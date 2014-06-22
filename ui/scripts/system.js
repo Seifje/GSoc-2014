@@ -15294,7 +15294,10 @@
                                                 id: 'Hyperv',
                                                 description: _l('Hyperv')
                                             });
-
+                                              items.push({
+                                                id: 'Any',
+                                                description: _l('Any')
+                                            });
                                             args.response.success({
                                                 data: items
                                             });
@@ -15855,8 +15858,92 @@
                                             required: true
                                         },
                                         isHidden: true
+                                    },/*ajout provide**@seif**/
+                                    Provider: {
+                                        label: 'label.provider',
+                                        docID: 'helpPrimaryStorageZone',
+                                        validation: {
+                                            required: true
+                                        },
+                                        select: function (args) {
+                                            var data = args.context.providers ? {
+                                                id: args.context.providers[0].id
+                                            }: {
+                                                listAll: true
+                                            };
+                                            
+                                            $.ajax({
+                                                url: createURL('listStorageProviders'),
+                                                   data: {
+                                                        
+                                                       type: 'primary'
+                                                   
+                                                          },
+                                                success: function (json) {
+                                                     var providers = json.liststorageprovidersresponse.dataStoreProvider ? json.liststorageprovidersresponse.dataStoreProvider:[];
+                                                    
+                                                    args.response.success({
+                                                        data: $.map(providers, function (provider) {
+                                                            return {
+                                                                id: provider.name,
+                                                                description: provider.name
+                                                            };
+                                                        })
+                                                    });
+                                                }
+                                            });
+                                         /**here*/
+                                         args.$select.change(function () {
+                                                var $form = $(this).closest('form');
+                                                var scope = $(this).val();
+                                                
+                                                if (scope == 'DefaultPrimary') {
+                                                    $form.find('.form-item[rel=isManaged]').hide();
+                                                    $form.find('.form-item[rel=capacityiops]').hide();
+                                                    $form.find('.form-item[rel=capacitybytes]').hide();
+                                                    $form.find('.form-item[rel=url]').hide();
+                                                } else  {
+                                                    
+                                                    $form.find('.form-item[rel=isManaged]').css('display', 'inline-block');
+                                                    $form.find('.form-item[rel=capacityiops]').css('display', 'inline-block');
+                                                    $form.find('.form-item[rel=capacitybytes]').css('display', 'inline-block');
+                                                    $form.find('.form-item[rel=url]').css('display', 'inline-block');
+                                                } 
+                                            }
+                                        )
+                                    }},
+                                    /*ajout provide**@seif**/
+                                     isManaged: {
+                                        label: 'Managed',
+                                        isBoolean: true,
+                                        isChecked: false,
+                                        validation: {
+                                            required: true
+                                        }
+                                         },
+                                     
+                                     capacityiops: {
+                                        label: 'Capacity IOPS',
+                                        docID: 'helpPrimaryStorageName',
+                                        validation: {
+                                            required: false
+                                        }
                                     },
-                                    
+                                     capacitybytes: {
+                                        label: 'Capacity Bytes',
+                                        docID: 'helpPrimaryStorageName',
+                                        validation: {
+                                            required: false
+                                        }
+                                    },
+                                     url: {
+                                        label: 'URL',
+                                        docID: 'helpPrimaryStorageName',
+                                        validation: {
+                                            required: false
+                                        }
+                                    },
+                                    /* fin ajout*/
                                     //SMB
                                     smbUsername: {
                                         label: 'label.smb.username',
@@ -15979,6 +16066,7 @@
                                 }
                             },
                             
+                            /******************************/
                             action: function (args) {
                                 var array1 =[];
                                 array1.push("&scope=" + todb(args.data.scope));
