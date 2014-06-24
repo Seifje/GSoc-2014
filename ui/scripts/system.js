@@ -15899,14 +15899,14 @@
                                                 
                                                 if (scope == 'DefaultPrimary') {
                                                     $form.find('.form-item[rel=isManaged]').hide();
-                                                    $form.find('.form-item[rel=capacityiops]').hide();
-                                                    $form.find('.form-item[rel=capacitybytes]').hide();
+                                                    $form.find('.form-item[rel=capacityIops]').hide();
+                                                    $form.find('.form-item[rel=capacityBytes]').hide();
                                                     $form.find('.form-item[rel=url]').hide();
                                                 } else  {
                                                     
                                                     $form.find('.form-item[rel=isManaged]').css('display', 'inline-block');
-                                                    $form.find('.form-item[rel=capacityiops]').css('display', 'inline-block');
-                                                    $form.find('.form-item[rel=capacitybytes]').css('display', 'inline-block');
+                                                    $form.find('.form-item[rel=capacityIops]').css('display', 'inline-block');
+                                                    $form.find('.form-item[rel=capacityBytes]').css('display', 'inline-block');
                                                     $form.find('.form-item[rel=url]').css('display', 'inline-block');
                                                 } 
                                             }
@@ -15922,14 +15922,14 @@
                                         }
                                          },
                                      
-                                     capacityiops: {
+                                     capacityIops: {
                                         label: 'Capacity IOPS',
                                         docID: 'helpPrimaryStorageName',
                                         validation: {
                                             required: false
                                         }
                                     },
-                                     capacitybytes: {
+                                     capacityBytes: {
                                         label: 'Capacity Bytes',
                                         docID: 'helpPrimaryStorageName',
                                         validation: {
@@ -16154,9 +16154,30 @@
                                 }
                                 array1.push("&url=" + todb(url));
                                 
-                                if (args.data.storageTags != null && args.data.storageTags.length > 0)
-                                array1.push("&tags=" + todb(args.data.storageTags));
                                 
+                                /******************nouveaux params************/
+                                   array1.push("&Provider=" + todb(args.data.Provider));
+                                   
+                                   if (args.data.Provider != "DefaultPrimary") {
+
+                                         array1.push("&isManaged=" + todb((args.data.isManaged=="on").toString()));
+                                         if (args.data.capacityBytes != null && args.data.capacityBytes.length > 0)
+                                                {   
+                                                  array1.push("&capacityBytes=" + todb(args.data.capacityBytes));  
+                                                } 
+                                        if (args.data.capacityIops != null && args.data.capacityIops.length > 0)
+                                                {    array1.push("&capacityIops=" + todb(args.data.capacityIops));
+                                                } 
+                                        if (args.data.url != null && args.data.url.length > 0)
+                                                {    array1.push("&url=" + todb(args.data.url));
+                                                } 
+                                       }
+                                   /***************************************/
+                                   
+                                  if (args.data.storageTags != null && args.data.storageTags.length > 0)
+                                   array1.push("&tags=" + todb(args.data.storageTags));
+
+                                  
                                 $.ajax({
                                     url: createURL("createStoragePool" + array1.join("")),
                                     dataType: "json",
