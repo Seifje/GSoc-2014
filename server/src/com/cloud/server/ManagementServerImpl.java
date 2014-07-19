@@ -3007,6 +3007,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         cmdList.add(UpdateVPCCmdByAdmin.class);
         cmdList.add(UpdateLBStickinessPolicyCmd.class);
         cmdList.add(UpdateLBHealthCheckPolicyCmd.class);
+        cmdList.add(ListStorageTagsCmd.class);
 
         return cmdList;
     }
