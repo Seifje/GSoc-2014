@@ -40,35 +40,26 @@ import com.cloud.host.Host;
 import com.cloud.user.Account;
 import com.cloud.vm.VirtualMachine;
 
-@APICommand(name = "migrateSystemVm", description = "Attempts Migration of a system virtual machine to the host specified.", responseObject = SystemVmResponse.class, entityType = {VirtualMachine.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "migrateSystemVm", description = "Attempts Migration of a system virtual machine to the host specified.", responseObject = SystemVmResponse.class, entityType = {VirtualMachine.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class MigrateSystemVMCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(MigrateSystemVMCmd.class.getName());
 
     private static final String s_name = "migratesystemvmresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.HOST_ID,
-               type = CommandType.UUID,
-               entityType = HostResponse.class,
-               required = true,
-               description = "destination Host ID to migrate VM to")
+    @Parameter(name = ApiConstants.HOST_ID, type = CommandType.UUID, entityType = HostResponse.class, required = true, description = "destination Host ID to migrate VM to")
     private Long hostId;
 
     @ACL(accessType = AccessType.OperateEntry)
-    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID,
-               type = CommandType.UUID,
-               entityType = SystemVmResponse.class,
-               required = true,
-               description = "the ID of the virtual machine")
+    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID, type = CommandType.UUID, entityType = SystemVmResponse.class, required = true, description = "the ID of the virtual machine")
     private Long virtualMachineId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getHostId() {
         return hostId;
@@ -78,9 +69,9 @@ public class MigrateSystemVMCmd extends BaseAsyncCmd {
         return virtualMachineId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -94,7 +85,9 @@ public class MigrateSystemVMCmd extends BaseAsyncCmd {
             return account.getId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
     @Override
@@ -116,7 +109,8 @@ public class MigrateSystemVMCmd extends BaseAsyncCmd {
         }
         try {
             CallContext.current().setEventDetails("VM Id: " + getVirtualMachineId() + " to host Id: " + getHostId());
-            //FIXME : Should not be calling UserVmService to migrate all types of VMs - need a generic VM layer
+            // FIXME : Should not be calling UserVmService to migrate all types
+            // of VMs - need a generic VM layer
             VirtualMachine migratedVm = _userVmService.migrateVirtualMachine(getVirtualMachineId(), destinationHost);
             if (migratedVm != null) {
                 // return the generic system VM instance response

@@ -32,26 +32,26 @@ public class DownloadErrorState extends DownloadInactiveState {
     @Override
     public String handleAnswer(DownloadAnswer answer) {
         switch (answer.getDownloadStatus()) {
-            case DOWNLOAD_IN_PROGRESS:
-                getDownloadListener().scheduleStatusCheck(RequestType.GET_STATUS);
-                return Status.DOWNLOAD_IN_PROGRESS.toString();
-            case DOWNLOADED:
-                getDownloadListener().scheduleImmediateStatusCheck(RequestType.PURGE);
-                getDownloadListener().cancelTimeoutTask();
-                return Status.DOWNLOADED.toString();
-            case NOT_DOWNLOADED:
-                getDownloadListener().scheduleStatusCheck(RequestType.GET_STATUS);
-                return Status.NOT_DOWNLOADED.toString();
-            case DOWNLOAD_ERROR:
-                getDownloadListener().cancelStatusTask();
-                getDownloadListener().cancelTimeoutTask();
-                return Status.DOWNLOAD_ERROR.toString();
-            case UNKNOWN:
-                getDownloadListener().cancelStatusTask();
-                getDownloadListener().cancelTimeoutTask();
-                return Status.DOWNLOAD_ERROR.toString();
-            default:
-                return null;
+        case DOWNLOAD_IN_PROGRESS:
+            getDownloadListener().scheduleStatusCheck(RequestType.GET_STATUS);
+            return Status.DOWNLOAD_IN_PROGRESS.toString();
+        case DOWNLOADED:
+            getDownloadListener().scheduleImmediateStatusCheck(RequestType.PURGE);
+            getDownloadListener().cancelTimeoutTask();
+            return Status.DOWNLOADED.toString();
+        case NOT_DOWNLOADED:
+            getDownloadListener().scheduleStatusCheck(RequestType.GET_STATUS);
+            return Status.NOT_DOWNLOADED.toString();
+        case DOWNLOAD_ERROR:
+            getDownloadListener().cancelStatusTask();
+            getDownloadListener().cancelTimeoutTask();
+            return Status.DOWNLOAD_ERROR.toString();
+        case UNKNOWN:
+            getDownloadListener().cancelStatusTask();
+            getDownloadListener().cancelTimeoutTask();
+            return Status.DOWNLOAD_ERROR.toString();
+        default:
+            return null;
         }
     }
 

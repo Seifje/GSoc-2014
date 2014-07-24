@@ -26,14 +26,14 @@ import com.cloud.resource.ResourceState;
 import com.cloud.utils.fsm.StateObject;
 
 /**
- *  Host represents one particular host server.
+ * Host represents one particular host server.
  */
 public interface Host extends StateObject<Status>, Identity, InternalIdentity {
     public enum Type {
-        Storage(false), Routing(false), SecondaryStorage(false), SecondaryStorageCmdExecutor(false), ConsoleProxy(true), ExternalFirewall(false), ExternalLoadBalancer(
-                false), ExternalVirtualSwitchSupervisor(false), PxeServer(false), BaremetalPxe(false), BaremetalDhcp(false), TrafficMonitor(false),
+        Storage(false), Routing(false), SecondaryStorage(false), SecondaryStorageCmdExecutor(false), ConsoleProxy(true), ExternalFirewall(false), ExternalLoadBalancer(false), ExternalVirtualSwitchSupervisor(
+                false), PxeServer(false), BaremetalPxe(false), BaremetalDhcp(false), TrafficMonitor(false),
 
-        ExternalDhcp(false), SecondaryStorageVM(true), LocalSecondaryStorage(false), L2Networking(false);
+                ExternalDhcp(false), SecondaryStorageVM(true), LocalSecondaryStorage(false), L2Networking(false);
         boolean _virtual;
 
         private Type(boolean virtual) {
@@ -104,7 +104,8 @@ public interface Host extends StateObject<Status>, Identity, InternalIdentity {
     Integer getCpuSockets();
 
     /**
-     * @return # of cores in a machine.  Note two cpus with two cores each returns 4.
+     * @return # of cores in a machine. Note two cpus with two cores each
+     *         returns 4.
      */
     Integer getCpus();
 
@@ -129,7 +130,7 @@ public interface Host extends StateObject<Status>, Identity, InternalIdentity {
     long getDataCenterId();
 
     /**
-     * @return parent path.  only used for storage server.
+     * @return parent path. only used for storage server.
      */
     String getParent();
 
@@ -174,7 +175,7 @@ public interface Host extends StateObject<Status>, Identity, InternalIdentity {
     Long getManagementServerId();
 
     /*
-     *@return removal date
+     * @return removal date
      */
     Date getRemoved();
 

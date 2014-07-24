@@ -107,43 +107,29 @@ public class CloudZonesStartupProcessor extends AdapterBase implements StartupCo
 
     protected boolean processHostStartup(StartupRoutingCommand startup) throws ConnectionException {
         /*
-        boolean found = false;
-        Type type = Host.Type.Routing;
-        final Map<String, String> hostDetails = startup.getHostDetails();
-        HostVO server = _hostDao.findByGuid(startup.getGuid());
-        if (server == null) {
-            server = _hostDao.findByGuid(startup.getGuidWithoutResource());
-        }
-        if (server != null && server.getRemoved() == null) {
-            if (s_logger.isDebugEnabled()) {
-                s_logger.debug("Found the host " + server.getId() + " by guid: "
-                        + startup.getGuid());
-            }
-            found = true;
-
-        } else {
-            server = new HostVO(startup.getGuid());
-        }
-        server.setDetails(hostDetails);
-
-        try {
-            updateComputeHost(server, startup, type);
-        } catch (AgentAuthnException e) {
-            throw new ConnectionException(true, "Failed to authorize host, invalid configuration", e);
-        }
-        if (!found) {
-            server.setHostAllocationState(Host.HostAllocationState.Enabled);
-            server = _hostDao.persist(server);
-        } else {
-            if (!_hostDao.connect(server, _nodeId)) {
-                throw new CloudRuntimeException(
-                        "Agent cannot connect because the current state is "
-                        + server.getStatus().toString());
-            }
-            s_logger.info("Old " + server.getType().toString()
-                    + " host reconnected w/ id =" + server.getId());
-        }
-        */
+         * boolean found = false; Type type = Host.Type.Routing; final
+         * Map<String, String> hostDetails = startup.getHostDetails(); HostVO
+         * server = _hostDao.findByGuid(startup.getGuid()); if (server == null)
+         * { server = _hostDao.findByGuid(startup.getGuidWithoutResource()); }
+         * if (server != null && server.getRemoved() == null) { if
+         * (s_logger.isDebugEnabled()) { s_logger.debug("Found the host " +
+         * server.getId() + " by guid: " + startup.getGuid()); } found = true;
+         *
+         * } else { server = new HostVO(startup.getGuid()); }
+         * server.setDetails(hostDetails);
+         *
+         * try { updateComputeHost(server, startup, type); } catch
+         * (AgentAuthnException e) { throw new ConnectionException(true,
+         * "Failed to authorize host, invalid configuration", e); } if (!found)
+         * { server.setHostAllocationState(Host.HostAllocationState.Enabled);
+         * server = _hostDao.persist(server); } else { if
+         * (!_hostDao.connect(server, _nodeId)) { throw new
+         * CloudRuntimeException(
+         * "Agent cannot connect because the current state is " +
+         * server.getStatus().toString()); } s_logger.info("Old " +
+         * server.getType().toString() + " host reconnected w/ id =" +
+         * server.getId()); }
+         */
         return true;
 
     }
@@ -184,8 +170,8 @@ public class CloudZonesStartupProcessor extends AdapterBase implements StartupCo
                 s_logger.debug("Number of hosts in Zone:" + currentCountOfHosts + ", max hosts limit: " + maxHosts);
             }
             if (currentCountOfHosts >= maxHosts) {
-                throw new AgentAuthnException("Number of running Routing hosts in the Zone:" + zone.getName() + " is already at the max limit:" + maxHosts +
-                    ", cannot start one more host");
+                throw new AgentAuthnException("Number of running Routing hosts in the Zone:" + zone.getName() + " is already at the max limit:" + maxHosts
+                        + ", cannot start one more host");
             }
         }
 
@@ -221,14 +207,14 @@ public class CloudZonesStartupProcessor extends AdapterBase implements StartupCo
                 s_logger.debug("Trying to detect the Pod to use from the agent's ip address and netmask passed in ");
             }
 
-            //deduce pod
+            // deduce pod
             boolean podFound = false;
             List<HostPodVO> podsInZone = _podDao.listByDataCenterId(zoneId);
             for (HostPodVO hostPod : podsInZone) {
                 if (checkCIDR(type, hostPod, startup.getPrivateIpAddress(), startup.getPrivateNetmask())) {
                     pod = hostPod;
 
-                    //found the default POD having the same subnet.
+                    // found the default POD having the same subnet.
                     updatePodNetmaskIfNeeded(pod, startup.getPrivateNetmask());
                     podFound = true;
                     break;
@@ -244,7 +230,8 @@ public class CloudZonesStartupProcessor extends AdapterBase implements StartupCo
                     s_logger.warn("No Gateway IP address passed in for the agent, cannot create a new pod for the agent");
                     throw new AgentAuthnException("No Gateway IP address passed in for the agent, cannot create a new pod for the agent");
                 }
-                //auto-create a new pod, since pod matching the agent's ip is not found
+                // auto-create a new pod, since pod matching the agent's ip is
+                // not found
                 String podName = "POD-" + (podsInZone.size() + 1);
                 try {
                     String gateway = startup.getGatewayIpAddress();
@@ -256,7 +243,8 @@ public class CloudZonesStartupProcessor extends AdapterBase implements StartupCo
                     String endIp = NetUtils.getIpRangeEndIpFromCidr(cidrAddress, cidrSize);
                     pod = _configurationManager.createPod(-1, podName, zoneId, gateway, cidr, startIp, endIp, null, true);
                 } catch (Exception e) {
-                    // no longer tolerate exception during the cluster creation phase
+                    // no longer tolerate exception during the cluster creation
+                    // phase
                     throw new CloudRuntimeException("Unable to create new Pod " + podName + " in Zone: " + zoneId, e);
                 }
 
@@ -272,7 +260,7 @@ public class CloudZonesStartupProcessor extends AdapterBase implements StartupCo
             cluster = _clusterDao.findById(host.getClusterId());
         }
         if (cluster == null) {
-            //auto-create cluster - assume one host per cluster
+            // auto-create cluster - assume one host per cluster
             String clusterName = "Cluster-" + startup.getPrivateIpAddress();
             ClusterVO existingCluster = _clusterDao.findBy(clusterName, pod.getId());
             if (existingCluster != null) {
@@ -287,7 +275,8 @@ public class CloudZonesStartupProcessor extends AdapterBase implements StartupCo
                 try {
                     cluster = _clusterDao.persist(cluster);
                 } catch (Exception e) {
-                    // no longer tolerate exception during the cluster creation phase
+                    // no longer tolerate exception during the cluster creation
+                    // phase
                     throw new CloudRuntimeException("Unable to create cluster " + clusterName + " in pod " + pod.getId() + " and data center " + zoneId, e);
                 }
             }
@@ -344,13 +333,13 @@ public class CloudZonesStartupProcessor extends AdapterBase implements StartupCo
     private void updatePodNetmaskIfNeeded(HostPodVO pod, String agentNetmask) {
         // If the server's private netmask is less inclusive than the pod's CIDR
         // netmask, update cidrSize of the default POD
-        //(reason: we are maintaining pods only for internal accounting.)
+        // (reason: we are maintaining pods only for internal accounting.)
         long cidrSize = pod.getCidrSize();
         String cidrNetmask = NetUtils.getCidrSubNet("255.255.255.255", cidrSize);
         long cidrNetmaskNumeric = NetUtils.ip2Long(cidrNetmask);
         long serverNetmaskNumeric = NetUtils.ip2Long(agentNetmask);//
         if (serverNetmaskNumeric > cidrNetmaskNumeric) {
-            //update pod's cidrsize
+            // update pod's cidrsize
             int newCidrSize = new Long(NetUtils.getCidrSize(agentNetmask)).intValue();
             pod.setCidrSize(newCidrSize);
             _podDao.update(pod.getId(), pod);
@@ -359,46 +348,32 @@ public class CloudZonesStartupProcessor extends AdapterBase implements StartupCo
 
     protected boolean processStorageStartup(StartupStorageCommand startup) throws ConnectionException {
         /*
-        if (startup.getResourceType() != Storage.StorageResourceType.LOCAL_SECONDARY_STORAGE) {
-            return false;
-        }
-        boolean found = false;
-        Type type = Host.Type.LocalSecondaryStorage;
-        final Map<String, String> hostDetails = startup.getHostDetails();
-        HostVO server = _hostDao.findByGuid(startup.getGuid());
-        if (server == null) {
-            server = _hostDao.findByGuid(startup.getGuidWithoutResource());
-        }
-        if (server != null && server.getRemoved() == null) {
-            if (s_logger.isDebugEnabled()) {
-                s_logger.debug("Found the host " + server.getId() + " by guid: "
-                        + startup.getGuid());
-            }
-            found = true;
-
-        } else {
-            server = new HostVO(startup.getGuid());
-        }
-        server.setDetails(hostDetails);
-
-        try {
-            updateSecondaryHost(server, startup, type);
-        } catch (AgentAuthnException e) {
-            throw new ConnectionException(true, "Failed to authorize host, invalid configuration", e);
-        }
-        if (!found) {
-            server.setHostAllocationState(Host.HostAllocationState.Enabled);
-            server = _hostDao.persist(server);
-        } else {
-            if (!_hostDao.connect(server, _nodeId)) {
-                throw new CloudRuntimeException(
-                        "Agent cannot connect because the current state is "
-                        + server.getStatus().toString());
-            }
-            s_logger.info("Old " + server.getType().toString()
-                    + " host reconnected w/ id =" + server.getId());
-        }
-        */
+         * if (startup.getResourceType() !=
+         * Storage.StorageResourceType.LOCAL_SECONDARY_STORAGE) { return false;
+         * } boolean found = false; Type type = Host.Type.LocalSecondaryStorage;
+         * final Map<String, String> hostDetails = startup.getHostDetails();
+         * HostVO server = _hostDao.findByGuid(startup.getGuid()); if (server ==
+         * null) { server =
+         * _hostDao.findByGuid(startup.getGuidWithoutResource()); } if (server
+         * != null && server.getRemoved() == null) { if
+         * (s_logger.isDebugEnabled()) { s_logger.debug("Found the host " +
+         * server.getId() + " by guid: " + startup.getGuid()); } found = true;
+         *
+         * } else { server = new HostVO(startup.getGuid()); }
+         * server.setDetails(hostDetails);
+         *
+         * try { updateSecondaryHost(server, startup, type); } catch
+         * (AgentAuthnException e) { throw new ConnectionException(true,
+         * "Failed to authorize host, invalid configuration", e); } if (!found)
+         * { server.setHostAllocationState(Host.HostAllocationState.Enabled);
+         * server = _hostDao.persist(server); } else { if
+         * (!_hostDao.connect(server, _nodeId)) { throw new
+         * CloudRuntimeException(
+         * "Agent cannot connect because the current state is " +
+         * server.getStatus().toString()); } s_logger.info("Old " +
+         * server.getType().toString() + " host reconnected w/ id =" +
+         * server.getId()); }
+         */
         return true;
 
     }
@@ -430,7 +405,8 @@ public class CloudZonesStartupProcessor extends AdapterBase implements StartupCo
             s_logger.debug("Successfully loaded the DataCenter from the zone token passed in ");
         }
 
-        HostPodVO pod = findPod(startup, zone.getId(), Host.Type.Routing); //yes, routing
+        HostPodVO pod = findPod(startup, zone.getId(), Host.Type.Routing); // yes,
+        // routing
         Long podId = null;
         if (pod != null) {
             s_logger.debug("Found pod " + pod.getName() + " for the secondary storage host " + startup.getName());
@@ -473,7 +449,7 @@ public class CloudZonesStartupProcessor extends AdapterBase implements StartupCo
             if (checkCIDR(type, hostPod, startup.getPrivateIpAddress(), startup.getPrivateNetmask())) {
                 pod = hostPod;
 
-                //found the default POD having the same subnet.
+                // found the default POD having the same subnet.
                 updatePodNetmaskIfNeeded(pod, startup.getPrivateNetmask());
 
                 break;

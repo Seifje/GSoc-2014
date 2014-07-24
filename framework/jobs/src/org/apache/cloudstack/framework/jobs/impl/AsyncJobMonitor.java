@@ -39,7 +39,8 @@ import com.cloud.utils.component.ManagerBase;
 public class AsyncJobMonitor extends ManagerBase {
     public static final Logger s_logger = Logger.getLogger(AsyncJobMonitor.class);
 
-    @Inject private MessageBus _messageBus;
+    @Inject
+    private MessageBus _messageBus;
 
     private final Map<Long, ActiveTaskRecord> _activeTasks = new HashMap<Long, ActiveTaskRecord>();
     private final Timer _timer = new Timer();
@@ -86,16 +87,14 @@ public class AsyncJobMonitor extends ManagerBase {
         synchronized (this) {
             for (Map.Entry<Long, ActiveTaskRecord> entry : _activeTasks.entrySet()) {
                 if (entry.getValue().millisSinceLastJobHeartbeat() > _inactivityWarningThresholdMs) {
-                    s_logger.warn("Task (job-" + entry.getValue().getJobId() + ") has been pending for "
-                            + entry.getValue().millisSinceLastJobHeartbeat() / 1000 + " seconds");
+                    s_logger.warn("Task (job-" + entry.getValue().getJobId() + ") has been pending for " + entry.getValue().millisSinceLastJobHeartbeat() / 1000 + " seconds");
                 }
             }
         }
     }
 
     @Override
-    public boolean configure(String name, Map<String, Object> params)
-            throws ConfigurationException {
+    public boolean configure(String name, Map<String, Object> params) throws ConfigurationException {
 
         _messageBus.subscribe(AsyncJob.Topics.JOB_HEARTBEAT, MessageDispatcher.getDispatcher(this));
         _timer.scheduleAtFixedRate(new ManagedContextTimerTask() {

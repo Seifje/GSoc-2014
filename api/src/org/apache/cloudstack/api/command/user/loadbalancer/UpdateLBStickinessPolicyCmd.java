@@ -26,25 +26,24 @@ import com.cloud.network.rules.LoadBalancer;
 import com.cloud.network.rules.StickinessPolicy;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateLBStickinessPolicy", description = "Updates LB Stickiness policy", responseObject = LBStickinessResponse.class, since = "4.4",
-requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
-public class UpdateLBStickinessPolicyCmd extends BaseAsyncCustomIdCmd{
+@APICommand(name = "updateLBStickinessPolicy", description = "Updates LB Stickiness policy", responseObject = LBStickinessResponse.class, since = "4.4", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+public class UpdateLBStickinessPolicyCmd extends BaseAsyncCustomIdCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateLBStickinessPolicyCmd.class.getName());
 
     private static final String s_name = "updatelbstickinesspolicyresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = LBStickinessResponse.class, required = true, description = "id of lb stickiness policy")
     private Long id;
 
     @Parameter(name = ApiConstants.FOR_DISPLAY, type = CommandType.BOOLEAN, description = "an optional field, whether to the display the policy to the end user or not", since = "4.4", authorized = {RoleType.Admin})
     private Boolean display;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
     public Long getId() {
         return id;
     }
@@ -65,7 +64,9 @@ public class UpdateLBStickinessPolicyCmd extends BaseAsyncCustomIdCmd{
             return account.getId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
     @Override
@@ -78,9 +79,9 @@ public class UpdateLBStickinessPolicyCmd extends BaseAsyncCustomIdCmd{
         return EventTypes.EVENT_LB_STICKINESSPOLICY_UPDATE;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
     @Override
     public void execute() {
         StickinessPolicy policy = _lbService.updateLBStickinessPolicy(this.getId(), this.getCustomId(), this.getDisplay());

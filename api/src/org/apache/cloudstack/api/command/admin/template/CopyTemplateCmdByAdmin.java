@@ -37,12 +37,12 @@ public class CopyTemplateCmdByAdmin extends CopyTemplateCmd {
     public static final Logger s_logger = Logger.getLogger(CopyTemplateCmdByAdmin.class.getName());
 
     @Override
-    public void execute() throws ResourceAllocationException{
+    public void execute() throws ResourceAllocationException {
         try {
             CallContext.current().setEventDetails(getEventDescription());
             VirtualMachineTemplate template = _templateService.copyTemplate(this);
 
-            if (template != null){
+            if (template != null) {
                 List<TemplateResponse> listResponse = _responseGenerator.createTemplateResponses(ResponseView.Full, template, getDestinationZoneId(), false);
                 TemplateResponse response = new TemplateResponse();
                 if (listResponse != null && !listResponse.isEmpty()) {
@@ -60,4 +60,3 @@ public class CopyTemplateCmdByAdmin extends CopyTemplateCmd {
         }
     }
 }
-

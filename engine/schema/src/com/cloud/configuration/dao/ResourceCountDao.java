@@ -26,16 +26,21 @@ import com.cloud.utils.db.GenericDao;
 
 public interface ResourceCountDao extends GenericDao<ResourceCountVO, Long> {
     /**
-     * @param domainId the id of the domain to get the resource count
-     * @param type the type of resource (e.g. user_vm, public_ip, volume)
+     * @param domainId
+     *            the id of the domain to get the resource count
+     * @param type
+     *            the type of resource (e.g. user_vm, public_ip, volume)
      * @return the count of resources in use for the given type and domain
      */
     long getResourceCount(long ownerId, ResourceOwnerType ownerType, ResourceType type);
 
     /**
-     * @param domainId the id of the domain to set the resource count
-     * @param type the type of resource (e.g. user_vm, public_ip, volume)
-     * @param the count of resources in use for the given type and domain
+     * @param domainId
+     *            the id of the domain to set the resource count
+     * @param type
+     *            the type of resource (e.g. user_vm, public_ip, volume)
+     * @param the
+     *            count of resources in use for the given type and domain
      */
     void setResourceCount(long ownerId, ResourceOwnerType ownerType, ResourceType type, long count);
 

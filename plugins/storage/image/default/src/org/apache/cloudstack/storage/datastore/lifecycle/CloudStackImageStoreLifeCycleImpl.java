@@ -89,7 +89,7 @@ public class CloudStackImageStoreLifeCycleImpl implements ImageStoreLifeCycle {
         Map<String, String> details = (Map<String, String>)dsInfos.get("details");
 
         String logString = "";
-        if(url.contains("cifs")) {
+        if (url.contains("cifs")) {
             logString = cleanPassword(url);
         } else {
             logString = StringUtils.cleanString(url);
@@ -127,9 +127,9 @@ public class CloudStackImageStoreLifeCycleImpl implements ImageStoreLifeCycle {
         imageStoreParameters.put("url", url);
         imageStoreParameters.put("protocol", uri.getScheme().toLowerCase());
         imageStoreParameters.put("scope", ScopeType.ZONE); // default cloudstack
-                                                           // provider only
-                                                           // supports zone-wide
-                                                           // image store
+        // provider only
+        // supports zone-wide
+        // image store
         imageStoreParameters.put("providerName", providerName);
         imageStoreParameters.put("role", role);
 
@@ -167,8 +167,13 @@ public class CloudStackImageStoreLifeCycleImpl implements ImageStoreLifeCycle {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.cloudstack.engine.subsystem.api.storage.DataStoreLifeCycle#migrateToObjectStore(org.apache.cloudstack.engine.subsystem.api.storage.DataStore)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.apache.cloudstack.engine.subsystem.api.storage.DataStoreLifeCycle
+     * #migrateToObjectStore
+     * (org.apache.cloudstack.engine.subsystem.api.storage.DataStore)
      */
     @Override
     public boolean migrateToObjectStore(DataStore store) {

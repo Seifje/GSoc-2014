@@ -24,7 +24,7 @@ import com.google.gson.GsonBuilder;
  */
 public class OvsVpcRoutingPolicyConfigCommand extends Command {
 
-    VpcConfig vpcConfig =null;
+    VpcConfig vpcConfig = null;
     long hostId;
     String bridgeName;
     long sequenceNumber;
@@ -39,10 +39,10 @@ public class OvsVpcRoutingPolicyConfigCommand extends Command {
         String sourcePortEnd;
         String protocol;
         String[] sourceCidrs;
-        public AclItem(int number, String uuid, String action, String direction, String sourcePortStart,
-                       String sourcePortEnd, String protocol, String[] sourceCidrs) {
+
+        public AclItem(int number, String uuid, String action, String direction, String sourcePortStart, String sourcePortEnd, String protocol, String[] sourceCidrs) {
             this.number = number;
-            this.uuid =uuid;
+            this.uuid = uuid;
             this.action = action;
             this.direction = direction;
             this.sourceCidrs = sourceCidrs;
@@ -55,6 +55,7 @@ public class OvsVpcRoutingPolicyConfigCommand extends Command {
     public static class Acl {
         String id;
         AclItem[] aclItems;
+
         public Acl(String uuid, AclItem[] aclItems) {
             this.id = uuid;
             this.aclItems = aclItems;
@@ -65,6 +66,7 @@ public class OvsVpcRoutingPolicyConfigCommand extends Command {
         String id;
         String cidr;
         String aclId;
+
         public Tier(String uuid, String cidr, String aclId) {
             this.id = uuid;
             this.cidr = cidr;
@@ -77,6 +79,7 @@ public class OvsVpcRoutingPolicyConfigCommand extends Command {
         String id;
         Acl[] acls;
         Tier[] tiers;
+
         public Vpc(String id, String cidr, Acl[] acls, Tier[] tiers) {
             this.id = id;
             this.cidr = cidr;
@@ -87,6 +90,7 @@ public class OvsVpcRoutingPolicyConfigCommand extends Command {
 
     public static class VpcConfig {
         Vpc vpc;
+
         public VpcConfig(Vpc vpc) {
             this.vpc = vpc;
         }

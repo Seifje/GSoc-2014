@@ -26,9 +26,8 @@ import com.cloud.template.VirtualMachineTemplate;
 import com.cloud.user.Account;
 
 @APICommand(name = "updateTemplatePermissions", responseObject = SuccessResponse.class, description = "Updates a template visibility permissions. "
-    + "A public template is visible to all accounts within the same domain. " + "A private template is visible only to the owner of the template. "
-        + "A priviledged template is a private template with account permissions added. " + "Only accounts specified under the template permissions are visible to them.", entityType = {VirtualMachineTemplate.class},
-    requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+        + "A public template is visible to all accounts within the same domain. " + "A private template is visible only to the owner of the template. "
+        + "A priviledged template is a private template with account permissions added. " + "Only accounts specified under the template permissions are visible to them.", entityType = {VirtualMachineTemplate.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateTemplatePermissionsCmd extends BaseUpdateTemplateOrIsoPermissionsCmd {
     @Override
     protected String getResponseName() {
@@ -47,7 +46,9 @@ public class UpdateTemplatePermissionsCmd extends BaseUpdateTemplateOrIsoPermiss
             return template.getAccountId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
 }

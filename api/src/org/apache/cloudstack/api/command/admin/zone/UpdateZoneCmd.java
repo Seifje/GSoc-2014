@@ -34,16 +34,15 @@ import org.apache.cloudstack.context.CallContext;
 import com.cloud.dc.DataCenter;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateZone", description = "Updates a Zone.", responseObject = ZoneResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "updateZone", description = "Updates a Zone.", responseObject = ZoneResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateZoneCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateZoneCmd.class.getName());
 
     private static final String s_name = "updatezoneresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.DNS1, type = CommandType.STRING, description = "the first DNS for the Zone")
     private String dns1;
@@ -84,9 +83,7 @@ public class UpdateZoneCmd extends BaseCmd {
     @Parameter(name = ApiConstants.DHCP_PROVIDER, type = CommandType.STRING, description = "the dhcp Provider for the Zone")
     private String dhcpProvider;
 
-    @Parameter(name = ApiConstants.DOMAIN,
-               type = CommandType.STRING,
-               description = "Network domain name for the networks in the zone; empty string will update domain with NULL value")
+    @Parameter(name = ApiConstants.DOMAIN, type = CommandType.STRING, description = "Network domain name for the networks in the zone; empty string will update domain with NULL value")
     private String domain;
 
     @Parameter(name = ApiConstants.DNS_SEARCH_ORDER, type = CommandType.LIST, collectionType = CommandType.STRING, description = "the dns search order list")
@@ -95,9 +92,9 @@ public class UpdateZoneCmd extends BaseCmd {
     @Parameter(name = ApiConstants.LOCAL_STORAGE_ENABLED, type = CommandType.BOOLEAN, description = "true if local storage offering enabled, false otherwise")
     private Boolean localStorageEnabled;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getDns1() {
         return dns1;
@@ -163,9 +160,9 @@ public class UpdateZoneCmd extends BaseCmd {
         return localStorageEnabled;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

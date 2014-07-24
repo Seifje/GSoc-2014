@@ -21,7 +21,8 @@ import org.apache.cloudstack.api.Identity;
 import org.apache.cloudstack.api.InternalIdentity;
 
 /**
- * GlobalLoadBalancerRule defines a global (multi zone) load balancing configuration.
+ * GlobalLoadBalancerRule defines a global (multi zone) load balancing
+ * configuration.
  */
 public interface GlobalLoadBalancerRule extends Identity, InternalIdentity, ControlledEntity {
 
@@ -52,9 +53,7 @@ public interface GlobalLoadBalancerRule extends Identity, InternalIdentity, Cont
     enum ServiceType {
         tcp, udp, http;
         public static boolean isValidServiceType(String serviceType) {
-            if (tcp.name().equalsIgnoreCase(serviceType) ||
-                udp.name().equalsIgnoreCase(serviceType) ||
-                http.name().equalsIgnoreCase(serviceType)) {
+            if (tcp.name().equalsIgnoreCase(serviceType) || udp.name().equalsIgnoreCase(serviceType) || http.name().equalsIgnoreCase(serviceType)) {
                 return true;
             }
             return false;

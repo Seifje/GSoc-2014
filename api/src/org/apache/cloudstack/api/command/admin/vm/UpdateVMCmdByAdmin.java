@@ -30,19 +30,16 @@ import com.cloud.exception.InsufficientCapacityException;
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.uservm.UserVm;
 
-
-@APICommand(name = "updateVirtualMachine", description="Updates properties of a virtual machine. The VM has to be stopped and restarted for the " +
-        "new properties to take effect. UpdateVirtualMachine does not first check whether the VM is stopped. " +
-        "Therefore, stop the VM manually before issuing this call.", responseObject = UserVmResponse.class, responseView = ResponseView.Full)
+@APICommand(name = "updateVirtualMachine", description = "Updates properties of a virtual machine. The VM has to be stopped and restarted for the "
+        + "new properties to take effect. UpdateVirtualMachine does not first check whether the VM is stopped. " + "Therefore, stop the VM manually before issuing this call.", responseObject = UserVmResponse.class, responseView = ResponseView.Full)
 public class UpdateVMCmdByAdmin extends UpdateVMCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateVMCmdByAdmin.class.getName());
 
     @Override
-    public void execute() throws ResourceUnavailableException,
-            InsufficientCapacityException, ServerApiException {
-        CallContext.current().setEventDetails("Vm Id: "+getId());
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException {
+        CallContext.current().setEventDetails("Vm Id: " + getId());
         UserVm result = _userVmService.updateVirtualMachine(this);
-        if (result != null){
+        if (result != null) {
             UserVmResponse response = _responseGenerator.createUserVmResponse(ResponseView.Full, "virtualmachine", result).get(0);
             response.setResponseName(getCommandName());
             setResponseObject(response);

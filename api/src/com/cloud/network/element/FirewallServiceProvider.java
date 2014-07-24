@@ -25,6 +25,7 @@ import com.cloud.network.rules.FirewallRule;
 public interface FirewallServiceProvider extends NetworkElement {
     /**
      * Apply rules
+     *
      * @param network
      * @param rules
      * @return

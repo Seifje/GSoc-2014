@@ -38,19 +38,17 @@ import com.cloud.exception.NetworkRuleConflictException;
 import com.cloud.exception.ResourceAllocationException;
 import com.cloud.exception.ResourceUnavailableException;
 
-@APICommand(name = "addOpenDaylightController", responseObject = OpenDaylightControllerResponse.class, description = "Adds an OpenDyalight controler",
-        requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
+@APICommand(name = "addOpenDaylightController", responseObject = OpenDaylightControllerResponse.class, description = "Adds an OpenDyalight controler", requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
 public class AddOpenDaylightControllerCmd extends BaseAsyncCmd {
 
     @Inject
     private OpenDaylightControllerResourceManager resourceManager;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, required = true,
-            description = "the Physical Network ID")
+    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, required = true, description = "the Physical Network ID")
     private Long physicalNetworkId;
 
     @Parameter(name = ApiConstants.URL, type = CommandType.STRING, required = true, description = "Api URL of the OpenDaylight Controller.")
@@ -62,9 +60,9 @@ public class AddOpenDaylightControllerCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.PASSWORD, type = CommandType.STRING, required = true, description = "Credential to access the OpenDaylight API")
     private String password;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -102,13 +100,13 @@ public class AddOpenDaylightControllerCmd extends BaseAsyncCmd {
         return password;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
-    NetworkRuleConflictException {
+            NetworkRuleConflictException {
         resourceManager.addController(this);
     }
 

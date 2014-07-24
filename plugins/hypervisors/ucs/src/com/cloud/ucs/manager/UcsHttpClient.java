@@ -41,7 +41,7 @@ public class UcsHttpClient {
         PostMethod post = new PostMethod(url);
         post.setRequestEntity(new StringRequestEntity(xml));
         post.setRequestHeader("Content-type", "text/xml");
-        //post.setFollowRedirects(true);
+        // post.setFollowRedirects(true);
         try {
             int result = client.executeMethod(post);
             if (result == 302) {

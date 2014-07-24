@@ -35,30 +35,29 @@ import org.apache.cloudstack.api.response.ZoneResponse;
 import com.cloud.host.Host;
 import com.cloud.network.element.JuniperSRXFirewallElementService;
 
-@APICommand(name = "listExternalFirewalls", description = "List external firewall appliances.", responseObject = ExternalFirewallResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listExternalFirewalls", description = "List external firewall appliances.", responseObject = ExternalFirewallResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListExternalFirewallsCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListServiceOfferingsCmd.class.getName());
     private static final String s_name = "listexternalfirewallsresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, required = true, description = "zone Id")
     private long zoneId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public long getZoneId() {
         return zoneId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Inject
     JuniperSRXFirewallElementService _srxElementService;

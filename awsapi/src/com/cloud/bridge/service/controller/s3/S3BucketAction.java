@@ -250,7 +250,8 @@ public class S3BucketAction implements ServletAction {
                         int resultCode = engineResponse.getResultCode();
                         String resutlDesc = engineResponse.getResultDescription();
                         if (resultCode == 204) {
-                            if (quite) { // show response depending on quite/verbose
+                            if (quite) { // show response depending on
+                                         // quite/verbose
                                 xmlDeleteResponse.append("<Deleted><Key>" + key_name + "</Key>");
                                 if (resutlDesc != null)
                                     xmlDeleteResponse.append(resutlDesc);
@@ -297,8 +298,8 @@ public class S3BucketAction implements ServletAction {
     }
 
     /**
-     * In order to support a policy on the "s3:CreateBucket" action we must be able to set and get
-     * policies before a bucket is actually created.
+     * In order to support a policy on the "s3:CreateBucket" action we must be
+     * able to set and get policies before a bucket is actually created.
      *
      * @param request
      * @param response
@@ -321,27 +322,30 @@ public class S3BucketAction implements ServletAction {
             }
         }
 
-        // [B] "The bucket owner by default has permissions to attach bucket policies to their buckets using PUT Bucket policy."
-        //  -> the bucket owner may want to restrict the IP address from where this can be executed
+        // [B]
+        // "The bucket owner by default has permissions to attach bucket policies to their buckets using PUT Bucket policy."
+        // -> the bucket owner may want to restrict the IP address from where
+        // this can be executed
         String client = UserContext.current().getCanonicalUserId();
         S3PolicyContext context = new S3PolicyContext(PolicyActions.PutBucketPolicy, bucketName);
 
         switch (S3Engine.verifyPolicy(context)) {
-            case ALLOW:
-                break;
+        case ALLOW:
+            break;
 
-            case DEFAULT_DENY:
-                if (null != owner && !client.equals(owner)) {
-                    response.setStatus(405);
-                    return;
-                }
-                break;
-            case DENY:
-                response.setStatus(403);
+        case DEFAULT_DENY:
+            if (null != owner && !client.equals(owner)) {
+                response.setStatus(405);
                 return;
+            }
+            break;
+        case DENY:
+            response.setStatus(403);
+            return;
         }
         TransactionLegacy txn = TransactionLegacy.open(TransactionLegacy.AWSAPI_DB);
-        // [B] Place the policy into the database over writting an existing policy
+        // [B] Place the policy into the database over writting an existing
+        // policy
         try {
             // -> first make sure that the policy is valid by parsing it
             PolicyParser parser = new PolicyParser();
@@ -351,7 +355,7 @@ public class S3BucketAction implements ServletAction {
             if (null != policy && !policy.isEmpty()) {
                 BucketPolicyVO bpolicy = new BucketPolicyVO(bucketName, client, policy);
                 bpolicy = bPolicyDao.persist(bpolicy);
-                //policyDao.addPolicy( bucketName, client, policy );
+                // policyDao.addPolicy( bucketName, client, policy );
             }
 
             if (null != sbp)
@@ -394,19 +398,19 @@ public class S3BucketAction implements ServletAction {
         String client = UserContext.current().getCanonicalUserId();
         S3PolicyContext context = new S3PolicyContext(PolicyActions.GetBucketPolicy, bucketName);
         switch (S3Engine.verifyPolicy(context)) {
-            case ALLOW:
-                break;
+        case ALLOW:
+            break;
 
-            case DEFAULT_DENY:
-                if (null != owner && !client.equals(owner)) {
-                    response.setStatus(405);
-                    return;
-                }
-                break;
-
-            case DENY:
-                response.setStatus(403);
+        case DEFAULT_DENY:
+            if (null != owner && !client.equals(owner)) {
+                response.setStatus(405);
                 return;
+            }
+            break;
+
+        case DENY:
+            response.setStatus(403);
+            return;
         }
 
         // [B] Pull the policy from the database if one exists
@@ -530,16 +534,12 @@ public class S3BucketAction implements ServletAction {
             response.setContentType("application/xml");
 
             StringBuffer xmlError = new StringBuffer();
-            xmlError.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-                .append("<Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist</Message>")
-                .append("<BucketName>")
-                .append((String)request.getAttribute(S3Constants.BUCKET_ATTR_KEY))
-                .append("</BucketName>")
-                .append("<RequestId>1DEADBEEF9</RequestId>")
-                // TODO
-                .append("<HostId>abCdeFgHiJ1k2LmN3op4q56r7st89</HostId>")
-                // TODO
-                .append("</Error>");
+            xmlError.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>").append("<Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist</Message>")
+                    .append("<BucketName>").append((String)request.getAttribute(S3Constants.BUCKET_ATTR_KEY)).append("</BucketName>").append("<RequestId>1DEADBEEF9</RequestId>")
+                    // TODO
+                    .append("<HostId>abCdeFgHiJ1k2LmN3op4q56r7st89</HostId>")
+                    // TODO
+                    .append("</Error>");
             S3RestServlet.endResponse(response, xmlError.toString());
 
         }
@@ -552,12 +552,15 @@ public class S3BucketAction implements ServletAction {
         cal.set(1970, 1, 1);
         engineRequest.setAccessKey(UserContext.current().getAccessKey());
         engineRequest.setRequestTimestamp(cal);
-        engineRequest.setSignature("");   // TODO - Consider providing signature in a future release which allows additional user description
+        engineRequest.setSignature(""); // TODO - Consider providing signature
+                                        // in a future release which allows
+                                        // additional user description
         engineRequest.setBucketName((String)request.getAttribute(S3Constants.BUCKET_ATTR_KEY));
 
         S3AccessControlPolicy engineResponse = ServiceProvider.getInstance().getS3Engine().handleRequest(engineRequest);
 
-        // To allow the bucket acl policy result to be serialized via Axiom classes
+        // To allow the bucket acl policy result to be serialized via Axiom
+        // classes
         GetBucketAccessControlPolicyResponse onePolicy = S3SerializableServiceImplementation.toGetBucketAccessControlPolicyResponse(engineResponse);
 
         OutputStream outputStream = response.getOutputStream();
@@ -590,7 +593,8 @@ public class S3BucketAction implements ServletAction {
             return;
         }
 
-        // [B] The owner may want to restrict the IP address at which this can be performed
+        // [B] The owner may want to restrict the IP address at which this can
+        // be performed
         String client = UserContext.current().getCanonicalUserId();
         if (!client.equals(sbucket.getOwnerCanonicalId()))
             throw new PermissionDeniedException("Access Denied - only the owner can read bucket versioning");
@@ -603,16 +607,16 @@ public class S3BucketAction implements ServletAction {
 
         // [C]
         switch (sbucket.getVersioningStatus()) {
-            default:
-            case 0:
-                versioningStatus = "";
-                break;
-            case 1:
-                versioningStatus = "Enabled";
-                break;
-            case 2:
-                versioningStatus = "Suspended";
-                break;
+        default:
+        case 0:
+            versioningStatus = "";
+            break;
+        case 1:
+            versioningStatus = "Enabled";
+            break;
+        case 2:
+            versioningStatus = "Suspended";
+            break;
         }
 
         StringBuffer xml = new StringBuffer();
@@ -706,7 +710,7 @@ public class S3BucketAction implements ServletAction {
     }
 
     public void executeGetBucketLogging(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // TODO -- Review this in future.  Currently this is a beta feature of S3
+        // TODO -- Review this in future. Currently this is a beta feature of S3
         response.setStatus(405);
     }
 
@@ -772,15 +776,15 @@ public class S3BucketAction implements ServletAction {
             response.flushBuffer();
         } catch (ObjectAlreadyExistsException oaee) {
             response.setStatus(409);
-            String xml =
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <Error><Code>OperationAborted</Code><Message>A conflicting conditional operation is currently in progress against this resource. Please try again..</Message>";
+            String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <Error><Code>OperationAborted</Code><Message>A conflicting conditional operation is currently in progress against this resource. Please try again..</Message>";
             response.setContentType("text/xml; charset=UTF-8");
             S3RestServlet.endResponse(response, xml.toString());
         }
     }
 
     public void executePutBucketAcl(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // [A] Determine that there is an applicable bucket which might have an ACL set
+        // [A] Determine that there is an applicable bucket which might have an
+        // ACL set
 
         String bucketName = (String)request.getAttribute(S3Constants.BUCKET_ATTR_KEY);
         SBucketVO bucket = bucketDao.getByName(bucketName);
@@ -887,15 +891,19 @@ public class S3BucketAction implements ServletAction {
     }
 
     public void executePutBucketLogging(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // TODO -- Review this in future.  Currently this is a S3 beta feature
+        // TODO -- Review this in future. Currently this is a S3 beta feature
         response.setStatus(501);
     }
 
     public void executePutBucketWebsite(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // TODO -- LoPri - Undertake checks on Put Bucket Website
-        // Tested using configuration <Directory /Users/john1/S3-Mount>\nAllowOverride FileInfo AuthConfig Limit...</Directory> in httpd.conf
-        //     Need some way of using  AllowOverride to allow use of .htaccess and then pushing .httaccess file to bucket subdirectory of mount point
-        // Currently has noop effect in the sense that a running apachectl process sees the directory contents without further action
+        // Tested using configuration <Directory
+        // /Users/john1/S3-Mount>\nAllowOverride FileInfo AuthConfig
+        // Limit...</Directory> in httpd.conf
+        // Need some way of using AllowOverride to allow use of .htaccess and
+        // then pushing .httaccess file to bucket subdirectory of mount point
+        // Currently has noop effect in the sense that a running apachectl
+        // process sees the directory contents without further action
         response.setStatus(200);
     }
 
@@ -908,10 +916,11 @@ public class S3BucketAction implements ServletAction {
     }
 
     /**
-     * Multipart upload is a complex operation with all the options defined by Amazon.   Part of the functionality is
-     * provided by the query done against the database.  The CommonPrefixes functionality is done the same way
-     * as done in the listBucketContents function (i.e., by iterating though the list to decide which output
-     * element each key is placed).
+     * Multipart upload is a complex operation with all the options defined by
+     * Amazon. Part of the functionality is provided by the query done against
+     * the database. The CommonPrefixes functionality is done the same way as
+     * done in the listBucketContents function (i.e., by iterating though the
+     * list to decide which output element each key is placed).
      *
      * @param request
      * @param response

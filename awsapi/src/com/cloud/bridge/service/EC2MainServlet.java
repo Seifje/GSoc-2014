@@ -56,8 +56,8 @@ public class EC2MainServlet extends HttpServlet {
     }
 
     /**
-     * We build the path to where the keystore holding the WS-Security X509 certificates
-     * are stored.
+     * We build the path to where the keystore holding the WS-Security X509
+     * certificates are stored.
      */
     @Override
     @DB
@@ -92,14 +92,14 @@ public class EC2MainServlet extends HttpServlet {
     protected void doGetOrPost(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("Action");
         if (!isEC2APIEnabled) {
-            //response.sendError(404, "EC2 API is disabled.");
+            // response.sendError(404, "EC2 API is disabled.");
             response.setStatus(404);
             faultResponse(response, "Unavailable", "EC2 API is disabled");
             return;
         }
 
         if (action != null) {
-            //We presume it's a Query/Rest call
+            // We presume it's a Query/Rest call
             try {
                 RequestDispatcher dispatcher = request.getRequestDispatcher(EC2_REST_SERVLET_PATH);
                 dispatcher.forward(request, response);

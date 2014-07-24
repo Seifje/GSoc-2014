@@ -30,4 +30,3 @@ public enum RoleType {
         return mask;
     }
 }
-

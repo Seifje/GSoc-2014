@@ -76,14 +76,14 @@ public class SnmpTrapAppender extends AppenderSkeleton {
     }
 
     void setSnmpHelpers() {
-        if (_snmpManagerIpAddresses == null || _snmpManagerIpAddresses.trim().isEmpty() || _snmpManagerCommunities == null || _snmpManagerCommunities.trim().isEmpty() ||
-            _snmpManagerPorts == null || _snmpManagerPorts.trim().isEmpty()) {
+        if (_snmpManagerIpAddresses == null || _snmpManagerIpAddresses.trim().isEmpty() || _snmpManagerCommunities == null || _snmpManagerCommunities.trim().isEmpty()
+                || _snmpManagerPorts == null || _snmpManagerPorts.trim().isEmpty()) {
             reset();
             return;
         }
 
-        if (_oldSnmpManagerIpAddresses != null && _oldSnmpManagerIpAddresses.equals(_snmpManagerIpAddresses) &&
-            _oldSnmpManagerCommunities.equals(_snmpManagerCommunities) && _oldSnmpManagerPorts.equals(_snmpManagerPorts)) {
+        if (_oldSnmpManagerIpAddresses != null && _oldSnmpManagerIpAddresses.equals(_snmpManagerIpAddresses) && _oldSnmpManagerCommunities.equals(_snmpManagerCommunities)
+                && _oldSnmpManagerPorts.equals(_snmpManagerPorts)) {
             return;
         }
 

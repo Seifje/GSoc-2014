@@ -73,8 +73,9 @@ public class EhcacheLimitStore implements LimitStore {
         if (entry != null) {
 
             /*
-             * We don't need to check isExpired() on the result, since ehcache takes care of expiring entries for us.
-             * c.f. the get(Key) implementation in this class.
+             * We don't need to check isExpired() on the result, since ehcache
+             * takes care of expiring entries for us. c.f. the get(Key)
+             * implementation in this class.
              */
             result = (StoreEntry)entry.getObjectValue();
         }

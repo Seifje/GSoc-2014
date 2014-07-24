@@ -32,6 +32,7 @@ public interface NetscalerLoadBalancerElementService extends PluggableService {
 
     /**
      * adds a Netscaler load balancer device in to a physical network
+     *
      * @param AddNetscalerLoadBalancerCmd
      * @return ExternalLoadBalancerDeviceVO object for the device added
      */
@@ -39,6 +40,7 @@ public interface NetscalerLoadBalancerElementService extends PluggableService {
 
     /**
      * removes a Netscaler load balancer device from a physical network
+     *
      * @param DeleteNetscalerLoadBalancerCmd
      * @return true if Netscaler device is deleted successfully
      */
@@ -46,6 +48,7 @@ public interface NetscalerLoadBalancerElementService extends PluggableService {
 
     /**
      * configures a Netscaler load balancer device added in a physical network
+     *
      * @param ConfigureNetscalerLoadBalancerCmd
      * @return ExternalLoadBalancerDeviceVO for the device configured
      */
@@ -53,21 +56,27 @@ public interface NetscalerLoadBalancerElementService extends PluggableService {
 
     /**
      * lists all the load balancer devices added in to a physical network
+     *
      * @param ListNetscalerLoadBalancersCmd
-     * @return list of ExternalLoadBalancerDeviceVO for the devices in the physical network.
+     * @return list of ExternalLoadBalancerDeviceVO for the devices in the
+     *         physical network.
      */
     public List<ExternalLoadBalancerDeviceVO> listNetscalerLoadBalancers(ListNetscalerLoadBalancersCmd cmd);
 
     /**
      * lists all the guest networks using a Netscaler load balancer device
+     *
      * @param ListNetscalerLoadBalancerNetworksCmd
-     * @return list of the guest networks that are using this Netscaler load balancer
+     * @return list of the guest networks that are using this Netscaler load
+     *         balancer
      */
     public List<? extends Network> listNetworks(ListNetscalerLoadBalancerNetworksCmd cmd);
 
     /**
      * creates API response object for netscaler load balancers
-     * @param lbDeviceVO external load balancer VO object
+     *
+     * @param lbDeviceVO
+     *            external load balancer VO object
      * @return NetscalerLoadBalancerResponse
      */
     public NetscalerLoadBalancerResponse createNetscalerLoadBalancerResponse(ExternalLoadBalancerDeviceVO lbDeviceVO);

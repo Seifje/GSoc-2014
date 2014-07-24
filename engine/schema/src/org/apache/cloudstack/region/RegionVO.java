@@ -91,7 +91,7 @@ public class RegionVO implements Region {
             return portableipEnabled;
         } else {
             assert false : "Unknown Region level Service";
-            return false;
+        return false;
         }
     }
 
@@ -103,7 +103,7 @@ public class RegionVO implements Region {
             this.portableipEnabled = true;
         } else {
             assert false : "Unknown Region level Service";
-            return;
+        return;
         }
     }
 

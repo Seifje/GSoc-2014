@@ -37,6 +37,7 @@ public class S3PolicyBoolCondition extends S3PolicyCondition {
 
     /**
      * Return a set holding all the condition keys kept in this object.
+     * 
      * @return Set<String>
      */
     public Set<ConditionKeys> getAllKeys() {
@@ -44,8 +45,9 @@ public class S3PolicyBoolCondition extends S3PolicyCondition {
     }
 
     /**
-     * After calling getAllKeys(), pass in each key from that result to get
-     * the key's associated list of values.
+     * After calling getAllKeys(), pass in each key from that result to get the
+     * key's associated list of values.
+     * 
      * @param key
      * @return String[]
      */
@@ -54,7 +56,7 @@ public class S3PolicyBoolCondition extends S3PolicyCondition {
     }
 
     /**
-     * Documentation on Bool conditions is nearly non-existent.   Only found that
+     * Documentation on Bool conditions is nearly non-existent. Only found that
      * the 'SecureTransport' key is relvant and have not found any examples.
      *
      * @throws ParseException
@@ -72,10 +74,11 @@ public class S3PolicyBoolCondition extends S3PolicyCondition {
         if (!itr.hasNext())
             return false;
 
-        // -> all keys in a condition are ANDed together (one false one terminates the entire condition)
+        // -> all keys in a condition are ANDed together (one false one
+        // terminates the entire condition)
         while (itr.hasNext()) {
             ConditionKeys keyName = itr.next();
-            // String[] valueList = getKeyValues( keyName );  // <-- not used
+            // String[] valueList = getKeyValues( keyName ); // <-- not used
             boolean keyResult = false;
 
             if (ConditionKeys.SecureTransport == keyName && PolicyConditions.Bool == condition) {
@@ -84,7 +87,8 @@ public class S3PolicyBoolCondition extends S3PolicyCondition {
                 logger.info("S3PolicyBoolCondition eval - SID: " + SID + ", " + condition + ", key: " + keyName + ", result: " + keyResult);
             }
 
-            // -> if all key values are false, false then that key is false and then the entire condition is then false
+            // -> if all key values are false, false then that key is false and
+            // then the entire condition is then false
             if (!keyResult)
                 return false;
         }

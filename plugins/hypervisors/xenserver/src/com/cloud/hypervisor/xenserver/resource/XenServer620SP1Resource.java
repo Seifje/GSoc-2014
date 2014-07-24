@@ -47,7 +47,7 @@ import com.xensource.xenapi.VGPUType;
 import com.xensource.xenapi.VGPUType.Record;
 import com.xensource.xenapi.VM;
 
-@Local(value=ServerResource.class)
+@Local(value = ServerResource.class)
 public class XenServer620SP1Resource extends XenServer620Resource {
     private static final Logger s_logger = Logger.getLogger(XenServer620SP1Resource.class);
 
@@ -59,7 +59,7 @@ public class XenServer620SP1Resource extends XenServer620Resource {
     public Answer executeRequest(Command cmd) {
         Class<? extends Command> clazz = cmd.getClass();
         if (clazz == GetGPUStatsCommand.class) {
-            return execute((GetGPUStatsCommand) cmd);
+            return execute((GetGPUStatsCommand)cmd);
         } else {
             return super.executeRequest(cmd);
         }
@@ -106,7 +106,7 @@ public class XenServer620SP1Resource extends XenServer620Resource {
                 gpuCapacity = groupDetails.get(groupName);
             }
             // Get remaining capacity of all the enabled VGPU in a PGPU
-            if(enabledVGPUTypes != null) {
+            if (enabledVGPUTypes != null) {
                 Iterator<VGPUType> it = enabledVGPUTypes.iterator();
                 while (it.hasNext()) {
                     VGPUType type = it.next();
@@ -121,8 +121,8 @@ public class XenServer620SP1Resource extends XenServer620Resource {
                         entry.setMaxVmCapacity(maxCapacity);
                         gpuCapacity.put(record.modelName, entry);
                     } else {
-                        VgpuTypesInfo vgpuTypeRecord = new VgpuTypesInfo(null, record.modelName, record.framebufferSize, record.maxHeads,
-                                record.maxResolutionX, record.maxResolutionY, maxCapacity, remainingCapacity, maxCapacity);
+                        VgpuTypesInfo vgpuTypeRecord = new VgpuTypesInfo(null, record.modelName, record.framebufferSize, record.maxHeads, record.maxResolutionX,
+                                record.maxResolutionY, maxCapacity, remainingCapacity, maxCapacity);
                         gpuCapacity.put(record.modelName, vgpuTypeRecord);
                     }
                 }
@@ -135,8 +135,7 @@ public class XenServer620SP1Resource extends XenServer620Resource {
     @Override
     protected void createVGPU(Connection conn, StartCommand cmd, VM vm, GPUDeviceTO gpuDevice) throws XenAPIException, XmlRpcException {
         if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Creating VGPU of VGPU type [ " + gpuDevice.getVgpuType() + " ] in gpu group" + gpuDevice.getGpuGroup()
-                    + " for VM " + cmd.getVirtualMachine().getName());
+            s_logger.debug("Creating VGPU of VGPU type [ " + gpuDevice.getVgpuType() + " ] in gpu group" + gpuDevice.getGpuGroup() + " for VM " + cmd.getVirtualMachine().getName());
         }
 
         Set<GPUGroup> groups = GPUGroup.getByNameLabel(conn, gpuDevice.getGpuGroup());
@@ -152,7 +151,8 @@ public class XenServer620SP1Resource extends XenServer620Resource {
                 vgpuType = entry;
             }
         }
-        String device = "0"; // Only allow device = "0" for now, as XenServer supports just a single vGPU per VM.
+        String device = "0"; // Only allow device = "0" for now, as XenServer
+        // supports just a single vGPU per VM.
         Map<String, String> other_config = new HashMap<String, String>();
         VGPU.create(conn, vm, gpuGroup, device, other_config, vgpuType);
 
@@ -169,29 +169,35 @@ public class XenServer620SP1Resource extends XenServer620Resource {
     }
 
     @Override
-    public long getStaticMax(String os, boolean b, long dynamicMinRam, long dynamicMaxRam){
+    public long getStaticMax(String os, boolean b, long dynamicMinRam, long dynamicMaxRam) {
         long recommendedValue = CitrixHelper.getXenServer620SP1StaticMax(os, b);
-        if(recommendedValue == 0){
+        if (recommendedValue == 0) {
             s_logger.warn("No recommended value found for dynamic max, setting static max and dynamic max equal");
             return dynamicMaxRam;
         }
-        long staticMax = Math.min(recommendedValue, 4l * dynamicMinRam);  // XS constraint for stability
-        if (dynamicMaxRam > staticMax){ // XS contraint that dynamic max <= static max
-            s_logger.warn("dynamixMax " + dynamicMaxRam + " cant be greater than static max " + staticMax + ", can lead to stability issues. Setting static max as much as dynamic max ");
+        long staticMax = Math.min(recommendedValue, 4l * dynamicMinRam); // XS
+        // constraint
+        // for
+        // stability
+        if (dynamicMaxRam > staticMax) { // XS contraint that dynamic max <=
+            // static max
+            s_logger.warn("dynamixMax " + dynamicMaxRam + " cant be greater than static max " + staticMax
+                    + ", can lead to stability issues. Setting static max as much as dynamic max ");
             return dynamicMaxRam;
         }
         return staticMax;
     }
 
     @Override
-    public long getStaticMin(String os, boolean b, long dynamicMinRam, long dynamicMaxRam){
+    public long getStaticMin(String os, boolean b, long dynamicMinRam, long dynamicMaxRam) {
         long recommendedValue = CitrixHelper.getXenServer620SP1StaticMin(os, b);
-        if(recommendedValue == 0){
+        if (recommendedValue == 0) {
             s_logger.warn("No recommended value found for dynamic min");
             return dynamicMinRam;
         }
 
-        if(dynamicMinRam < recommendedValue){   // XS contraint that dynamic min > static min
+        if (dynamicMinRam < recommendedValue) { // XS contraint that dynamic min
+            // > static min
             s_logger.warn("Vm is set to dynamixMin " + dynamicMinRam + " less than the recommended static min " + recommendedValue + ", could lead to stability issues");
         }
         return dynamicMinRam;

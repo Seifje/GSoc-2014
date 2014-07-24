@@ -33,8 +33,8 @@ public class AttachVolumeCmdByAdmin extends AttachVolumeCmd {
     public static final Logger s_logger = Logger.getLogger(AttachVolumeCmdByAdmin.class.getName());
 
     @Override
-    public void execute(){
-        CallContext.current().setEventDetails("Volume Id: "+getId()+" VmId: "+getVirtualMachineId());
+    public void execute() {
+        CallContext.current().setEventDetails("Volume Id: " + getId() + " VmId: " + getVirtualMachineId());
         Volume result = _volumeService.attachVolumeToVM(this);
         if (result != null) {
             VolumeResponse response = _responseGenerator.createVolumeResponse(ResponseView.Full, result);

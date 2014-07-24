@@ -86,13 +86,13 @@ public class ApiXmlDocWriter {
         List<String> asyncResponses = new ArrayList<String>();
         asyncResponses.add(TemplateResponse.class.getName());
         asyncResponses.add(VolumeResponse.class.getName());
-        //asyncResponses.add(LoadBalancerResponse.class.getName());
+        // asyncResponses.add(LoadBalancerResponse.class.getName());
         asyncResponses.add(HostResponse.class.getName());
         asyncResponses.add(IPAddressResponse.class.getName());
         asyncResponses.add(StoragePoolResponse.class.getName());
         asyncResponses.add(UserVmResponse.class.getName());
         asyncResponses.add(SecurityGroupResponse.class.getName());
-        //asyncResponses.add(ExternalLoadBalancerResponse.class.getName());
+        // asyncResponses.add(ExternalLoadBalancerResponse.class.getName());
         asyncResponses.add(SnapshotResponse.class.getName());
 
         return asyncResponses;
@@ -105,10 +105,12 @@ public class ApiXmlDocWriter {
         for (Class<?> cmdClass : cmdClasses) {
             String apiName = cmdClass.getAnnotation(APICommand.class).name();
             if (s_apiNameCmdClassMap.containsKey(apiName)) {
-                // handle API cmd separation into admin cmd and user cmd with the common api name
+                // handle API cmd separation into admin cmd and user cmd with
+                // the common api name
                 Class<?> curCmd = s_apiNameCmdClassMap.get(apiName);
                 if (curCmd.isAssignableFrom(cmdClass)) {
-                    // api_cmd map always keep the admin cmd class to get full response and parameters
+                    // api_cmd map always keep the admin cmd class to get full
+                    // response and parameters
                     s_apiNameCmdClassMap.put(apiName, cmdClass);
                 } else if (cmdClass.isAssignableFrom(curCmd)) {
                     // just skip this one without warning
@@ -219,7 +221,8 @@ public class ApiXmlDocWriter {
             ObjectOutputStream regularUser = xs.createObjectOutputStream(new FileWriter(regularUserDirName + "/regularUserSummary.xml"), "commands");
             ObjectOutputStream regularUserSorted = xs.createObjectOutputStream(new FileWriter(regularUserDirName + "/regularUserSummarySorted.xml"), "commands");
 
-            // Write commands in the order they are represented in commands.properties.in file
+            // Write commands in the order they are represented in
+            // commands.properties.in file
             Iterator<?> it = s_allApiCommands.keySet().iterator();
             while (it.hasNext()) {
                 String key = (String)it.next();
@@ -368,7 +371,7 @@ public class ApiXmlDocWriter {
                 apiCommand.setUsage(commandUsage);
             }
 
-            //Set version when the API is added
+            // Set version when the API is added
             if (!impl.since().isEmpty()) {
                 apiCommand.setSinceVersion(impl.since());
             }
@@ -402,18 +405,17 @@ public class ApiXmlDocWriter {
         // Create a new command, set name and description
         Command apiCommand = new Command();
         apiCommand.setName("login");
-        apiCommand.setDescription("Logs a user into the CloudStack. A successful login attempt will generate a JSESSIONID cookie value that can be passed in subsequent Query command calls until the \"logout\" command has been issued or the session has expired.");
+        apiCommand
+                .setDescription("Logs a user into the CloudStack. A successful login attempt will generate a JSESSIONID cookie value that can be passed in subsequent Query command calls until the \"logout\" command has been issued or the session has expired.");
 
         // Generate request
         request.add(new Argument("username", "Username", true));
-        request.add(new Argument(
-            "password",
-            "Hashed password (Default is MD5). If you wish to use any other hashing algorithm, you would need to write a custom authentication adapter See Docs section.",
-            true));
+        request.add(new Argument("password",
+                "Hashed password (Default is MD5). If you wish to use any other hashing algorithm, you would need to write a custom authentication adapter See Docs section.", true));
         request.add(new Argument("domain",
-            "path of the domain that the user belongs to. Example: domain=/com/cloud/internal.  If no domain is passed in, the ROOT domain is assumed.", false));
-        request.add(new Argument("domainId",
-            "id of the domain that the user belongs to. If both domain and domainId are passed in, \"domainId\" parameter takes precendence", false));
+                "path of the domain that the user belongs to. Example: domain=/com/cloud/internal.  If no domain is passed in, the ROOT domain is assumed.", false));
+        request.add(new Argument("domainId", "id of the domain that the user belongs to. If both domain and domainId are passed in, \"domainId\" parameter takes precendence",
+                false));
         apiCommand.setRequest(request);
 
         // Generate response

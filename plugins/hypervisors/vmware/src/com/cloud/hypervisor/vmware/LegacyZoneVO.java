@@ -27,7 +27,8 @@ import javax.persistence.Table;
 import com.cloud.utils.NumbersUtil;
 
 /**
- * LegacyZoneVO contains id of CloudStack zone containing clusters from multiple VMware vCetners and/or VMware Datacenters.
+ * LegacyZoneVO contains id of CloudStack zone containing clusters from multiple
+ * VMware vCetners and/or VMware Datacenters.
  */
 
 @Entity

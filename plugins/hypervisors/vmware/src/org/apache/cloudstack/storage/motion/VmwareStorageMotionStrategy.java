@@ -139,8 +139,9 @@ public class VmwareStorageMotionStrategy implements DataMotionStrategy {
             }
 
             // Migration across cluster needs to be done in three phases.
-            // 1. Send a migrate command to source resource to initiate migration
-            //      Run validations against target!!
+            // 1. Send a migrate command to source resource to initiate
+            // migration
+            // Run validations against target!!
             // 2. Complete the process. Update the volume details.
             MigrateWithStorageCommand migrateWithStorageCmd = new MigrateWithStorageCommand(to, volumeToFilerto, destHost.getGuid());
             MigrateWithStorageAnswer migrateWithStorageAnswer = (MigrateWithStorageAnswer)agentMgr.send(srcHost.getId(), migrateWithStorageCmd);

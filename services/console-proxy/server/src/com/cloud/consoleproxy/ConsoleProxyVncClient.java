@@ -88,10 +88,7 @@ public class ConsoleProxyVncClient extends ConsoleProxyClientBase {
                         s_logger.info("Connect to VNC server via tunnel. url: " + tunnelUrl + ", session: " + tunnelSession);
 
                         ConsoleProxy.ensureRoute(uri.getHost());
-                        client.connectTo(
-                                uri.getHost(), uri.getPort(),
-                                uri.getPath() + "?" + uri.getQuery(),
-                                tunnelSession, "https".equalsIgnoreCase(uri.getScheme()),
+                        client.connectTo(uri.getHost(), uri.getPort(), uri.getPath() + "?" + uri.getQuery(), tunnelSession, "https".equalsIgnoreCase(uri.getScheme()),
                                 getClientHostPassword());
                     } else {
                         s_logger.info("Connect to VNC server directly. host: " + getClientHostAddress() + ", port: " + getClientHostPort());
@@ -147,22 +144,22 @@ public class ConsoleProxyVncClient extends ConsoleProxyClientBase {
 
         updateFrontEndActivityTime();
 
-        switch(event) {
-        case KEY_DOWN :
+        switch (event) {
+        case KEY_DOWN:
             sendModifierEvents(modifiers);
             client.sendClientKeyboardEvent(RfbConstants.KEY_DOWN, code, 0);
             break;
 
-        case KEY_UP :
+        case KEY_UP:
             client.sendClientKeyboardEvent(RfbConstants.KEY_UP, code, 0);
             sendModifierEvents(0);
             break;
 
-        case KEY_PRESS :
+        case KEY_PRESS:
             break;
 
-        default :
-            assert(false);
+        default:
+            assert (false);
             break;
         }
     }
@@ -207,13 +204,13 @@ public class ConsoleProxyVncClient extends ConsoleProxyClientBase {
         if ((modifiers & SHIFT_KEY_MASK) != (lastModifierStates & SHIFT_KEY_MASK))
             client.sendClientKeyboardEvent((modifiers & SHIFT_KEY_MASK) != 0 ? RfbConstants.KEY_DOWN : RfbConstants.KEY_UP, X11_KEY_SHIFT, 0);
 
-        if((modifiers & CTRL_KEY_MASK) != (lastModifierStates & CTRL_KEY_MASK))
+        if ((modifiers & CTRL_KEY_MASK) != (lastModifierStates & CTRL_KEY_MASK))
             client.sendClientKeyboardEvent((modifiers & CTRL_KEY_MASK) != 0 ? RfbConstants.KEY_DOWN : RfbConstants.KEY_UP, X11_KEY_CTRL, 0);
 
         if ((modifiers & META_KEY_MASK) != (lastModifierStates & META_KEY_MASK))
             client.sendClientKeyboardEvent((modifiers & META_KEY_MASK) != 0 ? RfbConstants.KEY_DOWN : RfbConstants.KEY_UP, X11_KEY_META, 0);
 
-        if((modifiers & ALT_KEY_MASK) != (lastModifierStates & ALT_KEY_MASK))
+        if ((modifiers & ALT_KEY_MASK) != (lastModifierStates & ALT_KEY_MASK))
             client.sendClientKeyboardEvent((modifiers & ALT_KEY_MASK) != 0 ? RfbConstants.KEY_DOWN : RfbConstants.KEY_UP, X11_KEY_ALT, 0);
 
         lastModifierStates = modifiers;

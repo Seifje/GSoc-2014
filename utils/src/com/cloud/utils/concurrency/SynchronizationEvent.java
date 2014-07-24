@@ -74,7 +74,8 @@ public class SynchronizationEvent {
                 wait(timeOutMiliseconds);
                 return signalled;
             } catch (InterruptedException e) {
-                // TODO, we don't honor time out semantics when the waiting thread is interrupted
+                // TODO, we don't honor time out semantics when the waiting
+                // thread is interrupted
                 s_logger.debug("unexpected awaken signal in wait(...)");
                 throw e;
             }

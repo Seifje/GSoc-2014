@@ -27,6 +27,7 @@ public interface VGPUTypesDao extends GenericDao<VGPUTypesVO, Long> {
 
     /**
      * List zonewide/podwide/clusterwide GPU card capacities.
+     *
      * @param zoneId
      * @param podId
      * @param clusterId
@@ -36,23 +37,31 @@ public interface VGPUTypesDao extends GenericDao<VGPUTypesVO, Long> {
 
     /**
      * Find VGPU types by group Id
-     * @param groupId of the GPU group
+     *
+     * @param groupId
+     *            of the GPU group
      * @return list of VGPUTypesVO
      */
     List<VGPUTypesVO> listByGroupId(long groupId);
 
     /**
      * Find VGPU type by group Id and VGPU type
-     * @param groupId of the GPU group
-     * @param vgpuType name of VGPU type
+     *
+     * @param groupId
+     *            of the GPU group
+     * @param vgpuType
+     *            name of VGPU type
      * @return VGPUTypesVO
      */
     VGPUTypesVO findByGroupIdVGPUType(long groupId, String vgpuType);
 
     /**
      * Save the list of enabled VGPU types
-     * @param hostId the host
-     * @param groupDetails with enabled VGPU types
+     *
+     * @param hostId
+     *            the host
+     * @param groupDetails
+     *            with enabled VGPU types
      */
     void persist(long hostId, HashMap<String, HashMap<String, VgpuTypesInfo>> groupDetails);
 }

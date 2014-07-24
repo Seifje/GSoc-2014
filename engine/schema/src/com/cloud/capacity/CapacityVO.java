@@ -210,6 +210,7 @@ public class CapacityVO implements Capacity {
 
     @Override
     public String getUuid() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 }

@@ -27,8 +27,7 @@ import org.apache.cloudstack.jobs.JobInfo.Status;
 import com.cloud.utils.component.AdapterBase;
 
 public class AsyncJobTestDispatcher extends AdapterBase implements AsyncJobDispatcher {
-    private static final Logger s_logger =
-            Logger.getLogger(AsyncJobTestDispatcher.class);
+    private static final Logger s_logger = Logger.getLogger(AsyncJobTestDispatcher.class);
 
     @Inject
     private AsyncJobManager _asyncJobMgr;

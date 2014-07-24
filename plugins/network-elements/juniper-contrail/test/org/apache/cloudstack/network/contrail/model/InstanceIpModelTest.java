@@ -16,6 +16,7 @@
 // under the License.
 
 package org.apache.cloudstack.network.contrail.model;
+
 import java.util.UUID;
 
 import java.io.IOException;
@@ -45,14 +46,13 @@ import org.junit.Test;
 import junit.framework.TestCase;
 
 public class InstanceIpModelTest extends TestCase {
-    private static final Logger s_logger =
-        Logger.getLogger(InstanceIpModelTest.class);
+    private static final Logger s_logger = Logger.getLogger(InstanceIpModelTest.class);
 
     @Test
     public void testCreateInstanceIp() throws IOException {
 
         ContrailManagerImpl contrailMgr = mock(ContrailManagerImpl.class);
-        ModelController controller      = mock(ModelController.class);
+        ModelController controller = mock(ModelController.class);
         ApiConnector api = new ApiConnectorMock(null, 0);
         when(controller.getApiAccessor()).thenReturn(api);
         when(controller.getManager()).thenReturn(contrailMgr);
@@ -73,8 +73,7 @@ public class InstanceIpModelTest extends TestCase {
         when(contrailMgr.getCanonicalName(network)).thenReturn("testnetwork");
         when(contrailMgr.getProjectId(network.getDomainId(), network.getAccountId())).thenReturn("testProjectId");
 
-        VirtualNetworkModel vnModel = new VirtualNetworkModel(network, UUID.randomUUID().toString(), "test",
-                TrafficType.Guest);
+        VirtualNetworkModel vnModel = new VirtualNetworkModel(network, UUID.randomUUID().toString(), "test", TrafficType.Guest);
         vnModel.build(controller, network);
         try {
             vnModel.update(controller);
@@ -88,7 +87,7 @@ public class InstanceIpModelTest extends TestCase {
         when(vm.getState()).thenReturn(VirtualMachine.State.Running);
         when(vm.getDomainId()).thenReturn(10L);
         when(vm.getAccountId()).thenReturn(42L);
-        UserVmDao VmDao      = mock(UserVmDao.class);
+        UserVmDao VmDao = mock(UserVmDao.class);
         when(VmDao.findById(anyLong())).thenReturn(null);
         when(controller.getVmDao()).thenReturn(VmDao);
 

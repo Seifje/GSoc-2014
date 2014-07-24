@@ -36,30 +36,30 @@ import com.cloud.network.Network;
 public class CreateNetworkCmdByAdmin extends CreateNetworkCmd {
     public static final Logger s_logger = Logger.getLogger(CreateNetworkCmdByAdmin.class.getName());
 
-    @Parameter(name=ApiConstants.VLAN, type=CommandType.STRING, description="the ID or VID of the network")
+    @Parameter(name = ApiConstants.VLAN, type = CommandType.STRING, description = "the ID or VID of the network")
     private String vlan;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getVlan() {
         return vlan;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     // an exception thrown by createNetwork() will be caught by the dispatcher.
-    public void execute() throws InsufficientCapacityException, ConcurrentOperationException, ResourceAllocationException{
+    public void execute() throws InsufficientCapacityException, ConcurrentOperationException, ResourceAllocationException {
         Network result = _networkService.createGuestNetwork(this);
         if (result != null) {
             NetworkResponse response = _responseGenerator.createNetworkResponse(ResponseView.Full, result);
             response.setResponseName(getCommandName());
             setResponseObject(response);
-        }else {
+        } else {
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to create network");
         }
     }

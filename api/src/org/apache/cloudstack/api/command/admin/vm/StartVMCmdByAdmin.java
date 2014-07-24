@@ -39,13 +39,12 @@ import com.cloud.utils.exception.ExecutionException;
 public class StartVMCmdByAdmin extends StartVMCmd {
     public static final Logger s_logger = Logger.getLogger(StartVMCmdByAdmin.class.getName());
 
-
     @Override
     public void execute() throws ResourceUnavailableException, ResourceAllocationException {
         try {
             CallContext.current().setEventDetails("Vm Id: " + getId());
 
-            UserVm result ;
+            UserVm result;
             result = _userVmService.startVirtualMachine(this);
 
             if (result != null) {
@@ -67,7 +66,7 @@ public class StartVMCmdByAdmin extends StartVMCmd {
         } catch (InsufficientCapacityException ex) {
             StringBuilder message = new StringBuilder(ex.getMessage());
             if (ex instanceof InsufficientServerCapacityException) {
-                if (((InsufficientServerCapacityException) ex).isAffinityApplied()) {
+                if (((InsufficientServerCapacityException)ex).isAffinityApplied()) {
                     message.append(", Please check the affinity groups provided, there may not be sufficient capacity to follow them");
                 }
             }

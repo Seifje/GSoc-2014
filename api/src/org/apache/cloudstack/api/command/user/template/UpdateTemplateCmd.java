@@ -28,24 +28,23 @@ import org.apache.cloudstack.api.response.TemplateResponse;
 import com.cloud.template.VirtualMachineTemplate;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateTemplate", description = "Updates attributes of a template.", responseObject = TemplateResponse.class, responseView = ResponseView.Restricted,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "updateTemplate", description = "Updates attributes of a template.", responseObject = TemplateResponse.class, responseView = ResponseView.Restricted, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateTemplateCmd extends BaseUpdateTemplateOrIsoCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateTemplateCmd.class.getName());
     private static final String s_name = "updatetemplateresponse";
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public Boolean isBootable() {
         return null;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -54,7 +53,7 @@ public class UpdateTemplateCmd extends BaseUpdateTemplateOrIsoCmd {
 
     @SuppressWarnings("unchecked")
     public TemplateResponse getResponse() {
-       return null;
+        return null;
     }
 
     @Override
@@ -64,7 +63,9 @@ public class UpdateTemplateCmd extends BaseUpdateTemplateOrIsoCmd {
             return template.getAccountId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
     @Override
@@ -73,7 +74,14 @@ public class UpdateTemplateCmd extends BaseUpdateTemplateOrIsoCmd {
         if (result != null) {
             TemplateResponse response = _responseGenerator.createTemplateUpdateResponse(ResponseView.Restricted, result);
             response.setObjectName("template");
-            response.setTemplateType(result.getTemplateType().toString());//Template can be either USER or ROUTING type
+            response.setTemplateType(result.getTemplateType().toString());// Template
+            // can
+            // be
+            // either
+            // USER
+            // or
+            // ROUTING
+            // type
             response.setResponseName(getCommandName());
             setResponseObject(response);
         } else {

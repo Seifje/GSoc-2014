@@ -71,7 +71,8 @@ public class IscsiAdmStorageAdaptor implements StorageAdaptor {
 
     @Override
     public boolean connectPhysicalDisk(String volumeUuid, KVMStoragePool pool, Map<String, String> details) {
-        // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p 192.168.233.10:3260 -o new
+        // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p
+        // 192.168.233.10:3260 -o new
         Script iScsiAdmCmd = new Script(true, "iscsiadm", 0, s_logger);
 
         iScsiAdmCmd.add("-m", "node");
@@ -96,20 +97,27 @@ public class IscsiAdmStorageAdaptor implements StorageAdaptor {
 
         if (StringUtils.isNotBlank(chapInitiatorUsername) && StringUtils.isNotBlank(chapInitiatorSecret)) {
             try {
-                // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p 192.168.233.10:3260 --op update -n node.session.auth.authmethod -v CHAP
+                // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p
+                // 192.168.233.10:3260 --op update -n
+                // node.session.auth.authmethod -v CHAP
                 executeChapCommand(volumeUuid, pool, "node.session.auth.authmethod", "CHAP", null);
 
-                // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p 192.168.233.10:3260 --op update -n node.session.auth.username -v username
+                // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p
+                // 192.168.233.10:3260 --op update -n node.session.auth.username
+                // -v username
                 executeChapCommand(volumeUuid, pool, "node.session.auth.username", chapInitiatorUsername, "username");
 
-                // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p 192.168.233.10:3260 --op update -n node.session.auth.password -v password
+                // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p
+                // 192.168.233.10:3260 --op update -n node.session.auth.password
+                // -v password
                 executeChapCommand(volumeUuid, pool, "node.session.auth.password", chapInitiatorSecret, "password");
             } catch (Exception ex) {
                 return false;
             }
         }
 
-        // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p 192.168.233.10 --login
+        // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p
+        // 192.168.233.10 --login
         iScsiAdmCmd = new Script(true, "iscsiadm", 0, s_logger);
 
         iScsiAdmCmd.add("-m", "node");
@@ -129,15 +137,20 @@ public class IscsiAdmStorageAdaptor implements StorageAdaptor {
             System.out.println("Successfully logged in to iSCSI target " + volumeUuid);
         }
 
-        // There appears to be a race condition where logging in to the iSCSI volume via iscsiadm
+        // There appears to be a race condition where logging in to the iSCSI
+        // volume via iscsiadm
         // returns success before the device has been added to the OS.
-        // What happens is you get logged in and the device shows up, but the device may not
+        // What happens is you get logged in and the device shows up, but the
+        // device may not
         // show up before we invoke Libvirt to attach the device to a VM.
         // waitForDiskToBecomeAvailable(String, KVMStoragePool) invokes blockdev
-        // via getPhysicalDisk(String, KVMStoragePool) and checks if the size came back greater
+        // via getPhysicalDisk(String, KVMStoragePool) and checks if the size
+        // came back greater
         // than 0.
-        // After a certain number of tries and a certain waiting period in between tries,
-        // this method could still return (it should not block indefinitely) (the race condition
+        // After a certain number of tries and a certain waiting period in
+        // between tries,
+        // this method could still return (it should not block indefinitely)
+        // (the race condition
         // isn't solved here, but made highly unlikely to be a problem).
         waitForDiskToBecomeAvailable(volumeUuid, pool);
 
@@ -186,7 +199,8 @@ public class IscsiAdmStorageAdaptor implements StorageAdaptor {
         }
     }
 
-    // example by-path: /dev/disk/by-path/ip-192.168.233.10:3260-iscsi-iqn.2012-03.com.solidfire:storagepool2-lun-0
+    // example by-path:
+    // /dev/disk/by-path/ip-192.168.233.10:3260-iscsi-iqn.2012-03.com.solidfire:storagepool2-lun-0
     private String getByPath(String host, String path) {
         return "/dev/disk/by-path/ip-" + host + "-iscsi-" + getIqn(path) + "-lun-" + getLun(path);
     }
@@ -249,7 +263,8 @@ public class IscsiAdmStorageAdaptor implements StorageAdaptor {
     public boolean disconnectPhysicalDisk(String host, int port, String iqn, String lun) {
         // use iscsiadm to log out of the iSCSI target and un-discover it
 
-        // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p 192.168.233.10 --logout
+        // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p
+        // 192.168.233.10 --logout
         Script iScsiAdmCmd = new Script(true, "iscsiadm", 0, s_logger);
 
         iScsiAdmCmd.add("-m", "node");
@@ -269,7 +284,8 @@ public class IscsiAdmStorageAdaptor implements StorageAdaptor {
             System.out.println("Successfully logged out of iSCSI target /" + iqn + "/" + lun);
         }
 
-        // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p 192.168.233.10:3260 -o delete
+        // ex. sudo iscsiadm -m node -T iqn.2012-03.com.test:volume1 -p
+        // 192.168.233.10:3260 -o delete
         iScsiAdmCmd = new Script(true, "iscsiadm", 0, s_logger);
 
         iScsiAdmCmd.add("-m", "node");
@@ -338,8 +354,7 @@ public class IscsiAdmStorageAdaptor implements StorageAdaptor {
     }
 
     @Override
-    public KVMPhysicalDisk createDiskFromTemplate(KVMPhysicalDisk template, String name, PhysicalDiskFormat format,
-            ProvisioningType provisioningType, long size,
+    public KVMPhysicalDisk createDiskFromTemplate(KVMPhysicalDisk template, String name, PhysicalDiskFormat format, ProvisioningType provisioningType, long size,
             KVMStoragePool destPool, int timeout) {
         throw new UnsupportedOperationException("Creating a disk from a template is not yet supported for this configuration.");
     }

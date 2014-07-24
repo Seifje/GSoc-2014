@@ -22,14 +22,16 @@ package com.cloud.maint;
 public class Version {
     /**
      * Compares two version strings and see which one is higher version.
+     *
      * @param ver1
      * @param ver2
-     * @return positive if ver1 is higher.  negative if ver1 is lower; zero if the same.
+     * @return positive if ver1 is higher. negative if ver1 is lower; zero if
+     *         the same.
      */
     public static int compare(String ver1, String ver2) {
         String[] tokens1 = ver1.split("[.]");
         String[] tokens2 = ver2.split("[.]");
-//        assert(tokens1.length <= tokens2.length);
+        // assert(tokens1.length <= tokens2.length);
 
         int compareLength = Math.min(tokens1.length, tokens2.length);
         for (int i = 0; i < compareLength; i++) {

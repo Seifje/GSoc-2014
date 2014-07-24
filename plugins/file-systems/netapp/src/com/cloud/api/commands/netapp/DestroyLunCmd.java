@@ -37,8 +37,7 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.netapp.NetappManager;
 import com.cloud.server.api.response.netapp.DeleteLUNCmdResponse;
 
-@APICommand(name = "destroyLunOnFiler", description = "Destroy a LUN", responseObject = DeleteLUNCmdResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "destroyLunOnFiler", description = "Destroy a LUN", responseObject = DeleteLUNCmdResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DestroyLunCmd extends BaseCmd {
 
     public static final Logger s_logger = Logger.getLogger(DestroyLunCmd.class.getName());
@@ -51,8 +50,7 @@ public class DestroyLunCmd extends BaseCmd {
     NetappManager netappMgr;
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             netappMgr.destroyLunOnFiler(path);
             DeleteLUNCmdResponse response = new DeleteLUNCmdResponse();

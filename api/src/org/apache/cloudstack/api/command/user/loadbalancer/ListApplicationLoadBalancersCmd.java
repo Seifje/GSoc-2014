@@ -35,8 +35,7 @@ import com.cloud.exception.InvalidParameterValueException;
 import com.cloud.network.rules.LoadBalancerContainer.Scheme;
 import com.cloud.utils.Pair;
 
-@APICommand(name = "listLoadBalancers", description = "Lists Load Balancers", responseObject = ApplicationLoadBalancerResponse.class, since = "4.2.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listLoadBalancers", description = "Lists Load Balancers", responseObject = ApplicationLoadBalancerResponse.class, since = "4.2.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListApplicationLoadBalancersCmd extends BaseListTaggedResourcesCmd {
     public static final Logger s_logger = Logger.getLogger(ListApplicationLoadBalancersCmd.class.getName());
 
@@ -55,10 +54,7 @@ public class ListApplicationLoadBalancersCmd extends BaseListTaggedResourcesCmd 
     @Parameter(name = ApiConstants.SOURCE_IP, type = CommandType.STRING, description = "the source ip address of the Load Balancer")
     private String sourceIp;
 
-    @Parameter(name = ApiConstants.SOURCE_IP_NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = NetworkResponse.class,
-               description = "the network id of the source ip address")
+    @Parameter(name = ApiConstants.SOURCE_IP_NETWORK_ID, type = CommandType.UUID, entityType = NetworkResponse.class, description = "the network id of the source ip address")
     private Long sourceIpNetworkId;
 
     @Parameter(name = ApiConstants.SCHEME, type = CommandType.STRING, description = "the scheme of the Load Balancer. Supported value is Internal in the current release")
@@ -132,8 +128,7 @@ public class ListApplicationLoadBalancersCmd extends BaseListTaggedResourcesCmd 
         ListResponse<ApplicationLoadBalancerResponse> response = new ListResponse<ApplicationLoadBalancerResponse>();
         List<ApplicationLoadBalancerResponse> lbResponses = new ArrayList<ApplicationLoadBalancerResponse>();
         for (ApplicationLoadBalancerRule loadBalancer : loadBalancers.first()) {
-            ApplicationLoadBalancerResponse lbResponse =
-                _responseGenerator.createLoadBalancerContainerReponse(loadBalancer, _lbService.getLbInstances(loadBalancer.getId()));
+            ApplicationLoadBalancerResponse lbResponse = _responseGenerator.createLoadBalancerContainerReponse(loadBalancer, _lbService.getLbInstances(loadBalancer.getId()));
             lbResponse.setObjectName("loadbalancer");
             lbResponses.add(lbResponse);
         }

@@ -16,7 +16,6 @@
 // under the License.
 package org.apache.cloudstack.api.command.user.affinitygroup;
 
-
 import org.apache.log4j.Logger;
 
 import org.apache.cloudstack.acl.SecurityChecker.AccessType;
@@ -38,38 +37,31 @@ import com.cloud.event.EventTypes;
 import com.cloud.exception.InvalidParameterValueException;
 import com.cloud.user.Account;
 
-@APICommand(name = "deleteAffinityGroup", description = "Deletes affinity group", responseObject = SuccessResponse.class, entityType = {AffinityGroup.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteAffinityGroup", description = "Deletes affinity group", responseObject = SuccessResponse.class, entityType = {AffinityGroup.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteAffinityGroupCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(DeleteAffinityGroupCmd.class.getName());
     private static final String s_name = "deleteaffinitygroupresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "the account of the affinity group. Must be specified with domain ID")
     private String accountName;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               description = "the domain ID of account owning the affinity group",
-               entityType = DomainResponse.class)
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, description = "the domain ID of account owning the affinity group", entityType = DomainResponse.class)
     private Long domainId;
 
     @ACL(accessType = AccessType.OperateEntry)
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               description = "The ID of the affinity group. Mutually exclusive with name parameter",
-               entityType = AffinityGroupResponse.class)
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, description = "The ID of the affinity group. Mutually exclusive with name parameter", entityType = AffinityGroupResponse.class)
     private Long id;
 
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, description = "The name of the affinity group. Mutually exclusive with id parameter")
     private String name;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getAccountName() {
         return accountName;
@@ -98,9 +90,9 @@ public class DeleteAffinityGroupCmd extends BaseAsyncCmd {
         return id;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -124,8 +116,8 @@ public class DeleteAffinityGroupCmd extends BaseAsyncCmd {
         }
 
         return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
-                                          // command to SYSTEM so ERROR events
-                                          // are tracked
+        // command to SYSTEM so ERROR events
+        // are tracked
 
     }
 

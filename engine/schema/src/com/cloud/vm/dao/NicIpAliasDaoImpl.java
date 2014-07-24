@@ -130,7 +130,8 @@ public class NicIpAliasDaoImpl extends GenericDaoBase<NicIpAliasVO, Long> implem
 
     @Override
     public NicIpAliasVO findByIp4AddressAndNetworkId(String ip4Address, long networkId) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 
     @Override

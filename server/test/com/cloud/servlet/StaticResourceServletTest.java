@@ -69,23 +69,15 @@ public class StaticResourceServletTest {
 
     @Test
     public void testNoSuchFile() throws ServletException, IOException {
-        final StaticResourceServlet servlet = Mockito
-                .mock(StaticResourceServlet.class);
-        Mockito.doCallRealMethod()
-                .when(servlet)
-                .doGet(Matchers.any(HttpServletRequest.class),
-                        Matchers.any(HttpServletResponse.class));
-        final ServletContext servletContext = Mockito
-                .mock(ServletContext.class);
-        Mockito.when(servletContext.getRealPath("notexisting.css")).thenReturn(
-                new File(rootDirectory, "notexisting.css").getAbsolutePath());
+        final StaticResourceServlet servlet = Mockito.mock(StaticResourceServlet.class);
+        Mockito.doCallRealMethod().when(servlet).doGet(Matchers.any(HttpServletRequest.class), Matchers.any(HttpServletResponse.class));
+        final ServletContext servletContext = Mockito.mock(ServletContext.class);
+        Mockito.when(servletContext.getRealPath("notexisting.css")).thenReturn(new File(rootDirectory, "notexisting.css").getAbsolutePath());
         Mockito.when(servlet.getServletContext()).thenReturn(servletContext);
 
-        final HttpServletRequest request = Mockito
-                .mock(HttpServletRequest.class);
+        final HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
         Mockito.when(request.getServletPath()).thenReturn("notexisting.css");
-        final HttpServletResponse response = Mockito
-                .mock(HttpServletResponse.class);
+        final HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
         servlet.doGet(request, response);
         Mockito.verify(response).setStatus(HttpServletResponse.SC_NOT_FOUND);
     }
@@ -109,8 +101,7 @@ public class StaticResourceServletTest {
         final HttpServletResponse response = doGetTest("index.html");
         Mockito.verify(response).setStatus(HttpServletResponse.SC_OK);
         Mockito.verify(response).setContentType("text/html");
-        Mockito.verify(response, Mockito.times(0)).setHeader(
-                "Content-Encoding", "gzip");
+        Mockito.verify(response, Mockito.times(0)).setHeader("Content-Encoding", "gzip");
     }
 
     @Test
@@ -120,27 +111,23 @@ public class StaticResourceServletTest {
         final HttpServletResponse response = doGetTest("default.css", headers);
         Mockito.verify(response).setStatus(HttpServletResponse.SC_OK);
         Mockito.verify(response).setContentType("text/css");
-        Mockito.verify(response, Mockito.times(1)).setHeader(
-                "Content-Encoding", "gzip");
+        Mockito.verify(response, Mockito.times(1)).setHeader("Content-Encoding", "gzip");
     }
 
     @Test
-    public void testCompressedFileWithoutBrowserSupport()
-            throws ServletException, IOException {
+    public void testCompressedFileWithoutBrowserSupport() throws ServletException, IOException {
         final HashMap<String, String> headers = new HashMap<String, String>();
         headers.put("Accept-Encoding", "");
         final HttpServletResponse response = doGetTest("default.css", headers);
         Mockito.verify(response).setStatus(HttpServletResponse.SC_OK);
         Mockito.verify(response).setContentType("text/css");
-        Mockito.verify(response, Mockito.times(0)).setHeader(
-                "Content-Encoding", "gzip");
+        Mockito.verify(response, Mockito.times(0)).setHeader("Content-Encoding", "gzip");
     }
 
     @Test
     public void testWithEtag() throws ServletException, IOException {
         final HashMap<String, String> headers = new HashMap<String, String>();
-        headers.put("If-None-Match", StaticResourceServlet.getEtag(new File(
-                rootDirectory, "default.css")));
+        headers.put("If-None-Match", StaticResourceServlet.getEtag(new File(rootDirectory, "default.css")));
         final HttpServletResponse response = doGetTest("default.css", headers);
         Mockito.verify(response).setStatus(HttpServletResponse.SC_NOT_MODIFIED);
     }
@@ -157,76 +144,53 @@ public class StaticResourceServletTest {
 
     @Test
     public void getEtag() {
-        Assert.assertNotNull(StaticResourceServlet.getEtag(new File(
-                rootDirectory, "index.html")));
+        Assert.assertNotNull(StaticResourceServlet.getEtag(new File(rootDirectory, "index.html")));
     }
 
     @Test
     public void getContentType() {
-        Assert.assertEquals("text/plain",
-                StaticResourceServlet.getContentType("foo.txt"));
-        Assert.assertEquals("text/html",
-                StaticResourceServlet.getContentType("index.html"));
-        Assert.assertEquals("text/plain",
-                StaticResourceServlet.getContentType("README.TXT"));
+        Assert.assertEquals("text/plain", StaticResourceServlet.getContentType("foo.txt"));
+        Assert.assertEquals("text/html", StaticResourceServlet.getContentType("index.html"));
+        Assert.assertEquals("text/plain", StaticResourceServlet.getContentType("README.TXT"));
     }
 
     @Test
     public void isClientCompressionSupported() {
-        final HttpServletRequest request = Mockito
-                .mock(HttpServletRequest.class);
-        Mockito.when(request.getHeader("Accept-Encoding")).thenReturn(
-                "gzip, deflate");
-        Assert.assertTrue(StaticResourceServlet
-                .isClientCompressionSupported(request));
+        final HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+        Mockito.when(request.getHeader("Accept-Encoding")).thenReturn("gzip, deflate");
+        Assert.assertTrue(StaticResourceServlet.isClientCompressionSupported(request));
     }
 
     @Test
     public void isClientCompressionSupportedWithoutHeader() {
-        final HttpServletRequest request = Mockito
-                .mock(HttpServletRequest.class);
+        final HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
         Mockito.when(request.getHeader("Accept-Encoding")).thenReturn(null);
-        Assert.assertFalse(StaticResourceServlet
-                .isClientCompressionSupported(request));
+        Assert.assertFalse(StaticResourceServlet.isClientCompressionSupported(request));
     }
 
     // test utilities
-    private HttpServletResponse doGetTest(final String uri)
-            throws ServletException, IOException {
+    private HttpServletResponse doGetTest(final String uri) throws ServletException, IOException {
         return doGetTest(uri, Collections.<String, String> emptyMap());
     }
 
-    private HttpServletResponse doGetTest(final String uri,
-            final Map<String, String> headers) throws ServletException,
-            IOException {
-        final StaticResourceServlet servlet = Mockito
-                .mock(StaticResourceServlet.class);
-        Mockito.doCallRealMethod()
-                .when(servlet)
-                .doGet(Matchers.any(HttpServletRequest.class),
-                        Matchers.any(HttpServletResponse.class));
-        final ServletContext servletContext = Mockito
-                .mock(ServletContext.class);
-        Mockito.when(servletContext.getRealPath(uri)).thenReturn(
-                new File(rootDirectory, uri).getAbsolutePath());
+    private HttpServletResponse doGetTest(final String uri, final Map<String, String> headers) throws ServletException, IOException {
+        final StaticResourceServlet servlet = Mockito.mock(StaticResourceServlet.class);
+        Mockito.doCallRealMethod().when(servlet).doGet(Matchers.any(HttpServletRequest.class), Matchers.any(HttpServletResponse.class));
+        final ServletContext servletContext = Mockito.mock(ServletContext.class);
+        Mockito.when(servletContext.getRealPath(uri)).thenReturn(new File(rootDirectory, uri).getAbsolutePath());
         Mockito.when(servlet.getServletContext()).thenReturn(servletContext);
 
-        final HttpServletRequest request = Mockito
-                .mock(HttpServletRequest.class);
+        final HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
         Mockito.when(request.getServletPath()).thenReturn(uri);
-        Mockito.when(request.getHeader(Matchers.anyString())).thenAnswer(
-                new Answer<String>() {
+        Mockito.when(request.getHeader(Matchers.anyString())).thenAnswer(new Answer<String>() {
 
-                    @Override
-                    public String answer(final InvocationOnMock invocation)
-                            throws Throwable {
-                        return headers.get(invocation.getArguments()[0]);
-                    }
-                });
-        final HttpServletResponse response = Mockito
-                .mock(HttpServletResponse.class);
-        final ServletOutputStream responseBody = Mockito
-                .mock(ServletOutputStream.class);
+            @Override
+            public String answer(final InvocationOnMock invocation) throws Throwable {
+                return headers.get(invocation.getArguments()[0]);
+            }
+        });
+        final HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+        final ServletOutputStream responseBody = Mockito.mock(ServletOutputStream.class);
         Mockito.when(response.getOutputStream()).thenReturn(responseBody);
         servlet.doGet(request, response);
         return response;

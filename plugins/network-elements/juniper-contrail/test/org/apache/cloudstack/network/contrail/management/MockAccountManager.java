@@ -120,7 +120,7 @@ public class MockAccountManager extends ManagerBase implements AccountManager {
 
     @Override
     public UserAccount createUserAccount(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, short arg7, Long arg8, String arg9,
-        Map<String, String> arg10, String arg11, String arg12) {
+            Map<String, String> arg10, String arg11, String arg12) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -224,26 +224,20 @@ public class MockAccountManager extends ManagerBase implements AccountManager {
     }
 
     @Override
-    public void buildACLSearchBuilder(
-            SearchBuilder<? extends ControlledEntity> arg0, Long arg1,
-            boolean arg2, List<Long> arg3, ListProjectResourcesCriteria arg4) {
+    public void buildACLSearchBuilder(SearchBuilder<? extends ControlledEntity> arg0, Long arg1, boolean arg2, List<Long> arg3, ListProjectResourcesCriteria arg4) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void buildACLSearchCriteria(
-            SearchCriteria<? extends ControlledEntity> arg0, Long arg1,
-            boolean arg2, List<Long> arg3, ListProjectResourcesCriteria arg4) {
+    public void buildACLSearchCriteria(SearchCriteria<? extends ControlledEntity> arg0, Long arg1, boolean arg2, List<Long> arg3, ListProjectResourcesCriteria arg4) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void buildACLSearchParameters(Account arg0, Long arg1, String arg2,
-            Long arg3, List<Long> arg4,
-            Ternary<Long, Boolean, ListProjectResourcesCriteria> arg5,
-            boolean arg6, boolean arg7) {
+    public void buildACLSearchParameters(Account arg0, Long arg1, String arg2, Long arg3, List<Long> arg4, Ternary<Long, Boolean, ListProjectResourcesCriteria> arg5, boolean arg6,
+            boolean arg7) {
         // TODO Auto-generated method stub
 
     }
@@ -377,8 +371,7 @@ public class MockAccountManager extends ManagerBase implements AccountManager {
     }
 
     @Override
-    public void checkAccess(Account account, AccessType accessType, boolean sameOwner, String apiName,
-            ControlledEntity... entities) throws PermissionDeniedException {
+    public void checkAccess(Account account, AccessType accessType, boolean sameOwner, String apiName, ControlledEntity... entities) throws PermissionDeniedException {
         // TODO Auto-generated method stub
     }
 

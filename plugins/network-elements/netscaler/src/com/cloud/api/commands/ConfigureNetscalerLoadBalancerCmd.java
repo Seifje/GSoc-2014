@@ -40,8 +40,7 @@ import com.cloud.network.dao.ExternalLoadBalancerDeviceVO;
 import com.cloud.network.element.NetscalerLoadBalancerElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "configureNetscalerLoadBalancer", responseObject = NetscalerLoadBalancerResponse.class, description = "configures a netscaler load balancer device",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "configureNetscalerLoadBalancer", responseObject = NetscalerLoadBalancerResponse.class, description = "configures a netscaler load balancer device", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ConfigureNetscalerLoadBalancerCmd extends BaseAsyncCmd {
 
     public static final Logger s_logger = Logger.getLogger(ConfigureNetscalerLoadBalancerCmd.class.getName());
@@ -49,48 +48,30 @@ public class ConfigureNetscalerLoadBalancerCmd extends BaseAsyncCmd {
     @Inject
     NetscalerLoadBalancerElementService _netsclarLbService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_ID,
-               type = CommandType.UUID,
-               entityType = NetscalerLoadBalancerResponse.class,
-               required = true,
-               description = "Netscaler load balancer device ID")
+    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_ID, type = CommandType.UUID, entityType = NetscalerLoadBalancerResponse.class, required = true, description = "Netscaler load balancer device ID")
     private Long lbDeviceId;
 
-    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_CAPACITY,
-               type = CommandType.LONG,
-               required = false,
-               description = "capacity of the device, Capacity will be interpreted as number of networks device can handle")
+    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_CAPACITY, type = CommandType.LONG, required = false, description = "capacity of the device, Capacity will be interpreted as number of networks device can handle")
     private Long capacity;
 
-    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_DEDICATED,
-               type = CommandType.BOOLEAN,
-               required = false,
-               description = "true if this netscaler device to dedicated for a account, false if the netscaler device will be shared by multiple accounts")
+    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_DEDICATED, type = CommandType.BOOLEAN, required = false, description = "true if this netscaler device to dedicated for a account, false if the netscaler device will be shared by multiple accounts")
     private Boolean dedicatedUse;
 
-    @Parameter(name = ApiConstants.INLINE,
-               type = CommandType.BOOLEAN,
-               required = false,
-               description = "true if netscaler load balancer is intended to be used in in-line with firewall, false if netscaler load balancer will side-by-side with firewall")
+    @Parameter(name = ApiConstants.INLINE, type = CommandType.BOOLEAN, required = false, description = "true if netscaler load balancer is intended to be used in in-line with firewall, false if netscaler load balancer will side-by-side with firewall")
     private Boolean inline;
 
-    @Parameter(name = ApiConstants.POD_IDS,
-               type = CommandType.LIST,
-               collectionType = CommandType.UUID,
-               entityType = PodResponse.class,
-               required = false,
-               description = "Used when NetScaler device is provider of EIP service."
-                   + " This parameter represents the list of pod's, for which there exists a policy based route on datacenter L3 router to "
-                   + "route pod's subnet IP to a NetScaler device.")
+    @Parameter(name = ApiConstants.POD_IDS, type = CommandType.LIST, collectionType = CommandType.UUID, entityType = PodResponse.class, required = false, description = "Used when NetScaler device is provider of EIP service."
+            + " This parameter represents the list of pod's, for which there exists a policy based route on datacenter L3 router to "
+            + "route pod's subnet IP to a NetScaler device.")
     private List<Long> podIds;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getLoadBalancerDeviceId() {
         return lbDeviceId;
@@ -112,13 +93,12 @@ public class ConfigureNetscalerLoadBalancerCmd extends BaseAsyncCmd {
         return podIds;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             ExternalLoadBalancerDeviceVO lbDeviceVO = _netsclarLbService.configureNetscalerLoadBalancer(this);
             if (lbDeviceVO != null) {

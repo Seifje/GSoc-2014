@@ -100,17 +100,16 @@ public abstract class AgentHookBase implements AgentHook {
             if (!ticket.equals(ticketInUrl)) {
                 Date now = new Date();
                 // considering of minute round-up
-                String minuteEarlyTicket =
-                    ConsoleProxyServlet.genAccessTicket(cmd.getHost(), cmd.getPort(), cmd.getSid(), cmd.getVmId(), new Date(now.getTime() - 60 * 1000));
+                String minuteEarlyTicket = ConsoleProxyServlet.genAccessTicket(cmd.getHost(), cmd.getPort(), cmd.getSid(), cmd.getVmId(), new Date(now.getTime() - 60 * 1000));
 
                 if (s_logger.isDebugEnabled()) {
-                    s_logger.debug("Console authentication. Ticket in 2-minute boundary for " + cmd.getHost() + ":" + cmd.getPort() + "-" + cmd.getVmId() + " is " +
-                        minuteEarlyTicket);
+                    s_logger.debug("Console authentication. Ticket in 2-minute boundary for " + cmd.getHost() + ":" + cmd.getPort() + "-" + cmd.getVmId() + " is "
+                            + minuteEarlyTicket);
                 }
 
                 if (!minuteEarlyTicket.equals(ticketInUrl)) {
-                    s_logger.error("Access ticket expired or has been modified. vmId: " + cmd.getVmId() + "ticket in URL: " + ticketInUrl +
-                        ", tickets to check against: " + ticket + "," + minuteEarlyTicket);
+                    s_logger.error("Access ticket expired or has been modified. vmId: " + cmd.getVmId() + "ticket in URL: " + ticketInUrl + ", tickets to check against: " + ticket
+                            + "," + minuteEarlyTicket);
                     return new ConsoleAccessAuthenticationAnswer(cmd, false);
                 }
             }
@@ -161,8 +160,7 @@ public abstract class AgentHookBase implements AgentHook {
 
                 if (parsedHostInfo.second() != null && parsedHostInfo.third() != null) {
 
-                    s_logger.info("Re-authentication result. vm: " + vm.getId() + ", tunnel url: " + parsedHostInfo.second() + ", tunnel session: " +
-                        parsedHostInfo.third());
+                    s_logger.info("Re-authentication result. vm: " + vm.getId() + ", tunnel url: " + parsedHostInfo.second() + ", tunnel session: " + parsedHostInfo.third());
 
                     authenticationAnswer.setTunnelUrl(parsedHostInfo.second());
                     authenticationAnswer.setTunnelSession(parsedHostInfo.third());
@@ -217,8 +215,7 @@ public abstract class AgentHookBase implements AgentHook {
             s_logger.error("Unrecoverable OutOfMemory Error, exit and let it be re-launched");
             System.exit(1);
         } catch (Exception e) {
-            s_logger.error(
-                "Unexpected exception when sending http handling startup command(time out) to the console proxy resource for proxy:" + startupCmd.getProxyVmId(), e);
+            s_logger.error("Unexpected exception when sending http handling startup command(time out) to the console proxy resource for proxy:" + startupCmd.getProxyVmId(), e);
         }
     }
 

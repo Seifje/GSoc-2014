@@ -38,8 +38,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 public class UsageJobDaoImpl extends GenericDaoBase<UsageJobVO, Long> implements UsageJobDao {
     private static final Logger s_logger = Logger.getLogger(UsageJobDaoImpl.class.getName());
 
-    private static final String GET_LAST_JOB_SUCCESS_DATE_MILLIS =
-        "SELECT end_millis FROM cloud_usage.usage_job WHERE end_millis > 0 and success = 1 ORDER BY end_millis DESC LIMIT 1";
+    private static final String GET_LAST_JOB_SUCCESS_DATE_MILLIS = "SELECT end_millis FROM cloud_usage.usage_job WHERE end_millis > 0 and success = 1 ORDER BY end_millis DESC LIMIT 1";
 
     @Override
     public long getLastJobSuccessDateMillis() {
@@ -104,10 +103,11 @@ public class UsageJobDaoImpl extends GenericDaoBase<UsageJobVO, Long> implements
 
         long sinceLastHeartbeat = System.currentTimeMillis() - lastHeartbeat.getTime();
 
-        // TODO:  Make this check a little smarter..but in the mean time we want the mgmt
-        //        server to monitor the usage server, we need to make sure other usage
-        //        servers take over as the usage job owner more aggressively.  For now
-        //        this is hardcoded to 5 minutes.
+        // TODO: Make this check a little smarter..but in the mean time we want
+        // the mgmt
+        // server to monitor the usage server, we need to make sure other usage
+        // servers take over as the usage job owner more aggressively. For now
+        // this is hardcoded to 5 minutes.
         if (sinceLastHeartbeat > (5 * 60 * 1000)) {
             return job.getId();
         }

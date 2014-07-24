@@ -26,7 +26,7 @@ import com.cloud.utils.db.GenericDao;
 import com.cloud.utils.fsm.StateDao;
 
 public interface VMTemplatePoolDao extends GenericDao<VMTemplateStoragePoolVO, Long>,
-        StateDao<ObjectInDataStoreStateMachine.State, ObjectInDataStoreStateMachine.Event, DataObjectInStore> {
+StateDao<ObjectInDataStoreStateMachine.State, ObjectInDataStoreStateMachine.Event, DataObjectInStore> {
     public List<VMTemplateStoragePoolVO> listByPoolId(long id);
 
     public List<VMTemplateStoragePoolVO> listByTemplateId(long templateId);

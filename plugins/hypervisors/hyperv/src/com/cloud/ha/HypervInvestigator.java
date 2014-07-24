@@ -34,12 +34,15 @@ import javax.ejb.Local;
 import javax.inject.Inject;
 import java.util.List;
 
-@Local(value=Investigator.class)
+@Local(value = Investigator.class)
 public class HypervInvestigator extends AdapterBase implements Investigator {
     private final static Logger s_logger = Logger.getLogger(HypervInvestigator.class);
-    @Inject HostDao _hostDao;
-    @Inject AgentManager _agentMgr;
-    @Inject ResourceManager _resourceMgr;
+    @Inject
+    HostDao _hostDao;
+    @Inject
+    AgentManager _agentMgr;
+    @Inject
+    ResourceManager _resourceMgr;
 
     @Override
     public Boolean isVmAlive(com.cloud.vm.VirtualMachine vm, Host host) {

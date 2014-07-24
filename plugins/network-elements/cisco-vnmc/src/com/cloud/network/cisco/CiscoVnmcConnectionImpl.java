@@ -51,62 +51,40 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
     private enum VnmcXml {
         LOGIN("login.xml", "mgmt-controller"),
 
-        CREATE_TENANT("create-tenant.xml", "service-reg"),
-        DELETE_TENANT("delete-tenant.xml", "service-reg"),
-        CREATE_VDC("create-vdc.xml", "service-reg"),
-        DELETE_VDC("delete-vdc.xml", "service-reg"),
+        CREATE_TENANT("create-tenant.xml", "service-reg"), DELETE_TENANT("delete-tenant.xml", "service-reg"), CREATE_VDC("create-vdc.xml", "service-reg"), DELETE_VDC(
+                "delete-vdc.xml", "service-reg"),
 
-        CREATE_EDGE_DEVICE_PROFILE("create-edge-device-profile.xml", "policy-mgr"),
-        CREATE_EDGE_ROUTE_POLICY("create-edge-device-route-policy.xml", "policy-mgr"),
-        CREATE_EDGE_ROUTE("create-edge-device-route.xml", "policy-mgr"),
-        RESOLVE_EDGE_ROUTE_POLICY("associate-route-policy.xml", "policy-mgr"),
+        CREATE_EDGE_DEVICE_PROFILE("create-edge-device-profile.xml", "policy-mgr"), CREATE_EDGE_ROUTE_POLICY("create-edge-device-route-policy.xml", "policy-mgr"), CREATE_EDGE_ROUTE(
+                "create-edge-device-route.xml", "policy-mgr"), RESOLVE_EDGE_ROUTE_POLICY("associate-route-policy.xml", "policy-mgr"),
 
-        CREATE_DHCP_POLICY("create-dhcp-policy.xml", "policy-mgr"),
-        RESOLVE_EDGE_DHCP_POLICY("associate-dhcp-policy.xml", "policy-mgr"),
-        RESOLVE_EDGE_DHCP_SERVER_POLICY("associate-dhcp-server.xml", "policy-mgr"),
+        CREATE_DHCP_POLICY("create-dhcp-policy.xml", "policy-mgr"), RESOLVE_EDGE_DHCP_POLICY("associate-dhcp-policy.xml", "policy-mgr"), RESOLVE_EDGE_DHCP_SERVER_POLICY(
+                "associate-dhcp-server.xml", "policy-mgr"),
 
-        CREATE_EDGE_SECURITY_PROFILE("create-edge-security-profile.xml", "policy-mgr"),
-        DELETE_EDGE_SECURITY_PROFILE("delete-edge-security-profile.xml", "policy-mgr"),
+        CREATE_EDGE_SECURITY_PROFILE("create-edge-security-profile.xml", "policy-mgr"), DELETE_EDGE_SECURITY_PROFILE("delete-edge-security-profile.xml", "policy-mgr"),
 
-        CREATE_NAT_POLICY_SET("create-nat-policy-set.xml", "policy-mgr"),
-        DELETE_NAT_POLICY_SET("delete-nat-policy-set.xml", "policy-mgr"),
-        RESOLVE_NAT_POLICY_SET("associate-nat-policy-set.xml", "policy-mgr"),
-        CREATE_NAT_POLICY("create-nat-policy.xml", "policy-mgr"),
-        DELETE_NAT_POLICY("delete-nat-policy.xml", "policy-mgr"),
-        LIST_NAT_POLICIES("list-nat-policies.xml", "policy-mgr"),
-        CREATE_NAT_POLICY_REF("create-nat-policy-ref.xml", "policy-mgr"),
-        CREATE_PORT_POOL("create-port-pool.xml", "policy-mgr"),
-        CREATE_IP_POOL("create-ip-pool.xml", "policy-mgr"),
+        CREATE_NAT_POLICY_SET("create-nat-policy-set.xml", "policy-mgr"), DELETE_NAT_POLICY_SET("delete-nat-policy-set.xml", "policy-mgr"), RESOLVE_NAT_POLICY_SET(
+                "associate-nat-policy-set.xml", "policy-mgr"), CREATE_NAT_POLICY("create-nat-policy.xml", "policy-mgr"), DELETE_NAT_POLICY("delete-nat-policy.xml", "policy-mgr"), LIST_NAT_POLICIES(
+                "list-nat-policies.xml", "policy-mgr"), CREATE_NAT_POLICY_REF("create-nat-policy-ref.xml", "policy-mgr"), CREATE_PORT_POOL("create-port-pool.xml", "policy-mgr"), CREATE_IP_POOL(
+                "create-ip-pool.xml", "policy-mgr"),
 
-        CREATE_PF_RULE("create-pf-rule.xml", "policy-mgr"),
-        CREATE_ACL_RULE_FOR_PF("create-acl-rule-for-pf.xml", "policy-mgr"),
-        CREATE_DNAT_RULE("create-dnat-rule.xml", "policy-mgr"),
-        CREATE_ACL_RULE_FOR_DNAT("create-acl-rule-for-dnat.xml", "policy-mgr"),
-        CREATE_SOURCE_NAT_RULE("create-source-nat-rule.xml", "policy-mgr"),
+        CREATE_PF_RULE("create-pf-rule.xml", "policy-mgr"), CREATE_ACL_RULE_FOR_PF("create-acl-rule-for-pf.xml", "policy-mgr"), CREATE_DNAT_RULE("create-dnat-rule.xml",
+                "policy-mgr"), CREATE_ACL_RULE_FOR_DNAT("create-acl-rule-for-dnat.xml", "policy-mgr"), CREATE_SOURCE_NAT_RULE("create-source-nat-rule.xml", "policy-mgr"),
 
-        CREATE_ACL_POLICY_SET("create-acl-policy-set.xml", "policy-mgr"),
-        DELETE_ACL_POLICY_SET("delete-acl-policy-set.xml", "policy-mgr"),
-        RESOLVE_ACL_POLICY_SET("associate-acl-policy-set.xml", "policy-mgr"),
-        CREATE_ACL_POLICY("create-acl-policy.xml", "policy-mgr"),
-        DELETE_ACL_POLICY("delete-acl-policy.xml", "policy-mgr"),
-        LIST_ACL_POLICIES("list-acl-policies.xml", "policy-mgr"),
-        CREATE_ACL_POLICY_REF("create-acl-policy-ref.xml", "policy-mgr"),
-        CREATE_INGRESS_ACL_RULE("create-ingress-acl-rule.xml", "policy-mgr"),
-        CREATE_EGRESS_ACL_RULE("create-egress-acl-rule.xml", "policy-mgr"),
-        CREATE_GENERIC_INGRESS_ACL_RULE("create-generic-ingress-acl-rule.xml", "policy-mgr"),
-        CREATE_GENERIC_EGRESS_ACL_RULE("create-generic-egress-acl-rule.xml", "policy-mgr"),
-        CREATE_GENERIC_EGRESS_ACL_NO_PROTOCOL_RULE("create-generic-egress-acl-no-protocol-rule.xml", "policy-mgr"),
+        CREATE_ACL_POLICY_SET("create-acl-policy-set.xml", "policy-mgr"), DELETE_ACL_POLICY_SET("delete-acl-policy-set.xml", "policy-mgr"), RESOLVE_ACL_POLICY_SET(
+                "associate-acl-policy-set.xml", "policy-mgr"), CREATE_ACL_POLICY("create-acl-policy.xml", "policy-mgr"), DELETE_ACL_POLICY("delete-acl-policy.xml", "policy-mgr"), LIST_ACL_POLICIES(
+                "list-acl-policies.xml", "policy-mgr"), CREATE_ACL_POLICY_REF("create-acl-policy-ref.xml", "policy-mgr"), CREATE_INGRESS_ACL_RULE("create-ingress-acl-rule.xml",
+                "policy-mgr"), CREATE_EGRESS_ACL_RULE("create-egress-acl-rule.xml", "policy-mgr"), CREATE_GENERIC_INGRESS_ACL_RULE("create-generic-ingress-acl-rule.xml",
+                "policy-mgr"), CREATE_GENERIC_EGRESS_ACL_RULE("create-generic-egress-acl-rule.xml", "policy-mgr"), CREATE_GENERIC_EGRESS_ACL_NO_PROTOCOL_RULE(
+                "create-generic-egress-acl-no-protocol-rule.xml", "policy-mgr"),
 
         DELETE_RULE("delete-rule.xml", "policy-mgr"),
 
         LIST_CHILDREN("list-children.xml", "policy-mgr"),
 
-        CREATE_EDGE_FIREWALL("create-edge-firewall.xml", "resource-mgr"),
-        DELETE_EDGE_FIREWALL("delete-edge-firewall.xml", "resource-mgr"),
+        CREATE_EDGE_FIREWALL("create-edge-firewall.xml", "resource-mgr"), DELETE_EDGE_FIREWALL("delete-edge-firewall.xml", "resource-mgr"),
 
-        LIST_UNASSOC_ASA1000V("list-unassigned-asa1000v.xml", "resource-mgr"),
-        ASSIGN_ASA1000V("assoc-asa1000v.xml", "resource-mgr"),
-        UNASSIGN_ASA1000V("disassoc-asa1000v.xml", "resource-mgr");
+        LIST_UNASSOC_ASA1000V("list-unassigned-asa1000v.xml", "resource-mgr"), ASSIGN_ASA1000V("assoc-asa1000v.xml", "resource-mgr"), UNASSIGN_ASA1000V("disassoc-asa1000v.xml",
+                "resource-mgr");
 
         private final String scriptsDir = "scripts/network/cisco";
         private String xml;
@@ -135,7 +113,7 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
                 String xml = "";
                 String line;
                 while ((line = br.readLine()) != null) {
-                    //xml += line.replaceAll("\n"," ");
+                    // xml += line.replaceAll("\n"," ");
                     xml += line;
                 }
 
@@ -193,7 +171,7 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
 
     private String getDnForEdgeDeviceRoutingPolicy(String tenantName) {
         return getDnForTenantVDC(tenantName) + "/routing-policy-" + getNameForEdgeDeviceRoutePolicy(tenantName);
-        //FIXME: any other construct is unreliable. why?
+        // FIXME: any other construct is unreliable. why?
     }
 
     private String getDnForDhcpPolicy(String tenantName, String intfName) {
@@ -365,8 +343,7 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
     }
 
     @Override
-    public boolean createTenantVDCEdgeDhcpPolicy(String tenantName, String startIp, String endIp, String subnet, String nameServerIp, String domain)
-        throws ExecutionException {
+    public boolean createTenantVDCEdgeDhcpPolicy(String tenantName, String startIp, String endIp, String subnet, String nameServerIp, String domain) throws ExecutionException {
         String xml = VnmcXml.CREATE_DHCP_POLICY.getXml();
         String service = VnmcXml.CREATE_DHCP_POLICY.getService();
         xml = replaceXmlValue(xml, "cookie", _cookie);
@@ -409,7 +386,9 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
         xml = replaceXmlValue(xml, "name", getNameForEdgeDeviceSecurityProfile(tenantName));
         xml = replaceXmlValue(xml, "espdn", getDnForTenantVDCEdgeSecurityProfile(tenantName));
         xml = replaceXmlValue(xml, "egressref", "default-egress");
-        xml = replaceXmlValue(xml, "ingressref", "default-ingress"); //FIXME: allows everything
+        xml = replaceXmlValue(xml, "ingressref", "default-ingress"); // FIXME:
+                                                                     // allows
+                                                                     // everything
 
         String response = sendRequest(service, xml);
         return verifySuccess(response);
@@ -437,8 +416,7 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
 
     @Override
     public boolean createTenantVDCSourceNatIpPool(String tenantName, String identifier, String publicIp) throws ExecutionException {
-        return createTenantVDCIpPool(getDnForSourceNatPool(tenantName), getNameForSourceNatIpPool(tenantName), "Source NAT ip pool for Tenant VDC " + tenantName,
-            publicIp);
+        return createTenantVDCIpPool(getDnForSourceNatPool(tenantName), getNameForSourceNatIpPool(tenantName), "Source NAT ip pool for Tenant VDC " + tenantName, publicIp);
     }
 
     private String getNameForSourceNatPolicy(String tenantName) {
@@ -653,7 +631,7 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
 
     @Override
     public boolean createTenantVDCIngressAclRule(String tenantName, long ruleId, String policyIdentifier, String protocol, String sourceStartIp, String sourceEndIp,
-        String destStartPort, String destEndPort) throws ExecutionException {
+            String destStartPort, String destEndPort) throws ExecutionException {
         String xml = VnmcXml.CREATE_INGRESS_ACL_RULE.getXml();
         String service = VnmcXml.CREATE_INGRESS_ACL_RULE.getService();
 
@@ -678,7 +656,7 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
 
     @Override
     public boolean createTenantVDCIngressAclRule(String tenantName, long ruleId, String policyIdentifier, String protocol, String sourceStartIp, String sourceEndIp)
-        throws ExecutionException {
+            throws ExecutionException {
         String xml = VnmcXml.CREATE_GENERIC_INGRESS_ACL_RULE.getXml();
         String service = VnmcXml.CREATE_GENERIC_INGRESS_ACL_RULE.getService();
 
@@ -701,7 +679,7 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
 
     @Override
     public boolean createTenantVDCEgressAclRule(String tenantName, long ruleId, String policyIdentifier, String protocol, String sourceStartIp, String sourceEndIp,
-        String destStartPort, String destEndPort) throws ExecutionException {
+            String destStartPort, String destEndPort) throws ExecutionException {
         String xml = VnmcXml.CREATE_EGRESS_ACL_RULE.getXml();
         String service = VnmcXml.CREATE_EGRESS_ACL_RULE.getService();
 
@@ -726,7 +704,7 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
 
     @Override
     public boolean createTenantVDCEgressAclRule(String tenantName, long ruleId, String policyIdentifier, String protocol, String sourceStartIp, String sourceEndIp)
-        throws ExecutionException {
+            throws ExecutionException {
         String xml = VnmcXml.CREATE_GENERIC_EGRESS_ACL_RULE.getXml();
         String service = VnmcXml.CREATE_GENERIC_EGRESS_ACL_RULE.getService();
         if (protocol.equalsIgnoreCase("all")) { // any protocol
@@ -808,10 +786,13 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
         xml = replaceXmlValue(xml, "natpolicyrefdn", policyRefDn);
         xml = replaceXmlValue(xml, "natpolicyname", name);
 
-        // PF and static NAT policies need to come before source NAT, so leaving buffer
+        // PF and static NAT policies need to come before source NAT, so leaving
+        // buffer
         // and creating source NAT with a high order value.
-        // Initially tried setting MAX_INT as the order but VNMC complains about it
-        int order = 10000; // TODO: For now value should be sufficient, if required may need to increase
+        // Initially tried setting MAX_INT as the order but VNMC complains about
+        // it
+        int order = 10000; // TODO: For now value should be sufficient, if
+                           // required may need to increase
         if (!isSourceNat) {
             List<String> policies = listNatPolicies(tenantName);
             order = 100; // order starts at 100
@@ -923,14 +904,14 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
 
     @Override
     public boolean createTenantVDCPFPortPool(String tenantName, String identifier, String startPort, String endPort) throws ExecutionException {
-        return createTenantVDCPortPool(getDnForPFPortPool(tenantName, identifier), getNameForPFPortPool(tenantName, identifier), "PF port pool for " +
-            getNameForPFPortPool(tenantName, identifier), startPort, endPort);
+        return createTenantVDCPortPool(getDnForPFPortPool(tenantName, identifier), getNameForPFPortPool(tenantName, identifier),
+                "PF port pool for " + getNameForPFPortPool(tenantName, identifier), startPort, endPort);
     }
 
     @Override
     public boolean createTenantVDCPFIpPool(String tenantName, String identifier, String ipAddress) throws ExecutionException {
         return createTenantVDCIpPool(getDnForPFIpPool(tenantName, identifier), getNameForPFIpPool(tenantName, identifier),
-            "PF ip pool for " + getNameForPFIpPool(tenantName, identifier), ipAddress);
+                "PF ip pool for " + getNameForPFIpPool(tenantName, identifier), ipAddress);
     }
 
     private String getNameForPFPolicy(String tenantName, String identifier) {
@@ -955,7 +936,7 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
 
     @Override
     public boolean createTenantVDCPFRule(String tenantName, long ruleId, String policyIdentifier, String protocol, String publicIp, String startPort, String endPort)
-        throws ExecutionException {
+            throws ExecutionException {
         String xml = VnmcXml.CREATE_PF_RULE.getXml();
         String service = VnmcXml.CREATE_PF_RULE.getService();
 
@@ -985,8 +966,8 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
     }
 
     @Override
-    public boolean createTenantVDCAclRuleForPF(String tenantName, long ruleId, String policyIdentifier, String protocol, String ipAddress, String startPort,
-        String endPort) throws ExecutionException {
+    public boolean createTenantVDCAclRuleForPF(String tenantName, long ruleId, String policyIdentifier, String protocol, String ipAddress, String startPort, String endPort)
+            throws ExecutionException {
         String xml = VnmcXml.CREATE_ACL_RULE_FOR_PF.getXml();
         String service = VnmcXml.CREATE_ACL_RULE_FOR_PF.getService();
 
@@ -1033,8 +1014,8 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
 
     @Override
     public boolean createTenantVDCDNatIpPool(String tenantName, String identifier, String ipAddress) throws ExecutionException {
-        return createTenantVDCIpPool(getDnForDNatIpPool(tenantName, identifier), getNameForDNatIpPool(tenantName, identifier), "DNAT ip pool for " +
-            getNameForDNatIpPool(tenantName, identifier), ipAddress);
+        return createTenantVDCIpPool(getDnForDNatIpPool(tenantName, identifier), getNameForDNatIpPool(tenantName, identifier),
+                "DNAT ip pool for " + getNameForDNatIpPool(tenantName, identifier), ipAddress);
     }
 
     private String getNameForDNatRule(String tenantName, String identifier) {
@@ -1127,11 +1108,11 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
     }
 
     private String getNameForEdgeInsideIntf(String tenantName) {
-        return "Edge_Inside"; //TODO: make this configurable
+        return "Edge_Inside"; // TODO: make this configurable
     }
 
     private String getNameForEdgeOutsideIntf(String tenantName) {
-        return "Edge_Outside"; //TODO: make this configurable
+        return "Edge_Outside"; // TODO: make this configurable
     }
 
     private String getDnForOutsideIntf(String tenantName) {
@@ -1270,7 +1251,7 @@ public class CiscoVnmcConnectionImpl implements CiscoVnmcConnection {
         if (checked.get("errorCode") != null) {
             String errorCode = checked.get("errorCode");
             if (errorCode.equals("103")) {
-                //tenant already exists
+                // tenant already exists
                 return true;
             }
             String errorDescr = checked.get("errorDescr");

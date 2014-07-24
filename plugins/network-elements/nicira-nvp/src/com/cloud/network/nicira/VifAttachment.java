@@ -21,7 +21,7 @@ package com.cloud.network.nicira;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 public class VifAttachment extends Attachment {
@@ -47,18 +47,14 @@ public class VifAttachment extends Attachment {
         return type;
     }
 
-
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE, false);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE, false);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 31)
-                .append(this.getClass())
-                .append(vifUuid)
-                .toHashCode();
+        return new HashCodeBuilder(17, 31).append(this.getClass()).append(vifUuid).toHashCode();
     }
 
     @Override
@@ -72,7 +68,7 @@ public class VifAttachment extends Attachment {
         if (!(this.getClass().isInstance(obj))) {
             return false;
         }
-        final VifAttachment another = (VifAttachment) obj;
+        final VifAttachment another = (VifAttachment)obj;
         return new EqualsBuilder().append(vifUuid, another.vifUuid).isEquals();
     }
 }

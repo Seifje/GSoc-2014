@@ -89,7 +89,8 @@ public class MockAgentManagerImpl extends ManagerBase implements MockAgentManage
     MockStorageManager _storageMgr = null;
     @Inject
     ResourceManager _resourceMgr;
-    @Inject private AccountManager _accountMgr;
+    @Inject
+    private AccountManager _accountMgr;
 
     SimulatorSecondaryDiscoverer discoverer;
     @Inject
@@ -217,8 +218,8 @@ public class MockAgentManagerImpl extends ManagerBase implements MockAgentManage
     }
 
     @Override
-    public boolean handleSystemVMStart(long vmId, String privateIpAddress, String privateMacAddress, String privateNetMask, long dcId, long podId, String name,
-        String vmType, String url) {
+    public boolean handleSystemVMStart(long vmId, String privateIpAddress, String privateMacAddress, String privateNetMask, long dcId, long podId, String name, String vmType,
+            String url) {
         _executor.execute(new SystemVMHandler(vmId, privateIpAddress, privateMacAddress, privateNetMask, dcId, podId, name, vmType, _simulatorMgr, url));
         return true;
     }
@@ -292,7 +293,7 @@ public class MockAgentManagerImpl extends ManagerBase implements MockAgentManage
                 txn.close();
             }
 
-            //stop ssvm agent
+            // stop ssvm agent
             HostVO host = hostDao.findByGuid(this.guid);
             if (host != null) {
                 try {

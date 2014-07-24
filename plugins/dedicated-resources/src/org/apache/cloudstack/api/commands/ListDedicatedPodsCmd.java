@@ -40,8 +40,7 @@ import com.cloud.dc.DedicatedResourceVO;
 import com.cloud.dc.DedicatedResources;
 import com.cloud.utils.Pair;
 
-@APICommand(name = "listDedicatedPods", description = "Lists dedicated pods.", responseObject = DedicatePodResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listDedicatedPods", description = "Lists dedicated pods.", responseObject = DedicatePodResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListDedicatedPodsCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListDedicatedPodsCmd.class.getName());
 
@@ -49,9 +48,9 @@ public class ListDedicatedPodsCmd extends BaseListCmd {
     @Inject
     DedicatedService dedicatedService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
     @Parameter(name = ApiConstants.POD_ID, type = CommandType.UUID, entityType = PodResponse.class, description = "the ID of the pod")
     private Long podId;
 
@@ -61,15 +60,12 @@ public class ListDedicatedPodsCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "the name of the account associated with the pod. Must be used with domainId.")
     private String accountName;
 
-    @Parameter(name = ApiConstants.AFFINITY_GROUP_ID,
-               type = CommandType.UUID,
-               entityType = AffinityGroupResponse.class,
-               description = "list dedicated pods by affinity group")
+    @Parameter(name = ApiConstants.AFFINITY_GROUP_ID, type = CommandType.UUID, entityType = AffinityGroupResponse.class, description = "list dedicated pods by affinity group")
     private Long affinityGroupId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getPodId() {
         return podId;
@@ -87,9 +83,9 @@ public class ListDedicatedPodsCmd extends BaseListCmd {
         return affinityGroupId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

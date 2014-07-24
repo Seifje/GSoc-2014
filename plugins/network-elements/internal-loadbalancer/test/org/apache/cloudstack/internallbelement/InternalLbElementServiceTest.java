@@ -46,11 +46,11 @@ import com.cloud.utils.component.ComponentContext;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/lb_element.xml")
 public class InternalLbElementServiceTest {
-    //The interface to test
+    // The interface to test
     @Inject
     InternalLoadBalancerElementService _lbElSvc;
 
-    //Mocked interfaces
+    // Mocked interfaces
     @Inject
     AccountManager _accountMgr;
     @Inject
@@ -60,7 +60,7 @@ public class InternalLbElementServiceTest {
 
     long validElId = 1L;
     long nonExistingElId = 2L;
-    long invalidElId = 3L; //not of VirtualRouterProviderType
+    long invalidElId = 3L; // not of VirtualRouterProviderType
 
     long validProviderId = 1L;
     long nonExistingProviderId = 2L;
@@ -89,7 +89,7 @@ public class InternalLbElementServiceTest {
         Mockito.when(_vrProviderDao.persist(Matchers.any(VirtualRouterProviderVO.class))).thenReturn(validElement);
     }
 
-    //TESTS FOR getInternalLoadBalancerElement METHOD
+    // TESTS FOR getInternalLoadBalancerElement METHOD
 
     @Test(expected = InvalidParameterValueException.class)
     public void findNonExistingVm() {
@@ -101,7 +101,7 @@ public class InternalLbElementServiceTest {
             throw e;
         } finally {
             assertEquals("Test failed. The non-existing intenral lb provider was found" + expectedExcText, expectedExcText,
-                "Unable to find InternalLoadBalancerElementService by id");
+                    "Unable to find InternalLoadBalancerElementService by id");
         }
     }
 
@@ -115,7 +115,7 @@ public class InternalLbElementServiceTest {
             throw e;
         } finally {
             assertEquals("Test failed. The non-existing intenral lb provider was found" + expectedExcText, expectedExcText,
-                "Unable to find InternalLoadBalancerElementService by id");
+                    "Unable to find InternalLoadBalancerElementService by id");
         }
     }
 
@@ -129,7 +129,7 @@ public class InternalLbElementServiceTest {
         }
     }
 
-    //TESTS FOR configureInternalLoadBalancerElement METHOD
+    // TESTS FOR configureInternalLoadBalancerElement METHOD
 
     @Test(expected = InvalidParameterValueException.class)
     public void configureNonExistingVm() {
@@ -165,7 +165,7 @@ public class InternalLbElementServiceTest {
         }
     }
 
-    //TESTS FOR addInternalLoadBalancerElement METHOD
+    // TESTS FOR addInternalLoadBalancerElement METHOD
 
     @Test(expected = InvalidParameterValueException.class)
     public void addToNonExistingProvider() {

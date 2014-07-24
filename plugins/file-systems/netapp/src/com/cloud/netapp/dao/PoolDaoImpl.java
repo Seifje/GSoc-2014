@@ -58,11 +58,11 @@ public class PoolDaoImpl extends GenericDaoBase<PoolVO, Long> implements PoolDao
         return null;
     }
 
-//    @Override
-//    public List<NetappStoragePoolVO> listVolumes(String poolName) {
-//        SearchCriteria sc = NetappListVolumeSearch.create();
-//        sc.setParameters("poolName", poolName);
-//        return listBy(sc);
-//    }
+    // @Override
+    // public List<NetappStoragePoolVO> listVolumes(String poolName) {
+    // SearchCriteria sc = NetappListVolumeSearch.create();
+    // sc.setParameters("poolName", poolName);
+    // return listBy(sc);
+    // }
 
 }

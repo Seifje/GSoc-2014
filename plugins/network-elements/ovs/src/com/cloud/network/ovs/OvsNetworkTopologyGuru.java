@@ -23,19 +23,22 @@ import java.util.List;
 public interface OvsNetworkTopologyGuru extends Manager {
 
     /**
-     * get the list of hypervisor hosts id's on which VM's belonging to the network currently spans
+     * get the list of hypervisor hosts id's on which VM's belonging to the
+     * network currently spans
      */
-    public  List<Long> getNetworkSpanedHosts(long networkId);
+    public List<Long> getNetworkSpanedHosts(long networkId);
 
     /**
-     * get the list of hypervisor hosts id's on which VM's belonging to a VPC spans
+     * get the list of hypervisor hosts id's on which VM's belonging to a VPC
+     * spans
      */
-    public  List<Long> getVpcSpannedHosts(long vpId);
+    public List<Long> getVpcSpannedHosts(long vpId);
 
     /**
-     * get the list of VPC id's of the vpc's for which one or more VM's from the VPC are running on the host
+     * get the list of VPC id's of the vpc's for which one or more VM's from the
+     * VPC are running on the host
      */
-    public  List<Long> getVpcOnHost(long hostId);
+    public List<Long> getVpcOnHost(long hostId);
 
     /**
      * get the list of all active Vm id's in a network
@@ -48,7 +51,8 @@ public interface OvsNetworkTopologyGuru extends Manager {
     public List<Long> getAllActiveVmsInVpc(long vpcId);
 
     /**
-     * get the list of all Vm id's in the VPC for all the tiers that are running on the host
+     * get the list of all Vm id's in the VPC for all the tiers that are running
+     * on the host
      */
     public List<Long> getActiveVmsInVpcOnHost(long vpcId, long hostId);
 
@@ -58,7 +62,8 @@ public interface OvsNetworkTopologyGuru extends Manager {
     public List<Long> getActiveVmsInNetworkOnHost(long vpcId, long hostId, boolean includeVr);
 
     /**
-     * get the list of all Vpc id's in which, a VM has a nic in the network that is part of VPC
+     * get the list of all Vpc id's in which, a VM has a nic in the network that
+     * is part of VPC
      */
     public List<Long> getVpcIdsVmIsPartOf(long vmId);
 }

@@ -34,7 +34,7 @@ import com.cloud.user.Account;
 public interface LoadBalancingRulesManager {
 
     LoadBalancer createPublicLoadBalancer(String xId, String name, String description, int srcPort, int destPort, long sourceIpId, String protocol, String algorithm,
-        boolean openFirewall, CallContext caller, String lbProtocol, Boolean forDisplay) throws NetworkRuleConflictException;
+            boolean openFirewall, CallContext caller, String lbProtocol, Boolean forDisplay) throws NetworkRuleConflictException;
 
     boolean removeAllLoadBalanacersForIp(long ipId, Account caller, long callerUserId);
 
@@ -52,6 +52,7 @@ public interface LoadBalancingRulesManager {
 
     /**
      * Remove vm from all load balancers
+     *
      * @param vmId
      * @return true if removal is successful
      */

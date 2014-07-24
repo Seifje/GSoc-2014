@@ -17,8 +17,8 @@
 package com.cloud.network;
 
 /**
- * PhysicalNetworkNames provides the labels to identify per traffic type
- * the physical networks available to the host .
+ * PhysicalNetworkNames provides the labels to identify per traffic type the
+ * physical networks available to the host .
  */
 public class PhysicalNetworkSetupInfo {
 

@@ -28,20 +28,22 @@ import com.cloud.utils.Pair;
 import com.cloud.utils.net.Ip;
 
 public interface RulesService {
-    Pair<List<? extends FirewallRule>, Integer> searchStaticNatRules(Long ipId, Long id, Long vmId, Long start, Long size, String accountName, Long domainId,
-        Long projectId, boolean isRecursive, boolean listAll);
+    Pair<List<? extends FirewallRule>, Integer> searchStaticNatRules(Long ipId, Long id, Long vmId, Long start, Long size, String accountName, Long domainId, Long projectId,
+            boolean isRecursive, boolean listAll);
 
     /**
-     * Creates a port forwarding rule between two ip addresses or between
-     * an ip address and a virtual machine.
+     * Creates a port forwarding rule between two ip addresses or between an ip
+     * address and a virtual machine.
      *
      * @param rule
      *            rule to be created.
      * @param vmId
-     *            vm to be linked to. If specified the destination ip address is ignored.
+     *            vm to be linked to. If specified the destination ip address is
+     *            ignored.
      * @param openFirewall
      *            TODO
-     * @param forDisplay TODO
+     * @param forDisplay
+     *            TODO
      * @return PortForwardingRule if created.
      * @throws NetworkRuleConflictException
      *             if conflicts in the network rules are detected.
@@ -62,8 +64,10 @@ public interface RulesService {
      * List port forwarding rules assigned to an ip address
      *
      * @param cmd
-     *            the command object holding the criteria for listing port forwarding rules (the ipAddress)
-     * @return list of port forwarding rules on the given address, empty list if no rules exist
+     *            the command object holding the criteria for listing port
+     *            forwarding rules (the ipAddress)
+     * @return list of port forwarding rules on the given address, empty list if
+     *         no rules exist
      */
     public Pair<List<? extends PortForwardingRule>, Integer> listPortForwardingRules(ListPortForwardingRulesCmd cmd);
 

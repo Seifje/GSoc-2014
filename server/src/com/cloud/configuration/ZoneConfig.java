@@ -20,14 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum ZoneConfig {
-    EnableSecStorageVm(Boolean.class, "enable.secstorage.vm", "true", "Enables secondary storage vm service", null),
-    EnableConsoleProxyVm(Boolean.class, "enable.consoleproxy.vm", "true", "Enables console proxy vm service", null),
-    MaxHosts(Long.class, "max.hosts", null, "Maximum number of hosts the Zone can have", null),
-    MaxVirtualMachines(Long.class, "max.vms", null, "Maximum number of VMs the Zone can have", null),
-    ZoneMode(String.class, "zone.mode", null, "Mode of the Zone", "Free,Basic,Advanced"),
-    HasNoPublicIp(Boolean.class, "has.no.public.ip", "false", "True if Zone has no public IP", null),
-    DhcpStrategy(String.class, "zone.dhcp.strategy", "cloudstack-systemvm", "Who controls DHCP", "cloudstack-systemvm,cloudstack-external,external"),
-    DnsSearchOrder(String.class, "network.guestnetwork.dns.search.order", null, "Domains list to be used for domain search order", null);
+    EnableSecStorageVm(Boolean.class, "enable.secstorage.vm", "true", "Enables secondary storage vm service", null), EnableConsoleProxyVm(Boolean.class, "enable.consoleproxy.vm",
+            "true", "Enables console proxy vm service", null), MaxHosts(Long.class, "max.hosts", null, "Maximum number of hosts the Zone can have", null), MaxVirtualMachines(
+            Long.class, "max.vms", null, "Maximum number of VMs the Zone can have", null), ZoneMode(String.class, "zone.mode", null, "Mode of the Zone", "Free,Basic,Advanced"), HasNoPublicIp(
+            Boolean.class, "has.no.public.ip", "false", "True if Zone has no public IP", null), DhcpStrategy(String.class, "zone.dhcp.strategy", "cloudstack-systemvm",
+            "Who controls DHCP", "cloudstack-systemvm,cloudstack-external,external"), DnsSearchOrder(String.class, "network.guestnetwork.dns.search.order", null,
+            "Domains list to be used for domain search order", null);
 
     private final Class<?> _type;
     private final String _name;

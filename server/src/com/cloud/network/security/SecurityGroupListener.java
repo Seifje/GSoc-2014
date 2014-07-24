@@ -51,7 +51,7 @@ public class SecurityGroupListener implements Listener {
     public static final Logger s_logger = Logger.getLogger(SecurityGroupListener.class.getName());
 
     private static final int MAX_RETRIES_ON_FAILURE = 3;
-    private static final int MIN_TIME_BETWEEN_CLEANUPS = 30 * 60;//30 minutes
+    private static final int MIN_TIME_BETWEEN_CLEANUPS = 30 * 60;// 30 minutes
     private final Random _cleanupRandom = new Random();
 
     SecurityGroupManagerImpl _securityGroupManager;
@@ -92,11 +92,9 @@ public class SecurityGroupListener implements Listener {
                 } else {
                     _workDao.updateStep(ruleAnswer.getVmId(), ruleAnswer.getLogSequenceNumber(), Step.Error);
                     ;
-                    s_logger.debug("Failed to program rule " + ruleAnswer.toString() + " into host " + agentId + " due to " + ruleAnswer.getDetails() +
-                        " and updated  jobs");
+                    s_logger.debug("Failed to program rule " + ruleAnswer.toString() + " into host " + agentId + " due to " + ruleAnswer.getDetails() + " and updated  jobs");
                     if (ruleAnswer.getReason() == FailureReason.CANNOT_BRIDGE_FIREWALL) {
-                        s_logger.debug("Not retrying security group rules for vm " + ruleAnswer.getVmId() + " on failure since host " + agentId +
-                            " cannot do bridge firewalling");
+                        s_logger.debug("Not retrying security group rules for vm " + ruleAnswer.getVmId() + " on failure since host " + agentId + " cannot do bridge firewalling");
                     } else if (ruleAnswer.getReason() == FailureReason.PROGRAMMING_FAILED) {
                         if (checkShouldRetryOnFailure(ruleAnswer.getVmId())) {
                             s_logger.debug("Retrying security group rules on failure for vm " + ruleAnswer.getVmId());
@@ -157,7 +155,9 @@ public class SecurityGroupListener implements Listener {
             s_logger.info("Received a host startup notification");
 
         if (cmd instanceof StartupRoutingCommand) {
-            //if (Boolean.toString(true).equals(host.getDetail("can_bridge_firewall"))) {
+            // if
+            // (Boolean.toString(true).equals(host.getDetail("can_bridge_firewall")))
+            // {
             try {
                 int interval = MIN_TIME_BETWEEN_CLEANUPS + _cleanupRandom.nextInt(MIN_TIME_BETWEEN_CLEANUPS / 2);
                 CleanupNetworkRulesCmd cleanupCmd = new CleanupNetworkRulesCmd(interval);
@@ -166,7 +166,7 @@ public class SecurityGroupListener implements Listener {
                 if (s_logger.isInfoEnabled())
                     s_logger.info("Scheduled network rules cleanup, interval=" + cleanupCmd.getInterval());
             } catch (AgentUnavailableException e) {
-                //usually hypervisors that do not understand sec group rules.
+                // usually hypervisors that do not understand sec group rules.
                 s_logger.debug("Unable to schedule network rules cleanup for host " + host.getId(), e);
             }
             if (_workTracker != null) {

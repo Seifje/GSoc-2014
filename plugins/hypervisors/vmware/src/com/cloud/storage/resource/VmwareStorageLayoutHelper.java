@@ -33,33 +33,32 @@ import com.cloud.utils.Pair;
 public class VmwareStorageLayoutHelper {
     private static final Logger s_logger = Logger.getLogger(VmwareStorageLayoutHelper.class);
 
-    public static String[] getVmdkFilePairDatastorePath(DatastoreMO dsMo, String vmName, String vmdkName, VmwareStorageLayoutType layoutType, boolean linkedVmdk)
-        throws Exception {
+    public static String[] getVmdkFilePairDatastorePath(DatastoreMO dsMo, String vmName, String vmdkName, VmwareStorageLayoutType layoutType, boolean linkedVmdk) throws Exception {
 
         String[] filePair = new String[2];
         switch (layoutType) {
-            case VMWARE:
-                assert (vmName != null && !vmName.isEmpty());
-                filePair[0] = getVmwareDatastorePathFromVmdkFileName(dsMo, vmName, vmdkName + ".vmdk");
+        case VMWARE:
+            assert (vmName != null && !vmName.isEmpty());
+            filePair[0] = getVmwareDatastorePathFromVmdkFileName(dsMo, vmName, vmdkName + ".vmdk");
 
-                if (linkedVmdk)
-                    filePair[1] = getVmwareDatastorePathFromVmdkFileName(dsMo, vmName, vmdkName + "-delta.vmdk");
-                else
-                    filePair[1] = getVmwareDatastorePathFromVmdkFileName(dsMo, vmName, vmdkName + "-flat.vmdk");
-                return filePair;
+            if (linkedVmdk)
+                filePair[1] = getVmwareDatastorePathFromVmdkFileName(dsMo, vmName, vmdkName + "-delta.vmdk");
+            else
+                filePair[1] = getVmwareDatastorePathFromVmdkFileName(dsMo, vmName, vmdkName + "-flat.vmdk");
+            return filePair;
 
-            case CLOUDSTACK_LEGACY:
-                filePair[0] = getLegacyDatastorePathFromVmdkFileName(dsMo, vmdkName + ".vmdk");
+        case CLOUDSTACK_LEGACY:
+            filePair[0] = getLegacyDatastorePathFromVmdkFileName(dsMo, vmdkName + ".vmdk");
 
-                if (linkedVmdk)
-                    filePair[1] = getLegacyDatastorePathFromVmdkFileName(dsMo, vmdkName + "-delta.vmdk");
-                else
-                    filePair[1] = getLegacyDatastorePathFromVmdkFileName(dsMo, vmdkName + "-flat.vmdk");
-                return filePair;
+            if (linkedVmdk)
+                filePair[1] = getLegacyDatastorePathFromVmdkFileName(dsMo, vmdkName + "-delta.vmdk");
+            else
+                filePair[1] = getLegacyDatastorePathFromVmdkFileName(dsMo, vmdkName + "-flat.vmdk");
+            return filePair;
 
-            default:
-                assert (false);
-                break;
+        default:
+            assert (false);
+            break;
         }
 
         assert (false);
@@ -72,18 +71,23 @@ public class VmwareStorageLayoutHelper {
             if (!dsMo.fileExists(path)) {
                 path = getLegacyDatastorePathFromVmdkFileName(dsMo, vmdkFileName);
 
-                // to save one call to vCenter, we won't check file existence for this round, so the caller
-                // may still fail with exception, but if that's case, we will let it fail anyway
+                // to save one call to vCenter, we won't check file existence
+                // for this round, so the caller
+                // may still fail with exception, but if that's case, we will
+                // let it fail anyway
             }
             return path;
         } else {
             String path = getLegacyDatastorePathFromVmdkFileName(dsMo, vmdkFileName);
             if (!dsMo.fileExists(path)) {
-                // Datastore file movement is not atomic operations, we need to sync and repair
+                // Datastore file movement is not atomic operations, we need to
+                // sync and repair
                 path = dsMo.searchFileInSubFolders(vmdkFileName, false);
 
-                // to save one call to vCenter, we won't check file existence for this round, so the caller
-                // may still fail with exception, but if that's case, we will let it fail anyway
+                // to save one call to vCenter, we won't check file existence
+                // for this round, so the caller
+                // may still fail with exception, but if that's case, we will
+                // let it fail anyway
             }
             return path;
         }
@@ -105,8 +109,10 @@ public class VmwareStorageLayoutHelper {
         String[] vmdkFullCloneModePair = getVmdkFilePairDatastorePath(ds, vmName, vmdkName, VmwareStorageLayoutType.VMWARE, false);
 
         if (!ds.fileExists(vmdkLinkedCloneModeLegacyPair[0]) && !ds.fileExists(vmdkLinkedCloneModePair[0])) {
-            // To protect against inconsistency caused by non-atomic datastore file management, detached disk may
-            // be left over in its previous owner VM. We will do a fixup synchronization here by moving it to root
+            // To protect against inconsistency caused by non-atomic datastore
+            // file management, detached disk may
+            // be left over in its previous owner VM. We will do a fixup
+            // synchronization here by moving it to root
             // again.
             //
             syncVolumeToRootFolder(dcMo, ds, vmdkName);
@@ -215,8 +221,8 @@ public class VmwareStorageLayoutHelper {
     }
 
     /*
-     *  return Pair of <Template relative path, Template name>
-     *  Template url may or may not end with .ova extension
+     * return Pair of <Template relative path, Template name> Template url may
+     * or may not end with .ova extension
      */
     public static Pair<String, String> decodeTemplateRelativePathAndNameFromUrl(String storeUrl, String templateUrl, String defaultName) {
 

@@ -39,25 +39,20 @@ import com.cloud.network.vpc.StaticRoute;
 import com.cloud.network.vpc.Vpc;
 import com.cloud.network.vpc.VpcGateway;
 
-@APICommand(name = "createStaticRoute", description = "Creates a static route", responseObject = StaticRouteResponse.class, entityType = {StaticRoute.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createStaticRoute", description = "Creates a static route", responseObject = StaticRouteResponse.class, entityType = {StaticRoute.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateStaticRouteCmd extends BaseAsyncCreateCmd {
     private static final String s_name = "createstaticrouteresponse";
     public static final Logger s_logger = Logger.getLogger(CreateStaticRouteCmd.class.getName());
 
-    @Parameter(name = ApiConstants.GATEWAY_ID,
-               type = CommandType.UUID,
-               entityType = PrivateGatewayResponse.class,
-               required = true,
-               description = "the gateway id we are creating static route for")
+    @Parameter(name = ApiConstants.GATEWAY_ID, type = CommandType.UUID, entityType = PrivateGatewayResponse.class, required = true, description = "the gateway id we are creating static route for")
     private Long gatewayId;
 
     @Parameter(name = ApiConstants.CIDR, required = true, type = CommandType.STRING, description = "static route cidr")
     private String cidr;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
     public long getGatewayId() {
         return gatewayId;
     }
@@ -66,9 +61,9 @@ public class CreateStaticRouteCmd extends BaseAsyncCreateCmd {
         return cidr;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
     @Override
     public void create() throws ResourceAllocationException {
         try {
@@ -100,7 +95,8 @@ public class CreateStaticRouteCmd extends BaseAsyncCreateCmd {
             CallContext.current().setEventDetails("Static route Id: " + getEntityId());
             success = _vpcService.applyStaticRoutes(route.getVpcId());
 
-            // State is different after the route is applied, so get new object here
+            // State is different after the route is applied, so get new object
+            // here
             route = _entityMgr.findById(StaticRoute.class, getEntityId());
             StaticRouteResponse routeResponse = new StaticRouteResponse();
             if (route != null) {

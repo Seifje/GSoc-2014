@@ -27,20 +27,18 @@ import com.cloud.utils.net.Ip;
 
 /**
  *
- * - Allocated = null
- * - AccountId = null
- * - DomainId = null
+ * - Allocated = null - AccountId = null - DomainId = null
  *
- * - State = Allocated
- * - AccountId = account owner.
- * - DomainId = domain of the account owner.
- * - Allocated = time it was allocated.
+ * - State = Allocated - AccountId = account owner. - DomainId = domain of the
+ * account owner. - Allocated = time it was allocated.
  */
 public interface IpAddress extends ControlledEntity, Identity, InternalIdentity, Displayable {
     enum State {
-        Allocating, // The IP Address is being propagated to other network elements and is not ready for use yet.
+        Allocating, // The IP Address is being propagated to other network
+        // elements and is not ready for use yet.
         Allocated, // The IP address is in used.
-        Releasing, // The IP address is being released for other network elements and is not ready for allocation.
+        Releasing, // The IP address is being released for other network
+        // elements and is not ready for allocation.
         Free // The IP address is ready to be allocated.
     }
 
@@ -86,6 +84,7 @@ public interface IpAddress extends ControlledEntity, Identity, InternalIdentity,
 
     Long getNetworkId();
 
+    @Override
     boolean isDisplay();
 
     public Date getRemoved();

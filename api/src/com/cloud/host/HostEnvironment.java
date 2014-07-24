@@ -17,8 +17,7 @@
 package com.cloud.host;
 
 /**
- *  the networking environment of the host.  The
- *  the environment.
+ * the networking environment of the host. The the environment.
  */
 public class HostEnvironment {
 

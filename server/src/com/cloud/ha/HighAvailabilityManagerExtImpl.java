@@ -52,10 +52,12 @@ public class HighAvailabilityManagerExtImpl extends HighAvailabilityManagerImpl 
 
         boolean enableUsage = new Boolean(configDao.getValue("enable.usage.server"));
 
-        //By default, usage is enabled for production
-        //Devs might override this value to disable usage in their setup
+        // By default, usage is enabled for production
+        // Devs might override this value to disable usage in their setup
         if (enableUsage) {
-            _executor.scheduleAtFixedRate(new UsageServerMonitorTask(), 60 * 60, 10 * 60, TimeUnit.SECONDS); // schedule starting in one hour to execute every 10 minutes
+            _executor.scheduleAtFixedRate(new UsageServerMonitorTask(), 60 * 60, 10 * 60, TimeUnit.SECONDS); // schedule starting in
+            // one hour to execute
+            // every 10 minutes
         }
 
         return true;
@@ -76,7 +78,9 @@ public class HighAvailabilityManagerExtImpl extends HighAvailabilityManagerImpl 
                     if (lastHeartbeat != null) {
                         long sinceLastHeartbeat = System.currentTimeMillis() - lastHeartbeat.getTime();
                         if (sinceLastHeartbeat <= (10 * 60 * 1000)) {
-                            // if it's been less than 10 minutes since the last heartbeat, then it appears to be running, otherwise send an alert
+                            // if it's been less than 10 minutes since the last
+                            // heartbeat, then it appears to be running,
+                            // otherwise send an alert
                             isRunning = true;
                         }
                     }
@@ -93,7 +97,7 @@ public class HighAvailabilityManagerExtImpl extends HighAvailabilityManagerImpl 
 
                 if (!isRunning) {
                     _alertMgr.sendAlert(AlertManager.AlertType.ALERT_TYPE_USAGE_SERVER, 0, new Long(0), "No usage server process running",
-                        "No usage server process has been detected, some attention is required");
+                            "No usage server process has been detected, some attention is required");
                 } else {
                     _alertMgr.clearAlert(AlertManager.AlertType.ALERT_TYPE_USAGE_SERVER, 0, 0);
                 }

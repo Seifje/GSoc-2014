@@ -32,16 +32,15 @@ import org.apache.cloudstack.context.CallContext;
 import com.cloud.dc.DataCenter;
 import com.cloud.user.Account;
 
-@APICommand(name = "createZone", description = "Creates a Zone.", responseObject = ZoneResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createZone", description = "Creates a Zone.", responseObject = ZoneResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateZoneCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(CreateZoneCmd.class.getName());
 
     private static final String s_name = "createzoneresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.DNS1, type = CommandType.STRING, required = true, description = "the first DNS for the Zone")
     private String dns1;
@@ -70,10 +69,7 @@ public class CreateZoneCmd extends BaseCmd {
     @Parameter(name = ApiConstants.DOMAIN, type = CommandType.STRING, description = "Network domain name for the networks in the zone")
     private String domain;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               entityType = DomainResponse.class,
-               description = "the ID of the containing domain, null for public zones")
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "the ID of the containing domain, null for public zones")
     private Long domainId;
 
     @Parameter(name = ApiConstants.NETWORK_TYPE, type = CommandType.STRING, required = true, description = "network type of the zone, can be Basic or Advanced")
@@ -88,9 +84,9 @@ public class CreateZoneCmd extends BaseCmd {
     @Parameter(name = ApiConstants.LOCAL_STORAGE_ENABLED, type = CommandType.BOOLEAN, description = "true if local storage offering enabled, false otherwise")
     private Boolean localStorageEnabled;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getDns1() {
         return dns1;
@@ -154,8 +150,8 @@ public class CreateZoneCmd extends BaseCmd {
         return localStorageEnabled;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
     @Override
     public String getCommandName() {
         return s_name;
@@ -170,7 +166,7 @@ public class CreateZoneCmd extends BaseCmd {
     public void execute() {
         CallContext.current().setEventDetails("Zone Name: " + getZoneName());
         DataCenter result = _configService.createZone(this);
-        if (result != null){
+        if (result != null) {
             ZoneResponse response = _responseGenerator.createZoneResponse(ResponseView.Full, result, false);
             response.setResponseName(getCommandName());
             setResponseObject(response);

@@ -39,14 +39,14 @@ public class UserDispersingPlanner extends FirstFitPlanner implements Deployment
     private static final Logger s_logger = Logger.getLogger(UserDispersingPlanner.class);
 
     /**
-     * This method should reorder the given list of Cluster Ids by applying any necessary heuristic
-     * for this planner
-     * For UserDispersingPlanner we need to order the clusters by considering the number of VMs for this account
+     * This method should reorder the given list of Cluster Ids by applying any
+     * necessary heuristic for this planner For UserDispersingPlanner we need to
+     * order the clusters by considering the number of VMs for this account
+     *
      * @return List<Long> ordered list of Cluster Ids
      */
     @Override
-    protected List<Long> reorderClusters(long id, boolean isZone, Pair<List<Long>, Map<Long, Double>> clusterCapacityInfo, VirtualMachineProfile vmProfile,
-        DeploymentPlan plan) {
+    protected List<Long> reorderClusters(long id, boolean isZone, Pair<List<Long>, Map<Long, Double>> clusterCapacityInfo, VirtualMachineProfile vmProfile, DeploymentPlan plan) {
         List<Long> clusterIdsByCapacity = clusterCapacityInfo.first();
         if (vmProfile.getOwner() == null) {
             return clusterIdsByCapacity;
@@ -54,24 +54,26 @@ public class UserDispersingPlanner extends FirstFitPlanner implements Deployment
         long accountId = vmProfile.getOwner().getAccountId();
         Pair<List<Long>, Map<Long, Double>> clusterIdsVmCountInfo = listClustersByUserDispersion(id, isZone, accountId);
 
-        //now we have 2 cluster lists - one ordered by capacity and the other by number of VMs for this account
-        //need to apply weights to these to find the correct ordering to follow
+        // now we have 2 cluster lists - one ordered by capacity and the other
+        // by number of VMs for this account
+        // need to apply weights to these to find the correct ordering to follow
 
         if (_userDispersionWeight == 1.0f) {
             List<Long> clusterIds = clusterIdsVmCountInfo.first();
             clusterIds.retainAll(clusterIdsByCapacity);
             return clusterIds;
         } else {
-            //apply weights to the two lists
+            // apply weights to the two lists
             return orderByApplyingWeights(clusterCapacityInfo, clusterIdsVmCountInfo, accountId);
         }
 
     }
 
     /**
-     * This method should reorder the given list of Pod Ids by applying any necessary heuristic
-     * for this planner
-     * For UserDispersingPlanner we need to order the pods by considering the number of VMs for this account
+     * This method should reorder the given list of Pod Ids by applying any
+     * necessary heuristic for this planner For UserDispersingPlanner we need to
+     * order the pods by considering the number of VMs for this account
+     *
      * @return List<Long> ordered list of Pod Ids
      */
     @Override
@@ -84,15 +86,16 @@ public class UserDispersingPlanner extends FirstFitPlanner implements Deployment
 
         Pair<List<Long>, Map<Long, Double>> podIdsVmCountInfo = listPodsByUserDispersion(plan.getDataCenterId(), accountId);
 
-        //now we have 2 pod lists - one ordered by capacity and the other by number of VMs for this account
-        //need to apply weights to these to find the correct ordering to follow
+        // now we have 2 pod lists - one ordered by capacity and the other by
+        // number of VMs for this account
+        // need to apply weights to these to find the correct ordering to follow
 
         if (_userDispersionWeight == 1.0f) {
             List<Long> podIds = podIdsVmCountInfo.first();
             podIds.retainAll(podIdsByCapacity);
             return podIds;
         } else {
-            //apply weights to the two lists
+            // apply weights to the two lists
             return orderByApplyingWeights(podCapacityInfo, podIdsVmCountInfo, accountId);
         }
 
@@ -145,7 +148,7 @@ public class UserDispersingPlanner extends FirstFitPlanner implements Deployment
         if (s_logger.isDebugEnabled()) {
             s_logger.debug("Applying userDispersionWeight: " + _userDispersionWeight);
         }
-        //normalize the vmCountMap
+        // normalize the vmCountMap
         LinkedHashMap<Long, Double> normalisedVmCountIdMap = new LinkedHashMap<Long, Double>();
 
         Long totalVmsOfAccount = _vmInstanceDao.countRunningByAccount(accountId);
@@ -157,7 +160,7 @@ public class UserDispersingPlanner extends FirstFitPlanner implements Deployment
             normalisedVmCountIdMap.put(id, normalisedCount);
         }
 
-        //consider only those ids that are in capacity map.
+        // consider only those ids that are in capacity map.
 
         SortedMap<Double, List<Long>> sortedMap = new TreeMap<Double, List<Long>>();
         for (Long id : capacityOrderedIds) {

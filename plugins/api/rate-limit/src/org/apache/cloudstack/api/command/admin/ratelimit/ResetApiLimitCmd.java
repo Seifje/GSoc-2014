@@ -37,8 +37,7 @@ import org.apache.cloudstack.ratelimit.ApiRateLimitService;
 import com.cloud.configuration.Config;
 import com.cloud.user.Account;
 
-@APICommand(name = "resetApiLimit", responseObject = ApiLimitResponse.class, description = "Reset api count",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "resetApiLimit", responseObject = ApiLimitResponse.class, description = "Reset api count", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ResetApiLimitCmd extends BaseCmd {
     private static final Logger s_logger = Logger.getLogger(ResetApiLimitCmd.class.getName());
 
@@ -50,17 +49,17 @@ public class ResetApiLimitCmd extends BaseCmd {
     @Inject
     ConfigurationDao _configDao;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @ACL
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.UUID, entityType = AccountResponse.class, description = "the ID of the acount whose limit to be reset")
     private Long accountId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getAccountId() {
         return accountId;
@@ -70,9 +69,9 @@ public class ResetApiLimitCmd extends BaseCmd {
         this.accountId = accountId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -86,7 +85,9 @@ public class ResetApiLimitCmd extends BaseCmd {
             return account.getId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+                                          // command to SYSTEM so ERROR events
+                                          // are tracked
     }
 
     @Override

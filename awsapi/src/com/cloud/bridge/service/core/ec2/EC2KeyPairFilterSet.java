@@ -36,7 +36,8 @@ public class EC2KeyPairFilterSet {
     private Map<String, String> filterTypes = new HashMap<String, String>();
 
     public EC2KeyPairFilterSet() {
-        // -> use these values to check that the proper filter is passed to this type of filter set
+        // -> use these values to check that the proper filter is passed to this
+        // type of filter set
         filterTypes.put("fingerprint", "String");
         filterTypes.put("key-name", "String");
     }
@@ -49,7 +50,8 @@ public class EC2KeyPairFilterSet {
             throw new EC2ServiceException(ClientError.InvalidFilter, "Filter '" + filterName + "' is invalid");
         }
 
-        // ToDo we could add checks to make sure the type of a filters value is correct (e.g., an integer)
+        // ToDo we could add checks to make sure the type of a filters value is
+        // correct (e.g., an integer)
         filterSet.add(param);
     }
 

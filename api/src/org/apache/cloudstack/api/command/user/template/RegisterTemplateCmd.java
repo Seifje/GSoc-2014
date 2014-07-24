@@ -41,31 +41,23 @@ import org.apache.log4j.Logger;
 import com.cloud.exception.ResourceAllocationException;
 import com.cloud.template.VirtualMachineTemplate;
 
-@APICommand(name = "registerTemplate", description = "Registers an existing template into the CloudStack cloud. ", responseObject = TemplateResponse.class, responseView = ResponseView.Restricted,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "registerTemplate", description = "Registers an existing template into the CloudStack cloud. ", responseObject = TemplateResponse.class, responseView = ResponseView.Restricted, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class RegisterTemplateCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(RegisterTemplateCmd.class.getName());
 
     private static final String s_name = "registertemplateresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.BITS, type = CommandType.INTEGER, description = "32 or 64 bits support. 64 by default")
     private Integer bits;
 
-    @Parameter(name = ApiConstants.DISPLAY_TEXT,
-               type = CommandType.STRING,
-               required = true,
-               description = "the display text of the template. This is usually used for display purposes.",
-               length = 4096)
+    @Parameter(name = ApiConstants.DISPLAY_TEXT, type = CommandType.STRING, required = true, description = "the display text of the template. This is usually used for display purposes.", length = 4096)
     private String displayText;
 
-    @Parameter(name = ApiConstants.FORMAT,
-               type = CommandType.STRING,
-               required = true,
-               description = "the format for the template. Possible values include QCOW2, RAW, and VHD.")
+    @Parameter(name = ApiConstants.FORMAT, type = CommandType.STRING, required = true, description = "the format for the template. Possible values include QCOW2, RAW, and VHD.")
     private String format;
 
     @Parameter(name = ApiConstants.HYPERVISOR, type = CommandType.STRING, required = true, description = "the target hypervisor for the template")
@@ -80,16 +72,10 @@ public class RegisterTemplateCmd extends BaseCmd {
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "the name of the template")
     private String templateName;
 
-    @Parameter(name = ApiConstants.OS_TYPE_ID,
-               type = CommandType.UUID,
-               entityType = GuestOSResponse.class,
-               required = true,
-               description = "the ID of the OS Type that best represents the OS of this template.")
+    @Parameter(name = ApiConstants.OS_TYPE_ID, type = CommandType.UUID, entityType = GuestOSResponse.class, required = true, description = "the ID of the OS Type that best represents the OS of this template.")
     private Long osTypeId;
 
-    @Parameter(name = ApiConstants.PASSWORD_ENABLED,
-               type = CommandType.BOOLEAN,
-               description = "true if the template supports the password reset feature; default is false")
+    @Parameter(name = ApiConstants.PASSWORD_ENABLED, type = CommandType.BOOLEAN, description = "true if the template supports the password reset feature; default is false")
     private Boolean passwordEnabled;
 
     @Parameter(name = ApiConstants.SSHKEY_ENABLED, type = CommandType.BOOLEAN, description = "true if the template supports the sshkey upload feature; default is false")
@@ -101,20 +87,13 @@ public class RegisterTemplateCmd extends BaseCmd {
     @Parameter(name = ApiConstants.REQUIRES_HVM, type = CommandType.BOOLEAN, description = "true if this template requires HVM")
     private Boolean requiresHvm;
 
-    @Parameter(name = ApiConstants.URL,
-               type = CommandType.STRING,
-               required = true,
-               description = "the URL of where the template is hosted. Possible URL include http:// and https://")
+    @Parameter(name = ApiConstants.URL, type = CommandType.STRING, required = true, description = "the URL of where the template is hosted. Possible URL include http:// and https://")
     private String url;
 
-    @Parameter(name=ApiConstants.ZONE_ID, type=CommandType.UUID, entityType = ZoneResponse.class,
-            required=true, description="the ID of the zone the template is to be hosted on")
+    @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, required = true, description = "the ID of the zone the template is to be hosted on")
     protected Long zoneId;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               entityType = DomainResponse.class,
-               description = "an optional domainId. If the account parameter is used, domainId must also be used.")
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "an optional domainId. If the account parameter is used, domainId must also be used.")
     private Long domainId;
 
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "an optional accountName. Must be used with domainId.")
@@ -132,17 +111,15 @@ public class RegisterTemplateCmd extends BaseCmd {
     @Parameter(name = ApiConstants.DETAILS, type = CommandType.MAP, description = "Template details in key/value pairs.")
     protected Map details;
 
-    @Parameter(name = ApiConstants.IS_DYNAMICALLY_SCALABLE,
-               type = CommandType.BOOLEAN,
-               description = "true if template contains XS/VMWare tools inorder to support dynamic scaling of VM cpu/memory")
+    @Parameter(name = ApiConstants.IS_DYNAMICALLY_SCALABLE, type = CommandType.BOOLEAN, description = "true if template contains XS/VMWare tools inorder to support dynamic scaling of VM cpu/memory")
     protected Boolean isDynamicallyScalable;
 
     @Parameter(name = ApiConstants.ROUTING, type = CommandType.BOOLEAN, description = "true if the template type is routing i.e., if template is used to deploy router")
     protected Boolean isRoutingType;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Integer getBits() {
         return bits;
@@ -234,9 +211,9 @@ public class RegisterTemplateCmd extends BaseCmd {
         return isRoutingType;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

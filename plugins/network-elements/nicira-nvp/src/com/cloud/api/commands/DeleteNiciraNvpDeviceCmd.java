@@ -40,39 +40,33 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.network.element.NiciraNvpElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "deleteNiciraNvpDevice", responseObject = SuccessResponse.class, description = " delete a nicira nvp device",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteNiciraNvpDevice", responseObject = SuccessResponse.class, description = " delete a nicira nvp device", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteNiciraNvpDeviceCmd extends BaseAsyncCmd {
     private static final String s_name = "deleteniciranvpdeviceresponse";
     @Inject
     protected NiciraNvpElementService niciraNvpElementService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.NICIRA_NVP_DEVICE_ID,
-               type = CommandType.UUID,
-               entityType = NiciraNvpDeviceResponse.class,
-               required = true,
-               description = "Nicira device ID")
+    @Parameter(name = ApiConstants.NICIRA_NVP_DEVICE_ID, type = CommandType.UUID, entityType = NiciraNvpDeviceResponse.class, required = true, description = "Nicira device ID")
     private Long niciraNvpDeviceId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getNiciraNvpDeviceId() {
         return niciraNvpDeviceId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             boolean result = niciraNvpElementService.deleteNiciraNvpDevice(this);
             if (result) {

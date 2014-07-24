@@ -124,9 +124,9 @@ public class VolumeVO implements Volume {
 
     @Column(name = "update_count", updatable = true, nullable = false)
     protected long updatedCount; // This field should be updated everytime the
-                                 // state is updated. There's no set method in
-                                 // the vo object because it is done with in the
-                                 // dao code.
+    // state is updated. There's no set method in
+    // the vo object because it is done with in the
+    // dao code.
 
     @Column(name = "recreatable")
     boolean recreatable;
@@ -167,9 +167,8 @@ public class VolumeVO implements Volume {
     Integer hypervisorSnapshotReserve;
 
     // Real Constructor
-    public VolumeVO(Type type, String name, long dcId, long domainId,
-            long accountId, long diskOfferingId, Storage.ProvisioningType provisioningType, long size,
-            Long minIops, Long maxIops, String iScsiName) {
+    public VolumeVO(Type type, String name, long dcId, long domainId, long accountId, long diskOfferingId, Storage.ProvisioningType provisioningType, long size, Long minIops,
+            Long maxIops, String iScsiName) {
         this.volumeType = type;
         this.name = name;
         dataCenterId = dcId;
@@ -185,10 +184,8 @@ public class VolumeVO implements Volume {
         uuid = UUID.randomUUID().toString();
     }
 
-    public VolumeVO(String name, long dcId, Long podId, long accountId,
-            long domainId, Long instanceId, String folder, String path, Storage.ProvisioningType provisioningType,
-            long size, Long minIops, Long maxIops, String iScsiName,
-            Volume.Type vType) {
+    public VolumeVO(String name, long dcId, Long podId, long accountId, long domainId, Long instanceId, String folder, String path, Storage.ProvisioningType provisioningType,
+            long size, Long minIops, Long maxIops, String iScsiName, Volume.Type vType) {
         this.name = name;
         this.accountId = accountId;
         this.domainId = domainId;
@@ -208,8 +205,7 @@ public class VolumeVO implements Volume {
         uuid = UUID.randomUUID().toString();
     }
 
-    public VolumeVO(String name, long dcId, long podId, long accountId,
-            long domainId, Long instanceId, String folder, String path, Storage.ProvisioningType provisioningType,
+    public VolumeVO(String name, long dcId, long podId, long accountId, long domainId, Long instanceId, String folder, String path, Storage.ProvisioningType provisioningType,
             long size, Volume.Type vType) {
         this.name = name;
         this.accountId = accountId;
@@ -232,20 +228,8 @@ public class VolumeVO implements Volume {
 
     // Copy Constructor
     public VolumeVO(Volume that) {
-        this(that.getName(),
-            that.getDataCenterId(),
-            that.getPodId(),
-            that.getAccountId(),
-            that.getDomainId(),
-            that.getInstanceId(),
-            that.getFolder(),
-            that.getPath(),
-            that.getProvisioningType(),
-            that.getSize(),
-            that.getMinIops(),
-            that.getMaxIops(),
-            that.get_iScsiName(),
-            that.getVolumeType());
+        this(that.getName(), that.getDataCenterId(), that.getPodId(), that.getAccountId(), that.getDomainId(), that.getInstanceId(), that.getFolder(), that.getPath(), that
+                .getProvisioningType(), that.getSize(), that.getMinIops(), that.getMaxIops(), that.get_iScsiName(), that.getVolumeType());
         recreatable = that.isRecreatable();
         state = that.getState();
         size = that.getSize();
@@ -568,11 +552,11 @@ public class VolumeVO implements Volume {
     }
 
     @Override
-    public  boolean isDisplay(){
+    public boolean isDisplay() {
         return displayVolume;
     }
 
-    public void setDisplay(boolean display){
+    public void setDisplay(boolean display) {
         this.displayVolume = display;
     }
 
@@ -590,15 +574,15 @@ public class VolumeVO implements Volume {
     }
 
     @Override
-    public ProvisioningType getProvisioningType(){
+    public ProvisioningType getProvisioningType() {
         return provisioningType;
     }
 
-    public void setProvisioningType(ProvisioningType provisioningType){
+    public void setProvisioningType(ProvisioningType provisioningType) {
         this.provisioningType = provisioningType;
     }
 
-    public void setVmSnapshotChainSize(Long vmSnapshotChainSize){
+    public void setVmSnapshotChainSize(Long vmSnapshotChainSize) {
         this.vmSnapshotChainSize = vmSnapshotChainSize;
     }
 
@@ -616,7 +600,8 @@ public class VolumeVO implements Volume {
     }
 
     // don't use this directly, use volume state machine instead
-    // This method is used by UpdateVolume as a part of "Better control over first class objects in CS"
+    // This method is used by UpdateVolume as a part of
+    // "Better control over first class objects in CS"
     public void setState(State state) {
         this.state = state;
     }

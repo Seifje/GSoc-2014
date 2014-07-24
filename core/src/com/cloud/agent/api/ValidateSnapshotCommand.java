@@ -28,12 +28,18 @@ public class ValidateSnapshotCommand extends Command {
     }
 
     /**
-     * @param primaryStoragePoolNameLabel   The primary storage Pool Name Label
-     * @param volumeUuid        The UUID of the volume for which the snapshot was taken
-     * @param firstBackupUuid   This UUID of the first snapshot that was ever taken for this volume, even it was deleted.
-     * @param previousSnapshotUuid The UUID of the previous snapshot on the primary.
-     * @param templateUuid      If this is a root volume and no snapshot has been taken for it,
-     *                          this is the UUID of the template VDI.
+     * @param primaryStoragePoolNameLabel
+     *            The primary storage Pool Name Label
+     * @param volumeUuid
+     *            The UUID of the volume for which the snapshot was taken
+     * @param firstBackupUuid
+     *            This UUID of the first snapshot that was ever taken for this
+     *            volume, even it was deleted.
+     * @param previousSnapshotUuid
+     *            The UUID of the previous snapshot on the primary.
+     * @param templateUuid
+     *            If this is a root volume and no snapshot has been taken for
+     *            it, this is the UUID of the template VDI.
      */
     public ValidateSnapshotCommand(String primaryStoragePoolNameLabel, String volumeUuid, String firstBackupUuid, String previousSnapshotUuid, String templateUuid) {
         this.primaryStoragePoolNameLabel = primaryStoragePoolNameLabel;

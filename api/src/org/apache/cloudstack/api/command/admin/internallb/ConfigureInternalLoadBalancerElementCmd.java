@@ -40,12 +40,7 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.network.VirtualRouterProvider;
 import com.cloud.user.Account;
 
-@APICommand(name = "configureInternalLoadBalancerElement",
-            responseObject = InternalLoadBalancerElementResponse.class,
-            description = "Configures an Internal Load Balancer element.",
-            since = "4.2.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "configureInternalLoadBalancerElement", responseObject = InternalLoadBalancerElementResponse.class, description = "Configures an Internal Load Balancer element.", since = "4.2.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ConfigureInternalLoadBalancerElementCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(ConfigureInternalLoadBalancerElementCmd.class.getName());
     private static final String s_name = "configureinternalloadbalancerelementresponse";
@@ -53,23 +48,19 @@ public class ConfigureInternalLoadBalancerElementCmd extends BaseAsyncCmd {
     @Inject
     private List<InternalLoadBalancerElementService> _service;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = InternalLoadBalancerElementResponse.class,
-               required = true,
-               description = "the ID of the internal lb provider")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = InternalLoadBalancerElementResponse.class, required = true, description = "the ID of the internal lb provider")
     private Long id;
 
     @Parameter(name = ApiConstants.ENABLED, type = CommandType.BOOLEAN, required = true, description = "Enables/Disables the Internal Load Balancer element")
     private Boolean enabled;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -79,9 +70,9 @@ public class ConfigureInternalLoadBalancerElementCmd extends BaseAsyncCmd {
         return enabled;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

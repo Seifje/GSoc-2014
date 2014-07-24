@@ -139,9 +139,7 @@ public class AclOnPrivateGwTest {
     }
 
     @Configuration
-    @ComponentScan(basePackageClasses = {VpcManagerImpl.class},
-                   includeFilters = {@ComponentScan.Filter(value = TestConfiguration.Library.class, type = FilterType.CUSTOM)},
-                   useDefaultFilters = false)
+    @ComponentScan(basePackageClasses = {VpcManagerImpl.class}, includeFilters = {@ComponentScan.Filter(value = TestConfiguration.Library.class, type = FilterType.CUSTOM)}, useDefaultFilters = false)
     public static class TestConfiguration extends SpringUtils.CloudStackTestConfiguration {
         @Bean
         public VpcOfferingDao vpcOfferingDao() {

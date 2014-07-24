@@ -44,7 +44,7 @@ public interface BaremetalDhcpManager extends Manager, PluggableService {
     }
 
     boolean addVirtualMachineIntoNetwork(Network network, NicProfile nic, VirtualMachineProfile profile, DeployDestination dest, ReservationContext context)
-        throws ResourceUnavailableException;
+            throws ResourceUnavailableException;
 
     BaremetalDhcpVO addDchpServer(AddBaremetalDhcpCmd cmd);
 

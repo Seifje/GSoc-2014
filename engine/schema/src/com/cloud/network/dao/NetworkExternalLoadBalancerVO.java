@@ -31,8 +31,9 @@ import org.apache.cloudstack.api.InternalIdentity;
 import com.cloud.utils.db.GenericDao;
 
 /**
- * NetworkExternalLoadBalancerVO contains mapping of a network and the external load balancer device id assigned to the network
-  */
+ * NetworkExternalLoadBalancerVO contains mapping of a network and the external
+ * load balancer device id assigned to the network
+ */
 
 @Entity
 @Table(name = "network_external_lb_device_map")

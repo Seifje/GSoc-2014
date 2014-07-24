@@ -25,7 +25,6 @@ import org.apache.cloudstack.api.ServerApiException;
 import com.cloud.exception.ResourceAllocationException;
 import org.apache.cloudstack.context.CallContext;
 
-
 /**
  * This worker invokes create on the {@link BaseCmd} itself
  *
@@ -33,9 +32,7 @@ import org.apache.cloudstack.context.CallContext;
  */
 public class CommandCreationWorker implements DispatchWorker {
 
-    private static final String ATTEMP_TO_CREATE_NON_CREATION_CMD =
-            "Trying to invoke creation on a Command that is not " +
-            BaseAsyncCreateCmd.class.getName();
+    private static final String ATTEMP_TO_CREATE_NON_CREATION_CMD = "Trying to invoke creation on a Command that is not " + BaseAsyncCreateCmd.class.getName();
 
     @Override
     public void handle(final DispatchTask task) {
@@ -46,12 +43,10 @@ public class CommandCreationWorker implements DispatchWorker {
                 CallContext.current().setEventDisplayEnabled(cmd.isDisplay());
                 ((BaseAsyncCreateCmd)cmd).create();
             } catch (final ResourceAllocationException e) {
-                throw new ServerApiException(ApiErrorCode.RESOURCE_ALLOCATION_ERROR,
-                        e.getMessage(), e);
+                throw new ServerApiException(ApiErrorCode.RESOURCE_ALLOCATION_ERROR, e.getMessage(), e);
             }
         } else {
-            throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR,
-                    ATTEMP_TO_CREATE_NON_CREATION_CMD);
+            throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, ATTEMP_TO_CREATE_NON_CREATION_CMD);
         }
     }
 

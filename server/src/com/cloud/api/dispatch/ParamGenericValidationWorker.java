@@ -29,9 +29,9 @@ import org.apache.log4j.Logger;
 
 /**
  * This worker validates parameters in a generic way, by using annotated
- * restrictions without involving the {@Link BaseCmd}. This worker doesn't
- * know or care about the meaning of the parameters and that's why we can
- * have it out of the {@Link BaseCmd}
+ * restrictions without involving the {@Link BaseCmd}. This worker
+ * doesn't know or care about the meaning of the parameters and that's why we
+ * can have it out of the {@Link BaseCmd}
  *
  * @author afornie
  */
@@ -85,14 +85,14 @@ public class ParamGenericValidationWorker implements DispatchWorker {
             // If none of the expected params matches, we have an unknown param
             boolean matchedCurrentParam = false;
             for (final String expectedName : expectedParamNames) {
-                if (expectedName.equalsIgnoreCase((String) actualParamName)) {
+                if (expectedName.equalsIgnoreCase((String)actualParamName)) {
                     matchedCurrentParam = true;
                     break;
                 }
             }
             if (!matchedCurrentParam) {
                 errorMsg.append(" ").append(actualParamName);
-                foundUnknownParam= true;
+                foundUnknownParam = true;
             }
         }
 
@@ -103,7 +103,8 @@ public class ParamGenericValidationWorker implements DispatchWorker {
 
     protected List<String> getParamNamesForCommand(final BaseCmd cmd) {
         final List<String> paramNames = new ArrayList<String>();
-        // The expected param names are all the specific for the current command class ...
+        // The expected param names are all the specific for the current command
+        // class ...
         for (final Field field : cmd.getParamFields()) {
             final Parameter parameterAnnotation = field.getAnnotation(Parameter.class);
             paramNames.add(parameterAnnotation.name());

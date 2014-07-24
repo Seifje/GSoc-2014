@@ -25,7 +25,8 @@ import com.vmware.vim25.VirtualMachineConfigSpec;
 import com.cloud.hypervisor.vmware.util.VmwareContext;
 
 /**
- * Interface to consolidate ESX(i) hosts and HA/FT clusters into a common interface used by CloudStack Hypervisor resources
+ * Interface to consolidate ESX(i) hosts and HA/FT clusters into a common
+ * interface used by CloudStack Hypervisor resources
  */
 public interface VmwareHypervisorHost {
     VmwareContext getContext();
@@ -52,8 +53,8 @@ public interface VmwareHypervisorHost {
 
     boolean createVm(VirtualMachineConfigSpec vmSpec) throws Exception;
 
-    boolean createBlankVm(String vmName, String vmInternalCSName, int cpuCount, int cpuSpeedMHz, int cpuReservedMHz, boolean limitCpuUse, int memoryMB,
-        int memoryReserveMB, String guestOsIdentifier, ManagedObjectReference morDs, boolean snapshotDirToParent) throws Exception;
+    boolean createBlankVm(String vmName, String vmInternalCSName, int cpuCount, int cpuSpeedMHz, int cpuReservedMHz, boolean limitCpuUse, int memoryMB, int memoryReserveMB,
+            String guestOsIdentifier, ManagedObjectReference morDs, boolean snapshotDirToParent) throws Exception;
 
     void importVmFromOVF(String ovfFilePath, String vmName, DatastoreMO dsMo, String diskOption) throws Exception;
 

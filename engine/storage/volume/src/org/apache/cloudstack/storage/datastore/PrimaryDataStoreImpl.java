@@ -295,7 +295,7 @@ public class PrimaryDataStoreImpl implements PrimaryDataStore {
 
     @Override
     public boolean delete(DataObject obj) {
-        //TODO: clean up through driver
+        // TODO: clean up through driver
         objectInStoreMgr.delete(obj);
         return true;
     }
@@ -386,13 +386,13 @@ public class PrimaryDataStoreImpl implements PrimaryDataStore {
 
     @Override
     public boolean isInMaintenance() {
-        return getStatus() == StoragePoolStatus.PrepareForMaintenance || getStatus() == StoragePoolStatus.Maintenance ||
-            getStatus() == StoragePoolStatus.ErrorInMaintenance || getRemoved() != null;
+        return getStatus() == StoragePoolStatus.PrepareForMaintenance || getStatus() == StoragePoolStatus.Maintenance || getStatus() == StoragePoolStatus.ErrorInMaintenance
+                || getRemoved() != null;
     }
 
     @Override
     public HypervisorType getHypervisor() {
-       return pdsv.getHypervisor();
+        return pdsv.getHypervisor();
     }
 
     @Override

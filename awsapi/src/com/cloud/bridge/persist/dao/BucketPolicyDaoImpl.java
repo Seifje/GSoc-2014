@@ -36,8 +36,9 @@ public class BucketPolicyDaoImpl extends GenericDaoBase<BucketPolicyVO, Long> im
     }
 
     /**
-     * Since a bucket policy can exist before its bucket we also need to keep the policy's owner
-     * so we can restrict who modifies it (because of the "s3:CreateBucket" action).
+     * Since a bucket policy can exist before its bucket we also need to keep
+     * the policy's owner so we can restrict who modifies it (because of the
+     * "s3:CreateBucket" action).
      */
     @Override
     public BucketPolicyVO getByName(String bucketName) {

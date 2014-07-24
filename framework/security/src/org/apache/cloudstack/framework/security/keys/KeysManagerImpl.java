@@ -36,17 +36,17 @@ import com.cloud.utils.db.SearchBuilder;
 import com.cloud.utils.db.SearchCriteria;
 
 /**
- * To be perfectly honest, I'm not sure why we need this class.  This used
- * to be in ManagementServerImpl.  I moved the functionality because it seems
- * many features will need this.  However, the right thing will be for setup
- * and upgrade to take care of key generation.  Here, the methods appear to
- * mainly be used for dynamic generation.  I added this class because after
- * talking to Kelven, we think there will be other functionalities we need
- * to centralize to this class.  We'll see how that works out.
+ * To be perfectly honest, I'm not sure why we need this class. This used to be
+ * in ManagementServerImpl. I moved the functionality because it seems many
+ * features will need this. However, the right thing will be for setup and
+ * upgrade to take care of key generation. Here, the methods appear to mainly be
+ * used for dynamic generation. I added this class because after talking to
+ * Kelven, we think there will be other functionalities we need to centralize to
+ * this class. We'll see how that works out.
  *
- * There's multiple problems here that we need to fix.
- *   - Multiple servers can be generating keys.  This is not atomic.
- *   - The functionality of generating the keys should be moved over to setup/upgrade.
+ * There's multiple problems here that we need to fix. - Multiple servers can be
+ * generating keys. This is not atomic. - The functionality of generating the
+ * keys should be moved over to setup/upgrade.
  *
  */
 public class KeysManagerImpl implements KeysManager, Configurable {

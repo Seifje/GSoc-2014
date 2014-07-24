@@ -33,8 +33,11 @@ import com.cloud.utils.component.ManagerBase;
 @Local({Site2SiteVpnServiceProvider.class})
 public class MockSite2SiteVpnServiceProvider extends ManagerBase implements Site2SiteVpnServiceProvider {
 
-    /* (non-Javadoc)
-     * @see com.cloud.utils.component.Adapter#configure(java.lang.String, java.util.Map)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.utils.component.Adapter#configure(java.lang.String,
+     * java.util.Map)
      */
     @Override
     public boolean configure(String name, Map<String, Object> params) throws ConfigurationException {
@@ -42,7 +45,9 @@ public class MockSite2SiteVpnServiceProvider extends ManagerBase implements Site
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Adapter#getName()
      */
     @Override
@@ -51,7 +56,9 @@ public class MockSite2SiteVpnServiceProvider extends ManagerBase implements Site
         return "Site2SiteVpnServiceProvider";
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Adapter#start()
      */
     @Override
@@ -60,7 +67,9 @@ public class MockSite2SiteVpnServiceProvider extends ManagerBase implements Site
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Adapter#stop()
      */
     @Override
@@ -69,8 +78,12 @@ public class MockSite2SiteVpnServiceProvider extends ManagerBase implements Site
         return true;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.element.Site2SiteVpnServiceProvider#startSite2SiteVpn(com.cloud.network.Site2SiteVpnConnection)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.element.Site2SiteVpnServiceProvider#startSite2SiteVpn
+     * (com.cloud.network.Site2SiteVpnConnection)
      */
     @Override
     public boolean startSite2SiteVpn(Site2SiteVpnConnection conn) throws ResourceUnavailableException {
@@ -78,8 +91,12 @@ public class MockSite2SiteVpnServiceProvider extends ManagerBase implements Site
         return true;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.element.Site2SiteVpnServiceProvider#stopSite2SiteVpn(com.cloud.network.Site2SiteVpnConnection)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.element.Site2SiteVpnServiceProvider#stopSite2SiteVpn
+     * (com.cloud.network.Site2SiteVpnConnection)
      */
     @Override
     public boolean stopSite2SiteVpn(Site2SiteVpnConnection conn) throws ResourceUnavailableException {

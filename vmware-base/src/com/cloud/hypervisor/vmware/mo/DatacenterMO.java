@@ -69,9 +69,8 @@ public class DatacenterMO extends BaseMO {
         ManagedObjectReference morFolder = (ManagedObjectReference)_context.getVimClient().getDynamicProperty(_mor, "vmFolder");
         assert (morFolder != null);
 
-        ManagedObjectReference morTask =
-            _context.getService()
-                .registerVMTask(morFolder, String.format("[%s] %s/%s", datastoreName, templateName, templateFileName), templateName, true, null, morHost);
+        ManagedObjectReference morTask = _context.getService().registerVMTask(morFolder, String.format("[%s] %s/%s", datastoreName, templateName, templateFileName), templateName,
+                true, null, morHost);
 
         boolean result = _context.getVimClient().waitForTask(morTask);
         if (!result) {
@@ -114,13 +113,13 @@ public class DatacenterMO extends BaseMO {
                             if (prop.getName().equalsIgnoreCase("name")) {
                                 if (prop.getVal().toString().equals(vmLabel)) {
                                     list.add(new VirtualMachineMO(_context, oc.getObj()));
-                                    break;        // break out inner loop
+                                    break; // break out inner loop
                                 }
                             } else if (prop.getVal() instanceof CustomFieldStringValue) {
                                 String val = ((CustomFieldStringValue)prop.getVal()).getValue();
                                 if (val.equals(vmLabel)) {
                                     list.add(new VirtualMachineMO(_context, oc.getObj()));
-                                    break;        // break out inner loop
+                                    break; // break out inner loop
                                 }
                             }
                         }

@@ -37,8 +37,7 @@ import com.cloud.event.EventTypes;
 import com.cloud.server.ResourceTag;
 import com.cloud.server.ResourceTag.ResourceObjectType;
 
-@APICommand(name = "deleteTags", description = "Deleting resource tag(s)", responseObject = SuccessResponse.class, since = "4.0.0", entityType = {ResourceTag.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteTags", description = "Deleting resource tag(s)", responseObject = SuccessResponse.class, since = "4.0.0", entityType = {ResourceTag.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteTagsCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(DeleteTagsCmd.class.getName());
 
@@ -54,16 +53,12 @@ public class DeleteTagsCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.RESOURCE_TYPE, type = CommandType.STRING, required = true, description = "Delete tag by resource type")
     private String resourceType;
 
-    @Parameter(name = ApiConstants.RESOURCE_IDS,
-               type = CommandType.LIST,
-               required = true,
-               collectionType = CommandType.STRING,
-               description = "Delete tags for resource id(s)")
+    @Parameter(name = ApiConstants.RESOURCE_IDS, type = CommandType.LIST, required = true, collectionType = CommandType.STRING, description = "Delete tags for resource id(s)")
     private List<String> resourceIds;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public ResourceObjectType getResourceType() {
         return _taggedResourceService.getResourceType(resourceType);
@@ -100,7 +95,7 @@ public class DeleteTagsCmd extends BaseAsyncCmd {
 
     @Override
     public long getEntityOwnerId() {
-        //FIXME - validate the owner here
+        // FIXME - validate the owner here
         return 1;
     }
 

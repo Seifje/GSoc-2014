@@ -42,8 +42,8 @@ import com.cloud.utils.PropertiesUtil;
 /**
  * ManagementNetworkGuru
  *
- * Replace the default management network strategy (PodBasedNetworkGuru) by using a Isolated network for management
- * traffic.
+ * Replace the default management network strategy (PodBasedNetworkGuru) by
+ * using a Isolated network for management traffic.
  */
 @Component
 public class ManagementNetworkGuru extends ContrailGuru {
@@ -118,8 +118,7 @@ public class ManagementNetworkGuru extends ContrailGuru {
         if (!canHandle(offering)) {
             return null;
         }
-        NetworkVO network =
-            new NetworkVO(offering.getTrafficType(), Mode.Dhcp, BroadcastDomainType.Lswitch, offering.getId(), Network.State.Allocated, plan.getDataCenterId(),
+        NetworkVO network = new NetworkVO(offering.getTrafficType(), Mode.Dhcp, BroadcastDomainType.Lswitch, offering.getId(), Network.State.Allocated, plan.getDataCenterId(),
                 plan.getPhysicalNetworkId());
         if (_mgmtCidr != null) {
             network.setCidr(_mgmtCidr);

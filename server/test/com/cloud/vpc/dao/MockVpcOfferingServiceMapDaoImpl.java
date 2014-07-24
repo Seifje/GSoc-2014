@@ -30,8 +30,11 @@ import com.cloud.utils.db.GenericDaoBase;
 @DB()
 public class MockVpcOfferingServiceMapDaoImpl extends GenericDaoBase<VpcOfferingServiceMapVO, Long> implements VpcOfferingServiceMapDao {
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpc.Dao.VpcOfferingServiceMapDao#listByVpcOffId(long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpc.Dao.VpcOfferingServiceMapDao#listByVpcOffId(long)
      */
     @Override
     public List<VpcOfferingServiceMapVO> listByVpcOffId(long vpcOffId) {
@@ -39,8 +42,12 @@ public class MockVpcOfferingServiceMapDaoImpl extends GenericDaoBase<VpcOffering
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpc.Dao.VpcOfferingServiceMapDao#areServicesSupportedByNetworkOffering(long, com.cloud.network.Network.Service[])
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.vpc.Dao.VpcOfferingServiceMapDao#
+     * areServicesSupportedByNetworkOffering(long,
+     * com.cloud.network.Network.Service[])
      */
     @Override
     public boolean areServicesSupportedByNetworkOffering(long networkOfferingId, Service[] services) {
@@ -48,8 +55,12 @@ public class MockVpcOfferingServiceMapDaoImpl extends GenericDaoBase<VpcOffering
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpc.Dao.VpcOfferingServiceMapDao#listServicesForVpcOffering(long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpc.Dao.VpcOfferingServiceMapDao#listServicesForVpcOffering
+     * (long)
      */
     @Override
     public List<String> listServicesForVpcOffering(long vpcOfferingId) {
@@ -57,8 +68,12 @@ public class MockVpcOfferingServiceMapDaoImpl extends GenericDaoBase<VpcOffering
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpc.Dao.VpcOfferingServiceMapDao#findByServiceProviderAndOfferingId(java.lang.String, java.lang.String, long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.vpc.Dao.VpcOfferingServiceMapDao#
+     * findByServiceProviderAndOfferingId(java.lang.String, java.lang.String,
+     * long)
      */
     @Override
     public VpcOfferingServiceMapVO findByServiceProviderAndOfferingId(String service, String provider, long vpcOfferingId) {

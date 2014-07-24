@@ -51,8 +51,8 @@ public class VirtualMachineEntityImpl implements VirtualMachineEntity {
         this.vmEntityVO = this.manager.loadVirtualMachine(vmId);
     }
 
-    public void init(String vmId, String owner, String hostName, String displayName, int cpu, int speed, long memory, List<String> computeTags,
-        List<String> rootDiskTags, List<String> networks) {
+    public void init(String vmId, String owner, String hostName, String displayName, int cpu, int speed, long memory, List<String> computeTags, List<String> rootDiskTags,
+            List<String> networks) {
         init(vmId);
         this.vmEntityVO.setOwner(owner);
         this.vmEntityVO.setHostname(hostName);
@@ -196,7 +196,7 @@ public class VirtualMachineEntityImpl implements VirtualMachineEntity {
 
     @Override
     public String reserve(DeploymentPlanner plannerToUse, DeploymentPlan plan, ExcludeList exclude, String caller) throws InsufficientCapacityException,
-        ResourceUnavailableException {
+            ResourceUnavailableException {
         return manager.reserveVirtualMachine(this.vmEntityVO, plannerToUse, plan, exclude);
     }
 
@@ -207,8 +207,7 @@ public class VirtualMachineEntityImpl implements VirtualMachineEntity {
     }
 
     @Override
-    public void deploy(String reservationId, String caller, Map<VirtualMachineProfile.Param, Object> params) throws InsufficientCapacityException,
-        ResourceUnavailableException {
+    public void deploy(String reservationId, String caller, Map<VirtualMachineProfile.Param, Object> params) throws InsufficientCapacityException, ResourceUnavailableException {
         manager.deployVirtualMachine(reservationId, this.vmEntityVO, caller, params);
     }
 

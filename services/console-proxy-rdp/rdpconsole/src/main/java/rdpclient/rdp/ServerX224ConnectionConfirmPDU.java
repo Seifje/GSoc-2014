@@ -66,9 +66,10 @@ public class ServerX224ConnectionConfirmPDU extends OneTimeSwitch {
     public static final int SSL_CERT_NOT_ON_SERVER = 0x00000003;
 
     /**
-     * The list of requested security protocols is not consistent with the current
-     * security protocol in effect. This error is only possible when the Direct
-     * Approach is used and an External Security Protocolis already being used.
+     * The list of requested security protocols is not consistent with the
+     * current security protocol in effect. This error is only possible when the
+     * Direct Approach is used and an External Security Protocolis already being
+     * used.
      */
     public static final int INCONSISTENT_FLAGS = 0x00000004;
 
@@ -79,8 +80,8 @@ public class ServerX224ConnectionConfirmPDU extends OneTimeSwitch {
     public static final int HYBRID_REQUIRED_BY_SERVER = 0x00000005;
 
     /**
-     * The server requires that the client support Enhanced RDP Security with TLS
-     * 1.0, 1.1 or 1.2 and certificate-based client authentication.
+     * The server requires that the client support Enhanced RDP Security with
+     * TLS 1.0, 1.1 or 1.2 and certificate-based client authentication.
      */
     public static final int SSL_WITH_USER_AUTH_REQUIRED_BY_SERVER = 0x00000006;
 
@@ -100,8 +101,8 @@ public class ServerX224ConnectionConfirmPDU extends OneTimeSwitch {
 
         int x224Type = buf.readUnsignedByte();
         if (x224Type != X224_TPDU_CONNECTION_CONFIRM)
-            throw new RuntimeException("Unexpected type of packet. Expected type: " + X224_TPDU_CONNECTION_CONFIRM + " (CONNECTION CONFIRM), actual type: "
-                    + x224Type + ", length: " + x224Length + ", buf: " + buf + ".");
+            throw new RuntimeException("Unexpected type of packet. Expected type: " + X224_TPDU_CONNECTION_CONFIRM + " (CONNECTION CONFIRM), actual type: " + x224Type
+                    + ", length: " + x224Length + ", buf: " + buf + ".");
 
         // Ignore destination reference, because client side has only one node
         buf.skipBytes(2);
@@ -181,33 +182,35 @@ public class ServerX224ConnectionConfirmPDU extends OneTimeSwitch {
         System.setProperty("streamer.Element.debug", "true");
         // System.setProperty("streamer.Pipeline.debug", "true");
 
-//    byte[] packet = new byte[] {
-//
-//        0x03, // -> TPKT Header: TPKT version = 3
-//        0x00, // TPKT Header: Reserved = 0
-//        0x00, 0x13, // TPKT Header: Packet length - (total = 19 bytes)
-//        0x0e, // X.224: Length indicator (14 bytes)
-//        (byte) 0xd0, // X.224: Type (high nibble) = 0xd = CC TPDU; credit
-//                     // (low nibble) = 0
-//        0x00, 0x00, // X.224: Destination reference = 0
-//        0x12, 0x34, // X.224: Source reference = 0x1234 (bogus value)
-//        0x00, // X.224: Class and options = 0
-//
-//        0x02, // RDP_NEG_RSP::type (TYPE_RDP_NEG_RSP)
-//        0x00, // RDP_NEG_RSP::flags (0)
-//        0x08, 0x00, // RDP_NEG_RSP::length (8 bytes)
-//        0x01, 0x00, 0x00, 0x00 // RDP_NEG_RSP: Selected protocols (PROTOCOL_SSL)
-//    };
+        // byte[] packet = new byte[] {
+        //
+        // 0x03, // -> TPKT Header: TPKT version = 3
+        // 0x00, // TPKT Header: Reserved = 0
+        // 0x00, 0x13, // TPKT Header: Packet length - (total = 19 bytes)
+        // 0x0e, // X.224: Length indicator (14 bytes)
+        // (byte) 0xd0, // X.224: Type (high nibble) = 0xd = CC TPDU; credit
+        // // (low nibble) = 0
+        // 0x00, 0x00, // X.224: Destination reference = 0
+        // 0x12, 0x34, // X.224: Source reference = 0x1234 (bogus value)
+        // 0x00, // X.224: Class and options = 0
+        //
+        // 0x02, // RDP_NEG_RSP::type (TYPE_RDP_NEG_RSP)
+        // 0x00, // RDP_NEG_RSP::flags (0)
+        // 0x08, 0x00, // RDP_NEG_RSP::length (8 bytes)
+        // 0x01, 0x00, 0x00, 0x00 // RDP_NEG_RSP: Selected protocols
+        // (PROTOCOL_SSL)
+        // };
 
         // Connection failure
         // 03 00 00 13 0e d0 00 00 12 34 00 03 00 08 00 05 00 00 00
         byte[] packet = new byte[] {
 
-                0x03, // -> TPKT Header: TPKT version = 3
+        0x03, // -> TPKT Header: TPKT version = 3
                 0x00, // TPKT Header: Reserved = 0
                 0x00, 0x13, // TPKT Header: Packet length - (total = 19 bytes)
                 0x0e, // X.224: Length indicator (14 bytes)
-                (byte)0xd0, // X.224: Type (high nibble) = 0xd = CC TPDU; credit
+                (byte)0xd0, // X.224: Type (high nibble) = 0xd = CC TPDU;
+                // credit
                 // (low nibble) = 0
                 0x00, 0x00, // X.224: Destination reference = 0
                 0x12, 0x34, // X.224: Source reference = 0x1234 (bogus value)
@@ -215,7 +218,8 @@ public class ServerX224ConnectionConfirmPDU extends OneTimeSwitch {
                 (byte)0x03, // Failure
                 (byte)0x00, // RDP_NEG_RSP::flags (0)
                 (byte)0x08, (byte)0x00, // RDP_NEG_RSP::length (8 bytes)
-                (byte)0x05, (byte)0x00, (byte)0x00, (byte)0x00, // Code:  HYBRID_REQUIRED_BY_SERVER
+                (byte)0x05, (byte)0x00, (byte)0x00, (byte)0x00, // Code:
+        // HYBRID_REQUIRED_BY_SERVER
 
         };
 

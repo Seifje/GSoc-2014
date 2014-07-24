@@ -35,8 +35,7 @@ import com.cloud.event.EventTypes;
 import com.cloud.network.as.AutoScaleVmGroup;
 import com.cloud.user.Account;
 
-@APICommand(name = "deleteAutoScaleVmGroup", description = "Deletes a autoscale vm group.", responseObject = SuccessResponse.class, entityType = {AutoScaleVmGroup.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteAutoScaleVmGroup", description = "Deletes a autoscale vm group.", responseObject = SuccessResponse.class, entityType = {AutoScaleVmGroup.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteAutoScaleVmGroupCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(DeleteAutoScaleVmGroupCmd.class.getName());
     private static final String s_name = "deleteautoscalevmgroupresponse";
@@ -45,11 +44,7 @@ public class DeleteAutoScaleVmGroupCmd extends BaseAsyncCmd {
     // ///////////////////////////////////////////////////
 
     @ACL(accessType = AccessType.OperateEntry)
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = AutoScaleVmGroupResponse.class,
-               required = true,
-               description = "the ID of the autoscale group")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = AutoScaleVmGroupResponse.class, required = true, description = "the ID of the autoscale group")
     private Long id;
 
     // ///////////////////////////////////////////////////
@@ -76,7 +71,9 @@ public class DeleteAutoScaleVmGroupCmd extends BaseAsyncCmd {
             return autoScaleVmGroup.getAccountId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are
         // tracked
     }
 

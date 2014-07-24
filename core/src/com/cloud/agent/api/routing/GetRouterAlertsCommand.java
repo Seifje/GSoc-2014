@@ -17,8 +17,7 @@
 
 package com.cloud.agent.api.routing;
 
-
-public class GetRouterAlertsCommand  extends NetworkElementCommand {
+public class GetRouterAlertsCommand extends NetworkElementCommand {
 
     private String previousAlertTimeStamp;
 

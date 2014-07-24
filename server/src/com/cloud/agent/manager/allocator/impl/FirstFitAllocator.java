@@ -61,7 +61,8 @@ import com.cloud.vm.VirtualMachineProfile;
 import com.cloud.vm.dao.VMInstanceDao;
 
 /**
- * An allocator that tries to find a fit on a computing host.  This allocator does not care whether or not the host supports routing.
+ * An allocator that tries to find a fit on a computing host. This allocator
+ * does not care whether or not the host supports routing.
  */
 @Component
 @Local(value = {HostAllocator.class})
@@ -93,7 +94,6 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
     boolean _checkHvm = true;
     protected String _allocationAlgorithm = "random";
 
-
     @Override
     public List<Host> allocateTo(VirtualMachineProfile vmProfile, DeploymentPlan plan, Type type, ExcludeList avoid, int returnUpTo) {
         return allocateTo(vmProfile, plan, type, avoid, returnUpTo, true);
@@ -110,7 +110,8 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
         Account account = vmProfile.getOwner();
 
         if (type == Host.Type.Storage) {
-            // FirstFitAllocator should be used for user VMs only since it won't care whether the host is capable of routing or not
+            // FirstFitAllocator should be used for user VMs only since it won't
+            // care whether the host is capable of routing or not
             return new ArrayList<Host>();
         }
 
@@ -184,7 +185,7 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
 
     @Override
     public List<Host> allocateTo(VirtualMachineProfile vmProfile, DeploymentPlan plan, Type type, ExcludeList avoid, List<? extends Host> hosts, int returnUpTo,
-        boolean considerReservedCapacity) {
+            boolean considerReservedCapacity) {
         long dcId = plan.getDataCenterId();
         Long podId = plan.getPodId();
         Long clusterId = plan.getClusterId();
@@ -194,7 +195,8 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
         List<Host> suitableHosts = new ArrayList<Host>();
 
         if (type == Host.Type.Storage) {
-            // FirstFitAllocator should be used for user VMs only since it won't care whether the host is capable of
+            // FirstFitAllocator should be used for user VMs only since it won't
+            // care whether the host is capable of
             // routing or not.
             return suitableHosts;
         }
@@ -229,7 +231,7 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
     }
 
     protected List<Host> allocateTo(DeploymentPlan plan, ServiceOffering offering, VMTemplateVO template, ExcludeList avoid, List<? extends Host> hosts, int returnUpTo,
-        boolean considerReservedCapacity, Account account) {
+            boolean considerReservedCapacity, Account account) {
         if (_allocationAlgorithm.equals("random") || _allocationAlgorithm.equals("userconcentratedpod_random")) {
             // Shuffle this so that we don't check the hosts in the same order.
             Collections.shuffle(hosts);
@@ -241,7 +243,8 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
             s_logger.debug("FirstFitAllocator has " + hosts.size() + " hosts to check for allocation: " + hosts);
         }
 
-        // We will try to reorder the host lists such that we give priority to hosts that have
+        // We will try to reorder the host lists such that we give priority to
+        // hosts that have
         // the minimums to support a VM's requirements
         hosts = prioritizeHosts(template, offering, hosts);
 
@@ -268,20 +271,21 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
                 continue;
             }
 
-            //find number of guest VMs occupying capacity on this host.
+            // find number of guest VMs occupying capacity on this host.
             if (_capacityMgr.checkIfHostReachMaxGuestLimit(host)) {
                 if (s_logger.isDebugEnabled()) {
-                    s_logger.debug("Host name: " + host.getName() + ", hostId: " + host.getId() +
-                        " already has max Running VMs(count includes system VMs), skipping this and trying other available hosts");
+                    s_logger.debug("Host name: " + host.getName() + ", hostId: " + host.getId()
+                            + " already has max Running VMs(count includes system VMs), skipping this and trying other available hosts");
                 }
                 continue;
             }
 
-            // Check if GPU device is required by offering and host has the availability
-            if ((offeringDetails   = _serviceOfferingDetailsDao.findDetail(serviceOfferingId, GPU.Keys.vgpuType.toString())) != null) {
+            // Check if GPU device is required by offering and host has the
+            // availability
+            if ((offeringDetails = _serviceOfferingDetailsDao.findDetail(serviceOfferingId, GPU.Keys.vgpuType.toString())) != null) {
                 ServiceOfferingDetailsVO groupName = _serviceOfferingDetailsDao.findDetail(serviceOfferingId, GPU.Keys.pciDevice.toString());
-                if(!_resourceMgr.isGPUDeviceAvailable(host.getId(), groupName.getValue(), offeringDetails.getValue())){
-                    s_logger.info("Host name: " + host.getName() + ", hostId: "+ host.getId() +" does not have required GPU devices available");
+                if (!_resourceMgr.isGPUDeviceAvailable(host.getId(), groupName.getValue(), offeringDetails.getValue())) {
+                    s_logger.info("Host name: " + host.getName() + ", hostId: " + host.getId() + " does not have required GPU devices available");
                     continue;
                 }
             }
@@ -296,7 +300,7 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
 
             boolean hostHasCpuCapability = _capacityMgr.checkIfHostHasCpuCapability(host.getId(), offering.getCpu(), offering.getSpeed());
             boolean hostHasCapacity = _capacityMgr.checkIfHostHasCapacity(host.getId(), cpu_requested, ram_requested, false, cpuOvercommitRatio, memoryOvercommitRatio,
-                considerReservedCapacity);
+                    considerReservedCapacity);
 
             if (hostHasCpuCapability && hostHasCapacity) {
                 if (s_logger.isDebugEnabled()) {
@@ -331,7 +335,7 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
             s_logger.debug("List of hosts in ascending order of number of VMs: " + hostIdsByVmCount);
         }
 
-        //now filter the given list of Hosts by this ordered list
+        // now filter the given list of Hosts by this ordered list
         Map<Long, Host> hostMap = new HashMap<Long, Host>();
         for (Host host : hosts) {
             hostMap.put(host.getId(), host);
@@ -350,7 +354,8 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
 
     @Override
     public boolean isVirtualMachineUpgradable(VirtualMachine vm, ServiceOffering offering) {
-        // currently we do no special checks to rule out a VM being upgradable to an offering, so
+        // currently we do no special checks to rule out a VM being upgradable
+        // to an offering, so
         // return true
         return true;
     }
@@ -366,7 +371,8 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
         List<Host> prioritizedHosts = new ArrayList<Host>();
         List<Host> noHvmHosts = new ArrayList<Host>();
 
-        // If a template requires HVM and a host doesn't support HVM, remove it from consideration
+        // If a template requires HVM and a host doesn't support HVM, remove it
+        // from consideration
         List<Host> hostsToCheck = new ArrayList<Host>();
         if (template.isRequiresHvm()) {
             for (Host host : hosts) {
@@ -385,8 +391,10 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
                 s_logger.debug("Not considering hosts: " + noHvmHosts + "  to deploy template: " + template + " as they are not HVM enabled");
             }
         }
-        // If a host is tagged with the same guest OS category as the template, move it to a high priority list
-        // If a host is tagged with a different guest OS category than the template, move it to a low priority list
+        // If a host is tagged with the same guest OS category as the template,
+        // move it to a high priority list
+        // If a host is tagged with a different guest OS category than the
+        // template, move it to a low priority list
         List<Host> highPriorityHosts = new ArrayList<Host>();
         List<Host> lowPriorityHosts = new ArrayList<Host>();
         for (Host host : hostsToCheck) {
@@ -406,10 +414,12 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
         // Prioritize the remaining hosts by HVM capability
         for (Host host : hostsToCheck) {
             if (!template.isRequiresHvm() && !hostSupportsHVM(host)) {
-                // Host and template both do not support hvm, put it as first consideration
+                // Host and template both do not support hvm, put it as first
+                // consideration
                 prioritizedHosts.add(0, host);
             } else {
-                // Template doesn't require hvm, but the machine supports it, make it last for consideration
+                // Template doesn't require hvm, but the machine supports it,
+                // make it last for consideration
                 prioritizedHosts.add(host);
             }
         }
@@ -418,7 +428,8 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
         prioritizedHosts.addAll(0, highPriorityHosts);
         prioritizedHosts.addAll(lowPriorityHosts);
 
-        // if service offering is not GPU enabled then move all the GPU enabled hosts to the end of priority list.
+        // if service offering is not GPU enabled then move all the GPU enabled
+        // hosts to the end of priority list.
         if (_serviceOfferingDetailsDao.findDetail(offering.getId(), GPU.Keys.vgpuType.toString()) == null) {
 
             List<Host> gpuEnabledHosts = new ArrayList<Host>();
@@ -429,7 +440,7 @@ public class FirstFitAllocator extends AdapterBase implements HostAllocator {
                 }
             }
             // Move GPU enabled hosts to the end of list
-            if(!gpuEnabledHosts.isEmpty()) {
+            if (!gpuEnabledHosts.isEmpty()) {
                 prioritizedHosts.removeAll(gpuEnabledHosts);
                 prioritizedHosts.addAll(gpuEnabledHosts);
             }

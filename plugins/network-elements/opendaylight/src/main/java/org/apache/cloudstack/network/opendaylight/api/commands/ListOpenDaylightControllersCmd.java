@@ -42,27 +42,24 @@ import com.cloud.exception.NetworkRuleConflictException;
 import com.cloud.exception.ResourceAllocationException;
 import com.cloud.exception.ResourceUnavailableException;
 
-@APICommand(name = "listOpenDaylightControllers", responseObject = OpenDaylightControllerResponse.class, description = "Lists OpenDyalight controllers",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listOpenDaylightControllers", responseObject = OpenDaylightControllerResponse.class, description = "Lists OpenDyalight controllers", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListOpenDaylightControllersCmd extends BaseCmd {
     @Inject
     private OpenDaylightControllerResourceManager resourceManager;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, required = false,
-            description = "the Physical Network ID")
+    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, required = false, description = "the Physical Network ID")
     private Long physicalNetworkId;
 
-    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = OpenDaylightControllerResponse.class, required = false,
-            description = "the ID of a OpenDaylight Controller")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = OpenDaylightControllerResponse.class, required = false, description = "the ID of a OpenDaylight Controller")
     private Long Id;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -82,17 +79,17 @@ public class ListOpenDaylightControllersCmd extends BaseCmd {
         return Id;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
-    NetworkRuleConflictException {
+            NetworkRuleConflictException {
         List<OpenDaylightControllerVO> controllers = resourceManager.listControllers(this);
 
         List<OpenDaylightControllerResponse> controllerList = new ArrayList<OpenDaylightControllerResponse>();
-        for (OpenDaylightControllerVO controller: controllers) {
+        for (OpenDaylightControllerVO controller : controllers) {
             OpenDaylightControllerResponse responseObject = resourceManager.createResponseFromVO(controller);
             controllerList.add(responseObject);
         }

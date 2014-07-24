@@ -70,7 +70,8 @@ public class PaloAltoResourceTest {
     @Before
     public void setUp() {
         _resource = new MockablePaloAltoResource();
-        _resourceParams = new HashMap<String, Object>(); // params to be passed to configure()
+        _resourceParams = new HashMap<String, Object>(); // params to be passed
+        // to configure()
         _resourceParams.put("name", _testName);
         _resourceParams.put("zoneId", _testZoneId);
         _resourceParams.put("ip", _testIp);
@@ -98,7 +99,9 @@ public class PaloAltoResourceTest {
         _context.put("public_using_ethernet", "true");
         _context.put("private_using_ethernet", "true");
         _context.put("has_management_profile", "true");
-        _context.put("enable_console_output", "false"); // CHANGE TO "true" TO ENABLE CONSOLE LOGGING OF TESTS
+        _context.put("enable_console_output", "false"); // CHANGE TO "true" TO
+        // ENABLE CONSOLE
+        // LOGGING OF TESTS
         _resource.setMockContext(_context);
     }
 
@@ -168,8 +171,7 @@ public class PaloAltoResourceTest {
 
     @Test
     // implement public & private interfaces, source nat, guest network
-        public
-        void implementGuestNetwork() throws ConfigurationException, ExecutionException {
+    public void implementGuestNetwork() throws ConfigurationException, ExecutionException {
         if (_context.containsKey("enable_console_output") && _context.get("enable_console_output").equals("true")) {
             System.out.println("\nTEST: implementGuestNetwork");
             System.out.println("---------------------------------------------------");
@@ -190,8 +192,7 @@ public class PaloAltoResourceTest {
 
     @Test
     // remove public & private interface details, source nat, guest network
-        public
-        void shutdownGuestNetwork() throws ConfigurationException, ExecutionException {
+    public void shutdownGuestNetwork() throws ConfigurationException, ExecutionException {
         if (_context.containsKey("enable_console_output") && _context.get("enable_console_output").equals("true")) {
             System.out.println("\nTEST: shutdownGuestNetwork");
             System.out.println("---------------------------------------------------");

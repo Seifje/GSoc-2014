@@ -37,30 +37,25 @@ import com.cloud.network.BigSwitchVnsDeviceVO;
 import com.cloud.network.element.BigSwitchVnsElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "addBigSwitchVnsDevice", responseObject = BigSwitchVnsDeviceResponse.class, description = "Adds a BigSwitch VNS device", since = "4.1.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "addBigSwitchVnsDevice", responseObject = BigSwitchVnsDeviceResponse.class, description = "Adds a BigSwitch VNS device", since = "4.1.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class AddBigSwitchVnsDeviceCmd extends BaseAsyncCmd {
     private static final String s_name = "addbigswitchvnsdeviceresponse";
     @Inject
     BigSwitchVnsElementService _bigswitchVnsElementService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = PhysicalNetworkResponse.class,
-               required = true,
-               description = "the Physical Network ID")
+    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, required = true, description = "the Physical Network ID")
     private Long physicalNetworkId;
 
     @Parameter(name = ApiConstants.HOST_NAME, type = CommandType.STRING, required = true, description = "Hostname of ip address of the BigSwitch VNS Controller.")
     private String host;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getPhysicalNetworkId() {
         return physicalNetworkId;
@@ -70,13 +65,12 @@ public class AddBigSwitchVnsDeviceCmd extends BaseAsyncCmd {
         return host;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             BigSwitchVnsDeviceVO bigswitchVnsDeviceVO = _bigswitchVnsElementService.addBigSwitchVnsDevice(this);
             if (bigswitchVnsDeviceVO != null) {

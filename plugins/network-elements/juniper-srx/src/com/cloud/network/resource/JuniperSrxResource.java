@@ -107,69 +107,25 @@ public class JuniperSrxResource implements ServerResource {
     private static final Logger s_logger = Logger.getLogger(JuniperSrxResource.class);
 
     private enum SrxXml {
-        LOGIN("login.xml"),
-        PRIVATE_INTERFACE_ADD("private-interface-add.xml"),
-        PRIVATE_INTERFACE_WITH_FILTERS_ADD("private-interface-with-filters-add.xml"),
-        PRIVATE_INTERFACE_GETONE("private-interface-getone.xml"),
-        PROXY_ARP_ADD("proxy-arp-add.xml"),
-        PROXY_ARP_GETONE("proxy-arp-getone.xml"),
-        PROXY_ARP_GETALL("proxy-arp-getall.xml"),
-        ZONE_INTERFACE_ADD("zone-interface-add.xml"),
-        ZONE_INTERFACE_GETONE("zone-interface-getone.xml"),
-        SRC_NAT_POOL_ADD("src-nat-pool-add.xml"),
-        SRC_NAT_POOL_GETONE("src-nat-pool-getone.xml"),
-        SRC_NAT_RULE_ADD("src-nat-rule-add.xml"),
-        SRC_NAT_RULE_GETONE("src-nat-rule-getone.xml"),
-        SRC_NAT_RULE_GETALL("src-nat-rule-getall.xml"),
-        DEST_NAT_POOL_ADD("dest-nat-pool-add.xml"),
-        DEST_NAT_POOL_GETONE("dest-nat-pool-getone.xml"),
-        DEST_NAT_POOL_GETALL("dest-nat-pool-getall.xml"),
-        DEST_NAT_RULE_ADD("dest-nat-rule-add.xml"),
-        DEST_NAT_RULE_GETONE("dest-nat-rule-getone.xml"),
-        DEST_NAT_RULE_GETALL("dest-nat-rule-getall.xml"),
-        STATIC_NAT_RULE_ADD("static-nat-rule-add.xml"),
-        STATIC_NAT_RULE_GETONE("static-nat-rule-getone.xml"),
-        STATIC_NAT_RULE_GETALL("static-nat-rule-getall.xml"),
-        ADDRESS_BOOK_ENTRY_ADD("address-book-entry-add.xml"),
-        ADDRESS_BOOK_ENTRY_GETONE("address-book-entry-getone.xml"),
-        ADDRESS_BOOK_ENTRY_GETALL("address-book-entry-getall.xml"),
-        APPLICATION_ADD("application-add.xml"),
-        APPLICATION_GETONE("application-getone.xml"),
-        SECURITY_POLICY_ADD("security-policy-add.xml"),
-        SECURITY_POLICY_GETONE("security-policy-getone.xml"),
-        SECURITY_POLICY_GETALL("security-policy-getall.xml"),
-        SECURITY_POLICY_GROUP("security-policy-group.xml"),
-        GUEST_VLAN_FILTER_TERM_ADD("guest-vlan-filter-term-add.xml"),
-        PUBLIC_IP_FILTER_TERM_ADD("public-ip-filter-term-add.xml"),
-        FILTER_TERM_GETONE("filter-term-getone.xml"),
-        FILTER_GETONE("filter-getone.xml"),
-        FIREWALL_FILTER_BYTES_GETALL("firewall-filter-bytes-getall.xml"),
-        IKE_POLICY_ADD("ike-policy-add.xml"),
-        IKE_POLICY_GETONE("ike-policy-getone.xml"),
-        IKE_POLICY_GETALL("ike-policy-getall.xml"),
-        IKE_GATEWAY_ADD("ike-gateway-add.xml"),
-        IKE_GATEWAY_GETONE("ike-gateway-getone.xml"),
-        IKE_GATEWAY_GETALL("ike-gateway-getall.xml"),
-        IPSEC_VPN_ADD("ipsec-vpn-add.xml"),
-        IPSEC_VPN_GETONE("ipsec-vpn-getone.xml"),
-        IPSEC_VPN_GETALL("ipsec-vpn-getall.xml"),
-        DYNAMIC_VPN_CLIENT_ADD("dynamic-vpn-client-add.xml"),
-        DYNAMIC_VPN_CLIENT_GETONE("dynamic-vpn-client-getone.xml"),
-        DYNAMIC_VPN_CLIENT_GETALL("dynamic-vpn-client-getall.xml"),
-        ADDRESS_POOL_ADD("address-pool-add.xml"),
-        ADDRESS_POOL_GETONE("address-pool-getone.xml"),
-        ADDRESS_POOL_GETALL("address-pool-getall.xml"),
-        ACCESS_PROFILE_ADD("access-profile-add.xml"),
-        ACCESS_PROFILE_GETONE("access-profile-getone.xml"),
-        ACCESS_PROFILE_GETALL("access-profile-getall.xml"),
-        FIREWALL_FILTER_TERM_ADD("firewall-filter-term-add.xml"),
-        FIREWALL_FILTER_TERM_GETONE("firewall-filter-term-getone.xml"),
-        TEMPLATE_ENTRY("template-entry.xml"),
-        OPEN_CONFIGURATION("open-configuration.xml"),
-        CLOSE_CONFIGURATION("close-configuration.xml"),
-        COMMIT("commit.xml"),
-        ROLLBACK("rollback.xml"),
-        TEST("test.xml");
+        LOGIN("login.xml"), PRIVATE_INTERFACE_ADD("private-interface-add.xml"), PRIVATE_INTERFACE_WITH_FILTERS_ADD("private-interface-with-filters-add.xml"), PRIVATE_INTERFACE_GETONE(
+                "private-interface-getone.xml"), PROXY_ARP_ADD("proxy-arp-add.xml"), PROXY_ARP_GETONE("proxy-arp-getone.xml"), PROXY_ARP_GETALL("proxy-arp-getall.xml"), ZONE_INTERFACE_ADD(
+                "zone-interface-add.xml"), ZONE_INTERFACE_GETONE("zone-interface-getone.xml"), SRC_NAT_POOL_ADD("src-nat-pool-add.xml"), SRC_NAT_POOL_GETONE(
+                "src-nat-pool-getone.xml"), SRC_NAT_RULE_ADD("src-nat-rule-add.xml"), SRC_NAT_RULE_GETONE("src-nat-rule-getone.xml"), SRC_NAT_RULE_GETALL("src-nat-rule-getall.xml"), DEST_NAT_POOL_ADD(
+                "dest-nat-pool-add.xml"), DEST_NAT_POOL_GETONE("dest-nat-pool-getone.xml"), DEST_NAT_POOL_GETALL("dest-nat-pool-getall.xml"), DEST_NAT_RULE_ADD(
+                "dest-nat-rule-add.xml"), DEST_NAT_RULE_GETONE("dest-nat-rule-getone.xml"), DEST_NAT_RULE_GETALL("dest-nat-rule-getall.xml"), STATIC_NAT_RULE_ADD(
+                "static-nat-rule-add.xml"), STATIC_NAT_RULE_GETONE("static-nat-rule-getone.xml"), STATIC_NAT_RULE_GETALL("static-nat-rule-getall.xml"), ADDRESS_BOOK_ENTRY_ADD(
+                "address-book-entry-add.xml"), ADDRESS_BOOK_ENTRY_GETONE("address-book-entry-getone.xml"), ADDRESS_BOOK_ENTRY_GETALL("address-book-entry-getall.xml"), APPLICATION_ADD(
+                "application-add.xml"), APPLICATION_GETONE("application-getone.xml"), SECURITY_POLICY_ADD("security-policy-add.xml"), SECURITY_POLICY_GETONE(
+                "security-policy-getone.xml"), SECURITY_POLICY_GETALL("security-policy-getall.xml"), SECURITY_POLICY_GROUP("security-policy-group.xml"), GUEST_VLAN_FILTER_TERM_ADD(
+                "guest-vlan-filter-term-add.xml"), PUBLIC_IP_FILTER_TERM_ADD("public-ip-filter-term-add.xml"), FILTER_TERM_GETONE("filter-term-getone.xml"), FILTER_GETONE(
+                "filter-getone.xml"), FIREWALL_FILTER_BYTES_GETALL("firewall-filter-bytes-getall.xml"), IKE_POLICY_ADD("ike-policy-add.xml"), IKE_POLICY_GETONE(
+                "ike-policy-getone.xml"), IKE_POLICY_GETALL("ike-policy-getall.xml"), IKE_GATEWAY_ADD("ike-gateway-add.xml"), IKE_GATEWAY_GETONE("ike-gateway-getone.xml"), IKE_GATEWAY_GETALL(
+                "ike-gateway-getall.xml"), IPSEC_VPN_ADD("ipsec-vpn-add.xml"), IPSEC_VPN_GETONE("ipsec-vpn-getone.xml"), IPSEC_VPN_GETALL("ipsec-vpn-getall.xml"), DYNAMIC_VPN_CLIENT_ADD(
+                "dynamic-vpn-client-add.xml"), DYNAMIC_VPN_CLIENT_GETONE("dynamic-vpn-client-getone.xml"), DYNAMIC_VPN_CLIENT_GETALL("dynamic-vpn-client-getall.xml"), ADDRESS_POOL_ADD(
+                "address-pool-add.xml"), ADDRESS_POOL_GETONE("address-pool-getone.xml"), ADDRESS_POOL_GETALL("address-pool-getall.xml"), ACCESS_PROFILE_ADD(
+                "access-profile-add.xml"), ACCESS_PROFILE_GETONE("access-profile-getone.xml"), ACCESS_PROFILE_GETALL("access-profile-getall.xml"), FIREWALL_FILTER_TERM_ADD(
+                "firewall-filter-term-add.xml"), FIREWALL_FILTER_TERM_GETONE("firewall-filter-term-getone.xml"), TEMPLATE_ENTRY("template-entry.xml"), OPEN_CONFIGURATION(
+                "open-configuration.xml"), CLOSE_CONFIGURATION("close-configuration.xml"), COMMIT("commit.xml"), ROLLBACK("rollback.xml"), TEST("test.xml");
 
         private final String scriptsDir = "scripts/network/juniper";
         private final String xml;
@@ -247,8 +203,8 @@ public class JuniperSrxResource implements ServerResource {
         private String icmpCode;
         private final String countName;
 
-        private FirewallFilterTerm(String name, List<String> sourceCidrs, String destIp, String protocol, Integer startPort, Integer endPort, Integer icmpType,
-                Integer icmpCode, String countName) {
+        private FirewallFilterTerm(String name, List<String> sourceCidrs, String destIp, String protocol, Integer startPort, Integer endPort, Integer icmpType, Integer icmpCode,
+                String countName) {
             this.name = name;
             this.sourceCidrs = sourceCidrs;
             this.destIp = destIp;
@@ -563,8 +519,8 @@ public class JuniperSrxResource implements ServerResource {
     }
 
     /*
-     * The usage data will be handled on it's own socket, so usage
-     * commands will use the following methods...
+     * The usage data will be handled on it's own socket, so usage commands will
+     * use the following methods...
      */
     private boolean usageLogin() throws ExecutionException {
         String xml = SrxXml.LOGIN.getXml();
@@ -728,7 +684,7 @@ public class JuniperSrxResource implements ServerResource {
     }
 
     private void implementGuestNetwork(GuestNetworkType type, Long publicVlanTag, String publicIp, long privateVlanTag, String privateGateway, String privateSubnet,
-        long privateCidrNumber) throws ExecutionException {
+            long privateCidrNumber) throws ExecutionException {
         privateGateway = privateGateway + "/" + privateCidrNumber;
         privateSubnet = privateSubnet + "/" + privateCidrNumber;
 
@@ -752,7 +708,7 @@ public class JuniperSrxResource implements ServerResource {
     }
 
     private void shutdownGuestNetwork(GuestNetworkType type, long accountId, Long publicVlanTag, String sourceNatIpAddress, long privateVlanTag, String privateGateway,
-        String privateSubnet, long privateCidrSize) throws ExecutionException {
+            String privateSubnet, long privateCidrSize) throws ExecutionException {
         // Remove static and destination NAT rules for the guest network
         removeStaticAndDestNatRulesInPrivateVlan(privateVlanTag, privateGateway, privateCidrSize);
 
@@ -833,7 +789,7 @@ public class JuniperSrxResource implements ServerResource {
                 // List<String> cidrs = new ArrayList();
                 boolean defaultEgressPolicy = rules[0].isDefaultEgressPolicy();
                 FirewallRule.FirewallRuleType type = rules[0].getType();
-                //getting
+                // getting
                 String guestCidr = rules[0].getGuestCidr();
                 List<String> cidrs = new ArrayList<String>();
                 cidrs.add(guestCidr);
@@ -848,26 +804,28 @@ public class JuniperSrxResource implements ServerResource {
                 for (String guestVlan : guestVlans) {
                     List<FirewallRuleTO> activeRulesForGuestNw = activeRules.get(guestVlan);
 
-                    removeEgressSecurityPolicyAndApplications(SecurityPolicyType.SECURITYPOLICY_EGRESS, guestVlan, extractCidrs(activeRulesForGuestNw),
-                        defaultEgressPolicy);
+                    removeEgressSecurityPolicyAndApplications(SecurityPolicyType.SECURITYPOLICY_EGRESS, guestVlan, extractCidrs(activeRulesForGuestNw), defaultEgressPolicy);
                     if (activeRulesForGuestNw.size() > 0 && type == FirewallRule.FirewallRuleType.User) {
                         addEgressSecurityPolicyAndApplications(SecurityPolicyType.SECURITYPOLICY_EGRESS, guestVlan, extractApplications(activeRulesForGuestNw),
-                            extractCidrs(activeRulesForGuestNw), defaultEgressPolicy);
+                                extractCidrs(activeRulesForGuestNw), defaultEgressPolicy);
 
-                        /* Adding default policy rules are required because the order of rules is important.
-                         * Depending on the rules order the traffic accept/drop is performed
+                        /*
+                         * Adding default policy rules are required because the
+                         * order of rules is important. Depending on the rules
+                         * order the traffic accept/drop is performed
                          */
                         removeEgressSecurityPolicyAndApplications(SecurityPolicyType.SECURITYPOLICY_EGRESS_DEFAULT, guestVlan, cidrs, defaultEgressPolicy);
                         addEgressSecurityPolicyAndApplications(SecurityPolicyType.SECURITYPOLICY_EGRESS_DEFAULT, guestVlan, applications, cidrs, defaultEgressPolicy);
                     }
 
-                    //remove required with out comparing default policy  because in upgrade network offering we may required to delete
+                    // remove required with out comparing default policy because
+                    // in upgrade network offering we may required to delete
                     // the previously added rule
                     removeEgressSecurityPolicyAndApplications(SecurityPolicyType.SECURITYPOLICY_EGRESS_DEFAULT, guestVlan, cidrs, false);
                     if (defaultEgressPolicy == true && type == FirewallRule.FirewallRuleType.System) {
                         removeEgressSecurityPolicyAndApplications(SecurityPolicyType.SECURITYPOLICY_EGRESS_DEFAULT, guestVlan, cidrs, defaultEgressPolicy);
                         if (activeRulesForGuestNw.size() > 0) {
-                            //add default egress security policy
+                            // add default egress security policy
                             addEgressSecurityPolicyAndApplications(SecurityPolicyType.SECURITYPOLICY_EGRESS_DEFAULT, guestVlan, applications, cidrs, defaultEgressPolicy);
                         }
                     }
@@ -881,10 +839,9 @@ public class JuniperSrxResource implements ServerResource {
                         endPort = rule.getSrcPortRange()[1];
                     }
 
-                    FirewallFilterTerm term =
-                        new FirewallFilterTerm(genIpIdentifier(rule.getSrcIp()) + "-" + String.valueOf(rule.getId()), rule.getSourceCidrList(), rule.getSrcIp(),
-                            rule.getProtocol(), startPort, endPort, rule.getIcmpType(), rule.getIcmpCode(), genIpIdentifier(rule.getSrcIp()) +
-                                _usageFilterIPInput.getCounterIdentifier());
+                    FirewallFilterTerm term = new FirewallFilterTerm(genIpIdentifier(rule.getSrcIp()) + "-" + String.valueOf(rule.getId()), rule.getSourceCidrList(),
+                            rule.getSrcIp(), rule.getProtocol(), startPort, endPort, rule.getIcmpType(), rule.getIcmpCode(), genIpIdentifier(rule.getSrcIp())
+                                    + _usageFilterIPInput.getCounterIdentifier());
                     if (!rule.revoked()) {
                         manageProxyArp(SrxCommand.ADD, getVlanTag(rule.getSrcVlanTag()), rule.getSrcIp());
                         manageFirewallFilter(SrxCommand.ADD, term, _publicZoneInputFilterName);
@@ -941,7 +898,8 @@ public class JuniperSrxResource implements ServerResource {
                 removeStaticNatRule(publicVlanTag, publicIp, privateIp);
 
                 if (activeRulesForIpPair.size() > 0) {
-                    // If there are active FirewallRules for this IP pair, add the static NAT rule and open the specified port ranges
+                    // If there are active FirewallRules for this IP pair, add
+                    // the static NAT rule and open the specified port ranges
                     addStaticNatRule(publicVlanTag, publicIp, privateIp, activeRulesForIpPair);
                 }
             }
@@ -996,8 +954,8 @@ public class JuniperSrxResource implements ServerResource {
             }
 
             if (privateVlanTag != null) {
-                s_logger.warn("Found a static NAT rule (" + staticNatRulePublicIp + " <-> " + staticNatRulePrivateIp + ") for guest VLAN with tag " + privateVlanTag +
-                    " that is active when the guest network is being removed. Removing rule...");
+                s_logger.warn("Found a static NAT rule (" + staticNatRulePublicIp + " <-> " + staticNatRulePrivateIp + ") for guest VLAN with tag " + privateVlanTag
+                        + " that is active when the guest network is being removed. Removing rule...");
             }
 
             removeStaticNatRule(publicVlanTag, staticNatRulePublicIp, staticNatRulePrivateIp);
@@ -1201,20 +1159,23 @@ public class JuniperSrxResource implements ServerResource {
 
                 List<FirewallRuleTO> activeRulesForIpPair = activeRules.get(ipPair);
 
-                // Get a list of all destination NAT rules for the public/private IP address pair
+                // Get a list of all destination NAT rules for the
+                // public/private IP address pair
                 List<String[]> destNatRules = getDestNatRules(RuleMatchCondition.PUBLIC_PRIVATE_IPS, publicIp, privateIp, null, null);
                 Map<String, Long> publicVlanTags = getPublicVlanTagsForNatRules(destNatRules);
 
-                // Delete all of these rules, along with the destination NAT pools and security policies they use
+                // Delete all of these rules, along with the destination NAT
+                // pools and security policies they use
                 removeDestinationNatRules(null, publicVlanTags, destNatRules);
 
-                // If there are active rules for the public/private IP address pair, add them back
+                // If there are active rules for the public/private IP address
+                // pair, add them back
                 for (FirewallRuleTO rule : activeRulesForIpPair) {
                     Long publicVlanTag = getVlanTag(rule.getSrcVlanTag());
                     PortForwardingRuleTO portForwardingRule = (PortForwardingRuleTO)rule;
                     addDestinationNatRule(getProtocol(rule.getProtocol()), publicVlanTag, portForwardingRule.getSrcIp(), portForwardingRule.getDstIp(),
-                        portForwardingRule.getSrcPortRange()[0], portForwardingRule.getSrcPortRange()[1], portForwardingRule.getDstPortRange()[0],
-                        portForwardingRule.getDstPortRange()[1]);
+                            portForwardingRule.getSrcPortRange()[0], portForwardingRule.getSrcPortRange()[1], portForwardingRule.getDstPortRange()[0],
+                            portForwardingRule.getDstPortRange()[1]);
                 }
             }
 
@@ -1235,7 +1196,7 @@ public class JuniperSrxResource implements ServerResource {
     }
 
     private void addDestinationNatRule(Protocol protocol, Long publicVlanTag, String publicIp, String privateIp, int srcPortStart, int srcPortEnd, int destPortStart,
-        int destPortEnd) throws ExecutionException {
+            int destPortEnd) throws ExecutionException {
 
         int offset = 0;
         for (int srcPort = srcPortStart; srcPort <= srcPortEnd; srcPort++) {
@@ -1254,8 +1215,8 @@ public class JuniperSrxResource implements ServerResource {
 
         String srcPortRange = srcPortStart + "-" + srcPortEnd;
         String destPortRange = destPortStart + "-" + destPortEnd;
-        s_logger.debug("Added destination NAT rule for protocol " + protocol + ", public IP " + publicIp + ", private IP " + privateIp + ", source port range " +
-            srcPortRange + ", and dest port range " + destPortRange);
+        s_logger.debug("Added destination NAT rule for protocol " + protocol + ", public IP " + publicIp + ", private IP " + privateIp + ", source port range " + srcPortRange
+                + ", and dest port range " + destPortRange);
     }
 
     private void removeDestinationNatRule(Long publicVlanTag, String publicIp, String privateIp, int srcPort, int destPort) throws ExecutionException {
@@ -1267,8 +1228,7 @@ public class JuniperSrxResource implements ServerResource {
 
         manageAddressBookEntry(SrxCommand.DELETE, _privateZone, privateIp, null);
 
-        s_logger.debug("Removed destination NAT rule for public IP " + publicIp + ", private IP " + privateIp + ", source port " + srcPort + ", and dest port " +
-            destPort);
+        s_logger.debug("Removed destination NAT rule for public IP " + publicIp + ", private IP " + privateIp + ", source port " + srcPort + ", and dest port " + destPort);
     }
 
     private void removeDestinationNatRules(Long privateVlanTag, Map<String, Long> publicVlanTags, List<String[]> destNatRules) throws ExecutionException {
@@ -1284,8 +1244,8 @@ public class JuniperSrxResource implements ServerResource {
             }
 
             if (privateVlanTag != null) {
-                s_logger.warn("Found a destination NAT rule (public IP: " + publicIp + ", private IP: " + privateIp + ", public port: " + srcPort + ", private port: " +
-                    destPort + ") for guest VLAN with tag " + privateVlanTag + " that is active when the guest network is being removed. Removing rule...");
+                s_logger.warn("Found a destination NAT rule (public IP: " + publicIp + ", private IP: " + privateIp + ", public port: " + srcPort + ", private port: " + destPort
+                        + ") for guest VLAN with tag " + privateVlanTag + " that is active when the guest network is being removed. Removing rule...");
             }
 
             removeDestinationNatRule(publicVlanTag, publicIp, privateIp, srcPort, destPort);
@@ -1376,46 +1336,46 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.IKE_GATEWAY_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "policy-name", ikePolicyName);
-                return sendRequestAndCheckResponse(command, xml, "name", ikePolicyName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.IKE_GATEWAY_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "policy-name", ikePolicyName);
+            return sendRequestAndCheckResponse(command, xml, "name", ikePolicyName);
 
-            case ADD:
-                if (manageIkePolicy(SrxCommand.CHECK_IF_EXISTS, ikePolicyName, accountId, preSharedKey)) {
-                    return true;
-                }
+        case ADD:
+            if (manageIkePolicy(SrxCommand.CHECK_IF_EXISTS, ikePolicyName, accountId, preSharedKey)) {
+                return true;
+            }
 
-                xml = SrxXml.IKE_POLICY_ADD.getXml();
-                xml = replaceXmlValue(xml, "policy-name", ikePolicyName);
-                xml = replaceXmlValue(xml, "proposal-name", _ikeProposalName);
-                xml = replaceXmlValue(xml, "pre-shared-key", preSharedKey);
+            xml = SrxXml.IKE_POLICY_ADD.getXml();
+            xml = replaceXmlValue(xml, "policy-name", ikePolicyName);
+            xml = replaceXmlValue(xml, "proposal-name", _ikeProposalName);
+            xml = replaceXmlValue(xml, "pre-shared-key", preSharedKey);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add IKE policy: " + ikePolicyName);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add IKE policy: " + ikePolicyName);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageIkePolicy(SrxCommand.CHECK_IF_EXISTS, ikePolicyName, accountId, preSharedKey)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageIkePolicy(SrxCommand.CHECK_IF_EXISTS, ikePolicyName, accountId, preSharedKey)) {
+                return true;
+            }
 
-                xml = SrxXml.IKE_GATEWAY_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "policy-name", ikePolicyName);
+            xml = SrxXml.IKE_GATEWAY_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "policy-name", ikePolicyName);
 
-                if (!sendRequestAndCheckResponse(command, xml, "name", ikePolicyName)) {
-                    throw new ExecutionException("Failed to delete IKE policy: " + ikePolicyName);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml, "name", ikePolicyName)) {
+                throw new ExecutionException("Failed to delete IKE policy: " + ikePolicyName);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
         }
 
     }
@@ -1425,7 +1385,7 @@ public class JuniperSrxResource implements ServerResource {
     }
 
     private boolean manageIkeGateway(SrxCommand command, String ikeGatewayName, Long accountId, String ikePolicyName, String ikeGatewayHostname, String username)
-        throws ExecutionException {
+            throws ExecutionException {
         if (ikeGatewayName == null) {
             ikeGatewayName = genIkeGatewayName(accountId, username);
         }
@@ -1434,48 +1394,48 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.IKE_GATEWAY_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "gateway-name", ikeGatewayName);
-                return sendRequestAndCheckResponse(command, xml, "name", ikeGatewayName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.IKE_GATEWAY_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "gateway-name", ikeGatewayName);
+            return sendRequestAndCheckResponse(command, xml, "name", ikeGatewayName);
 
-            case ADD:
-                if (manageIkeGateway(SrxCommand.CHECK_IF_EXISTS, ikeGatewayName, accountId, ikePolicyName, ikeGatewayHostname, username)) {
-                    return true;
-                }
+        case ADD:
+            if (manageIkeGateway(SrxCommand.CHECK_IF_EXISTS, ikeGatewayName, accountId, ikePolicyName, ikeGatewayHostname, username)) {
+                return true;
+            }
 
-                xml = SrxXml.IKE_GATEWAY_ADD.getXml();
-                xml = replaceXmlValue(xml, "gateway-name", ikeGatewayName);
-                xml = replaceXmlValue(xml, "ike-policy-name", ikePolicyName);
-                xml = replaceXmlValue(xml, "ike-gateway-hostname", ikeGatewayHostname);
-                xml = replaceXmlValue(xml, "public-interface-name", _publicInterface);
-                xml = replaceXmlValue(xml, "access-profile-name", genAccessProfileName(accountId, username));
+            xml = SrxXml.IKE_GATEWAY_ADD.getXml();
+            xml = replaceXmlValue(xml, "gateway-name", ikeGatewayName);
+            xml = replaceXmlValue(xml, "ike-policy-name", ikePolicyName);
+            xml = replaceXmlValue(xml, "ike-gateway-hostname", ikeGatewayHostname);
+            xml = replaceXmlValue(xml, "public-interface-name", _publicInterface);
+            xml = replaceXmlValue(xml, "access-profile-name", genAccessProfileName(accountId, username));
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add IKE gateway: " + ikeGatewayName);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add IKE gateway: " + ikeGatewayName);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageIkeGateway(SrxCommand.CHECK_IF_EXISTS, ikeGatewayName, accountId, ikePolicyName, ikeGatewayHostname, username)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageIkeGateway(SrxCommand.CHECK_IF_EXISTS, ikeGatewayName, accountId, ikePolicyName, ikeGatewayHostname, username)) {
+                return true;
+            }
 
-                xml = SrxXml.IKE_GATEWAY_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "gateway-name", ikeGatewayName);
+            xml = SrxXml.IKE_GATEWAY_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "gateway-name", ikeGatewayName);
 
-                if (!sendRequestAndCheckResponse(command, xml, "name", ikeGatewayName)) {
-                    throw new ExecutionException("Failed to delete IKE gateway: " + ikeGatewayName);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml, "name", ikeGatewayName)) {
+                throw new ExecutionException("Failed to delete IKE gateway: " + ikeGatewayName);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
         }
     }
 
@@ -1484,7 +1444,7 @@ public class JuniperSrxResource implements ServerResource {
     }
 
     private boolean manageIpsecVpn(SrxCommand command, String ipsecVpnName, Long accountId, String guestNetworkCidr, String username, String ipsecPolicyName)
-        throws ExecutionException {
+            throws ExecutionException {
         if (ipsecVpnName == null) {
             ipsecVpnName = genIpsecVpnName(accountId, username);
         }
@@ -1493,46 +1453,46 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.IPSEC_VPN_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "ipsec-vpn-name", ipsecVpnName);
-                return sendRequestAndCheckResponse(command, xml, "name", ipsecVpnName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.IPSEC_VPN_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "ipsec-vpn-name", ipsecVpnName);
+            return sendRequestAndCheckResponse(command, xml, "name", ipsecVpnName);
 
-            case ADD:
-                if (manageIpsecVpn(SrxCommand.CHECK_IF_EXISTS, ipsecVpnName, accountId, guestNetworkCidr, username, ipsecPolicyName)) {
-                    return true;
-                }
+        case ADD:
+            if (manageIpsecVpn(SrxCommand.CHECK_IF_EXISTS, ipsecVpnName, accountId, guestNetworkCidr, username, ipsecPolicyName)) {
+                return true;
+            }
 
-                xml = SrxXml.IPSEC_VPN_ADD.getXml();
-                xml = replaceXmlValue(xml, "ipsec-vpn-name", ipsecVpnName);
-                xml = replaceXmlValue(xml, "ike-gateway", genIkeGatewayName(accountId, username));
-                xml = replaceXmlValue(xml, "ipsec-policy-name", ipsecPolicyName);
+            xml = SrxXml.IPSEC_VPN_ADD.getXml();
+            xml = replaceXmlValue(xml, "ipsec-vpn-name", ipsecVpnName);
+            xml = replaceXmlValue(xml, "ike-gateway", genIkeGatewayName(accountId, username));
+            xml = replaceXmlValue(xml, "ipsec-policy-name", ipsecPolicyName);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add IPSec VPN: " + ipsecVpnName);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add IPSec VPN: " + ipsecVpnName);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageIpsecVpn(SrxCommand.CHECK_IF_EXISTS, ipsecVpnName, accountId, guestNetworkCidr, username, ipsecPolicyName)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageIpsecVpn(SrxCommand.CHECK_IF_EXISTS, ipsecVpnName, accountId, guestNetworkCidr, username, ipsecPolicyName)) {
+                return true;
+            }
 
-                xml = SrxXml.IPSEC_VPN_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "ipsec-vpn-name", ipsecVpnName);
+            xml = SrxXml.IPSEC_VPN_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "ipsec-vpn-name", ipsecVpnName);
 
-                if (!sendRequestAndCheckResponse(command, xml, "name", ipsecVpnName)) {
-                    throw new ExecutionException("Failed to delete IPSec VPN: " + ipsecVpnName);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml, "name", ipsecVpnName)) {
+                throw new ExecutionException("Failed to delete IPSec VPN: " + ipsecVpnName);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
         }
     }
 
@@ -1541,7 +1501,7 @@ public class JuniperSrxResource implements ServerResource {
     }
 
     private boolean manageDynamicVpnClient(SrxCommand command, String clientName, Long accountId, String guestNetworkCidr, String ipsecVpnName, String username)
-        throws ExecutionException {
+            throws ExecutionException {
         if (clientName == null) {
             clientName = genDynamicVpnClientName(accountId, username);
         }
@@ -1550,47 +1510,47 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.DYNAMIC_VPN_CLIENT_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "client-name", clientName);
-                return sendRequestAndCheckResponse(command, xml, "name", clientName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.DYNAMIC_VPN_CLIENT_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "client-name", clientName);
+            return sendRequestAndCheckResponse(command, xml, "name", clientName);
 
-            case ADD:
-                if (manageDynamicVpnClient(SrxCommand.CHECK_IF_EXISTS, clientName, accountId, guestNetworkCidr, ipsecVpnName, username)) {
-                    return true;
-                }
+        case ADD:
+            if (manageDynamicVpnClient(SrxCommand.CHECK_IF_EXISTS, clientName, accountId, guestNetworkCidr, ipsecVpnName, username)) {
+                return true;
+            }
 
-                xml = SrxXml.DYNAMIC_VPN_CLIENT_ADD.getXml();
-                xml = replaceXmlValue(xml, "client-name", clientName);
-                xml = replaceXmlValue(xml, "guest-network-cidr", guestNetworkCidr);
-                xml = replaceXmlValue(xml, "ipsec-vpn-name", ipsecVpnName);
-                xml = replaceXmlValue(xml, "username", username);
+            xml = SrxXml.DYNAMIC_VPN_CLIENT_ADD.getXml();
+            xml = replaceXmlValue(xml, "client-name", clientName);
+            xml = replaceXmlValue(xml, "guest-network-cidr", guestNetworkCidr);
+            xml = replaceXmlValue(xml, "ipsec-vpn-name", ipsecVpnName);
+            xml = replaceXmlValue(xml, "username", username);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add dynamic VPN client: " + clientName);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add dynamic VPN client: " + clientName);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageDynamicVpnClient(SrxCommand.CHECK_IF_EXISTS, clientName, accountId, guestNetworkCidr, ipsecVpnName, username)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageDynamicVpnClient(SrxCommand.CHECK_IF_EXISTS, clientName, accountId, guestNetworkCidr, ipsecVpnName, username)) {
+                return true;
+            }
 
-                xml = SrxXml.DYNAMIC_VPN_CLIENT_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "client-name", clientName);
+            xml = SrxXml.DYNAMIC_VPN_CLIENT_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "client-name", clientName);
 
-                if (!sendRequestAndCheckResponse(command, xml, "name", clientName)) {
-                    throw new ExecutionException("Failed to delete dynamic VPN client: " + clientName);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml, "name", clientName)) {
+                throw new ExecutionException("Failed to delete dynamic VPN client: " + clientName);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
         }
     }
 
@@ -1599,7 +1559,7 @@ public class JuniperSrxResource implements ServerResource {
     }
 
     private boolean manageAddressPool(SrxCommand command, String addressPoolName, Long accountId, String guestNetworkCidr, String lowAddress, String highAddress,
-        String primaryDnsAddress) throws ExecutionException {
+            String primaryDnsAddress) throws ExecutionException {
         if (addressPoolName == null) {
             addressPoolName = genAddressPoolName(accountId);
         }
@@ -1608,49 +1568,49 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.ADDRESS_POOL_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "address-pool-name", addressPoolName);
-                return sendRequestAndCheckResponse(command, xml, "name", addressPoolName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.ADDRESS_POOL_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "address-pool-name", addressPoolName);
+            return sendRequestAndCheckResponse(command, xml, "name", addressPoolName);
 
-            case ADD:
-                if (manageAddressPool(SrxCommand.CHECK_IF_EXISTS, addressPoolName, accountId, guestNetworkCidr, lowAddress, highAddress, primaryDnsAddress)) {
-                    return true;
-                }
+        case ADD:
+            if (manageAddressPool(SrxCommand.CHECK_IF_EXISTS, addressPoolName, accountId, guestNetworkCidr, lowAddress, highAddress, primaryDnsAddress)) {
+                return true;
+            }
 
-                xml = SrxXml.ADDRESS_POOL_ADD.getXml();
-                xml = replaceXmlValue(xml, "address-pool-name", addressPoolName);
-                xml = replaceXmlValue(xml, "guest-network-cidr", guestNetworkCidr);
-                xml = replaceXmlValue(xml, "address-range-name", "r-" + addressPoolName);
-                xml = replaceXmlValue(xml, "low-address", lowAddress);
-                xml = replaceXmlValue(xml, "high-address", highAddress);
-                xml = replaceXmlValue(xml, "primary-dns-address", primaryDnsAddress);
+            xml = SrxXml.ADDRESS_POOL_ADD.getXml();
+            xml = replaceXmlValue(xml, "address-pool-name", addressPoolName);
+            xml = replaceXmlValue(xml, "guest-network-cidr", guestNetworkCidr);
+            xml = replaceXmlValue(xml, "address-range-name", "r-" + addressPoolName);
+            xml = replaceXmlValue(xml, "low-address", lowAddress);
+            xml = replaceXmlValue(xml, "high-address", highAddress);
+            xml = replaceXmlValue(xml, "primary-dns-address", primaryDnsAddress);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add address pool: " + addressPoolName);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add address pool: " + addressPoolName);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageAddressPool(SrxCommand.CHECK_IF_EXISTS, addressPoolName, accountId, guestNetworkCidr, lowAddress, highAddress, primaryDnsAddress)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageAddressPool(SrxCommand.CHECK_IF_EXISTS, addressPoolName, accountId, guestNetworkCidr, lowAddress, highAddress, primaryDnsAddress)) {
+                return true;
+            }
 
-                xml = SrxXml.ADDRESS_POOL_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "address-pool-name", addressPoolName);
+            xml = SrxXml.ADDRESS_POOL_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "address-pool-name", addressPoolName);
 
-                if (!sendRequestAndCheckResponse(command, xml, "name", addressPoolName)) {
-                    throw new ExecutionException("Failed to delete address pool: " + addressPoolName);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml, "name", addressPoolName)) {
+                throw new ExecutionException("Failed to delete address pool: " + addressPoolName);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
         }
     }
 
@@ -1659,7 +1619,7 @@ public class JuniperSrxResource implements ServerResource {
     }
 
     private boolean manageAccessProfile(SrxCommand command, String accessProfileName, Long accountId, String username, String password, String addressPoolName)
-        throws ExecutionException {
+            throws ExecutionException {
         if (accessProfileName == null) {
             accessProfileName = genAccessProfileName(accountId, username);
         }
@@ -1668,47 +1628,47 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.ACCESS_PROFILE_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "access-profile-name", accessProfileName);
-                return sendRequestAndCheckResponse(command, xml, "name", username);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.ACCESS_PROFILE_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "access-profile-name", accessProfileName);
+            return sendRequestAndCheckResponse(command, xml, "name", username);
 
-            case ADD:
-                if (manageAccessProfile(SrxCommand.CHECK_IF_EXISTS, accessProfileName, accountId, username, password, addressPoolName)) {
-                    return true;
-                }
+        case ADD:
+            if (manageAccessProfile(SrxCommand.CHECK_IF_EXISTS, accessProfileName, accountId, username, password, addressPoolName)) {
+                return true;
+            }
 
-                xml = SrxXml.ACCESS_PROFILE_ADD.getXml();
-                xml = replaceXmlValue(xml, "access-profile-name", accessProfileName);
-                xml = replaceXmlValue(xml, "username", username);
-                xml = replaceXmlValue(xml, "password", password);
-                xml = replaceXmlValue(xml, "address-pool-name", addressPoolName);
+            xml = SrxXml.ACCESS_PROFILE_ADD.getXml();
+            xml = replaceXmlValue(xml, "access-profile-name", accessProfileName);
+            xml = replaceXmlValue(xml, "username", username);
+            xml = replaceXmlValue(xml, "password", password);
+            xml = replaceXmlValue(xml, "address-pool-name", addressPoolName);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add access profile: " + accessProfileName);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add access profile: " + accessProfileName);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageAccessProfile(SrxCommand.CHECK_IF_EXISTS, accessProfileName, accountId, username, password, addressPoolName)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageAccessProfile(SrxCommand.CHECK_IF_EXISTS, accessProfileName, accountId, username, password, addressPoolName)) {
+                return true;
+            }
 
-                xml = SrxXml.ACCESS_PROFILE_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "access-profile-name", accessProfileName);
+            xml = SrxXml.ACCESS_PROFILE_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "access-profile-name", accessProfileName);
 
-                if (!sendRequestAndCheckResponse(command, xml, "name", username)) {
-                    throw new ExecutionException("Failed to delete access profile: " + accessProfileName);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml, "name", username)) {
+                throw new ExecutionException("Failed to delete access profile: " + accessProfileName);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
         }
     }
 
@@ -1721,53 +1681,53 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.PRIVATE_INTERFACE_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "private-interface-name", _privateInterface);
-                xml = replaceXmlValue(xml, "vlan-id", String.valueOf(vlanTag));
-                return sendRequestAndCheckResponse(command, xml, "name", String.valueOf(vlanTag));
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.PRIVATE_INTERFACE_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "private-interface-name", _privateInterface);
+            xml = replaceXmlValue(xml, "vlan-id", String.valueOf(vlanTag));
+            return sendRequestAndCheckResponse(command, xml, "name", String.valueOf(vlanTag));
 
-            case ADD:
-                if (managePrivateInterface(SrxCommand.CHECK_IF_EXISTS, false, vlanTag, privateInterfaceIp)) {
-                    return true;
-                }
+        case ADD:
+            if (managePrivateInterface(SrxCommand.CHECK_IF_EXISTS, false, vlanTag, privateInterfaceIp)) {
+                return true;
+            }
 
-                xml = addFilters ? SrxXml.PRIVATE_INTERFACE_WITH_FILTERS_ADD.getXml() : SrxXml.PRIVATE_INTERFACE_ADD.getXml();
-                xml = replaceXmlValue(xml, "private-interface-name", _privateInterface);
-                xml = replaceXmlValue(xml, "vlan-id", String.valueOf(vlanTag));
-                xml = replaceXmlValue(xml, "private-interface-ip", privateInterfaceIp);
+            xml = addFilters ? SrxXml.PRIVATE_INTERFACE_WITH_FILTERS_ADD.getXml() : SrxXml.PRIVATE_INTERFACE_ADD.getXml();
+            xml = replaceXmlValue(xml, "private-interface-name", _privateInterface);
+            xml = replaceXmlValue(xml, "vlan-id", String.valueOf(vlanTag));
+            xml = replaceXmlValue(xml, "private-interface-ip", privateInterfaceIp);
 
-                if (addFilters) {
-                    xml = replaceXmlValue(xml, "input-filter-name", _usageFilterVlanInput.getName() + "-" + vlanTag);
-                    xml = replaceXmlValue(xml, "output-filter-name", _usageFilterVlanOutput.getName() + "-" + vlanTag);
-                }
+            if (addFilters) {
+                xml = replaceXmlValue(xml, "input-filter-name", _usageFilterVlanInput.getName() + "-" + vlanTag);
+                xml = replaceXmlValue(xml, "output-filter-name", _usageFilterVlanOutput.getName() + "-" + vlanTag);
+            }
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add private interface for guest VLAN tag " + vlanTag);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add private interface for guest VLAN tag " + vlanTag);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!managePrivateInterface(SrxCommand.CHECK_IF_EXISTS, false, vlanTag, privateInterfaceIp)) {
-                    return true;
-                }
+        case DELETE:
+            if (!managePrivateInterface(SrxCommand.CHECK_IF_EXISTS, false, vlanTag, privateInterfaceIp)) {
+                return true;
+            }
 
-                xml = SrxXml.PRIVATE_INTERFACE_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "private-interface-name", _privateInterface);
-                xml = replaceXmlValue(xml, "vlan-id", String.valueOf(vlanTag));
+            xml = SrxXml.PRIVATE_INTERFACE_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "private-interface-name", _privateInterface);
+            xml = replaceXmlValue(xml, "vlan-id", String.valueOf(vlanTag));
 
-                if (!sendRequestAndCheckResponse(command, xml, "name", String.valueOf(vlanTag))) {
-                    throw new ExecutionException("Failed to delete private interface for guest VLAN tag " + vlanTag);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml, "name", String.valueOf(vlanTag))) {
+                throw new ExecutionException("Failed to delete private interface for guest VLAN tag " + vlanTag);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
         }
 
     }
@@ -1800,61 +1760,61 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.PROXY_ARP_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "public-interface-name", publicInterface);
-                xml = replaceXmlValue(xml, "public-ip-address", publicIp);
-                return sendRequestAndCheckResponse(command, xml, "name", publicIp + "/32");
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.PROXY_ARP_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "public-interface-name", publicInterface);
+            xml = replaceXmlValue(xml, "public-ip-address", publicIp);
+            return sendRequestAndCheckResponse(command, xml, "name", publicIp + "/32");
 
-            case CHECK_IF_IN_USE:
-                // Check if any NAT rules are using this proxy ARP entry
-                String poolName = genSourceNatPoolName(publicIp);
+        case CHECK_IF_IN_USE:
+            // Check if any NAT rules are using this proxy ARP entry
+            String poolName = genSourceNatPoolName(publicIp);
 
-                String allStaticNatRules = sendRequest(SrxXml.STATIC_NAT_RULE_GETALL.getXml());
-                String allDestNatRules = sendRequest(replaceXmlValue(SrxXml.DEST_NAT_RULE_GETALL.getXml(), "rule-set", _publicZone));
-                String allSrcNatRules = sendRequest(SrxXml.SRC_NAT_RULE_GETALL.getXml());
+            String allStaticNatRules = sendRequest(SrxXml.STATIC_NAT_RULE_GETALL.getXml());
+            String allDestNatRules = sendRequest(replaceXmlValue(SrxXml.DEST_NAT_RULE_GETALL.getXml(), "rule-set", _publicZone));
+            String allSrcNatRules = sendRequest(SrxXml.SRC_NAT_RULE_GETALL.getXml());
 
-                return (allStaticNatRules.contains(publicIp) || allDestNatRules.contains(publicIp) || allSrcNatRules.contains(poolName));
+            return (allStaticNatRules.contains(publicIp) || allDestNatRules.contains(publicIp) || allSrcNatRules.contains(poolName));
 
-            case ADD:
-                if (manageProxyArp(SrxCommand.CHECK_IF_EXISTS, publicVlanTag, publicIp)) {
-                    return true;
-                }
+        case ADD:
+            if (manageProxyArp(SrxCommand.CHECK_IF_EXISTS, publicVlanTag, publicIp)) {
+                return true;
+            }
 
-                xml = SrxXml.PROXY_ARP_ADD.getXml();
-                xml = replaceXmlValue(xml, "public-interface-name", publicInterface);
-                xml = replaceXmlValue(xml, "public-ip-address", publicIp);
+            xml = SrxXml.PROXY_ARP_ADD.getXml();
+            xml = replaceXmlValue(xml, "public-interface-name", publicInterface);
+            xml = replaceXmlValue(xml, "public-ip-address", publicIp);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add proxy ARP entry for public IP " + publicIp);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add proxy ARP entry for public IP " + publicIp);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageProxyArp(SrxCommand.CHECK_IF_EXISTS, publicVlanTag, publicIp)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageProxyArp(SrxCommand.CHECK_IF_EXISTS, publicVlanTag, publicIp)) {
+                return true;
+            }
 
-                if (manageProxyArp(SrxCommand.CHECK_IF_IN_USE, publicVlanTag, publicIp)) {
-                    return true;
-                }
+            if (manageProxyArp(SrxCommand.CHECK_IF_IN_USE, publicVlanTag, publicIp)) {
+                return true;
+            }
 
-                xml = SrxXml.PROXY_ARP_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "public-interface-name", publicInterface);
-                xml = replaceXmlValue(xml, "public-ip-address", publicIp);
+            xml = SrxXml.PROXY_ARP_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "public-interface-name", publicInterface);
+            xml = replaceXmlValue(xml, "public-ip-address", publicIp);
 
-                if (!sendRequestAndCheckResponse(command, xml, "name", publicIp)) {
-                    throw new ExecutionException("Failed to delete proxy ARP entry for public IP " + publicIp);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml, "name", publicIp)) {
+                throw new ExecutionException("Failed to delete proxy ARP entry for public IP " + publicIp);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
 
         }
 
@@ -1954,47 +1914,47 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.ZONE_INTERFACE_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "private-zone-name", _privateZone);
-                xml = replaceXmlValue(xml, "zone-interface-name", zoneInterfaceName);
-                return sendRequestAndCheckResponse(command, xml, "name", zoneInterfaceName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.ZONE_INTERFACE_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "private-zone-name", _privateZone);
+            xml = replaceXmlValue(xml, "zone-interface-name", zoneInterfaceName);
+            return sendRequestAndCheckResponse(command, xml, "name", zoneInterfaceName);
 
-            case ADD:
-                if (manageZoneInterface(SrxCommand.CHECK_IF_EXISTS, vlanTag)) {
-                    return true;
-                }
+        case ADD:
+            if (manageZoneInterface(SrxCommand.CHECK_IF_EXISTS, vlanTag)) {
+                return true;
+            }
 
-                xml = SrxXml.ZONE_INTERFACE_ADD.getXml();
-                xml = replaceXmlValue(xml, "private-zone-name", _privateZone);
-                xml = replaceXmlValue(xml, "zone-interface-name", zoneInterfaceName);
+            xml = SrxXml.ZONE_INTERFACE_ADD.getXml();
+            xml = replaceXmlValue(xml, "private-zone-name", _privateZone);
+            xml = replaceXmlValue(xml, "zone-interface-name", zoneInterfaceName);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add interface " + zoneInterfaceName + " to zone " + _privateZone);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add interface " + zoneInterfaceName + " to zone " + _privateZone);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageZoneInterface(SrxCommand.CHECK_IF_EXISTS, vlanTag)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageZoneInterface(SrxCommand.CHECK_IF_EXISTS, vlanTag)) {
+                return true;
+            }
 
-                xml = SrxXml.ZONE_INTERFACE_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "private-zone-name", _privateZone);
-                xml = replaceXmlValue(xml, "zone-interface-name", zoneInterfaceName);
+            xml = SrxXml.ZONE_INTERFACE_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "private-zone-name", _privateZone);
+            xml = replaceXmlValue(xml, "zone-interface-name", zoneInterfaceName);
 
-                if (!sendRequestAndCheckResponse(command, xml, "name", zoneInterfaceName)) {
-                    throw new ExecutionException("Failed to delete interface " + zoneInterfaceName + " from zone " + _privateZone);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml, "name", zoneInterfaceName)) {
+                throw new ExecutionException("Failed to delete interface " + zoneInterfaceName + " from zone " + _privateZone);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
         }
     }
 
@@ -2012,51 +1972,51 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.STATIC_NAT_RULE_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "rule-set", _publicZone);
-                xml = replaceXmlValue(xml, "from-zone", _publicZone);
-                xml = replaceXmlValue(xml, "rule-name", ruleName);
-                return sendRequestAndCheckResponse(command, xml, "name", ruleName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.STATIC_NAT_RULE_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "rule-set", _publicZone);
+            xml = replaceXmlValue(xml, "from-zone", _publicZone);
+            xml = replaceXmlValue(xml, "rule-name", ruleName);
+            return sendRequestAndCheckResponse(command, xml, "name", ruleName);
 
-            case ADD:
-                if (manageStaticNatRule(SrxCommand.CHECK_IF_EXISTS, publicIp, privateIp)) {
-                    return true;
-                }
+        case ADD:
+            if (manageStaticNatRule(SrxCommand.CHECK_IF_EXISTS, publicIp, privateIp)) {
+                return true;
+            }
 
-                xml = SrxXml.STATIC_NAT_RULE_ADD.getXml();
-                xml = replaceXmlValue(xml, "rule-set", _publicZone);
-                xml = replaceXmlValue(xml, "from-zone", _publicZone);
-                xml = replaceXmlValue(xml, "rule-name", ruleName);
-                xml = replaceXmlValue(xml, "original-ip", publicIp);
-                xml = replaceXmlValue(xml, "translated-ip", privateIp);
+            xml = SrxXml.STATIC_NAT_RULE_ADD.getXml();
+            xml = replaceXmlValue(xml, "rule-set", _publicZone);
+            xml = replaceXmlValue(xml, "from-zone", _publicZone);
+            xml = replaceXmlValue(xml, "rule-name", ruleName);
+            xml = replaceXmlValue(xml, "original-ip", publicIp);
+            xml = replaceXmlValue(xml, "translated-ip", privateIp);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add static NAT rule from public IP " + publicIp + " to private IP " + privateIp);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add static NAT rule from public IP " + publicIp + " to private IP " + privateIp);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageStaticNatRule(SrxCommand.CHECK_IF_EXISTS, publicIp, privateIp)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageStaticNatRule(SrxCommand.CHECK_IF_EXISTS, publicIp, privateIp)) {
+                return true;
+            }
 
-                xml = SrxXml.STATIC_NAT_RULE_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "rule-set", _publicZone);
-                xml = replaceXmlValue(xml, "from-zone", _publicZone);
-                xml = replaceXmlValue(xml, "rule-name", ruleName);
+            xml = SrxXml.STATIC_NAT_RULE_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "rule-set", _publicZone);
+            xml = replaceXmlValue(xml, "from-zone", _publicZone);
+            xml = replaceXmlValue(xml, "rule-name", ruleName);
 
-                if (!sendRequestAndCheckResponse(command, xml, "name", ruleName)) {
-                    throw new ExecutionException("Failed to delete static NAT rule from public IP " + publicIp + " to private IP " + privateIp);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml, "name", ruleName)) {
+                throw new ExecutionException("Failed to delete static NAT rule from public IP " + publicIp + " to private IP " + privateIp);
+            } else {
+                return true;
+            }
 
-            default:
-                throw new ExecutionException("Unrecognized command.");
+        default:
+            throw new ExecutionException("Unrecognized command.");
 
         }
     }
@@ -2118,55 +2078,55 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.DEST_NAT_POOL_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "pool-name", poolName);
-                return sendRequestAndCheckResponse(command, xml, "name", poolName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.DEST_NAT_POOL_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "pool-name", poolName);
+            return sendRequestAndCheckResponse(command, xml, "name", poolName);
 
-            case CHECK_IF_IN_USE:
-                // Check if any destination nat rules refer to this pool
-                xml = SrxXml.DEST_NAT_RULE_GETALL.getXml();
-                xml = replaceXmlValue(xml, "rule-set", _publicZone);
-                return sendRequestAndCheckResponse(command, xml, "pool-name", poolName);
+        case CHECK_IF_IN_USE:
+            // Check if any destination nat rules refer to this pool
+            xml = SrxXml.DEST_NAT_RULE_GETALL.getXml();
+            xml = replaceXmlValue(xml, "rule-set", _publicZone);
+            return sendRequestAndCheckResponse(command, xml, "pool-name", poolName);
 
-            case ADD:
-                if (manageDestinationNatPool(SrxCommand.CHECK_IF_EXISTS, privateIp, destPort)) {
-                    return true;
-                }
+        case ADD:
+            if (manageDestinationNatPool(SrxCommand.CHECK_IF_EXISTS, privateIp, destPort)) {
+                return true;
+            }
 
-                xml = SrxXml.DEST_NAT_POOL_ADD.getXml();
-                xml = replaceXmlValue(xml, "pool-name", poolName);
-                xml = replaceXmlValue(xml, "private-address", privateIp + "/32");
-                xml = replaceXmlValue(xml, "dest-port", String.valueOf(destPort));
+            xml = SrxXml.DEST_NAT_POOL_ADD.getXml();
+            xml = replaceXmlValue(xml, "pool-name", poolName);
+            xml = replaceXmlValue(xml, "private-address", privateIp + "/32");
+            xml = replaceXmlValue(xml, "dest-port", String.valueOf(destPort));
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add destination NAT pool for private IP " + privateIp + " and private port " + destPort);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add destination NAT pool for private IP " + privateIp + " and private port " + destPort);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageDestinationNatPool(SrxCommand.CHECK_IF_EXISTS, privateIp, destPort)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageDestinationNatPool(SrxCommand.CHECK_IF_EXISTS, privateIp, destPort)) {
+                return true;
+            }
 
-                if (manageDestinationNatPool(SrxCommand.CHECK_IF_IN_USE, privateIp, destPort)) {
-                    return true;
-                }
+            if (manageDestinationNatPool(SrxCommand.CHECK_IF_IN_USE, privateIp, destPort)) {
+                return true;
+            }
 
-                xml = SrxXml.DEST_NAT_POOL_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "pool-name", poolName);
+            xml = SrxXml.DEST_NAT_POOL_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "pool-name", poolName);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to delete destination NAT pool for private IP " + privateIp + " and private port " + destPort);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to delete destination NAT pool for private IP " + privateIp + " and private port " + destPort);
+            } else {
+                return true;
+            }
 
-            default:
-                throw new ExecutionException("Unrecognized command.");
+        default:
+            throw new ExecutionException("Unrecognized command.");
         }
     }
 
@@ -2175,8 +2135,7 @@ public class JuniperSrxResource implements ServerResource {
      */
 
     private String genDestinationNatRuleName(String publicIp, String privateIp, long srcPort, long destPort) {
-        return "destnatrule-" +
-            String.valueOf(genObjectName(publicIp, privateIp, String.valueOf(srcPort), String.valueOf(destPort)).hashCode()).replaceAll("[^a-zA-Z0-9]", "");
+        return "destnatrule-" + String.valueOf(genObjectName(publicIp, privateIp, String.valueOf(srcPort), String.valueOf(destPort)).hashCode()).replaceAll("[^a-zA-Z0-9]", "");
     }
 
     private boolean manageDestinationNatRule(SrxCommand command, String publicIp, String privateIp, long srcPort, long destPort) throws ExecutionException {
@@ -2186,66 +2145,64 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.DEST_NAT_RULE_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "rule-set", _publicZone);
-                xml = replaceXmlValue(xml, "from-zone", _publicZone);
-                xml = replaceXmlValue(xml, "rule-name", ruleName);
-                return sendRequestAndCheckResponse(command, xml, "name", ruleName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.DEST_NAT_RULE_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "rule-set", _publicZone);
+            xml = replaceXmlValue(xml, "from-zone", _publicZone);
+            xml = replaceXmlValue(xml, "rule-name", ruleName);
+            return sendRequestAndCheckResponse(command, xml, "name", ruleName);
 
-            case ADD:
-                if (manageDestinationNatRule(SrxCommand.CHECK_IF_EXISTS, publicIp, privateIp, srcPort, destPort)) {
-                    return true;
-                }
+        case ADD:
+            if (manageDestinationNatRule(SrxCommand.CHECK_IF_EXISTS, publicIp, privateIp, srcPort, destPort)) {
+                return true;
+            }
 
-                if (!manageDestinationNatPool(SrxCommand.CHECK_IF_EXISTS, privateIp, destPort)) {
-                    throw new ExecutionException("The destination NAT pool corresponding to private IP: " + privateIp + " and destination port: " + destPort +
-                        " does not exist.");
-                }
+            if (!manageDestinationNatPool(SrxCommand.CHECK_IF_EXISTS, privateIp, destPort)) {
+                throw new ExecutionException("The destination NAT pool corresponding to private IP: " + privateIp + " and destination port: " + destPort + " does not exist.");
+            }
 
-                xml = SrxXml.DEST_NAT_RULE_ADD.getXml();
-                xml = replaceXmlValue(xml, "rule-set", _publicZone);
-                xml = replaceXmlValue(xml, "from-zone", _publicZone);
-                xml = replaceXmlValue(xml, "rule-name", ruleName);
-                xml = replaceXmlValue(xml, "public-address", publicIp);
-                xml = replaceXmlValue(xml, "src-port", String.valueOf(srcPort));
-                xml = replaceXmlValue(xml, "pool-name", poolName);
+            xml = SrxXml.DEST_NAT_RULE_ADD.getXml();
+            xml = replaceXmlValue(xml, "rule-set", _publicZone);
+            xml = replaceXmlValue(xml, "from-zone", _publicZone);
+            xml = replaceXmlValue(xml, "rule-name", ruleName);
+            xml = replaceXmlValue(xml, "public-address", publicIp);
+            xml = replaceXmlValue(xml, "src-port", String.valueOf(srcPort));
+            xml = replaceXmlValue(xml, "pool-name", poolName);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add destination NAT rule from public IP " + publicIp + ", public port " + srcPort + ", private IP " +
-                        privateIp + ", and private port " + destPort);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add destination NAT rule from public IP " + publicIp + ", public port " + srcPort + ", private IP " + privateIp
+                        + ", and private port " + destPort);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageDestinationNatRule(SrxCommand.CHECK_IF_EXISTS, publicIp, privateIp, srcPort, destPort)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageDestinationNatRule(SrxCommand.CHECK_IF_EXISTS, publicIp, privateIp, srcPort, destPort)) {
+                return true;
+            }
 
-                xml = SrxXml.DEST_NAT_RULE_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "rule-set", _publicZone);
-                xml = replaceXmlValue(xml, "from-zone", _publicZone);
-                xml = replaceXmlValue(xml, "rule-name", ruleName);
+            xml = SrxXml.DEST_NAT_RULE_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "rule-set", _publicZone);
+            xml = replaceXmlValue(xml, "from-zone", _publicZone);
+            xml = replaceXmlValue(xml, "rule-name", ruleName);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to delete destination NAT rule from public IP " + publicIp + ", public port " + srcPort + ", private IP " +
-                        privateIp + ", and private port " + destPort);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to delete destination NAT rule from public IP " + publicIp + ", public port " + srcPort + ", private IP " + privateIp
+                        + ", and private port " + destPort);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
         }
 
     }
 
-    private List<String[]> getDestNatRules(RuleMatchCondition condition, String publicIp, String privateIp, String privateGateway, Long privateCidrSize)
-        throws ExecutionException {
+    private List<String[]> getDestNatRules(RuleMatchCondition condition, String publicIp, String privateIp, String privateGateway, Long privateCidrSize) throws ExecutionException {
         List<String[]> destNatRules = new ArrayList<String[]>();
 
         String xmlRequest = SrxXml.DEST_NAT_RULE_GETALL.getXml();
@@ -2347,54 +2304,54 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.SRC_NAT_POOL_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "pool-name", poolName);
-                return sendRequestAndCheckResponse(command, xml, "name", poolName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.SRC_NAT_POOL_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "pool-name", poolName);
+            return sendRequestAndCheckResponse(command, xml, "name", poolName);
 
-            case CHECK_IF_IN_USE:
-                // Check if any source nat rules refer to this pool
-                xml = SrxXml.SRC_NAT_RULE_GETALL.getXml();
-                return sendRequestAndCheckResponse(command, xml, "pool-name", poolName);
+        case CHECK_IF_IN_USE:
+            // Check if any source nat rules refer to this pool
+            xml = SrxXml.SRC_NAT_RULE_GETALL.getXml();
+            return sendRequestAndCheckResponse(command, xml, "pool-name", poolName);
 
-            case ADD:
-                if (manageSourceNatPool(SrxCommand.CHECK_IF_EXISTS, publicIp)) {
-                    return true;
-                }
+        case ADD:
+            if (manageSourceNatPool(SrxCommand.CHECK_IF_EXISTS, publicIp)) {
+                return true;
+            }
 
-                xml = SrxXml.SRC_NAT_POOL_ADD.getXml();
-                xml = replaceXmlValue(xml, "pool-name", poolName);
-                xml = replaceXmlValue(xml, "address", publicIp + "/32");
+            xml = SrxXml.SRC_NAT_POOL_ADD.getXml();
+            xml = replaceXmlValue(xml, "pool-name", poolName);
+            xml = replaceXmlValue(xml, "address", publicIp + "/32");
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add source NAT pool for public IP " + publicIp);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add source NAT pool for public IP " + publicIp);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageSourceNatPool(SrxCommand.CHECK_IF_EXISTS, publicIp)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageSourceNatPool(SrxCommand.CHECK_IF_EXISTS, publicIp)) {
+                return true;
+            }
 
-                if (manageSourceNatPool(SrxCommand.CHECK_IF_IN_USE, publicIp)) {
-                    return true;
-                }
+            if (manageSourceNatPool(SrxCommand.CHECK_IF_IN_USE, publicIp)) {
+                return true;
+            }
 
-                xml = SrxXml.SRC_NAT_POOL_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "pool-name", poolName);
+            xml = SrxXml.SRC_NAT_POOL_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "pool-name", poolName);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to delete source NAT pool for public IP " + publicIp);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to delete source NAT pool for public IP " + publicIp);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
         }
     }
 
@@ -2413,57 +2370,57 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.SRC_NAT_RULE_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "rule-set", _privateZone);
-                xml = replaceXmlValue(xml, "from-zone", _privateZone);
-                xml = replaceXmlValue(xml, "rule-name", ruleName);
-                return sendRequestAndCheckResponse(command, xml, "name", ruleName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.SRC_NAT_RULE_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "rule-set", _privateZone);
+            xml = replaceXmlValue(xml, "from-zone", _privateZone);
+            xml = replaceXmlValue(xml, "rule-name", ruleName);
+            return sendRequestAndCheckResponse(command, xml, "name", ruleName);
 
-            case ADD:
-                if (manageSourceNatRule(SrxCommand.CHECK_IF_EXISTS, publicIp, privateSubnet)) {
-                    return true;
-                }
+        case ADD:
+            if (manageSourceNatRule(SrxCommand.CHECK_IF_EXISTS, publicIp, privateSubnet)) {
+                return true;
+            }
 
-                if (!manageSourceNatPool(SrxCommand.CHECK_IF_EXISTS, publicIp)) {
-                    throw new ExecutionException("The source NAT pool corresponding to " + publicIp + " does not exist.");
-                }
+            if (!manageSourceNatPool(SrxCommand.CHECK_IF_EXISTS, publicIp)) {
+                throw new ExecutionException("The source NAT pool corresponding to " + publicIp + " does not exist.");
+            }
 
-                xml = SrxXml.SRC_NAT_RULE_ADD.getXml();
-                xml = replaceXmlValue(xml, "rule-set", _privateZone);
-                xml = replaceXmlValue(xml, "from-zone", _privateZone);
-                xml = replaceXmlValue(xml, "to-zone", _publicZone);
-                xml = replaceXmlValue(xml, "rule-name", ruleName);
-                xml = replaceXmlValue(xml, "private-subnet", privateSubnet);
-                xml = replaceXmlValue(xml, "pool-name", poolName);
+            xml = SrxXml.SRC_NAT_RULE_ADD.getXml();
+            xml = replaceXmlValue(xml, "rule-set", _privateZone);
+            xml = replaceXmlValue(xml, "from-zone", _privateZone);
+            xml = replaceXmlValue(xml, "to-zone", _publicZone);
+            xml = replaceXmlValue(xml, "rule-name", ruleName);
+            xml = replaceXmlValue(xml, "private-subnet", privateSubnet);
+            xml = replaceXmlValue(xml, "pool-name", poolName);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add source NAT rule for public IP " + publicIp + " and private subnet " + privateSubnet);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add source NAT rule for public IP " + publicIp + " and private subnet " + privateSubnet);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageSourceNatRule(SrxCommand.CHECK_IF_EXISTS, publicIp, privateSubnet)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageSourceNatRule(SrxCommand.CHECK_IF_EXISTS, publicIp, privateSubnet)) {
+                return true;
+            }
 
-                xml = SrxXml.SRC_NAT_RULE_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "rule-set", _privateZone);
-                xml = replaceXmlValue(xml, "from-zone", _privateZone);
-                xml = replaceXmlValue(xml, "rule-name", ruleName);
+            xml = SrxXml.SRC_NAT_RULE_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "rule-set", _privateZone);
+            xml = replaceXmlValue(xml, "from-zone", _privateZone);
+            xml = replaceXmlValue(xml, "rule-name", ruleName);
 
-                if (!sendRequestAndCheckResponse(command, xml, "name", ruleName)) {
-                    throw new ExecutionException("Failed to delete source NAT rule for public IP " + publicIp + " and private subnet " + privateSubnet);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml, "name", ruleName)) {
+                throw new ExecutionException("Failed to delete source NAT rule for public IP " + publicIp + " and private subnet " + privateSubnet);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
         }
 
     }
@@ -2493,60 +2450,60 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.ADDRESS_BOOK_ENTRY_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "zone", zone);
-                xml = replaceXmlValue(xml, "entry-name", entryName);
-                return sendRequestAndCheckResponse(command, xml, "name", entryName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.ADDRESS_BOOK_ENTRY_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "zone", zone);
+            xml = replaceXmlValue(xml, "entry-name", entryName);
+            return sendRequestAndCheckResponse(command, xml, "name", entryName);
 
-            case CHECK_IF_IN_USE:
-                // Check if any security policies refer to this address book entry
-                xml = SrxXml.SECURITY_POLICY_GETALL.getXml();
-                String fromZone = zone.equals(_publicZone) ? _privateZone : _publicZone;
-                xml = replaceXmlValue(xml, "from-zone", fromZone);
-                xml = replaceXmlValue(xml, "to-zone", zone);
-                return sendRequestAndCheckResponse(command, xml, "destination-address", entryName);
+        case CHECK_IF_IN_USE:
+            // Check if any security policies refer to this address book entry
+            xml = SrxXml.SECURITY_POLICY_GETALL.getXml();
+            String fromZone = zone.equals(_publicZone) ? _privateZone : _publicZone;
+            xml = replaceXmlValue(xml, "from-zone", fromZone);
+            xml = replaceXmlValue(xml, "to-zone", zone);
+            return sendRequestAndCheckResponse(command, xml, "destination-address", entryName);
 
-            case ADD:
-                if (manageAddressBookEntry(SrxCommand.CHECK_IF_EXISTS, zone, ip, entryName)) {
-                    return true;
-                }
+        case ADD:
+            if (manageAddressBookEntry(SrxCommand.CHECK_IF_EXISTS, zone, ip, entryName)) {
+                return true;
+            }
 
-                xml = SrxXml.ADDRESS_BOOK_ENTRY_ADD.getXml();
-                xml = replaceXmlValue(xml, "zone", zone);
-                xml = replaceXmlValue(xml, "entry-name", entryName);
-                xml = replaceXmlValue(xml, "ip", ip);
+            xml = SrxXml.ADDRESS_BOOK_ENTRY_ADD.getXml();
+            xml = replaceXmlValue(xml, "zone", zone);
+            xml = replaceXmlValue(xml, "entry-name", entryName);
+            xml = replaceXmlValue(xml, "ip", ip);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add address book entry for IP " + ip + " in zone " + zone);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add address book entry for IP " + ip + " in zone " + zone);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageAddressBookEntry(SrxCommand.CHECK_IF_EXISTS, zone, ip, entryName)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageAddressBookEntry(SrxCommand.CHECK_IF_EXISTS, zone, ip, entryName)) {
+                return true;
+            }
 
-                if (manageAddressBookEntry(SrxCommand.CHECK_IF_IN_USE, zone, ip, entryName)) {
-                    return true;
-                }
+            if (manageAddressBookEntry(SrxCommand.CHECK_IF_IN_USE, zone, ip, entryName)) {
+                return true;
+            }
 
-                xml = SrxXml.ADDRESS_BOOK_ENTRY_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "zone", zone);
-                xml = replaceXmlValue(xml, "entry-name", entryName);
+            xml = SrxXml.ADDRESS_BOOK_ENTRY_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "zone", zone);
+            xml = replaceXmlValue(xml, "entry-name", entryName);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to delete address book entry for IP " + ip + " in zone " + zone);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to delete address book entry for IP " + ip + " in zone " + zone);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
 
         }
 
@@ -2598,59 +2555,59 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.APPLICATION_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "name", applicationName);
-                return sendRequestAndCheckResponse(command, xml, "name", applicationName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.APPLICATION_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "name", applicationName);
+            return sendRequestAndCheckResponse(command, xml, "name", applicationName);
 
-            case ADD:
-                if (manageApplication(type, SrxCommand.CHECK_IF_EXISTS, protocol, startPort, endPort)) {
-                    return true;
-                }
-                String icmpOrDestPort;
-                xml = SrxXml.APPLICATION_ADD.getXml();
-                xml = replaceXmlValue(xml, "name", applicationName);
-                xml = replaceXmlValue(xml, "protocol", protocol.toString());
-                if (protocol.toString() == Protocol.icmp.toString()) {
-                    icmpOrDestPort = "<icmp-type>" + startPort + "</icmp-type>";
-                    icmpOrDestPort += "<icmp-code>" + endPort + "</icmp-code>";
+        case ADD:
+            if (manageApplication(type, SrxCommand.CHECK_IF_EXISTS, protocol, startPort, endPort)) {
+                return true;
+            }
+            String icmpOrDestPort;
+            xml = SrxXml.APPLICATION_ADD.getXml();
+            xml = replaceXmlValue(xml, "name", applicationName);
+            xml = replaceXmlValue(xml, "protocol", protocol.toString());
+            if (protocol.toString() == Protocol.icmp.toString()) {
+                icmpOrDestPort = "<icmp-type>" + startPort + "</icmp-type>";
+                icmpOrDestPort += "<icmp-code>" + endPort + "</icmp-code>";
+            } else {
+                String destPort;
+
+                if (startPort == endPort) {
+                    destPort = String.valueOf(startPort);
                 } else {
-                    String destPort;
-
-                    if (startPort == endPort) {
-                        destPort = String.valueOf(startPort);
-                    } else {
-                        destPort = startPort + "-" + endPort;
-                    }
-                    icmpOrDestPort = "<destination-port>" + destPort + "</destination-port>";
+                    destPort = startPort + "-" + endPort;
                 }
+                icmpOrDestPort = "<destination-port>" + destPort + "</destination-port>";
+            }
 
-                xml = replaceXmlValue(xml, "dest-port-icmp", icmpOrDestPort);
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add application " + applicationName);
-                } else {
-                    return true;
-                }
+            xml = replaceXmlValue(xml, "dest-port-icmp", icmpOrDestPort);
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add application " + applicationName);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageApplication(type, SrxCommand.CHECK_IF_EXISTS, protocol, startPort, endPort)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageApplication(type, SrxCommand.CHECK_IF_EXISTS, protocol, startPort, endPort)) {
+                return true;
+            }
 
-                xml = SrxXml.APPLICATION_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "name", applicationName);
+            xml = SrxXml.APPLICATION_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "name", applicationName);
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to delete application " + applicationName);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to delete application " + applicationName);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
         }
 
     }
@@ -2658,7 +2615,8 @@ public class JuniperSrxResource implements ServerResource {
     private List<String> getUnusedApplications(List<String> applications, String fromZone, String toZone) throws ExecutionException {
         List<String> unusedApplications = new ArrayList<String>();
 
-        // Check if any of the applications are unused by existing security policies
+        // Check if any of the applications are unused by existing security
+        // policies
         String xml = SrxXml.SECURITY_POLICY_GETALL.getXml();
         xml = replaceXmlValue(xml, "from-zone", fromZone);
         xml = replaceXmlValue(xml, "to-zone", toZone);
@@ -2745,7 +2703,7 @@ public class JuniperSrxResource implements ServerResource {
     }
 
     private boolean manageSecurityPolicy(SecurityPolicyType type, SrxCommand command, Long accountId, String username, String privateIp, List<String> applicationNames,
-        List<String> cidrs, String ipsecVpnName, boolean defaultEgressAction) throws ExecutionException {
+            List<String> cidrs, String ipsecVpnName, boolean defaultEgressAction) throws ExecutionException {
         String fromZone = _publicZone;
         String toZone = _privateZone;
 
@@ -2768,164 +2726,166 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.SECURITY_POLICY_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "from-zone", fromZone);
-                xml = replaceXmlValue(xml, "to-zone", toZone);
-                xml = replaceXmlValue(xml, "policy-name", securityPolicyName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.SECURITY_POLICY_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "from-zone", fromZone);
+            xml = replaceXmlValue(xml, "to-zone", toZone);
+            xml = replaceXmlValue(xml, "policy-name", securityPolicyName);
 
-                return sendRequestAndCheckResponse(command, xml, "name", securityPolicyName);
+            return sendRequestAndCheckResponse(command, xml, "name", securityPolicyName);
 
-            case CHECK_IF_IN_USE:
-                List<String[]> rulesToCheck = null;
-                if (type.equals(SecurityPolicyType.STATIC_NAT)) {
-                    // Check if any static NAT rules rely on this security policy
-                    rulesToCheck = getStaticNatRules(RuleMatchCondition.ALL, null, null);
-                } else if (type.equals(SecurityPolicyType.DESTINATION_NAT)) {
-                    // Check if any destination NAT rules rely on this security policy
-                    rulesToCheck = getDestNatRules(RuleMatchCondition.ALL, null, null, null, null);
-                } else {
-                    return false;
-                }
-
-                for (String[] rule : rulesToCheck) {
-                    String rulePrivateIp = rule[1];
-                    if (privateIp.equals(rulePrivateIp)) {
-                        return true;
-                    }
-                }
-
+        case CHECK_IF_IN_USE:
+            List<String[]> rulesToCheck = null;
+            if (type.equals(SecurityPolicyType.STATIC_NAT)) {
+                // Check if any static NAT rules rely on this security policy
+                rulesToCheck = getStaticNatRules(RuleMatchCondition.ALL, null, null);
+            } else if (type.equals(SecurityPolicyType.DESTINATION_NAT)) {
+                // Check if any destination NAT rules rely on this security
+                // policy
+                rulesToCheck = getDestNatRules(RuleMatchCondition.ALL, null, null, null, null);
+            } else {
                 return false;
+            }
 
-            case ADD:
-                if (!(type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS) || type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS_DEFAULT))) {
-                    if (!manageAddressBookEntry(SrxCommand.CHECK_IF_EXISTS, toZone, privateIp, addressBookEntryName)) {
-                        throw new ExecutionException("No address book entry for policy: " + securityPolicyName);
-                    }
+            for (String[] rule : rulesToCheck) {
+                String rulePrivateIp = rule[1];
+                if (privateIp.equals(rulePrivateIp)) {
+                    return true;
                 }
+            }
 
-                String srcAddrs = "";
-                String dstAddrs = "";
-                String action = "";
-                xml = SrxXml.SECURITY_POLICY_ADD.getXml();
-                xml = replaceXmlValue(xml, "policy-name", securityPolicyName);
-                if (type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS) || type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS_DEFAULT)) {
-                    xml = replaceXmlValue(xml, "from-zone", _privateZone);
-                    xml = replaceXmlValue(xml, "to-zone", _publicZone);
-                    if (cidrs == null || cidrs.size() == 0) {
-                        srcAddrs = "<source-address>any</source-address>";
-                    } else {
-                        for (String cidr : cidrs) {
-                            srcAddrs += "<source-address>" + genAddressBookEntryName(cidr) + "</source-address>";
-                        }
-                    }
-                    xml = replaceXmlValue(xml, "src-address", srcAddrs);
-                    dstAddrs = "<destination-address>any</destination-address>";
-                    xml = replaceXmlValue(xml, "dst-address", dstAddrs);
-                    if (type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS_DEFAULT)) {
-                        if (defaultEgressAction == false) {
-                            //for default policy is false add default deny rules
-                            action = "<deny></deny>";
-                        } else {
-                            action = "<permit></permit>";
-                        }
-                    } else {
-                        if (defaultEgressAction == true) {
-                            //configure egress rules to deny the traffic when default egress is allow
-                            action = "<deny></deny>";
-                        } else {
-                            action = "<permit></permit>";
-                        }
+            return false;
 
-                        xml = replaceXmlValue(xml, "action", action);
-                    }
-                } else {
-                    xml = replaceXmlValue(xml, "from-zone", fromZone);
-                    xml = replaceXmlValue(xml, "to-zone", toZone);
+        case ADD:
+            if (!(type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS) || type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS_DEFAULT))) {
+                if (!manageAddressBookEntry(SrxCommand.CHECK_IF_EXISTS, toZone, privateIp, addressBookEntryName)) {
+                    throw new ExecutionException("No address book entry for policy: " + securityPolicyName);
+                }
+            }
+
+            String srcAddrs = "";
+            String dstAddrs = "";
+            String action = "";
+            xml = SrxXml.SECURITY_POLICY_ADD.getXml();
+            xml = replaceXmlValue(xml, "policy-name", securityPolicyName);
+            if (type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS) || type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS_DEFAULT)) {
+                xml = replaceXmlValue(xml, "from-zone", _privateZone);
+                xml = replaceXmlValue(xml, "to-zone", _publicZone);
+                if (cidrs == null || cidrs.size() == 0) {
                     srcAddrs = "<source-address>any</source-address>";
-                    xml = replaceXmlValue(xml, "src-address", srcAddrs);
-                    dstAddrs = "<destination-address>" + addressBookEntryName + "</destination-address>";
-                    xml = replaceXmlValue(xml, "dst-address", dstAddrs);
-                }
-
-                if (type.equals(SecurityPolicyType.VPN) && ipsecVpnName != null) {
-                    xml = replaceXmlValue(xml, "tunnel", "<permit><tunnel><ipsec-vpn>" + ipsecVpnName + "</ipsec-vpn></tunnel></permit>");
                 } else {
-                    xml = replaceXmlValue(xml, "tunnel", "");
-                    if (!(type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS_DEFAULT) || type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS))) {
+                    for (String cidr : cidrs) {
+                        srcAddrs += "<source-address>" + genAddressBookEntryName(cidr) + "</source-address>";
+                    }
+                }
+                xml = replaceXmlValue(xml, "src-address", srcAddrs);
+                dstAddrs = "<destination-address>any</destination-address>";
+                xml = replaceXmlValue(xml, "dst-address", dstAddrs);
+                if (type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS_DEFAULT)) {
+                    if (defaultEgressAction == false) {
+                        // for default policy is false add default deny rules
+                        action = "<deny></deny>";
+                    } else {
                         action = "<permit></permit>";
-                        xml = replaceXmlValue(xml, "action", action);
                     }
-                }
-
-                String applications;
-                if (applicationNames == null || applicationNames.size() == 0) {
-                    applications = "<application>any</application>";
                 } else {
-                    applications = "";
-                    for (String applicationName : applicationNames) {
-                        applications += "<application>" + applicationName + "</application>";
+                    if (defaultEgressAction == true) {
+                        // configure egress rules to deny the traffic when
+                        // default egress is allow
+                        action = "<deny></deny>";
+                    } else {
+                        action = "<permit></permit>";
                     }
+
+                    xml = replaceXmlValue(xml, "action", action);
                 }
-
-                xml = replaceXmlValue(xml, "applications", applications);
-
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add security policy for privateIp " + privateIp + " and applications " + applicationNames);
-                } else {
-                    return true;
-                }
-
-            case DELETE:
-                if (!manageSecurityPolicy(type, SrxCommand.CHECK_IF_EXISTS, null, null, privateIp, applicationNames, cidrs, ipsecVpnName, defaultEgressAction)) {
-                    return true;
-                }
-
-                if (manageSecurityPolicy(type, SrxCommand.CHECK_IF_IN_USE, null, null, privateIp, applicationNames, cidrs, ipsecVpnName, defaultEgressAction)) {
-                    return true;
-                }
-
-                xml = SrxXml.SECURITY_POLICY_GETONE.getXml();
-                xml = setDelete(xml, true);
+            } else {
                 xml = replaceXmlValue(xml, "from-zone", fromZone);
                 xml = replaceXmlValue(xml, "to-zone", toZone);
-                xml = replaceXmlValue(xml, "policy-name", securityPolicyName);
+                srcAddrs = "<source-address>any</source-address>";
+                xml = replaceXmlValue(xml, "src-address", srcAddrs);
+                dstAddrs = "<destination-address>" + addressBookEntryName + "</destination-address>";
+                xml = replaceXmlValue(xml, "dst-address", dstAddrs);
+            }
 
-                boolean success = sendRequestAndCheckResponse(command, xml);
+            if (type.equals(SecurityPolicyType.VPN) && ipsecVpnName != null) {
+                xml = replaceXmlValue(xml, "tunnel", "<permit><tunnel><ipsec-vpn>" + ipsecVpnName + "</ipsec-vpn></tunnel></permit>");
+            } else {
+                xml = replaceXmlValue(xml, "tunnel", "");
+                if (!(type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS_DEFAULT) || type.equals(SecurityPolicyType.SECURITYPOLICY_EGRESS))) {
+                    action = "<permit></permit>";
+                    xml = replaceXmlValue(xml, "action", action);
+                }
+            }
 
-                if (success) {
-                    xml = SrxXml.SECURITY_POLICY_GETALL.getXml();
+            String applications;
+            if (applicationNames == null || applicationNames.size() == 0) {
+                applications = "<application>any</application>";
+            } else {
+                applications = "";
+                for (String applicationName : applicationNames) {
+                    applications += "<application>" + applicationName + "</application>";
+                }
+            }
+
+            xml = replaceXmlValue(xml, "applications", applications);
+
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add security policy for privateIp " + privateIp + " and applications " + applicationNames);
+            } else {
+                return true;
+            }
+
+        case DELETE:
+            if (!manageSecurityPolicy(type, SrxCommand.CHECK_IF_EXISTS, null, null, privateIp, applicationNames, cidrs, ipsecVpnName, defaultEgressAction)) {
+                return true;
+            }
+
+            if (manageSecurityPolicy(type, SrxCommand.CHECK_IF_IN_USE, null, null, privateIp, applicationNames, cidrs, ipsecVpnName, defaultEgressAction)) {
+                return true;
+            }
+
+            xml = SrxXml.SECURITY_POLICY_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "from-zone", fromZone);
+            xml = replaceXmlValue(xml, "to-zone", toZone);
+            xml = replaceXmlValue(xml, "policy-name", securityPolicyName);
+
+            boolean success = sendRequestAndCheckResponse(command, xml);
+
+            if (success) {
+                xml = SrxXml.SECURITY_POLICY_GETALL.getXml();
+                xml = replaceXmlValue(xml, "from-zone", fromZone);
+                xml = replaceXmlValue(xml, "to-zone", toZone);
+                String getAllResponseXml = sendRequest(xml);
+
+                if (getAllResponseXml == null) {
+                    throw new ExecutionException("Deleted security policy, but failed to delete security policy group.");
+                }
+
+                if (!getAllResponseXml.contains(fromZone) || !getAllResponseXml.contains(toZone)) {
+                    return true;
+                } else if (!getAllResponseXml.contains("match") && !getAllResponseXml.contains("then")) {
+                    xml = SrxXml.SECURITY_POLICY_GROUP.getXml();
                     xml = replaceXmlValue(xml, "from-zone", fromZone);
                     xml = replaceXmlValue(xml, "to-zone", toZone);
-                    String getAllResponseXml = sendRequest(xml);
-
-                    if (getAllResponseXml == null) {
+                    xml = setDelete(xml, true);
+                    if (!sendRequestAndCheckResponse(command, xml)) {
                         throw new ExecutionException("Deleted security policy, but failed to delete security policy group.");
-                    }
-
-                    if (!getAllResponseXml.contains(fromZone) || !getAllResponseXml.contains(toZone)) {
-                        return true;
-                    } else if (!getAllResponseXml.contains("match") && !getAllResponseXml.contains("then")) {
-                        xml = SrxXml.SECURITY_POLICY_GROUP.getXml();
-                        xml = replaceXmlValue(xml, "from-zone", fromZone);
-                        xml = replaceXmlValue(xml, "to-zone", toZone);
-                        xml = setDelete(xml, true);
-                        if (!sendRequestAndCheckResponse(command, xml)) {
-                            throw new ExecutionException("Deleted security policy, but failed to delete security policy group.");
-                        } else {
-                            return true;
-                        }
                     } else {
                         return true;
                     }
                 } else {
-                    throw new ExecutionException("Failed to delete security policy for privateIp " + privateIp + " and applications " + applicationNames);
+                    return true;
                 }
+            } else {
+                throw new ExecutionException("Failed to delete security policy for privateIp " + privateIp + " and applications " + applicationNames);
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
 
         }
     }
@@ -2967,7 +2927,8 @@ public class JuniperSrxResource implements ServerResource {
         // Remove the security policy
         manageSecurityPolicy(type, SrxCommand.DELETE, null, null, privateIp, null, null, null, false);
 
-        // Remove any applications for the removed security policy that are no longer in use
+        // Remove any applications for the removed security policy that are no
+        // longer in use
         List<String> unusedApplications = getUnusedApplications(applications, _publicZone, _privateZone);
         for (String application : unusedApplications) {
             Object[] applicationComponents;
@@ -2988,8 +2949,7 @@ public class JuniperSrxResource implements ServerResource {
         return true;
     }
 
-    private boolean removeEgressSecurityPolicyAndApplications(SecurityPolicyType type, String guestVlan, List<String> cidrs, boolean defaultEgressAction)
-        throws ExecutionException {
+    private boolean removeEgressSecurityPolicyAndApplications(SecurityPolicyType type, String guestVlan, List<String> cidrs, boolean defaultEgressAction) throws ExecutionException {
         if (!manageSecurityPolicy(type, SrxCommand.CHECK_IF_EXISTS, null, null, guestVlan, null, cidrs, null, defaultEgressAction)) {
             return true;
         }
@@ -3000,7 +2960,8 @@ public class JuniperSrxResource implements ServerResource {
         // Remove the security policy even if it is in use
         manageSecurityPolicy(type, SrxCommand.DELETE, null, null, guestVlan, null, cidrs, null, defaultEgressAction);
 
-        // Remove any applications for the removed security policy that are no longer in use
+        // Remove any applications for the removed security policy that are no
+        // longer in use
         List<String> unusedApplications;
         unusedApplications = getUnusedApplications(applications, _privateZone, _publicZone);
 
@@ -3026,8 +2987,8 @@ public class JuniperSrxResource implements ServerResource {
         return true;
     }
 
-    private boolean addEgressSecurityPolicyAndApplications(SecurityPolicyType type, String guestVlan, List<Object[]> applications, List<String> cidrs,
-        boolean defaultEgressAction) throws ExecutionException {
+    private boolean addEgressSecurityPolicyAndApplications(SecurityPolicyType type, String guestVlan, List<Object[]> applications, List<String> cidrs, boolean defaultEgressAction)
+            throws ExecutionException {
         // Add all necessary applications
         List<String> applicationNames = new ArrayList<String>();
         for (Object[] application : applications) {
@@ -3084,52 +3045,52 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.FILTER_TERM_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "filter-name", filterName);
-                xml = replaceXmlValue(xml, "term-name", filterTermName);
-                return sendRequestAndCheckResponse(command, xml, "name", filterTermName);
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.FILTER_TERM_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "filter-name", filterName);
+            xml = replaceXmlValue(xml, "term-name", filterTermName);
+            return sendRequestAndCheckResponse(command, xml, "name", filterTermName);
 
-            case ADD:
-                if (manageUsageFilter(SrxCommand.CHECK_IF_EXISTS, filter, ip, guestVlanTag, filterTermName)) {
-                    return true;
-                }
+        case ADD:
+            if (manageUsageFilter(SrxCommand.CHECK_IF_EXISTS, filter, ip, guestVlanTag, filterTermName)) {
+                return true;
+            }
 
-                xml = replaceXmlValue(xml, "filter-name", filterName);
-                xml = replaceXmlValue(xml, "term-name", filterTermName);
+            xml = replaceXmlValue(xml, "filter-name", filterName);
+            xml = replaceXmlValue(xml, "term-name", filterTermName);
 
-                if (filter.equals(_usageFilterIPInput) || filter.equals(_usageFilterIPOutput)) {
-                    xml = replaceXmlValue(xml, "ip-address", ip);
-                    xml = replaceXmlValue(xml, "address-type", filter.getAddressType());
-                }
+            if (filter.equals(_usageFilterIPInput) || filter.equals(_usageFilterIPOutput)) {
+                xml = replaceXmlValue(xml, "ip-address", ip);
+                xml = replaceXmlValue(xml, "address-type", filter.getAddressType());
+            }
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add usage filter: " + filterDescription);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add usage filter: " + filterDescription);
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageUsageFilter(SrxCommand.CHECK_IF_EXISTS, filter, ip, guestVlanTag, filterTermName)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageUsageFilter(SrxCommand.CHECK_IF_EXISTS, filter, ip, guestVlanTag, filterTermName)) {
+                return true;
+            }
 
-                boolean deleteFilter = filter.equals(_usageFilterVlanInput) || filter.equals(_usageFilterVlanOutput);
-                xml = deleteFilter ? SrxXml.FILTER_GETONE.getXml() : SrxXml.FILTER_TERM_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "filter-name", filterName);
-                xml = !deleteFilter ? replaceXmlValue(xml, "term-name", filterTermName) : xml;
+            boolean deleteFilter = filter.equals(_usageFilterVlanInput) || filter.equals(_usageFilterVlanOutput);
+            xml = deleteFilter ? SrxXml.FILTER_GETONE.getXml() : SrxXml.FILTER_TERM_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "filter-name", filterName);
+            xml = !deleteFilter ? replaceXmlValue(xml, "term-name", filterTermName) : xml;
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to delete usage filter: " + filterDescription);
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to delete usage filter: " + filterDescription);
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
 
         }
     }
@@ -3177,61 +3138,61 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case CHECK_IF_EXISTS:
-                xml = SrxXml.FIREWALL_FILTER_TERM_GETONE.getXml();
-                xml = setDelete(xml, false);
-                xml = replaceXmlValue(xml, "filter-name", filterName);
-                xml = replaceXmlValue(xml, "term-name", term.getName());
-                return sendRequestAndCheckResponse(command, xml, "name", term.getName());
+        case CHECK_IF_EXISTS:
+            xml = SrxXml.FIREWALL_FILTER_TERM_GETONE.getXml();
+            xml = setDelete(xml, false);
+            xml = replaceXmlValue(xml, "filter-name", filterName);
+            xml = replaceXmlValue(xml, "term-name", term.getName());
+            return sendRequestAndCheckResponse(command, xml, "name", term.getName());
 
-            case ADD:
-                if (manageFirewallFilter(SrxCommand.CHECK_IF_EXISTS, term, filterName)) {
-                    return true;
-                }
+        case ADD:
+            if (manageFirewallFilter(SrxCommand.CHECK_IF_EXISTS, term, filterName)) {
+                return true;
+            }
 
-                xml = SrxXml.FIREWALL_FILTER_TERM_ADD.getXml();
+            xml = SrxXml.FIREWALL_FILTER_TERM_ADD.getXml();
 
-                xml = replaceXmlValue(xml, "filter-name", filterName);
-                xml = replaceXmlValue(xml, "term-name", term.getName());
-                xml = replaceXmlValue(xml, "source-address-entries", genMultipleEntries("source-address", term.getSourceCidrs()));
-                xml = replaceXmlValue(xml, "dest-ip-address", term.getDestIp());
+            xml = replaceXmlValue(xml, "filter-name", filterName);
+            xml = replaceXmlValue(xml, "term-name", term.getName());
+            xml = replaceXmlValue(xml, "source-address-entries", genMultipleEntries("source-address", term.getSourceCidrs()));
+            xml = replaceXmlValue(xml, "dest-ip-address", term.getDestIp());
 
-                String protocol = term.getProtocol();
-                if (protocol.equals("tcp") || protocol.equals("udp")) {
-                    xml = replaceXmlValue(xml, "protocol-options", genPortRangeEntry(protocol, term.getPortRange()));
-                } else if (protocol.equals("icmp")) {
-                    xml = replaceXmlValue(xml, "protocol-options", genIcmpEntries(term.getIcmpType(), term.getIcmpCode()));
-                } else {
-                    assert protocol.equals("any");
-                    xml = replaceXmlValue(xml, "protocol-options", "");
-                }
-                xml = replaceXmlValue(xml, "count-name", term.getCountName());
+            String protocol = term.getProtocol();
+            if (protocol.equals("tcp") || protocol.equals("udp")) {
+                xml = replaceXmlValue(xml, "protocol-options", genPortRangeEntry(protocol, term.getPortRange()));
+            } else if (protocol.equals("icmp")) {
+                xml = replaceXmlValue(xml, "protocol-options", genIcmpEntries(term.getIcmpType(), term.getIcmpCode()));
+            } else {
+                assert protocol.equals("any");
+                xml = replaceXmlValue(xml, "protocol-options", "");
+            }
+            xml = replaceXmlValue(xml, "count-name", term.getCountName());
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to add firewall filter: " + term.getName());
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to add firewall filter: " + term.getName());
+            } else {
+                return true;
+            }
 
-            case DELETE:
-                if (!manageFirewallFilter(SrxCommand.CHECK_IF_EXISTS, term, filterName)) {
-                    return true;
-                }
+        case DELETE:
+            if (!manageFirewallFilter(SrxCommand.CHECK_IF_EXISTS, term, filterName)) {
+                return true;
+            }
 
-                xml = SrxXml.FIREWALL_FILTER_TERM_GETONE.getXml();
-                xml = setDelete(xml, true);
-                xml = replaceXmlValue(xml, "filter-name", filterName);
-                xml = replaceXmlValue(xml, "term-name", term.getName());
+            xml = SrxXml.FIREWALL_FILTER_TERM_GETONE.getXml();
+            xml = setDelete(xml, true);
+            xml = replaceXmlValue(xml, "filter-name", filterName);
+            xml = replaceXmlValue(xml, "term-name", term.getName());
 
-                if (!sendRequestAndCheckResponse(command, xml)) {
-                    throw new ExecutionException("Failed to delete firewall filter: " + term.getName());
-                } else {
-                    return true;
-                }
+            if (!sendRequestAndCheckResponse(command, xml)) {
+                throw new ExecutionException("Failed to delete firewall filter: " + term.getName());
+            } else {
+                return true;
+            }
 
-            default:
-                s_logger.debug("Unrecognized command.");
-                return false;
+        default:
+            s_logger.debug("Unrecognized command.");
+            return false;
 
         }
     }
@@ -3481,35 +3442,35 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case LOGIN:
-                key = "status";
-                value = "success";
-                break;
+        case LOGIN:
+            key = "status";
+            value = "success";
+            break;
 
-            case OPEN_CONFIGURATION:
-            case CLOSE_CONFIGURATION:
-                errorKeyAndValue = true;
-                key = "error";
-                value = null;
-                break;
+        case OPEN_CONFIGURATION:
+        case CLOSE_CONFIGURATION:
+            errorKeyAndValue = true;
+            key = "error";
+            value = null;
+            break;
 
-            case COMMIT:
-                key = "commit-success";
-                value = null;
-                break;
+        case COMMIT:
+            key = "commit-success";
+            value = null;
+            break;
 
-            case CHECK_IF_EXISTS:
-            case CHECK_IF_IN_USE:
-                assert (keyAndValue != null && keyAndValue.length == 2) : "If the SrxCommand is " + command + ", both a key and value must be specified.";
+        case CHECK_IF_EXISTS:
+        case CHECK_IF_IN_USE:
+            assert (keyAndValue != null && keyAndValue.length == 2) : "If the SrxCommand is " + command + ", both a key and value must be specified.";
 
-                key = keyAndValue[0];
-                value = keyAndValue[1];
-                break;
+            key = keyAndValue[0];
+            value = keyAndValue[1];
+            break;
 
-            default:
-                key = "load-success";
-                value = null;
-                break;
+        default:
+            key = "load-success";
+            value = null;
+            break;
 
         }
 
@@ -3524,35 +3485,35 @@ public class JuniperSrxResource implements ServerResource {
 
         switch (command) {
 
-            case LOGIN:
-                key = "status";
-                value = "success";
-                break;
+        case LOGIN:
+            key = "status";
+            value = "success";
+            break;
 
-            case OPEN_CONFIGURATION:
-            case CLOSE_CONFIGURATION:
-                errorKeyAndValue = true;
-                key = "error";
-                value = null;
-                break;
+        case OPEN_CONFIGURATION:
+        case CLOSE_CONFIGURATION:
+            errorKeyAndValue = true;
+            key = "error";
+            value = null;
+            break;
 
-            case COMMIT:
-                key = "commit-success";
-                value = null;
-                break;
+        case COMMIT:
+            key = "commit-success";
+            value = null;
+            break;
 
-            case CHECK_IF_EXISTS:
-            case CHECK_IF_IN_USE:
-                assert (keyAndValue != null && keyAndValue.length == 2) : "If the SrxCommand is " + command + ", both a key and value must be specified.";
+        case CHECK_IF_EXISTS:
+        case CHECK_IF_IN_USE:
+            assert (keyAndValue != null && keyAndValue.length == 2) : "If the SrxCommand is " + command + ", both a key and value must be specified.";
 
-                key = keyAndValue[0];
-                value = keyAndValue[1];
-                break;
+            key = keyAndValue[0];
+            value = keyAndValue[1];
+            break;
 
-            default:
-                key = "load-success";
-                value = null;
-                break;
+        default:
+            key = "load-success";
+            value = null;
+            break;
 
         }
 

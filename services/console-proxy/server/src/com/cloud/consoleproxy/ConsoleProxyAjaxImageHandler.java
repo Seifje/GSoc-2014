@@ -49,13 +49,13 @@ public class ConsoleProxyAjaxImageHandler implements HttpHandler {
             throw e;
         } catch (IllegalArgumentException e) {
             s_logger.warn("Exception, ", e);
-            t.sendResponseHeaders(400, -1);     // bad request
+            t.sendResponseHeaders(400, -1); // bad request
         } catch (OutOfMemoryError e) {
             s_logger.error("Unrecoverable OutOfMemory Error, exit and let it be re-launched");
             System.exit(1);
         } catch (Throwable e) {
             s_logger.error("Unexpected exception, ", e);
-            t.sendResponseHeaders(500, -1);     // server error
+            t.sendResponseHeaders(500, -1); // server error
         } finally {
             t.close();
         }

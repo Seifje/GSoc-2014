@@ -52,7 +52,8 @@ public interface DomainService {
      *
      * @param domainPath
      *            the path to use to lookup a domain
-     * @return domainVO the domain with the matching path, or null if no domain with the given path exists
+     * @return domainVO the domain with the matching path, or null if no domain
+     *         with the given path exists
      */
     Domain findDomainByPath(String domainPath);
 

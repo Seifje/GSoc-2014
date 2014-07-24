@@ -49,29 +49,20 @@ import org.apache.cloudstack.framework.config.ConfigKey;
 
 /**
  * VolumeOrchestrationService is a PURE orchestration service on CloudStack
- * volumes.  It does not understand resource limits, ACL, action events, or
- * anything that has to do with the self-service portion of CloudStack.  Its
- * job is to carry out any orchestration needed among the physical components
- * to provision volumes.
+ * volumes. It does not understand resource limits, ACL, action events, or
+ * anything that has to do with the self-service portion of CloudStack. Its job
+ * is to carry out any orchestration needed among the physical components to
+ * provision volumes.
  */
 public interface VolumeOrchestrationService {
 
-    static final ConfigKey<Long> CustomDiskOfferingMinSize = new ConfigKey<Long>("Advanced",
-        Long.class,
-        "custom.diskoffering.size.min",
-        "1",
-        "Minimum size in GB for custom disk offering.",
-        true
-    );
-    static final ConfigKey<Long> CustomDiskOfferingMaxSize = new ConfigKey<Long>("Advanced",
-        Long.class,
-        "custom.diskoffering.size.max",
-        "1024",
-        "Maximum size in GB for custom disk offering.",
-        true
-    );
-    VolumeInfo moveVolume(VolumeInfo volume, long destPoolDcId, Long destPoolPodId, Long destPoolClusterId, HypervisorType dataDiskHyperType)
-        throws ConcurrentOperationException, StorageUnavailableException;
+    static final ConfigKey<Long> CustomDiskOfferingMinSize = new ConfigKey<Long>("Advanced", Long.class, "custom.diskoffering.size.min", "1",
+            "Minimum size in GB for custom disk offering.", true);
+    static final ConfigKey<Long> CustomDiskOfferingMaxSize = new ConfigKey<Long>("Advanced", Long.class, "custom.diskoffering.size.max", "1024",
+            "Maximum size in GB for custom disk offering.", true);
+
+    VolumeInfo moveVolume(VolumeInfo volume, long destPoolDcId, Long destPoolPodId, Long destPoolClusterId, HypervisorType dataDiskHyperType) throws ConcurrentOperationException,
+    StorageUnavailableException;
 
     Volume allocateDuplicateVolume(Volume oldVol, Long templateId);
 
@@ -87,7 +78,8 @@ public interface VolumeOrchestrationService {
 
     void destroyVolume(Volume volume);
 
-    DiskProfile allocateRawVolume(Type type, String name, DiskOffering offering, Long size, Long minIops, Long maxIops, VirtualMachine vm, VirtualMachineTemplate template, Account owner);
+    DiskProfile allocateRawVolume(Type type, String name, DiskOffering offering, Long size, Long minIops, Long maxIops, VirtualMachine vm, VirtualMachineTemplate template,
+            Account owner);
 
     VolumeInfo createVolumeOnPrimaryStorage(VirtualMachine vm, VolumeInfo volume, HypervisorType rootDiskHyperType, StoragePool storagePool) throws NoTransitionException;
 
@@ -109,8 +101,8 @@ public interface VolumeOrchestrationService {
 
     boolean canVmRestartOnAnotherServer(long vmId);
 
-    DiskProfile allocateTemplatedVolume(Type type, String name, DiskOffering offering, Long rootDisksize, Long minIops, Long maxIops, VirtualMachineTemplate template, VirtualMachine vm,
-        Account owner);
+    DiskProfile allocateTemplatedVolume(Type type, String name, DiskOffering offering, Long rootDisksize, Long minIops, Long maxIops, VirtualMachineTemplate template,
+            VirtualMachine vm, Account owner);
 
     String getVmNameFromVolumeId(long volumeId);
 

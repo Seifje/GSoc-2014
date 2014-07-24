@@ -30,25 +30,24 @@ public abstract class BaseListTemplateOrIsoPermissionsCmd extends BaseCmd {
     public Logger logger = getLogger();
     protected static final String s_name = "listtemplatepermissionsresponse";
 
-
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = TemplatePermissionsResponse.class, required = true, description = "the template ID")
     private Long id;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
     @Override
     public long getEntityOwnerId() {
         VirtualMachineTemplate template = _entityMgr.findById(VirtualMachineTemplate.class, getId());
@@ -56,7 +55,9 @@ public abstract class BaseListTemplateOrIsoPermissionsCmd extends BaseCmd {
             return template.getAccountId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
     protected Logger getLogger() {
@@ -76,7 +77,6 @@ public abstract class BaseListTemplateOrIsoPermissionsCmd extends BaseCmd {
         return "templateOrIso";
     }
 
-
     protected void executeWithView(ResponseView view) {
         List<String> accountNames = _templateService.listTemplatePermissions(this);
 
@@ -84,6 +84,5 @@ public abstract class BaseListTemplateOrIsoPermissionsCmd extends BaseCmd {
         response.setResponseName(getCommandName());
         setResponseObject(response);
     }
-
 
 }

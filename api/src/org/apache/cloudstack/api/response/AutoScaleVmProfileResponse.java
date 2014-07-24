@@ -63,18 +63,14 @@ public class AutoScaleVmProfileResponse extends BaseResponse implements Controll
 
     /* Parameters related to a running virtual machine - monitoring aspects */
     @SerializedName(ApiConstants.COUNTERPARAM_LIST)
-    @Parameter(name = ApiConstants.COUNTERPARAM_LIST,
-               type = CommandType.MAP,
-               description = "counterparam list. Example: counterparam[0].name=snmpcommunity&counterparam[0].value=public&counterparam[1].name=snmpport&counterparam[1].value=161")
+    @Parameter(name = ApiConstants.COUNTERPARAM_LIST, type = CommandType.MAP, description = "counterparam list. Example: counterparam[0].name=snmpcommunity&counterparam[0].value=public&counterparam[1].name=snmpport&counterparam[1].value=161")
     private Map<String, String> counterParams;
 
     @SerializedName(ApiConstants.AUTOSCALE_USER_ID)
     @Param(description = "the ID of the user used to launch and destroy the VMs")
     private String autoscaleUserId;
 
-    @Parameter(name = ApiConstants.CS_URL,
-               type = CommandType.STRING,
-               description = "the API URL including port of the CloudStack Management Server example: http://server.cloud.com:8080/client/api?")
+    @Parameter(name = ApiConstants.CS_URL, type = CommandType.STRING, description = "the API URL including port of the CloudStack Management Server example: http://server.cloud.com:8080/client/api?")
     private String csUrl;
 
     @SerializedName(ApiConstants.ACCOUNT)

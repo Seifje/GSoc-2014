@@ -26,8 +26,7 @@ import com.google.gson.annotations.SerializedName;
 
 @EntityReference(value = OvsProvider.class)
 @SuppressWarnings("unused")
-public class OvsProviderResponse extends BaseResponse implements
-        ControlledEntityResponse {
+public class OvsProviderResponse extends BaseResponse implements ControlledEntityResponse {
     @SerializedName(ApiConstants.ID)
     @Param(description = "the id of the ovs")
     private String id;

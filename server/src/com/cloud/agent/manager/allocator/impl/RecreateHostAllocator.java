@@ -92,8 +92,9 @@ public class RecreateHostAllocator extends FirstFitRoutingAllocator {
 
         DataCenter dc = _dcDao.findById(plan.getDataCenterId());
         List<PodCluster> pcs = _resourceMgr.listByDataCenter(dc.getId());
-        //getting rid of direct.attached.untagged.vlan.enabled config param: Bug 7204
-        //basic network type for zone maps to direct untagged case
+        // getting rid of direct.attached.untagged.vlan.enabled config param:
+        // Bug 7204
+        // basic network type for zone maps to direct untagged case
         if (dc.getNetworkType().equals(NetworkType.Basic)) {
             s_logger.debug("Direct Networking mode so we can only allow the host to be allocated in the same pod due to public ip address cannot change");
             List<VolumeVO> vols = _volsDao.findByInstance(vm.getId());
@@ -127,16 +128,16 @@ public class RecreateHostAllocator extends FirstFitRoutingAllocator {
         for (PodCluster p : pcs) {
             if (p.getPod().getAllocationState() != Grouping.AllocationState.Enabled) {
                 if (s_logger.isDebugEnabled()) {
-                    s_logger.debug("Pod name: " + p.getPod().getName() + ", podId: " + p.getPod().getId() + " is in " + p.getPod().getAllocationState().name() +
-                        " state, skipping this and trying other pods");
+                    s_logger.debug("Pod name: " + p.getPod().getName() + ", podId: " + p.getPod().getId() + " is in " + p.getPod().getAllocationState().name()
+                            + " state, skipping this and trying other pods");
                 }
                 continue;
             }
             Long clusterId = p.getCluster() == null ? null : p.getCluster().getId();
             if (p.getCluster() != null && p.getCluster().getAllocationState() != Grouping.AllocationState.Enabled) {
                 if (s_logger.isDebugEnabled()) {
-                    s_logger.debug("Cluster name: " + p.getCluster().getName() + ", clusterId: " + clusterId + " is in " + p.getCluster().getAllocationState().name() +
-                        " state, skipping this and trying other pod-clusters");
+                    s_logger.debug("Cluster name: " + p.getCluster().getName() + ", clusterId: " + clusterId + " is in " + p.getCluster().getAllocationState().name()
+                            + " state, skipping this and trying other pod-clusters");
                 }
                 continue;
             }

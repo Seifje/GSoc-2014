@@ -32,8 +32,9 @@ import com.cloud.utils.net.Ip;
 import com.cloud.utils.net.NetUtils;
 
 /**
- * This VO represent Internal Load Balancer rule.
- * Instead of pointing to the public ip address id directly as External Load Balancer rule does, it refers to the ip address by its value/sourceNetworkid
+ * This VO represent Internal Load Balancer rule. Instead of pointing to the
+ * public ip address id directly as External Load Balancer rule does, it refers
+ * to the ip address by its value/sourceNetworkid
  *
  */
 @Entity

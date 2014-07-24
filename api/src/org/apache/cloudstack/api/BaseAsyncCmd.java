@@ -16,7 +16,6 @@
 // under the License.
 package org.apache.cloudstack.api;
 
-
 import org.apache.log4j.Logger;
 
 /**
@@ -36,7 +35,7 @@ public abstract class BaseAsyncCmd extends BaseCmd {
     @Parameter(name = "starteventid", type = CommandType.LONG)
     private Long startEventId;
 
-    @Parameter(name = ApiConstants.CUSTOM_JOB_ID , type = CommandType.STRING)
+    @Parameter(name = ApiConstants.CUSTOM_JOB_ID, type = CommandType.STRING)
     private String injectedJobId;
 
     public String getInjectedJobId() {
@@ -44,18 +43,23 @@ public abstract class BaseAsyncCmd extends BaseCmd {
     }
 
     /**
-     * For proper tracking of async commands through the system, events must be generated when the command is
-     * scheduled, started, and completed. Commands should specify the type of event so that when the scheduled,
-     * started, and completed events are saved to the events table, they have the proper type information.
+     * For proper tracking of async commands through the system, events must be
+     * generated when the command is scheduled, started, and completed. Commands
+     * should specify the type of event so that when the scheduled, started, and
+     * completed events are saved to the events table, they have the proper type
+     * information.
      *
-     * @return a string representing the type of event, e.g. VM.START, VOLUME.CREATE.
+     * @return a string representing the type of event, e.g. VM.START,
+     *         VOLUME.CREATE.
      */
     public abstract String getEventType();
 
     /**
-     * For proper tracking of async commands through the system, events must be generated when the command is
-     * scheduled, started, and completed. Commands should specify a description for these events so that when
-     * the scheduled, started, and completed events are saved to the events table, they have a meaningful description.
+     * For proper tracking of async commands through the system, events must be
+     * generated when the command is scheduled, started, and completed. Commands
+     * should specify a description for these events so that when the scheduled,
+     * started, and completed events are saved to the events table, they have a
+     * meaningful description.
      *
      * @return a string representing a description of the event
      */
@@ -74,11 +78,13 @@ public abstract class BaseAsyncCmd extends BaseCmd {
     }
 
     /**
-     * Async commands that want to be tracked as part of the listXXX commands need to
-     * provide implementations of the two following methods, getInstanceId() and getInstanceType()
+     * Async commands that want to be tracked as part of the listXXX commands
+     * need to provide implementations of the two following methods,
+     * getInstanceId() and getInstanceType()
      *
-     * getObjectId() should return the id of the object the async command is executing on
-     * getObjectType() should return a type from the AsyncJob.Type enumeration
+     * getObjectId() should return the id of the object the async command is
+     * executing on getObjectType() should return a type from the AsyncJob.Type
+     * enumeration
      */
     public Long getInstanceId() {
         return null;

@@ -46,7 +46,8 @@ public interface RpcClientCall {
     void cancel();
 
     /**
-     * @return the result object， it may also throw RpcException to indicate RPC failures
+     * @return the result object， it may also throw RpcException to indicate RPC
+     *         failures
      */
     <T> T get();
 }

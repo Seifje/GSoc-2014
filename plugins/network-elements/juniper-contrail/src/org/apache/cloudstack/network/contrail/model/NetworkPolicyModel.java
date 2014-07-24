@@ -57,7 +57,7 @@ public class NetworkPolicyModel extends ModelObjectBase {
         _name = name;
     }
 
-     public String getQualifiedName() {
+    public String getQualifiedName() {
         return _fqName;
     }
 
@@ -99,10 +99,9 @@ public class NetworkPolicyModel extends ModelObjectBase {
 
         PolicyEntriesType policyMap = new PolicyEntriesType();
 
-        for (NetworkACLItem rule:rules) {
-            if (rule.getState() != NetworkACLItem.State.Active &&
-                 rule.getState() != NetworkACLItem.State.Add)  {
-                 continue;
+        for (NetworkACLItem rule : rules) {
+            if (rule.getState() != NetworkACLItem.State.Active && rule.getState() != NetworkACLItem.State.Add) {
+                continue;
             }
 
             String action = null;
@@ -134,14 +133,16 @@ public class NetworkPolicyModel extends ModelObjectBase {
             List<PolicyRuleType.PortType> srcPorts = new ArrayList<PolicyRuleType.PortType>();
             List<PolicyRuleType.PortType> dstPorts = new ArrayList<PolicyRuleType.PortType>();
 
-            if (rule.getTrafficType() == NetworkACLItem.TrafficType.Egress){
-                for (String cidr: cidrList) {
+            if (rule.getTrafficType() == NetworkACLItem.TrafficType.Egress) {
+                for (String cidr : cidrList) {
                     NetworkVO net = cidrToNetwork(controller, cidr);
-                    /*String[] maskInfo = StringUtils.splitByWholeSeparator(cidr, "/");
-                    SubnetType subnet = new SubnetType();
-                    subnet.setIpPrefix(maskInfo[0]);
-                    subnet.setIpPrefixLen(Integer.parseInt(maskInfo[1]));
-                    */
+                    /*
+                     * String[] maskInfo =
+                     * StringUtils.splitByWholeSeparator(cidr, "/"); SubnetType
+                     * subnet = new SubnetType();
+                     * subnet.setIpPrefix(maskInfo[0]);
+                     * subnet.setIpPrefixLen(Integer.parseInt(maskInfo[1]));
+                     */
                     String netName = projectName + ":" + controller.getManager().getCanonicalName(net);
                     dstList.add(new PolicyRuleType.AddressType(null, netName, null));
                 }
@@ -149,7 +150,7 @@ public class NetworkPolicyModel extends ModelObjectBase {
                 srcList.add(new PolicyRuleType.AddressType(null, "local", null));
                 srcPorts.add(new PolicyRuleType.PortType(0, 65535));
             } else {
-                for (String cidr: cidrList) {
+                for (String cidr : cidrList) {
                     NetworkVO net = cidrToNetwork(controller, cidr);
                     String netName = projectName + ":" + controller.getManager().getCanonicalName(net);
                     srcList.add(new PolicyRuleType.AddressType(null, netName, null));
@@ -160,9 +161,7 @@ public class NetworkPolicyModel extends ModelObjectBase {
                 srcPorts.add(new PolicyRuleType.PortType(0, 65535));
             }
 
-            PolicyRuleType vnRule = new PolicyRuleType(
-                    new PolicyRuleType.SequenceType(1, 0), rule.getUuid(), "<>", protocol,
-                    srcList, srcPorts, null, dstList, dstPorts,
+            PolicyRuleType vnRule = new PolicyRuleType(new PolicyRuleType.SequenceType(1, 0), rule.getUuid(), "<>", protocol, srcList, srcPorts, null, dstList, dstPorts,
                     new PolicyRuleType.ActionListType(action, null, null, null));
             policyMap.addPolicyRule(vnRule);
         }
@@ -170,8 +169,7 @@ public class NetworkPolicyModel extends ModelObjectBase {
     }
 
     /* for service instance policy */
-    public void build(ModelController modelController, String leftVn, String rightVn, String gatewayName,
-            List<String> siList, String action) {
+    public void build(ModelController modelController, String leftVn, String rightVn, String gatewayName, List<String> siList, String action) {
         if (_project != null) {
             _fqName = StringUtils.join(_project.getQualifiedName(), ':') + ":" + _name;
         } else {
@@ -187,9 +185,7 @@ public class NetworkPolicyModel extends ModelObjectBase {
         List<PolicyRuleType.PortType> portAny = new ArrayList<PolicyRuleType.PortType>();
         portAny.add(new PolicyRuleType.PortType(0, 65535));
 
-        PolicyRuleType rule = new PolicyRuleType(
-                new PolicyRuleType.SequenceType(1, 0),  null, "<>", "any",
-                srcList, portAny, null, dstList, portAny,
+        PolicyRuleType rule = new PolicyRuleType(new PolicyRuleType.SequenceType(1, 0), null, "<>", "any", srcList, portAny, null, dstList, portAny,
                 new PolicyRuleType.ActionListType(action, gatewayName, siList, null));
         policyMap.addPolicyRule(rule);
         _policyMap = policyMap;
@@ -206,7 +202,7 @@ public class NetworkPolicyModel extends ModelObjectBase {
     public int compareTo(ModelObject o) {
         NetworkPolicyModel other;
         try {
-            other = (NetworkPolicyModel) o;
+            other = (NetworkPolicyModel)o;
         } catch (ClassCastException ex) {
             String clsname = o.getClass().getName();
             return NetworkPolicyModel.class.getName().compareTo(clsname);
@@ -245,7 +241,7 @@ public class NetworkPolicyModel extends ModelObjectBase {
             try {
                 String policyId = api.findByName(NetworkPolicy.class, _project, _name);
                 if (policyId != null) {
-                    policy = _policy = (NetworkPolicy) api.findById(NetworkPolicy.class, policyId);
+                    policy = _policy = (NetworkPolicy)api.findById(NetworkPolicy.class, policyId);
                 }
                 if (policy == null) {
                     policy = new NetworkPolicy();
@@ -276,7 +272,7 @@ public class NetworkPolicyModel extends ModelObjectBase {
                 throw new CloudRuntimeException("Unable to update network policy", ex);
             }
         }
-        for (ModelObject successor: successors()) {
+        for (ModelObject successor : successors()) {
             successor.update(controller);
         }
     }

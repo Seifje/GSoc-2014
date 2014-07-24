@@ -37,33 +37,26 @@ import org.apache.log4j.Logger;
 import com.cloud.exception.ResourceAllocationException;
 import com.cloud.template.VirtualMachineTemplate;
 
-@APICommand(name = "registerIso", responseObject = TemplateResponse.class, description = "Registers an existing ISO into the CloudStack Cloud.", responseView = ResponseView.Restricted,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "registerIso", responseObject = TemplateResponse.class, description = "Registers an existing ISO into the CloudStack Cloud.", responseView = ResponseView.Restricted, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class RegisterIsoCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(RegisterIsoCmd.class.getName());
 
     private static final String s_name = "registerisoresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.BOOTABLE, type = CommandType.BOOLEAN, description = "true if this ISO is bootable. If not passed explicitly its assumed to be true")
     private Boolean bootable;
 
-    @Parameter(name = ApiConstants.DISPLAY_TEXT,
-               type = CommandType.STRING,
-               required = true,
-               description = "the display text of the ISO. This is usually used for display purposes.",
-               length = 4096)
+    @Parameter(name = ApiConstants.DISPLAY_TEXT, type = CommandType.STRING, required = true, description = "the display text of the ISO. This is usually used for display purposes.", length = 4096)
     private String displayText;
 
     @Parameter(name = ApiConstants.IS_FEATURED, type = CommandType.BOOLEAN, description = "true if you want this ISO to be featured")
     private Boolean featured;
 
-    @Parameter(name = ApiConstants.IS_PUBLIC,
-               type = CommandType.BOOLEAN,
-               description = "true if you want to register the ISO to be publicly available to all users, false otherwise.")
+    @Parameter(name = ApiConstants.IS_PUBLIC, type = CommandType.BOOLEAN, description = "true if you want to register the ISO to be publicly available to all users, false otherwise.")
     private Boolean publicIso;
 
     @Parameter(name = ApiConstants.IS_EXTRACTABLE, type = CommandType.BOOLEAN, description = "true if the iso or its derivatives are extractable; default is false")
@@ -72,23 +65,16 @@ public class RegisterIsoCmd extends BaseCmd {
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "the name of the ISO")
     private String isoName;
 
-    @Parameter(name = ApiConstants.OS_TYPE_ID,
-               type = CommandType.UUID,
-               entityType = GuestOSResponse.class,
-               description = "the ID of the OS Type that best represents the OS of this ISO. If the iso is bootable this parameter needs to be passed")
+    @Parameter(name = ApiConstants.OS_TYPE_ID, type = CommandType.UUID, entityType = GuestOSResponse.class, description = "the ID of the OS Type that best represents the OS of this ISO. If the iso is bootable this parameter needs to be passed")
     private Long osTypeId;
 
     @Parameter(name = ApiConstants.URL, type = CommandType.STRING, required = true, description = "the URL to where the ISO is currently being hosted")
     private String url;
 
-    @Parameter(name=ApiConstants.ZONE_ID, type=CommandType.UUID, entityType = ZoneResponse.class,
-            required=true, description="the ID of the zone you wish to register the ISO to.")
+    @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, required = true, description = "the ID of the zone you wish to register the ISO to.")
     protected Long zoneId;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               entityType = DomainResponse.class,
-               description = "an optional domainId. If the account parameter is used, domainId must also be used.")
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "an optional domainId. If the account parameter is used, domainId must also be used.")
     private Long domainId;
 
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "an optional account name. Must be used with domainId.")
@@ -103,14 +89,12 @@ public class RegisterIsoCmd extends BaseCmd {
     @Parameter(name = ApiConstants.IMAGE_STORE_UUID, type = CommandType.STRING, description = "Image store uuid")
     private String imageStoreUuid;
 
-    @Parameter(name = ApiConstants.IS_DYNAMICALLY_SCALABLE,
-               type = CommandType.BOOLEAN,
-               description = "true if iso contains XS/VMWare tools inorder to support dynamic scaling of VM cpu/memory")
+    @Parameter(name = ApiConstants.IS_DYNAMICALLY_SCALABLE, type = CommandType.BOOLEAN, description = "true if iso contains XS/VMWare tools inorder to support dynamic scaling of VM cpu/memory")
     protected Boolean isDynamicallyScalable;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Boolean isBootable() {
         return bootable;
@@ -165,12 +149,12 @@ public class RegisterIsoCmd extends BaseCmd {
     }
 
     public Boolean isDynamicallyScalable() {
-        return isDynamicallyScalable ==  null ? false : isDynamicallyScalable;
+        return isDynamicallyScalable == null ? false : isDynamicallyScalable;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

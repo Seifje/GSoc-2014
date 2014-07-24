@@ -15,6 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 package org.apache.cloudstack.api.command.user.volume;
+
 import org.apache.cloudstack.api.BaseAsyncCmd;
 import org.apache.log4j.Logger;
 
@@ -39,17 +40,15 @@ import com.cloud.projects.Project;
 import com.cloud.storage.Volume;
 import com.cloud.user.Account;
 
-
-@APICommand(name = "resizeVolume", description = "Resizes a volume", responseObject = VolumeResponse.class, responseView = ResponseView.Restricted, entityType = {Volume.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "resizeVolume", description = "Resizes a volume", responseObject = VolumeResponse.class, responseView = ResponseView.Restricted, entityType = {Volume.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ResizeVolumeCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(ResizeVolumeCmd.class.getName());
 
     private static final String s_name = "resizevolumeresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @ACL(accessType = AccessType.OperateEntry)
     @Parameter(name = ApiConstants.ID, entityType = VolumeResponse.class, required = true, type = CommandType.UUID, description = "the ID of the disk volume")
@@ -61,18 +60,14 @@ public class ResizeVolumeCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.SHRINK_OK, type = CommandType.BOOLEAN, required = false, description = "Verify OK to Shrink")
     private boolean shrinkOk;
 
-    @Parameter(name = ApiConstants.DISK_OFFERING_ID,
-               entityType = DiskOfferingResponse.class,
-               type = CommandType.UUID,
-               required = false,
-               description = "new disk offering id")
+    @Parameter(name = ApiConstants.DISK_OFFERING_ID, entityType = DiskOfferingResponse.class, type = CommandType.UUID, required = false, description = "new disk offering id")
     private Long newDiskOfferingId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
-    //TODO use the method getId() instead of this one.
+    // TODO use the method getId() instead of this one.
     public Long getEntityId() {
         return id;
     }
@@ -93,9 +88,9 @@ public class ResizeVolumeCmd extends BaseAsyncCmd {
         return newDiskOfferingId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -111,21 +106,20 @@ public class ResizeVolumeCmd extends BaseAsyncCmd {
         return "volume";
     }
 
-   @Override
+    @Override
     public long getEntityOwnerId() {
 
         Volume volume = _entityMgr.findById(Volume.class, getEntityId());
         if (volume == null) {
-                throw new InvalidParameterValueException("Unable to find volume by id=" + id);
+            throw new InvalidParameterValueException("Unable to find volume by id=" + id);
         }
 
         Account account = _accountService.getAccount(volume.getAccountId());
-        //Can resize volumes for enabled projects/accounts only
+        // Can resize volumes for enabled projects/accounts only
         if (account.getType() == Account.ACCOUNT_TYPE_PROJECT) {
-                Project project = _projectService.findByProjectAccountId(volume.getAccountId());
+            Project project = _projectService.findByProjectAccountId(volume.getAccountId());
             if (project.getState() != Project.State.Active) {
-                throw new PermissionDeniedException("Can't add resources to  project id=" + project.getId() + " in state=" + project.getState() +
-                    " as it's no longer active");
+                throw new PermissionDeniedException("Can't add resources to  project id=" + project.getId() + " in state=" + project.getState() + " as it's no longer active");
             }
         } else if (account.getState() == Account.State.disabled) {
             throw new PermissionDeniedException("The owner of volume " + id + "  is disabled: " + account);
@@ -150,7 +144,7 @@ public class ResizeVolumeCmd extends BaseAsyncCmd {
         Volume volume = _volumeService.resizeVolume(this);
         if (volume != null) {
             VolumeResponse response = _responseGenerator.createVolumeResponse(ResponseView.Restricted, volume);
-            //FIXME - have to be moved to ApiResponseHelper
+            // FIXME - have to be moved to ApiResponseHelper
             response.setResponseName(getCommandName());
             setResponseObject(response);
         } else {

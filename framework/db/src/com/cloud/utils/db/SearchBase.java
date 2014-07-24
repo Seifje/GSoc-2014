@@ -38,16 +38,19 @@ import com.cloud.utils.db.SearchCriteria.SelectType;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 /**
- * SearchBase contains the methods that are used to build up search
- * queries.  While this class is public it's not really meant for public
- * consumption.  Unfortunately, it has to be public for methods to be mocked.
+ * SearchBase contains the methods that are used to build up search queries.
+ * While this class is public it's not really meant for public consumption.
+ * Unfortunately, it has to be public for methods to be mocked.
  *
  * @see GenericSearchBuilder
  * @see GenericQueryBuilder
  *
- * @param <J> Child class that inherited from SearchBase
- * @param <T> Entity Type to perform the searches on
- * @param <K> Type to place the search results.  This can be a native type,
+ * @param <J>
+ *            Child class that inherited from SearchBase
+ * @param <T>
+ *            Entity Type to perform the searches on
+ * @param <K>
+ *            Type to place the search results. This can be a native type,
  *            composite object, or the entity type itself.
  */
 public abstract class SearchBase<J extends SearchBase<?, T, K>, T, K> {
@@ -85,10 +88,13 @@ public abstract class SearchBase<J extends SearchBase<?, T, K>, T, K> {
         _joins = null;
         _specifiedAttrs = new ArrayList<Attribute>();
     }
+
     /**
      * Specifies how the search query should be grouped
      *
-     * @param fields fields of the entity object that should be grouped on.  The order is important.
+     * @param fields
+     *            fields of the entity object that should be grouped on. The
+     *            order is important.
      * @return GroupBy object to perform more operations on.
      * @see GroupBy
      */
@@ -102,10 +108,16 @@ public abstract class SearchBase<J extends SearchBase<?, T, K>, T, K> {
     /**
      * Specifies what to select in the search.
      *
-     * @param fieldName The field name of the result object to put the value of the field selected.  This can be null if you're selecting only one field and the result is not a complex object.
-     * @param func function to place.
-     * @param field column to select.  Call this with this.entity() method.
-     * @param params parameters to the function.
+     * @param fieldName
+     *            The field name of the result object to put the value of the
+     *            field selected. This can be null if you're selecting only one
+     *            field and the result is not a complex object.
+     * @param func
+     *            function to place.
+     * @param field
+     *            column to select. Call this with this.entity() method.
+     * @param params
+     *            parameters to the function.
      * @return itself to build more search parts.
      */
     @SuppressWarnings("unchecked")
@@ -137,7 +149,7 @@ public abstract class SearchBase<J extends SearchBase<?, T, K>, T, K> {
         } else {
             if (_selects.size() != 0) {
                 throw new RuntimeException(
-                    "You're selecting more than one item and yet is not providing a container class to put these items in.  So what do you expect me to do.  Spin magic?");
+                        "You're selecting more than one item and yet is not providing a container class to put these items in.  So what do you expect me to do.  Spin magic?");
             }
         }
 
@@ -152,7 +164,8 @@ public abstract class SearchBase<J extends SearchBase<?, T, K>, T, K> {
     /**
      * Select fields from the entity object to be selected in the search query.
      *
-     * @param fields fields from the entity object
+     * @param fields
+     *            fields from the entity object
      * @return itself
      */
     @SuppressWarnings("unchecked")
@@ -187,11 +200,16 @@ public abstract class SearchBase<J extends SearchBase<?, T, K>, T, K> {
     /**
      * joins this search with another search
      *
-     * @param name name given to the other search.  used for setJoinParameters.
-     * @param builder The other search
-     * @param joinField1 field of the first table used to perform the join
-     * @param joinField2 field of the second table used to perform the join
-     * @param joinType type of join
+     * @param name
+     *            name given to the other search. used for setJoinParameters.
+     * @param builder
+     *            The other search
+     * @param joinField1
+     *            field of the first table used to perform the join
+     * @param joinField2
+     *            field of the second table used to perform the join
+     * @param joinType
+     *            type of join
      * @return itself
      */
     @SuppressWarnings("unchecked")
@@ -224,8 +242,9 @@ public abstract class SearchBase<J extends SearchBase<?, T, K>, T, K> {
     }
 
     /**
-     * @return entity object.  This allows the caller to use the entity return
-     * to specify the field to be selected in many of the search parameters.
+     * @return entity object. This allows the caller to use the entity return to
+     *         specify the field to be selected in many of the search
+     *         parameters.
      */
     public T entity() {
         return _entity;
@@ -266,8 +285,8 @@ public abstract class SearchBase<J extends SearchBase<?, T, K>, T, K> {
     }
 
     /**
-     * Adds an OR condition to the search.  Normally you should use this to
-     * perform an 'OR' with a big conditional in parenthesis.  For example,
+     * Adds an OR condition to the search. Normally you should use this to
+     * perform an 'OR' with a big conditional in parenthesis. For example,
      *
      * search.or().op(entity.getId(), Op.Eq, "abc").cp()
      *
@@ -284,8 +303,8 @@ public abstract class SearchBase<J extends SearchBase<?, T, K>, T, K> {
     }
 
     /**
-     * Adds an AND condition to the search.  Normally you should use this to
-     * perform an 'AND' with a big conditional in parenthesis.  For example,
+     * Adds an AND condition to the search. Normally you should use this to
+     * perform an 'AND' with a big conditional in parenthesis. For example,
      *
      * search.and().op(entity.getId(), Op.Eq, "abc").cp()
      *
@@ -303,6 +322,7 @@ public abstract class SearchBase<J extends SearchBase<?, T, K>, T, K> {
 
     /**
      * Closes a parenthesis that's started by op()
+     *
      * @return this
      */
     @SuppressWarnings("unchecked")
@@ -314,6 +334,7 @@ public abstract class SearchBase<J extends SearchBase<?, T, K>, T, K> {
 
     /**
      * Writes an open parenthesis into the search
+     *
      * @return this
      */
     @SuppressWarnings("unchecked")
@@ -421,7 +442,8 @@ public abstract class SearchBase<J extends SearchBase<?, T, K>, T, K> {
                 for (int i = 0; i < params.length; i++) {
                     sql.insert(sql.length() - 2, "?,");
                 }
-                sql.delete(sql.length() - 3, sql.length() - 2); // remove the last ,
+                sql.delete(sql.length() - 3, sql.length() - 2); // remove the
+                // last ,
             } else if (op == Op.EQ && (params == null || params.length == 0 || params[0] == null)) {
                 sql.delete(sql.length() - 4, sql.length());
                 sql.append(" IS NULL ");

@@ -39,49 +39,55 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * <p>
- * EasySSLProtocolSocketFactory can be used to creats SSL {@link Socket}s
- * that accept self-signed certificates.
+ * EasySSLProtocolSocketFactory can be used to creats SSL {@link Socket}s that
+ * accept self-signed certificates.
  * </p>
  * <p>
- * This socket factory SHOULD NOT be used for productive systems
- * due to security reasons, unless it is a concious decision and
- * you are perfectly aware of security implications of accepting
- * self-signed certificates
+ * This socket factory SHOULD NOT be used for productive systems due to security
+ * reasons, unless it is a concious decision and you are perfectly aware of
+ * security implications of accepting self-signed certificates
  * </p>
  *
  * <p>
  * Example of using custom protocol socket factory for a specific host:
- *     <pre>
- *     Protocol easyhttps = new Protocol("https", new EasySSLProtocolSocketFactory(), 443);
  *
- *     URI uri = new URI("https://localhost/", true);
- *     // use relative url only
- *     GetMethod httpget = new GetMethod(uri.getPathQuery());
- *     HostConfiguration hc = new HostConfiguration();
- *     hc.setHost(uri.getHost(), uri.getPort(), easyhttps);
- *     HttpClient client = new HttpClient();
- *     client.executeMethod(hc, httpget);
- *     </pre>
+ * <pre>
+ * Protocol easyhttps = new Protocol(&quot;https&quot;, new EasySSLProtocolSocketFactory(),
+ *         443);
+ *
+ * URI uri = new URI(&quot;https://localhost/&quot;, true);
+ * // use relative url only
+ * GetMethod httpget = new GetMethod(uri.getPathQuery());
+ * HostConfiguration hc = new HostConfiguration();
+ * hc.setHost(uri.getHost(), uri.getPort(), easyhttps);
+ * HttpClient client = new HttpClient();
+ * client.executeMethod(hc, httpget);
+ * </pre>
+ *
  * </p>
  * <p>
- * Example of using custom protocol socket factory per default instead of the standard one:
- *     <pre>
- *     Protocol easyhttps = new Protocol("https", new EasySSLProtocolSocketFactory(), 443);
- *     Protocol.registerProtocol("https", easyhttps);
+ * Example of using custom protocol socket factory per default instead of the
+ * standard one:
  *
- *     HttpClient client = new HttpClient();
- *     GetMethod httpget = new GetMethod("https://localhost/");
- *     client.executeMethod(httpget);
- *     </pre>
+ * <pre>
+ * Protocol easyhttps = new Protocol(&quot;https&quot;, new EasySSLProtocolSocketFactory(),
+ *         443);
+ * Protocol.registerProtocol(&quot;https&quot;, easyhttps);
+ *
+ * HttpClient client = new HttpClient();
+ * GetMethod httpget = new GetMethod(&quot;https://localhost/&quot;);
+ * client.executeMethod(httpget);
+ * </pre>
+ *
  * </p>
  *
  * @author <a href="mailto:oleg -at- ural.ru">Oleg Kalnichevski</a>
  *
- * <p>
- * DISCLAIMER: HttpClient developers DO NOT actively support this component.
- * The component is provided as a reference material, which may be inappropriate
- * for use without additional customization.
- * </p>
+ *         <p>
+ *         DISCLAIMER: HttpClient developers DO NOT actively support this
+ *         component. The component is provided as a reference material, which
+ *         may be inappropriate for use without additional customization.
+ *         </p>
  */
 
 public class EasySSLProtocolSocketFactory implements SecureProtocolSocketFactory {
@@ -126,29 +132,37 @@ public class EasySSLProtocolSocketFactory implements SecureProtocolSocketFactory
     }
 
     /**
-     * Attempts to get a new socket connection to the given host within the given time limit.
+     * Attempts to get a new socket connection to the given host within the
+     * given time limit.
      * <p>
-     * To circumvent the limitations of older JREs that do not support connect timeout a
-     * controller thread is executed. The controller thread attempts to create a new socket
-     * within the given limit of time. If socket constructor does not return until the
-     * timeout expires, the controller terminates and throws an {@link ConnectTimeoutException}
+     * To circumvent the limitations of older JREs that do not support connect
+     * timeout a controller thread is executed. The controller thread attempts
+     * to create a new socket within the given limit of time. If socket
+     * constructor does not return until the timeout expires, the controller
+     * terminates and throws an {@link ConnectTimeoutException}
      * </p>
      *
-     * @param host the host name/IP
-     * @param port the port on the host
-     * @param clientHost the local host name/IP to bind the socket to
-     * @param clientPort the port on the local machine
-     * @param params {@link HttpConnectionParams Http connection parameters}
+     * @param host
+     *            the host name/IP
+     * @param port
+     *            the port on the host
+     * @param clientHost
+     *            the local host name/IP to bind the socket to
+     * @param clientPort
+     *            the port on the local machine
+     * @param params
+     *            {@link HttpConnectionParams Http connection parameters}
      *
      * @return Socket a new socket
      *
-     * @throws IOException if an I/O error occurs while creating the socket
-     * @throws UnknownHostException if the IP address of the host cannot be
-     * determined
+     * @throws IOException
+     *             if an I/O error occurs while creating the socket
+     * @throws UnknownHostException
+     *             if the IP address of the host cannot be determined
      */
     @Override
-    public Socket createSocket(final String host, final int port, final InetAddress localAddress, final int localPort, final HttpConnectionParams params)
-        throws IOException, UnknownHostException, ConnectTimeoutException {
+    public Socket createSocket(final String host, final int port, final InetAddress localAddress, final int localPort, final HttpConnectionParams params) throws IOException,
+    UnknownHostException, ConnectTimeoutException {
         if (params == null) {
             throw new IllegalArgumentException("Parameters may not be null");
         }

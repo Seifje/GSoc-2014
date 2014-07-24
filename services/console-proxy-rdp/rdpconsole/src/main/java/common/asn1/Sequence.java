@@ -62,8 +62,7 @@ public class Sequence extends Tag {
 
         long length = buf.readBerLength();
         if (length > buf.remainderLength())
-            throw new RuntimeException("BER sequence is too long: " + length + " bytes, while buffer remainder length is " + buf.remainderLength() + ". Data: " + buf
-                    + ".");
+            throw new RuntimeException("BER sequence is too long: " + length + " bytes, while buffer remainder length is " + buf.remainderLength() + ". Data: " + buf + ".");
 
         ByteBuffer value = buf.readBytes((int)length);
         parseContent(value);
@@ -80,8 +79,7 @@ public class Sequence extends Tag {
 
                 // If tag is required, then throw exception
                 if (!tags[i].optional) {
-                    throw new RuntimeException("[" + this + "] ERROR: Required tag is missed: " + tags[i] + ". Unexected tag type: " + typeAndFlags + ". Data: " + buf
-                            + ".");
+                    throw new RuntimeException("[" + this + "] ERROR: Required tag is missed: " + tags[i] + ". Unexected tag type: " + typeAndFlags + ". Data: " + buf + ".");
                 } else {
                     // One or more tags are omitted, so skip them
                     for (; i < tags.length; i++) {
@@ -91,8 +89,8 @@ public class Sequence extends Tag {
                     }
 
                     if (i >= tags.length || !tags[i].isTypeValid(typeAndFlags)) {
-                        throw new RuntimeException("[" + this + "] ERROR: No more tags to read or skip, but some data still left in buffer. Unexected tag type: "
-                                + typeAndFlags + ". Data: " + buf + ".");
+                        throw new RuntimeException("[" + this + "] ERROR: No more tags to read or skip, but some data still left in buffer. Unexected tag type: " + typeAndFlags
+                                + ". Data: " + buf + ".");
                     }
                 }
             }

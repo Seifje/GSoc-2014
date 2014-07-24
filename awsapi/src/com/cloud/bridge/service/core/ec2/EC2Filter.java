@@ -40,10 +40,11 @@ public class EC2Filter {
     }
 
     /**
-     * From Amazon:
-     * "You can use wildcards with the filter values: * matches zero or more characters, and ? matches
-     * exactly one character. You can escape special characters using a backslash before the character. For
-     * example, a value of \*amazon\?\\ searches for the literal string *amazon?\. "
+     * From Amazon: "You can use wildcards with the filter values: * matches
+     * zero or more characters, and ? matches exactly one character. You can
+     * escape special characters using a backslash before the character. For
+     * example, a value of \*amazon\?\\ searches for the literal string
+     * *amazon?\. "
      */
     public void addValueEncoded(String param) {
         valueSet.add(StringHelper.toRegex(param));

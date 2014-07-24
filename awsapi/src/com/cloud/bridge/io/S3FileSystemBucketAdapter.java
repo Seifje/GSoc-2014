@@ -103,7 +103,7 @@ public class S3FileSystemBucketAdapter implements S3BucketAdapter {
                 md5.update(buffer, 0, len);
 
             }
-            //Convert MD4 digest to (lowercase) hex String
+            // Convert MD4 digest to (lowercase) hex String
             return StringHelper.toHexString(md5.digest());
 
         } catch (IOException e) {
@@ -120,22 +120,31 @@ public class S3FileSystemBucketAdapter implements S3BucketAdapter {
     }
 
     /**
-     * From a list of files (each being one part of the multipart upload), concatentate all files into a single
-     * object that can be accessed by normal S3 calls.  This function could take a long time since a multipart is
-     * allowed to have upto 10,000 parts (each 5 gib long).   Amazon defines that while this operation is in progress
-     * whitespace is sent back to the client inorder to keep the HTTP connection alive.
+     * From a list of files (each being one part of the multipart upload),
+     * concatentate all files into a single object that can be accessed by
+     * normal S3 calls. This function could take a long time since a multipart
+     * is allowed to have upto 10,000 parts (each 5 gib long). Amazon defines
+     * that while this operation is in progress whitespace is sent back to the
+     * client inorder to keep the HTTP connection alive.
      *
-     * @param mountedRoot - where both the source and dest buckets are located
-     * @param destBucket - resulting location of the concatenated objects
-     * @param fileName - resulting file name of the concatenated objects
-     * @param sourceBucket - special bucket used to save uploaded file parts
-     * @param parts - an array of file names in the sourceBucket
-     * @param client - if not null, then keep the servlet connection alive while this potentially long concatentation takes place
-     * @return OrderedPair with the first value the MD5 of the final object, and the second value the length of the final object
+     * @param mountedRoot
+     *            - where both the source and dest buckets are located
+     * @param destBucket
+     *            - resulting location of the concatenated objects
+     * @param fileName
+     *            - resulting file name of the concatenated objects
+     * @param sourceBucket
+     *            - special bucket used to save uploaded file parts
+     * @param parts
+     *            - an array of file names in the sourceBucket
+     * @param client
+     *            - if not null, then keep the servlet connection alive while
+     *            this potentially long concatentation takes place
+     * @return OrderedPair with the first value the MD5 of the final object, and
+     *         the second value the length of the final object
      */
     @Override
-    public OrderedPair<String, Long> concatentateObjects(String mountedRoot, String destBucket, String fileName, String sourceBucket, S3MultipartPart[] parts,
-        OutputStream client) {
+    public OrderedPair<String, Long> concatentateObjects(String mountedRoot, String destBucket, String fileName, String sourceBucket, S3MultipartPart[] parts, OutputStream client) {
         MessageDigest md5;
         long totalLength = 0;
 
@@ -168,7 +177,8 @@ public class S3FileSystemBucketAdapter implements S3BucketAdapter {
                 }
                 is.close();
 
-                // -> after each file write tell the client we are still here to keep connection alive
+                // -> after each file write tell the client we are still here to
+                // keep connection alive
                 if (null != client) {
                     client.write(new String(" ").getBytes());
                     client.flush();
@@ -176,7 +186,8 @@ public class S3FileSystemBucketAdapter implements S3BucketAdapter {
             }
             fos.close();
             return new OrderedPair<String, Long>(StringHelper.toHexString(md5.digest()), new Long(totalLength));
-            //Create an ordered pair whose first element is the MD4 digest as a (lowercase) hex String
+            // Create an ordered pair whose first element is the MD4 digest as a
+            // (lowercase) hex String
         } catch (IOException e) {
             logger.error("concatentateObjects unexpected exception " + e.getMessage(), e);
             throw new OutOfStorageException(e);

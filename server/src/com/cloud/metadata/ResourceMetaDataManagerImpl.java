@@ -262,7 +262,7 @@ public class ResourceMetaDataManagerImpl extends ManagerBase implements Resource
     }
 
     @Override
-    public List<? extends ResourceDetail> getDetails(ResourceObjectType resourceType, String key, String value, Boolean forDisplay){
+    public List<? extends ResourceDetail> getDetails(ResourceObjectType resourceType, String key, String value, Boolean forDisplay) {
         DetailDaoHelper newDetailDaoHelper = new DetailDaoHelper(resourceType);
         return newDetailDaoHelper.getDetails(key, value, forDisplay);
     }

@@ -62,7 +62,8 @@ public class ServiceOfferingResponse extends BaseResponse {
     @Param(description = "the storage type for this service offering")
     private String storageType;
 
-    @SerializedName("provisioningtype") @Param(description="provisioning type used to create volumes. Valid values are thin, sparse, fat.", since = "4.4.0")
+    @SerializedName("provisioningtype")
+    @Param(description = "provisioning type used to create volumes. Valid values are thin, sparse, fat.", since = "4.4.0")
     private String provisioningType;
 
     @SerializedName("offerha")
@@ -244,11 +245,11 @@ public class ServiceOfferingResponse extends BaseResponse {
         this.storageType = storageType;
     }
 
-    public String getProvisioningType(){
+    public String getProvisioningType() {
         return provisioningType;
     }
 
-    public void setProvisioningType(String provisioningType){
+    public void setProvisioningType(String provisioningType) {
         this.provisioningType = provisioningType;
     }
 

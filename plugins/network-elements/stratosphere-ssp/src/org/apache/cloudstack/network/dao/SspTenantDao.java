@@ -22,12 +22,13 @@ public interface SspTenantDao extends GenericDao<SspTenantVO, Long> {
     /**
      * Find an ssp tenant uuid for a specific cloudstack zone.
      *
-     * The ssp tenant uuid will be used in ssp tenant_network creation.
-     * For now, we map ssp tenant to cloudstack zone. Instead, we might
-     * want to map ssp tenant to cloudstack domain, or ssp tenant to
-     * cloudstack project in future.
+     * The ssp tenant uuid will be used in ssp tenant_network creation. For now,
+     * we map ssp tenant to cloudstack zone. Instead, we might want to map ssp
+     * tenant to cloudstack domain, or ssp tenant to cloudstack project in
+     * future.
      *
-     * @param zoneId zone id
+     * @param zoneId
+     *            zone id
      * @return tenant uuid string
      */
     public String findUuidByZone(long zoneId);

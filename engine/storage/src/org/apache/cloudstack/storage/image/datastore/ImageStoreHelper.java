@@ -101,11 +101,11 @@ public class ImageStoreHelper {
 
         store.setRole((DataStoreRole)params.get("role"));
 
-        if ("cifs".equalsIgnoreCase((String) params.get("protocol")) && details != null) {
+        if ("cifs".equalsIgnoreCase((String)params.get("protocol")) && details != null) {
             String user = details.get("user");
             String password = details.get("password");
             String domain = details.get("domain");
-            String updatedPath = (String) params.get("url");
+            String updatedPath = (String)params.get("url");
 
             if (user == null || password == null) {
                 String errMsg = "Missing cifs user and password details. Add them as details parameter.";
@@ -155,15 +155,19 @@ public class ImageStoreHelper {
     }
 
     /**
-     * Convert current NFS secondary storage to Staging store to be ready to migrate to S3 object store.
-     * @param store NFS image store.
+     * Convert current NFS secondary storage to Staging store to be ready to
+     * migrate to S3 object store.
+     *
+     * @param store
+     *            NFS image store.
      * @return true if successful.
      */
     public boolean convertToStagingStore(DataStore store) {
         ImageStoreVO nfsStore = imageStoreDao.findById(store.getId());
         nfsStore.setRole(DataStoreRole.ImageCache);
         imageStoreDao.update(store.getId(), nfsStore);
-        // clear snapshot entry on primary store to make next snapshot become full snapshot
+        // clear snapshot entry on primary store to make next snapshot become
+        // full snapshot
         snapshotStoreDao.deleteSnapshotRecordsOnPrimary();
         return true;
     }

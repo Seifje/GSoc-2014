@@ -109,8 +109,8 @@ public class FloatingIpPoolModel extends ModelObjectBase {
     }
 
     /**
-     * Initialize the object properties based on the DB object.
-     * Common code between plugin calls and DBSync.
+     * Initialize the object properties based on the DB object. Common code
+     * between plugin calls and DBSync.
      */
     public void setProperties(ModelController controller) {
         _name = "PublicIpPool";

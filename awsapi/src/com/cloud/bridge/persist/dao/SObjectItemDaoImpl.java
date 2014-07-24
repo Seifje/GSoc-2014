@@ -64,7 +64,7 @@ public class SObjectItemDaoImpl extends GenericDaoBase<SObjectItemVO, Long> impl
             SearchCriteria<SObjectItemVO> sc = SearchBySobjectID.create();
             sc.setParameters("SObjectID", sobjectID);
             return listBy(sc);
-            //findOneIncludingRemovedBy(sc);
+            // findOneIncludingRemovedBy(sc);
         } finally {
             txn.close();
         }

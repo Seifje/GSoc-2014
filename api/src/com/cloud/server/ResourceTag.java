@@ -22,41 +22,14 @@ import org.apache.cloudstack.api.InternalIdentity;
 
 public interface ResourceTag extends ControlledEntity, Identity, InternalIdentity {
 
-    // FIXME - extract enum to another interface as its used both by resourceTags and resourceMetaData code
+    // FIXME - extract enum to another interface as its used both by
+    // resourceTags and resourceMetaData code
     public enum ResourceObjectType {
-        UserVm(true, true),
-        Template(true, true),
-        ISO(true, false),
-        Volume(true, true),
-        Snapshot(true, false),
-        Network(true, true),
-        Nic(false, true),
-        LoadBalancer(true, true),
-        PortForwardingRule(true, true),
-        FirewallRule(true, true),
-        SecurityGroup(true, false),
-        PublicIpAddress(true, true),
-        Project(true, false),
-        Vpc(true, true),
-        NetworkACL(true, true),
-        StaticRoute(true, false),
-        VMSnapshot(true, false),
-        RemoteAccessVpn(true, true),
-        Zone(false, true),
-        ServiceOffering(false, true),
-        Storage(false, true),
-        PrivateGateway(false, true),
-        NetworkACLList(false, true),
-        VpnGateway(false, true),
-        CustomerGateway(false, true),
-        VpnConnection(false, true),
-        User(true, true),
-        DiskOffering(false, true),
-        AutoScaleVmProfile(false, true),
-        AutoScaleVmGroup(false, true),
-        LBStickinessPolicy(false, true),
-        LBHealthCheckPolicy(false, true);
-
+        UserVm(true, true), Template(true, true), ISO(true, false), Volume(true, true), Snapshot(true, false), Network(true, true), Nic(false, true), LoadBalancer(true, true), PortForwardingRule(
+                true, true), FirewallRule(true, true), SecurityGroup(true, false), PublicIpAddress(true, true), Project(true, false), Vpc(true, true), NetworkACL(true, true), StaticRoute(
+                        true, false), VMSnapshot(true, false), RemoteAccessVpn(true, true), Zone(false, true), ServiceOffering(false, true), Storage(false, true), PrivateGateway(false,
+                                true), NetworkACLList(false, true), VpnGateway(false, true), CustomerGateway(false, true), VpnConnection(false, true), User(true, true), DiskOffering(false, true), AutoScaleVmProfile(
+                                        false, true), AutoScaleVmGroup(false, true), LBStickinessPolicy(false, true), LBHealthCheckPolicy(false, true);
 
         ResourceObjectType(boolean resourceTagsSupport, boolean resourceMetadataSupport) {
             this.resourceTagsSupport = resourceTagsSupport;

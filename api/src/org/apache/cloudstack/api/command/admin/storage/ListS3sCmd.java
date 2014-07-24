@@ -30,15 +30,14 @@ import com.cloud.exception.NetworkRuleConflictException;
 import com.cloud.exception.ResourceAllocationException;
 import com.cloud.exception.ResourceUnavailableException;
 
-@APICommand(name = "listS3s", description = "Lists S3s", responseObject = ImageStoreResponse.class, since = "4.0.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listS3s", description = "Lists S3s", responseObject = ImageStoreResponse.class, since = "4.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListS3sCmd extends BaseListCmd {
 
     private static final String COMMAND_NAME = "lists3sresponse";
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException, NetworkRuleConflictException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
+    NetworkRuleConflictException {
 
         ListImageStoresCmd cmd = new ListImageStoresCmd();
         cmd.setProvider("S3");

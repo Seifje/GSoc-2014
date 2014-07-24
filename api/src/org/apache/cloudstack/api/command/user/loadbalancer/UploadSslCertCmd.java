@@ -36,8 +36,7 @@ import com.cloud.exception.ResourceAllocationException;
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.network.lb.CertService;
 
-@APICommand(name = "uploadSslCert", description = "Upload a certificate to cloudstack", responseObject = SslCertResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "uploadSslCert", description = "Upload a certificate to cloudstack", responseObject = SslCertResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UploadSslCertCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(UploadSslCertCmd.class.getName());
 
@@ -46,9 +45,9 @@ public class UploadSslCertCmd extends BaseCmd {
     @Inject
     CertService _certService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.CERTIFICATE, type = CommandType.STRING, required = true, description = "SSL certificate", length = 16384)
     private String cert;
@@ -62,9 +61,9 @@ public class UploadSslCertCmd extends BaseCmd {
     @Parameter(name = ApiConstants.PASSWORD, type = CommandType.STRING, description = "Password for the private key")
     private String password;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getCert() {
         return cert;
@@ -82,13 +81,13 @@ public class UploadSslCertCmd extends BaseCmd {
         return password;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException, NetworkRuleConflictException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
+    NetworkRuleConflictException {
 
         try {
             SslCertResponse response = _certService.uploadSslCert(this);

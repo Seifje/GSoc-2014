@@ -249,7 +249,7 @@ public class NetworkProfile implements Network {
     }
 
     @Override
-    public boolean isDisplay(){
+    public boolean isDisplay() {
         return displayNetwork;
     }
 

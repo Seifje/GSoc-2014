@@ -68,7 +68,8 @@ public class SspGuestNetworkGuru extends GuestNetworkGuru implements NetworkMigr
 
         String setting = null;
         if (physicalNetwork != null && physicalNetwork.getIsolationMethods().contains("SSP")) {
-            // Be careful, PhysicalNetwork#getIsolationMethods() returns List<String>, not List<IsolationMethod>
+            // Be careful, PhysicalNetwork#getIsolationMethods() returns
+            // List<String>, not List<IsolationMethod>
             setting = "physicalnetwork setting";
         } else if (_ntwkOfferingSrvcDao.isProviderForNetworkOffering(offering.getId(), Network.Provider.getProvider(SspElement.s_SSP_NAME))) {
             setting = "network offering setting";
@@ -91,16 +92,20 @@ public class SspGuestNetworkGuru extends GuestNetworkGuru implements NetworkMigr
         return false;
     }
 
-    /* (non-Javadoc)
-     * FYI: What is done in parent class is allocateVnet(vlan).
-     * Effective return object members are: cidr, broadcastUri, gateway, mode, physicalNetworkId
-     * The other members will be silently ignored.
-     * This method is called at DeployVMCmd#execute (running phase) - NetworkManagerImpl#prepare
-     * @see org.apache.cloudstack.network.guru.GuestNetworkGuru#implement(com.cloud.network.Network, com.cloud.offering.NetworkOffering, com.cloud.deploy.DeployDestination, com.cloud.vm.ReservationContext)
+    /*
+     * (non-Javadoc) FYI: What is done in parent class is allocateVnet(vlan).
+     * Effective return object members are: cidr, broadcastUri, gateway, mode,
+     * physicalNetworkId The other members will be silently ignored. This method
+     * is called at DeployVMCmd#execute (running phase) -
+     * NetworkManagerImpl#prepare
+     *
+     * @see
+     * org.apache.cloudstack.network.guru.GuestNetworkGuru#implement(com.cloud
+     * .network.Network, com.cloud.offering.NetworkOffering,
+     * com.cloud.deploy.DeployDestination, com.cloud.vm.ReservationContext)
      */
     @Override
-    public Network implement(Network network, NetworkOffering offering, DeployDestination dest, ReservationContext context)
-        throws InsufficientVirtualNetworkCapcityException {
+    public Network implement(Network network, NetworkOffering offering, DeployDestination dest, ReservationContext context) throws InsufficientVirtualNetworkCapcityException {
         s_logger.trace("implement " + network.toString());
         super.implement(network, offering, dest, context);
         _sspMgr.createNetwork(network, offering, dest, context);
@@ -116,7 +121,7 @@ public class SspGuestNetworkGuru extends GuestNetworkGuru implements NetworkMigr
 
     @Override
     public void reserve(NicProfile nic, Network network, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
-        throws InsufficientVirtualNetworkCapcityException, InsufficientAddressCapacityException {
+            throws InsufficientVirtualNetworkCapcityException, InsufficientAddressCapacityException {
         super.reserve(nic, network, vm, dest, context);
         _sspMgr.createNicEnv(network, nic, dest, context);
     }

@@ -254,7 +254,9 @@ public class TemplateJoinVO extends BaseViewVO implements ControlledViewEntity {
     ObjectInDataStoreStateMachine.State state;
 
     @Column(name = "temp_zone_pair")
-    private String tempZonePair; // represent a distinct (templateId, data_center_id) pair
+    private String tempZonePair; // represent a distinct (templateId,
+
+    // data_center_id) pair
 
     public TemplateJoinVO() {
     }

@@ -22,28 +22,14 @@ import com.cloud.bridge.service.core.s3.S3ConditionFactory.PolicyConditions;
 import com.cloud.bridge.service.exception.PermissionDeniedException;
 
 /**
- * In the Bucket Policy language a condition block can hold one or more conditions.
- * A condition has one or more keys, where each key can have one or more values.
+ * In the Bucket Policy language a condition block can hold one or more
+ * conditions. A condition has one or more keys, where each key can have one or
+ * more values.
  */
 public abstract class S3PolicyCondition {
 
     public enum ConditionKeys {
-        UnknownKey,
-        CurrentTime,
-        SecureTransport,
-        SourceIp,
-        SourceArn,
-        UserAgent,
-        EpochTime,
-        Referer,
-        Acl,
-        Location,
-        Prefix,
-        Delimiter,
-        MaxKeys,
-        CopySource,
-        MetaData,
-        VersionId
+        UnknownKey, CurrentTime, SecureTransport, SourceIp, SourceArn, UserAgent, EpochTime, Referer, Acl, Location, Prefix, Delimiter, MaxKeys, CopySource, MetaData, VersionId
     }
 
     protected PolicyConditions condition = null;
@@ -99,8 +85,9 @@ public abstract class S3PolicyCondition {
     }
 
     /**
-     * After calling getAllKeys(), pass in each key from that result to get
-     * the key's associated list of values.
+     * After calling getAllKeys(), pass in each key from that result to get the
+     * key's associated list of values.
+     * 
      * @param key
      * @return object[]
      */

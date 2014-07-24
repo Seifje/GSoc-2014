@@ -74,7 +74,8 @@ public class ManagementIPSystemVMInvestigator extends AbstractInvestigatorImpl {
             if (nic.getIp4Address() == null) {
                 continue;
             }
-            // get the data center IP address, find a host on the pod, use that host to ping the data center IP address
+            // get the data center IP address, find a host on the pod, use that
+            // host to ping the data center IP address
             List<Long> otherHosts = findHostByPod(vmHost.getPodId(), vm.getHostId());
             for (Long otherHost : otherHosts) {
                 Status vmState = testIpAddress(otherHost, nic.getIp4Address());
@@ -88,13 +89,14 @@ public class ManagementIPSystemVMInvestigator extends AbstractInvestigatorImpl {
                     }
                     return Boolean.TRUE;
                 } else if (vmState == Status.Down) {
-                    // We can't ping the VM directly...if we can ping the host, then report the VM down.
-                    // If we can't ping the host, then we don't have enough information.
+                    // We can't ping the VM directly...if we can ping the host,
+                    // then report the VM down.
+                    // If we can't ping the host, then we don't have enough
+                    // information.
                     Status vmHostState = testIpAddress(otherHost, vmHost.getPrivateIpAddress());
                     if ((vmHostState != null) && (vmHostState == Status.Up)) {
                         if (s_logger.isDebugEnabled()) {
-                            s_logger.debug("successfully pinged vm's host IP (" + vmHost.getPrivateIpAddress() +
-                                "), but could not ping VM, returning that the VM is down");
+                            s_logger.debug("successfully pinged vm's host IP (" + vmHost.getPrivateIpAddress() + "), but could not ping VM, returning that the VM is down");
                         }
                         return Boolean.FALSE;
                     }

@@ -53,7 +53,7 @@ public class ApiRateLimitTest {
     private static Account s_testAccount;
 
     @BeforeClass
-public static void setUp() throws ConfigurationException {
+    public static void setUp() throws ConfigurationException {
 
         when(s_configDao.getValue(Config.ApiLimitInterval.key())).thenReturn(null);
         when(s_configDao.getValue(Config.ApiLimitMax.key())).thenReturn(null);
@@ -225,7 +225,8 @@ public static void setUp() throws ConfigurationException {
         ApiLimitResponse response = s_limitService.searchApiLimit(s_testAccount);
         assertEquals("apiIssued is incorrect", 5, response.getApiIssued());
         assertEquals("apiAllowed is incorrect", 5, response.getApiAllowed());
-        // using <= to account for inaccurate System.currentTimeMillis() clock in Windows environment
+        // using <= to account for inaccurate System.currentTimeMillis() clock
+        // in Windows environment
         assertTrue("expiredAfter is incorrect", response.getExpireAfter() <= 1000);
 
     }
@@ -245,7 +246,7 @@ public static void setUp() throws ConfigurationException {
             }
         } finally {
             s_limitService.setEnabled(true); // enable api throttling to avoid
-                                            // impacting other testcases
+                                             // impacting other testcases
         }
 
     }

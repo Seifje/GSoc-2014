@@ -77,7 +77,7 @@ public class ZoneResponse extends BaseResponse {
     @Param(description = "the guest CIDR address for the Zone")
     private String guestCidrAddress;
 
-    //TODO - generate description
+    // TODO - generate description
     @SerializedName("status")
     private String status;
 

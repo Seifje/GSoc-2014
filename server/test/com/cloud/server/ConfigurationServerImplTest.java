@@ -29,16 +29,18 @@ public class ConfigurationServerImplTest {
 
     @Spy
     ConfigurationServerImpl windowsImpl = new ConfigurationServerImpl() {
-      protected boolean isOnWindows() {
-        return true;
-      }
+        @Override
+        protected boolean isOnWindows() {
+            return true;
+        }
     };
 
     @Spy
     ConfigurationServerImpl linuxImpl = new ConfigurationServerImpl() {
-      protected boolean isOnWindows() {
-        return false;
-      }
+        @Override
+        protected boolean isOnWindows() {
+            return false;
+        }
     };
 
     final static String TEST = "the quick brown fox jumped over the lazy dog";
@@ -78,10 +80,10 @@ public class ConfigurationServerImplTest {
 
     @Test
     public void testWindowsScript() {
-      Assert.assertTrue(windowsImpl.isOnWindows());
-      Assert.assertEquals("scripts/vm/systemvm/injectkeys.py", windowsImpl.getInjectScript());
+        Assert.assertTrue(windowsImpl.isOnWindows());
+        Assert.assertEquals("scripts/vm/systemvm/injectkeys.py", windowsImpl.getInjectScript());
 
-      Assert.assertFalse(linuxImpl.isOnWindows());
-      Assert.assertEquals("scripts/vm/systemvm/injectkeys.sh", linuxImpl.getInjectScript());
+        Assert.assertFalse(linuxImpl.isOnWindows());
+        Assert.assertEquals("scripts/vm/systemvm/injectkeys.sh", linuxImpl.getInjectScript());
     }
 }

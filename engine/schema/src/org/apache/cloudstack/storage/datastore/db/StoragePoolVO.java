@@ -41,12 +41,7 @@ import com.cloud.utils.db.GenericDao;
 @Table(name = "storage_pool")
 public class StoragePoolVO implements StoragePool {
     @Id
-    @TableGenerator(name = "storage_pool_sq",
-                    table = "sequence",
-                    pkColumnName = "name",
-                    valueColumnName = "value",
-                    pkColumnValue = "storage_pool_seq",
-                    allocationSize = 1)
+    @TableGenerator(name = "storage_pool_sq", table = "sequence", pkColumnName = "name", valueColumnName = "value", pkColumnValue = "storage_pool_seq", allocationSize = 1)
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
@@ -132,8 +127,8 @@ public class StoragePoolVO implements StoragePool {
         this.status = StoragePoolStatus.Initial;
     }
 
-    public StoragePoolVO(long poolId, String name, String uuid, StoragePoolType type, long dataCenterId, Long podId, long availableBytes, long capacityBytes,
-            String hostAddress, int port, String hostPath) {
+    public StoragePoolVO(long poolId, String name, String uuid, StoragePoolType type, long dataCenterId, Long podId, long availableBytes, long capacityBytes, String hostAddress,
+            int port, String hostPath) {
         this.name = name;
         this.id = poolId;
         this.uuid = uuid;
@@ -330,6 +325,7 @@ public class StoragePoolVO implements StoragePool {
         return this.scope;
     }
 
+    @Override
     public HypervisorType getHypervisor() {
         return hypervisor;
     }
@@ -369,7 +365,6 @@ public class StoragePoolVO implements StoragePool {
 
     @Override
     public boolean isInMaintenance() {
-        return status == StoragePoolStatus.PrepareForMaintenance || status == StoragePoolStatus.Maintenance || status == StoragePoolStatus.ErrorInMaintenance ||
-            removed != null;
+        return status == StoragePoolStatus.PrepareForMaintenance || status == StoragePoolStatus.Maintenance || status == StoragePoolStatus.ErrorInMaintenance || removed != null;
     }
 }

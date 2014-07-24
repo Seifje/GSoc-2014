@@ -26,7 +26,7 @@ import com.cloud.utils.db.GenericDao;
 import com.cloud.utils.fsm.StateDao;
 
 public interface SnapshotDataStoreDao extends GenericDao<SnapshotDataStoreVO, Long>,
-        StateDao<ObjectInDataStoreStateMachine.State, ObjectInDataStoreStateMachine.Event, DataObjectInStore> {
+StateDao<ObjectInDataStoreStateMachine.State, ObjectInDataStoreStateMachine.Event, DataObjectInStore> {
 
     List<SnapshotDataStoreVO> listByStoreId(long id, DataStoreRole role);
 
@@ -46,7 +46,8 @@ public interface SnapshotDataStoreDao extends GenericDao<SnapshotDataStoreVO, Lo
 
     void duplicateCacheRecordsOnRegionStore(long storeId);
 
-    // delete the snapshot entry on primary data store to make sure that next snapshot will be full snapshot
+    // delete the snapshot entry on primary data store to make sure that next
+    // snapshot will be full snapshot
     void deleteSnapshotRecordsOnPrimary();
 
     SnapshotDataStoreVO findReadyOnCache(long snapshotId);

@@ -163,8 +163,8 @@ public class ActionEventUtils {
         return event.getId();
     }
 
-    private static Event persistActionEvent(Long userId, Long accountId, Long domainId, String level, String type,
-                                            Event.State state, boolean eventDisplayEnabled, String description, Long startEventId) {
+    private static Event persistActionEvent(Long userId, Long accountId, Long domainId, String level, String type, Event.State state, boolean eventDisplayEnabled,
+            String description, Long startEventId) {
         EventVO event = new EventVO();
         event.setUserId(userId);
         event.setAccountId(accountId);
@@ -192,12 +192,13 @@ public class ActionEventUtils {
         String configKey = Config.PublishActionEvent.key();
         String value = s_configDao.getValue(configKey);
         boolean configValue = Boolean.parseBoolean(value);
-        if(!configValue)
+        if (!configValue)
             return;
         try {
             s_eventBus = ComponentContext.getComponent(EventBus.class);
         } catch (NoSuchBeanDefinitionException nbe) {
-            return; // no provider is configured to provide events bus, so just return
+            return; // no provider is configured to provide events bus, so just
+            // return
         }
 
         // get the entity details for which ActionEvent is generated
@@ -205,33 +206,36 @@ public class ActionEventUtils {
         String entityUuid = null;
         CallContext context = CallContext.current();
         Class entityKey = getEntityKey(eventType);
-        if (entityKey != null){
-            //FIXME - Remove this since it should be covered by the else if condition below.
+        if (entityKey != null) {
+            // FIXME - Remove this since it should be covered by the else if
+            // condition below.
             entityUuid = (String)context.getContextParameter(entityKey);
             if (entityUuid != null)
                 entityType = entityKey.getName();
-        }else if (EventTypes.getEntityClassForEvent(eventType) != null){
-            //Get entity Class(Example - VirtualMachine.class) from the event Type eg. - VM.CREATE
+        } else if (EventTypes.getEntityClassForEvent(eventType) != null) {
+            // Get entity Class(Example - VirtualMachine.class) from the event
+            // Type eg. - VM.CREATE
             Class entityClass = EventTypes.getEntityClassForEvent(eventType);
 
-            //Get uuid from id
-            if(context.getContextParameter(entityClass.getName()) != null){
+            // Get uuid from id
+            if (context.getContextParameter(entityClass.getName()) != null) {
                 try {
                     entityUuid = getEntityUuid(entityClass, context.getContextParameter(entityClass.getName()));
-                } catch (Exception e){
+                } catch (Exception e) {
                     s_logger.debug("Caught exception while finding entityUUID, moving on");
                 }
             }
         }
 
-        org.apache.cloudstack.framework.events.Event event =
-            new org.apache.cloudstack.framework.events.Event(ManagementService.Name, eventCategory, eventType, EventTypes.getEntityForEvent(eventType), entityUuid);
+        org.apache.cloudstack.framework.events.Event event = new org.apache.cloudstack.framework.events.Event(ManagementService.Name, eventCategory, eventType,
+                EventTypes.getEntityForEvent(eventType), entityUuid);
 
         Map<String, String> eventDescription = new HashMap<String, String>();
         Project project = s_projectDao.findByProjectAccountId(accountId);
         Account account = s_accountDao.findById(accountId);
         User user = s_userDao.findById(userId);
-        // if account has been deleted, this might be called during cleanup of resources and results in null pointer
+        // if account has been deleted, this might be called during cleanup of
+        // resources and results in null pointer
         if (account == null)
             return;
         if (user == null)
@@ -244,7 +248,8 @@ public class ActionEventUtils {
         eventDescription.put("status", state.toString());
         eventDescription.put("entity", entityType);
         eventDescription.put("entityuuid", entityUuid);
-        //Put all the first class entities that are touched during the action. For now atleast put in the vmid.
+        // Put all the first class entities that are touched during the action.
+        // For now atleast put in the vmid.
         populateFirstClassEntities(eventDescription);
         eventDescription.put("description", description);
 
@@ -260,21 +265,23 @@ public class ActionEventUtils {
         }
     }
 
-    private static String getEntityUuid(Class entityType, Object entityId){
+    private static String getEntityUuid(Class entityType, Object entityId) {
 
-        // entityId can be internal db id or UUID so accordingly call findbyId or return uuid directly
+        // entityId can be internal db id or UUID so accordingly call findbyId
+        // or return uuid directly
 
-        if (entityId instanceof Long){
+        if (entityId instanceof Long) {
             // Its internal db id - use findById
             final Object objVO = s_entityMgr.findById(entityType, (Long)entityId);
             return ((Identity)objVO).getUuid();
-        } else if(entityId instanceof String){
-            try{
-                // In case its an async job the internal db id would be a string because of json deserialization
-                Long internalId = Long.valueOf((String) entityId);
+        } else if (entityId instanceof String) {
+            try {
+                // In case its an async job the internal db id would be a string
+                // because of json deserialization
+                Long internalId = Long.valueOf((String)entityId);
                 final Object objVO = s_entityMgr.findById(entityType, internalId);
                 return ((Identity)objVO).getUuid();
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 // It is uuid - so return it
                 return (String)entityId;
             }
@@ -292,39 +299,33 @@ public class ActionEventUtils {
         return account.getDomainId();
     }
 
-    private static void populateFirstClassEntities(Map<String, String> eventDescription){
+    private static void populateFirstClassEntities(Map<String, String> eventDescription) {
 
         CallContext context = CallContext.current();
         Map<Object, Object> contextMap = context.getContextParameters();
 
-        for(Map.Entry<Object, Object> entry : contextMap.entrySet()){
-            try{
+        for (Map.Entry<Object, Object> entry : contextMap.entrySet()) {
+            try {
                 Object key = entry.getKey();
                 Class clz = Class.forName((String)key);
-                if(clz instanceof Class && Identity.class.isAssignableFrom(clz)){
+                if (clz instanceof Class && Identity.class.isAssignableFrom(clz)) {
                     String uuid = getEntityUuid(clz, entry.getValue());
                     eventDescription.put(ReflectUtil.getEntityName(clz), uuid);
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 s_logger.trace("Caught exception while populating first class entities for event bus, moving on");
             }
         }
 
     }
 
-    private static Class getEntityKey(String eventType)
-    {
+    private static Class getEntityKey(String eventType) {
         // FIXME - Remove this
-        if (eventType.startsWith("DOMAIN."))
-        {
+        if (eventType.startsWith("DOMAIN.")) {
             return Domain.class;
-        }
-        else if (eventType.startsWith("ACCOUNT."))
-        {
+        } else if (eventType.startsWith("ACCOUNT.")) {
             return Account.class;
-        }
-        else if (eventType.startsWith("USER."))
-        {
+        } else if (eventType.startsWith("USER.")) {
             return User.class;
         }
 

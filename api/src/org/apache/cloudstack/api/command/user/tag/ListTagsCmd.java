@@ -26,8 +26,7 @@ import org.apache.cloudstack.api.response.ResourceTagResponse;
 
 import com.cloud.server.ResourceTag;
 
-@APICommand(name = "listTags", description = "List resource tag(s)", responseObject = ResourceTagResponse.class, since = "4.0.0", entityType = {ResourceTag.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listTags", description = "List resource tag(s)", responseObject = ResourceTagResponse.class, since = "4.0.0", entityType = {ResourceTag.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListTagsCmd extends BaseListProjectAndAccountResourcesCmd {
     private static final String s_name = "listtagsresponse";
 
@@ -46,9 +45,9 @@ public class ListTagsCmd extends BaseListProjectAndAccountResourcesCmd {
     @Parameter(name = ApiConstants.CUSTOMER, type = CommandType.STRING, description = "list by customer name")
     private String customer;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public void execute() {

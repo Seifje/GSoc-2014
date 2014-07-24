@@ -34,8 +34,7 @@ import com.cloud.event.EventTypes;
 import com.cloud.network.as.AutoScaleVmGroup;
 import com.cloud.user.Account;
 
-@APICommand(name = "enableAutoScaleVmGroup", description = "Enables an AutoScale Vm Group", responseObject = AutoScaleVmGroupResponse.class, entityType = {AutoScaleVmGroup.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "enableAutoScaleVmGroup", description = "Enables an AutoScale Vm Group", responseObject = AutoScaleVmGroupResponse.class, entityType = {AutoScaleVmGroup.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class EnableAutoScaleVmGroupCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(EnableAutoScaleVmGroupCmd.class.getName());
     private static final String s_name = "enableautoscalevmGroupresponse";
@@ -45,11 +44,7 @@ public class EnableAutoScaleVmGroupCmd extends BaseAsyncCmd {
     // ///////////////////////////////////////////////////
 
     @ACL(accessType = AccessType.OperateEntry)
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = AutoScaleVmGroupResponse.class,
-               required = true,
-               description = "the ID of the autoscale group")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = AutoScaleVmGroupResponse.class, required = true, description = "the ID of the autoscale group")
     private Long id;
 
     // ///////////////////////////////////////////////////
@@ -87,7 +82,9 @@ public class EnableAutoScaleVmGroupCmd extends BaseAsyncCmd {
         if (autoScaleVmGroup != null) {
             return autoScaleVmGroup.getAccountId();
         }
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are
         // tracked
     }
 

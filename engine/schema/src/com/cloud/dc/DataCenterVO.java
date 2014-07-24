@@ -116,7 +116,7 @@ public class DataCenterVO implements DataCenter {
     @Column(name = GenericDao.REMOVED_COLUMN)
     private Date removed;
 
-    // This is a delayed load value.  If the value is null,
+    // This is a delayed load value. If the value is null,
     // then this field has not been loaded yet.
     // Call the dao to load it.
     @Transient
@@ -188,8 +188,8 @@ public class DataCenterVO implements DataCenter {
         this.uuid = UUID.randomUUID().toString();
     }
 
-    public DataCenterVO(String name, String description, String dns1, String dns2, String dns3, String dns4, String guestCidr, String domain, Long domainId,
-            NetworkType zoneType, String zoneToken, String domainSuffix, boolean securityGroupEnabled, boolean localStorageEnabled, String ip6Dns1, String ip6Dns2) {
+    public DataCenterVO(String name, String description, String dns1, String dns2, String dns3, String dns4, String guestCidr, String domain, Long domainId, NetworkType zoneType,
+            String zoneToken, String domainSuffix, boolean securityGroupEnabled, boolean localStorageEnabled, String ip6Dns1, String ip6Dns2) {
         this.name = name;
         this.description = description;
         this.dns1 = dns1;

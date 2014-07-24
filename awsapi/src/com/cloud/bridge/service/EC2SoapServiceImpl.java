@@ -686,7 +686,7 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
         }
         request = toResourceTypeAndIds(request, resourceIdList);
 
-        //add resource tag's to the request
+        // add resource tag's to the request
         ResourceTagSetItemType[] resourceTagItems = resourceTags.getItem();
         if (resourceTagItems != null) {
             for (int i = 0; i < resourceTagItems.length; i++)
@@ -715,7 +715,7 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
         }
         request = toResourceTypeAndIds(request, resourceIdList);
 
-        //add resource tag's to the request
+        // add resource tag's to the request
         DeleteTagsSetItemType[] resourceTagItems = resourceTags.getItem();
         if (resourceTagItems != null) {
             for (int i = 0; i < resourceTagItems.length; i++)
@@ -803,7 +803,7 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
         DescribeAvailabilityZonesType dazt = describeAvailabilityZones.getDescribeAvailabilityZones();
         DescribeAvailabilityZonesSetType dazs = dazt.getAvailabilityZoneSet();
         DescribeAvailabilityZonesSetItemType[] items = dazs.getItem();
-        if (null != items) {  // -> can be empty
+        if (null != items) { // -> can be empty
             for (int i = 0; i < items.length; i++)
                 request.addZone(items[i].getZoneName());
         }
@@ -896,7 +896,7 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
         // -> toEC2DescribeInstances
         DescribeInstancesInfoType diit = dit.getInstancesSet();
         DescribeInstancesItemType[] items = diit.getItem();
-        if (null != items) {  // -> can be empty
+        if (null != items) { // -> can be empty
             for (int i = 0; i < items.length; i++)
                 request.addInstanceId(items[i].getInstanceId());
         }
@@ -914,7 +914,7 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
 
         DescribeAddressesInfoType dait = dat.getPublicIpsSet();
         DescribeAddressesItemType[] items = dait.getItem();
-        if (items != null) {  // -> can be empty
+        if (items != null) { // -> can be empty
             for (DescribeAddressesItemType itemType : items)
                 ec2Request.addPublicIp(itemType.getPublicIp());
         }
@@ -970,7 +970,7 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
         // -> toEC2DescribeSecurityGroups
         DescribeSecurityGroupsSetType sgst = sgt.getSecurityGroupSet();
         DescribeSecurityGroupsSetItemType[] items = sgst.getItem();
-        if (null != items) {  // -> can be empty
+        if (null != items) { // -> can be empty
             for (DescribeSecurityGroupsSetItemType item : items)
                 request.addGroupName(item.getGroupName());
         }
@@ -1120,9 +1120,10 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
     }
 
     /**
-     * Did not find a matching service offering so for now we just return disabled
-     * for each instance request.  We could verify that all of the specified instances
-     * exist to detect an error which would require a listVirtualMachines.
+     * Did not find a matching service offering so for now we just return
+     * disabled for each instance request. We could verify that all of the
+     * specified instances exist to detect an error which would require a
+     * listVirtualMachines.
      */
     public MonitorInstancesResponse monitorInstances(MonitorInstances monitorInstances) {
         MonitorInstancesResponse response = new MonitorInstancesResponse();
@@ -1158,7 +1159,7 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
         // -> toEC2StartInstances
         RebootInstancesInfoType rist = rit.getInstancesSet();
         RebootInstancesItemType[] items = rist.getItem();
-        if (null != items) {  // -> should not be empty
+        if (null != items) { // -> should not be empty
             for (int i = 0; i < items.length; i++)
                 request.addInstanceId(items[i].getInstanceId());
         }
@@ -1170,15 +1171,19 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
      *
      * @param
      *
-     * @see <a href="http://docs.amazonwebservices.com/AWSEC2/2010-11-15/APIReference/index.html?ApiReference-query-RegisterImage.html">RegisterImage</a>
+     * @see <a
+     *      href="http://docs.amazonwebservices.com/AWSEC2/2010-11-15/APIReference/index.html?ApiReference-query-RegisterImage.html">RegisterImage</a>
      */
     public RegisterImageResponse registerImage(RegisterImage registerImage) {
         EC2RegisterImage request = new EC2RegisterImage();
         RegisterImageType rit = registerImage.getRegisterImage();
 
-        // -> we redefine the architecture field to hold: "format:zonename:osTypeName",
-        //    these are the bare minimum that we need to call the cloud registerTemplate call.
-        request.setLocation(rit.getImageLocation());   // -> should be a URL for us
+        // -> we redefine the architecture field to hold:
+        // "format:zonename:osTypeName",
+        // these are the bare minimum that we need to call the cloud
+        // registerTemplate call.
+        request.setLocation(rit.getImageLocation()); // -> should be a URL for
+                                                     // us
         request.setName(rit.getName());
         request.setDescription(rit.getDescription());
         request.setArchitecture(rit.getArchitecture());
@@ -1190,7 +1195,8 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
      *
      * @param resetImageAttribute
      *
-     * @see <a href="http://docs.amazonwebservices.com/AWSEC2/2010-11-15/APIReference/index.html?ApiReference-query-ResetInstanceAttribute.html">ResetInstanceAttribute</a>
+     * @see <a
+     *      href="http://docs.amazonwebservices.com/AWSEC2/2010-11-15/APIReference/index.html?ApiReference-query-ResetInstanceAttribute.html">ResetInstanceAttribute</a>
      */
 
     public ResetImageAttributeResponse resetImageAttribute(ResetImageAttribute resetImageAttribute) {
@@ -1209,11 +1215,12 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
     }
 
     /**
-     *  ec2-run-instances
+     * ec2-run-instances
      *
      * @param runInstances
      *
-     * @see <a href="http://docs.amazonwebservices.com/AWSEC2/2010-11-15/APIReference/index.html?ApiReference-query-RunInstances.html">RunInstances</a>
+     * @see <a
+     *      href="http://docs.amazonwebservices.com/AWSEC2/2010-11-15/APIReference/index.html?ApiReference-query-RunInstances.html">RunInstances</a>
      */
     public RunInstancesResponse runInstances(RunInstances runInstances) {
         RunInstancesType rit = runInstances.getRunInstances();
@@ -1251,7 +1258,9 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
             GroupItemType[] items = gst.getItem();
             if (null != items) {
                 for (int i = 0; i < items.length; i++) {
-                    if (items[i].getGroupName() != null) // either SG-name or SG-id can be provided
+                    if (items[i].getGroupName() != null) // either SG-name or
+                                                         // SG-id can be
+                                                         // provided
                         request.addSecuritGroupName(items[i].getGroupName());
                     else
                         request.addSecuritGroupId(items[i].getGroupId());
@@ -1268,7 +1277,7 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
         // -> toEC2StartInstances
         InstanceIdSetType iist = sit.getInstancesSet();
         InstanceIdType[] items = iist.getItem();
-        if (null != items) {  // -> should not be empty
+        if (null != items) { // -> should not be empty
             for (int i = 0; i < items.length; i++)
                 request.addInstanceId(items[i].getInstanceId());
         }
@@ -1283,7 +1292,7 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
         // -> toEC2StopInstances
         InstanceIdSetType iist = sit.getInstancesSet();
         InstanceIdType[] items = iist.getItem();
-        if (null != items) {  // -> should not be empty
+        if (null != items) { // -> should not be empty
             for (int i = 0; i < items.length; i++)
                 request.addInstanceId(items[i].getInstanceId());
         }
@@ -1294,9 +1303,10 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
     }
 
     /**
-     * Mapping this to the destroyVirtualMachine cloud API concept.
-     * This makes sense since when considering the rebootInstances function.   In reboot
-     * any terminated instances are left alone.   We will do the same with destroyed instances.
+     * Mapping this to the destroyVirtualMachine cloud API concept. This makes
+     * sense since when considering the rebootInstances function. In reboot any
+     * terminated instances are left alone. We will do the same with destroyed
+     * instances.
      */
     public TerminateInstancesResponse terminateInstances(TerminateInstances terminateInstances) {
         EC2StopInstances request = new EC2StopInstances();
@@ -1305,7 +1315,7 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
         // -> toEC2StopInstances
         InstanceIdSetType iist = sit.getInstancesSet();
         InstanceIdType[] items = iist.getItem();
-        if (null != items) {  // -> should not be empty
+        if (null != items) { // -> should not be empty
             for (int i = 0; i < items.length; i++)
                 request.addInstanceId(items[i].getInstanceId());
         }
@@ -1794,7 +1804,8 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
             param3.setStatus(vol.getState());
             param3.setVolumeType("standard");
 
-            // -> CloudStack seems to have issues with timestamp formats so just in case
+            // -> CloudStack seems to have issues with timestamp formats so just
+            // in case
             Calendar cal = EC2RestAuth.parseDateString(vol.getCreated());
             if (cal == null) {
                 cal = Calendar.getInstance();
@@ -1864,7 +1875,8 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
 
             ReservationInfoType param3 = new ReservationInfoType();
 
-            param3.setReservationId(inst.getId());   // -> an id we could track down if needed
+            param3.setReservationId(inst.getId()); // -> an id we could track
+                                                   // down if needed
             param3.setOwnerId(ownerId);
             param3.setRequesterId("");
 
@@ -1914,7 +1926,7 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
             Calendar cal = inst.getCreated();
             if (null == cal) {
                 cal = Calendar.getInstance();
-//                 cal.set( 1970, 1, 1 );
+                // cal.set( 1970, 1, 1 );
             }
             param7.setLaunchTime(cal);
 
@@ -1931,8 +1943,8 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
             param7.setMonitoring(param12);
             param7.setSubnetId("");
             param7.setVpcId("");
-//            String ipAddr = inst.getPrivateIpAddress();
-//            param7.setPrivateIpAddress((null != ipAddr ? ipAddr : ""));
+            // String ipAddr = inst.getPrivateIpAddress();
+            // param7.setPrivateIpAddress((null != ipAddr ? ipAddr : ""));
             param7.setPrivateIpAddress(inst.getPrivateIpAddress());
             param7.setIpAddress(inst.getIpAddress());
 
@@ -1977,7 +1989,8 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
             DescribeAddressesResponseItemType item = new DescribeAddressesResponseItemType();
             item.setPublicIp(addr.getIpAddress());
             item.setInstanceId(addr.getAssociatedInstanceId());
-            item.setDomain("standard"); // Since VPC is not supported by AWSAPI default to 'standard'
+            item.setDomain("standard"); // Since VPC is not supported by AWSAPI
+                                        // default to 'standard'
             items.add(item);
         }
         DescribeAddressesResponseInfoType descAddrRespInfoType = new DescribeAddressesResponseInfoType();
@@ -2040,8 +2053,8 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
     }
 
     /**
-     * Map our cloud state values into what Amazon defines.
-     * Where are the values that can be returned by our cloud api defined?
+     * Map our cloud state values into what Amazon defines. Where are the values
+     * that can be returned by our cloud api defined?
      *
      * @param cloudState
      * @return
@@ -2240,7 +2253,8 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
             param7.setProductCodes(param9);
 
             param7.setInstanceType(inst.getServiceOffering());
-            // -> CloudStack seems to have issues with timestamp formats so just in case
+            // -> CloudStack seems to have issues with timestamp formats so just
+            // in case
             Calendar cal = inst.getCreated();
             if (null == cal) {
                 cal = Calendar.getInstance();
@@ -2336,7 +2350,8 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
 
         Calendar cal = Calendar.getInstance();
 
-        // -> if the instanceId was not given in the request then we have no way to get it
+        // -> if the instanceId was not given in the request then we have no way
+        // to get it
         param1.setVolumeId(engineResponse.getId().toString());
         param1.setInstanceId(engineResponse.getInstanceId().toString());
         param1.setDevice(engineResponse.getDevice());
@@ -2352,7 +2367,8 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
         DetachVolumeResponse response = new DetachVolumeResponse();
         DetachVolumeResponseType param1 = new DetachVolumeResponseType();
         Calendar cal = Calendar.getInstance();
-        cal.set(1970, 1, 1);   // return one value, Unix Epoch, what else can we return?
+        cal.set(1970, 1, 1); // return one value, Unix Epoch, what else can we
+                             // return?
 
         param1.setVolumeId(engineResponse.getId().toString());
         param1.setInstanceId((null == engineResponse.getInstanceId() ? "" : engineResponse.getInstanceId().toString()));
@@ -2380,13 +2396,14 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
         if (null != engineResponse.getState())
             param1.setStatus(engineResponse.getState());
         else
-            param1.setStatus("");  // ToDo - throw an Soap Fault
+            param1.setStatus(""); // ToDo - throw an Soap Fault
 
-        // -> CloudStack seems to have issues with timestamp formats so just in case
+        // -> CloudStack seems to have issues with timestamp formats so just in
+        // case
         Calendar cal = EC2RestAuth.parseDateString(engineResponse.getCreated());
         if (null == cal) {
             cal = Calendar.getInstance();
-//             cal.set( 1970, 1, 1 );
+            // cal.set( 1970, 1, 1 );
         }
         param1.setCreateTime(cal);
 
@@ -2403,7 +2420,7 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
         if (null != engineResponse.getState())
             param1.set_return(true);
         else
-            param1.set_return(false);  // ToDo - supposed to return an error
+            param1.set_return(false); // ToDo - supposed to return an error
 
         param1.setRequestId(UUID.randomUUID().toString());
         response.setDeleteVolumeResponse(param1);
@@ -2432,15 +2449,17 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
                 param3.setStatus("pending");
                 param3.setProgress("66%");
             } else {
-                // if we see anything besides: backedup/creating/backingup, we assume error
+                // if we see anything besides: backedup/creating/backingup, we
+                // assume error
                 param3.setStatus("error");
                 param3.setProgress("0%");
             }
-//             param3.setStatus( snap.getState());
+            // param3.setStatus( snap.getState());
 
             String ownerId = snap.getDomainId() + ":" + snap.getAccountName();
 
-            // -> CloudStack seems to have issues with timestamp formats so just in case
+            // -> CloudStack seems to have issues with timestamp formats so just
+            // in case
             Calendar cal = snap.getCreated();
             if (null == cal) {
                 cal = Calendar.getInstance();
@@ -2489,7 +2508,8 @@ public class EC2SoapServiceImpl implements AmazonEC2SkeletonInterface {
         param1.setVolumeId(engineResponse.getVolumeId().toString());
         param1.setStatus("completed");
 
-        // -> CloudStack seems to have issues with timestamp formats so just in case
+        // -> CloudStack seems to have issues with timestamp formats so just in
+        // case
         Calendar cal = engineResponse.getCreated();
         if (null == cal) {
             cal = Calendar.getInstance();

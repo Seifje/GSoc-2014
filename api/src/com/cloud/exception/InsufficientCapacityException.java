@@ -39,18 +39,18 @@ public abstract class InsufficientCapacityException extends CloudException {
     }
 
     /**
-     * @return scope where we are insufficient.  The possible classes are
-     *         Host, StoragePool, Cluster, Pod, DataCenter, NetworkConfiguration.
+     * @return scope where we are insufficient. The possible classes are Host,
+     *         StoragePool, Cluster, Pod, DataCenter, NetworkConfiguration.
      */
     public Class<?> getScope() {
         return scope;
     }
 
     /**
-     * @return the id of the object that it is insufficient in.  Note that this method is
-     *         marked such that if the id is not set, then it will throw NullPointerException.
-     *         This is intended as you should check to see if the Scope is present before
-     *         accessing this method.
+     * @return the id of the object that it is insufficient in. Note that this
+     *         method is marked such that if the id is not set, then it will
+     *         throw NullPointerException. This is intended as you should check
+     *         to see if the Scope is present before accessing this method.
      */
     public long getId() {
         return id;

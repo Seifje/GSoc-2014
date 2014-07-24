@@ -28,15 +28,14 @@ import com.cloud.utils.net.NetUtils;
 /**
  * FirewallRuleTO transfers a port range for an ip to be opened.
  *
- * There are essentially three states transferred with each state.
- *      sent multiple times to the destination.  If the rule is not on
- *   2. alreadyAdded - the rule has been successfully added before.  Rules
- *      in this state are sent for completeness and optimization.
- *      If the rule already exists on the destination, the destination should
- *      reply the rule is successfully applied.
+ * There are essentially three states transferred with each state. sent multiple
+ * times to the destination. If the rule is not on 2. alreadyAdded - the rule
+ * has been successfully added before. Rules in this state are sent for
+ * completeness and optimization. If the rule already exists on the destination,
+ * the destination should reply the rule is successfully applied.
  *
- *   - srcPortRange: port range to open.
- *   - protocol: protocol to open for.  Usually tcp and udp.
+ * - srcPortRange: port range to open. - protocol: protocol to open for. Usually
+ * tcp and udp.
  *
  */
 public class FirewallRuleTO implements InternalIdentity {
@@ -59,8 +58,8 @@ public class FirewallRuleTO implements InternalIdentity {
     protected FirewallRuleTO() {
     }
 
-    public FirewallRuleTO(long id, String srcIp, String protocol, Integer srcPortStart, Integer srcPortEnd, boolean revoked, boolean alreadyAdded,
-            FirewallRule.Purpose purpose, List<String> sourceCidr, Integer icmpType, Integer icmpCode) {
+    public FirewallRuleTO(long id, String srcIp, String protocol, Integer srcPortStart, Integer srcPortEnd, boolean revoked, boolean alreadyAdded, FirewallRule.Purpose purpose,
+            List<String> sourceCidr, Integer icmpType, Integer icmpCode) {
         this(id, null, srcIp, protocol, srcPortStart, srcPortEnd, revoked, alreadyAdded, purpose, sourceCidr, icmpType, icmpCode);
     }
 
@@ -96,113 +95,42 @@ public class FirewallRuleTO implements InternalIdentity {
     }
 
     public FirewallRuleTO(FirewallRule rule, String srcVlanTag, String srcIp) {
-        this(rule.getId(),
-            srcVlanTag,
-            srcIp,
-            rule.getProtocol(),
-            rule.getSourcePortStart(),
-            rule.getSourcePortEnd(),
-            rule.getState() == State.Revoke,
-            rule.getState() == State.Active,
-            rule.getPurpose(),
-            rule.getSourceCidrList(),
-            rule.getIcmpType(),
-            rule.getIcmpCode());
+        this(rule.getId(), srcVlanTag, srcIp, rule.getProtocol(), rule.getSourcePortStart(), rule.getSourcePortEnd(), rule.getState() == State.Revoke,
+                rule.getState() == State.Active, rule.getPurpose(), rule.getSourceCidrList(), rule.getIcmpType(), rule.getIcmpCode());
     }
 
     public FirewallRuleTO(FirewallRule rule, String srcIp) {
-        this(rule.getId(),
-            null,
-            srcIp,
-            rule.getProtocol(),
-            rule.getSourcePortStart(),
-            rule.getSourcePortEnd(),
-            rule.getState() == State.Revoke,
-            rule.getState() == State.Active,
-            rule.getPurpose(),
-            rule.getSourceCidrList(),
-            rule.getIcmpType(),
-            rule.getIcmpCode());
+        this(rule.getId(), null, srcIp, rule.getProtocol(), rule.getSourcePortStart(), rule.getSourcePortEnd(), rule.getState() == State.Revoke, rule.getState() == State.Active,
+                rule.getPurpose(), rule.getSourceCidrList(), rule.getIcmpType(), rule.getIcmpCode());
     }
 
     public FirewallRuleTO(FirewallRule rule, String srcVlanTag, String srcIp, FirewallRule.Purpose purpose) {
-        this(rule.getId(),
-            srcVlanTag,
-            srcIp,
-            rule.getProtocol(),
-            rule.getSourcePortStart(),
-            rule.getSourcePortEnd(),
-            rule.getState() == State.Revoke,
-            rule.getState() == State.Active,
-            purpose,
-            rule.getSourceCidrList(),
-            rule.getIcmpType(),
-            rule.getIcmpCode());
+        this(rule.getId(), srcVlanTag, srcIp, rule.getProtocol(), rule.getSourcePortStart(), rule.getSourcePortEnd(), rule.getState() == State.Revoke,
+                rule.getState() == State.Active, purpose, rule.getSourceCidrList(), rule.getIcmpType(), rule.getIcmpCode());
     }
 
     public FirewallRuleTO(FirewallRule rule, String srcVlanTag, String srcIp, FirewallRule.Purpose purpose, FirewallRule.TrafficType trafficType) {
-        this(rule.getId(),
-            srcVlanTag,
-            srcIp,
-            rule.getProtocol(),
-            rule.getSourcePortStart(),
-            rule.getSourcePortEnd(),
-            rule.getState() == State.Revoke,
-            rule.getState() == State.Active,
-            purpose,
-            rule.getSourceCidrList(),
-            rule.getIcmpType(),
-            rule.getIcmpCode());
+        this(rule.getId(), srcVlanTag, srcIp, rule.getProtocol(), rule.getSourcePortStart(), rule.getSourcePortEnd(), rule.getState() == State.Revoke,
+                rule.getState() == State.Active, purpose, rule.getSourceCidrList(), rule.getIcmpType(), rule.getIcmpCode());
         this.trafficType = trafficType;
     }
 
-    public FirewallRuleTO(FirewallRule rule, String srcVlanTag, String srcIp, FirewallRule.Purpose purpose, FirewallRule.TrafficType trafficType,
-            boolean defaultEgressPolicy) {
-        this(rule.getId(),
-            srcVlanTag,
-            srcIp,
-            rule.getProtocol(),
-            rule.getSourcePortStart(),
-            rule.getSourcePortEnd(),
-            rule.getState() == State.Revoke,
-            rule.getState() == State.Active,
-            purpose,
-            rule.getSourceCidrList(),
-            rule.getIcmpType(),
-            rule.getIcmpCode());
+    public FirewallRuleTO(FirewallRule rule, String srcVlanTag, String srcIp, FirewallRule.Purpose purpose, FirewallRule.TrafficType trafficType, boolean defaultEgressPolicy) {
+        this(rule.getId(), srcVlanTag, srcIp, rule.getProtocol(), rule.getSourcePortStart(), rule.getSourcePortEnd(), rule.getState() == State.Revoke,
+                rule.getState() == State.Active, purpose, rule.getSourceCidrList(), rule.getIcmpType(), rule.getIcmpCode());
         this.trafficType = trafficType;
         this.defaultEgressPolicy = defaultEgressPolicy;
     }
 
     public FirewallRuleTO(FirewallRule rule, String srcVlanTag, String srcIp, FirewallRule.Purpose purpose, boolean revokeState, boolean alreadyAdded) {
-        this(rule.getId(),
-            srcVlanTag,
-            srcIp,
-            rule.getProtocol(),
-            rule.getSourcePortStart(),
-            rule.getSourcePortEnd(),
-            revokeState,
-            alreadyAdded,
-            purpose,
-            rule.getSourceCidrList(),
-            rule.getIcmpType(),
-            rule.getIcmpCode());
+        this(rule.getId(), srcVlanTag, srcIp, rule.getProtocol(), rule.getSourcePortStart(), rule.getSourcePortEnd(), revokeState, alreadyAdded, purpose, rule.getSourceCidrList(),
+                rule.getIcmpType(), rule.getIcmpCode());
     }
 
     public FirewallRuleTO(FirewallRule rule, String guestVlanTag, FirewallRule.TrafficType trafficType, String guestCidr, boolean defaultEgressPolicy,
             FirewallRule.FirewallRuleType type) {
-        this(rule.getId(),
-            guestVlanTag,
-            null,
-            rule.getProtocol(),
-            rule.getSourcePortStart(),
-            rule.getSourcePortEnd(),
-            rule.getState() == State.Revoke,
-            rule.getState() == State.Active,
-            rule.getPurpose(),
-            rule.getSourceCidrList(),
-            rule.getIcmpType(),
-            rule.getIcmpCode());
+        this(rule.getId(), guestVlanTag, null, rule.getProtocol(), rule.getSourcePortStart(), rule.getSourcePortEnd(), rule.getState() == State.Revoke,
+                rule.getState() == State.Active, rule.getPurpose(), rule.getSourceCidrList(), rule.getIcmpType(), rule.getIcmpCode());
         this.trafficType = trafficType;
         this.defaultEgressPolicy = defaultEgressPolicy;
         this.guestCidr = guestCidr;

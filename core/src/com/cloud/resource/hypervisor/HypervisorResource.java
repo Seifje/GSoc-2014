@@ -30,23 +30,29 @@ import com.cloud.resource.ServerResource;
  */
 public interface HypervisorResource extends ServerResource {
     /**
-     * Starts a VM.  All information regarding the VM
-     * are carried within the command.
-     * @param cmd carries all the information necessary to start a VM
+     * Starts a VM. All information regarding the VM are carried within the
+     * command.
+     *
+     * @param cmd
+     *            carries all the information necessary to start a VM
      * @return Start2Answer answer.
      */
     StartAnswer execute(StartCommand cmd);
 
     /**
-     * Stops a VM.  Must return true as long as the VM does not exist.
-     * @param cmd information necessary to identify the VM to stop.
+     * Stops a VM. Must return true as long as the VM does not exist.
+     *
+     * @param cmd
+     *            information necessary to identify the VM to stop.
      * @return StopAnswer
      */
     StopAnswer execute(StopCommand cmd);
 
     /**
      * Reboots a VM.
-     * @param cmd information necessary to identify the VM to reboot.
+     *
+     * @param cmd
+     *            information necessary to identify the VM to reboot.
      * @return RebootAnswer
      */
     RebootAnswer execute(RebootCommand cmd);

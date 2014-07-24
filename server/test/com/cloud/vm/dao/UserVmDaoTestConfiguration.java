@@ -30,9 +30,7 @@ import org.springframework.core.type.filter.TypeFilter;
 import org.apache.cloudstack.test.utils.SpringUtils;
 
 @Configuration
-@ComponentScan(basePackageClasses = {UserVmDaoImpl.class},
-               includeFilters = {@Filter(value = UserVmDaoTestConfiguration.Library.class, type = FilterType.CUSTOM)},
-               useDefaultFilters = false)
+@ComponentScan(basePackageClasses = {UserVmDaoImpl.class}, includeFilters = {@Filter(value = UserVmDaoTestConfiguration.Library.class, type = FilterType.CUSTOM)}, useDefaultFilters = false)
 public class UserVmDaoTestConfiguration {
     public static class Library implements TypeFilter {
 

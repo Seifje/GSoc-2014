@@ -191,9 +191,9 @@ public class TrafficSentinelResource implements ServerResource {
         DirectNetworkUsageAnswer answer = new DirectNetworkUsageAnswer(cmd);
 
         try {
-            //Direct Network Usage
+            // Direct Network Usage
             URL trafficSentinel;
-            //Use Global include/exclude zones if there are no per TS zones
+            // Use Global include/exclude zones if there are no per TS zones
             if (_inclZones == null) {
                 _inclZones = cmd.getIncludeZones();
             }
@@ -203,17 +203,16 @@ public class TrafficSentinelResource implements ServerResource {
             }
 
             try {
-                //Query traffic Sentinel
-                trafficSentinel =
-                    new URL(_url + "/inmsf/Query?script=" + URLEncoder.encode(getScript(cmd.getPublicIps(), cmd.getStart(), cmd.getEnd()), "UTF-8") +
-                        "&authenticate=basic&resultFormat=txt");
+                // Query traffic Sentinel
+                trafficSentinel = new URL(_url + "/inmsf/Query?script=" + URLEncoder.encode(getScript(cmd.getPublicIps(), cmd.getStart(), cmd.getEnd()), "UTF-8")
+                        + "&authenticate=basic&resultFormat=txt");
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(trafficSentinel.openStream()));
 
                 String inputLine;
 
                 while ((inputLine = in.readLine()) != null) {
-                    //Parse the script output
+                    // Parse the script output
                     StringTokenizer st = new StringTokenizer(inputLine, ",");
                     if (st.countTokens() == 3) {
                         String publicIp = st.nextToken();

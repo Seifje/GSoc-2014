@@ -75,7 +75,7 @@ public class BaremetalDhcpdResource extends BaremetalDhcpResourceBase {
             }
             scp.put(prepareDhcpdScriptPath, "/usr/bin/", "0755");
 
-            //TODO: tooooooooooooooo ugly here!!!
+            // TODO: tooooooooooooooo ugly here!!!
             String[] ips = _ip.split("\\.");
             ips[3] = "0";
             StringBuffer buf = new StringBuffer();
@@ -118,8 +118,7 @@ public class BaremetalDhcpdResource extends BaremetalDhcpResourceBase {
             if (sshConnection == null) {
                 return new Answer(cmd, false, "ssh authenticate failed");
             }
-            String addDhcp =
-                String.format("python /usr/bin/dhcpd_edithosts.py %1$s %2$s %3$s %4$s %5$s %6$s", cmd.getVmMac(), cmd.getVmIpAddress(), cmd.getVmName(), cmd.getDns(),
+            String addDhcp = String.format("python /usr/bin/dhcpd_edithosts.py %1$s %2$s %3$s %4$s %5$s %6$s", cmd.getVmMac(), cmd.getVmIpAddress(), cmd.getVmName(), cmd.getDns(),
                     cmd.getGateway(), cmd.getNextServer());
             if (!SSHCmdHelper.sshExecuteCmd(sshConnection, addDhcp)) {
                 return new Answer(cmd, false, "add Dhcp entry failed");

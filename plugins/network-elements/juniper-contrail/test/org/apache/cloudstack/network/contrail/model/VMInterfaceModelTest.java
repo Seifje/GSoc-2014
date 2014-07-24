@@ -16,6 +16,7 @@
 // under the License.
 
 package org.apache.cloudstack.network.contrail.model;
+
 import java.util.UUID;
 import java.io.IOException;
 
@@ -45,15 +46,14 @@ import org.junit.Test;
 import junit.framework.TestCase;
 
 public class VMInterfaceModelTest extends TestCase {
-    private static final Logger s_logger =
-        Logger.getLogger(VMInterfaceModelTest.class);
+    private static final Logger s_logger = Logger.getLogger(VMInterfaceModelTest.class);
 
     @Test
     public void testCreateVMInterface() throws IOException {
 
         String uuid;
         ContrailManagerImpl contrailMgr = mock(ContrailManagerImpl.class);
-        ModelController controller      = mock(ModelController.class);
+        ModelController controller = mock(ModelController.class);
         ApiConnector api = new ApiConnectorMock(null, 0);
         when(controller.getManager()).thenReturn(contrailMgr);
         when(controller.getApiAccessor()).thenReturn(api);
@@ -74,8 +74,7 @@ public class VMInterfaceModelTest extends TestCase {
         when(contrailMgr.getCanonicalName(network)).thenReturn("testnetwork");
         when(contrailMgr.getProjectId(network.getDomainId(), network.getAccountId())).thenReturn("testProjectId");
 
-        VirtualNetworkModel vnModel = new VirtualNetworkModel(network, UUID.randomUUID().toString(),
-                "test", TrafficType.Guest);
+        VirtualNetworkModel vnModel = new VirtualNetworkModel(network, UUID.randomUUID().toString(), "test", TrafficType.Guest);
         vnModel.build(controller, network);
         try {
             vnModel.update(controller);
@@ -89,7 +88,7 @@ public class VMInterfaceModelTest extends TestCase {
         when(vm.getState()).thenReturn(VirtualMachine.State.Running);
         when(vm.getDomainId()).thenReturn(10L);
         when(vm.getAccountId()).thenReturn(42L);
-        UserVmDao VmDao      = mock(UserVmDao.class);
+        UserVmDao VmDao = mock(UserVmDao.class);
         when(VmDao.findById(anyLong())).thenReturn(null);
         when(controller.getVmDao()).thenReturn(VmDao);
 
@@ -134,7 +133,7 @@ public class VMInterfaceModelTest extends TestCase {
 
         // Verify virtual-machine-interface creation.
         try {
-            VirtualMachineInterface vmi = (VirtualMachineInterface) api.findById(VirtualMachineInterface.class, vmiModel.getUuid());
+            VirtualMachineInterface vmi = (VirtualMachineInterface)api.findById(VirtualMachineInterface.class, vmiModel.getUuid());
             assertNotNull(vmi);
         } catch (Exception ex) {
             fail("vm-interface verify failed ");

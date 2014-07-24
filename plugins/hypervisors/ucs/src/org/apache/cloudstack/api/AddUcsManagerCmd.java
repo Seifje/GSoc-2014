@@ -32,8 +32,7 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.ucs.manager.UcsManager;
 import com.cloud.user.Account;
 
-@APICommand(name = "addUcsManager", description = "Adds a Ucs manager", responseObject = UcsManagerResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "addUcsManager", description = "Adds a Ucs manager", responseObject = UcsManagerResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class AddUcsManagerCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(AddUcsManagerCmd.class);
 
@@ -56,8 +55,8 @@ public class AddUcsManagerCmd extends BaseCmd {
     private String password;
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException, NetworkRuleConflictException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
+            NetworkRuleConflictException {
         try {
             UcsManagerResponse rsp = mgr.addUcsManager(this);
             rsp.setObjectName("ucsmanager");

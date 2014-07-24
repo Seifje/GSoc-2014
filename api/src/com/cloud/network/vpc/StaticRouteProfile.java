@@ -16,7 +16,6 @@
 // under the License.
 package com.cloud.network.vpc;
 
-
 public class StaticRouteProfile implements StaticRoute {
     private long id;
     private String uuid;
@@ -73,7 +72,7 @@ public class StaticRouteProfile implements StaticRoute {
 
     @Override
     public Long getVpcId() {
-       return vpcId;
+        return vpcId;
     }
 
     @Override

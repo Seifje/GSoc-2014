@@ -44,43 +44,28 @@ import com.cloud.utils.StringUtils;
 import com.cloud.utils.net.NetUtils;
 import com.cloud.vm.VirtualMachine;
 
-@APICommand(name = "assignToLoadBalancerRule",
-            description = "Assigns virtual machine or a list of virtual machines to a load balancer rule.",
-            responseObject = SuccessResponse.class,
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "assignToLoadBalancerRule", description = "Assigns virtual machine or a list of virtual machines to a load balancer rule.", responseObject = SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class AssignToLoadBalancerRuleCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(AssignToLoadBalancerRuleCmd.class.getName());
 
     private static final String s_name = "assigntoloadbalancerruleresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = FirewallRuleResponse.class,
-               required = true,
-               description = "the ID of the load balancer rule")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = FirewallRuleResponse.class, required = true, description = "the ID of the load balancer rule")
     private Long id;
 
-    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_IDS,
-               type = CommandType.LIST,
-               collectionType = CommandType.UUID,
-               entityType = UserVmResponse.class,
-               description = "the list of IDs of the virtual machine that are being assigned to the load balancer rule(i.e. virtualMachineIds=1,2,3)")
+    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_IDS, type = CommandType.LIST, collectionType = CommandType.UUID, entityType = UserVmResponse.class, description = "the list of IDs of the virtual machine that are being assigned to the load balancer rule(i.e. virtualMachineIds=1,2,3)")
     private List<Long> virtualMachineIds;
 
-    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID_IP,
-            type = CommandType.MAP,
-            description = "VM ID and IP map, vmidipmap[0].vmid=1 vmidipmap[0].ip=10.1.1.75",
-            since = "4.4")
+    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID_IP, type = CommandType.MAP, description = "VM ID and IP map, vmidipmap[0].vmid=1 vmidipmap[0].ip=10.1.1.75", since = "4.4")
     private Map vmIdIpMap;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getLoadBalancerId() {
         return id;
@@ -94,9 +79,9 @@ public class AssignToLoadBalancerRuleCmd extends BaseAsyncCmd {
         return vmIdIpMap;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -107,7 +92,9 @@ public class AssignToLoadBalancerRuleCmd extends BaseAsyncCmd {
     public long getEntityOwnerId() {
         LoadBalancer lb = _entityMgr.findById(LoadBalancer.class, getLoadBalancerId());
         if (lb == null) {
-            return Account.ACCOUNT_ID_SYSTEM; // bad id given, parent this command to SYSTEM so ERROR events are tracked
+            return Account.ACCOUNT_ID_SYSTEM; // bad id given, parent this
+            // command to SYSTEM so ERROR
+            // events are tracked
         }
         return lb.getAccountId();
     }
@@ -121,7 +108,6 @@ public class AssignToLoadBalancerRuleCmd extends BaseAsyncCmd {
     public String getEventDescription() {
         return "applying instances for load balancer: " + getLoadBalancerId() + " (ids: " + StringUtils.join(getVirtualMachineIds(), ",") + ")";
     }
-
 
     public Map<Long, List<String>> getVmIdIpListMap() {
         Map<Long, List<String>> vmIdIpsMap = new HashMap<Long, List<String>>();
@@ -138,10 +124,9 @@ public class AssignToLoadBalancerRuleCmd extends BaseAsyncCmd {
                     throw new InvalidParameterValueException("Unable to find virtual machine ID: " + vmId);
                 }
 
-                //check wether the given ip is valid ip or not
+                // check wether the given ip is valid ip or not
                 if (vmIp == null || !NetUtils.isValidIp(vmIp)) {
-                    throw new InvalidParameterValueException("Invalid ip address "+ vmIp +" passed in vmidipmap for " +
-                            "vmid " + vmId);
+                    throw new InvalidParameterValueException("Invalid ip address " + vmIp + " passed in vmidipmap for " + "vmid " + vmId);
                 }
                 Long longVmId = lbvm.getId();
 

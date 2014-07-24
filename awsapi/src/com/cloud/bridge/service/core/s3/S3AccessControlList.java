@@ -20,7 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An S3AccessControlList is simply a holder of grants depicted as instances of S3Grant.
+ * An S3AccessControlList is simply a holder of grants depicted as instances of
+ * S3Grant.
  */
 public class S3AccessControlList {
     private List<S3Grant> list = new ArrayList<S3Grant>();

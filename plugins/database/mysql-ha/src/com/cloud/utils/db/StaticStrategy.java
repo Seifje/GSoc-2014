@@ -45,8 +45,8 @@ public class StaticStrategy implements BalanceStrategy {
     }
 
     @Override
-    public ConnectionImpl pickConnection(LoadBalancingConnectionProxy proxy, List<String> configuredHosts, Map<String, ConnectionImpl> liveConnections,
-        long[] responseTimes, int numRetries) throws SQLException {
+    public ConnectionImpl pickConnection(LoadBalancingConnectionProxy proxy, List<String> configuredHosts, Map<String, ConnectionImpl> liveConnections, long[] responseTimes,
+            int numRetries) throws SQLException {
         int numHosts = configuredHosts.size();
 
         SQLException ex = null;
@@ -65,7 +65,8 @@ public class StaticStrategy implements BalanceStrategy {
                 throw SQLError.createSQLException("No hosts configured", null);
             }
 
-            String hostPortSpec = whiteList.get(0);     //Always take the first host
+            String hostPortSpec = whiteList.get(0); // Always take the first
+                                                    // host
 
             ConnectionImpl conn = liveConnections.get(hostPortSpec);
 

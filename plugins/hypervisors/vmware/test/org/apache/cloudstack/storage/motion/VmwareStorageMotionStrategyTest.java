@@ -232,9 +232,7 @@ public class VmwareStorageMotionStrategyTest {
     }
 
     @Configuration
-    @ComponentScan(basePackageClasses = {VmwareStorageMotionStrategy.class},
-                   includeFilters = {@Filter(value = TestConfiguration.Library.class, type = FilterType.CUSTOM)},
-                   useDefaultFilters = false)
+    @ComponentScan(basePackageClasses = {VmwareStorageMotionStrategy.class}, includeFilters = {@Filter(value = TestConfiguration.Library.class, type = FilterType.CUSTOM)}, useDefaultFilters = false)
     public static class TestConfiguration extends SpringUtils.CloudStackTestConfiguration {
 
         @Bean

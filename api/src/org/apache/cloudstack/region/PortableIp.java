@@ -23,10 +23,12 @@ import org.apache.cloudstack.api.InternalIdentity;
 public interface PortableIp extends InternalIdentity {
 
     enum State {
-        Allocating, // The IP Address is being propagated to other network elements and is not ready for use yet.
-        Allocated,  // The IP address is in used.
-        Releasing,  // The IP address is being released for other network elements and is not ready for allocation.
-        Free        // The IP address is ready to be allocated.
+        Allocating, // The IP Address is being propagated to other network
+        // elements and is not ready for use yet.
+        Allocated, // The IP address is in used.
+        Releasing, // The IP address is being released for other network
+        // elements and is not ready for allocation.
+        Free // The IP address is ready to be allocated.
     }
 
     Long getAllocatedToAccountId();

@@ -24,8 +24,8 @@ import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 /**
- * CSExceptionErrorCode lists the CloudStack error codes that correspond
- * to a each exception thrown by the CloudStack API.
+ * CSExceptionErrorCode lists the CloudStack error codes that correspond to a
+ * each exception thrown by the CloudStack API.
  */
 
 public class CSExceptionErrorCode {
@@ -69,7 +69,8 @@ public class CSExceptionErrorCode {
             ExceptionErrorCodeMap.put("com.cloud.exception.RequestLimitException", 4545);
 
             // Have a special error code for ServerApiException when it is
-            // thrown in a standalone manner when failing to detect any of the above
+            // thrown in a standalone manner when failing to detect any of the
+            // above
             // standard exceptions.
             ExceptionErrorCodeMap.put("org.apache.cloudstack.api.ServerApiException", 9999);
         } catch (Exception e) {

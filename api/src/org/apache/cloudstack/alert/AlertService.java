@@ -40,8 +40,7 @@ public interface AlertService {
         public static final AlertType ALERT_TYPE_CPU = new AlertType(Capacity.CAPACITY_TYPE_CPU, "ALERT.CPU", true);
         public static final AlertType ALERT_TYPE_STORAGE = new AlertType(Capacity.CAPACITY_TYPE_STORAGE, "ALERT.STORAGE", true);
         public static final AlertType ALERT_TYPE_STORAGE_ALLOCATED = new AlertType(Capacity.CAPACITY_TYPE_STORAGE_ALLOCATED, "ALERT.STORAGE.ALLOCATED", true);
-        public static final AlertType ALERT_TYPE_VIRTUAL_NETWORK_PUBLIC_IP = new AlertType(Capacity.CAPACITY_TYPE_VIRTUAL_NETWORK_PUBLIC_IP, "ALERT.NETWORK.PUBLICIP",
-            true);
+        public static final AlertType ALERT_TYPE_VIRTUAL_NETWORK_PUBLIC_IP = new AlertType(Capacity.CAPACITY_TYPE_VIRTUAL_NETWORK_PUBLIC_IP, "ALERT.NETWORK.PUBLICIP", true);
         public static final AlertType ALERT_TYPE_PRIVATE_IP = new AlertType(Capacity.CAPACITY_TYPE_PRIVATE_IP, "ALERT.NETWORK.PRIVATEIP", true);
         public static final AlertType ALERT_TYPE_SECONDARY_STORAGE = new AlertType(Capacity.CAPACITY_TYPE_SECONDARY_STORAGE, "ALERT.STORAGE.SECONDARY", true);
         public static final AlertType ALERT_TYPE_HOST = new AlertType((short)7, "ALERT.COMPUTE.HOST", true);

@@ -42,6 +42,7 @@ import common.asn1.Tag;
  *
  * <li>cspName: Specifies the name of the CSP.
  * </ul>
+ *
  * @see http://msdn.microsoft.com/en-us/library/cc226785.aspx
  */
 public class TSCspDataDetail extends Sequence {

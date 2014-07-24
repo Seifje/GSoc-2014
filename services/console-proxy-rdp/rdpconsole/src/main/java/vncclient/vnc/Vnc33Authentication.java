@@ -77,10 +77,10 @@ public class Vnc33Authentication extends OneTimeSwitch {
 
     /**
      * Read security type. If connection type is @see
-     * RfbConstants.CONNECTION_FAILED, then throw exception. If connection type is @see
-     * RfbConstants.NO_AUTH, then switch off this element. If connection type is @see
-     * RfbConstants.VNC_AUTH, then read challenge, send encoded password, and read
-     * authentication response.
+     * RfbConstants.CONNECTION_FAILED, then throw exception. If connection type
+     * is @see RfbConstants.NO_AUTH, then switch off this element. If connection
+     * type is @see RfbConstants.VNC_AUTH, then read challenge, send encoded
+     * password, and read authentication response.
      */
     private void stage0(ByteBuffer buf, Link link) {
         // At least 4 bytes are necessary
@@ -157,9 +157,9 @@ public class Vnc33Authentication extends OneTimeSwitch {
      * Encode password using DES encryption with given challenge.
      *
      * @param challenge
-     *          a random set of bytes.
+     *            a random set of bytes.
      * @param password
-     *          a password
+     *            a password
      * @return DES hash of password and challenge
      */
     public ByteBuffer encodePassword(ByteBuffer challenge, String password) {
@@ -196,10 +196,11 @@ public class Vnc33Authentication extends OneTimeSwitch {
      * bit. E.g. 01001100 will become 00110010.
      *
      * See also: http://www.vidarholen.net/contents/junk/vnc.html ,
-     * http://bytecrafter .blogspot.com/2010/09/des-encryption-as-used-in-vnc.html
+     * http://bytecrafter
+     * .blogspot.com/2010/09/des-encryption-as-used-in-vnc.html
      *
      * @param b
-     *          a byte
+     *            a byte
      * @return byte in reverse order
      */
     private static byte flipByte(byte b) {
@@ -265,7 +266,7 @@ public class Vnc33Authentication extends OneTimeSwitch {
         Element source = new MockSource("source") {
             {
                 bufs = ByteBuffer.convertByteArraysToByteBuffers(
-                        // Request authentication and send 16 byte challenge
+                // Request authentication and send 16 byte challenge
                         new byte[] {0, 0, 0, RfbConstants.VNC_AUTH, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16},
                         // Respond to challenge with AUTH_OK
                         new byte[] {0, 0, 0, RfbConstants.VNC_AUTH_OK});

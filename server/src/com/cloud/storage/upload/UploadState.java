@@ -46,17 +46,17 @@ public abstract class UploadState {
             getUploadListener().log("handleEvent, event type=" + event + ", curr state=" + getName(), Level.TRACE);
         }
         switch (event) {
-            case UPLOAD_ANSWER:
-                UploadAnswer answer = (UploadAnswer)eventObj;
-                return handleAnswer(answer);
-            case ABANDON_UPLOAD:
-                return handleAbort();
-            case TIMEOUT_CHECK:
-                Date now = new Date();
-                long update = now.getTime() - ul.getLastUpdated().getTime();
-                return handleTimeout(update);
-            case DISCONNECT:
-                return handleDisconnect();
+        case UPLOAD_ANSWER:
+            UploadAnswer answer = (UploadAnswer)eventObj;
+            return handleAnswer(answer);
+        case ABANDON_UPLOAD:
+            return handleAbort();
+        case TIMEOUT_CHECK:
+            Date now = new Date();
+            long update = now.getTime() - ul.getLastUpdated().getTime();
+            return handleTimeout(update);
+        case DISCONNECT:
+            return handleDisconnect();
         }
         return null;
     }

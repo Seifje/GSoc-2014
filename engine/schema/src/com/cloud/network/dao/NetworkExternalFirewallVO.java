@@ -31,8 +31,9 @@ import org.apache.cloudstack.api.InternalIdentity;
 import com.cloud.utils.db.GenericDao;
 
 /**
- * NetworkExternalFirewallVO contains information on the networks that are using external firewall
-  */
+ * NetworkExternalFirewallVO contains information on the networks that are using
+ * external firewall
+ */
 
 @Entity
 @Table(name = "network_external_firewall_device_map")

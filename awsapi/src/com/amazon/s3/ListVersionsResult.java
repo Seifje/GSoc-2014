@@ -25,15 +25,15 @@
 package com.amazon.s3;
 
 /**
-*  ListVersionsResult bean class
-*/
+ * ListVersionsResult bean class
+ */
 
 public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean {
-    /* This type was generated from the piece of schema that had
-            name = ListVersionsResult
-            Namespace URI = http://s3.amazonaws.com/doc/2006-03-01/
-            Namespace Prefix = ns1
-            */
+    /*
+     * This type was generated from the piece of schema that had name =
+     * ListVersionsResult Namespace URI =
+     * http://s3.amazonaws.com/doc/2006-03-01/ Namespace Prefix = ns1
+     */
 
     private static java.lang.String generatePrefix(java.lang.String namespace) {
         if (namespace.equals("http://s3.amazonaws.com/doc/2006-03-01/")) {
@@ -43,22 +43,23 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * field for Metadata
-    * This was an Array!
-    */
+     * field for Metadata This was an Array!
+     */
 
     protected com.amazon.s3.MetadataEntry[] localMetadata;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localMetadataTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.s3.MetadataEntry[]
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.s3.MetadataEntry[]
+     */
     public com.amazon.s3.MetadataEntry[] getMetadata() {
         return localMetadata;
     }
@@ -72,14 +73,16 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
     /**
      * Auto generated setter method
-     * @param param Metadata
+     * 
+     * @param param
+     *            Metadata
      */
     public void setMetadata(com.amazon.s3.MetadataEntry[] param) {
 
         validateMetadata(param);
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localMetadataTracker = true;
         } else {
             localMetadataTracker = false;
@@ -90,15 +93,17 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * Auto generated add method for the array for convenience
-    * @param param com.amazon.s3.MetadataEntry
-    */
+     * Auto generated add method for the array for convenience
+     * 
+     * @param param
+     *            com.amazon.s3.MetadataEntry
+     */
     public void addMetadata(com.amazon.s3.MetadataEntry param) {
         if (localMetadata == null) {
             localMetadata = new com.amazon.s3.MetadataEntry[] {};
         }
 
-        //update the setting tracker
+        // update the setting tracker
         localMetadataTracker = true;
 
         java.util.List list = org.apache.axis2.databinding.utils.ConverterUtil.toList(localMetadata);
@@ -108,23 +113,26 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * field for Name
-    */
+     * field for Name
+     */
 
     protected java.lang.String localName;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getName() {
         return localName;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Name
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Name
+     */
     public void setName(java.lang.String param) {
 
         this.localName = param;
@@ -132,23 +140,26 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * field for Prefix
-    */
+     * field for Prefix
+     */
 
     protected java.lang.String localPrefix;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getPrefix() {
         return localPrefix;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Prefix
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Prefix
+     */
     public void setPrefix(java.lang.String param) {
 
         this.localPrefix = param;
@@ -156,23 +167,26 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * field for KeyMarker
-    */
+     * field for KeyMarker
+     */
 
     protected java.lang.String localKeyMarker;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getKeyMarker() {
         return localKeyMarker;
     }
 
     /**
-       * Auto generated setter method
-       * @param param KeyMarker
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            KeyMarker
+     */
     public void setKeyMarker(java.lang.String param) {
 
         this.localKeyMarker = param;
@@ -180,23 +194,26 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * field for VersionIdMarker
-    */
+     * field for VersionIdMarker
+     */
 
     protected java.lang.String localVersionIdMarker;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getVersionIdMarker() {
         return localVersionIdMarker;
     }
 
     /**
-       * Auto generated setter method
-       * @param param VersionIdMarker
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            VersionIdMarker
+     */
     public void setVersionIdMarker(java.lang.String param) {
 
         this.localVersionIdMarker = param;
@@ -204,33 +221,37 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * field for NextKeyMarker
-    */
+     * field for NextKeyMarker
+     */
 
     protected java.lang.String localNextKeyMarker;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localNextKeyMarkerTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getNextKeyMarker() {
         return localNextKeyMarker;
     }
 
     /**
-       * Auto generated setter method
-       * @param param NextKeyMarker
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            NextKeyMarker
+     */
     public void setNextKeyMarker(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localNextKeyMarkerTracker = true;
         } else {
             localNextKeyMarkerTracker = false;
@@ -242,33 +263,37 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * field for NextVersionIdMarker
-    */
+     * field for NextVersionIdMarker
+     */
 
     protected java.lang.String localNextVersionIdMarker;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localNextVersionIdMarkerTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getNextVersionIdMarker() {
         return localNextVersionIdMarker;
     }
 
     /**
-       * Auto generated setter method
-       * @param param NextVersionIdMarker
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            NextVersionIdMarker
+     */
     public void setNextVersionIdMarker(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localNextVersionIdMarkerTracker = true;
         } else {
             localNextVersionIdMarkerTracker = false;
@@ -280,23 +305,26 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * field for MaxKeys
-    */
+     * field for MaxKeys
+     */
 
     protected int localMaxKeys;
 
     /**
-    * Auto generated getter method
-    * @return int
-    */
+     * Auto generated getter method
+     * 
+     * @return int
+     */
     public int getMaxKeys() {
         return localMaxKeys;
     }
 
     /**
-       * Auto generated setter method
-       * @param param MaxKeys
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            MaxKeys
+     */
     public void setMaxKeys(int param) {
 
         this.localMaxKeys = param;
@@ -304,33 +332,37 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * field for Delimiter
-    */
+     * field for Delimiter
+     */
 
     protected java.lang.String localDelimiter;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localDelimiterTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getDelimiter() {
         return localDelimiter;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Delimiter
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Delimiter
+     */
     public void setDelimiter(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localDelimiterTracker = true;
         } else {
             localDelimiterTracker = false;
@@ -342,23 +374,26 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * field for IsTruncated
-    */
+     * field for IsTruncated
+     */
 
     protected boolean localIsTruncated;
 
     /**
-    * Auto generated getter method
-    * @return boolean
-    */
+     * Auto generated getter method
+     * 
+     * @return boolean
+     */
     public boolean getIsTruncated() {
         return localIsTruncated;
     }
 
     /**
-       * Auto generated setter method
-       * @param param IsTruncated
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            IsTruncated
+     */
     public void setIsTruncated(boolean param) {
 
         this.localIsTruncated = param;
@@ -366,22 +401,23 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * field for ListVersionsResultChoice_type0
-    * This was an Array!
-    */
+     * field for ListVersionsResultChoice_type0 This was an Array!
+     */
 
     protected com.amazon.s3.ListVersionsResultChoice_type0[] localListVersionsResultChoice_type0;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localListVersionsResultChoice_type0Tracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.s3.ListVersionsResultChoice_type0[]
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.s3.ListVersionsResultChoice_type0[]
+     */
     public com.amazon.s3.ListVersionsResultChoice_type0[] getListVersionsResultChoice_type0() {
         return localListVersionsResultChoice_type0;
     }
@@ -395,14 +431,16 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
     /**
      * Auto generated setter method
-     * @param param ListVersionsResultChoice_type0
+     * 
+     * @param param
+     *            ListVersionsResultChoice_type0
      */
     public void setListVersionsResultChoice_type0(com.amazon.s3.ListVersionsResultChoice_type0[] param) {
 
         validateListVersionsResultChoice_type0(param);
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localListVersionsResultChoice_type0Tracker = true;
         } else {
             localListVersionsResultChoice_type0Tracker = false;
@@ -413,41 +451,43 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * Auto generated add method for the array for convenience
-    * @param param com.amazon.s3.ListVersionsResultChoice_type0
-    */
+     * Auto generated add method for the array for convenience
+     * 
+     * @param param
+     *            com.amazon.s3.ListVersionsResultChoice_type0
+     */
     public void addListVersionsResultChoice_type0(com.amazon.s3.ListVersionsResultChoice_type0 param) {
         if (localListVersionsResultChoice_type0 == null) {
             localListVersionsResultChoice_type0 = new com.amazon.s3.ListVersionsResultChoice_type0[] {};
         }
 
-        //update the setting tracker
+        // update the setting tracker
         localListVersionsResultChoice_type0Tracker = true;
 
         java.util.List list = org.apache.axis2.databinding.utils.ConverterUtil.toList(localListVersionsResultChoice_type0);
         list.add(param);
-        this.localListVersionsResultChoice_type0 =
-            (com.amazon.s3.ListVersionsResultChoice_type0[])list.toArray(new com.amazon.s3.ListVersionsResultChoice_type0[list.size()]);
+        this.localListVersionsResultChoice_type0 = (com.amazon.s3.ListVersionsResultChoice_type0[])list.toArray(new com.amazon.s3.ListVersionsResultChoice_type0[list.size()]);
 
     }
 
     /**
-    * field for CommonPrefixes
-    * This was an Array!
-    */
+     * field for CommonPrefixes This was an Array!
+     */
 
     protected com.amazon.s3.PrefixEntry[] localCommonPrefixes;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localCommonPrefixesTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.s3.PrefixEntry[]
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.s3.PrefixEntry[]
+     */
     public com.amazon.s3.PrefixEntry[] getCommonPrefixes() {
         return localCommonPrefixes;
     }
@@ -461,14 +501,16 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
     /**
      * Auto generated setter method
-     * @param param CommonPrefixes
+     * 
+     * @param param
+     *            CommonPrefixes
      */
     public void setCommonPrefixes(com.amazon.s3.PrefixEntry[] param) {
 
         validateCommonPrefixes(param);
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localCommonPrefixesTracker = true;
         } else {
             localCommonPrefixesTracker = false;
@@ -479,15 +521,17 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * Auto generated add method for the array for convenience
-    * @param param com.amazon.s3.PrefixEntry
-    */
+     * Auto generated add method for the array for convenience
+     * 
+     * @param param
+     *            com.amazon.s3.PrefixEntry
+     */
     public void addCommonPrefixes(com.amazon.s3.PrefixEntry param) {
         if (localCommonPrefixes == null) {
             localCommonPrefixes = new com.amazon.s3.PrefixEntry[] {};
         }
 
-        //update the setting tracker
+        // update the setting tracker
         localCommonPrefixesTracker = true;
 
         java.util.List list = org.apache.axis2.databinding.utils.ConverterUtil.toList(localCommonPrefixes);
@@ -497,9 +541,10 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -512,13 +557,13 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, parentQName) {
 
@@ -531,14 +576,13 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
         java.lang.String prefix = null;
         java.lang.String namespace = null;
@@ -580,7 +624,8 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
                         localMetadata[i].serialize(new javax.xml.namespace.QName("http://s3.amazonaws.com/doc/2006-03-01/", "Metadata"), factory, xmlWriter);
                     } else {
 
-                        // we don't have to do any thing since minOccures is zero
+                        // we don't have to do any thing since minOccures is
+                        // zero
 
                     }
 
@@ -881,7 +926,8 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
                         localListVersionsResultChoice_type0[i].serialize(null, factory, xmlWriter);
                     } else {
 
-                        // we don't have to do any thing since minOccures is zero
+                        // we don't have to do any thing since minOccures is
+                        // zero
 
                     }
 
@@ -897,7 +943,8 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
                         localCommonPrefixes[i].serialize(new javax.xml.namespace.QName("http://s3.amazonaws.com/doc/2006-03-01/", "CommonPrefixes"), factory, xmlWriter);
                     } else {
 
-                        // we don't have to do any thing since minOccures is zero
+                        // we don't have to do any thing since minOccures is
+                        // zero
 
                     }
 
@@ -915,8 +962,8 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -928,10 +975,10 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -941,10 +988,10 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -967,7 +1014,7 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -995,7 +1042,8 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -1029,8 +1077,8 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -1049,9 +1097,9 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
         java.util.ArrayList elementList = new java.util.ArrayList();
@@ -1190,17 +1238,20 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static ListVersionsResult parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             ListVersionsResult object = new ListVersionsResult();
 
@@ -1225,7 +1276,7 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
                         java.lang.String type = fullTypeName.substring(fullTypeName.indexOf(":") + 1);
 
                         if (!"ListVersionsResult".equals(type)) {
-                            //find namespace for the prefix
+                            // find namespace for the prefix
                             java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
                             return (ListVersionsResult)com.amazon.s3.ExtensionMapper.getTypeObject(nsUri, type, reader);
                         }
@@ -1234,7 +1285,8 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
                 }
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -1254,7 +1306,8 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
                     // Process the array and step past its final element's end.
                     list1.add(com.amazon.s3.MetadataEntry.Factory.parse(reader));
 
-                    //loop until we find a start element that is not part of this array
+                    // loop until we find a start element that is not part of
+                    // this array
                     boolean loopDone1 = false;
                     while (!loopDone1) {
                         // We should be at the end element, but make sure
@@ -1266,7 +1319,8 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
                         while (!reader.isStartElement() && !reader.isEndElement())
                             reader.next();
                         if (reader.isEndElement()) {
-                            //two continuous end elements means we are exiting the xml structure
+                            // two continuous end elements means we are exiting
+                            // the xml structure
                             loopDone1 = true;
                         } else {
                             if (new javax.xml.namespace.QName("http://s3.amazonaws.com/doc/2006-03-01/", "Metadata").equals(reader.getName())) {
@@ -1277,12 +1331,11 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
                             }
                         }
                     }
-                    // call the converter utility  to convert and set the array
+                    // call the converter utility to convert and set the array
 
-                    object.setMetadata((com.amazon.s3.MetadataEntry[])org.apache.axis2.databinding.utils.ConverterUtil.convertToArray(com.amazon.s3.MetadataEntry.class,
-                        list1));
+                    object.setMetadata((com.amazon.s3.MetadataEntry[])org.apache.axis2.databinding.utils.ConverterUtil.convertToArray(com.amazon.s3.MetadataEntry.class, list1));
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1299,10 +1352,11 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1317,10 +1371,11 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1335,10 +1390,11 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1353,10 +1409,11 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1371,7 +1428,7 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1388,7 +1445,7 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1405,10 +1462,11 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1423,7 +1481,7 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1440,10 +1498,11 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1454,9 +1513,11 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
 
                     if (reader.isStartElement()) {
 
-                        // Process the array and step past its final element's end.
+                        // Process the array and step past its final element's
+                        // end.
                         list11.add(com.amazon.s3.ListVersionsResultChoice_type0.Factory.parse(reader));
-                        //loop until we find a start element that is not part of this array
+                        // loop until we find a start element that is not part
+                        // of this array
                         boolean loopDone11 = false;
                         while (!loopDone11) {
 
@@ -1464,17 +1525,19 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
                             while (!reader.isStartElement() && !reader.isEndElement())
                                 reader.next();
                             if (reader.isEndElement()) {
-                                //two continuous end elements means we are exiting the xml structure
+                                // two continuous end elements means we are
+                                // exiting the xml structure
                                 loopDone11 = true;
                             } else {
                                 list11.add(com.amazon.s3.ListVersionsResultChoice_type0.Factory.parse(reader));
                             }
                         }
-                        // call the converter utility  to convert and set the array
+                        // call the converter utility to convert and set the
+                        // array
                         object.setListVersionsResultChoice_type0((com.amazon.s3.ListVersionsResultChoice_type0[])org.apache.axis2.databinding.utils.ConverterUtil.convertToArray(
-                            com.amazon.s3.ListVersionsResultChoice_type0.class, list11));
+                                com.amazon.s3.ListVersionsResultChoice_type0.class, list11));
 
-                    }  // End of if for expected property start element
+                    } // End of if for expected property start element
 
                     else {
 
@@ -1491,7 +1554,8 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
                     // Process the array and step past its final element's end.
                     list12.add(com.amazon.s3.PrefixEntry.Factory.parse(reader));
 
-                    //loop until we find a start element that is not part of this array
+                    // loop until we find a start element that is not part of
+                    // this array
                     boolean loopDone12 = false;
                     while (!loopDone12) {
                         // We should be at the end element, but make sure
@@ -1503,7 +1567,8 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
                         while (!reader.isStartElement() && !reader.isEndElement())
                             reader.next();
                         if (reader.isEndElement()) {
-                            //two continuous end elements means we are exiting the xml structure
+                            // two continuous end elements means we are exiting
+                            // the xml structure
                             loopDone12 = true;
                         } else {
                             if (new javax.xml.namespace.QName("http://s3.amazonaws.com/doc/2006-03-01/", "CommonPrefixes").equals(reader.getName())) {
@@ -1514,12 +1579,11 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
                             }
                         }
                     }
-                    // call the converter utility  to convert and set the array
+                    // call the converter utility to convert and set the array
 
-                    object.setCommonPrefixes((com.amazon.s3.PrefixEntry[])org.apache.axis2.databinding.utils.ConverterUtil.convertToArray(
-                        com.amazon.s3.PrefixEntry.class, list12));
+                    object.setCommonPrefixes((com.amazon.s3.PrefixEntry[])org.apache.axis2.databinding.utils.ConverterUtil.convertToArray(com.amazon.s3.PrefixEntry.class, list12));
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1529,7 +1593,8 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
                     reader.next();
 
                 if (reader.isStartElement())
-                    // A start element we are not expecting indicates a trailing invalid property
+                    // A start element we are not expecting indicates a trailing
+                    // invalid property
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
 
             } catch (javax.xml.stream.XMLStreamException e) {
@@ -1539,6 +1604,6 @@ public class ListVersionsResult implements org.apache.axis2.databinding.ADBBean 
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

@@ -58,8 +58,8 @@ public class ResponseObjectTypeAdapter implements JsonSerializer<ResponseObject>
             s_logger.error("Security exception in getting ResponseObject " + o.getClass().getName() + " get method for property: " + propName);
         } catch (NoSuchMethodException e1) {
             if (s_logger.isTraceEnabled()) {
-                s_logger.trace("ResponseObject " + o.getClass().getName() + " does not have " + methodName + "() method for property: " + propName +
-                    ", will check is-prefixed method to see if it is boolean property");
+                s_logger.trace("ResponseObject " + o.getClass().getName() + " does not have " + methodName + "() method for property: " + propName
+                        + ", will check is-prefixed method to see if it is boolean property");
             }
         }
 

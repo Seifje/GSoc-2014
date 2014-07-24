@@ -35,6 +35,6 @@ public class GetVmStatsAnswer extends Answer {
     }
 
     protected GetVmStatsAnswer() {
-        //no-args constructor for json serialization-deserialization
+        // no-args constructor for json serialization-deserialization
     }
 }

@@ -25,9 +25,11 @@ public interface PortForwardingRulesDao extends GenericDao<PortForwardingRuleVO,
     List<PortForwardingRuleVO> listForApplication(long ipId);
 
     /**
-     * Find all port forwarding rules for the ip address that have not been revoked.
+     * Find all port forwarding rules for the ip address that have not been
+     * revoked.
      *
-     * @param ip ip address
+     * @param ip
+     *            ip address
      * @return List of PortForwardingRuleVO
      */
     List<PortForwardingRuleVO> listByIpAndNotRevoked(long ipId);
@@ -44,7 +46,7 @@ public interface PortForwardingRulesDao extends GenericDao<PortForwardingRuleVO,
 
     List<PortForwardingRuleVO> listByDestIpAddr(String ip4Address);
 
-    List<PortForwardingRuleVO> listByVmidAndDestIpAddr(String ip4Address,long vmid);
+    List<PortForwardingRuleVO> listByVmidAndDestIpAddr(String ip4Address, long vmid);
 
     PortForwardingRuleVO findByIdAndIp(long id, String secondaryIp);
 }

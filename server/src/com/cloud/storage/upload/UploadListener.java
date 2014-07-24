@@ -190,8 +190,7 @@ public class UploadListener implements Listener {
         } else {
             extractId = ApiDBUtils.findTemplateById(uploadObj.getTypeId()).getUuid();
         }
-        resultObj =
-            new ExtractResponse(extractId, typeName, ApiDBUtils.findAccountById(accountId).getUuid(), Status.NOT_UPLOADED.toString(), ApiDBUtils.findUploadById(uploadId)
+        resultObj = new ExtractResponse(extractId, typeName, ApiDBUtils.findAccountById(accountId).getUuid(), Status.NOT_UPLOADED.toString(), ApiDBUtils.findUploadById(uploadId)
                 .getUuid());
         resultObj.setResponseName(responseNameMap.get(type.toString()));
         updateDatabase(Status.NOT_UPLOADED, cmd.getUrl(), "");
@@ -236,7 +235,7 @@ public class UploadListener implements Listener {
                 if (getJobId() == null) {
                     setJobId(answer.getJobId());
                 } else if (!getJobId().equalsIgnoreCase(answer.getJobId())) {
-                    return false;//TODO
+                    return false;// TODO
                 }
                 transition(UploadEvent.UPLOAD_ANSWER, answer);
                 processed = true;
@@ -275,7 +274,9 @@ public class UploadListener implements Listener {
     }
 
     public void logUploadStart() {
-        //uploadMonitor.logEvent(accountId, event, "Storage server " + sserver.getName() + " started upload of " +type.toString() + " " + typeName, EventVO.LEVEL_INFO, eventId);
+        // uploadMonitor.logEvent(accountId, event, "Storage server " +
+        // sserver.getName() + " started upload of " +type.toString() + " " +
+        // typeName, EventVO.LEVEL_INFO, eventId);
     }
 
     public void cancelTimeoutTask() {

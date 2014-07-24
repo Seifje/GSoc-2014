@@ -46,12 +46,14 @@ public class ElastistorPrimaryDataStoreProvider implements PrimaryDataStoreProvi
 
     private static final Logger s_logger = Logger.getLogger(DefaultHostListener.class);
 
-    //these classes will be injected by spring
+    // these classes will be injected by spring
     private ElastistorPrimaryDataStoreLifeCycle lifecycle;
     private PrimaryDataStoreDriver driver;
     private HypervisorHostListener listener;
 
-    // these params will be initialized with respective values given in spring-storage-volume-cloudbyte-context.xml bean for the elastistor porpose only.
+    // these params will be initialized with respective values given in
+    // spring-storage-volume-cloudbyte-context.xml bean for the elastistor
+    // porpose only.
     private String esmanagementip;
     private String esapikey;
     private String esaccountid;
@@ -70,7 +72,6 @@ public class ElastistorPrimaryDataStoreProvider implements PrimaryDataStoreProvi
     StoragePoolHostDao storagePoolHostDao;
     @Inject
     PrimaryDataStoreDao primaryStoreDao;
-
 
     @Override
     public String getName() {
@@ -118,6 +119,7 @@ public class ElastistorPrimaryDataStoreProvider implements PrimaryDataStoreProvi
 
         return types;
     }
+
     public String getEspoolid() {
         return espoolid;
     }
@@ -157,6 +159,7 @@ public class ElastistorPrimaryDataStoreProvider implements PrimaryDataStoreProvi
     public void setesdefaultgateway(String esdefaultgateway) {
         this.esdefaultgateway = esdefaultgateway;
     }
+
     public String getEssubnet() {
         return essubnet;
     }
@@ -165,11 +168,11 @@ public class ElastistorPrimaryDataStoreProvider implements PrimaryDataStoreProvi
         this.essubnet = essubnet;
     }
 
-    public String getEstntinterface(){
-     return estntinterface;
+    public String getEstntinterface() {
+        return estntinterface;
     }
 
-    public void setEstntinterface(String estntinterface){
-      this.estntinterface = estntinterface;
+    public void setEstntinterface(String estntinterface) {
+        this.estntinterface = estntinterface;
     }
 }

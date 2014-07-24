@@ -42,7 +42,8 @@ public class SnapshotDescriptor {
             in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(vmsdFileContent)));
             String line;
             while ((line = in.readLine()) != null) {
-                // TODO, remember to remove this log, temporarily added for debugging purpose
+                // TODO, remember to remove this log, temporarily added for
+                // debugging purpose
                 s_logger.info("Parse snapshot file content: " + line);
 
                 String[] tokens = line.split("=");
@@ -204,8 +205,7 @@ public class SnapshotDescriptor {
                 numDisks = Integer.parseInt(numDisksStr);
                 DiskInfo[] disks = new DiskInfo[numDisks];
                 for (int i = 0; i < numDisks; i++) {
-                    disks[i] =
-                        new DiskInfo(_properties.getProperty(String.format("snapshot%d.disk%d.fileName", id, i)), _properties.getProperty(String.format(
+                    disks[i] = new DiskInfo(_properties.getProperty(String.format("snapshot%d.disk%d.fileName", id, i)), _properties.getProperty(String.format(
                             "snapshot%d.disk%d.node", id, i)));
                 }
 

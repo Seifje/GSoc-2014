@@ -27,7 +27,7 @@ public class EC2Snapshot {
     private String id;
     private String name;
     private String volumeId;
-    private Long volumeSize;   // in gigs
+    private Long volumeSize; // in gigs
     private String type;
     private String state;
     private Calendar created;

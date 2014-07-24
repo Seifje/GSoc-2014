@@ -21,8 +21,12 @@ import java.util.List;
 
 public class EC2StopInstances {
 
-    private List<String> instancesSet = new ArrayList<String>();    // a list of strings identifying instances
-    private boolean destroyInstances;                               // we are destroying the instances rather than stopping them
+    private List<String> instancesSet = new ArrayList<String>(); // a list of
+                                                                 // strings
+                                                                 // identifying
+                                                                 // instances
+    private boolean destroyInstances; // we are destroying the instances rather
+                                      // than stopping them
     private Boolean force = false;
 
     public EC2StopInstances() {

@@ -189,11 +189,11 @@ public class VolumeObjectTO implements DataTO {
         this.format = format;
     }
 
-    public Storage.ProvisioningType getProvisioningType(){
+    public Storage.ProvisioningType getProvisioningType() {
         return provisioningType;
     }
 
-    public void setProvisioningType(Storage.ProvisioningType provisioningType){
+    public void setProvisioningType(Storage.ProvisioningType provisioningType) {
         this.provisioningType = provisioningType;
     }
 

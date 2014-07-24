@@ -42,7 +42,8 @@ public class ServerMCSPDU extends BaseElement {
         switch (type) {
         // Expected type: send data indication: 26 (0x1a, top 6 bits, or 0x68)
         case 0x1a: {
-            // int userId = buf.readUnsignedShort() + 1001; // User ID: 1002 (1001+1)
+            // int userId = buf.readUnsignedShort() + 1001; // User ID: 1002
+            // (1001+1)
             buf.skipBytes(2); // Ignore user ID
 
             int channelId = buf.readUnsignedShort(); // Channel ID: 1003
@@ -110,7 +111,8 @@ public class ServerMCSPDU extends BaseElement {
                 (byte)0x16, (byte)0x00,
 
                 (byte)0xEA, (byte)0x03, // PDU source: 1002 (LE)
-                (byte)0xEA, (byte)0x03, (byte)0x01, (byte)0x00, // ShareID = 66538
+                (byte)0xEA, (byte)0x03, (byte)0x01, (byte)0x00, // ShareID =
+                // 66538
 
                 (byte)0x01, (byte)0x00, // Length if source descriptor: 1 (LE)
                 (byte)0x00, // Source descriptor (should be set to 0): 0
@@ -134,11 +136,15 @@ public class ServerMCSPDU extends BaseElement {
                 (byte)0x16, (byte)0x00,
 
                 (byte)0xEA, (byte)0x03, // PDU source: 1002 (LE)
-                (byte)0xEA, (byte)0x03, (byte)0x01, (byte)0x00, // ShareID = 66538
+                (byte)0xEA, (byte)0x03, (byte)0x01, (byte)0x00, // ShareID
+                // =
+                // 66538
 
-                (byte)0x01, (byte)0x00, // Length if source descriptor: 1 (LE)
-                (byte)0x00, // Source descriptor (should be set to 0): 0
-        }));
+                (byte)0x01, (byte)0x00, // Length if source
+                // descriptor: 1 (LE)
+                (byte)0x00, // Source descriptor (should be set to 0):
+        // 0
+                }));
 
         Pipeline pipeline = new PipelineImpl("test");
         pipeline.add(source, tpkt, x224, mcs, sink);

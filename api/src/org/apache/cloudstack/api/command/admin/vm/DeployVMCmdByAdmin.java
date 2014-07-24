@@ -32,19 +32,17 @@ import com.cloud.exception.InsufficientServerCapacityException;
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.uservm.UserVm;
 
-
 @APICommand(name = "deployVirtualMachine", description = "Creates and automatically starts a virtual machine based on a service offering, disk offering, and template.", responseObject = UserVmResponse.class, responseView = ResponseView.Full)
 public class DeployVMCmdByAdmin extends DeployVMCmd {
     public static final Logger s_logger = Logger.getLogger(DeployVMCmdByAdmin.class.getName());
 
-
     @Override
-    public void execute(){
+    public void execute() {
         UserVm result;
 
         if (getStartVm()) {
             try {
-                CallContext.current().setEventDetails("Vm Id: "+getEntityId());
+                CallContext.current().setEventDetails("Vm Id: " + getEntityId());
                 result = _userVmService.startVirtualMachine(this);
             } catch (ResourceUnavailableException ex) {
                 s_logger.warn("Exception: ", ex);
@@ -55,7 +53,7 @@ public class DeployVMCmdByAdmin extends DeployVMCmd {
             } catch (InsufficientCapacityException ex) {
                 StringBuilder message = new StringBuilder(ex.getMessage());
                 if (ex instanceof InsufficientServerCapacityException) {
-                    if(((InsufficientServerCapacityException)ex).isAffinityApplied()){
+                    if (((InsufficientServerCapacityException)ex).isAffinityApplied()) {
                         message.append(", Please check the affinity groups provided, there may not be sufficient capacity to follow them");
                     }
                 }

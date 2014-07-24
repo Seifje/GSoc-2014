@@ -57,7 +57,10 @@ public class ServerNtlmsspChallenge extends OneTimeSwitch implements NtlmConstan
         request.readTag(buf);
 
         ByteBuffer negoToken = ((NegoItem)request.negoTokens.tags[0]).negoToken.value;
-        ntlmState.challengeMessage = negoToken.toByteArray(); // Store message for MIC calculation in AUTH message
+        ntlmState.challengeMessage = negoToken.toByteArray(); // Store message
+        // for MIC
+        // calculation in
+        // AUTH message
 
         parseNtlmChallenge(negoToken);
 
@@ -76,8 +79,7 @@ public class ServerNtlmsspChallenge extends OneTimeSwitch implements NtlmConstan
         // MessageType (CHALLENGE)
         int messageType = buf.readSignedIntLE();
         if (messageType != NtlmConstants.CHALLENGE)
-            throw new RuntimeException("Unexpected NTLM message type: " + messageType + ". Expected type: CHALLENGE (" + NtlmConstants.CHALLENGE + "). Data: " + buf
-                    + ".");
+            throw new RuntimeException("Unexpected NTLM message type: " + messageType + ". Expected type: CHALLENGE (" + NtlmConstants.CHALLENGE + "). Data: " + buf + ".");
 
         // TargetName
         ntlmState.serverTargetName = readStringByDescription(buf);
@@ -152,13 +154,15 @@ public class ServerNtlmsspChallenge extends OneTimeSwitch implements NtlmConstan
         case MSV_AV_TIMESTAMP:
             ByteBuffer tmp = buf.readBytes(length);
             ntlmState.serverTimestamp = tmp.toByteArray();
-            //*DEBUG*/System.out.println("Server timestamp: "+tmp.toPlainHexString());
+            // *DEBUG*/System.out.println("Server timestamp: "+tmp.toPlainHexString());
             tmp.unref();
             break;
 
         default:
             // Ignore
-            //throw new RuntimeException("[" + this + "] ERROR: Unknown NTLM target info attribute: " + type + ". Data: " + buf + ".");
+            // throw new RuntimeException("[" + this +
+            // "] ERROR: Unknown NTLM target info attribute: " + type +
+            // ". Data: " + buf + ".");
 
         }
 
@@ -169,7 +173,7 @@ public class ServerNtlmsspChallenge extends OneTimeSwitch implements NtlmConstan
      * beginning of NTLM message signature.
      *
      * @param buf
-     *          buffer with cursor pointing to description
+     *            buffer with cursor pointing to description
      * @return
      */
     public static String readStringByDescription(ByteBuffer buf) {
@@ -189,10 +193,10 @@ public class ServerNtlmsspChallenge extends OneTimeSwitch implements NtlmConstan
             blockLength = allocatedSpace;
 
         if (offset > buf.length || offset < 0 || offset + allocatedSpace > buf.length)
-            throw new RuntimeException("ERROR: NTLM block is too long. Allocated space: " + allocatedSpace + ", block offset: " + offset + ", data: "
-                    + buf + ".");
+            throw new RuntimeException("ERROR: NTLM block is too long. Allocated space: " + allocatedSpace + ", block offset: " + offset + ", data: " + buf + ".");
 
-        // Move cursor to position of allocated block, starting from beginning of
+        // Move cursor to position of allocated block, starting from beginning
+        // of
         // this buffer
         int storedCursor = buf.cursor;
         buf.cursor = offset;
@@ -216,56 +220,206 @@ public class ServerNtlmsspChallenge extends OneTimeSwitch implements NtlmConstan
 
         /* @formatter:off */
         byte[] packet = new byte[] {
-                0x30, (byte) 0x82, 0x01, 0x02, // TAG: [UNIVERSAL 16] (constructed) "SEQUENCE" LEN: 258 bytes
-                (byte) 0xa0, 0x03, // TAG: [0] (constructed) LEN: 3 bytes
-                0x02, 0x01, 0x03,  // TAG: [UNIVERSAL 2] (primitive) "INTEGER" LEN: 1 bytes, Version: 0x3
-                (byte) 0xa1, (byte) 0x81, (byte) 0xfa, // TAG: [1] (constructed) LEN: 250 bytes
-                0x30, (byte) 0x81, (byte) 0xf7, // TAG: [UNIVERSAL 16] (constructed) "SEQUENCE" LEN: 247 bytes
-                0x30, (byte) 0x81, (byte) 0xf4, // TAG: [UNIVERSAL 16] (constructed) "SEQUENCE" LEN: 244 bytes
-                (byte) 0xa0, (byte) 0x81, (byte) 0xf1, // TAG: [0] (constructed) LEN: 241 bytes
-                0x04, (byte) 0x81, (byte) 0xee, // TAG: [UNIVERSAL 4] (primitive) "OCTET STRING" LEN: 238 bytes
+                0x30,
+                (byte) 0x82,
+                0x01,
+                0x02, // TAG: [UNIVERSAL 16] (constructed) "SEQUENCE" LEN: 258
+                // bytes
+                (byte) 0xa0,
+                0x03, // TAG: [0] (constructed) LEN: 3 bytes
+                0x02,
+                0x01,
+                0x03, // TAG: [UNIVERSAL 2] (primitive) "INTEGER" LEN: 1 bytes,
+                // Version: 0x3
+                (byte) 0xa1,
+                (byte) 0x81,
+                (byte) 0xfa, // TAG: [1] (constructed) LEN: 250 bytes
+                0x30,
+                (byte) 0x81,
+                (byte) 0xf7, // TAG: [UNIVERSAL 16] (constructed) "SEQUENCE"
+                // LEN: 247 bytes
+                0x30,
+                (byte) 0x81,
+                (byte) 0xf4, // TAG: [UNIVERSAL 16] (constructed) "SEQUENCE"
+                // LEN: 244 bytes
+                (byte) 0xa0,
+                (byte) 0x81,
+                (byte) 0xf1, // TAG: [0] (constructed) LEN: 241 bytes
+                0x04,
+                (byte) 0x81,
+                (byte) 0xee, // TAG: [UNIVERSAL 4] (primitive) "OCTET STRING"
+                // LEN: 238 bytes
 
-                0x4e, 0x54, 0x4c, 0x4d, 0x53, 0x53, 0x50, 0x00, // "NTLMSSP\0"
+                0x4e,
+                0x54,
+                0x4c,
+                0x4d,
+                0x53,
+                0x53,
+                0x50,
+                0x00, // "NTLMSSP\0"
 
-                0x02, 0x00, 0x00, 0x00, // MessageType (CHALLENGE)
-                0x1e, 0x00, 0x1e, 0x00, 0x38, 0x00, 0x00, 0x00, // TargetName (length: 30, allocated space: 30, offset: 56)
-                0x35, (byte) 0x82, (byte) 0x8a, (byte) 0xe2, // NegotiateFlags
-                0x52, (byte) 0xbe, (byte) 0x83, (byte) 0xd1, (byte) 0xf8, (byte) 0x80, 0x16, 0x6a,  //  ServerChallenge
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, //  Reserved
-                (byte) 0x98, 0x00, (byte) 0x98, 0x00, 0x56, 0x00, 0x00, 0x00, // TargetInfo (length: 152, allocated space: 152, offset: 86)
-                0x06, 0x03, (byte) 0xd7, 0x24, 0x00, 0x00, 0x00, 0x0f,  // Version (6.3, build 9431) , NTLM current revision: 15
+                0x02,
+                0x00,
+                0x00,
+                0x00, // MessageType (CHALLENGE)
+                0x1e,
+                0x00,
+                0x1e,
+                0x00,
+                0x38,
+                0x00,
+                0x00,
+                0x00, // TargetName (length: 30, allocated space: 30, offset:
+                // 56)
+                0x35,
+                (byte) 0x82,
+                (byte) 0x8a,
+                (byte) 0xe2, // NegotiateFlags
+                0x52,
+                (byte) 0xbe,
+                (byte) 0x83,
+                (byte) 0xd1,
+                (byte) 0xf8,
+                (byte) 0x80,
+                0x16,
+                0x6a, // ServerChallenge
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x00, // Reserved
+                (byte) 0x98,
+                0x00,
+                (byte) 0x98,
+                0x00,
+                0x56,
+                0x00,
+                0x00,
+                0x00, // TargetInfo (length: 152, allocated space: 152, offset:
+                // 86)
+                0x06,
+                0x03,
+                (byte) 0xd7,
+                0x24,
+                0x00,
+                0x00,
+                0x00,
+                0x0f, // Version (6.3, build 9431) , NTLM current revision: 15
 
-
-                0x57, 0x00, 0x49, 0x00, 0x4e, 0x00, 0x2d, 0x00, 0x4c, 0x00, 0x4f, 0x00, 0x34, 0x00, 0x31, 0x00, 0x39, 0x00, 0x42, 0x00, 0x32, 0x00, 0x4c, 0x00, 0x53, 0x00, 0x52, 0x00, 0x30, 0x00,  // Target name value: "WIN-LO419B2LSR0"
+                0x57,
+                0x00,
+                0x49,
+                0x00,
+                0x4e,
+                0x00,
+                0x2d,
+                0x00,
+                0x4c,
+                0x00,
+                0x4f,
+                0x00,
+                0x34,
+                0x00,
+                0x31,
+                0x00,
+                0x39,
+                0x00,
+                0x42,
+                0x00,
+                0x32,
+                0x00,
+                0x4c,
+                0x00,
+                0x53,
+                0x00,
+                0x52,
+                0x00,
+                0x30,
+                0x00, // Target name value: "WIN-LO419B2LSR0"
 
                 // Target Info value:
 
                 // Attribute list
 
-                0x02, 0x00, // Item Type: NetBIOS domain name (0x0002, LE)
-                0x1e, 0x00, //  Item Length: 30 (LE)
-                0x57, 0x00, 0x49, 0x00, 0x4e, 0x00, 0x2d, 0x00, 0x4c, 0x00, 0x4f, 0x00, 0x34, 0x00, 0x31, 0x00, 0x39, 0x00, 0x42, 0x00, 0x32, 0x00, 0x4c, 0x00, 0x53, 0x00, 0x52, 0x00, 0x30, 0x00, // "WIN-LO419B2LSR0"
+                0x02,
+                0x00, // Item Type: NetBIOS domain name (0x0002, LE)
+                0x1e,
+                0x00, // Item Length: 30 (LE)
+                0x57, 0x00, 0x49, 0x00, 0x4e, 0x00, 0x2d, 0x00, 0x4c, 0x00,
+                0x4f, 0x00,
+                0x34,
+                0x00,
+                0x31,
+                0x00,
+                0x39,
+                0x00,
+                0x42,
+                0x00,
+                0x32,
+                0x00,
+                0x4c,
+                0x00,
+                0x53,
+                0x00,
+                0x52,
+                0x00,
+                0x30,
+                0x00, // "WIN-LO419B2LSR0"
 
-                0x01, 0x00,  //  Item Type: NetBIOS computer name (0x0001, LE)
-                0x1e, 0x00, //  Item Length: 30 (LE)
-                0x57, 0x00, 0x49, 0x00, 0x4e, 0x00, 0x2d, 0x00, 0x4c, 0x00, 0x4f, 0x00, 0x34, 0x00, 0x31, 0x00, 0x39, 0x00, 0x42, 0x00, 0x32, 0x00, 0x4c, 0x00, 0x53, 0x00, 0x52, 0x00, 0x30, 0x00, // "WIN-LO419B2LSR0"
+                0x01,
+                0x00, // Item Type: NetBIOS computer name (0x0001, LE)
+                0x1e,
+                0x00, // Item Length: 30 (LE)
+                0x57, 0x00, 0x49, 0x00, 0x4e, 0x00, 0x2d, 0x00, 0x4c, 0x00,
+                0x4f, 0x00, 0x34, 0x00, 0x31, 0x00, 0x39, 0x00,
+                0x42,
+                0x00,
+                0x32,
+                0x00,
+                0x4c,
+                0x00,
+                0x53,
+                0x00,
+                0x52,
+                0x00,
+                0x30,
+                0x00, // "WIN-LO419B2LSR0"
 
-                0x04, 0x00,  // Item Type: DNS domain name (0x0004, LE)
-                0x1e, 0x00, //  Item Length: 30 (LE)
-                0x57, 0x00, 0x49, 0x00, 0x4e, 0x00, 0x2d, 0x00, 0x4c, 0x00, 0x4f, 0x00, 0x34, 0x00, 0x31, 0x00, 0x39, 0x00, 0x42, 0x00, 0x32, 0x00, 0x4c, 0x00, 0x53, 0x00, 0x52, 0x00, 0x30, 0x00, // "WIN-LO419B2LSR0"
+                0x04,
+                0x00, // Item Type: DNS domain name (0x0004, LE)
+                0x1e,
+                0x00, // Item Length: 30 (LE)
+                0x57, 0x00, 0x49, 0x00, 0x4e, 0x00, 0x2d, 0x00, 0x4c, 0x00,
+                0x4f, 0x00, 0x34, 0x00, 0x31, 0x00, 0x39, 0x00, 0x42, 0x00,
+                0x32, 0x00, 0x4c, 0x00, 0x53,
+                0x00,
+                0x52,
+                0x00,
+                0x30,
+                0x00, // "WIN-LO419B2LSR0"
 
-                0x03, 0x00,  // Item Type: DNS computer name (0x0003, LE)
-                0x1e, 0x00, //  Item Length: 30 (LE)
-                0x57, 0x00, 0x49, 0x00, 0x4e, 0x00, 0x2d, 0x00, 0x4c, 0x00, 0x4f, 0x00, 0x34, 0x00, 0x31, 0x00, 0x39, 0x00, 0x42, 0x00, 0x32, 0x00, 0x4c, 0x00, 0x53, 0x00, 0x52, 0x00, 0x30, 0x00, // "WIN-LO419B2LSR0"
+                0x03,
+                0x00, // Item Type: DNS computer name (0x0003, LE)
+                0x1e,
+                0x00, // Item Length: 30 (LE)
+                0x57, 0x00, 0x49, 0x00, 0x4e, 0x00, 0x2d, 0x00, 0x4c, 0x00,
+                0x4f, 0x00, 0x34, 0x00, 0x31, 0x00, 0x39, 0x00, 0x42, 0x00,
+                0x32, 0x00, 0x4c, 0x00, 0x53, 0x00, 0x52, 0x00, 0x30,
+                0x00, // "WIN-LO419B2LSR0"
 
-                0x07, 0x00,  // Item Type: Timestamp (0x0007, LE)
-                0x08, 0x00, //  Item Length: 8 (LE)
-                (byte) 0x99, 0x4f, 0x02, (byte) 0xd8, (byte) 0xf4, (byte) 0xaf, (byte) 0xce, 0x01, // TODO
+                0x07,
+                0x00, // Item Type: Timestamp (0x0007, LE)
+                0x08,
+                0x00, // Item Length: 8 (LE)
+                (byte) 0x99, 0x4f, 0x02, (byte) 0xd8, (byte) 0xf4, (byte) 0xaf,
+                (byte) 0xce, 0x01, // TODO
 
                 // Attribute: End of list
-                0x00, 0x00,
-                0x00, 0x00,
-        };
+                0x00, 0x00, 0x00, 0x00, };
         /* @formatter:on */
 
         MockSource source = new MockSource("source", ByteBuffer.convertByteArraysToByteBuffers(packet, new byte[] {1, 2, 3}));
@@ -285,8 +439,8 @@ public class ServerNtlmsspChallenge extends OneTimeSwitch implements NtlmConstan
         if (state.serverChallenge == null)
             throw new RuntimeException("Challenge was not extracted from server NTLMSSP Challenge packet.");
         if (!Arrays.equals(challenge, state.serverChallenge))
-            throw new RuntimeException("Challenge was extracted from server NTLMSSP Challenge packet is not equal to expected. Actual value: "
-                    + state.serverChallenge + ", expected value: " + challenge + ".");
+            throw new RuntimeException("Challenge was extracted from server NTLMSSP Challenge packet is not equal to expected. Actual value: " + state.serverChallenge
+                    + ", expected value: " + challenge + ".");
 
     }
 

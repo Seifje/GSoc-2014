@@ -81,8 +81,8 @@ public class SecurityGroupRulesVO implements SecurityGroupRules {
         this.id = id;
     }
 
-    public SecurityGroupRulesVO(long id, String name, String description, Long domainId, Long accountId, Long ruleId, String ruleUuid, int startPort, int endPort,
-            String protocol, Long allowedNetworkId, String allowedSourceIpCidr) {
+    public SecurityGroupRulesVO(long id, String name, String description, Long domainId, Long accountId, Long ruleId, String ruleUuid, int startPort, int endPort, String protocol,
+            Long allowedNetworkId, String allowedSourceIpCidr) {
         this.id = id;
         this.name = name;
         this.description = description;

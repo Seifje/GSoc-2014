@@ -166,14 +166,7 @@ public class ItWorkVO {
 
     @Override
     public String toString() {
-        return new StringBuilder("ItWork[").append(id)
-            .append("-")
-            .append(type.toString())
-            .append("-")
-            .append(instanceId)
-            .append("-")
-            .append(step.toString())
-            .append("]")
-            .toString();
+        return new StringBuilder("ItWork[").append(id).append("-").append(type.toString()).append("-").append(instanceId).append("-").append(step.toString()).append("]")
+                .toString();
     }
 }

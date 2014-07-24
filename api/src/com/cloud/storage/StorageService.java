@@ -38,8 +38,8 @@ public interface StorageService {
      * Create StoragePool based on uri
      *
      * @param cmd
-     *            the command object that specifies the zone, cluster/pod, URI, details, etc. to use to create the
-     *            storage pool.
+     *            the command object that specifies the zone, cluster/pod, URI,
+     *            details, etc. to use to create the storage pool.
      * @return
      * @throws ResourceInUseException
      * @throws IllegalArgumentException
@@ -93,22 +93,25 @@ public interface StorageService {
     boolean deleteSecondaryStagingStore(DeleteSecondaryStagingStoreCmd cmd);
 
     public ImageStore discoverImageStore(String name, String url, String providerName, Long dcId, Map details) throws IllegalArgumentException, DiscoveryException,
-            InvalidParameterValueException;
+    InvalidParameterValueException;
 
-
-        /**
+    /**
      * Migrate existing NFS to use object store.
-     * @param name object store name.
-     * @param url object store url.
-     * @param providerName object store provider Name.
-     * @param details object store other details
+     *
+     * @param name
+     *            object store name.
+     * @param url
+     *            object store url.
+     * @param providerName
+     *            object store provider Name.
+     * @param details
+     *            object store other details
      * @return Object store created.
      * @throws IllegalArgumentException
      * @throws DiscoveryException
      * @throws InvalidParameterValueException
      */
     public ImageStore migrateToObjectStore(String name, String url, String providerName, Map details) throws IllegalArgumentException, DiscoveryException,
-            InvalidParameterValueException;
-
+    InvalidParameterValueException;
 
 }

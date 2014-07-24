@@ -33,23 +33,22 @@ import com.cloud.exception.InvalidParameterValueException;
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.projects.Project;
 
-@APICommand(name = "suspendProject", description = "Suspends a project", responseObject = ProjectResponse.class, since = "3.0.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "suspendProject", description = "Suspends a project", responseObject = ProjectResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class SuspendProjectCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(SuspendProjectCmd.class.getName());
 
     private static final String s_name = "suspendprojectresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = ProjectResponse.class, required = true, description = "id of the project to be suspended")
     private Long id;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long geId() {
         return id;
@@ -60,9 +59,9 @@ public class SuspendProjectCmd extends BaseAsyncCmd {
         return s_name;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public void execute() throws ConcurrentOperationException, ResourceUnavailableException {
@@ -90,7 +89,7 @@ public class SuspendProjectCmd extends BaseAsyncCmd {
     @Override
     public long getEntityOwnerId() {
         Project project = _projectService.getProject(id);
-        //verify input parameters
+        // verify input parameters
         if (project == null) {
             throw new InvalidParameterValueException("Unable to find project by id " + id);
         }

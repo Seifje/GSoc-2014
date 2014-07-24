@@ -63,8 +63,8 @@ public class ParamProcessWorkerTest {
         boolean boolparam1;
 
         @Override
-        public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-            ResourceAllocationException, NetworkRuleConflictException {
+        public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
+                NetworkRuleConflictException {
             // well documented nothing
         }
 

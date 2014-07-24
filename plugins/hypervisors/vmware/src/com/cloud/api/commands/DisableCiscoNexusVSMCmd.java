@@ -38,8 +38,7 @@ import com.cloud.network.CiscoNexusVSMDevice;
 import com.cloud.network.element.CiscoNexusVSMElementService;
 import com.cloud.user.Account;
 
-@APICommand(name = "disableCiscoNexusVSM", responseObject = CiscoNexusVSMResponse.class, description = "disable a Cisco Nexus VSM device",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "disableCiscoNexusVSM", responseObject = CiscoNexusVSMResponse.class, description = "disable a Cisco Nexus VSM device", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DisableCiscoNexusVSMCmd extends BaseAsyncCmd {
 
     public static final Logger s_logger = Logger.getLogger(DisableCiscoNexusVSMCmd.class.getName());
@@ -47,32 +46,27 @@ public class DisableCiscoNexusVSMCmd extends BaseAsyncCmd {
     @Inject
     CiscoNexusVSMElementService _ciscoNexusVSMService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = CiscoNexusVSMResponse.class,
-               required = true,
-               description = "Id of the Cisco Nexus 1000v VSM device to be deleted")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = CiscoNexusVSMResponse.class, required = true, description = "Id of the Cisco Nexus 1000v VSM device to be deleted")
     private Long id;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getCiscoNexusVSMDeviceId() {
         return id;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         CiscoNexusVSMDevice result = _ciscoNexusVSMService.disableCiscoNexusVSM(this);
         if (result != null) {
             CiscoNexusVSMResponse response = _ciscoNexusVSMService.createCiscoNexusVSMDetailedResponse(result);

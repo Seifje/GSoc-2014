@@ -32,19 +32,19 @@ import com.cloud.utils.exception.CloudRuntimeException;
 public class SpringUtils {
 
     /**
-     * This method allows you to use @ComponentScan for your unit testing but
-     * it limits the scope of the classes found to the class specified in
-     * the @ComponentScan annotation.
+     * This method allows you to use @ComponentScan for your unit testing but it
+     * limits the scope of the classes found to the class specified in the @ComponentScan
+     * annotation.
      *
-     * Without using this method, the default behavior of @ComponentScan is
-     * to actually scan in the package of the class specified rather than
-     * only the class. This can cause extra classes to be loaded which causes
-     * the classes these extra classes depend on to be loaded. The end effect
-     * is often most of the project gets loaded.
+     * Without using this method, the default behavior of @ComponentScan is to
+     * actually scan in the package of the class specified rather than only the
+     * class. This can cause extra classes to be loaded which causes the classes
+     * these extra classes depend on to be loaded. The end effect is often most
+     * of the project gets loaded.
      *
      * In order to use this method properly, you must do the following: <li>
-     *   - Specify @ComponentScan with basePackageClasses, includeFilters, and
-     *     useDefaultFilters=true.  See the following example.
+     * - Specify @ComponentScan with basePackageClasses, includeFilters, and
+     * useDefaultFilters=true. See the following example.
      *
      * <pre>
      *     @ComponentScan(basePackageClasses={AffinityGroupServiceImpl.class, EventUtils.class},
@@ -52,22 +52,29 @@ public class SpringUtils {
      *     useDefaultFilters=false)
      * </pre>
      *
-     *   - Create a Library class and use that to call this method.  See the
-     *     following example.  The Library class you define here is the Library
-     *     class being added in the filter above.
+     * - Create a Library class and use that to call this method. See the
+     * following example. The Library class you define here is the Library class
+     * being added in the filter above.
      *
      * <pre>
      * public static class Library implements TypeFilter {
-     *      @Override
-     *      public boolean match(MetadataReader mdr, MetadataReaderFactory arg1) throws IOException {
-     *          ComponentScan cs = TestConfiguration.class.getAnnotation(ComponentScan.class);
-     *          return SpringUtils.includedInBasePackageClasses(mdr.getClassMetadata().getClassName(), cs);
-     *      }
+     *     &#064;Override
+     *     public boolean match(MetadataReader mdr, MetadataReaderFactory arg1)
+     *             throws IOException {
+     *         ComponentScan cs = TestConfiguration.class
+     *                 .getAnnotation(ComponentScan.class);
+     *         return SpringUtils.includedInBasePackageClasses(mdr.getClassMetadata()
+     *                 .getClassName(), cs);
+     *     }
      * }
      * </pre>
      *
-     * @param clazzName name of the class that should be included in the Spring components
-     * @param cs ComponentScan annotation that was declared on the configuration
+     * @param clazzName
+     *            name of the class that should be included in the Spring
+     *            components
+     * @param cs
+     *            ComponentScan annotation that was declared on the
+     *            configuration
      *
      * @return
      */

@@ -219,15 +219,14 @@ public class XenServer56Resource extends CitrixResourceBase {
                 throw new CloudRuntimeException("Unable to authenticate");
             }
 
-            String shcmd = "/opt/cloud/bin/check_heartbeat.sh " + hostuuid + " "
-                          + Integer.toString(_heartbeatInterval * 2);
+            String shcmd = "/opt/cloud/bin/check_heartbeat.sh " + hostuuid + " " + Integer.toString(_heartbeatInterval * 2);
             if (!SSHCmdHelper.sshExecuteCmd(sshConnection, shcmd)) {
                 s_logger.debug("Heart beat is gone so dead.");
                 return false;
             }
             s_logger.debug("Heart beat is still going");
             return true;
-        }  catch (Exception e) {
+        } catch (Exception e) {
             s_logger.debug("health check failed due to catch exception " + e.toString());
             return null;
         } finally {
@@ -239,11 +238,11 @@ public class XenServer56Resource extends CitrixResourceBase {
         Connection conn = getConnection();
         try {
             Boolean alive = check_heartbeat(cmd.getHostGuid());
-            if ( alive == null ) {
+            if (alive == null) {
                 s_logger.debug("Failed to check heartbeat,  so unable to fence");
                 return new FenceAnswer(cmd, false, "Failed to check heartbeat, so unable to fence");
             }
-            if ( alive ) {
+            if (alive) {
                 s_logger.debug("Heart beat is still going so unable to fence");
                 return new FenceAnswer(cmd, false, "Heartbeat is still going on unable to fence");
             }
@@ -265,7 +264,6 @@ public class XenServer56Resource extends CitrixResourceBase {
             return new FenceAnswer(cmd, false, e.getMessage());
         }
     }
-
 
     @Override
     protected boolean transferManagementNetwork(Connection conn, Host host, PIF src, PIF.Record spr, PIF dest) throws XmlRpcException, XenAPIException {
@@ -305,23 +303,21 @@ public class XenServer56Resource extends CitrixResourceBase {
         return cmds;
     }
 
-
     @Override
     protected CheckOnHostAnswer execute(CheckOnHostCommand cmd) {
         Boolean alive = check_heartbeat(cmd.getHost().getGuid());
         String msg = "";
         if (alive == null) {
-                msg = " cannot determine ";
-        } else if ( alive == true) {
-                msg = "Heart beat is still going";
+            msg = " cannot determine ";
+        } else if (alive == true) {
+            msg = "Heart beat is still going";
         } else {
-                msg = "Heart beat is gone so dead.";
+            msg = "Heart beat is gone so dead.";
         }
         s_logger.debug(msg);
         return new CheckOnHostAnswer(cmd, alive, msg);
 
     }
-
 
     public XenServer56Resource() {
         super();

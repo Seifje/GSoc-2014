@@ -45,13 +45,11 @@ public interface CapacityDao extends GenericDao<CapacityVO, Long> {
 
     Pair<List<Long>, Map<Long, Double>> orderPodsByAggregateCapacity(long zoneId, short capacityType);
 
-    List<SummedCapacity> findCapacityBy(Integer capacityType, Long zoneId,
-        Long podId, Long clusterId, String resourceState);
+    List<SummedCapacity> findCapacityBy(Integer capacityType, Long zoneId, Long podId, Long clusterId, String resourceState);
 
     List<SummedCapacity> listCapacitiesGroupedByLevelAndType(Integer capacityType, Long zoneId, Long podId, Long clusterId, int level, Long limit);
 
-    void updateCapacityState(Long dcId, Long podId, Long clusterId,
-        Long hostId, String capacityState);
+    void updateCapacityState(Long dcId, Long podId, Long clusterId, Long hostId, String capacityState);
 
     List<Long> listClustersCrossingThreshold(short capacityType, Long zoneId, String configName, long computeRequested);
 

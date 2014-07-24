@@ -47,11 +47,7 @@ import com.cloud.user.Account;
 import com.cloud.utils.StringUtils;
 import com.cloud.utils.db.EntityManager;
 
-@APICommand(name = "assignToGlobalLoadBalancerRule",
-            description = "Assign load balancer rule or list of load " + "balancer rules to a global load balancer rules.",
-            responseObject = SuccessResponse.class,
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "assignToGlobalLoadBalancerRule", description = "Assign load balancer rule or list of load " + "balancer rules to a global load balancer rules.", responseObject = SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class AssignToGlobalLoadBalancerRuleCmd extends BaseAsyncCmd {
 
     public static final Logger s_logger = Logger.getLogger(AssignToGlobalLoadBalancerRuleCmd.class.getName());
@@ -61,35 +57,24 @@ public class AssignToGlobalLoadBalancerRuleCmd extends BaseAsyncCmd {
     @Inject
     public EntityManager _entityMgr;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = GlobalLoadBalancerResponse.class,
-               required = true,
-               description = "the ID of the global load balancer rule")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = GlobalLoadBalancerResponse.class, required = true, description = "the ID of the global load balancer rule")
     private Long id;
 
-    @Parameter(name = ApiConstants.LOAD_BALANCER_RULE_LIST,
-               type = CommandType.LIST,
-               collectionType = CommandType.UUID,
-               entityType = FirewallRuleResponse.class,
-               required = true,
-               description = "the list load balancer rules that " + "will be assigned to gloabal load balacner rule")
+    @Parameter(name = ApiConstants.LOAD_BALANCER_RULE_LIST, type = CommandType.LIST, collectionType = CommandType.UUID, entityType = FirewallRuleResponse.class, required = true, description = "the list load balancer rules that "
+            + "will be assigned to gloabal load balacner rule")
     private List<Long> loadBalancerRulesIds;
 
-    @Parameter(name = ApiConstants.GSLB_LBRULE_WEIGHT_MAP,
-               type = CommandType.MAP,
-               description = "Map of LB rule id's and corresponding weights (between 1-100) in the GSLB rule, if not specified weight of "
-                   + "a LB rule is defaulted to 1. Specified as 'gslblbruleweightsmap[0].loadbalancerid=UUID" + "&gslblbruleweightsmap[0].weight=10'",
-               required = false)
+    @Parameter(name = ApiConstants.GSLB_LBRULE_WEIGHT_MAP, type = CommandType.MAP, description = "Map of LB rule id's and corresponding weights (between 1-100) in the GSLB rule, if not specified weight of "
+            + "a LB rule is defaulted to 1. Specified as 'gslblbruleweightsmap[0].loadbalancerid=UUID" + "&gslblbruleweightsmap[0].weight=10'", required = false)
     private Map gslbLbRuleWieghtMap;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getGlobalLoadBalancerRuleId() {
         return id;
@@ -129,9 +114,9 @@ public class AssignToGlobalLoadBalancerRuleCmd extends BaseAsyncCmd {
         return lbRuleWeightMap;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Inject
     public GlobalLoadBalancingRulesService _gslbService;
@@ -145,7 +130,9 @@ public class AssignToGlobalLoadBalancerRuleCmd extends BaseAsyncCmd {
     public long getEntityOwnerId() {
         GlobalLoadBalancerRule globalLoadBalancerRule = _entityMgr.findById(GlobalLoadBalancerRule.class, getGlobalLoadBalancerRuleId());
         if (globalLoadBalancerRule == null) {
-            return Account.ACCOUNT_ID_SYSTEM; // bad id given, parent this command to SYSTEM so ERROR events are tracked
+            return Account.ACCOUNT_ID_SYSTEM; // bad id given, parent this
+            // command to SYSTEM so ERROR
+            // events are tracked
         }
         return globalLoadBalancerRule.getAccountId();
     }
@@ -162,8 +149,7 @@ public class AssignToGlobalLoadBalancerRuleCmd extends BaseAsyncCmd {
 
     @Override
     public void execute() {
-        CallContext.current().setEventDetails(
-            "Global Load balancer rule Id: " + getGlobalLoadBalancerRuleId() + " VmIds: " + StringUtils.join(getLoadBalancerRulesIds(), ","));
+        CallContext.current().setEventDetails("Global Load balancer rule Id: " + getGlobalLoadBalancerRuleId() + " VmIds: " + StringUtils.join(getLoadBalancerRulesIds(), ","));
         boolean result = _gslbService.assignToGlobalLoadBalancerRule(this);
         if (result) {
             SuccessResponse response = new SuccessResponse(getCommandName());

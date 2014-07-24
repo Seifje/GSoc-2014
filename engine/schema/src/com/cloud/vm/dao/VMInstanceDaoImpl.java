@@ -100,27 +100,24 @@ public class VMInstanceDaoImpl extends GenericDaoBase<VMInstanceVO, Long> implem
 
     protected Attribute _updateTimeAttr;
 
-    private static final String ORDER_CLUSTERS_NUMBER_OF_VMS_FOR_ACCOUNT_PART1 = "SELECT host.cluster_id, SUM(IF(vm.state='Running' AND vm.account_id = ?, 1, 0)) " +
-        "FROM `cloud`.`host` host LEFT JOIN `cloud`.`vm_instance` vm ON host.id = vm.host_id WHERE ";
-    private static final String ORDER_CLUSTERS_NUMBER_OF_VMS_FOR_ACCOUNT_PART2 = " AND host.type = 'Routing' AND host.removed is null GROUP BY host.cluster_id " +
-        "ORDER BY 2 ASC ";
+    private static final String ORDER_CLUSTERS_NUMBER_OF_VMS_FOR_ACCOUNT_PART1 = "SELECT host.cluster_id, SUM(IF(vm.state='Running' AND vm.account_id = ?, 1, 0)) "
+            + "FROM `cloud`.`host` host LEFT JOIN `cloud`.`vm_instance` vm ON host.id = vm.host_id WHERE ";
+    private static final String ORDER_CLUSTERS_NUMBER_OF_VMS_FOR_ACCOUNT_PART2 = " AND host.type = 'Routing' AND host.removed is null GROUP BY host.cluster_id "
+            + "ORDER BY 2 ASC ";
 
-    private static final String ORDER_PODS_NUMBER_OF_VMS_FOR_ACCOUNT = "SELECT pod.id, SUM(IF(vm.state='Running' AND vm.account_id = ?, 1, 0)) FROM `cloud`.`" +
-        "host_pod_ref` pod LEFT JOIN `cloud`.`vm_instance` vm ON pod.id = vm.pod_id WHERE pod.data_center_id = ? AND pod.removed is null "
-        + " GROUP BY pod.id ORDER BY 2 ASC ";
+    private static final String ORDER_PODS_NUMBER_OF_VMS_FOR_ACCOUNT = "SELECT pod.id, SUM(IF(vm.state='Running' AND vm.account_id = ?, 1, 0)) FROM `cloud`.`"
+            + "host_pod_ref` pod LEFT JOIN `cloud`.`vm_instance` vm ON pod.id = vm.pod_id WHERE pod.data_center_id = ? AND pod.removed is null "
+            + " GROUP BY pod.id ORDER BY 2 ASC ";
 
-    private static final String ORDER_HOSTS_NUMBER_OF_VMS_FOR_ACCOUNT =
-        "SELECT host.id, SUM(IF(vm.state='Running' AND vm.account_id = ?, 1, 0)) FROM `cloud`.`host` host LEFT JOIN `cloud`.`vm_instance` vm ON host.id = vm.host_id " +
-            "WHERE host.data_center_id = ? AND host.type = 'Routing' AND host.removed is null ";
+    private static final String ORDER_HOSTS_NUMBER_OF_VMS_FOR_ACCOUNT = "SELECT host.id, SUM(IF(vm.state='Running' AND vm.account_id = ?, 1, 0)) FROM `cloud`.`host` host LEFT JOIN `cloud`.`vm_instance` vm ON host.id = vm.host_id "
+            + "WHERE host.data_center_id = ? AND host.type = 'Routing' AND host.removed is null ";
 
     private static final String ORDER_HOSTS_NUMBER_OF_VMS_FOR_ACCOUNT_PART2 = " GROUP BY host.id ORDER BY 2 ASC ";
 
-    private static final String COUNT_VMS_BASED_ON_VGPU_TYPES1 =
-            "SELECT pci, type, SUM(vmcount) FROM (SELECT MAX(IF(offering.name = 'pciDevice',value,'')) AS pci, MAX(IF(offering.name = 'vgpuType', value,'')) " +
-            "AS type, COUNT(DISTINCT vm.id) AS vmcount FROM service_offering_details offering INNER JOIN vm_instance vm ON offering.service_offering_id = vm.service_offering_id " +
-            "INNER JOIN `cloud`.`host` ON vm.host_id = host.id WHERE vm.state = 'Running' AND host.data_center_id = ? ";
-    private static final String COUNT_VMS_BASED_ON_VGPU_TYPES2 =
-            "GROUP BY offering.service_offering_id) results GROUP BY pci, type";
+    private static final String COUNT_VMS_BASED_ON_VGPU_TYPES1 = "SELECT pci, type, SUM(vmcount) FROM (SELECT MAX(IF(offering.name = 'pciDevice',value,'')) AS pci, MAX(IF(offering.name = 'vgpuType', value,'')) "
+            + "AS type, COUNT(DISTINCT vm.id) AS vmcount FROM service_offering_details offering INNER JOIN vm_instance vm ON offering.service_offering_id = vm.service_offering_id "
+            + "INNER JOIN `cloud`.`host` ON vm.host_id = host.id WHERE vm.state = 'Running' AND host.data_center_id = ? ";
+    private static final String COUNT_VMS_BASED_ON_VGPU_TYPES2 = "GROUP BY offering.service_offering_id) results GROUP BY pci, type";
 
     @Inject
     protected HostDao _hostDao;
@@ -444,7 +441,8 @@ public class VMInstanceDaoImpl extends GenericDaoBase<VMInstanceVO, Long> implem
             return true;
         }
 
-        // lock the target row at beginning to avoid lock-promotion caused deadlock
+        // lock the target row at beginning to avoid lock-promotion caused
+        // deadlock
         lockRow(vm.getId(), true);
 
         SearchCriteria<VMInstanceVO> sc = StateChangeSearch.create();
@@ -469,11 +467,11 @@ public class VMInstanceDaoImpl extends GenericDaoBase<VMInstanceVO, Long> implem
                 if (vo != null) {
                     StringBuilder str = new StringBuilder("Unable to update ").append(vo.toString());
                     str.append(": DB Data={Host=").append(vo.getHostId()).append("; State=").append(vo.getState().toString()).append("; updated=").append(vo.getUpdated())
-                            .append("; time=").append(vo.getUpdateTime());
+                    .append("; time=").append(vo.getUpdateTime());
                     str.append("} New Data: {Host=").append(vm.getHostId()).append("; State=").append(vm.getState().toString()).append("; updated=").append(vmi.getUpdated())
-                            .append("; time=").append(vo.getUpdateTime());
+                    .append("; time=").append(vo.getUpdateTime());
                     str.append("} Stale Data: {Host=").append(oldHostId).append("; State=").append(oldState).append("; updated=").append(oldUpdated).append("; time=")
-                            .append(oldUpdateDate).append("}");
+                    .append(oldUpdateDate).append("}");
                     s_logger.debug(str.toString());
 
                 } else {
@@ -482,7 +480,8 @@ public class VMInstanceDaoImpl extends GenericDaoBase<VMInstanceVO, Long> implem
             }
 
             if (vo != null && vo.getState() == newState) {
-                // allow for concurrent update if target state has already been matched
+                // allow for concurrent update if target state has already been
+                // matched
                 s_logger.debug("VM " + vo.getInstanceName() + " state has been already been updated to " + newState);
                 return true;
             }
@@ -766,8 +765,7 @@ public class VMInstanceDaoImpl extends GenericDaoBase<VMInstanceVO, Long> implem
                 VMInstanceVO instance = findById(instanceId);
                 if (instance != null) {
                     Long savedPowerHostId = instance.getPowerHostId();
-                    if (instance.getPowerState() != powerState || savedPowerHostId == null
-                            || savedPowerHostId.longValue() != powerHostId) {
+                    if (instance.getPowerState() != powerState || savedPowerHostId == null || savedPowerHostId.longValue() != powerHostId) {
                         instance.setPowerState(powerState);
                         instance.setPowerHostId(powerHostId);
                         instance.setPowerStateUpdateCount(1);
@@ -775,7 +773,8 @@ public class VMInstanceDaoImpl extends GenericDaoBase<VMInstanceVO, Long> implem
                         needToUpdate = true;
                         update(instanceId, instance);
                     } else {
-                        // to reduce DB updates, consecutive same state update for more than 3 times
+                        // to reduce DB updates, consecutive same state update
+                        // for more than 3 times
                         if (instance.getPowerStateUpdateCount() < MAX_CONSECUTIVE_SAME_STATE_UPDATE_COUNT) {
                             instance.setPowerStateUpdateCount(instance.getPowerStateUpdateCount() + 1);
                             instance.setPowerStateUpdateTime(DateUtil.currentGMTTime());
@@ -804,7 +803,8 @@ public class VMInstanceDaoImpl extends GenericDaoBase<VMInstanceVO, Long> implem
         });
     }
 
-    @Override @DB
+    @Override
+    @DB
     public void resetHostPowerStateTracking(final long hostId) {
         Transaction.execute(new TransactionCallbackNoReturn() {
             @Override

@@ -34,8 +34,7 @@ import com.cloud.region.ha.GlobalLoadBalancerRule;
 import com.cloud.region.ha.GlobalLoadBalancingRulesService;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateGlobalLoadBalancerRule", description = "update global load balancer rules.", responseObject = GlobalLoadBalancerResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "updateGlobalLoadBalancerRule", description = "update global load balancer rules.", responseObject = GlobalLoadBalancerResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateGlobalLoadBalancerRuleCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(GlobalLoadBalancerResponse.class.getName());
 
@@ -45,27 +44,17 @@ public class UpdateGlobalLoadBalancerRuleCmd extends BaseAsyncCmd {
     // ////////////// API parameters /////////////////////
     // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = GlobalLoadBalancerResponse.class,
-               required = true,
-               description = "the ID of the global load balancer rule")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = GlobalLoadBalancerResponse.class, required = true, description = "the ID of the global load balancer rule")
     private Long id;
 
     @Parameter(name = ApiConstants.DESCRIPTION, type = CommandType.STRING, description = "the description of the load balancer rule", length = 4096)
     private String description;
 
-    @Parameter(name = ApiConstants.GSLB_LB_METHOD,
-               type = CommandType.STRING,
-               required = false,
-               description = "load balancer algorithm (roundrobin, leastconn, proximity) "
-                   + "that is used to distributed traffic across the zones participating in global server load balancing, if not specified defaults to 'round robin'")
+    @Parameter(name = ApiConstants.GSLB_LB_METHOD, type = CommandType.STRING, required = false, description = "load balancer algorithm (roundrobin, leastconn, proximity) "
+            + "that is used to distributed traffic across the zones participating in global server load balancing, if not specified defaults to 'round robin'")
     private String algorithm;
 
-    @Parameter(name = ApiConstants.GSLB_STICKY_SESSION_METHOD,
-               type = CommandType.STRING,
-               required = false,
-               description = "session sticky method (sourceip) if not specified defaults to sourceip")
+    @Parameter(name = ApiConstants.GSLB_STICKY_SESSION_METHOD, type = CommandType.STRING, required = false, description = "session sticky method (sourceip) if not specified defaults to sourceip")
     private String stickyMethod;
 
     // ///////////////////////////////////////////////////

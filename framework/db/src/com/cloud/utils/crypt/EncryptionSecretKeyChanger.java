@@ -63,7 +63,7 @@ public class EncryptionSecretKeyChanger {
         String newMSKey = null;
         String newDBKey = null;
 
-        //Parse command-line args
+        // Parse command-line args
         while (iter.hasNext()) {
             String arg = iter.next();
             // Old MS Key
@@ -139,9 +139,9 @@ public class EncryptionSecretKeyChanger {
                 System.out.println("Failed to update db.properties");
                 return;
             } else {
-                //db.properties updated successfully
+                // db.properties updated successfully
                 if (encryptionType.equals("file")) {
-                    //update key file with new MS key
+                    // update key file with new MS key
                     try {
                         FileWriter fwriter = new FileWriter(keyFile);
                         BufferedWriter bwriter = new BufferedWriter(fwriter);
@@ -172,14 +172,14 @@ public class EncryptionSecretKeyChanger {
             System.out.println("Successfully updated secret key(s)");
         } else {
             System.out.println("Data Migration failed. Reverting db.properties");
-            //revert db.properties
+            // revert db.properties
             try {
                 backupDBProps.save();
             } catch (ConfigurationException e) {
                 e.printStackTrace();
             }
             if (encryptionType.equals("file")) {
-                //revert secret key in file
+                // revert secret key in file
                 try {
                     FileWriter fwriter = new FileWriter(keyFile);
                     BufferedWriter bwriter = new BufferedWriter(fwriter);
@@ -418,6 +418,6 @@ public class EncryptionSecretKeyChanger {
 
     private static void usage() {
         System.out.println("Usage: \tEncryptionSecretKeyChanger \n" + "\t\t-m <Mgmt Secret Key> \n" + "\t\t-d <DB Secret Key> \n" + "\t\t-n [New Mgmt Secret Key] \n"
-            + "\t\t-e [New DB Secret Key]");
+                + "\t\t-e [New DB Secret Key]");
     }
 }

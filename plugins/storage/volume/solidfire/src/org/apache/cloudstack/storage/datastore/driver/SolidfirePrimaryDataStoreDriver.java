@@ -65,15 +65,24 @@ import com.cloud.user.dao.AccountDao;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class SolidfirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
-    @Inject private PrimaryDataStoreDao _storagePoolDao;
-    @Inject private StoragePoolDetailsDao _storagePoolDetailsDao;
-    @Inject private VolumeDao _volumeDao;
-    @Inject private VolumeDetailsDao _volumeDetailsDao;
-    @Inject private DataCenterDao _zoneDao;
-    @Inject private AccountDao _accountDao;
-    @Inject private AccountDetailsDao _accountDetailsDao;
-    @Inject private ClusterDetailsDao _clusterDetailsDao;
-    @Inject private HostDao _hostDao;
+    @Inject
+    private PrimaryDataStoreDao _storagePoolDao;
+    @Inject
+    private StoragePoolDetailsDao _storagePoolDetailsDao;
+    @Inject
+    private VolumeDao _volumeDao;
+    @Inject
+    private VolumeDetailsDao _volumeDetailsDao;
+    @Inject
+    private DataCenterDao _zoneDao;
+    @Inject
+    private AccountDao _accountDao;
+    @Inject
+    private AccountDetailsDao _accountDetailsDao;
+    @Inject
+    private ClusterDetailsDao _clusterDetailsDao;
+    @Inject
+    private HostDao _hostDao;
 
     @Override
     public Map<String, String> getCapabilities() {
@@ -152,33 +161,23 @@ public class SolidfirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
     }
 
     private void updateCsDbWithAccountInfo(long csAccountId, SolidFireUtil.SolidFireAccount sfAccount) {
-        AccountDetailVO accountDetail = new AccountDetailVO(csAccountId,
-                SolidFireUtil.ACCOUNT_ID,
-                String.valueOf(sfAccount.getId()));
+        AccountDetailVO accountDetail = new AccountDetailVO(csAccountId, SolidFireUtil.ACCOUNT_ID, String.valueOf(sfAccount.getId()));
 
         _accountDetailsDao.persist(accountDetail);
 
-        accountDetail = new AccountDetailVO(csAccountId,
-                SolidFireUtil.CHAP_INITIATOR_USERNAME,
-                String.valueOf(sfAccount.getName()));
+        accountDetail = new AccountDetailVO(csAccountId, SolidFireUtil.CHAP_INITIATOR_USERNAME, String.valueOf(sfAccount.getName()));
 
         _accountDetailsDao.persist(accountDetail);
 
-        accountDetail = new AccountDetailVO(csAccountId,
-                SolidFireUtil.CHAP_INITIATOR_SECRET,
-                String.valueOf(sfAccount.getInitiatorSecret()));
+        accountDetail = new AccountDetailVO(csAccountId, SolidFireUtil.CHAP_INITIATOR_SECRET, String.valueOf(sfAccount.getInitiatorSecret()));
 
         _accountDetailsDao.persist(accountDetail);
 
-        accountDetail = new AccountDetailVO(csAccountId,
-                SolidFireUtil.CHAP_TARGET_USERNAME,
-                sfAccount.getName());
+        accountDetail = new AccountDetailVO(csAccountId, SolidFireUtil.CHAP_TARGET_USERNAME, sfAccount.getName());
 
         _accountDetailsDao.persist(accountDetail);
 
-        accountDetail = new AccountDetailVO(csAccountId,
-                SolidFireUtil.CHAP_TARGET_SECRET,
-                sfAccount.getTargetSecret());
+        accountDetail = new AccountDetailVO(csAccountId, SolidFireUtil.CHAP_TARGET_SECRET, sfAccount.getTargetSecret());
 
         _accountDetailsDao.persist(accountDetail);
     }
@@ -223,38 +222,43 @@ public class SolidfirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
     }
 
     /*
-    @Override
-    public ChapInfo getChapInfo(VolumeInfo volumeInfo) {
-        long accountId = volumeInfo.getAccountId();
+     * @Override public ChapInfo getChapInfo(VolumeInfo volumeInfo) { long
+     * accountId = volumeInfo.getAccountId();
+     *
+     * AccountDetailVO accountDetail = _accountDetailsDao.findDetail(accountId,
+     * SolidFireUtil.CHAP_INITIATOR_USERNAME);
+     *
+     * String chapInitiatorUsername = accountDetail.getValue();
+     *
+     * accountDetail = _accountDetailsDao.findDetail(accountId,
+     * SolidFireUtil.CHAP_INITIATOR_SECRET);
+     *
+     * String chapInitiatorSecret = accountDetail.getValue();
+     *
+     * accountDetail = _accountDetailsDao.findDetail(accountId,
+     * SolidFireUtil.CHAP_TARGET_USERNAME);
+     *
+     * String chapTargetUsername = accountDetail.getValue();
+     *
+     * accountDetail = _accountDetailsDao.findDetail(accountId,
+     * SolidFireUtil.CHAP_TARGET_SECRET);
+     *
+     * String chapTargetSecret = accountDetail.getValue();
+     *
+     * return new ChapInfoImpl(chapInitiatorUsername, chapInitiatorSecret,
+     * chapTargetUsername, chapTargetSecret); }
+     */
 
-        AccountDetailVO accountDetail = _accountDetailsDao.findDetail(accountId, SolidFireUtil.CHAP_INITIATOR_USERNAME);
-
-        String chapInitiatorUsername = accountDetail.getValue();
-
-        accountDetail = _accountDetailsDao.findDetail(accountId, SolidFireUtil.CHAP_INITIATOR_SECRET);
-
-        String chapInitiatorSecret = accountDetail.getValue();
-
-        accountDetail = _accountDetailsDao.findDetail(accountId, SolidFireUtil.CHAP_TARGET_USERNAME);
-
-        String chapTargetUsername = accountDetail.getValue();
-
-        accountDetail = _accountDetailsDao.findDetail(accountId, SolidFireUtil.CHAP_TARGET_SECRET);
-
-        String chapTargetSecret = accountDetail.getValue();
-
-        return new ChapInfoImpl(chapInitiatorUsername, chapInitiatorSecret, chapTargetUsername, chapTargetSecret);
-    }
-    */
-
-    // get the VAG associated with volumeInfo's cluster, if any (ListVolumeAccessGroups)
+    // get the VAG associated with volumeInfo's cluster, if any
+    // (ListVolumeAccessGroups)
     // if the VAG exists
-    //     update the VAG to contain all IQNs of the hosts (ModifyVolumeAccessGroup)
-    //     if the ID of volumeInfo in not in the VAG, add it (ModifyVolumeAccessGroup)
-    // if the VAG doesn't exist, create it with the IQNs of the hosts and the ID of volumeInfo (CreateVolumeAccessGroup)
+    // update the VAG to contain all IQNs of the hosts (ModifyVolumeAccessGroup)
+    // if the ID of volumeInfo in not in the VAG, add it
+    // (ModifyVolumeAccessGroup)
+    // if the VAG doesn't exist, create it with the IQNs of the hosts and the ID
+    // of volumeInfo (CreateVolumeAccessGroup)
     @Override
-    public boolean connectVolumeToHost(VolumeInfo volumeInfo, Host host, DataStore dataStore)
-    {
+    public boolean connectVolumeToHost(VolumeInfo volumeInfo, Host host, DataStore dataStore) {
         if (volumeInfo == null || host == null || dataStore == null) {
             return false;
         }
@@ -277,38 +281,34 @@ public class SolidfirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
 
         if (vagId != null) {
             SolidFireUtil.SolidFireVag sfVag = SolidFireUtil.getSolidFireVag(sfConnection.getManagementVip(), sfConnection.getManagementPort(),
-                sfConnection.getClusterAdminUsername(), sfConnection.getClusterAdminPassword(), Long.parseLong(vagId));
+                    sfConnection.getClusterAdminUsername(), sfConnection.getClusterAdminPassword(), Long.parseLong(vagId));
 
             String[] hostIqns = getNewHostIqns(sfVag.getInitiators(), getIqnsFromHosts(hosts));
             long[] volumeIds = getNewVolumeIds(sfVag.getVolumeIds(), sfVolumeId, true);
 
-            SolidFireUtil.modifySolidFireVag(sfConnection.getManagementVip(), sfConnection.getManagementPort(),
-                sfConnection.getClusterAdminUsername(), sfConnection.getClusterAdminPassword(), sfVag.getId(),
-                hostIqns, volumeIds);
-        }
-        else {
+            SolidFireUtil.modifySolidFireVag(sfConnection.getManagementVip(), sfConnection.getManagementPort(), sfConnection.getClusterAdminUsername(),
+                    sfConnection.getClusterAdminPassword(), sfVag.getId(), hostIqns, volumeIds);
+        } else {
             long lVagId;
 
             try {
-                lVagId = SolidFireUtil.createSolidFireVag(sfConnection.getManagementVip(), sfConnection.getManagementPort(),
-                    sfConnection.getClusterAdminUsername(), sfConnection.getClusterAdminPassword(), "CloudStack-" + UUID.randomUUID().toString(),
-                    getIqnsFromHosts(hosts), new long[] { sfVolumeId });
-            }
-            catch (Exception ex) {
+                lVagId = SolidFireUtil.createSolidFireVag(sfConnection.getManagementVip(), sfConnection.getManagementPort(), sfConnection.getClusterAdminUsername(),
+                        sfConnection.getClusterAdminPassword(), "CloudStack-" + UUID.randomUUID().toString(), getIqnsFromHosts(hosts), new long[] {sfVolumeId});
+            } catch (Exception ex) {
                 String iqnInVagAlready = "Exceeded maximum number of Volume Access Groups per initiator";
 
                 if (!ex.getMessage().contains(iqnInVagAlready)) {
                     throw new CloudRuntimeException(ex.getMessage());
                 }
 
-                // getCompatibleVag throws an exception if an existing VAG can't be located
+                // getCompatibleVag throws an exception if an existing VAG can't
+                // be located
                 SolidFireUtil.SolidFireVag sfVag = getCompatibleVag(hosts, sfConnection);
 
                 long[] volumeIds = getNewVolumeIds(sfVag.getVolumeIds(), sfVolumeId, true);
 
-                SolidFireUtil.modifySolidFireVag(sfConnection.getManagementVip(), sfConnection.getManagementPort(),
-                    sfConnection.getClusterAdminUsername(), sfConnection.getClusterAdminPassword(), sfVag.getId(),
-                    sfVag.getInitiators(), volumeIds);
+                SolidFireUtil.modifySolidFireVag(sfConnection.getManagementVip(), sfConnection.getManagementPort(), sfConnection.getClusterAdminUsername(),
+                        sfConnection.getClusterAdminPassword(), sfVag.getId(), sfVag.getInitiators(), volumeIds);
 
                 lVagId = sfVag.getId();
             }
@@ -321,8 +321,10 @@ public class SolidfirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
         return true;
     }
 
-    // this method takes in a collection of hosts and tries to find an existing VAG that has all three of them in it
-    // if successful, the VAG is returned; else, a CloudRuntimeException is thrown and this issue should be corrected by an admin
+    // this method takes in a collection of hosts and tries to find an existing
+    // VAG that has all three of them in it
+    // if successful, the VAG is returned; else, a CloudRuntimeException is
+    // thrown and this issue should be corrected by an admin
     private SolidFireUtil.SolidFireVag getCompatibleVag(List<HostVO> hosts, SolidFireConnection sfConnection) {
         List<SolidFireUtil.SolidFireVag> sfVags = SolidFireUtil.getAllSolidFireVags(sfConnection.getManagementVip(), sfConnection.getManagementPort(),
                 sfConnection.getClusterAdminUsername(), sfConnection.getClusterAdminPassword());
@@ -332,14 +334,16 @@ public class SolidfirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
 
             // where the method we're in is called, hosts should not be null
             for (HostVO host : hosts) {
-                // where the method we're in is called, host.getStorageUrl() should not be null (it actually should start with "iqn")
+                // where the method we're in is called, host.getStorageUrl()
+                // should not be null (it actually should start with "iqn")
                 hostIqns.add(host.getStorageUrl().toLowerCase());
             }
 
             for (SolidFireUtil.SolidFireVag sfVag : sfVags) {
                 List<String> lstInitiators = getStringArrayAsLowerCaseStringList(sfVag.getInitiators());
 
-                // lstInitiators should not be returned from getStringArrayAsLowerCaseStringList as null
+                // lstInitiators should not be returned from
+                // getStringArrayAsLowerCaseStringList as null
                 if (lstInitiators.containsAll(hostIqns)) {
                     return sfVag;
                 }
@@ -361,14 +365,14 @@ public class SolidfirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
         }
 
         return lstLowerCaseString;
-      }
+    }
 
-    // get the VAG associated with volumeInfo's cluster, if any (ListVolumeAccessGroups) // might not exist if using CHAP
+    // get the VAG associated with volumeInfo's cluster, if any
+    // (ListVolumeAccessGroups) // might not exist if using CHAP
     // if the VAG exists
-    //     remove the ID of volumeInfo from the VAG (ModifyVolumeAccessGroup)
+    // remove the ID of volumeInfo from the VAG (ModifyVolumeAccessGroup)
     @Override
-    public void disconnectVolumeFromHost(VolumeInfo volumeInfo, Host host, DataStore dataStore)
-    {
+    public void disconnectVolumeFromHost(VolumeInfo volumeInfo, Host host, DataStore dataStore) {
         if (volumeInfo == null || host == null || dataStore == null) {
             return;
         }
@@ -387,14 +391,13 @@ public class SolidfirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
             SolidFireConnection sfConnection = getSolidFireConnection(storagePoolId);
 
             SolidFireUtil.SolidFireVag sfVag = SolidFireUtil.getSolidFireVag(sfConnection.getManagementVip(), sfConnection.getManagementPort(),
-                sfConnection.getClusterAdminUsername(), sfConnection.getClusterAdminPassword(), Long.parseLong(vagId));
+                    sfConnection.getClusterAdminUsername(), sfConnection.getClusterAdminPassword(), Long.parseLong(vagId));
 
             String[] hostIqns = getNewHostIqns(sfVag.getInitiators(), getIqnsFromHosts(hosts));
             long[] volumeIds = getNewVolumeIds(sfVag.getVolumeIds(), sfVolumeId, false);
 
-            SolidFireUtil.modifySolidFireVag(sfConnection.getManagementVip(), sfConnection.getManagementPort(),
-                sfConnection.getClusterAdminUsername(), sfConnection.getClusterAdminPassword(), sfVag.getId(),
-                hostIqns, volumeIds);
+            SolidFireUtil.modifySolidFireVag(sfConnection.getManagementVip(), sfConnection.getManagementPort(), sfConnection.getClusterAdminUsername(),
+                    sfConnection.getClusterAdminPassword(), sfVag.getId(), hostIqns, volumeIds);
         }
     }
 
@@ -558,10 +561,8 @@ public class SolidfirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
 
         long volumeSize = getVolumeSizeIncludingHypervisorSnapshotReserve(volumeInfo, _storagePoolDao.findById(storagePoolId));
 
-        long sfVolumeId = SolidFireUtil.createSolidFireVolume(mVip, mPort, clusterAdminUsername, clusterAdminPassword,
-                getSolidFireVolumeName(volumeInfo.getName()), sfAccountId, volumeSize, true,
-                NumberFormat.getInstance().format(volumeInfo.getSize()),
-                iops.getMinIops(), iops.getMaxIops(), iops.getBurstIops());
+        long sfVolumeId = SolidFireUtil.createSolidFireVolume(mVip, mPort, clusterAdminUsername, clusterAdminPassword, getSolidFireVolumeName(volumeInfo.getName()), sfAccountId,
+                volumeSize, true, NumberFormat.getInstance().format(volumeInfo.getSize()), iops.getMinIops(), iops.getMaxIops(), iops.getBurstIops());
 
         return SolidFireUtil.getSolidFireVolume(mVip, mPort, clusterAdminUsername, clusterAdminPassword, sfVolumeId);
     }
@@ -636,12 +637,12 @@ public class SolidfirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
         }
     }
 
-    private SolidFireUtil.SolidFireVolume deleteSolidFireVolume(VolumeInfo volumeInfo, SolidFireConnection sfConnection)
-    {
+    private SolidFireUtil.SolidFireVolume deleteSolidFireVolume(VolumeInfo volumeInfo, SolidFireConnection sfConnection) {
         Long storagePoolId = volumeInfo.getPoolId();
 
         if (storagePoolId == null) {
-            return null; // this volume was never assigned to a storage pool, so no SAN volume should exist for it
+            return null; // this volume was never assigned to a storage pool, so
+            // no SAN volume should exist for it
         }
 
         String mVip = sfConnection.getManagementVip();
@@ -729,46 +730,41 @@ public class SolidfirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
     }
 
     /*
-    private void deleteSolidFireAccount(long sfAccountId, SolidFireConnection sfConnection) {
-        String mVip = sfConnection.getManagementVip();
-        int mPort = sfConnection.getManagementPort();
-        String clusterAdminUsername = sfConnection.getClusterAdminUsername();
-        String clusterAdminPassword = sfConnection.getClusterAdminPassword();
-
-        List<SolidFireUtil.SolidFireVolume> sfVolumes = SolidFireUtil.getDeletedVolumes(mVip, mPort, clusterAdminUsername, clusterAdminPassword);
-
-        // if there are volumes for this account in the trash, delete them (so the account can be deleted)
-        if (sfVolumes != null) {
-            for (SolidFireUtil.SolidFireVolume sfVolume : sfVolumes) {
-                if (sfVolume.getAccountId() == sfAccountId) {
-                    SolidFireUtil.purgeSolidFireVolume(mVip, mPort, clusterAdminUsername, clusterAdminPassword, sfVolume.getId());
-                }
-            }
-        }
-
-        SolidFireUtil.deleteSolidFireAccount(mVip, mPort, clusterAdminUsername, clusterAdminPassword, sfAccountId);
-    }
-
-    private boolean sfAccountHasVolume(long sfAccountId, SolidFireConnection sfConnection) {
-        String mVip = sfConnection.getManagementVip();
-        int mPort = sfConnection.getManagementPort();
-        String clusterAdminUsername = sfConnection.getClusterAdminUsername();
-        String clusterAdminPassword = sfConnection.getClusterAdminPassword();
-
-        List<SolidFireUtil.SolidFireVolume> sfVolumes =
-            SolidFireUtil.getSolidFireVolumesForAccountId(mVip, mPort, clusterAdminUsername, clusterAdminPassword, sfAccountId);
-
-        if (sfVolumes != null) {
-            for (SolidFireUtil.SolidFireVolume sfVolume : sfVolumes) {
-                if (sfVolume.isActive()) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-    */
+     * private void deleteSolidFireAccount(long sfAccountId, SolidFireConnection
+     * sfConnection) { String mVip = sfConnection.getManagementVip(); int mPort
+     * = sfConnection.getManagementPort(); String clusterAdminUsername =
+     * sfConnection.getClusterAdminUsername(); String clusterAdminPassword =
+     * sfConnection.getClusterAdminPassword();
+     *
+     * List<SolidFireUtil.SolidFireVolume> sfVolumes =
+     * SolidFireUtil.getDeletedVolumes(mVip, mPort, clusterAdminUsername,
+     * clusterAdminPassword);
+     *
+     * // if there are volumes for this account in the trash, delete them (so
+     * the account can be deleted) if (sfVolumes != null) { for
+     * (SolidFireUtil.SolidFireVolume sfVolume : sfVolumes) { if
+     * (sfVolume.getAccountId() == sfAccountId) {
+     * SolidFireUtil.purgeSolidFireVolume(mVip, mPort, clusterAdminUsername,
+     * clusterAdminPassword, sfVolume.getId()); } } }
+     *
+     * SolidFireUtil.deleteSolidFireAccount(mVip, mPort, clusterAdminUsername,
+     * clusterAdminPassword, sfAccountId); }
+     *
+     * private boolean sfAccountHasVolume(long sfAccountId, SolidFireConnection
+     * sfConnection) { String mVip = sfConnection.getManagementVip(); int mPort
+     * = sfConnection.getManagementPort(); String clusterAdminUsername =
+     * sfConnection.getClusterAdminUsername(); String clusterAdminPassword =
+     * sfConnection.getClusterAdminPassword();
+     *
+     * List<SolidFireUtil.SolidFireVolume> sfVolumes =
+     * SolidFireUtil.getSolidFireVolumesForAccountId(mVip, mPort,
+     * clusterAdminUsername, clusterAdminPassword, sfAccountId);
+     *
+     * if (sfVolumes != null) { for (SolidFireUtil.SolidFireVolume sfVolume :
+     * sfVolumes) { if (sfVolume.isActive()) { return true; } } }
+     *
+     * return false; }
+     */
 
     @Override
     public void deleteAsync(DataStore dataStore, DataObject dataObject, AsyncCompletionCallback<CommandResult> callback) {
@@ -776,8 +772,11 @@ public class SolidfirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
 
         if (dataObject.getType() == DataObjectType.VOLUME) {
             VolumeInfo volumeInfo = (VolumeInfo)dataObject;
-            // AccountVO account = _accountDao.findById(volumeInfo.getAccountId());
-            // AccountDetailVO accountDetails = _accountDetailsDao.findDetail(account.getAccountId(), SolidFireUtil.ACCOUNT_ID);
+            // AccountVO account =
+            // _accountDao.findById(volumeInfo.getAccountId());
+            // AccountDetailVO accountDetails =
+            // _accountDetailsDao.findDetail(account.getAccountId(),
+            // SolidFireUtil.ACCOUNT_ID);
             // long sfAccountId = Long.parseLong(accountDetails.getValue());
 
             long storagePoolId = dataStore.getId();
@@ -787,14 +786,14 @@ public class SolidfirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
 
             _volumeDao.deleteVolumesByInstance(volumeInfo.getId());
 
-            //  if (!sfAccountHasVolume(sfAccountId, sfConnection)) {
-            //      // delete the account from the SolidFire SAN
-            //      deleteSolidFireAccount(sfAccountId, sfConnection);
+            // if (!sfAccountHasVolume(sfAccountId, sfConnection)) {
+            // // delete the account from the SolidFire SAN
+            // deleteSolidFireAccount(sfAccountId, sfConnection);
             //
-            //      // delete the info in the account_details table
-            //      // that's related to the SolidFire account
-            //      _accountDetailsDao.deleteDetails(account.getAccountId());
-            //  }
+            // // delete the info in the account_details table
+            // // that's related to the SolidFire account
+            // _accountDetailsDao.deleteDetails(account.getAccountId());
+            // }
 
             StoragePoolVO storagePool = _storagePoolDao.findById(storagePoolId);
 

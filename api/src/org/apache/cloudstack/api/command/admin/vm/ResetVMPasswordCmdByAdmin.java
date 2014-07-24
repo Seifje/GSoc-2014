@@ -30,20 +30,17 @@ import com.cloud.exception.InsufficientCapacityException;
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.uservm.UserVm;
 
-@APICommand(name = "resetPasswordForVirtualMachine", responseObject=UserVmResponse.class, description="Resets the password for virtual machine. " +
-                    "The virtual machine must be in a \"Stopped\" state and the template must already " +
-        "support this feature for this command to take effect. [async]", responseView = ResponseView.Full)
+@APICommand(name = "resetPasswordForVirtualMachine", responseObject = UserVmResponse.class, description = "Resets the password for virtual machine. "
+        + "The virtual machine must be in a \"Stopped\" state and the template must already " + "support this feature for this command to take effect. [async]", responseView = ResponseView.Full)
 public class ResetVMPasswordCmdByAdmin extends ResetVMPasswordCmd {
     public static final Logger s_logger = Logger.getLogger(ResetVMPasswordCmdByAdmin.class.getName());
 
-
-
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException{
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException {
         password = _mgr.generateRandomPassword();
-        CallContext.current().setEventDetails("Vm Id: "+getId());
+        CallContext.current().setEventDetails("Vm Id: " + getId());
         UserVm result = _userVmService.resetVMPassword(this, password);
-        if (result != null){
+        if (result != null) {
             UserVmResponse response = _responseGenerator.createUserVmResponse(ResponseView.Full, "virtualmachine", result).get(0);
             response.setResponseName(getCommandName());
             setResponseObject(response);

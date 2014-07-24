@@ -59,17 +59,20 @@ public class NexentaPrimaryDataStoreDriver implements PrimaryDataStoreDriver {
 
     @Override
     public boolean connectVolumeToHost(VolumeInfo volumeInfo, Host host, DataStore dataStore) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return false; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 
     @Override
     public void disconnectVolumeFromHost(VolumeInfo volumeInfo, Host host, DataStore dataStore) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        // To change body of implemented methods use File | Settings | File
+        // Templates.
     }
 
     @Override
     public long getVolumeSizeIncludingHypervisorSnapshotReserve(Volume volume, StoragePool pool) {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return 0; // To change body of implemented methods use File | Settings |
+        // File Templates.
     }
 
     @Inject
@@ -117,10 +120,12 @@ public class NexentaPrimaryDataStoreDriver implements PrimaryDataStoreDriver {
     }
 
     @Override
-    public void takeSnapshot(SnapshotInfo snapshot, AsyncCompletionCallback<CreateCmdResult> callback) {}
+    public void takeSnapshot(SnapshotInfo snapshot, AsyncCompletionCallback<CreateCmdResult> callback) {
+    }
 
     @Override
-    public void revertSnapshot(SnapshotInfo snapshot, AsyncCompletionCallback<CommandResult> callback) {}
+    public void revertSnapshot(SnapshotInfo snapshot, AsyncCompletionCallback<CommandResult> callback) {
+    }
 
     @Override
     public void createAsync(DataStore dataStore, DataObject dataObject, AsyncCompletionCallback<CreateCmdResult> callback) {
@@ -130,13 +135,13 @@ public class NexentaPrimaryDataStoreDriver implements PrimaryDataStoreDriver {
         if (dataObject.getType() != DataObjectType.VOLUME) {
             errorMessage = "Invalid DataObjectType (" + dataObject.getType() + ") passed to createAsync";
         } else {
-            VolumeInfo volumeInfo = (VolumeInfo) dataObject;
+            VolumeInfo volumeInfo = (VolumeInfo)dataObject;
 
             long storagePoolId = dataStore.getId();
             NexentaStorAppliance appliance = getNexentaStorAppliance(storagePoolId);
 
             // TODO: maybe we should use md5(volume name) as volume name
-            NexentaStorZvol zvol = (NexentaStorZvol) appliance.createVolume(volumeInfo.getName(), volumeInfo.getSize());
+            NexentaStorZvol zvol = (NexentaStorZvol)appliance.createVolume(volumeInfo.getName(), volumeInfo.getSize());
             iqn = zvol.getIqn();
 
             VolumeVO volume = this._volumeDao.findById(volumeInfo.getId());
@@ -163,18 +168,14 @@ public class NexentaPrimaryDataStoreDriver implements PrimaryDataStoreDriver {
     public void deleteAsync(DataStore store, DataObject data, AsyncCompletionCallback<CommandResult> callback) {
         String errorMessage = null;
         if (data.getType() == DataObjectType.VOLUME) {
-            VolumeInfo volumeInfo = (VolumeInfo) data;
+            VolumeInfo volumeInfo = (VolumeInfo)data;
             long storagePoolId = store.getId();
             NexentaStorAppliance appliance = getNexentaStorAppliance(storagePoolId);
             StoragePoolVO storagePool = _storagePoolDao.findById(storagePoolId);
 
-
-
-//            _storagePoolDao.update(stoagePoolId);
+            // _storagePoolDao.update(stoagePoolId);
         } else {
-            errorMessage = String.format(
-                    "Invalid DataObjectType(%s) passed to deleteAsync",
-                    data.getType());
+            errorMessage = String.format("Invalid DataObjectType(%s) passed to deleteAsync", data.getType());
         }
         CommandResult result = new CommandResult();
         result.setResult(errorMessage);
@@ -182,7 +183,8 @@ public class NexentaPrimaryDataStoreDriver implements PrimaryDataStoreDriver {
     }
 
     @Override
-    public void copyAsync(DataObject srcdata, DataObject destData, AsyncCompletionCallback<CopyCommandResult> callback) {}
+    public void copyAsync(DataObject srcdata, DataObject destData, AsyncCompletionCallback<CopyCommandResult> callback) {
+    }
 
     @Override
     public boolean canCopy(DataObject srcData, DataObject destData) {
@@ -190,5 +192,6 @@ public class NexentaPrimaryDataStoreDriver implements PrimaryDataStoreDriver {
     }
 
     @Override
-    public void resize(DataObject data, AsyncCompletionCallback<CreateCmdResult> callback) {}
+    public void resize(DataObject data, AsyncCompletionCallback<CreateCmdResult> callback) {
+    }
 }

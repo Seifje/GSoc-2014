@@ -74,7 +74,6 @@ public class ApiDispatcher {
         _createSnapshotQueueSizeLimit = snapshotLimit;
     }
 
-
     public void dispatchCreateCmd(final BaseAsyncCreateCmd cmd, final Map<String, String> params) throws Exception {
         asyncCreationDispatchChain.dispatch(new DispatchTask(cmd, params));
     }
@@ -88,9 +87,10 @@ public class ApiDispatcher {
         if (!entitiesToAccess.isEmpty()) {
             for (Object entity : entitiesToAccess.keySet()) {
                 if (entity instanceof ControlledEntity) {
-                    _accountMgr.checkAccess(caller, entitiesToAccess.get(entity), false, apiName, (ControlledEntity) entity);
+                    _accountMgr.checkAccess(caller, entitiesToAccess.get(entity), false, apiName, (ControlledEntity)entity);
                 } else if (entity instanceof InfrastructureEntity) {
-                    //FIXME: Move this code in adapter, remove code from Account manager
+                    // FIXME: Move this code in adapter, remove code from
+                    // Account manager
                 }
             }
         }
@@ -103,7 +103,8 @@ public class ApiDispatcher {
         final CallContext ctx = CallContext.current();
         ctx.setEventDisplayEnabled(cmd.isDisplay());
 
-        // TODO This if shouldn't be here. Use polymorphism and move it to validateSpecificParameters
+        // TODO This if shouldn't be here. Use polymorphism and move it to
+        // validateSpecificParameters
         if (cmd instanceof BaseAsyncCmd) {
 
             final BaseAsyncCmd asyncCmd = (BaseAsyncCmd)cmd;
@@ -121,7 +122,8 @@ public class ApiDispatcher {
 
                 if (queueSizeLimit != null) {
                     if (!execute) {
-                        // if we are not within async-execution context, enqueue the command
+                        // if we are not within async-execution context, enqueue
+                        // the command
                         _asyncMgr.syncAsyncJobExecution((AsyncJob)asyncCmd.getJob(), asyncCmd.getSyncObjType(), asyncCmd.getSyncObjId().longValue(), queueSizeLimit);
                         return;
                     }
@@ -131,7 +133,8 @@ public class ApiDispatcher {
             }
         }
 
-        // TODO This if shouldn't be here. Use polymorphism and move it to validateSpecificParameters
+        // TODO This if shouldn't be here. Use polymorphism and move it to
+        // validateSpecificParameters
         if (cmd instanceof BaseAsyncCustomIdCmd) {
             ((BaseAsyncCustomIdCmd)cmd).checkUuid();
         } else if (cmd instanceof BaseCustomIdCmd) {
@@ -139,6 +142,6 @@ public class ApiDispatcher {
         }
 
         cmd.execute();
-                            }
+    }
 
 }

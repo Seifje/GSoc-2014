@@ -37,15 +37,14 @@ import org.apache.cloudstack.api.response.ZoneResponse;
 import com.cloud.storage.ImageStore;
 import com.cloud.user.Account;
 
-@APICommand(name = "createSecondaryStagingStore", description = "create secondary staging store.", responseObject = ImageStoreResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createSecondaryStagingStore", description = "create secondary staging store.", responseObject = ImageStoreResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateSecondaryStagingStoreCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(AddImageStoreCmd.class.getName());
     private static final String s_name = "createsecondarystagingstoreresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.URL, type = CommandType.STRING, required = true, description = "the URL for the staging store")
     private String url;
@@ -62,9 +61,9 @@ public class CreateSecondaryStagingStoreCmd extends BaseCmd {
     @Parameter(name = ApiConstants.PROVIDER, type = CommandType.STRING, required = false, description = "the staging store provider name")
     private String providerName;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getUrl() {
         return url;
@@ -98,9 +97,9 @@ public class CreateSecondaryStagingStoreCmd extends BaseCmd {
         return this.providerName;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

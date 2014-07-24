@@ -27,15 +27,20 @@ import com.cloud.utils.component.ManagerBase;
 @Local(value = {AlertManager.class})
 public class MockAlertManagerImpl extends ManagerBase implements AlertManager {
 
-    /* (non-Javadoc)
-     * @see com.cloud.utils.component.Manager#configure(java.lang.String, java.util.Map)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.utils.component.Manager#configure(java.lang.String,
+     * java.util.Map)
      */
     @Override
     public boolean configure(String name, Map<String, Object> params) throws ConfigurationException {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#start()
      */
     @Override
@@ -43,7 +48,9 @@ public class MockAlertManagerImpl extends ManagerBase implements AlertManager {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#stop()
      */
     @Override
@@ -51,7 +58,9 @@ public class MockAlertManagerImpl extends ManagerBase implements AlertManager {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#getName()
      */
     @Override
@@ -59,7 +68,9 @@ public class MockAlertManagerImpl extends ManagerBase implements AlertManager {
         return "MockAlertManagerImpl";
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.alert.AlertManager#clearAlert(short, long, long)
      */
     @Override
@@ -68,8 +79,11 @@ public class MockAlertManagerImpl extends ManagerBase implements AlertManager {
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.alert.AlertManager#sendAlert(short, long, java.lang.Long, java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.alert.AlertManager#sendAlert(short, long, java.lang.Long,
+     * java.lang.String, java.lang.String)
      */
     @Override
     public void sendAlert(AlertType alertType, long dataCenterId, Long podId, String subject, String body) {
@@ -77,7 +91,9 @@ public class MockAlertManagerImpl extends ManagerBase implements AlertManager {
 
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.alert.AlertManager#recalculateCapacity()
      */
     @Override

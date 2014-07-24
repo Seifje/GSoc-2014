@@ -102,15 +102,20 @@ public class XenServerGuru extends HypervisorGuruBase implements HypervisorGuru 
 
         List<VolumeVO> volumes = _volumeDao.findByInstance(vm.getId());
 
-        // it's OK in this case to send a detach command to the host for a root volume as this
-        // will simply lead to the SR that supports the root volume being removed
+        // it's OK in this case to send a detach command to the host for a root
+        // volume as this
+        // will simply lead to the SR that supports the root volume being
+        // removed
         if (volumes != null) {
             for (VolumeVO volume : volumes) {
                 StoragePoolVO storagePool = _storagePoolDao.findById(volume.getPoolId());
 
-                // storagePool should be null if we are expunging a volume that was never
-                // attached to a VM that was started (the "trick" for storagePool to be null
-                // is that none of the VMs this volume may have been attached to were ever started,
+                // storagePool should be null if we are expunging a volume that
+                // was never
+                // attached to a VM that was started (the "trick" for
+                // storagePool to be null
+                // is that none of the VMs this volume may have been attached to
+                // were ever started,
                 // so the volume was never assigned to a storage pool)
                 if (storagePool != null && storagePool.isManaged()) {
                     DataTO volTO = _volFactory.getVolume(volume.getId()).getTO();

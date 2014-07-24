@@ -71,7 +71,7 @@ public class StoragePoolJoinDaoImpl extends GenericDaoBase<StoragePoolJoinVO, Lo
         poolResponse.setName(pool.getName());
         poolResponse.setState(pool.getStatus());
         String path = pool.getPath();
-        //cifs store may contain password entry, remove the password
+        // cifs store may contain password entry, remove the password
         path = StringUtils.cleanString(path);
         poolResponse.setPath(path);
         poolResponse.setIpAddress(pool.getHostAddress());
@@ -135,7 +135,7 @@ public class StoragePoolJoinDaoImpl extends GenericDaoBase<StoragePoolJoinVO, Lo
         poolResponse.setName(pool.getName());
         poolResponse.setState(pool.getStatus());
         String path = pool.getPath();
-        //cifs store may contain password entry, remove the password
+        // cifs store may contain password entry, remove the password
         path = StringUtils.cleanString(path);
         poolResponse.setPath(path);
         poolResponse.setIpAddress(pool.getHostAddress());

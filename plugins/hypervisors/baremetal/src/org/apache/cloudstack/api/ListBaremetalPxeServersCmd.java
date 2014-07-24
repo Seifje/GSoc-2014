@@ -34,8 +34,7 @@ import com.cloud.exception.NetworkRuleConflictException;
 import com.cloud.exception.ResourceAllocationException;
 import com.cloud.exception.ResourceUnavailableException;
 
-@APICommand(name = "listBaremetalPxeServers", description = "list baremetal pxe server", responseObject = BaremetalPxeResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listBaremetalPxeServers", description = "list baremetal pxe server", responseObject = BaremetalPxeResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListBaremetalPxeServersCmd extends BaseListCmd {
     private static final Logger s_logger = Logger.getLogger(ListBaremetalPxeServersCmd.class);
     private static final String s_name = "listbaremetalpxeserversresponse";
@@ -58,8 +57,8 @@ public class ListBaremetalPxeServersCmd extends BaseListCmd {
     }
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException, NetworkRuleConflictException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
+            NetworkRuleConflictException {
         try {
             ListResponse<BaremetalPxeResponse> response = new ListResponse<BaremetalPxeResponse>();
             List<BaremetalPxeResponse> pxeResponses = _pxeMgr.listPxeServers(this);

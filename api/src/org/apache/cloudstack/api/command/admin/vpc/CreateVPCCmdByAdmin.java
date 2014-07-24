@@ -44,7 +44,7 @@ public class CreateVPCCmdByAdmin extends CreateVPCCmd {
                 success = _vpcService.startVpc(getEntityId(), true);
             } else {
                 s_logger.debug("Not starting VPC as " + ApiConstants.START + "=false was passed to the API");
-             }
+            }
             vpc = _entityMgr.findById(Vpc.class, getEntityId());
         } catch (ResourceUnavailableException ex) {
             s_logger.warn("Exception: ", ex);

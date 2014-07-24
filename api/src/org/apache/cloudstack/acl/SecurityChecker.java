@@ -31,10 +31,7 @@ import com.cloud.utils.component.Adapter;
 public interface SecurityChecker extends Adapter {
 
     public enum AccessType {
-        ModifyProject,
-        OperateEntry,
-        UseEntry,
-        ListEntry
+        ModifyProject, OperateEntry, UseEntry, ListEntry
     }
 
     /**
@@ -44,9 +41,11 @@ public interface SecurityChecker extends Adapter {
      *            account to check against.
      * @param object
      *            object that the account is trying to access.
-     * @return true if access allowed. false if this adapter cannot authenticate ownership.
+     * @return true if access allowed. false if this adapter cannot authenticate
+     *         ownership.
      * @throws PermissionDeniedException
-     *             if this adapter is suppose to authenticate ownership and the check failed.
+     *             if this adapter is suppose to authenticate ownership and the
+     *             check failed.
      */
     boolean checkAccess(Account caller, Domain domain) throws PermissionDeniedException;
 
@@ -57,9 +56,11 @@ public interface SecurityChecker extends Adapter {
      *            user to check against.
      * @param object
      *            object that the account is trying to access.
-     * @return true if access allowed. false if this adapter cannot authenticate ownership.
+     * @return true if access allowed. false if this adapter cannot authenticate
+     *         ownership.
      * @throws PermissionDeniedException
-     *             if this adapter is suppose to authenticate ownership and the check failed.
+     *             if this adapter is suppose to authenticate ownership and the
+     *             check failed.
      */
     boolean checkAccess(User user, Domain domain) throws PermissionDeniedException;
 
@@ -78,8 +79,7 @@ public interface SecurityChecker extends Adapter {
      *             if this adapter is suppose to authenticate ownership and the
      *             check failed.
      */
-    boolean checkAccess(Account caller, ControlledEntity entity, AccessType accessType)
-            throws PermissionDeniedException;
+    boolean checkAccess(Account caller, ControlledEntity entity, AccessType accessType) throws PermissionDeniedException;
 
     /**
      * Checks if the account can access the object.
@@ -117,9 +117,7 @@ public interface SecurityChecker extends Adapter {
      *             if this adapter is suppose to authenticate ownership and the
      *             check failed.
      */
-    boolean checkAccess(Account caller, AccessType accessType, String action, ControlledEntity... entities)
-            throws PermissionDeniedException;
-
+    boolean checkAccess(Account caller, AccessType accessType, String action, ControlledEntity... entities) throws PermissionDeniedException;
 
     /**
      * Checks if the user belongs to an account that can access the object.
@@ -128,9 +126,11 @@ public interface SecurityChecker extends Adapter {
      *            user to check against.
      * @param entity
      *            object that the account is trying to access.
-     * @return true if access allowed. false if this adapter cannot authenticate ownership.
+     * @return true if access allowed. false if this adapter cannot authenticate
+     *         ownership.
      * @throws PermissionDeniedException
-     *             if this adapter is suppose to authenticate ownership and the check failed.
+     *             if this adapter is suppose to authenticate ownership and the
+     *             check failed.
      */
     boolean checkAccess(User user, ControlledEntity entity) throws PermissionDeniedException;
 

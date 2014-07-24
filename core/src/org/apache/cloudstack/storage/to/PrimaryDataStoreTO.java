@@ -124,14 +124,7 @@ public class PrimaryDataStoreTO implements DataStoreTO {
 
     @Override
     public String toString() {
-        return new StringBuilder("PrimaryDataStoreTO[uuid=").append(uuid)
-            .append("|name=")
-            .append(name)
-            .append("|id=")
-            .append(id)
-            .append("|pooltype=")
-            .append(poolType)
-            .append("]")
-            .toString();
+        return new StringBuilder("PrimaryDataStoreTO[uuid=").append(uuid).append("|name=").append(name).append("|id=").append(id).append("|pooltype=").append(poolType).append("]")
+                .toString();
     }
 }

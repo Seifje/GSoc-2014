@@ -40,8 +40,7 @@ import com.cloud.dc.DedicatedResourceVO;
 import com.cloud.dc.DedicatedResources;
 import com.cloud.utils.Pair;
 
-@APICommand(name = "listDedicatedHosts", description = "Lists dedicated hosts.", responseObject = DedicateHostResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listDedicatedHosts", description = "Lists dedicated hosts.", responseObject = DedicateHostResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListDedicatedHostsCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListDedicatedHostsCmd.class.getName());
 
@@ -49,9 +48,9 @@ public class ListDedicatedHostsCmd extends BaseListCmd {
     @Inject
     DedicatedService dedicatedService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
     @Parameter(name = ApiConstants.HOST_ID, type = CommandType.UUID, entityType = HostResponse.class, description = "the ID of the host")
     private Long hostId;
 
@@ -61,15 +60,12 @@ public class ListDedicatedHostsCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "the name of the account associated with the host. Must be used with domainId.")
     private String accountName;
 
-    @Parameter(name = ApiConstants.AFFINITY_GROUP_ID,
-               type = CommandType.UUID,
-               entityType = AffinityGroupResponse.class,
-               description = "list dedicated hosts by affinity group")
+    @Parameter(name = ApiConstants.AFFINITY_GROUP_ID, type = CommandType.UUID, entityType = AffinityGroupResponse.class, description = "list dedicated hosts by affinity group")
     private Long affinityGroupId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getHostId() {
         return hostId;
@@ -87,9 +83,9 @@ public class ListDedicatedHostsCmd extends BaseListCmd {
         return affinityGroupId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////l
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////l
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

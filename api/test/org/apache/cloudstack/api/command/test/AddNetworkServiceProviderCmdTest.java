@@ -87,7 +87,7 @@ public class AddNetworkServiceProviderCmdTest extends TestCase {
 
         PhysicalNetworkServiceProvider physicalNetworkServiceProvider = Mockito.mock(PhysicalNetworkServiceProvider.class);
         Mockito.when(networkService.addProviderToPhysicalNetwork(Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong(), Matchers.anyList())).thenReturn(
-            physicalNetworkServiceProvider);
+                physicalNetworkServiceProvider);
 
         try {
             addNetworkServiceProviderCmd.create();

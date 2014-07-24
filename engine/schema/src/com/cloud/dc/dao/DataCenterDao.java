@@ -28,8 +28,10 @@ public interface DataCenterDao extends GenericDao<DataCenterVO, Long> {
     DataCenterVO findByName(String name);
 
     /**
-     * @param id data center id
-     * @return a pair of mac address strings.  The first one is private and second is public.
+     * @param id
+     *            data center id
+     * @return a pair of mac address strings. The first one is private and
+     *         second is public.
      */
     String[] getNextAvailableMacAddressPair(long id);
 

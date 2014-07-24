@@ -19,25 +19,32 @@ package com.cloud.bridge.service.core.ec2;
 
 public class IpForwardingRuleResponse /* extends BaseResponse */{
 
-    // @SerializedName(ApiConstants.ID) @Param(description="the ID of the port forwarding rule")
+    // @SerializedName(ApiConstants.ID)
+    // @Param(description="the ID of the port forwarding rule")
     private Long id;
 
-    // @SerializedName(ApiConstants.PROTOCOL) @Param(description="the protocol of the port forwarding rule")
+    // @SerializedName(ApiConstants.PROTOCOL)
+    // @Param(description="the protocol of the port forwarding rule")
     private String protocol;
 
-    // @SerializedName(ApiConstants.VIRTUAL_MACHINE_ID) @Param(description="the VM ID for the port forwarding rule")
+    // @SerializedName(ApiConstants.VIRTUAL_MACHINE_ID)
+    // @Param(description="the VM ID for the port forwarding rule")
     private Long virtualMachineId;
 
-    // @SerializedName("virtualmachinename") @Param(description="the VM name for the port forwarding rule")
+    // @SerializedName("virtualmachinename")
+    // @Param(description="the VM name for the port forwarding rule")
     private String virtualMachineName;
 
-    // @SerializedName("virtualmachinedisplayname") @Param(description="the VM display name for the port forwarding rule")
+    // @SerializedName("virtualmachinedisplayname")
+    // @Param(description="the VM display name for the port forwarding rule")
     private String virtualMachineDisplayName;
 
-    // @SerializedName("ipaddress") @Param(description="the public ip address for the port forwarding rule")
+    // @SerializedName("ipaddress")
+    // @Param(description="the public ip address for the port forwarding rule")
     private String publicIpAddress;
 
-    // @SerializedName("state") @Param(description="state of the ip forwarding rule")
+    // @SerializedName("state")
+    // @Param(description="state of the ip forwarding rule")
     private String state;
 
     public Long getId() {

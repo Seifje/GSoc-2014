@@ -40,8 +40,8 @@ public class VirtualDiskManagerMO extends BaseMO {
         super(context, morType, morValue);
     }
 
-    public void copyVirtualDisk(String srcName, ManagedObjectReference morSrcDc, String destName, ManagedObjectReference morDestDc, VirtualDiskSpec diskSpec,
-            boolean force) throws Exception {
+    public void copyVirtualDisk(String srcName, ManagedObjectReference morSrcDc, String destName, ManagedObjectReference morDestDc, VirtualDiskSpec diskSpec, boolean force)
+            throws Exception {
 
         ManagedObjectReference morTask = _context.getService().copyVirtualDiskTask(_mor, srcName, morSrcDc, destName, morDestDc, diskSpec, force);
 

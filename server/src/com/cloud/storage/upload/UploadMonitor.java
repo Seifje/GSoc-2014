@@ -37,8 +37,7 @@ public interface UploadMonitor extends Manager {
 
     public void cancelAllUploads(Long templateId);
 
-    public Long extractTemplate(VMTemplateVO template, String url, TemplateDataStoreVO tmpltStoreRef, Long dataCenterId, long eventId, long asyncJobId,
-        AsyncJobManager asyncMgr);
+    public Long extractTemplate(VMTemplateVO template, String url, TemplateDataStoreVO tmpltStoreRef, Long dataCenterId, long eventId, long asyncJobId, AsyncJobManager asyncMgr);
 
     boolean isTypeUploadInProgress(Long typeId, Type type);
 
@@ -47,7 +46,7 @@ public interface UploadMonitor extends Manager {
     UploadVO createNewUploadEntry(Long hostId, Long typeId, Status uploadState, Type type, String errorString, Mode extractMode);
 
     void extractVolume(UploadVO uploadVolumeObj, DataStore secStore, VolumeVO volume, String url, Long dataCenterId, String installPath, long eventId, long asyncJobId,
-        AsyncJobManager asyncMgr);
+            AsyncJobManager asyncMgr);
 
     UploadVO createEntityDownloadURL(VMTemplateVO template, TemplateDataStoreVO vmTemplateStore, Long dataCenterId, long eventId);
 

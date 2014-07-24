@@ -52,7 +52,7 @@ public class AddClusterCmdTest extends TestCase {
          * resourceService = Mockito.mock(ResourceService.class);
          * responseGenerator = Mockito.mock(ResponseGenerator.class);
          */addClusterCmd = new AddClusterCmd() {
-        };
+         };
     }
 
     @Test

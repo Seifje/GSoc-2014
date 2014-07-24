@@ -98,7 +98,8 @@ public class LoadBalanceRuleHandlerTest {
         assertEquals(0, candidateVms.size());
     }
 
-    // PodIdToDeployIn should not be null according to column specification in DomainRouterVO
+    // PodIdToDeployIn should not be null according to column specification in
+    // DomainRouterVO
     @Test(expected = NullPointerException.class)
     public void testAddCandidateVmIsPodIpMatchesWhenPodIdToDeployInIsNull() throws Exception {
         DomainRouterVO candidateVmMock = mock(DomainRouterVO.class);

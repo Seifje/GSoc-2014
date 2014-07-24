@@ -72,7 +72,11 @@ public class NetUtils {
     public final static int PORT_RANGE_MIN = 0;
     public final static int PORT_RANGE_MAX = 65535;
 
-    public final static int DEFAULT_AUTOSCALE_VM_DESTROY_TIME = 2 * 60; // Grace period before Vm is destroyed
+    public final static int DEFAULT_AUTOSCALE_VM_DESTROY_TIME = 2 * 60; // Grace
+    // period
+    // before
+    // Vm is
+    // destroyed
     public final static int DEFAULT_AUTOSCALE_POLICY_INTERVAL_TIME = 30;
     public final static int DEFAULT_AUTOSCALE_POLICY_QUIET_TIME = 5 * 60;
     private final static Random s_rand = new Random(System.currentTimeMillis());
@@ -660,13 +664,17 @@ public class NetUtils {
     }
 
     /**
-     * Given a cidr, this method returns an ip address within the range but
-     * is not in the avoid list.
+     * Given a cidr, this method returns an ip address within the range but is
+     * not in the avoid list.
      *
-     * @param startIp ip that the cidr starts with
-     * @param size size of the cidr
-     * @param avoid set of ips to avoid
-     * @return ip that is within the cidr range but not in the avoid set.  -1 if unable to find one.
+     * @param startIp
+     *            ip that the cidr starts with
+     * @param size
+     *            size of the cidr
+     * @param avoid
+     *            set of ips to avoid
+     * @return ip that is within the cidr range but not in the avoid set. -1 if
+     *         unable to find one.
      */
     public static long getRandomIpFromCidr(String startIp, int size, SortedSet<Long> avoid) {
         return getRandomIpFromCidr(ip2Long(startIp), size, avoid);
@@ -674,32 +682,40 @@ public class NetUtils {
     }
 
     /**
-     * Given a cidr, this method returns an ip address within the range but
-     * is not in the avoid list.
-     * Note: the gateway address has to be specified in the avoid list
+     * Given a cidr, this method returns an ip address within the range but is
+     * not in the avoid list. Note: the gateway address has to be specified in
+     * the avoid list
      *
-     * @param cidr ip that the cidr starts with
-     * @param size size of the cidr
-     * @param avoid set of ips to avoid
-     * @return ip that is within the cidr range but not in the avoid set.  -1 if unable to find one.
+     * @param cidr
+     *            ip that the cidr starts with
+     * @param size
+     *            size of the cidr
+     * @param avoid
+     *            set of ips to avoid
+     * @return ip that is within the cidr range but not in the avoid set. -1 if
+     *         unable to find one.
      */
     public static long getRandomIpFromCidr(long cidr, int size, SortedSet<Long> avoid) {
         assert (size < 32) : "You do know this is not for ipv6 right?  Keep it smaller than 32 but you have " + size;
 
         long startNetMask = ip2Long(getCidrNetmask(size));
-        long startIp = (cidr & startNetMask) + 1; //exclude the first ip since it isnt valid, e.g., 192.168.10.0
-        int range = 1 << (32 - size); //e.g., /24 = 2^8 = 256
-        range = range - 1; //exclude end of the range since that is the broadcast address, e.g., 192.168.10.255
+        long startIp = (cidr & startNetMask) + 1; // exclude the first ip since
+        // it isnt valid, e.g.,
+        // 192.168.10.0
+        int range = 1 << (32 - size); // e.g., /24 = 2^8 = 256
+        range = range - 1; // exclude end of the range since that is the
+        // broadcast address, e.g., 192.168.10.255
 
         if (avoid.size() >= range) {
             return -1;
         }
 
-        //Reduce the range by the size of the avoid set
-        //e.g., cidr = 192.168.10.0, size = /24, avoid = 192.168.10.1, 192.168.10.20, 192.168.10.254
+        // Reduce the range by the size of the avoid set
+        // e.g., cidr = 192.168.10.0, size = /24, avoid = 192.168.10.1,
+        // 192.168.10.20, 192.168.10.254
         // range = 2^8 - 1 - 3 = 252
         range = range - avoid.size();
-        int next = s_rand.nextInt(range); //note: nextInt excludes last value
+        int next = s_rand.nextInt(range); // note: nextInt excludes last value
         long ip = startIp + next;
         for (Long avoidable : avoid) {
             if (ip >= avoidable) {
@@ -817,7 +833,7 @@ public class NetUtils {
         Long[] cidrBLong = cidrToLong(cidrB);
         long shift = 0;
         if (cidrALong == null || cidrBLong == null) {
-            //implies error in the cidr format
+            // implies error in the cidr format
             return supersetOrSubset.errorInCidrFormat;
         }
         if (cidrALong[1] >= cidrBLong[1]) {
@@ -828,16 +844,16 @@ public class NetUtils {
         long result = (cidrALong[0] >> shift) - (cidrBLong[0] >> shift);
         if (result == 0) {
             if (cidrALong[1] < cidrBLong[1]) {
-                //this implies cidrA is super set of cidrB
+                // this implies cidrA is super set of cidrB
                 return supersetOrSubset.isSuperset;
             } else if (cidrALong[1].equals(cidrBLong[1])) {
-                //this implies both the cidrs are equal
+                // this implies both the cidrs are equal
                 return supersetOrSubset.sameSubnet;
             }
             // implies cidrA is subset of cidrB
             return supersetOrSubset.isSubset;
         }
-        //this implies no overlap.
+        // this implies no overlap.
         return supersetOrSubset.neitherSubetNorSuperset;
     }
 
@@ -1015,7 +1031,8 @@ public class NetUtils {
     }
 
     public static boolean verifyDomainNameLabel(String hostName, boolean isHostName) {
-        // must be between 1 and 63 characters long and may contain only the ASCII letters 'a' through 'z' (in a
+        // must be between 1 and 63 characters long and may contain only the
+        // ASCII letters 'a' through 'z' (in a
         // case-insensitive manner),
         // the digits '0' through '9', and the hyphen ('-').
         // Can not start with a hyphen and digit, and must not end with a hyphen
@@ -1039,7 +1056,8 @@ public class NetUtils {
     }
 
     public static boolean verifyDomainName(String domainName) {
-        // don't allow domain name length to exceed 190 chars (190 + 63 (max host name length) = 253 = max domainName length
+        // don't allow domain name length to exceed 190 chars (190 + 63 (max
+        // host name length) = 253 = max domainName length
         if (domainName.length() < 1 || domainName.length() > 190) {
             s_logger.trace("Domain name must be between 1 and 190 characters long");
             return false;
@@ -1098,7 +1116,8 @@ public class NetUtils {
     }
 
     public static boolean validateGuestCidr(String cidr) {
-        // RFC 1918 - The Internet Assigned Numbers Authority (IANA) has reserved the
+        // RFC 1918 - The Internet Assigned Numbers Authority (IANA) has
+        // reserved the
         // following three blocks of the IP address space for private internets:
         // 10.0.0.0 - 10.255.255.255 (10/8 prefix)
         // 172.16.0.0 - 172.31.255.255 (172.16/12 prefix)
@@ -1122,7 +1141,7 @@ public class NetUtils {
     }
 
     public static boolean verifyInstanceName(String instanceName) {
-        //instance name for cloudstack vms shouldn't contain - and spaces
+        // instance name for cloudstack vms shouldn't contain - and spaces
         if (instanceName.contains("-") || instanceName.contains(" ") || instanceName.contains("+")) {
             s_logger.warn("Instance name can not contain hyphen, spaces and \"+\" char");
             return false;
@@ -1186,7 +1205,8 @@ public class NetUtils {
     }
 
     public static boolean validateIcmpType(long icmpType) {
-        //Source - http://www.erg.abdn.ac.uk/~gorry/course/inet-pages/icmp-code.html
+        // Source -
+        // http://www.erg.abdn.ac.uk/~gorry/course/inet-pages/icmp-code.html
         if (!(icmpType >= 0 && icmpType <= 255)) {
             s_logger.warn("impcType is not within 0-255 range");
             return false;
@@ -1196,7 +1216,8 @@ public class NetUtils {
 
     public static boolean validateIcmpCode(long icmpCode) {
 
-        //Source - http://www.erg.abdn.ac.uk/~gorry/course/inet-pages/icmp-code.html
+        // Source -
+        // http://www.erg.abdn.ac.uk/~gorry/course/inet-pages/icmp-code.html
         if (!(icmpCode >= 0 && icmpCode <= 15)) {
             s_logger.warn("Icmp code should be within 0-15 range");
             return false;
@@ -1255,7 +1276,7 @@ public class NetUtils {
         return ip.toString();
     }
 
-    //RFC3315, section 9.4
+    // RFC3315, section 9.4
     public static String getDuidLL(String macAddress) {
         String duid = "00:03:00:01:" + macAddress;
         return duid;
@@ -1406,7 +1427,8 @@ public class NetUtils {
         if (one.contains(VLAN_UNTAGGED) && other.contains(VLAN_UNTAGGED)) {
             return true;
         }
-        // if one is a number check the other as number and as 'vlan://' + number
+        // if one is a number check the other as number and as 'vlan://' +
+        // number
         if (one.startsWith(VLAN_PREFIX)) {
             one = one.substring(VLAN_PREFIX_LENGTH);
         }
@@ -1421,7 +1443,8 @@ public class NetUtils {
         return false;
     }
 
-    // Attention maintainers: these pvlan functions should take into account code
+    // Attention maintainers: these pvlan functions should take into account
+    // code
     // in Networks.BroadcastDomainType, where URI construction is done for other
     // types of BroadcastDomainTypes
     public static URI generateUriForPvlan(String primaryVlan, String isolatedPvlan) {

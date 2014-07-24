@@ -122,8 +122,8 @@ public class MockConfigurationDaoImpl extends GenericDaoBase<MockConfigurationVO
         TransactionLegacy txn = TransactionLegacy.currentTxn();
         StringBuilder search = new StringBuilder();
         Formatter formatter = new Formatter(search);
-        formatter.format("select * from mockconfiguration where (name='%s') and ((data_center_id = %d and pod_id = %d and cluster_id = %d and host_id = %d)", name, dcId,
-            podId, clusterId, hostId);
+        formatter.format("select * from mockconfiguration where (name='%s') and ((data_center_id = %d and pod_id = %d and cluster_id = %d and host_id = %d)", name, dcId, podId,
+                clusterId, hostId);
         formatter.format(" or (data_center_id = %d and pod_id = %d and cluster_id = %d and host_id is null)", dcId, podId, clusterId);
         formatter.format(" or (data_center_id = %d and pod_id = %d and cluster_id is null and host_id is null)", dcId, podId);
         formatter.format(" or (data_center_id = %d and pod_id is null and cluster_id is null and host_id is null)", dcId);

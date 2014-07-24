@@ -51,8 +51,10 @@ public class EncryptionSecretKeyChecker {
 
     @PostConstruct
     public void init() {
-        /* This will call DbProperties, which will call this to initialize the encryption. Yep,
-         * round about and annoying */
+        /*
+         * This will call DbProperties, which will call this to initialize the
+         * encryption. Yep, round about and annoying
+         */
         DbProperties.getDbProperties();
     }
 
@@ -78,16 +80,17 @@ public class EncryptionSecretKeyChecker {
         if (encryptionType.equals("file")) {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream(s_keyFile);
             if (is == null) {
-              is = this.getClass().getClassLoader().getResourceAsStream(s_altKeyFile);
+                is = this.getClass().getClassLoader().getResourceAsStream(s_altKeyFile);
             }
-            if(is == null) {  //This is means we are not able to load key file from the classpath.
-              throw new CloudRuntimeException(s_keyFile + " File containing secret key not found in the classpath: ");
+            if (is == null) { // This is means we are not able to load key file
+                // from the classpath.
+                throw new CloudRuntimeException(s_keyFile + " File containing secret key not found in the classpath: ");
             }
             BufferedReader in = null;
             try {
                 in = new BufferedReader(new InputStreamReader(is));
                 secretKey = in.readLine();
-                //Check for null or empty secret key
+                // Check for null or empty secret key
             } catch (IOException e) {
                 throw new CloudRuntimeException("Error while reading secret key from: " + s_keyFile, e);
             } finally {
@@ -145,7 +148,7 @@ public class EncryptionSecretKeyChecker {
         return s_useEncryption;
     }
 
-    //Initialize encryptor for migration during secret key change
+    // Initialize encryptor for migration during secret key change
     public static void initEncryptorForMigration(String secretKey) {
         s_encryptor.setAlgorithm("PBEWithMD5AndDES");
         SimpleStringPBEConfig stringConfig = new SimpleStringPBEConfig();

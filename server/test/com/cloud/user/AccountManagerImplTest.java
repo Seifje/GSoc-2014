@@ -26,10 +26,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-
 import org.apache.cloudstack.acl.ControlledEntity;
 import org.apache.cloudstack.acl.SecurityChecker;
 import org.apache.cloudstack.acl.SecurityChecker.AccessType;
@@ -188,15 +188,13 @@ public class AccountManagerImplTest {
     SecurityChecker securityChecker;
 
     @Before
-    public void setup() throws NoSuchFieldException, SecurityException,
-            IllegalArgumentException, IllegalAccessException {
+    public void setup() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
         accountManager = new AccountManagerImpl();
         for (Field field : AccountManagerImpl.class.getDeclaredFields()) {
             if (field.getAnnotation(Inject.class) != null) {
                 field.setAccessible(true);
                 try {
-                    Field mockField = this.getClass().getDeclaredField(
-                            field.getName());
+                    Field mockField = this.getClass().getDeclaredField(field.getName());
                     field.set(accountManager, mockField.get(this));
                 } catch (Exception e) {
                     // ignore missing fields
@@ -213,15 +211,13 @@ public class AccountManagerImplTest {
     }
 
     @Test
-    public void disableAccountNotexisting()
-            throws ConcurrentOperationException, ResourceUnavailableException {
+    public void disableAccountNotexisting() throws ConcurrentOperationException, ResourceUnavailableException {
         Mockito.when(_accountDao.findById(42l)).thenReturn(null);
         Assert.assertTrue(accountManager.disableAccount(42));
     }
 
     @Test
-    public void disableAccountDisabled() throws ConcurrentOperationException,
-            ResourceUnavailableException {
+    public void disableAccountDisabled() throws ConcurrentOperationException, ResourceUnavailableException {
         AccountVO disabledAccount = new AccountVO();
         disabledAccount.setState(State.disabled);
         Mockito.when(_accountDao.findById(42l)).thenReturn(disabledAccount);
@@ -229,20 +225,15 @@ public class AccountManagerImplTest {
     }
 
     @Test
-    public void disableAccount() throws ConcurrentOperationException,
-            ResourceUnavailableException {
+    public void disableAccount() throws ConcurrentOperationException, ResourceUnavailableException {
         AccountVO account = new AccountVO();
         account.setState(State.enabled);
         Mockito.when(_accountDao.findById(42l)).thenReturn(account);
         Mockito.when(_accountDao.createForUpdate()).thenReturn(new AccountVO());
-        Mockito.when(
-                _accountDao.update(Mockito.eq(42l),
-                        Mockito.any(AccountVO.class))).thenReturn(true);
-        Mockito.when(_vmDao.listByAccountId(42l)).thenReturn(
-                Arrays.asList(Mockito.mock(VMInstanceVO.class)));
+        Mockito.when(_accountDao.update(Matchers.eq(42l), Matchers.any(AccountVO.class))).thenReturn(true);
+        Mockito.when(_vmDao.listByAccountId(42l)).thenReturn(Arrays.asList(Mockito.mock(VMInstanceVO.class)));
         Assert.assertTrue(accountManager.disableAccount(42));
-        Mockito.verify(_accountDao, Mockito.atLeastOnce()).update(
-                Mockito.eq(42l), Mockito.any(AccountVO.class));
+        Mockito.verify(_accountDao, Mockito.atLeastOnce()).update(Matchers.eq(42l), Matchers.any(AccountVO.class));
     }
 
     @Test
@@ -251,24 +242,16 @@ public class AccountManagerImplTest {
         account.setId(42l);
         DomainVO domain = new DomainVO();
         Mockito.when(_accountDao.findById(42l)).thenReturn(account);
-        Mockito.when(
-                securityChecker.checkAccess(Mockito.any(Account.class),
-                        Mockito.any(AccessType.class), Mockito.anyString(),
-                        Mockito.any(ControlledEntity[].class)))
+        Mockito.when(securityChecker.checkAccess(Matchers.any(Account.class), Matchers.any(AccessType.class), Matchers.anyString(), Matchers.any(ControlledEntity[].class)))
                 .thenReturn(true);
         Mockito.when(_accountDao.remove(42l)).thenReturn(true);
-        Mockito.when(_configMgr.releaseAccountSpecificVirtualRanges(42l))
-                .thenReturn(true);
-        Mockito.when(_domainMgr.getDomain(Mockito.anyLong())).thenReturn(domain);
-        Mockito.when(
-                securityChecker.checkAccess(Mockito.any(Account.class),
-                        Mockito.any(Domain.class)))
-                .thenReturn(true);
+        Mockito.when(_configMgr.releaseAccountSpecificVirtualRanges(42l)).thenReturn(true);
+        Mockito.when(_domainMgr.getDomain(Matchers.anyLong())).thenReturn(domain);
+        Mockito.when(securityChecker.checkAccess(Matchers.any(Account.class), Matchers.any(Domain.class))).thenReturn(true);
 
         Assert.assertTrue(accountManager.deleteUserAccount(42));
         // assert that this was a clean delete
-        Mockito.verify(_accountDao, Mockito.never()).markForCleanup(
-                Mockito.eq(42l));
+        Mockito.verify(_accountDao, Mockito.never()).markForCleanup(Matchers.eq(42l));
     }
 
     @Test
@@ -277,28 +260,17 @@ public class AccountManagerImplTest {
         account.setId(42l);
         DomainVO domain = new DomainVO();
         Mockito.when(_accountDao.findById(42l)).thenReturn(account);
-        Mockito.when(
-                securityChecker.checkAccess(Mockito.any(Account.class),
-                        Mockito.any(AccessType.class), Mockito.anyString(),
-                        Mockito.any(ControlledEntity[].class)))
+        Mockito.when(securityChecker.checkAccess(Matchers.any(Account.class), Matchers.any(AccessType.class), Matchers.anyString(), Matchers.any(ControlledEntity[].class)))
                 .thenReturn(true);
         Mockito.when(_accountDao.remove(42l)).thenReturn(true);
-        Mockito.when(_configMgr.releaseAccountSpecificVirtualRanges(42l))
-                .thenReturn(true);
-        Mockito.when(_userVmDao.listByAccountId(42l)).thenReturn(
-                Arrays.asList(Mockito.mock(UserVmVO.class)));
-        Mockito.when(
-                _vmMgr.expunge(Mockito.any(UserVmVO.class), Mockito.anyLong(),
-                        Mockito.any(Account.class))).thenReturn(false);
-        Mockito.when(_domainMgr.getDomain(Mockito.anyLong())).thenReturn(domain);
-        Mockito.when(
-                securityChecker.checkAccess(Mockito.any(Account.class),
-                        Mockito.any(Domain.class)))
-                .thenReturn(true);
+        Mockito.when(_configMgr.releaseAccountSpecificVirtualRanges(42l)).thenReturn(true);
+        Mockito.when(_userVmDao.listByAccountId(42l)).thenReturn(Arrays.asList(Mockito.mock(UserVmVO.class)));
+        Mockito.when(_vmMgr.expunge(Matchers.any(UserVmVO.class), Matchers.anyLong(), Matchers.any(Account.class))).thenReturn(false);
+        Mockito.when(_domainMgr.getDomain(Matchers.anyLong())).thenReturn(domain);
+        Mockito.when(securityChecker.checkAccess(Matchers.any(Account.class), Matchers.any(Domain.class))).thenReturn(true);
 
         Assert.assertTrue(accountManager.deleteUserAccount(42));
         // assert that this was NOT a clean delete
-        Mockito.verify(_accountDao, Mockito.atLeastOnce()).markForCleanup(
-                Mockito.eq(42l));
+        Mockito.verify(_accountDao, Mockito.atLeastOnce()).markForCleanup(Matchers.eq(42l));
     }
 }

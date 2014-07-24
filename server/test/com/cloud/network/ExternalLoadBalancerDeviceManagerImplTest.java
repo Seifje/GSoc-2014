@@ -31,6 +31,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -143,68 +144,50 @@ public class ExternalLoadBalancerDeviceManagerImplTest {
     ExternalLoadBalancerDeviceManagerImpl externalLoadBalancerDeviceManager;
 
     @Before
-    public void setup() throws IllegalArgumentException,
-            IllegalAccessException, NoSuchFieldException, SecurityException {
+    public void setup() throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
         externalLoadBalancerDeviceManager = new ExternalLoadBalancerDeviceManagerImpl() {
         };
-        for (Field fieldToInject : ExternalLoadBalancerDeviceManagerImpl.class
-                .getDeclaredFields()) {
+        for (Field fieldToInject : ExternalLoadBalancerDeviceManagerImpl.class.getDeclaredFields()) {
             if (fieldToInject.isAnnotationPresent(Inject.class)) {
                 fieldToInject.setAccessible(true);
-                fieldToInject.set(externalLoadBalancerDeviceManager, this
-                        .getClass().getDeclaredField(fieldToInject.getName())
-                        .get(this));
+                fieldToInject.set(externalLoadBalancerDeviceManager, this.getClass().getDeclaredField(fieldToInject.getName()).get(this));
             }
         }
     }
 
     @Test
-    public void getLBHealthChecks() throws ResourceUnavailableException,
-            URISyntaxException {
+    public void getLBHealthChecks() throws ResourceUnavailableException, URISyntaxException {
         setupLBHealthChecksMocks();
 
-        HealthCheckLBConfigAnswer answer = Mockito
-                .mock(HealthCheckLBConfigAnswer.class);
-        Mockito.when(answer.getLoadBalancers()).thenReturn(
-                Collections.<LoadBalancerTO> emptyList());
-        Mockito.when(
-                _agentMgr.easySend(Mockito.anyLong(),
-                        Mockito.any(Command.class))).thenReturn(answer);
+        HealthCheckLBConfigAnswer answer = Mockito.mock(HealthCheckLBConfigAnswer.class);
+        Mockito.when(answer.getLoadBalancers()).thenReturn(Collections.<LoadBalancerTO> emptyList());
+        Mockito.when(_agentMgr.easySend(Matchers.anyLong(), Matchers.any(Command.class))).thenReturn(answer);
 
-        Assert.assertNotNull(externalLoadBalancerDeviceManager
-                .getLBHealthChecks(network, Arrays.asList(rule)));
+        Assert.assertNotNull(externalLoadBalancerDeviceManager.getLBHealthChecks(network, Arrays.asList(rule)));
     }
 
     @Test
-    public void getLBHealthChecksNullAnswer() throws ResourceUnavailableException,
-            URISyntaxException {
+    public void getLBHealthChecksNullAnswer() throws ResourceUnavailableException, URISyntaxException {
         setupLBHealthChecksMocks();
 
-        Mockito.when(
-                _agentMgr.easySend(Mockito.anyLong(),
-                        Mockito.any(Command.class))).thenReturn(null);
+        Mockito.when(_agentMgr.easySend(Matchers.anyLong(), Matchers.any(Command.class))).thenReturn(null);
 
-        Assert.assertNull(externalLoadBalancerDeviceManager
-                .getLBHealthChecks(network, Arrays.asList(rule)));
+        Assert.assertNull(externalLoadBalancerDeviceManager.getLBHealthChecks(network, Arrays.asList(rule)));
     }
 
     private void setupLBHealthChecksMocks() throws URISyntaxException {
         Mockito.when(network.getId()).thenReturn(42l);
         Mockito.when(network.getBroadcastUri()).thenReturn(new URI("vlan://1"));
-        NetworkExternalLoadBalancerVO externalLb = Mockito
-                .mock(NetworkExternalLoadBalancerVO.class);
+        NetworkExternalLoadBalancerVO externalLb = Mockito.mock(NetworkExternalLoadBalancerVO.class);
         Mockito.when(externalLb.getExternalLBDeviceId()).thenReturn(66l);
-        Mockito.when(_networkExternalLBDao.findByNetworkId(42)).thenReturn(
-                externalLb);
-        ExternalLoadBalancerDeviceVO lbDevice = Mockito
-                .mock(ExternalLoadBalancerDeviceVO.class);
-        Mockito.when(_externalLoadBalancerDeviceDao.findById(66l)).thenReturn(
-                lbDevice);
+        Mockito.when(_networkExternalLBDao.findByNetworkId(42)).thenReturn(externalLb);
+        ExternalLoadBalancerDeviceVO lbDevice = Mockito.mock(ExternalLoadBalancerDeviceVO.class);
+        Mockito.when(_externalLoadBalancerDeviceDao.findById(66l)).thenReturn(lbDevice);
         Mockito.when(rule.getAlgorithm()).thenReturn("TEST");
         Mockito.when(rule.getProtocol()).thenReturn("TEST");
         Mockito.when(rule.getSourceIp()).thenReturn(new Ip(1l));
         Mockito.when(lbDevice.getHostId()).thenReturn(99l);
         HostVO hostVo = Mockito.mock(HostVO.class);
-        Mockito.when(_hostDao.findById(Mockito.anyLong())).thenReturn(hostVo);
+        Mockito.when(_hostDao.findById(Matchers.anyLong())).thenReturn(hostVo);
     }
 }

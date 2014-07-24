@@ -70,7 +70,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 @Local(value = {HostDao.class})
 @DB
 @TableGenerator(name = "host_req_sq", table = "op_host", pkColumnName = "id", valueColumnName = "sequence", allocationSize = 1)
-public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao { //FIXME: , ExternalIdDao {
+public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao { // FIXME: , ExternalIdDao {
     private static final Logger s_logger = Logger.getLogger(HostDaoImpl.class);
     private static final Logger status_logger = Logger.getLogger(Status.class);
     private static final Logger state_logger = Logger.getLogger(ResourceState.class);
@@ -259,7 +259,8 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
 
         SequenceSearch = createSearchBuilder();
         SequenceSearch.and("id", SequenceSearch.entity().getId(), SearchCriteria.Op.EQ);
-        // SequenceSearch.addRetrieve("sequence", SequenceSearch.entity().getSequence());
+        // SequenceSearch.addRetrieve("sequence",
+        // SequenceSearch.entity().getSequence());
         SequenceSearch.done();
 
         DirectlyConnectedSearch = createSearchBuilder();
@@ -276,10 +277,13 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
         UnmanagedDirectConnectSearch.and("resourceStates", UnmanagedDirectConnectSearch.entity().getResourceState(), SearchCriteria.Op.NIN);
         UnmanagedDirectConnectSearch.and("clusterIn", UnmanagedDirectConnectSearch.entity().getClusterId(), SearchCriteria.Op.IN);
         /*
-         * UnmanagedDirectConnectSearch.op(SearchCriteria.Op.OR, "managementServerId",
-         * UnmanagedDirectConnectSearch.entity().getManagementServerId(), SearchCriteria.Op.EQ);
-         * UnmanagedDirectConnectSearch.and("lastPinged", UnmanagedDirectConnectSearch.entity().getLastPinged(),
-         * SearchCriteria.Op.LTEQ); UnmanagedDirectConnectSearch.cp(); UnmanagedDirectConnectSearch.cp();
+         * UnmanagedDirectConnectSearch.op(SearchCriteria.Op.OR,
+         * "managementServerId",
+         * UnmanagedDirectConnectSearch.entity().getManagementServerId(),
+         * SearchCriteria.Op.EQ); UnmanagedDirectConnectSearch.and("lastPinged",
+         * UnmanagedDirectConnectSearch.entity().getLastPinged(),
+         * SearchCriteria.Op.LTEQ); UnmanagedDirectConnectSearch.cp();
+         * UnmanagedDirectConnectSearch.cp();
          */
         try {
             HostTransferSearch = _hostTransferDao.createSearchBuilder();
@@ -288,11 +292,11 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
         }
         HostTransferSearch.and("id", HostTransferSearch.entity().getId(), SearchCriteria.Op.NULL);
         UnmanagedDirectConnectSearch.join("hostTransferSearch", HostTransferSearch, HostTransferSearch.entity().getId(), UnmanagedDirectConnectSearch.entity().getId(),
-            JoinType.LEFTOUTER);
+                JoinType.LEFTOUTER);
         ClusterManagedSearch = _clusterDao.createSearchBuilder();
         ClusterManagedSearch.and("managed", ClusterManagedSearch.entity().getManagedState(), SearchCriteria.Op.EQ);
-        UnmanagedDirectConnectSearch.join("ClusterManagedSearch", ClusterManagedSearch, ClusterManagedSearch.entity().getId(), UnmanagedDirectConnectSearch.entity()
-            .getClusterId(), JoinType.INNER);
+        UnmanagedDirectConnectSearch.join("ClusterManagedSearch", ClusterManagedSearch, ClusterManagedSearch.entity().getId(),
+                UnmanagedDirectConnectSearch.entity().getClusterId(), JoinType.INNER);
         UnmanagedDirectConnectSearch.done();
 
         DirectConnectSearch = createSearchBuilder();
@@ -423,7 +427,8 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
     }
 
     /*
-     * Find hosts which is in Disconnected, Down, Alert and ping timeout and server is not null, set server to null
+     * Find hosts which is in Disconnected, Down, Alert and ping timeout and
+     * server is not null, set server to null
      */
     private void resetHosts(long managementServerId, long lastPingSecondsAfter) {
         SearchCriteria<HostVO> sc = HostsForReconnectSearch.create();
@@ -478,10 +483,10 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
     }
 
     /*
-     * This determines if hosts belonging to cluster(@clusterId) are up for grabs
+     * This determines if hosts belonging to cluster(@clusterId) are up for
+     * grabs
      *
-     * This is used for handling following cases:
-     * 1. First host added in cluster
+     * This is used for handling following cases: 1. First host added in cluster
      * 2. During MS restart all hosts in a cluster are without any MS
      */
     private boolean canOwnCluster(long clusterId) {
@@ -521,7 +526,9 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
             sc.setParameters("lastPinged", lastPingSecondsAfter);
             sc.setJoinParameters("ClusterManagedSearch", "managed", Managed.ManagedState.Managed);
             sc.setParameters("clusterIn", clusters.toArray());
-            List<HostVO> unmanagedHosts = lockRows(sc, new Filter(HostVO.class, "clusterId", true, 0L, limit), true); // host belongs to clusters owned by @managementServerId
+            List<HostVO> unmanagedHosts = lockRows(sc, new Filter(HostVO.class, "clusterId", true, 0L, limit), true); // host belongs to
+            // clusters owned by
+            // @managementServerId
             StringBuilder sb = new StringBuilder();
             for (HostVO host : unmanagedHosts) {
                 host.setManagementServerId(managementServerId);
@@ -542,7 +549,8 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
             if (s_logger.isDebugEnabled()) {
                 s_logger.debug("Acquiring hosts for clusters not owned by any management server");
             }
-            // for remaining hosts not owned by any MS check if they can be owned (by owning full cluster)
+            // for remaining hosts not owned by any MS check if they can be
+            // owned (by owning full cluster)
             clusters = findClustersForHostsNotOwnedByAnyManagementServer();
             List<Long> updatedClusters = clusters;
             if (clusters.size() > limit) {
@@ -566,7 +574,10 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
 
                 StringBuilder sb = new StringBuilder();
                 for (Long clusterId : hostMap.keySet()) {
-                    if (canOwnCluster(clusterId)) { // cluster is not owned by any other MS, so @managementServerId can own it
+                    if (canOwnCluster(clusterId)) { // cluster is not owned by
+                        // any other MS, so
+                        // @managementServerId can
+                        // own it
                         List<HostVO> hostList = hostMap.get(clusterId);
                         for (HostVO host : hostList) {
                             host.setManagementServerId(managementServerId);
@@ -602,7 +613,7 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
         SearchCriteria<HostVO> sc = UnmanagedApplianceSearch.create();
         sc.setParameters("lastPinged", lastPingSecondsAfter);
         sc.setParameters("types", Type.ExternalDhcp, Type.ExternalFirewall, Type.ExternalLoadBalancer, Type.BaremetalDhcp, Type.BaremetalPxe, Type.TrafficMonitor,
-            Type.L2Networking);
+                Type.L2Networking);
         List<HostVO> hosts = lockRows(sc, null, true);
 
         for (HostVO host : hosts) {
@@ -740,13 +751,12 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
         List<HostVO> result = new ArrayList<HostVO>();
         ResultSet rs = null;
         try {
-            String sql =
-                "select h.id from host h left join  cluster c on h.cluster_id=c.id where h.mgmt_server_id is not null and h.last_ping < ? and h.status in ('Up', 'Updating', 'Disconnected', 'Connecting') and h.type not in ('ExternalFirewall', 'ExternalLoadBalancer', 'TrafficMonitor', 'SecondaryStorage', 'LocalSecondaryStorage', 'L2Networking') and (h.cluster_id is null or c.managed_state = 'Managed') ;";
+            String sql = "select h.id from host h left join  cluster c on h.cluster_id=c.id where h.mgmt_server_id is not null and h.last_ping < ? and h.status in ('Up', 'Updating', 'Disconnected', 'Connecting') and h.type not in ('ExternalFirewall', 'ExternalLoadBalancer', 'TrafficMonitor', 'SecondaryStorage', 'LocalSecondaryStorage', 'L2Networking') and (h.cluster_id is null or c.managed_state = 'Managed') ;";
             pstmt = txn.prepareStatement(sql);
             pstmt.setLong(1, timeout);
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                long id = rs.getLong(1); //ID column
+                long id = rs.getLong(1); // ID column
                 result.add(findById(id));
             }
         } catch (Exception e) {
@@ -844,8 +854,7 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
     @Override
     @DB
     public List<RunningHostCountInfo> getRunningHostCounts(Date cutTime) {
-        String sql =
-            "select * from (" + "select h.data_center_id, h.type, count(*) as count from host as h INNER JOIN mshost as m ON h.mgmt_server_id=m.msid "
+        String sql = "select * from (" + "select h.data_center_id, h.type, count(*) as count from host as h INNER JOIN mshost as m ON h.mgmt_server_id=m.msid "
                 + "where h.status='Up' and h.type='SecondaryStorage' and m.last_update > ? " + "group by h.data_center_id, h.type " + "UNION ALL "
                 + "select h.data_center_id, h.type, count(*) as count from host as h INNER JOIN mshost as m ON h.mgmt_server_id=m.msid "
                 + "where h.status='Up' and h.type='Routing' and m.last_update > ? " + "group by h.data_center_id, h.type) as t " + "ORDER by t.data_center_id, t.type";
@@ -888,7 +897,7 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
         return s_seqFetcher.getNextSequence(Long.class, tg, hostId);
     }
 
-    /*TODO: this is used by mycloud, check if it needs resource state Enabled */
+    /* TODO: this is used by mycloud, check if it needs resource state Enabled */
     @Override
     public long countRoutingHostsByDataCenter(long dcId) {
         SearchCriteria<Long> sc = CountRoutingByDc.create();
@@ -900,7 +909,8 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
 
     @Override
     public boolean updateState(Status oldStatus, Event event, Status newStatus, Host vo, Object data) {
-        // lock target row from beginning to avoid lock-promotion caused deadlock
+        // lock target row from beginning to avoid lock-promotion caused
+        // deadlock
         HostVO host = lockRow(vo.getId(), true);
         if (host == null) {
             if (event == Event.Remove && newStatus == Status.Removed) {
@@ -963,24 +973,12 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
 
                 StringBuilder str = new StringBuilder("Unable to update host for event:").append(event.toString());
                 str.append(". Name=").append(host.getName());
-                str.append("; New=[status=")
-                        .append(newStatus.toString())
-                        .append(":msid=")
-                        .append(newStatus.lostConnection() ? "null" : host.getManagementServerId())
-                        .append(":lastpinged=")
-                        .append(host.getLastPinged())
-                        .append("]");
+                str.append("; New=[status=").append(newStatus.toString()).append(":msid=").append(newStatus.lostConnection() ? "null" : host.getManagementServerId())
+                .append(":lastpinged=").append(host.getLastPinged()).append("]");
                 str.append("; Old=[status=").append(oldStatus.toString()).append(":msid=").append(host.getManagementServerId()).append(":lastpinged=").append(oldPingTime)
-                        .append("]");
-                str.append("; DB=[status=")
-                        .append(vo.getStatus().toString())
-                        .append(":msid=")
-                        .append(vo.getManagementServerId())
-                        .append(":lastpinged=")
-                        .append(vo.getLastPinged())
-                        .append(":old update count=")
-                        .append(oldUpdateCount)
-                        .append("]");
+                .append("]");
+                str.append("; DB=[status=").append(vo.getStatus().toString()).append(":msid=").append(vo.getManagementServerId()).append(":lastpinged=").append(vo.getLastPinged())
+                .append(":old update count=").append(oldUpdateCount).append("]");
                 status_logger.debug(str.toString());
             } else {
                 StringBuilder msg = new StringBuilder("Agent status update: [");

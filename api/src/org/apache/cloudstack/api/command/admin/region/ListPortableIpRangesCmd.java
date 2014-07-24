@@ -33,17 +33,16 @@ import org.apache.cloudstack.region.PortableIpRange;
 
 import com.cloud.user.Account;
 
-@APICommand(name = "listPortableIpRanges", description = "list portable IP ranges", responseObject = PortableIpRangeResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listPortableIpRanges", description = "list portable IP ranges", responseObject = PortableIpRangeResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListPortableIpRangesCmd extends BaseListCmd {
 
     public static final Logger s_logger = Logger.getLogger(ListPortableIpRangesCmd.class.getName());
 
     private static final String s_name = "listportableipresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.REGION_ID, type = CommandType.INTEGER, required = false, description = "Id of a Region")
     private Integer regionId;
@@ -51,9 +50,9 @@ public class ListPortableIpRangesCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, required = false, entityType = PortableIpRangeResponse.class, description = "Id of the portable ip range")
     private Long id;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Integer getRegionIdId() {
         return regionId;
@@ -63,9 +62,9 @@ public class ListPortableIpRangesCmd extends BaseListCmd {
         return id;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

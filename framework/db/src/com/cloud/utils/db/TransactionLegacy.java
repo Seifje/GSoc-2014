@@ -48,18 +48,17 @@ import com.cloud.utils.exception.CloudRuntimeException;
 import com.cloud.utils.mgmt.JmxUtil;
 
 /**
- * Transaction abstracts away the Connection object in JDBC.  It allows the
+ * Transaction abstracts away the Connection object in JDBC. It allows the
  * following things that the Connection object does not.
  *
- *   1. Transaction can be started at an entry point and whether the DB
- *      actions should be auto-commit or not determined at that point.
- *   2. DB Connection is allocated only when it is needed.
- *   3. Code does not need to know if a transaction has been started or not.
- *      It just starts/ends a transaction and we resolve it correctly with
- *      the previous actions.
+ * 1. Transaction can be started at an entry point and whether the DB actions
+ * should be auto-commit or not determined at that point. 2. DB Connection is
+ * allocated only when it is needed. 3. Code does not need to know if a
+ * transaction has been started or not. It just starts/ends a transaction and we
+ * resolve it correctly with the previous actions.
  *
- * Note that this class is not synchronous but it doesn't need to be because
- * it is stored with TLS and is one per thread.  Use appropriately.
+ * Note that this class is not synchronous but it doesn't need to be because it
+ * is stored with TLS and is one per thread. Use appropriately.
  */
 public class TransactionLegacy implements Closeable {
     private static final Logger s_logger = Logger.getLogger(Transaction.class.getName() + "." + "Transaction");
@@ -114,8 +113,8 @@ public class TransactionLegacy implements Closeable {
         if (check) {
             assert txn != null : "No Transaction on stack.  Did you mark the method with @DB?";
 
-            assert checkAnnotation(4, txn) : "Did you even read the guide to use Transaction...IOW...other people's code? Try method can't be private.  What about @DB? hmmm... could that be it? " +
-            txn;
+            assert checkAnnotation(4, txn) : "Did you even read the guide to use Transaction...IOW...other people's code? Try method can't be private.  What about @DB? hmmm... could that be it? "
+                    + txn;
         }
         return txn;
     }
@@ -129,8 +128,10 @@ public class TransactionLegacy implements Closeable {
     }
 
     //
-    // Usage of this transaction setup should be limited, it will always open a new transaction context regardless of whether or not there is other
-    // transaction context in the stack. It is used in special use cases that we want to control DB connection explicitly and in the mean time utilize
+    // Usage of this transaction setup should be limited, it will always open a
+    // new transaction context regardless of whether or not there is other
+    // transaction context in the stack. It is used in special use cases that we
+    // want to control DB connection explicitly and in the mean time utilize
     // the existing DAO features
     //
     public void transitToUserManagedConnection(Connection conn) {
@@ -142,7 +143,8 @@ public class TransactionLegacy implements Closeable {
     }
 
     public void transitToAutoManagedConnection(short dbId) {
-        // assert(_stack.size() <= 1) : "Can't change to auto managed connection unless your stack is empty";
+        // assert(_stack.size() <= 1) :
+        // "Can't change to auto managed connection unless your stack is empty";
         _dbId = dbId;
         _conn = null;
     }
@@ -307,7 +309,8 @@ public class TransactionLegacy implements Closeable {
             }
         }
 
-        // relax stack structure for several places that @DB required injection is not in place
+        // relax stack structure for several places that @DB required injection
+        // is not in place
         s_logger.warn("Non-standard stack context that Transaction context is manaully placed into the calling chain. Stack chain: " + sb);
         return true;
     }
@@ -326,12 +329,8 @@ public class TransactionLegacy implements Closeable {
                     continue;
                 }
 
-                str.append("-")
-                .append(stacks[i].getClassName().substring(stacks[i].getClassName().lastIndexOf(".") + 1))
-                .append(".")
-                .append(stacks[i].getMethodName())
-                .append(":")
-                .append(stacks[i].getLineNumber());
+                str.append("-").append(stacks[i].getClassName().substring(stacks[i].getClassName().lastIndexOf(".") + 1)).append(".").append(stacks[i].getMethodName()).append(":")
+                        .append(stacks[i].getLineNumber());
                 j++;
                 i++;
             }
@@ -454,12 +453,14 @@ public class TransactionLegacy implements Closeable {
     }
 
     /**
-     * Prepares an auto close statement.  The statement is closed automatically if it is
-     * retrieved with this method.
+     * Prepares an auto close statement. The statement is closed automatically
+     * if it is retrieved with this method.
      *
-     * @param sql sql String
+     * @param sql
+     *            sql String
      * @return PreparedStatement
-     * @throws SQLException if problem with JDBC layer.
+     * @throws SQLException
+     *             if problem with JDBC layer.
      *
      * @see java.sql.Connection
      */
@@ -480,13 +481,16 @@ public class TransactionLegacy implements Closeable {
     }
 
     /**
-     * Prepares an auto close statement.  The statement is closed automatically if it is
-     * retrieved with this method.
+     * Prepares an auto close statement. The statement is closed automatically
+     * if it is retrieved with this method.
      *
-     * @param sql sql String
-     * @param autoGeneratedKeys keys that are generated
+     * @param sql
+     *            sql String
+     * @param autoGeneratedKeys
+     *            keys that are generated
      * @return PreparedStatement
-     * @throws SQLException if problem with JDBC layer.
+     * @throws SQLException
+     *             if problem with JDBC layer.
      *
      * @see java.sql.Connection
      */
@@ -502,13 +506,16 @@ public class TransactionLegacy implements Closeable {
     }
 
     /**
-     * Prepares an auto close statement.  The statement is closed automatically if it is
-     * retrieved with this method.
+     * Prepares an auto close statement. The statement is closed automatically
+     * if it is retrieved with this method.
      *
-     * @param sql sql String
-     * @param columnNames names of the columns
+     * @param sql
+     *            sql String
+     * @param columnNames
+     *            names of the columns
      * @return PreparedStatement
-     * @throws SQLException if problem with JDBC layer.
+     * @throws SQLException
+     *             if problem with JDBC layer.
      *
      * @see java.sql.Connection
      */
@@ -524,12 +531,14 @@ public class TransactionLegacy implements Closeable {
     }
 
     /**
-     * Prepares an auto close statement.  The statement is closed automatically if it is
-     * retrieved with this method.
+     * Prepares an auto close statement. The statement is closed automatically
+     * if it is retrieved with this method.
      *
-     * @param sql sql String
+     * @param sql
+     *            sql String
      * @return PreparedStatement
-     * @throws SQLException if problem with JDBC layer.
+     * @throws SQLException
+     *             if problem with JDBC layer.
      *
      * @see java.sql.Connection
      */
@@ -547,12 +556,11 @@ public class TransactionLegacy implements Closeable {
     /**
      * Returns the db connection.
      *
-     * Note: that you can call getConnection() but beaware that
-     * all prepare statements from the Connection are not garbage
-     * collected!
+     * Note: that you can call getConnection() but beaware that all prepare
+     * statements from the Connection are not garbage collected!
      *
-     * @return DB Connection but make sure you understand that
-     *         you are responsible for closing the PreparedStatement.
+     * @return DB Connection but make sure you understand that you are
+     *         responsible for closing the PreparedStatement.
      * @throws SQLException
      */
     public Connection getConnection() throws SQLException {
@@ -599,13 +607,14 @@ public class TransactionLegacy implements Closeable {
 
             //
             // MySQL default transaction isolation level is REPEATABLE READ,
-            // to reduce chances of DB deadlock, we will use READ COMMITED isolation level instead
+            // to reduce chances of DB deadlock, we will use READ COMMITED
+            // isolation level instead
             // see http://dev.mysql.com/doc/refman/5.0/en/innodb-deadlocks.html
             //
             _stack.push(new StackElement(CREATE_CONN, null));
             if (s_connLogger.isTraceEnabled()) {
-                s_connLogger.trace("Creating a DB connection with " + (_txn ? " txn: " : " no txn: ") + " for " + _dbId + ": dbconn" + System.identityHashCode(_conn) +
-                        ". Stack: " + buildName());
+                s_connLogger.trace("Creating a DB connection with " + (_txn ? " txn: " : " no txn: ") + " for " + _dbId + ": dbconn" + System.identityHashCode(_conn) + ". Stack: "
+                        + buildName());
             }
         } else {
             s_logger.trace("conn: Using existing DB connection");
@@ -617,7 +626,8 @@ public class TransactionLegacy implements Closeable {
     protected boolean takeOver(final String name, final boolean create) {
         if (_stack.size() != 0) {
             if (!create) {
-                // If it is not a create transaction, then let's just use the current one.
+                // If it is not a create transaction, then let's just use the
+                // current one.
                 if (s_logger.isTraceEnabled()) {
                     s_logger.trace("Using current transaction: " + toString());
                 }
@@ -627,7 +637,7 @@ public class TransactionLegacy implements Closeable {
 
             final StackElement se = _stack.getFirst();
             if (se.type == CREATE_TXN) {
-                // This create is called inside of another create.  Which is ok?
+                // This create is called inside of another create. Which is ok?
                 // We will let that create be responsible for cleaning up.
                 if (s_logger.isTraceEnabled()) {
                     s_logger.trace("Create using current transaction: " + toString());
@@ -678,14 +688,14 @@ public class TransactionLegacy implements Closeable {
     }
 
     /**
-     * close() is used by endTxn to close the connection.  This method only
+     * close() is used by endTxn to close the connection. This method only
      * closes the connection if the name is the same as what's stored.
      *
      * @param name
-     * @return true if this close actually closes the connection.  false if not.
+     * @return true if this close actually closes the connection. false if not.
      */
     public boolean close(final String name) {
-        if (_name == null) {    // Already cleaned up.
+        if (_name == null) { // Already cleaned up.
             if (s_logger.isTraceEnabled()) {
                 s_logger.trace("Already cleaned up." + buildName());
             }
@@ -1044,7 +1054,7 @@ public class TransactionLegacy implements Closeable {
             s_dbHAEnabled = Boolean.valueOf(dbProps.getProperty("db.ha.enabled"));
             s_logger.info("Is Data Base High Availiability enabled? Ans : " + s_dbHAEnabled);
             String loadBalanceStrategy = dbProps.getProperty("db.ha.loadBalanceStrategy");
-            // FIXME:  If params are missing...default them????
+            // FIXME: If params are missing...default them????
             final int cloudMaxActive = Integer.parseInt(dbProps.getProperty("db.cloud.maxActive"));
             final int cloudMaxIdle = Integer.parseInt(dbProps.getProperty("db.cloud.maxIdle"));
             final long cloudMaxWait = Long.parseLong(dbProps.getProperty("db.cloud.maxWait"));
@@ -1095,19 +1105,17 @@ public class TransactionLegacy implements Closeable {
                 System.setProperty("javax.net.ssl.trustStorePassword", dbProps.getProperty("db.cloud.trustStorePassword"));
             }
 
-            final GenericObjectPool cloudConnectionPool =
-                    new GenericObjectPool(null, cloudMaxActive, GenericObjectPool.DEFAULT_WHEN_EXHAUSTED_ACTION, cloudMaxWait, cloudMaxIdle, cloudTestOnBorrow, false,
-                            cloudTimeBtwEvictionRunsMillis, 1, cloudMinEvcitableIdleTimeMillis, cloudTestWhileIdle);
+            final GenericObjectPool cloudConnectionPool = new GenericObjectPool(null, cloudMaxActive, GenericObjectPool.DEFAULT_WHEN_EXHAUSTED_ACTION, cloudMaxWait, cloudMaxIdle,
+                    cloudTestOnBorrow, false, cloudTimeBtwEvictionRunsMillis, 1, cloudMinEvcitableIdleTimeMillis, cloudTestWhileIdle);
 
-            final ConnectionFactory cloudConnectionFactory =
-                    new DriverManagerConnectionFactory("jdbc:mysql://" + cloudHost + (s_dbHAEnabled ? "," + cloudSlaves : "") + ":" + cloudPort + "/" + cloudDbName +
-                            "?autoReconnect=" + cloudAutoReconnect + (url != null ? "&" + url : "") + (useSSL ? "&useSSL=true" : "") +
-                            (s_dbHAEnabled ? "&" + cloudDbHAParams : "") + (s_dbHAEnabled ? "&loadBalanceStrategy=" + loadBalanceStrategy : ""), cloudUsername, cloudPassword);
+            final ConnectionFactory cloudConnectionFactory = new DriverManagerConnectionFactory("jdbc:mysql://" + cloudHost + (s_dbHAEnabled ? "," + cloudSlaves : "") + ":"
+                    + cloudPort + "/" + cloudDbName + "?autoReconnect=" + cloudAutoReconnect + (url != null ? "&" + url : "") + (useSSL ? "&useSSL=true" : "")
+                    + (s_dbHAEnabled ? "&" + cloudDbHAParams : "") + (s_dbHAEnabled ? "&loadBalanceStrategy=" + loadBalanceStrategy : ""), cloudUsername, cloudPassword);
 
             final KeyedObjectPoolFactory poolableObjFactory = (cloudPoolPreparedStatements ? new StackKeyedObjectPoolFactory() : null);
 
-            final PoolableConnectionFactory cloudPoolableConnectionFactory =
-                    new PoolableConnectionFactory(cloudConnectionFactory, cloudConnectionPool, poolableObjFactory, cloudValidationQuery, false, false, isolationLevel);
+            final PoolableConnectionFactory cloudPoolableConnectionFactory = new PoolableConnectionFactory(cloudConnectionFactory, cloudConnectionPool, poolableObjFactory,
+                    cloudValidationQuery, false, false, isolationLevel);
 
             // Default Data Source for CloudStack
             s_ds = new PoolingDataSource(cloudPoolableConnectionFactory.getPool());
@@ -1124,31 +1132,27 @@ public class TransactionLegacy implements Closeable {
             final boolean usageAutoReconnect = Boolean.parseBoolean(dbProps.getProperty("db.usage.autoReconnect"));
             final String usageUrl = dbProps.getProperty("db.usage.url.params");
 
-            final GenericObjectPool usageConnectionPool =
-                    new GenericObjectPool(null, usageMaxActive, GenericObjectPool.DEFAULT_WHEN_EXHAUSTED_ACTION, usageMaxWait, usageMaxIdle);
+            final GenericObjectPool usageConnectionPool = new GenericObjectPool(null, usageMaxActive, GenericObjectPool.DEFAULT_WHEN_EXHAUSTED_ACTION, usageMaxWait, usageMaxIdle);
 
-            final ConnectionFactory usageConnectionFactory =
-                    new DriverManagerConnectionFactory("jdbc:mysql://" + usageHost + (s_dbHAEnabled ? "," + dbProps.getProperty("db.cloud.slaves") : "") + ":" + usagePort +
-                            "/" + usageDbName + "?autoReconnect=" + usageAutoReconnect + (usageUrl != null ? "&" + usageUrl : "") +
-                            (s_dbHAEnabled ? "&" + getDBHAParams("usage", dbProps) : "") + (s_dbHAEnabled ? "&loadBalanceStrategy=" + loadBalanceStrategy : ""), usageUsername,
-                            usagePassword);
+            final ConnectionFactory usageConnectionFactory = new DriverManagerConnectionFactory("jdbc:mysql://" + usageHost
+                    + (s_dbHAEnabled ? "," + dbProps.getProperty("db.cloud.slaves") : "") + ":" + usagePort + "/" + usageDbName + "?autoReconnect=" + usageAutoReconnect
+                    + (usageUrl != null ? "&" + usageUrl : "") + (s_dbHAEnabled ? "&" + getDBHAParams("usage", dbProps) : "")
+                    + (s_dbHAEnabled ? "&loadBalanceStrategy=" + loadBalanceStrategy : ""), usageUsername, usagePassword);
 
-            final PoolableConnectionFactory usagePoolableConnectionFactory =
-                    new PoolableConnectionFactory(usageConnectionFactory, usageConnectionPool, new StackKeyedObjectPoolFactory(), null, false, false);
+            final PoolableConnectionFactory usagePoolableConnectionFactory = new PoolableConnectionFactory(usageConnectionFactory, usageConnectionPool,
+                    new StackKeyedObjectPoolFactory(), null, false, false);
 
             // Data Source for usage server
             s_usageDS = new PoolingDataSource(usagePoolableConnectionFactory.getPool());
 
             // Configure awsapi db
             final String awsapiDbName = dbProps.getProperty("db.awsapi.name");
-            final GenericObjectPool awsapiConnectionPool =
-                    new GenericObjectPool(null, usageMaxActive, GenericObjectPool.DEFAULT_WHEN_EXHAUSTED_ACTION, usageMaxWait, usageMaxIdle);
-            final ConnectionFactory awsapiConnectionFactory =
-                    new DriverManagerConnectionFactory("jdbc:mysql://" + cloudHost + (s_dbHAEnabled ? "," + cloudSlaves : "") + ":" + cloudPort + "/" + awsapiDbName +
-                            "?autoReconnect=" + cloudAutoReconnect + (s_dbHAEnabled ? "&" + cloudDbHAParams : "") +
-                            (s_dbHAEnabled ? "&loadBalanceStrategy=" + loadBalanceStrategy : ""), cloudUsername, cloudPassword);
-            final PoolableConnectionFactory awsapiPoolableConnectionFactory =
-                    new PoolableConnectionFactory(awsapiConnectionFactory, awsapiConnectionPool, new StackKeyedObjectPoolFactory(), null, false, false);
+            final GenericObjectPool awsapiConnectionPool = new GenericObjectPool(null, usageMaxActive, GenericObjectPool.DEFAULT_WHEN_EXHAUSTED_ACTION, usageMaxWait, usageMaxIdle);
+            final ConnectionFactory awsapiConnectionFactory = new DriverManagerConnectionFactory("jdbc:mysql://" + cloudHost + (s_dbHAEnabled ? "," + cloudSlaves : "") + ":"
+                    + cloudPort + "/" + awsapiDbName + "?autoReconnect=" + cloudAutoReconnect + (s_dbHAEnabled ? "&" + cloudDbHAParams : "")
+                    + (s_dbHAEnabled ? "&loadBalanceStrategy=" + loadBalanceStrategy : ""), cloudUsername, cloudPassword);
+            final PoolableConnectionFactory awsapiPoolableConnectionFactory = new PoolableConnectionFactory(awsapiConnectionFactory, awsapiConnectionPool,
+                    new StackKeyedObjectPoolFactory(), null, false, false);
 
             // Data Source for awsapi
             s_awsapiDS = new PoolingDataSource(awsapiPoolableConnectionFactory.getPool());
@@ -1165,15 +1169,14 @@ public class TransactionLegacy implements Closeable {
                 final String simulatorDbName = dbProps.getProperty("db.simulator.name");
                 final boolean simulatorAutoReconnect = Boolean.parseBoolean(dbProps.getProperty("db.simulator.autoReconnect"));
 
-                final GenericObjectPool simulatorConnectionPool =
-                        new GenericObjectPool(null, simulatorMaxActive, GenericObjectPool.DEFAULT_WHEN_EXHAUSTED_ACTION, simulatorMaxWait, simulatorMaxIdle);
+                final GenericObjectPool simulatorConnectionPool = new GenericObjectPool(null, simulatorMaxActive, GenericObjectPool.DEFAULT_WHEN_EXHAUSTED_ACTION,
+                        simulatorMaxWait, simulatorMaxIdle);
 
-                final ConnectionFactory simulatorConnectionFactory =
-                        new DriverManagerConnectionFactory("jdbc:mysql://" + simulatorHost + ":" + simulatorPort + "/" + simulatorDbName + "?autoReconnect=" +
-                                simulatorAutoReconnect, simulatorUsername, simulatorPassword);
+                final ConnectionFactory simulatorConnectionFactory = new DriverManagerConnectionFactory("jdbc:mysql://" + simulatorHost + ":" + simulatorPort + "/"
+                        + simulatorDbName + "?autoReconnect=" + simulatorAutoReconnect, simulatorUsername, simulatorPassword);
 
-                final PoolableConnectionFactory simulatorPoolableConnectionFactory =
-                        new PoolableConnectionFactory(simulatorConnectionFactory, simulatorConnectionPool, new StackKeyedObjectPoolFactory(), null, false, false);
+                final PoolableConnectionFactory simulatorPoolableConnectionFactory = new PoolableConnectionFactory(simulatorConnectionFactory, simulatorConnectionPool,
+                        new StackKeyedObjectPoolFactory(), null, false, false);
                 s_simulatorDS = new PoolingDataSource(simulatorPoolableConnectionFactory.getPool());
             } catch (Exception e) {
                 s_logger.debug("Simulator DB properties are not available. Not initializing simulator DS");
@@ -1205,7 +1208,7 @@ public class TransactionLegacy implements Closeable {
         final ConnectionFactory connectionFactory = new DriverManagerConnectionFactory("jdbc:mysql://localhost:3306/" + database, "cloud", "cloud");
         final PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory(connectionFactory, connectionPool, null, null, false, true);
         return new PoolingDataSource(
-                /* connectionPool */poolableConnectionFactory.getPool());
+        /* connectionPool */poolableConnectionFactory.getPool());
     }
 
     /**
@@ -1218,8 +1221,9 @@ public class TransactionLegacy implements Closeable {
     }
 
     /**
-     * Receives a list of {@link PreparedStatement} and quietly closes all of them, which
-     * triggers also closing their dependent objects, like a {@link ResultSet}
+     * Receives a list of {@link PreparedStatement} and quietly closes all of
+     * them, which triggers also closing their dependent objects, like a
+     * {@link ResultSet}
      *
      * @param pstmt2Close
      */
@@ -1230,7 +1234,8 @@ public class TransactionLegacy implements Closeable {
                     pstmt.close();
                 }
             } catch (SQLException e) {
-                // It's not possible to recover from this and we need to continue closing
+                // It's not possible to recover from this and we need to
+                // continue closing
                 e.printStackTrace();
             }
         }

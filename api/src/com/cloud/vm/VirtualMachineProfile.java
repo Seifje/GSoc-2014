@@ -27,9 +27,9 @@ import com.cloud.template.VirtualMachineTemplate.BootloaderType;
 import com.cloud.user.Account;
 
 /**
- * VirtualMachineProfile describes one virtual machine. This object
- * on what the virtual machine profile should look like before it is
- * actually started on the hypervisor.
+ * VirtualMachineProfile describes one virtual machine. This object on what the
+ * virtual machine profile should look like before it is actually started on the
+ * hypervisor.
  *
  */
 public interface VirtualMachineProfile {
@@ -67,7 +67,7 @@ public interface VirtualMachineProfile {
                 return false;
             if (getClass() != obj.getClass())
                 return false;
-            Param other = (Param) obj;
+            Param other = (Param)obj;
             return (other.getName().equals(this.getName()));
         }
     }

@@ -38,7 +38,8 @@ public interface Vpc extends ControlledEntity, Identity, InternalIdentity {
     long getZoneId();
 
     /**
-     * @return super CIDR of the VPC. All the networks participating in VPC, should have CIDRs that are the part of the super cidr
+     * @return super CIDR of the VPC. All the networks participating in VPC,
+     *         should have CIDRs that are the part of the super cidr
      */
     String getCidr();
 
@@ -62,7 +63,8 @@ public interface Vpc extends ControlledEntity, Identity, InternalIdentity {
 
     /**
      *
-     * @return VPC network domain. All networks participating in the VPC, become the part of the same network domain
+     * @return VPC network domain. All networks participating in the VPC, become
+     *         the part of the same network domain
      */
     String getNetworkDomain();
 
@@ -76,7 +78,8 @@ public interface Vpc extends ControlledEntity, Identity, InternalIdentity {
 
     /**
      *
-     * @return true if VPC is configured to use distributed router to provides one-hop forwarding and hypervisor based ACL
+     * @return true if VPC is configured to use distributed router to provides
+     *         one-hop forwarding and hypervisor based ACL
      */
     boolean usesDistributedRouter();
 

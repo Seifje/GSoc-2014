@@ -25,32 +25,7 @@ import java.util.Map;
 public class S3PolicyAction {
 
     public enum PolicyActions {
-        UnknownAction,
-        AllActions,
-        GetObject,
-        GetObjectVersion,
-        PutObject,
-        GetObjectAcl,
-        GetObjectVersionAcl,
-        PutObjectAcl,
-        PutObjectAclVersion,
-        DeleteObject,
-        DeleteObjectVersion,
-        ListMultipartUploadParts,
-        AbortMultipartUpload,
-        CreateBucket,
-        DeleteBucket,
-        ListBucket,
-        ListBucketVersions,
-        ListAllMyBuckets,
-        ListBucketMultipartUploads,
-        GetBucketAcl,
-        PutBucketAcl,
-        GetBucketVersioning,
-        PutBucketVersioning,
-        GetBucketLocation,
-        PutBucketPolicy,
-        GetBucketPolicy
+        UnknownAction, AllActions, GetObject, GetObjectVersion, PutObject, GetObjectAcl, GetObjectVersionAcl, PutObjectAcl, PutObjectAclVersion, DeleteObject, DeleteObjectVersion, ListMultipartUploadParts, AbortMultipartUpload, CreateBucket, DeleteBucket, ListBucket, ListBucketVersions, ListAllMyBuckets, ListBucketMultipartUploads, GetBucketAcl, PutBucketAcl, GetBucketVersioning, PutBucketVersioning, GetBucketLocation, PutBucketPolicy, GetBucketPolicy
     }
 
     // -> map a string name into a policy action constant

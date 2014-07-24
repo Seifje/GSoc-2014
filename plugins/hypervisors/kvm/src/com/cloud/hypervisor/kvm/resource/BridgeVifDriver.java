@@ -104,8 +104,7 @@ public class BridgeVifDriver extends VifDriverBase {
         String trafficLabel = nic.getName();
         if (nic.getType() == Networks.TrafficType.Guest) {
             Integer networkRateKBps = (nic.getNetworkRateMbps() != null && nic.getNetworkRateMbps().intValue() != -1) ? nic.getNetworkRateMbps().intValue() * 128 : 0;
-            if (nic.getBroadcastType() == Networks.BroadcastDomainType.Vlan && !vNetId.equalsIgnoreCase("untagged") ||
-                nic.getBroadcastType() == Networks.BroadcastDomainType.Vxlan) {
+            if (nic.getBroadcastType() == Networks.BroadcastDomainType.Vlan && !vNetId.equalsIgnoreCase("untagged") || nic.getBroadcastType() == Networks.BroadcastDomainType.Vxlan) {
                 if (trafficLabel != null && !trafficLabel.isEmpty()) {
                     s_logger.debug("creating a vNet dev and bridge for guest traffic per traffic label " + trafficLabel);
                     String brName = createVnetBr(vNetId, trafficLabel, protocol);
@@ -123,8 +122,7 @@ public class BridgeVifDriver extends VifDriverBase {
             intf.defBridgeNet(_bridges.get("linklocal"), null, nic.getMac(), getGuestNicModel(guestOsType, nicAdapter));
         } else if (nic.getType() == Networks.TrafficType.Public) {
             Integer networkRateKBps = (nic.getNetworkRateMbps() != null && nic.getNetworkRateMbps().intValue() != -1) ? nic.getNetworkRateMbps().intValue() * 128 : 0;
-            if (nic.getBroadcastType() == Networks.BroadcastDomainType.Vlan && !vNetId.equalsIgnoreCase("untagged") ||
-                nic.getBroadcastType() == Networks.BroadcastDomainType.Vxlan) {
+            if (nic.getBroadcastType() == Networks.BroadcastDomainType.Vlan && !vNetId.equalsIgnoreCase("untagged") || nic.getBroadcastType() == Networks.BroadcastDomainType.Vxlan) {
                 if (trafficLabel != null && !trafficLabel.isEmpty()) {
                     s_logger.debug("creating a vNet dev and bridge for public traffic per traffic label " + trafficLabel);
                     String brName = createVnetBr(vNetId, trafficLabel, protocol);
@@ -164,7 +162,8 @@ public class BridgeVifDriver extends VifDriverBase {
     private String createVnetBr(String vNetId, String pifKey, String protocol) throws InternalErrorException {
         String nic = _pifs.get(pifKey);
         if (nic == null) {
-            // if not found in bridge map, maybe traffic label refers to pif already?
+            // if not found in bridge map, maybe traffic label refers to pif
+            // already?
             File pif = new File("/sys/class/net/" + pifKey);
             if (pif.isDirectory()) {
                 nic = pifKey;
@@ -219,7 +218,8 @@ public class BridgeVifDriver extends VifDriverBase {
             String pName = null;
             String vNetId = null;
             if (oldStyleBrNameMatcher.find()) {
-                // Actually modifyvlan.sh doesn't require pif name when deleting its bridge so far.
+                // Actually modifyvlan.sh doesn't require pif name when deleting
+                // its bridge so far.
                 pName = "undefined";
                 vNetId = oldStyleBrNameMatcher.group(1);
             } else if (brNameMatcher.find()) {
@@ -279,8 +279,8 @@ public class BridgeVifDriver extends VifDriverBase {
             }
         }
         if (!foundLinkLocalBr) {
-            Script.runSimpleBashScript("ifconfig " + linkLocalBr + " 169.254.0.1;" + "ip route add " + NetUtils.getLinkLocalCIDR() + " dev " + linkLocalBr + " src " +
-                NetUtils.getLinkLocalGateway());
+            Script.runSimpleBashScript("ifconfig " + linkLocalBr + " 169.254.0.1;" + "ip route add " + NetUtils.getLinkLocalCIDR() + " dev " + linkLocalBr + " src "
+                    + NetUtils.getLinkLocalGateway());
         }
     }
 

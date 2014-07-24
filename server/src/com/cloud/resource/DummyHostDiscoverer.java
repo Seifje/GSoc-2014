@@ -81,7 +81,7 @@ public class DummyHostDiscoverer extends AdapterBase implements Discoverer {
 
     @Override
     public void postDiscovery(List<HostVO> hosts, long msId) {
-        //do nothing
+        // do nothing
     }
 
     @Override

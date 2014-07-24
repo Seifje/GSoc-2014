@@ -195,8 +195,8 @@ public class VolumeHostVO implements InternalIdentity, DataObjectInStore {
         this.state = ObjectInDataStoreStateMachine.State.Allocated;
     }
 
-    public VolumeHostVO(long hostId, long volumeId, long zoneId, Date lastUpdated, int downloadPercent, Status downloadState, String localDownloadPath,
-            String errorString, String jobId, String installPath, String downloadUrl, String checksum, ImageFormat format) {
+    public VolumeHostVO(long hostId, long volumeId, long zoneId, Date lastUpdated, int downloadPercent, Status downloadState, String localDownloadPath, String errorString,
+            String jobId, String installPath, String downloadUrl, String checksum, ImageFormat format) {
         // super();
         this.hostId = hostId;
         this.volumeId = volumeId;

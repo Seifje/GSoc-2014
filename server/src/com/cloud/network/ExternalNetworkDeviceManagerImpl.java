@@ -121,7 +121,8 @@ public class ExternalNetworkDeviceManagerImpl extends ManagerBase implements Ext
     int _externalNetworkStatsInterval;
 
     // obsolete
-    // private final static IdentityService _identityService = (IdentityService)ComponentLocator.getLocator(ManagementServer.Name).getManager(IdentityService.class);
+    // private final static IdentityService _identityService =
+    // (IdentityService)ComponentLocator.getLocator(ManagementServer.Name).getManager(IdentityService.class);
 
     private static final org.apache.log4j.Logger s_logger = Logger.getLogger(ExternalNetworkDeviceManagerImpl.class);
 
@@ -143,20 +144,20 @@ public class ExternalNetworkDeviceManagerImpl extends ManagerBase implements Ext
     }
 
     private List<Host> listNetworkDevice(Long zoneId, Long physicalNetworkId, Long podId, Host.Type type) {
-//        List<Host> res = new ArrayList<Host>();
-//        if (podId != null) {
-//            List<HostVO> devs = _hostDao.listBy(type, null, podId, zoneId);
-//            if (devs.size() == 1) {
-//                res.add(devs.get(0));
-//            } else {
-//                s_logger.debug("List " + type + ": " + devs.size() + " found");
-//            }
-//        } else {
-//            List<HostVO> devs = _hostDao.listBy(type, zoneId);
-//            res.addAll(devs);
-        //       }
+        // List<Host> res = new ArrayList<Host>();
+        // if (podId != null) {
+        // List<HostVO> devs = _hostDao.listBy(type, null, podId, zoneId);
+        // if (devs.size() == 1) {
+        // res.add(devs.get(0));
+        // } else {
+        // s_logger.debug("List " + type + ": " + devs.size() + " found");
+        // }
+        // } else {
+        // List<HostVO> devs = _hostDao.listBy(type, zoneId);
+        // res.addAll(devs);
+        // }
 
-        //       return res;
+        // return res;
         return null;
     }
 

@@ -378,8 +378,8 @@ public class NiciraNvpResource implements ServerResource {
         String publicNetworkIpAddress = cmd.getPublicIpCidr();
         String internalNetworkAddress = cmd.getInternalIpCidr();
 
-        s_logger.debug("Creating a logical router with external ip " + publicNetworkIpAddress + " and internal ip " + internalNetworkAddress + "on gateway service " +
-            gatewayServiceUuid);
+        s_logger.debug("Creating a logical router with external ip " + publicNetworkIpAddress + " and internal ip " + internalNetworkAddress + "on gateway service "
+                + gatewayServiceUuid);
 
         try {
             // Create the Router
@@ -403,7 +403,8 @@ public class NiciraNvpResource implements ServerResource {
                 lrpo.setIpAddresses(outsideIpAddresses);
                 lrpo = niciraNvpApi.createLogicalRouterPort(lrc.getUuid(), lrpo);
 
-                // Attach the outside port to the gateway service on the correct VLAN
+                // Attach the outside port to the gateway service on the correct
+                // VLAN
                 L3GatewayAttachment attachment = new L3GatewayAttachment(gatewayServiceUuid);
                 if (cmd.getVlanId() != 0) {
                     attachment.setVlanId(cmd.getVlanId());
@@ -424,10 +425,12 @@ public class NiciraNvpResource implements ServerResource {
                 lsp = new LogicalSwitchPort(truncate(routerName + "-inside-port", NAME_MAX_LEN), tags, true);
                 lsp = niciraNvpApi.createLogicalSwitchPort(logicalSwitchUuid, lsp);
 
-                // Attach the inside router port to the lswitch port with a PatchAttachment
+                // Attach the inside router port to the lswitch port with a
+                // PatchAttachment
                 niciraNvpApi.updateLogicalRouterPortAttachment(lrc.getUuid(), lrpi.getUuid(), new PatchAttachment(lsp.getUuid()));
 
-                // Attach the inside lswitch port to the router with a PatchAttachment
+                // Attach the inside lswitch port to the router with a
+                // PatchAttachment
                 niciraNvpApi.updateLogicalSwitchPortAttachment(logicalSwitchUuid, lsp.getUuid(), new PatchAttachment(lrpi.getUuid()));
 
                 // Setup the source nat rule
@@ -486,8 +489,8 @@ public class NiciraNvpResource implements ServerResource {
             lrp.setIpAddresses(cmd.getPublicCidrs());
             niciraNvpApi.updateLogicalRouterPort(cmd.getLogicalRouterUuid(), lrp);
 
-            return new ConfigurePublicIpsOnLogicalRouterAnswer(cmd, true, "Configured " + cmd.getPublicCidrs().size() + " ip addresses on logical router uuid " +
-                cmd.getLogicalRouterUuid());
+            return new ConfigurePublicIpsOnLogicalRouterAnswer(cmd, true, "Configured " + cmd.getPublicCidrs().size() + " ip addresses on logical router uuid "
+                    + cmd.getLogicalRouterUuid());
         } catch (NiciraNvpApiException e) {
             if (numRetries > 0) {
                 return retry(cmd, --numRetries);
@@ -501,9 +504,12 @@ public class NiciraNvpResource implements ServerResource {
     private Answer executeRequest(final ConfigureStaticNatRulesOnLogicalRouterCommand cmd, int numRetries) {
         try {
             NiciraNvpList<NatRule> existingRules = niciraNvpApi.findNatRulesByLogicalRouterUuid(cmd.getLogicalRouterUuid());
-            // Rules of the game (also known as assumptions-that-will-make-stuff-break-later-on)
-            // A SourceNat rule with a match other than a /32 cidr is assumed to be the "main" SourceNat rule
-            // Any other SourceNat rule should have a corresponding DestinationNat rule
+            // Rules of the game (also known as
+            // assumptions-that-will-make-stuff-break-later-on)
+            // A SourceNat rule with a match other than a /32 cidr is assumed to
+            // be the "main" SourceNat rule
+            // Any other SourceNat rule should have a corresponding
+            // DestinationNat rule
 
             for (StaticNatRuleTO rule : cmd.getRules()) {
 
@@ -570,9 +576,12 @@ public class NiciraNvpResource implements ServerResource {
     private Answer executeRequest(final ConfigurePortForwardingRulesOnLogicalRouterCommand cmd, int numRetries) {
         try {
             NiciraNvpList<NatRule> existingRules = niciraNvpApi.findNatRulesByLogicalRouterUuid(cmd.getLogicalRouterUuid());
-            // Rules of the game (also known as assumptions-that-will-make-stuff-break-later-on)
-            // A SourceNat rule with a match other than a /32 cidr is assumed to be the "main" SourceNat rule
-            // Any other SourceNat rule should have a corresponding DestinationNat rule
+            // Rules of the game (also known as
+            // assumptions-that-will-make-stuff-break-later-on)
+            // A SourceNat rule with a match other than a /32 cidr is assumed to
+            // be the "main" SourceNat rule
+            // Any other SourceNat rule should have a corresponding
+            // DestinationNat rule
 
             for (PortForwardingRuleTO rule : cmd.getRules()) {
                 if (rule.isAlreadyAdded() && !rule.revoked()) {
@@ -727,9 +736,9 @@ public class NiciraNvpResource implements ServerResource {
 
     }
 
-    protected NatRule[] generatePortForwardingRulePair(final String insideIp, final int[] insidePorts, final String outsideIp, final int[] outsidePorts,
-        final String protocol) {
-        // Start with a basic static nat rule, then add port and protocol details
+    protected NatRule[] generatePortForwardingRulePair(final String insideIp, final int[] insidePorts, final String outsideIp, final int[] outsidePorts, final String protocol) {
+        // Start with a basic static nat rule, then add port and protocol
+        // details
         NatRule[] rulepair = generateStaticNatRulePair(insideIp, outsideIp);
 
         ((DestinationNatRule)rulepair[0]).setToDestinationPort(insidePorts[0]);

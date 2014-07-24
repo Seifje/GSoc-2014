@@ -74,7 +74,7 @@ public class SyncQueueItemDaoImpl extends GenericDaoBase<SyncQueueItemVO, Long> 
 
         Filter filter = new Filter(SyncQueueItemVO.class, "created", true, 0L, 1L);
         List<SyncQueueItemVO> l = listBy(sc, filter);
-        if(l != null && l.size() > 0)
+        if (l != null && l.size() > 0)
             return l.get(0);
 
         return null;
@@ -93,12 +93,8 @@ public class SyncQueueItemDaoImpl extends GenericDaoBase<SyncQueueItemVO, Long> 
     public List<SyncQueueItemVO> getNextQueueItems(int maxItems) {
         List<SyncQueueItemVO> l = new ArrayList<SyncQueueItemVO>();
 
-        String sql = "SELECT i.id, i.queue_id, i.content_type, i.content_id, i.created " +
-                " FROM sync_queue AS q JOIN sync_queue_item AS i ON q.id = i.queue_id " +
-                     " WHERE i.queue_proc_number IS NULL " +
-                " GROUP BY q.id " +
-                " ORDER BY i.id " +
-                " LIMIT 0, ?";
+        String sql = "SELECT i.id, i.queue_id, i.content_type, i.content_id, i.created " + " FROM sync_queue AS q JOIN sync_queue_item AS i ON q.id = i.queue_id "
+                + " WHERE i.queue_proc_number IS NULL " + " GROUP BY q.id " + " ORDER BY i.id " + " LIMIT 0, ?";
 
         TransactionLegacy txn = TransactionLegacy.currentTxn();
         PreparedStatement pstmt = null;
@@ -106,7 +102,7 @@ public class SyncQueueItemDaoImpl extends GenericDaoBase<SyncQueueItemVO, Long> 
             pstmt = txn.prepareAutoCloseStatement(sql);
             pstmt.setInt(1, maxItems);
             ResultSet rs = pstmt.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 SyncQueueItemVO item = new SyncQueueItemVO();
                 item.setId(rs.getLong(1));
                 item.setQueueId(rs.getLong(2));
@@ -126,8 +122,7 @@ public class SyncQueueItemDaoImpl extends GenericDaoBase<SyncQueueItemVO, Long> 
     @Override
     public List<SyncQueueItemVO> getActiveQueueItems(Long msid, boolean exclusive) {
         SearchBuilder<SyncQueueItemVO> sb = createSearchBuilder();
-        sb.and("lastProcessMsid", sb.entity().getLastProcessMsid(),
-                SearchCriteria.Op.EQ);
+        sb.and("lastProcessMsid", sb.entity().getLastProcessMsid(), SearchCriteria.Op.EQ);
         sb.done();
 
         SearchCriteria<SyncQueueItemVO> sc = sb.create();
@@ -155,7 +150,7 @@ public class SyncQueueItemDaoImpl extends GenericDaoBase<SyncQueueItemVO, Long> 
         SearchCriteria<SyncQueueItemVO> sc = sbItem.create();
         sc.setParameters("lastProcessTime2", new Date(cutTime.getTime() - thresholdMs));
 
-        if(exclusive)
+        if (exclusive)
             return lockRows(sc, null, true);
         return listBy(sc, null);
     }

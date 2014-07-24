@@ -44,8 +44,7 @@ import com.cloud.network.rules.FirewallRule;
 import com.cloud.user.Account;
 import com.cloud.utils.net.NetUtils;
 
-@APICommand(name = "createEgressFirewallRule", description = "Creates a egress firewall rule for a given network ", responseObject = FirewallResponse.class, entityType = {FirewallRule.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createEgressFirewallRule", description = "Creates a egress firewall rule for a given network ", responseObject = FirewallResponse.class, entityType = {FirewallRule.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateEgressFirewallRuleCmd extends BaseAsyncCreateCmd implements FirewallRule {
     public static final Logger s_logger = Logger.getLogger(CreateEgressFirewallRuleCmd.class.getName());
 
@@ -55,17 +54,10 @@ public class CreateEgressFirewallRuleCmd extends BaseAsyncCreateCmd implements F
     // ////////////// API parameters /////////////////////
     // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = NetworkResponse.class,
-               required = true,
-               description = "the network id of the port forwarding rule")
+    @Parameter(name = ApiConstants.NETWORK_ID, type = CommandType.UUID, entityType = NetworkResponse.class, required = true, description = "the network id of the port forwarding rule")
     private Long networkId;
 
-    @Parameter(name = ApiConstants.PROTOCOL,
-               type = CommandType.STRING,
-               required = true,
-               description = "the protocol for the firewall rule. Valid values are TCP/UDP/ICMP.")
+    @Parameter(name = ApiConstants.PROTOCOL, type = CommandType.STRING, required = true, description = "the protocol for the firewall rule. Valid values are TCP/UDP/ICMP.")
     private String protocol;
 
     @Parameter(name = ApiConstants.START_PORT, type = CommandType.INTEGER, description = "the starting port of firewall rule")
@@ -144,7 +136,8 @@ public class CreateEgressFirewallRuleCmd extends BaseAsyncCreateCmd implements F
         try {
             CallContext.current().setEventDetails("Rule Id: " + getEntityId());
             success = _firewallService.applyEgressFirewallRules(rule, callerContext.getCallingAccount());
-            // State is different after the rule is applied, so get new object here
+            // State is different after the rule is applied, so get new object
+            // here
             rule = _entityMgr.findById(FirewallRule.class, getEntityId());
             FirewallResponse fwResponse = new FirewallResponse();
             if (rule != null) {
@@ -220,14 +213,16 @@ public class CreateEgressFirewallRuleCmd extends BaseAsyncCreateCmd implements F
             return account.getId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
     @Override
     public long getDomainId() {
         Network network = _networkService.getNetwork(networkId);
-            return  network.getDomainId();
-        }
+        return network.getDomainId();
+    }
 
     @Override
     public void create() {
@@ -248,15 +243,15 @@ public class CreateEgressFirewallRuleCmd extends BaseAsyncCreateCmd implements F
         }
         if (getProtocol().equalsIgnoreCase(NetUtils.ALL_PROTO)) {
             if (getSourcePortStart() != null && getSourcePortEnd() != null) {
-                throw new InvalidParameterValueException("Do not pass ports to protocol ALL, porotocol ALL do not require ports. Unable to create " +
-                    "firewall rule for the network id=" + networkId);
+                throw new InvalidParameterValueException("Do not pass ports to protocol ALL, porotocol ALL do not require ports. Unable to create "
+                        + "firewall rule for the network id=" + networkId);
             }
         }
 
         if (getVpcId() != null) {
-                throw new  InvalidParameterValueException("Unable to create firewall rule for the network id=" + networkId +
-                        " as firewall egress rule can be created only for non vpc networks.");
-            }
+            throw new InvalidParameterValueException("Unable to create firewall rule for the network id=" + networkId
+                    + " as firewall egress rule can be created only for non vpc networks.");
+        }
 
         try {
             FirewallRule result = _firewallService.createEgressFirewallRule(this);
@@ -275,7 +270,7 @@ public class CreateEgressFirewallRuleCmd extends BaseAsyncCreateCmd implements F
 
     @Override
     public String getEventDescription() {
-         Network network = _networkService.getNetwork(networkId);
+        Network network = _networkService.getNetwork(networkId);
         return ("Creating firewall rule for network: " + network + " for protocol:" + getProtocol());
     }
 
@@ -292,7 +287,7 @@ public class CreateEgressFirewallRuleCmd extends BaseAsyncCreateCmd implements F
 
     @Override
     public Long getSyncObjId() {
-                return  getNetworkId();
+        return getNetworkId();
     }
 
     @Override
@@ -337,7 +332,7 @@ public class CreateEgressFirewallRuleCmd extends BaseAsyncCreateCmd implements F
 
     @Override
     public TrafficType getTrafficType() {
-           return TrafficType.Egress;
+        return TrafficType.Egress;
     }
 
     @Override

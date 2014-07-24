@@ -281,7 +281,7 @@ public class S3SerializableServiceImplementation implements AmazonS3SkeletonInte
     }
 
     public PutObjectResponse putObject(PutObject putObject) {
-        //TODO : fill this with the necessary business logic
+        // TODO : fill this with the necessary business logic
         throw new UnsupportedOperationException("Please implement " + this.getClass().getName() + "#putObject");
     }
 
@@ -335,7 +335,7 @@ public class S3SerializableServiceImplementation implements AmazonS3SkeletonInte
             for (int i = 0; i < engineEntries.length; i++) {
                 entries[i] = new ListAllMyBucketsEntry();
                 entries[i].setName(engineEntries[i].getName());
-                entries[i].setCreationDate(engineEntries[i].getCreationDate());   //setTimeZone(TimeZone.getTimeZone("Z"));
+                entries[i].setCreationDate(engineEntries[i].getCreationDate()); // setTimeZone(TimeZone.getTimeZone("Z"));
             }
 
             ListAllMyBucketsList list = new ListAllMyBucketsList();
@@ -596,11 +596,13 @@ public class S3SerializableServiceImplementation implements AmazonS3SkeletonInte
                     Group temp = (Group)grantee;
                     String uri = temp.getURI();
                     if (uri.equalsIgnoreCase("http://acs.amazonaws.com/groups/global/AllUsers")) {
-                        // -> this allows all public unauthenticated access based on permission given
+                        // -> this allows all public unauthenticated access
+                        // based on permission given
                         engineGrant.setGrantee(SAcl.GRANTEE_ALLUSERS);
                         engineGrant.setCanonicalUserID("*");
                     } else if (uri.equalsIgnoreCase("http://acs.amazonaws.com/groups/global/Authenticated")) {
-                        // -> this allows any authenticated user access based on permission given
+                        // -> this allows any authenticated user access based on
+                        // permission given
                         engineGrant.setGrantee(SAcl.GRANTEE_AUTHENTICATED);
                         engineGrant.setCanonicalUserID("A");
                     } else
@@ -640,45 +642,45 @@ public class S3SerializableServiceImplementation implements AmazonS3SkeletonInte
                 grants[i] = new Grant();
 
                 switch (engineGrants[i].getGrantee()) {
-                    case SAcl.GRANTEE_USER:
-                        grantee = new CanonicalUser();
-                        ((CanonicalUser)grantee).setID(engineGrants[i].getCanonicalUserID());
-                        ((CanonicalUser)grantee).setDisplayName("TODO");
-                        grants[i].setGrantee(grantee);
-                        break;
+                case SAcl.GRANTEE_USER:
+                    grantee = new CanonicalUser();
+                    ((CanonicalUser)grantee).setID(engineGrants[i].getCanonicalUserID());
+                    ((CanonicalUser)grantee).setDisplayName("TODO");
+                    grants[i].setGrantee(grantee);
+                    break;
 
-                    case SAcl.GRANTEE_ALLUSERS:
-                        grantee = new Group();
-                        ((Group)grantee).setURI("http://acs.amazonaws.com/groups/global/AllUsers");
-                        grants[i].setGrantee(grantee);
-                        break;
+                case SAcl.GRANTEE_ALLUSERS:
+                    grantee = new Group();
+                    ((Group)grantee).setURI("http://acs.amazonaws.com/groups/global/AllUsers");
+                    grants[i].setGrantee(grantee);
+                    break;
 
-                    case SAcl.GRANTEE_AUTHENTICATED:
-                        grantee = new Group();
-                        ((Group)grantee).setURI("http://acs.amazonaws.com/groups/global/Authenticated");
-                        grants[i].setGrantee(grantee);
-                        break;
+                case SAcl.GRANTEE_AUTHENTICATED:
+                    grantee = new Group();
+                    ((Group)grantee).setURI("http://acs.amazonaws.com/groups/global/Authenticated");
+                    grants[i].setGrantee(grantee);
+                    break;
 
-                    default:
-                        throw new InternalErrorException("Unsupported grantee type");
+                default:
+                    throw new InternalErrorException("Unsupported grantee type");
                 }
 
                 switch (engineGrants[i].getPermission()) {
-                    case SAcl.PERMISSION_READ:
-                        grants[i].setPermission(Permission.READ);
-                        break;
-                    case SAcl.PERMISSION_WRITE:
-                        grants[i].setPermission(Permission.WRITE);
-                        break;
-                    case SAcl.PERMISSION_READ_ACL:
-                        grants[i].setPermission(Permission.READ_ACP);
-                        break;
-                    case SAcl.PERMISSION_WRITE_ACL:
-                        grants[i].setPermission(Permission.WRITE_ACP);
-                        break;
-                    case SAcl.PERMISSION_FULL:
-                        grants[i].setPermission(Permission.FULL_CONTROL);
-                        break;
+                case SAcl.PERMISSION_READ:
+                    grants[i].setPermission(Permission.READ);
+                    break;
+                case SAcl.PERMISSION_WRITE:
+                    grants[i].setPermission(Permission.WRITE);
+                    break;
+                case SAcl.PERMISSION_READ_ACL:
+                    grants[i].setPermission(Permission.READ_ACP);
+                    break;
+                case SAcl.PERMISSION_WRITE_ACL:
+                    grants[i].setPermission(Permission.WRITE_ACP);
+                    break;
+                case SAcl.PERMISSION_FULL:
+                    grants[i].setPermission(Permission.FULL_CONTROL);
+                    break;
                 }
             }
             return grants;

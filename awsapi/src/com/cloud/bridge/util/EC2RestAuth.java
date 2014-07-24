@@ -35,8 +35,10 @@ import org.apache.log4j.Logger;
 public class EC2RestAuth {
     protected final static Logger logger = Logger.getLogger(RestAuth.class);
 
-    // TreeMap: used to Sort the UTF-8 query string components by parameter name with natural byte ordering
-    protected TreeMap<String, String> queryParts = null;   // used to generate a CanonicalizedQueryString
+    // TreeMap: used to Sort the UTF-8 query string components by parameter name
+    // with natural byte ordering
+    protected TreeMap<String, String> queryParts = null; // used to generate a
+                                                         // CanonicalizedQueryString
     protected String canonicalizedQueryString = null;
     protected String hostHeader = null;
     protected String httpRequestURI = null;
@@ -50,7 +52,8 @@ public class EC2RestAuth {
         DateFormat formatter = null;
         Calendar cal = Calendar.getInstance();
 
-        // -> for some unknown reason SimpleDateFormat does not properly handle the 'Z' timezone
+        // -> for some unknown reason SimpleDateFormat does not properly handle
+        // the 'Z' timezone
         if (created.endsWith("Z"))
             created = created.replace("Z", "+0000");
 
@@ -109,7 +112,9 @@ public class EC2RestAuth {
     /**
      * Assuming that a port number is to be included.
      *
-     * @param header - contents of the "Host:" header, skipping the 'Host:' preamble.
+     * @param header
+     *            - contents of the "Host:" header, skipping the 'Host:'
+     *            preamble.
      */
     public void setHostHeader(String hostHeader) {
         if (null == hostHeader)
@@ -126,10 +131,11 @@ public class EC2RestAuth {
     }
 
     /**
-     * The given query string needs to be pulled apart, sorted by paramter name, and reconstructed.
-     * We sort the query string values via a TreeMap.
+     * The given query string needs to be pulled apart, sorted by paramter name,
+     * and reconstructed. We sort the query string values via a TreeMap.
      *
-     * @param query - this string still has all URL encoding in place.
+     * @param query
+     *            - this string still has all URL encoding in place.
      */
     public void setQueryString(String query) {
         String parameter = null;
@@ -177,14 +183,19 @@ public class EC2RestAuth {
     }
 
     /**
-     * The request is authenticated if we can regenerate the same signature given
-     * on the request.  Before calling this function make sure to set the header values
-     * defined by the public values above.
+     * The request is authenticated if we can regenerate the same signature
+     * given on the request. Before calling this function make sure to set the
+     * header values defined by the public values above.
      *
-     * @param httpVerb  - the type of HTTP request (e.g., GET, PUT)
-     * @param secretKey - value obtained from the AWSAccessKeyId
-     * @param signature - the signature we are trying to recreate, note can be URL-encoded
-     * @param method    - { "HmacSHA1", "HmacSHA256" }
+     * @param httpVerb
+     *            - the type of HTTP request (e.g., GET, PUT)
+     * @param secretKey
+     *            - value obtained from the AWSAccessKeyId
+     * @param signature
+     *            - the signature we are trying to recreate, note can be
+     *            URL-encoded
+     * @param method
+     *            - { "HmacSHA1", "HmacSHA256" }
      *
      * @throws SignatureException
      *
@@ -200,11 +211,13 @@ public class EC2RestAuth {
         secretKey = secretKey.trim();
         signature = signature.trim();
 
-        // -> first calculate the StringToSign after the caller has initialized all the header values
+        // -> first calculate the StringToSign after the caller has initialized
+        // all the header values
         String StringToSign = genStringToSign(httpVerb);
         String calSig = calculateRFC2104HMAC(StringToSign, secretKey, method.equalsIgnoreCase("HmacSHA1"));
 
-        // -> the passed in signature is defined to be URL encoded? (and it must be base64 encoded)
+        // -> the passed in signature is defined to be URL encoded? (and it must
+        // be base64 encoded)
         int offset = signature.indexOf("%");
         if (-1 != offset)
             signature = URLDecoder.decode(signature, "UTF-8");
@@ -216,13 +229,11 @@ public class EC2RestAuth {
     }
 
     /**
-     * This function generates the single string that will be used to sign with a users
-     * secret key.
+     * This function generates the single string that will be used to sign with
+     * a users secret key.
      *
-     * StringToSign = HTTP-Verb + "\n" +
-     * ValueOfHostHeaderInLowercase + "\n" +
-     * HTTPRequestURI + "\n" +
-     * CanonicalizedQueryString
+     * StringToSign = HTTP-Verb + "\n" + ValueOfHostHeaderInLowercase + "\n" +
+     * HTTPRequestURI + "\n" + CanonicalizedQueryString
      *
      * @return The single StringToSign or null.
      */
@@ -249,13 +260,16 @@ public class EC2RestAuth {
     }
 
     /**
-     * Create a signature by the following method:
-     *     new String( Base64( SHA1 or SHA256 ( key, byte array )))
+     * Create a signature by the following method: new String( Base64( SHA1 or
+     * SHA256 ( key, byte array )))
      *
-     * @param signIt    - the data to generate a keyed HMAC over
-     * @param secretKey - the user's unique key for the HMAC operation
-     * @param useSHA1   - if false use SHA256
-     * @return String   - the recalculated string
+     * @param signIt
+     *            - the data to generate a keyed HMAC over
+     * @param secretKey
+     *            - the user's unique key for the HMAC operation
+     * @param useSHA1
+     *            - if false use SHA256
+     * @return String - the recalculated string
      * @throws SignatureException
      */
     private String calculateRFC2104HMAC(String signIt, String secretKey, boolean useSHA1) throws SignatureException {

@@ -80,8 +80,8 @@ public class RGB888LE32PixelFormatRequest extends BaseElement {
         outBuf.writeByte(0);
         outBuf.writeByte(0);
 
-        screen.setPixelFormat(bitsPerPixel, depth, bigEndianFlag != RfbConstants.LITTLE_ENDIAN, trueColourFlag == RfbConstants.TRUE_COLOR, redMax, greenMax,
-                blueMax, redShift, greenShift, blueShift);
+        screen.setPixelFormat(bitsPerPixel, depth, bigEndianFlag != RfbConstants.LITTLE_ENDIAN, trueColourFlag == RfbConstants.TRUE_COLOR, redMax, greenMax, blueMax, redShift,
+                greenShift, blueShift);
 
         pushDataToAllOuts(outBuf);
     }

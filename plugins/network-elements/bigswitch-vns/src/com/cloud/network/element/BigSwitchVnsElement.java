@@ -161,15 +161,15 @@ public class BigSwitchVnsElement extends AdapterBase implements BigSwitchVnsElem
 
     @Override
     public boolean implement(Network network, NetworkOffering offering, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException, InsufficientCapacityException {
+            ResourceUnavailableException, InsufficientCapacityException {
         s_logger.debug("entering BigSwitchVnsElement implement function for network " + network.getDisplayText() + " (state " + network.getState() + ")");
 
         return true;
     }
 
     @Override
-    public boolean prepare(Network network, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
-        throws ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException {
+    public boolean prepare(Network network, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException,
+            ResourceUnavailableException, InsufficientCapacityException {
 
         if (!canHandle(network, Service.Connectivity)) {
             return false;
@@ -203,8 +203,7 @@ public class BigSwitchVnsElement extends AdapterBase implements BigSwitchVnsElem
     }
 
     @Override
-    public boolean release(Network network, NicProfile nic, VirtualMachineProfile vm, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public boolean release(Network network, NicProfile nic, VirtualMachineProfile vm, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
 
         if (!canHandle(network, Service.Connectivity)) {
             return false;
@@ -260,8 +259,7 @@ public class BigSwitchVnsElement extends AdapterBase implements BigSwitchVnsElem
     }
 
     @Override
-    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
         // Nothing to do here.
         return true;
     }
@@ -303,14 +301,14 @@ public class BigSwitchVnsElement extends AdapterBase implements BigSwitchVnsElem
         }
         long zoneId = physicalNetwork.getDataCenterId();
 
-        final PhysicalNetworkServiceProviderVO ntwkSvcProvider =
-            _physicalNetworkServiceProviderDao.findByServiceProvider(physicalNetwork.getId(), networkDevice.getNetworkServiceProvder());
+        final PhysicalNetworkServiceProviderVO ntwkSvcProvider = _physicalNetworkServiceProviderDao.findByServiceProvider(physicalNetwork.getId(),
+                networkDevice.getNetworkServiceProvder());
         if (ntwkSvcProvider == null) {
-            throw new CloudRuntimeException("Network Service Provider: " + networkDevice.getNetworkServiceProvder() + " is not enabled in the physical network: " +
-                physicalNetworkId + "to add this device");
+            throw new CloudRuntimeException("Network Service Provider: " + networkDevice.getNetworkServiceProvder() + " is not enabled in the physical network: "
+                    + physicalNetworkId + "to add this device");
         } else if (ntwkSvcProvider.getState() == PhysicalNetworkServiceProvider.State.Shutdown) {
-            throw new CloudRuntimeException("Network Service Provider: " + ntwkSvcProvider.getProviderName() + " is in shutdown state in the physical network: " +
-                physicalNetworkId + "to add this device");
+            throw new CloudRuntimeException("Network Service Provider: " + ntwkSvcProvider.getProviderName() + " is in shutdown state in the physical network: "
+                    + physicalNetworkId + "to add this device");
         }
 
         if (_bigswitchVnsDao.listByPhysicalNetwork(physicalNetworkId).size() != 0) {
@@ -337,8 +335,7 @@ public class BigSwitchVnsElement extends AdapterBase implements BigSwitchVnsElem
                 return Transaction.execute(new TransactionCallback<BigSwitchVnsDeviceVO>() {
                     @Override
                     public BigSwitchVnsDeviceVO doInTransaction(TransactionStatus status) {
-                        BigSwitchVnsDeviceVO bigswitchVnsDevice =
-                            new BigSwitchVnsDeviceVO(host.getId(), physicalNetworkId, ntwkSvcProvider.getProviderName(), deviceName);
+                        BigSwitchVnsDeviceVO bigswitchVnsDevice = new BigSwitchVnsDeviceVO(host.getId(), physicalNetworkId, ntwkSvcProvider.getProviderName(), deviceName);
                         _bigswitchVnsDao.persist(bigswitchVnsDevice);
 
                         DetailVO detail = new DetailVO(host.getId(), "bigswitchvnsdeviceid", String.valueOf(bigswitchVnsDevice.getId()));
@@ -392,7 +389,7 @@ public class BigSwitchVnsElement extends AdapterBase implements BigSwitchVnsElem
                 if (network.getBroadcastDomainType() == Networks.BroadcastDomainType.Lswitch) {
                     if ((network.getState() != Network.State.Shutdown) && (network.getState() != Network.State.Destroy)) {
                         throw new CloudRuntimeException("This BigSwitch Controller device can not be deleted as there are one or more "
-                            + "logical networks provisioned by cloudstack.");
+                                + "logical networks provisioned by cloudstack.");
                     }
                 }
             }
@@ -401,8 +398,8 @@ public class BigSwitchVnsElement extends AdapterBase implements BigSwitchVnsElem
         HostVO bigswitchHost = _hostDao.findById(bigswitchVnsDevice.getHostId());
         Long hostId = bigswitchHost.getId();
 
-        //bigswitchHost.setResourceState(ResourceState.Maintenance);
-        //_hostDao.update(hostId, bigswitchHost);
+        // bigswitchHost.setResourceState(ResourceState.Maintenance);
+        // _hostDao.update(hostId, bigswitchHost);
         _hostDao.remove(hostId);
         _resourceMgr.deleteHost(hostId, false, false);
 

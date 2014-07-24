@@ -52,38 +52,29 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.user.AccountService;
 import com.cloud.user.DomainService;
 
-@APICommand(name = "importLdapUsers", description = "Import LDAP users", responseObject = LdapUserResponse.class, since = "4.3.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "importLdapUsers", description = "Import LDAP users", responseObject = LdapUserResponse.class, since = "4.3.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class LdapImportUsersCmd extends BaseListCmd {
 
     public static final Logger s_logger = Logger.getLogger(LdapImportUsersCmd.class.getName());
 
     private static final String s_name = "ldapuserresponse";
 
-    @Parameter(name = ApiConstants.TIMEZONE,
-               type = CommandType.STRING,
-               description = "Specifies a timezone for this command. For more information on the timezone parameter, see Time Zone Format.")
+    @Parameter(name = ApiConstants.TIMEZONE, type = CommandType.STRING, description = "Specifies a timezone for this command. For more information on the timezone parameter, see Time Zone Format.")
     private String timezone;
 
-    @Parameter(name = ApiConstants.ACCOUNT_TYPE,
-               type = CommandType.SHORT,
-               required = true,
-               description = "Type of the account.  Specify 0 for user, 1 for root admin, and 2 for domain admin")
+    @Parameter(name = ApiConstants.ACCOUNT_TYPE, type = CommandType.SHORT, required = true, description = "Type of the account.  Specify 0 for user, 1 for root admin, and 2 for domain admin")
     private Short accountType;
 
     @Parameter(name = ApiConstants.ACCOUNT_DETAILS, type = CommandType.MAP, description = "details for account used to store specific parameters")
     private Map<String, String> details;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               entityType = DomainResponse.class,
-               description = "Specifies the domain to which the ldap users are to be "
-                   + "imported. If no domain is specified, a domain will created using group parameter. If the group is also not specified, a domain name based on the OU information will be "
-                   + "created. If no OU hierarchy exists, will be defaulted to ROOT domain")
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "Specifies the domain to which the ldap users are to be "
+            + "imported. If no domain is specified, a domain will created using group parameter. If the group is also not specified, a domain name based on the OU information will be "
+            + "created. If no OU hierarchy exists, will be defaulted to ROOT domain")
     private Long domainId;
 
     @Parameter(name = ApiConstants.GROUP, type = CommandType.STRING, description = "Specifies the group name from which the ldap users are to be imported. "
-        + "If no group is specified, all the users will be imported.")
+            + "If no group is specified, all the users will be imported.")
     private String groupName;
 
     private Domain _domain;
@@ -117,8 +108,8 @@ public class LdapImportUsersCmd extends BaseListCmd {
     }
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException, NetworkRuleConflictException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
+            NetworkRuleConflictException {
 
         List<LdapUser> users;
         try {
@@ -151,7 +142,7 @@ public class LdapImportUsersCmd extends BaseListCmd {
 
     private String getAccountName(LdapUser user) {
         String finalAccountName = accountName;
-        if(finalAccountName == null ) {
+        if (finalAccountName == null) {
             finalAccountName = user.getUsername();
         }
         return finalAccountName;
@@ -160,7 +151,8 @@ public class LdapImportUsersCmd extends BaseListCmd {
     private Domain getDomainForName(String name) {
         Domain domain = null;
         if (StringUtils.isNotBlank(name)) {
-            //removing all the special characters and trimming its length to 190 to make the domain valid.
+            // removing all the special characters and trimming its length to
+            // 190 to make the domain valid.
             String domainName = StringUtils.substring(name.replaceAll("\\W", ""), 0, 190);
             if (StringUtils.isNotBlank(domainName)) {
                 domain = _domainService.getDomainByName(domainName, Domain.ROOT_DOMAIN);
@@ -175,22 +167,26 @@ public class LdapImportUsersCmd extends BaseListCmd {
     private Domain getDomain(LdapUser user) {
         Domain domain;
         if (_domain != null) {
-            //this means either domain id or groupname is passed and this will be same for all the users in this call. hence returning it.
+            // this means either domain id or groupname is passed and this will
+            // be same for all the users in this call. hence returning it.
             domain = _domain;
         } else {
             if (domainId != null) {
-                // a domain Id is passed. use it for this user and all the users in the same api call (by setting _domain)
+                // a domain Id is passed. use it for this user and all the users
+                // in the same api call (by setting _domain)
                 domain = _domain = _domainService.getDomain(domainId);
             } else {
-                // a group name is passed. use it for this user and all the users in the same api call(by setting _domain)
+                // a group name is passed. use it for this user and all the
+                // users in the same api call(by setting _domain)
                 domain = _domain = getDomainForName(groupName);
                 if (domain == null) {
-                    //use the domain from the LDAP for this user
+                    // use the domain from the LDAP for this user
                     domain = getDomainForName(user.getDomain());
                 }
             }
             if (domain == null) {
-                // could not get a domain using domainId / LDAP group / OU of LDAP user. using ROOT domain for this user
+                // could not get a domain using domainId / LDAP group / OU of
+                // LDAP user. using ROOT domain for this user
                 domain = _domainService.getDomain(Domain.ROOT_DOMAIN);
             }
         }

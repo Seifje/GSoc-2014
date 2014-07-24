@@ -95,11 +95,11 @@ public abstract class ServerResourceBase implements ServerResource {
             while (nics.hasMoreElements()) {
                 final NetworkInterface nic = nics.nextElement();
                 final String nicName = nic.getName();
-                //  try {
-                if (//!nic.isLoopback() &&
-                    //nic.isUp() &&
-                !nic.isVirtual() && !nicName.startsWith("vnif") && !nicName.startsWith("vnbr") && !nicName.startsWith("peth") && !nicName.startsWith("vif") &&
-                    !nicName.startsWith("virbr") && !nicName.contains(":")) {
+                // try {
+                if (// !nic.isLoopback() &&
+                        // nic.isUp() &&
+                        !nic.isVirtual() && !nicName.startsWith("vnif") && !nicName.startsWith("vnbr") && !nicName.startsWith("peth") && !nicName.startsWith("vif")
+                        && !nicName.startsWith("virbr") && !nicName.contains(":")) {
                     final String[] info = NetUtils.getNicParams(nicName);
                     if (info != null && info[0] != null) {
                         _privateNic = nic;
@@ -107,9 +107,9 @@ public abstract class ServerResourceBase implements ServerResource {
                         break;
                     }
                 }
-                //      } catch (final SocketException e) {
-                //        s_logger.warn("Error looking at " + nicName, e);
-                //  }
+                // } catch (final SocketException e) {
+                // s_logger.warn("Error looking at " + nicName, e);
+                // }
                 s_logger.debug("Skipping nic " + nicName);
             }
 

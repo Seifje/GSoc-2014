@@ -131,7 +131,7 @@ public class ResourceTagResponse extends BaseResponse implements ControlledViewE
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ResourceTagResponse other = (ResourceTagResponse) obj;
+        ResourceTagResponse other = (ResourceTagResponse)obj;
         String key = this.getKey();
         if (key == null) {
             if (other.getKey() != null)

@@ -92,8 +92,8 @@ public class StorageNetworkManagerImpl extends ManagerBase implements StorageNet
         List<StorageNetworkIpRangeVO> curRanges = _sNwIpRangeDao.listByPodId(podId);
         for (StorageNetworkIpRangeVO range : curRanges) {
             if (NetUtils.ipRangesOverlap(startIp, endIp, range.getStartIp(), range.getEndIp())) {
-                throw new InvalidParameterValueException("The Storage network Start IP and endIP address range overlap with private IP :" + range.getStartIp() + " - " +
-                    range.getEndIp());
+                throw new InvalidParameterValueException("The Storage network Start IP and endIP address range overlap with private IP :" + range.getStartIp() + " - "
+                        + range.getEndIp());
             }
         }
     }
@@ -101,8 +101,7 @@ public class StorageNetworkManagerImpl extends ManagerBase implements StorageNet
     private void createStorageIpEntires(TransactionLegacy txn, long rangeId, String startIp, String endIp, long zoneId) throws SQLException {
         long startIPLong = NetUtils.ip2Long(startIp);
         long endIPLong = NetUtils.ip2Long(endIp);
-        String insertSql =
-            "INSERT INTO `cloud`.`op_dc_storage_network_ip_address` (range_id, ip_address, mac_address, taken) VALUES (?, ?, (select mac_address from `cloud`.`data_center` where id=?), ?)";
+        String insertSql = "INSERT INTO `cloud`.`op_dc_storage_network_ip_address` (range_id, ip_address, mac_address, taken) VALUES (?, ?, (select mac_address from `cloud`.`data_center` where id=?), ?)";
         String updateSql = "UPDATE `cloud`.`data_center` set mac_address = mac_address+1 where id=?";
         PreparedStatement stmt = null;
         Connection conn = txn.getConnection();
@@ -285,7 +284,8 @@ public class StorageNetworkManagerImpl extends ManagerBase implements StorageNet
                         throw new CloudRuntimeException(msg);
                     }
                     /*
-                     * entries in op_dc_storage_network_ip_address will be deleted automatically due to
+                     * entries in op_dc_storage_network_ip_address will be
+                     * deleted automatically due to
                      * fk_storage_ip_address__range_id constraint key
                      */
                     _sNwIpRangeDao.remove(rangeId);
@@ -361,8 +361,8 @@ public class StorageNetworkManagerImpl extends ManagerBase implements StorageNet
 
     @Override
     public List<SecondaryStorageVmVO> getSSVMWithNoStorageNetwork(long zoneId) {
-        List<SecondaryStorageVmVO> ssvms =
-            _ssvmDao.getSecStorageVmListInStates(null, zoneId, VirtualMachine.State.Starting, VirtualMachine.State.Running, VirtualMachine.State.Stopping);
+        List<SecondaryStorageVmVO> ssvms = _ssvmDao.getSecStorageVmListInStates(null, zoneId, VirtualMachine.State.Starting, VirtualMachine.State.Running,
+                VirtualMachine.State.Stopping);
         return ssvms;
     }
 

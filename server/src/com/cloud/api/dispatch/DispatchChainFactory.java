@@ -48,18 +48,10 @@ public class DispatchChainFactory {
 
     @PostConstruct
     public void setup() {
-        standardDispatchChain = new DispatchChain().
-                add(paramUnpackWorker).
-                add(paramProcessWorker).
-                add(paramGenericValidationWorker).
-                add(specificCmdValidationWorker);
+        standardDispatchChain = new DispatchChain().add(paramUnpackWorker).add(paramProcessWorker).add(paramGenericValidationWorker).add(specificCmdValidationWorker);
 
-        asyncCreationDispatchChain = new DispatchChain().
-                add(paramUnpackWorker).
-                add(paramProcessWorker).
-                add(paramGenericValidationWorker).
-                add(specificCmdValidationWorker).
-                add(commandCreationWorker);
+        asyncCreationDispatchChain = new DispatchChain().add(paramUnpackWorker).add(paramProcessWorker).add(paramGenericValidationWorker).add(specificCmdValidationWorker)
+                .add(commandCreationWorker);
     }
 
     public DispatchChain getStandardDispatchChain() {

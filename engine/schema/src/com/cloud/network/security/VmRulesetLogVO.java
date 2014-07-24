@@ -42,7 +42,7 @@ public class VmRulesetLogVO implements InternalIdentity {
     private Long id;
 
     @Column(name = "instance_id", updatable = false, nullable = false)
-    private Long instanceId;    // vm_instance id
+    private Long instanceId; // vm_instance id
 
     @Column(name = GenericDao.CREATED_COLUMN)
     private Date created;

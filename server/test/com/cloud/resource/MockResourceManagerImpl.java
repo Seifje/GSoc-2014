@@ -60,8 +60,12 @@ import com.cloud.utils.fsm.NoTransitionException;
 @Local(value = {ResourceManager.class})
 public class MockResourceManagerImpl extends ManagerBase implements ResourceManager {
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceService#updateHost(com.cloud.api.commands.UpdateHostCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceService#updateHost(com.cloud.api.commands.
+     * UpdateHostCmd)
      */
     @Override
     public Host updateHost(UpdateHostCmd cmd) throws NoTransitionException {
@@ -69,8 +73,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceService#cancelMaintenance(com.cloud.api.commands.CancelMaintenanceCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceService#cancelMaintenance(com.cloud.api.commands
+     * .CancelMaintenanceCmd)
      */
     @Override
     public Host cancelMaintenance(CancelMaintenanceCmd cmd) {
@@ -78,8 +86,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceService#reconnectHost(com.cloud.api.commands.ReconnectHostCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceService#reconnectHost(com.cloud.api.commands
+     * .ReconnectHostCmd)
      */
     @Override
     public Host reconnectHost(ReconnectHostCmd cmd) {
@@ -87,8 +99,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceService#discoverCluster(com.cloud.api.commands.AddClusterCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceService#discoverCluster(com.cloud.api.commands
+     * .AddClusterCmd)
      */
     @Override
     public List<? extends Cluster> discoverCluster(AddClusterCmd cmd) throws IllegalArgumentException, DiscoveryException, ResourceInUseException {
@@ -96,8 +112,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceService#deleteCluster(com.cloud.api.commands.DeleteClusterCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceService#deleteCluster(com.cloud.api.commands
+     * .DeleteClusterCmd)
      */
     @Override
     public boolean deleteCluster(DeleteClusterCmd cmd) {
@@ -105,8 +125,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceService#updateCluster(com.cloud.org.Cluster, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceService#updateCluster(com.cloud.org.Cluster,
+     * java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
     public Cluster updateCluster(Cluster cluster, String clusterType, String hypervisor, String allocationState, String managedstate) {
@@ -114,8 +138,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceService#discoverHosts(com.cloud.api.commands.AddHostCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceService#discoverHosts(com.cloud.api.commands
+     * .AddHostCmd)
      */
     @Override
     public List<? extends Host> discoverHosts(AddHostCmd cmd) throws IllegalArgumentException, DiscoveryException, InvalidParameterValueException {
@@ -123,8 +151,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceService#discoverHosts(com.cloud.api.commands.AddSecondaryStorageCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceService#discoverHosts(com.cloud.api.commands
+     * .AddSecondaryStorageCmd)
      */
     @Override
     public List<? extends Host> discoverHosts(AddSecondaryStorageCmd cmd) throws IllegalArgumentException, DiscoveryException, InvalidParameterValueException {
@@ -132,8 +164,11 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceService#maintain(com.cloud.api.commands.PrepareForMaintenanceCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.resource.ResourceService#maintain(com.cloud.api.commands.
+     * PrepareForMaintenanceCmd)
      */
     @Override
     public Host maintain(PrepareForMaintenanceCmd cmd) {
@@ -141,8 +176,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceService#updateHostPassword(com.cloud.api.commands.UpdateHostPasswordCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceService#updateHostPassword(com.cloud.api.commands
+     * .UpdateHostPasswordCmd)
      */
     @Override
     public boolean updateHostPassword(UpdateHostPasswordCmd upasscmd) {
@@ -150,7 +189,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceService#getHost(long)
      */
     @Override
@@ -159,7 +200,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceService#getCluster(java.lang.Long)
      */
     @Override
@@ -168,8 +211,11 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceService#getSupportedHypervisorTypes(long, boolean, java.lang.Long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.resource.ResourceService#getSupportedHypervisorTypes(long,
+     * boolean, java.lang.Long)
      */
     @Override
     public List<HypervisorType> getSupportedHypervisorTypes(long zoneId, boolean forVirtualRouter, Long podId) {
@@ -177,8 +223,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#registerResourceEvent(java.lang.Integer, com.cloud.resource.ResourceListener)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#registerResourceEvent(java.lang.Integer
+     * , com.cloud.resource.ResourceListener)
      */
     @Override
     public void registerResourceEvent(Integer event, ResourceListener listener) {
@@ -186,8 +236,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#unregisterResourceEvent(com.cloud.resource.ResourceListener)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#unregisterResourceEvent(com.cloud.
+     * resource.ResourceListener)
      */
     @Override
     public void unregisterResourceEvent(ResourceListener listener) {
@@ -195,8 +249,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#registerResourceStateAdapter(java.lang.String, com.cloud.resource.ResourceStateAdapter)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#registerResourceStateAdapter(java.
+     * lang.String, com.cloud.resource.ResourceStateAdapter)
      */
     @Override
     public void registerResourceStateAdapter(String name, ResourceStateAdapter adapter) {
@@ -204,8 +262,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#unregisterResourceStateAdapter(java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#unregisterResourceStateAdapter(java
+     * .lang.String)
      */
     @Override
     public void unregisterResourceStateAdapter(String name) {
@@ -213,8 +275,13 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#createHostAndAgent(java.lang.Long, com.cloud.resource.ServerResource, java.util.Map, boolean, java.util.List, boolean)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#createHostAndAgent(java.lang.Long,
+     * com.cloud.resource.ServerResource, java.util.Map, boolean,
+     * java.util.List, boolean)
      */
     @Override
     public Host createHostAndAgent(Long hostId, ServerResource resource, Map<String, String> details, boolean old, List<String> hostTags, boolean forRebalance) {
@@ -222,8 +289,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#addHost(long, com.cloud.resource.ServerResource, com.cloud.host.Host.Type, java.util.Map)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.resource.ResourceManager#addHost(long,
+     * com.cloud.resource.ServerResource, com.cloud.host.Host.Type,
+     * java.util.Map)
      */
     @Override
     public Host addHost(long zoneId, ServerResource resource, Type hostType, Map<String, String> hostDetails) {
@@ -231,8 +302,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#createHostVOForConnectedAgent(com.cloud.agent.api.StartupCommand[])
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#createHostVOForConnectedAgent(com.
+     * cloud.agent.api.StartupCommand[])
      */
     @Override
     public HostVO createHostVOForConnectedAgent(StartupCommand[] cmds) {
@@ -240,8 +315,11 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#checkCIDR(com.cloud.dc.HostPodVO, com.cloud.dc.DataCenterVO, java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.resource.ResourceManager#checkCIDR(com.cloud.dc.HostPodVO,
+     * com.cloud.dc.DataCenterVO, java.lang.String, java.lang.String)
      */
     @Override
     public void checkCIDR(HostPodVO pod, DataCenterVO dc, String serverPrivateIP, String serverPrivateNetmask) {
@@ -249,8 +327,14 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#fillRoutingHostVO(com.cloud.host.HostVO, com.cloud.agent.api.StartupRoutingCommand, com.cloud.hypervisor.Hypervisor.HypervisorType, java.util.Map, java.util.List)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#fillRoutingHostVO(com.cloud.host.HostVO
+     * , com.cloud.agent.api.StartupRoutingCommand,
+     * com.cloud.hypervisor.Hypervisor.HypervisorType, java.util.Map,
+     * java.util.List)
      */
     @Override
     public HostVO fillRoutingHostVO(HostVO host, StartupRoutingCommand ssCmd, HypervisorType hyType, Map<String, String> details, List<String> hostTags) {
@@ -258,8 +342,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#deleteRoutingHost(com.cloud.host.HostVO, boolean, boolean)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#deleteRoutingHost(com.cloud.host.HostVO
+     * , boolean, boolean)
      */
     @Override
     public void deleteRoutingHost(HostVO host, boolean isForced, boolean forceDestroyStorage) throws UnableDeleteHostException {
@@ -267,8 +355,11 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#executeUserRequest(long, com.cloud.resource.ResourceState.Event)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.resource.ResourceManager#executeUserRequest(long,
+     * com.cloud.resource.ResourceState.Event)
      */
     @Override
     public boolean executeUserRequest(long hostId, Event event) throws AgentUnavailableException {
@@ -276,8 +367,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#resourceStateTransitTo(com.cloud.host.Host, com.cloud.resource.ResourceState.Event, long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#resourceStateTransitTo(com.cloud.host
+     * .Host, com.cloud.resource.ResourceState.Event, long)
      */
     @Override
     public boolean resourceStateTransitTo(Host host, Event event, long msId) throws NoTransitionException {
@@ -285,7 +380,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#umanageHost(long)
      */
     @Override
@@ -294,7 +391,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#maintenanceFailed(long)
      */
     @Override
@@ -303,7 +402,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#maintain(long)
      */
     @Override
@@ -312,7 +413,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#maintain(long)
      */
     @Override
@@ -321,8 +424,11 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#deleteHost(long, boolean, boolean)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.resource.ResourceManager#deleteHost(long, boolean,
+     * boolean)
      */
     @Override
     public boolean deleteHost(long hostId, boolean isForced, boolean isForceDeleteStorage) {
@@ -330,7 +436,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#findDirectlyConnectedHosts()
      */
     @Override
@@ -339,8 +447,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#listAllUpAndEnabledHosts(com.cloud.host.Host.Type, java.lang.Long, java.lang.Long, long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#listAllUpAndEnabledHosts(com.cloud
+     * .host.Host.Type, java.lang.Long, java.lang.Long, long)
      */
     @Override
     public List<HostVO> listAllUpAndEnabledHosts(Type type, Long clusterId, Long podId, long dcId) {
@@ -348,7 +460,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#listAllHostsInCluster(long)
      */
     @Override
@@ -357,8 +471,11 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#listHostsInClusterByStatus(long, com.cloud.host.Status)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.resource.ResourceManager#listHostsInClusterByStatus(long,
+     * com.cloud.host.Status)
      */
     @Override
     public List<HostVO> listHostsInClusterByStatus(long clusterId, Status status) {
@@ -366,8 +483,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#listAllUpAndEnabledHostsInOneZoneByType(com.cloud.host.Host.Type, long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#listAllUpAndEnabledHostsInOneZoneByType
+     * (com.cloud.host.Host.Type, long)
      */
     @Override
     public List<HostVO> listAllUpAndEnabledHostsInOneZoneByType(Type type, long dcId) {
@@ -375,8 +496,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#listAllHostsInOneZoneByType(com.cloud.host.Host.Type, long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#listAllHostsInOneZoneByType(com.cloud
+     * .host.Host.Type, long)
      */
     @Override
     public List<HostVO> listAllHostsInOneZoneByType(Type type, long dcId) {
@@ -384,8 +509,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#listAllHostsInAllZonesByType(com.cloud.host.Host.Type)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#listAllHostsInAllZonesByType(com.cloud
+     * .host.Host.Type)
      */
     @Override
     public List<HostVO> listAllHostsInAllZonesByType(Type type) {
@@ -393,8 +522,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#listAvailHypervisorInZone(java.lang.Long, java.lang.Long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#listAvailHypervisorInZone(java.lang
+     * .Long, java.lang.Long)
      */
     @Override
     public List<HypervisorType> listAvailHypervisorInZone(Long hostId, Long zoneId) {
@@ -402,7 +535,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#findHostByGuid(java.lang.String)
      */
     @Override
@@ -411,7 +546,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#findHostByName(java.lang.String)
      */
     @Override
@@ -420,7 +557,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#getHostStatistics(long)
      */
     @Override
@@ -429,7 +568,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#getGuestOSCategoryId(long)
      */
     @Override
@@ -438,7 +579,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#getHostTags(long)
      */
     @Override
@@ -447,7 +590,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#listByDataCenter(long)
      */
     @Override
@@ -456,8 +601,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#listAllNotInMaintenanceHostsInOneZone(com.cloud.host.Host.Type, java.lang.Long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#listAllNotInMaintenanceHostsInOneZone
+     * (com.cloud.host.Host.Type, java.lang.Long)
      */
     @Override
     public List<HostVO> listAllNotInMaintenanceHostsInOneZone(Type type, Long dcId) {
@@ -465,7 +614,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#getDefaultHypervisor(long)
      */
     @Override
@@ -474,7 +625,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.resource.ResourceManager#getAvailableHypervisor(long)
      */
     @Override
@@ -483,8 +636,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#getMatchingDiscover(com.cloud.hypervisor.Hypervisor.HypervisorType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#getMatchingDiscover(com.cloud.hypervisor
+     * .Hypervisor.HypervisorType)
      */
     @Override
     public Discoverer getMatchingDiscover(HypervisorType hypervisorType) {
@@ -492,8 +649,11 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#findHostByGuid(long, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.resource.ResourceManager#findHostByGuid(long,
+     * java.lang.String)
      */
     @Override
     public List<HostVO> findHostByGuid(long dcId, String guid) {
@@ -501,8 +661,12 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.resource.ResourceManager#listAllUpAndEnabledNonHAHosts(com.cloud.host.Host.Type, java.lang.Long, java.lang.Long, long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.resource.ResourceManager#listAllUpAndEnabledNonHAHosts(com.
+     * cloud.host.Host.Type, java.lang.Long, java.lang.Long, long)
      */
     @Override
     public List<HostVO> listAllUpAndEnabledNonHAHosts(Type type, Long clusterId, Long podId, long dcId) {
@@ -510,8 +674,11 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.utils.component.Manager#configure(java.lang.String, java.util.Map)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.utils.component.Manager#configure(java.lang.String,
+     * java.util.Map)
      */
     @Override
     public boolean configure(String name, Map<String, Object> params) throws ConfigurationException {
@@ -519,7 +686,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#start()
      */
     @Override
@@ -528,7 +697,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#stop()
      */
     @Override
@@ -537,7 +708,9 @@ public class MockResourceManagerImpl extends ManagerBase implements ResourceMana
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#getName()
      */
     @Override

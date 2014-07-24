@@ -68,14 +68,12 @@ import com.cloud.utils.script.OutputInterpreter;
 import com.cloud.utils.script.Script;
 
 /**
- * @config
- *         {@table
- *         || Param Name | Description | Values | Default ||
- *         || type | Type of server | Storage / Computing / Routing | No Default ||
- *         || workers | # of workers to process the requests | int | 1 ||
- *         || host | host to connect to | ip address | localhost ||
- *         || port | port to connect to | port number | 8250 ||
- *         || instance | Used to allow multiple agents running on the same host | String | none || * }
+ * @config {@table || Param Name | Description | Values | Default || || type |
+ *         Type of server | Storage / Computing / Routing | No Default || ||
+ *         workers | # of workers to process the requests | int | 1 || || host |
+ *         host to connect to | ip address | localhost || || port | port to
+ *         connect to | port number | 8250 || || instance | Used to allow
+ *         multiple agents running on the same host | String | none || * }
  *
  *         For more configuration options, see the individual types.
  *
@@ -120,7 +118,7 @@ public class Agent implements HandlerFactory, IAgentControl {
     long _startupWaitDefault = 180000;
     long _startupWait = _startupWaitDefault;
     boolean _reconnectAllowed = true;
-    //For time sentitive task, e.g. PingTask
+    // For time sentitive task, e.g. PingTask
     private ThreadPoolExecutor _ugentTaskPool;
     ExecutorService _executor;
 
@@ -133,12 +131,10 @@ public class Agent implements HandlerFactory, IAgentControl {
 
         Runtime.getRuntime().addShutdownHook(new ShutdownThread(this));
 
-        _ugentTaskPool =
-            new ThreadPoolExecutor(shell.getPingRetries(), 2 * shell.getPingRetries(), 10, TimeUnit.MINUTES, new SynchronousQueue<Runnable>(), new NamedThreadFactory(
+        _ugentTaskPool = new ThreadPoolExecutor(shell.getPingRetries(), 2 * shell.getPingRetries(), 10, TimeUnit.MINUTES, new SynchronousQueue<Runnable>(), new NamedThreadFactory(
                 "UgentTask"));
 
-        _executor =
-            new ThreadPoolExecutor(_shell.getWorkers(), 5 * _shell.getWorkers(), 1, TimeUnit.DAYS, new LinkedBlockingQueue<Runnable>(), new NamedThreadFactory(
+        _executor = new ThreadPoolExecutor(_shell.getWorkers(), 5 * _shell.getWorkers(), 1, TimeUnit.DAYS, new LinkedBlockingQueue<Runnable>(), new NamedThreadFactory(
                 "agentRequest-Handler"));
     }
 
@@ -155,7 +151,8 @@ public class Agent implements HandlerFactory, IAgentControl {
 
         final Map<String, Object> params = PropertiesUtil.toMap(_shell.getProperties());
 
-        // merge with properties from command line to let resource access command line parameters
+        // merge with properties from command line to let resource access
+        // command line parameters
         for (Map.Entry<String, Object> cmdLineProp : _shell.getCmdLineProperties().entrySet()) {
             params.put(cmdLineProp.getKey(), cmdLineProp.getValue());
         }
@@ -171,16 +168,14 @@ public class Agent implements HandlerFactory, IAgentControl {
         s_logger.debug("Adding shutdown hook");
         Runtime.getRuntime().addShutdownHook(new ShutdownThread(this));
 
-        _ugentTaskPool =
-            new ThreadPoolExecutor(shell.getPingRetries(), 2 * shell.getPingRetries(), 10, TimeUnit.MINUTES, new SynchronousQueue<Runnable>(), new NamedThreadFactory(
+        _ugentTaskPool = new ThreadPoolExecutor(shell.getPingRetries(), 2 * shell.getPingRetries(), 10, TimeUnit.MINUTES, new SynchronousQueue<Runnable>(), new NamedThreadFactory(
                 "UgentTask"));
 
-        _executor =
-            new ThreadPoolExecutor(_shell.getWorkers(), 5 * _shell.getWorkers(), 1, TimeUnit.DAYS, new LinkedBlockingQueue<Runnable>(), new NamedThreadFactory(
+        _executor = new ThreadPoolExecutor(_shell.getWorkers(), 5 * _shell.getWorkers(), 1, TimeUnit.DAYS, new LinkedBlockingQueue<Runnable>(), new NamedThreadFactory(
                 "agentRequest-Handler"));
 
-        s_logger.info("Agent [id = " + (_id != null ? _id : "new") + " : type = " + getResourceName() + " : zone = " + _shell.getZone() + " : pod = " + _shell.getPod() +
-            " : workers = " + _shell.getWorkers() + " : host = " + _shell.getHost() + " : port = " + _shell.getPort());
+        s_logger.info("Agent [id = " + (_id != null ? _id : "new") + " : type = " + getResourceName() + " : zone = " + _shell.getZone() + " : pod = " + _shell.getPod()
+                + " : workers = " + _shell.getWorkers() + " : host = " + _shell.getHost() + " : port = " + _shell.getPort());
     }
 
     public String getVersion() {
@@ -446,7 +441,8 @@ public class Agent implements HandlerFactory, IAgentControl {
                 Answer answer;
                 try {
                     if (s_logger.isDebugEnabled()) {
-                        if (!requestLogged) // ensures request is logged only once per method call
+                        if (!requestLogged) // ensures request is logged only
+                                            // once per method call
                         {
                             String requestMsg = request.toString();
                             if (requestMsg != null) {
@@ -591,7 +587,7 @@ public class Agent implements HandlerFactory, IAgentControl {
 
             try {
                 task.getLink().send(request.toBytes());
-                //if i can send pingcommand out, means the link is ok
+                // if i can send pingcommand out, means the link is ok
                 setLastPingResponseTime();
             } catch (final ClosedChannelException e) {
                 s_logger.warn("Unable to send request: " + request.toString());
@@ -830,11 +826,14 @@ public class Agent implements HandlerFactory, IAgentControl {
                 try {
                     request = Request.parse(task.getData());
                     if (request instanceof Response) {
-                        //It's for pinganswer etc, should be processed immediately.
+                        // It's for pinganswer etc, should be processed
+                        // immediately.
                         processResponse((Response)request, task.getLink());
                     } else {
-                        //put the requests from mgt server into another thread pool, as the request may take a longer time to finish. Don't block the NIO main thread pool
-                        //processRequest(request, task.getLink());
+                        // put the requests from mgt server into another thread
+                        // pool, as the request may take a longer time to
+                        // finish. Don't block the NIO main thread pool
+                        // processRequest(request, task.getLink());
                         _executor.execute(new AgentRequestHandler(this.getType(), this.getLink(), request));
                     }
                 } catch (final ClassNotFoundException e) {

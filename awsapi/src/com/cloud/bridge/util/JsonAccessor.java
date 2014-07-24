@@ -30,11 +30,11 @@ import com.google.gson.JsonPrimitive;
 import com.cloud.bridge.service.exception.InternalErrorException;
 
 /**
- * JsonAccessor provides the functionality to allow navigating JSON object graph using simple expressions,
- * for example, following property access expressions are all valid ones
+ * JsonAccessor provides the functionality to allow navigating JSON object graph
+ * using simple expressions, for example, following property access expressions
+ * are all valid ones
  *
- *         rootobj.level1obj[1].property
- *         this[0].level1obj[1].property
+ * rootobj.level1obj[1].property this[0].level1obj[1].property
  *
  */
 public class JsonAccessor {
@@ -132,10 +132,9 @@ public class JsonAccessor {
     }
 
     /*
-     * Return
-     *         -1    :    property expression can not be resolved
-     *         0    :    match to a null JSON object
-     *         1+    :    matched, for array element, the count of the elements inside the array
+     * Return -1 : property expression can not be resolved 0 : match to a null
+     * JSON object 1+ : matched, for array element, the count of the elements
+     * inside the array
      */
     public int getMatchCount(String propPath) {
         JsonElement jsonElement = tryEval(propPath);

@@ -17,9 +17,10 @@
 package com.cloud.bridge.util;
 
 /**
- * Reusable class whose instances encode any ordered pair (or 2-tuple) of values of types T1 and T2
- * Provide getters: getFirst(), getSecond()
- * Provide setters: setFirst(val), setSecond(val)
+ * Reusable class whose instances encode any ordered pair (or 2-tuple) of values
+ * of types T1 and T2 Provide getters: getFirst(), getSecond() Provide setters:
+ * setFirst(val), setSecond(val)
+ * 
  * @param <T1>
  * @param <T2>
  */

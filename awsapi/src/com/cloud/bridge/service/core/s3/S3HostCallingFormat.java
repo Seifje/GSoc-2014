@@ -59,7 +59,7 @@ public abstract class S3HostCallingFormat {
 
     public static S3HostCallingFormat getvirtualHostingFormat() {
         return virtualHostingFormat;
-    }                   // as defined below
+    } // as defined below
 
     public static String pathArgsMapToString(Map<?, ?> pathArgs) {
         StringBuffer pathArgsString = new StringBuffer();

@@ -71,7 +71,7 @@ public class Upgrade2211to2212 implements DbUpgrade {
         s_logger.debug("Creating missing resource_count records as a part of 2.2.11-2.2.12 upgrade");
         try {
 
-            //Get all non removed accounts
+            // Get all non removed accounts
             List<Long> accounts = new ArrayList<Long>();
             PreparedStatement pstmt = conn.prepareStatement("SELECT id FROM account");
             ResultSet rs = pstmt.executeQuery();
@@ -80,7 +80,7 @@ public class Upgrade2211to2212 implements DbUpgrade {
             }
             rs.close();
 
-            //get all non removed domains
+            // get all non removed domains
             List<Long> domains = new ArrayList<Long>();
             pstmt = conn.prepareStatement("SELECT id FROM domain");
             rs = pstmt.executeQuery();
@@ -89,7 +89,7 @@ public class Upgrade2211to2212 implements DbUpgrade {
             }
             rs.close();
 
-            //2.2.12 resource types
+            // 2.2.12 resource types
             String[] resourceTypes = {"user_vm", "public_ip", "volume", "snapshot", "template"};
 
             for (Long accountId : accounts) {

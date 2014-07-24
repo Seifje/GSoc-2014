@@ -34,9 +34,9 @@ public class ServerClipboardCapabilitiesPDU extends BaseElement {
 
     /**
      * The Long Format Name variant of the Format List PDU is supported for
-     * exchanging updated format names. If this flag is not set, the Short Format
-     * Name variant MUST be used. If this flag is set by both protocol endpoints,
-     * then the Long Format Name variant MUST be used.
+     * exchanging updated format names. If this flag is not set, the Short
+     * Format Name variant MUST be used. If this flag is set by both protocol
+     * endpoints, then the Long Format Name variant MUST be used.
      */
     public static final int CB_USE_LONG_FORMAT_NAMES = 0x00000002;
 
@@ -47,8 +47,8 @@ public class ServerClipboardCapabilitiesPDU extends BaseElement {
     public static final int CB_STREAM_FILECLIP_ENABLED = 0x00000004;
 
     /**
-     * Indicates that any description of files to copy and paste MUST NOT include
-     * the source path of the files.
+     * Indicates that any description of files to copy and paste MUST NOT
+     * include the source path of the files.
      */
     public static final int CB_FILECLIP_NO_FILE_PATHS = 0x00000008;
 
@@ -82,7 +82,8 @@ public class ServerClipboardCapabilitiesPDU extends BaseElement {
             // CB_CAPSTYPE_GENERAL (1)
             int capabilitySetType = buf.readUnsignedShortLE();
 
-            // 0x0c, 0x00, // CLIPRDR_CAPS_SET::lengthCapability = 0x0c = 12 bytes
+            // 0x0c, 0x00, // CLIPRDR_CAPS_SET::lengthCapability = 0x0c = 12
+            // bytes
             int lengthCapability = buf.readUnsignedShortLE();
 
             // parse capability set
@@ -93,7 +94,8 @@ public class ServerClipboardCapabilitiesPDU extends BaseElement {
             default:
                 // Ignore
                 // throw new RuntimeException("Unknown capability set type: " +
-                // capabilitySetType + ". Expected value: CB_CAPSTYPE_GENERAL (1).");
+                // capabilitySetType +
+                // ". Expected value: CB_CAPSTYPE_GENERAL (1).");
             }
         }
 
@@ -106,7 +108,8 @@ public class ServerClipboardCapabilitiesPDU extends BaseElement {
         // long version = buf.readUnsignedIntLE();
         buf.skipBytes(4);
 
-        // 0x0e, 0x00, 0x00, 0x00, // CLIPRDR_GENERAL_CAPABILITY::capabilityFlags
+        // 0x0e, 0x00, 0x00, 0x00, //
+        // CLIPRDR_GENERAL_CAPABILITY::capabilityFlags
         // = 0x0000000e = 0x02 |0x04 |0x08 = CB_USE_LONG_FORMAT_NAMES |
         // CB_STREAM_FILECLIP_ENABLED | CB_FILECLIP_NO_FILE_PATHS
         int flags = buf.readSignedIntLE();
@@ -126,8 +129,7 @@ public class ServerClipboardCapabilitiesPDU extends BaseElement {
         if ((flags & CB_FILECLIP_NO_FILE_PATHS) == CB_FILECLIP_NO_FILE_PATHS) {
             state.serverFileClipNoFilePaths = true;
             if (verbose)
-                System.out.println("[" + this
-                        + "] INFO: Server Indicates that any description of files to copy and paste MUST NOT include the source path of the files.");
+                System.out.println("[" + this + "] INFO: Server Indicates that any description of files to copy and paste MUST NOT include the source path of the files.");
         }
 
         if ((flags & CB_CAN_LOCK_CLIPDATA) == CB_CAN_LOCK_CLIPDATA) {
@@ -147,16 +149,24 @@ public class ServerClipboardCapabilitiesPDU extends BaseElement {
         // System.setProperty("streamer.Pipeline.debug", "true");
 
         /* @formatter:off */
-        byte[] packet = new byte[] {
-                0x07, 0x00,  //  CLIPRDR_HEADER::msgType = CB_CLIP_CAPS (7)
-                0x00, 0x00,  //  CLIPRDR_HEADER::msgFlags = 0
-                0x10, 0x00, 0x00, 0x00,  //  CLIPRDR_HEADER::dataLen = 0x10 = 16 bytes
-                0x01, 0x00,  //  CLIPRDR_CAPS::cCapabilitiesSets = 1
-                0x00, 0x00,  //  CLIPRDR_CAPS::pad1
-                0x01, 0x00,  //  CLIPRDR_CAPS_SET::capabilitySetType = CB_CAPSTYPE_GENERAL (1)
-                0x0c, 0x00,  //  CLIPRDR_CAPS_SET::lengthCapability = 0x0c = 12 bytes
-                0x02, 0x00, 0x00, 0x00,  //  CLIPRDR_GENERAL_CAPABILITY::version = CB_CAPS_VERSION_2 (2)
-                0x0e, 0x00, 0x00, 0x00,  //  CLIPRDR_GENERAL_CAPABILITY::capabilityFlags = 0x0000000e = 0x02 |0x04 |0x08 = CB_USE_LONG_FORMAT_NAMES | CB_STREAM_FILECLIP_ENABLED | CB_FILECLIP_NO_FILE_PATHS
+        byte[] packet = new byte[] { 0x07, 0x00, // CLIPRDR_HEADER::msgType =
+                // CB_CLIP_CAPS (7)
+                0x00, 0x00, // CLIPRDR_HEADER::msgFlags = 0
+                0x10, 0x00, 0x00, 0x00, // CLIPRDR_HEADER::dataLen = 0x10 = 16
+                // bytes
+                0x01, 0x00, // CLIPRDR_CAPS::cCapabilitiesSets = 1
+                0x00, 0x00, // CLIPRDR_CAPS::pad1
+                0x01, 0x00, // CLIPRDR_CAPS_SET::capabilitySetType =
+                // CB_CAPSTYPE_GENERAL (1)
+                0x0c, 0x00, // CLIPRDR_CAPS_SET::lengthCapability = 0x0c = 12
+                // bytes
+                0x02, 0x00, 0x00, 0x00, // CLIPRDR_GENERAL_CAPABILITY::version =
+                // CB_CAPS_VERSION_2 (2)
+                0x0e, 0x00, 0x00, 0x00, // CLIPRDR_GENERAL_CAPABILITY::capabilityFlags
+                // = 0x0000000e = 0x02 |0x04 |0x08 =
+                // CB_USE_LONG_FORMAT_NAMES |
+                // CB_STREAM_FILECLIP_ENABLED |
+                // CB_FILECLIP_NO_FILE_PATHS
         };
         /* @formatter:on */
 

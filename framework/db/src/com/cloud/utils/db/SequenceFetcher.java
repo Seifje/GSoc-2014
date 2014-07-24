@@ -34,9 +34,8 @@ import org.apache.log4j.Logger;
 import com.cloud.utils.concurrency.NamedThreadFactory;
 
 /**
- * Since Mysql does not have sequence support, we have
- * table retrieval was inside a transaction, the value
- * gets locked until the transaction is over.
+ * Since Mysql does not have sequence support, we have table retrieval was
+ * inside a transaction, the value gets locked until the transaction is over.
  *
  * allocation size.
  *

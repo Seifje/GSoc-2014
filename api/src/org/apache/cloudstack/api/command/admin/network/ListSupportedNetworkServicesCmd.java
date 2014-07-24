@@ -33,12 +33,7 @@ import com.cloud.network.Network;
 import com.cloud.network.Network.Service;
 import com.cloud.user.Account;
 
-@APICommand(name = "listSupportedNetworkServices",
-            description = "Lists all network services provided by CloudStack or for the given Provider.",
-            responseObject = ServiceResponse.class,
-            since = "3.0.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "listSupportedNetworkServices", description = "Lists all network services provided by CloudStack or for the given Provider.", responseObject = ServiceResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListSupportedNetworkServicesCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListSupportedNetworkServicesCmd.class.getName());
     private static final String s_name = "listsupportednetworkservicesresponse";
@@ -49,13 +44,13 @@ public class ListSupportedNetworkServicesCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.SERVICE, type = CommandType.STRING, description = "network service name to list providers and capabilities of")
     private String serviceName;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public void setProviderName(String providerName) {
         this.providerName = providerName;
@@ -69,9 +64,9 @@ public class ListSupportedNetworkServicesCmd extends BaseListCmd {
         return serviceName;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
     @Override
     public String getCommandName() {
         return s_name;
@@ -103,7 +98,7 @@ public class ListSupportedNetworkServicesCmd extends BaseListCmd {
         ListResponse<ServiceResponse> response = new ListResponse<ServiceResponse>();
         List<ServiceResponse> servicesResponses = new ArrayList<ServiceResponse>();
         for (Network.Service service : services) {
-            //skip gateway service
+            // skip gateway service
             if (service == Service.Gateway) {
                 continue;
             }

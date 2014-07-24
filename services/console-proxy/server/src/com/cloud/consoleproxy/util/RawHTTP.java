@@ -53,46 +53,46 @@ public final class RawHTTP {
     private static final Pattern HTTP_PATTERN = Pattern.compile("^HTTP/\\d+\\.\\d+ (\\d*) (.*)\r\n$");
 
     /**
-     * @uml.property  name="command"
+     * @uml.property name="command"
      */
     private final String command;
     /**
-     * @uml.property  name="host"
+     * @uml.property name="host"
      */
     private final String host;
     /**
-     * @uml.property  name="port"
+     * @uml.property name="port"
      */
     private final int port;
     /**
-     * @uml.property  name="path"
+     * @uml.property name="path"
      */
     private final String path;
     /**
-     * @uml.property  name="session"
+     * @uml.property name="session"
      */
     private final String session;
     /**
-     * @uml.property  name="useSSL"
+     * @uml.property name="useSSL"
      */
     private final boolean useSSL;
 
     /**
-     * @uml.property  name="responseHeaders"
-     * @uml.associationEnd  qualifier="group:java.lang.String java.lang.String"
+     * @uml.property name="responseHeaders"
+     * @uml.associationEnd qualifier="group:java.lang.String java.lang.String"
      */
     private final Map<String, String> responseHeaders = new HashMap<String, String>();
 
     /**
-     * @uml.property  name="ic"
+     * @uml.property name="ic"
      */
     private InputStream ic;
     /**
-     * @uml.property  name="oc"
+     * @uml.property name="oc"
      */
     private OutputStream oc;
     /**
-     * @uml.property  name="s"
+     * @uml.property name="s"
      */
     private Socket s;
 

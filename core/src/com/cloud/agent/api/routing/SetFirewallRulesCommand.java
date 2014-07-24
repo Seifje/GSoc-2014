@@ -24,8 +24,8 @@ import java.util.Set;
 
 /**
  *
- * AccessDetails allow different components to put in information about
- * how to access the components inside the command.
+ * AccessDetails allow different components to put in information about how to
+ * access the components inside the command.
  */
 public class SetFirewallRulesCommand extends NetworkElementCommand {
     FirewallRuleTO[] rules;
@@ -46,13 +46,19 @@ public class SetFirewallRulesCommand extends NetworkElementCommand {
         Set<String> toAdd = new HashSet<String>();
 
         for (FirewallRuleTO fwTO : rules) {
-            /* example  :  172.16.92.44:tcp:80:80:0.0.0.0/0:,200.16.92.44:tcp:220:220:0.0.0.0/0:,
-             *  each entry format      <ip>:protocol:srcport:destport:scidr:
-             *  reverted entry format  <ip>:reverted:0:0:0:
+            /*
+             * example :
+             * 172.16.92.44:tcp:80:80:0.0.0.0/0:,200.16.92.44:tcp:220:220
+             * :0.0.0.0/0:, each entry format
+             * <ip>:protocol:srcport:destport:scidr: reverted entry format
+             * <ip>:reverted:0:0:0:
              */
             if (fwTO.revoked() == true) {
                 StringBuilder sb = new StringBuilder();
-                /* This entry is added just to make sure atleast there will one entry in the list to get the ipaddress */
+                /*
+                 * This entry is added just to make sure atleast there will one
+                 * entry in the list to get the ipaddress
+                 */
                 sb.append(fwTO.getSrcIp()).append(":reverted:0:0:0:");
                 String fwRuleEntry = sb.toString();
                 toAdd.add(fwRuleEntry);

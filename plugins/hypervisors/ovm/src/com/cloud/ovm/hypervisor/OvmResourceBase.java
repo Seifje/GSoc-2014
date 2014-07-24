@@ -258,17 +258,18 @@ public class OvmResourceBase implements ServerResource, HypervisorResource {
             throw new ConfigurationException("Cannot find bridge " + _guestNetworkName + " on host " + _ip + ", all bridges are:" + _bridges);
         }
 
-        /* set to false so each time ModifyStoragePoolCommand will re-setup heartbeat*/
+        /*
+         * set to false so each time ModifyStoragePoolCommand will re-setup
+         * heartbeat
+         */
         s_isHeartBeat = false;
 
         /*
-        try {
-            _canBridgeFirewall = canBridgeFirewall();
-        } catch (XmlRpcException e) {
-            s_logger.error("Failed to detect whether the host supports security groups.", e);
-            _canBridgeFirewall = false;
-        }
-        */
+         * try { _canBridgeFirewall = canBridgeFirewall(); } catch
+         * (XmlRpcException e) { s_logger.error(
+         * "Failed to detect whether the host supports security groups.", e);
+         * _canBridgeFirewall = false; }
+         */
 
         _canBridgeFirewall = false;
 
@@ -312,7 +313,7 @@ public class OvmResourceBase implements ServerResource, HypervisorResource {
             cmd.setCluster(_clusterId.toString());
             cmd.setVersion(OvmResourceBase.class.getPackage().getImplementationVersion());
             cmd.setHypervisorType(HypervisorType.Ovm);
-            //TODO: introudce PIF
+            // TODO: introudce PIF
             cmd.setPrivateIpAddress(_ip);
             cmd.setStorageIpAddress(_ip);
             cmd.setHostVmStateReport(getHostVmStateReport());
@@ -419,7 +420,7 @@ public class OvmResourceBase implements ServerResource, HypervisorResource {
     protected ReadyAnswer execute(ReadyCommand cmd) {
         try {
             OvmHost.Details d = OvmHost.getDetails(_conn);
-            //TODO: cleanup halted vm
+            // TODO: cleanup halted vm
             if (d.masterIp.equalsIgnoreCase(_ip)) {
                 return new ReadyAnswer(cmd);
             } else {
@@ -514,8 +515,7 @@ public class OvmResourceBase implements ServerResource, HypervisorResource {
                 vol = OvmVolume.createDataDsik(_conn, primaryStorage.getUuid(), Long.toString(disk.getSize()), disk.getType() == Volume.Type.ROOT);
             }
 
-            VolumeTO volume =
-                new VolumeTO(cmd.getVolumeId(), disk.getType(), primaryStorage.getType(), primaryStorage.getUuid(), primaryStorage.getPath(), vol.name, vol.path,
+            VolumeTO volume = new VolumeTO(cmd.getVolumeId(), disk.getType(), primaryStorage.getType(), primaryStorage.getUuid(), primaryStorage.getPath(), vol.name, vol.path,
                     vol.size, null);
             return new CreateAnswer(cmd, volume);
         } catch (Exception e) {
@@ -599,7 +599,7 @@ public class OvmResourceBase implements ServerResource, HypervisorResource {
         return brdetails.name;
     }
 
-    //TODO: complete all network support
+    // TODO: complete all network support
     protected String getNetwork(NicTO nic) throws XmlRpcException {
         String vlanId = null;
         String bridgeName = null;
@@ -699,7 +699,7 @@ public class OvmResourceBase implements ServerResource, HypervisorResource {
             return new StartAnswer(cmd, e.getMessage());
         } finally {
             synchronized (_vms) {
-                //FIXME: where to come to Stopped???
+                // FIXME: where to come to Stopped???
                 if (state != State.Stopped) {
                     _vms.put(vmName, state);
                 } else {
@@ -880,7 +880,7 @@ public class OvmResourceBase implements ServerResource, HypervisorResource {
                     } else if (oldState != newState) {
                         _vms.put(vm, newState);
                         if (newState == State.Stopped) {
-                            //TODO: need anything here?
+                            // TODO: need anything here?
                         }
                         changes.put(vm, newState);
                     }
@@ -1117,8 +1117,7 @@ public class OvmResourceBase implements ServerResource, HypervisorResource {
             OvmVif.Details vif = getVifFromVm(cmd.getVmName(), null);
             String vifDeviceName = vif.name;
             String bridgeName = vif.bridge;
-            result =
-                addNetworkRules(cmd.getVmName(), Long.toString(cmd.getVmId()), cmd.getGuestIp(), cmd.getSignature(), String.valueOf(cmd.getSeqNum()), cmd.getGuestMac(),
+            result = addNetworkRules(cmd.getVmName(), Long.toString(cmd.getVmId()), cmd.getGuestIp(), cmd.getSignature(), String.valueOf(cmd.getSeqNum()), cmd.getGuestMac(),
                     cmd.stringifyRules(), vifDeviceName, bridgeName);
         } catch (XmlRpcException e) {
             s_logger.error(e);
@@ -1129,8 +1128,8 @@ public class OvmResourceBase implements ServerResource, HypervisorResource {
             s_logger.warn("Failed to program network rules for vm " + cmd.getVmName());
             return new SecurityGroupRuleAnswer(cmd, false, "programming network rules failed");
         } else {
-            s_logger.info("Programmed network rules for vm " + cmd.getVmName() + " guestIp=" + cmd.getGuestIp() + ":ingress num rules=" + cmd.getIngressRuleSet().length +
-                ":egress num rules=" + cmd.getEgressRuleSet().length);
+            s_logger.info("Programmed network rules for vm " + cmd.getVmName() + " guestIp=" + cmd.getGuestIp() + ":ingress num rules=" + cmd.getIngressRuleSet().length
+                    + ":egress num rules=" + cmd.getEgressRuleSet().length);
             return new SecurityGroupRuleAnswer(cmd);
         }
     }
@@ -1174,8 +1173,8 @@ public class OvmResourceBase implements ServerResource, HypervisorResource {
         return OvmSecurityGroup.deleteAllNetworkRulesForVm(_conn, vmName, vif);
     }
 
-    protected boolean addNetworkRules(String vmName, String vmId, String guestIp, String signature, String seqno, String vifMacAddress, String rules,
-        String vifDeviceName, String bridgeName) throws XmlRpcException {
+    protected boolean addNetworkRules(String vmName, String vmId, String guestIp, String signature, String seqno, String vifMacAddress, String rules, String vifDeviceName,
+            String bridgeName) throws XmlRpcException {
         if (!_canBridgeFirewall) {
             return false;
         }
@@ -1256,7 +1255,7 @@ public class OvmResourceBase implements ServerResource, HypervisorResource {
             String installPath = "template/tmpl/" + accountId + "/" + templateId;
             Map<String, String> res = OvmStoragePool.createTemplateFromVolume(_conn, secondaryStorageMountPath, installPath, volumePath, wait);
             return new CreatePrivateTemplateAnswer(cmd, true, null, res.get("installPath"), Long.valueOf(res.get("virtualSize")), Long.valueOf(res.get("physicalSize")),
-                res.get("templateFileName"), ImageFormat.RAW);
+                    res.get("templateFileName"), ImageFormat.RAW);
         } catch (Exception e) {
             s_logger.debug("Create template failed", e);
             return new CreatePrivateTemplateAnswer(cmd, false, e.getMessage());
@@ -1311,15 +1310,12 @@ public class OvmResourceBase implements ServerResource, HypervisorResource {
                 break;
             }
             if (!isNetworkSetupByName(info.getPrivateNetworkName())) {
-                msg =
-                    "For Physical Network id:" + info.getPhysicalNetworkId() + ", Private Network is not configured on the backend by name " +
-                        info.getPrivateNetworkName();
+                msg = "For Physical Network id:" + info.getPhysicalNetworkId() + ", Private Network is not configured on the backend by name " + info.getPrivateNetworkName();
                 errorout = true;
                 break;
             }
             if (!isNetworkSetupByName(info.getPublicNetworkName())) {
-                msg =
-                    "For Physical Network id:" + info.getPhysicalNetworkId() + ", Public Network is not configured on the backend by name " + info.getPublicNetworkName();
+                msg = "For Physical Network id:" + info.getPhysicalNetworkId() + ", Public Network is not configured on the backend by name " + info.getPublicNetworkName();
                 errorout = true;
                 break;
             }

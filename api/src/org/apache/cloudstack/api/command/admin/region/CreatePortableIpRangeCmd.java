@@ -35,21 +35,16 @@ import com.cloud.exception.ConcurrentOperationException;
 import com.cloud.exception.ResourceAllocationException;
 import com.cloud.user.Account;
 
-@APICommand(name = "createPortableIpRange",
-            responseObject = PortableIpRangeResponse.class,
-            description = "adds a range of portable public IP's to a region",
-            since = "4.2.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "createPortableIpRange", responseObject = PortableIpRangeResponse.class, description = "adds a range of portable public IP's to a region", since = "4.2.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreatePortableIpRangeCmd extends BaseAsyncCreateCmd {
 
     public static final Logger s_logger = Logger.getLogger(CreatePortableIpRangeCmd.class.getName());
 
     private static final String s_name = "createportableiprangeresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.REGION_ID, type = CommandType.INTEGER, entityType = RegionResponse.class, required = true, description = "Id of the Region")
     private Integer regionId;
@@ -69,9 +64,9 @@ public class CreatePortableIpRangeCmd extends BaseAsyncCreateCmd {
     @Parameter(name = ApiConstants.VLAN, type = CommandType.STRING, description = "VLAN id, if not specified defaulted to untagged")
     private String vlan;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Integer getRegionId() {
         return regionId;
@@ -97,9 +92,9 @@ public class CreatePortableIpRangeCmd extends BaseAsyncCreateCmd {
         return netmask;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

@@ -313,8 +313,7 @@ public class SqlGenerator {
                 }
             }
             if (attrs.size() != 0) {
-                Pair<StringBuilder, Attribute[]> pair =
-                    new Pair<StringBuilder, Attribute[]>(buildUpdateSql(tableName, attrs), attrs.toArray(new Attribute[attrs.size()]));
+                Pair<StringBuilder, Attribute[]> pair = new Pair<StringBuilder, Attribute[]>(buildUpdateSql(tableName, attrs), attrs.toArray(new Attribute[attrs.size()]));
                 sqls.add(pair);
             }
         }
@@ -446,7 +445,7 @@ public class SqlGenerator {
         List<Attribute> ids = _ids.get(attribute.table);
 
         // if ids == null, that means the removed column was added as a JOIN
-        // value to another table.  We ignore it here.
+        // value to another table. We ignore it here.
         if (ids == null) {
             return null;
         }
@@ -615,7 +614,8 @@ public class SqlGenerator {
     }
 
     /**
-     * buildDiscriminatorClause builds the join clause when there are multiple tables.
+     * buildDiscriminatorClause builds the join clause when there are multiple
+     * tables.
      *
      * @return
      */

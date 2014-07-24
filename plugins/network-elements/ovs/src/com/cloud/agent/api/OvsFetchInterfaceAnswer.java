@@ -17,7 +17,6 @@
 
 package com.cloud.agent.api;
 
-
 public class OvsFetchInterfaceAnswer extends Answer {
     String ip;
     String netmask;
@@ -29,8 +28,7 @@ public class OvsFetchInterfaceAnswer extends Answer {
         this.label = ((OvsFetchInterfaceCommand)cmd).getLabel();
     }
 
-    public OvsFetchInterfaceAnswer(Command cmd, boolean success,
-            String details, String ip, String netmask, String mac) {
+    public OvsFetchInterfaceAnswer(Command cmd, boolean success, String details, String ip, String netmask, String mac) {
         super(cmd, success, details);
         this.ip = ip;
         this.netmask = netmask;

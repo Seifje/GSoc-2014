@@ -33,12 +33,13 @@ import org.apache.cloudstack.api.response.SuccessResponse;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 /**
- * Test fixture to do integration rate limit test.
- * Currently we commented out this test suite since it requires a real MS and Db running.
+ * Test fixture to do integration rate limit test. Currently we commented out
+ * this test suite since it requires a real MS and Db running.
  */
 public class RateLimitIntegrationTest extends APITest {
 
-    private static int apiMax = 25;         // assuming ApiRateLimitService set api.throttling.max = 25
+    private static int apiMax = 25; // assuming ApiRateLimitService set
+                                    // api.throttling.max = 25
 
     @Before
     public void setup() {
@@ -202,7 +203,8 @@ public class RateLimitIntegrationTest extends APITest {
         params2.put("sessionkey", sessionKey);
         String getResult = sendRequest("getApiLimit", params2);
         ApiLimitResponse getLimitResp = (ApiLimitResponse)fromSerializedString(getResult, ApiLimitResponse.class);
-        assertEquals("Issued api count is incorrect!", 2, getLimitResp.getApiIssued()); // should be 2 apis issues plus this getlimit api
+        assertEquals("Issued api count is incorrect!", 2, getLimitResp.getApiIssued()); // should be 2 apis issues plus
+                                                                                        // this getlimit api
         assertEquals("Allowed api count is incorrect!", apiMax - 2, getLimitResp.getApiAllowed());
     }
 }

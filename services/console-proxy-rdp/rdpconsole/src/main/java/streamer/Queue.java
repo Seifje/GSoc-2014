@@ -70,7 +70,8 @@ public class Queue extends BaseElement {
     public void handleEvent(Event event, Direction direction) {
         switch (event) {
         case LINK_SWITCH_TO_PULL_MODE:
-            // Do not propagate this event, because this element is boundary between
+            // Do not propagate this event, because this element is boundary
+            // between
             // threads
             break;
         default:

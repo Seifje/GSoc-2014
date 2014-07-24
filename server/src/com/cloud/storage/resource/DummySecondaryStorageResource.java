@@ -106,8 +106,7 @@ public class DummySecondaryStorageResource extends ServerResourceBase implements
 
     @Override
     public StartupCommand[] initialize() {
-        final StartupStorageCommand cmd =
-            new StartupStorageCommand("dummy", StoragePoolType.NetworkFilesystem, 1024 * 1024 * 1024 * 100L, new HashMap<String, TemplateProp>());
+        final StartupStorageCommand cmd = new StartupStorageCommand("dummy", StoragePoolType.NetworkFilesystem, 1024 * 1024 * 1024 * 100L, new HashMap<String, TemplateProp>());
 
         cmd.setResourceType(Storage.StorageResourceType.SECONDARY_STORAGE);
         cmd.setIqn(null);
@@ -172,8 +171,7 @@ public class DummySecondaryStorageResource extends ServerResourceBase implements
         Map<String, TemplateProp> tmpltInfo = new HashMap<String, TemplateProp>();
         if (tmplts != null) {
             for (VMTemplateVO tmplt : tmplts) {
-                TemplateProp routingInfo =
-                    new TemplateProp(tmplt.getUniqueName(), TemplateConstants.DEFAULT_SYSTEM_VM_TEMPLATE_PATH + tmplt.getId() + File.separator, false, false);
+                TemplateProp routingInfo = new TemplateProp(tmplt.getUniqueName(), TemplateConstants.DEFAULT_SYSTEM_VM_TEMPLATE_PATH + tmplt.getId() + File.separator, false, false);
                 tmpltInfo.put(tmplt.getUniqueName(), routingInfo);
             }
         }

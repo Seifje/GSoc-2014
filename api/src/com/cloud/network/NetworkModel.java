@@ -40,10 +40,11 @@ import com.cloud.vm.NicProfile;
 import com.cloud.vm.VirtualMachine;
 
 /**
- * The NetworkModel presents a read-only view into the Network data such as L2 networks,
- * Nics, PublicIps, NetworkOfferings, traffic labels, physical networks and the like
- * The idea is that only the orchestration core should be able to modify the data, while other
- * participants in the orchestration can use this interface to query the data.
+ * The NetworkModel presents a read-only view into the Network data such as L2
+ * networks, Nics, PublicIps, NetworkOfferings, traffic labels, physical
+ * networks and the like The idea is that only the orchestration core should be
+ * able to modify the data, while other participants in the orchestration can
+ * use this interface to query the data.
  */
 public interface NetworkModel {
 
@@ -55,7 +56,8 @@ public interface NetworkModel {
      * @param associatedNetworkId
      *            TODO
      * @param sourceNat
-     *            - (optional) true if the IP address should be a source NAT address
+     *            - (optional) true if the IP address should be a source NAT
+     *            address
      * @return - list of IP addresses
      */
     List<? extends IpAddress> listPublicIpsAssignedToGuestNtwk(long accountId, long associatedNetworkId, Boolean sourceNat);

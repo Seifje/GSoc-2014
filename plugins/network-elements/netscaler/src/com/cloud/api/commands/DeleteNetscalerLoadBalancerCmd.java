@@ -38,8 +38,7 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.network.element.NetscalerLoadBalancerElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "deleteNetscalerLoadBalancer", responseObject = SuccessResponse.class, description = " delete a netscaler load balancer device",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteNetscalerLoadBalancer", responseObject = SuccessResponse.class, description = " delete a netscaler load balancer device", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteNetscalerLoadBalancerCmd extends BaseAsyncCmd {
 
     public static final Logger s_logger = Logger.getLogger(DeleteNetscalerLoadBalancerCmd.class.getName());
@@ -47,32 +46,27 @@ public class DeleteNetscalerLoadBalancerCmd extends BaseAsyncCmd {
     @Inject
     NetscalerLoadBalancerElementService _netsclarLbService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_ID,
-               type = CommandType.UUID,
-               entityType = NetscalerLoadBalancerResponse.class,
-               required = true,
-               description = "netscaler load balancer device ID")
+    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_ID, type = CommandType.UUID, entityType = NetscalerLoadBalancerResponse.class, required = true, description = "netscaler load balancer device ID")
     private Long lbDeviceId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getLoadBalancerDeviceId() {
         return lbDeviceId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             boolean result = _netsclarLbService.deleteNetscalerLoadBalancer(this);
             if (result) {

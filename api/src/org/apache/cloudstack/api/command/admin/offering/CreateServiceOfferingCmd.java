@@ -35,15 +35,14 @@ import org.apache.log4j.Logger;
 import com.cloud.offering.ServiceOffering;
 import com.cloud.user.Account;
 
-@APICommand(name = "createServiceOffering", description = "Creates a service offering.", responseObject = ServiceOfferingResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createServiceOffering", description = "Creates a service offering.", responseObject = ServiceOfferingResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateServiceOfferingCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(CreateServiceOfferingCmd.class.getName());
     private static final String s_name = "createserviceofferingresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.CPU_NUMBER, type = CommandType.INTEGER, required = false, description = "the CPU number of the service offering")
     private Integer cpuNumber;
@@ -69,9 +68,7 @@ public class CreateServiceOfferingCmd extends BaseCmd {
     @Parameter(name = ApiConstants.LIMIT_CPU_USE, type = CommandType.BOOLEAN, description = "restrict the CPU usage to committed service offering")
     private Boolean limitCpuUse;
 
-    @Parameter(name = ApiConstants.IS_VOLATILE,
-               type = CommandType.BOOLEAN,
-               description = "true if the virtual machine needs to be volatile so that on every reboot of VM, original root disk is dettached then destroyed and a fresh root disk is created and attached to VM")
+    @Parameter(name = ApiConstants.IS_VOLATILE, type = CommandType.BOOLEAN, description = "true if the virtual machine needs to be volatile so that on every reboot of VM, original root disk is dettached then destroyed and a fresh root disk is created and attached to VM")
     private Boolean isVolatile;
 
     @Parameter(name = ApiConstants.STORAGE_TYPE, type = CommandType.STRING, description = "the storage type of the service offering. Values are local and shared.")
@@ -80,10 +77,7 @@ public class CreateServiceOfferingCmd extends BaseCmd {
     @Parameter(name = ApiConstants.TAGS, type = CommandType.STRING, description = "the tags for this service offering.")
     private String tags;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               entityType = DomainResponse.class,
-               description = "the ID of the containing domain, null for public offerings")
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "the ID of the containing domain, null for public offerings")
     private Long domainId;
 
     @Parameter(name = ApiConstants.HOST_TAGS, type = CommandType.STRING, description = "the host tag for this service offering.")
@@ -92,19 +86,13 @@ public class CreateServiceOfferingCmd extends BaseCmd {
     @Parameter(name = ApiConstants.IS_SYSTEM_OFFERING, type = CommandType.BOOLEAN, description = "is this a system vm offering")
     private Boolean isSystem;
 
-    @Parameter(name = ApiConstants.SYSTEM_VM_TYPE,
-               type = CommandType.STRING,
-               description = "the system VM type. Possible types are \"domainrouter\", \"consoleproxy\" and \"secondarystoragevm\".")
+    @Parameter(name = ApiConstants.SYSTEM_VM_TYPE, type = CommandType.STRING, description = "the system VM type. Possible types are \"domainrouter\", \"consoleproxy\" and \"secondarystoragevm\".")
     private String systemVmType;
 
-    @Parameter(name = ApiConstants.NETWORKRATE,
-               type = CommandType.INTEGER,
-               description = "data transfer rate in megabits per second allowed. Supported only for non-System offering and system offerings having \"domainrouter\" systemvmtype")
+    @Parameter(name = ApiConstants.NETWORKRATE, type = CommandType.INTEGER, description = "data transfer rate in megabits per second allowed. Supported only for non-System offering and system offerings having \"domainrouter\" systemvmtype")
     private Integer networkRate;
 
-    @Parameter(name = ApiConstants.DEPLOYMENT_PLANNER,
-               type = CommandType.STRING,
-               description = "The deployment planner heuristics used to deploy a VM of this offering. If null, value of global config vm.deployment.planner is used")
+    @Parameter(name = ApiConstants.DEPLOYMENT_PLANNER, type = CommandType.STRING, description = "The deployment planner heuristics used to deploy a VM of this offering. If null, value of global config vm.deployment.planner is used")
     private String deploymentPlanner;
 
     @Parameter(name = ApiConstants.SERVICE_OFFERING_DETAILS, type = CommandType.MAP, description = "details for planner, used to store specific parameters")
@@ -131,16 +119,12 @@ public class CreateServiceOfferingCmd extends BaseCmd {
     @Parameter(name = ApiConstants.MAX_IOPS, type = CommandType.LONG, required = false, description = "max iops of the compute offering", since = "4.4")
     private Long maxIops;
 
-    @Parameter(name = ApiConstants.HYPERVISOR_SNAPSHOT_RESERVE,
-            type = CommandType.INTEGER,
-            required = false,
-            description = "Hypervisor snapshot reserve space as a percent of a volume (for managed storage using Xen or VMware)",
-            since = "4.4")
+    @Parameter(name = ApiConstants.HYPERVISOR_SNAPSHOT_RESERVE, type = CommandType.INTEGER, required = false, description = "Hypervisor snapshot reserve space as a percent of a volume (for managed storage using Xen or VMware)", since = "4.4")
     private Integer hypervisorSnapshotReserve;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Integer getCpuNumber() {
         return cpuNumber;
@@ -154,7 +138,7 @@ public class CreateServiceOfferingCmd extends BaseCmd {
         return displayText;
     }
 
-    public String getProvisioningType(){
+    public String getProvisioningType() {
         return provisioningType;
     }
 
@@ -221,7 +205,7 @@ public class CreateServiceOfferingCmd extends BaseCmd {
             Collection<?> props = details.values();
             Iterator<?> iter = props.iterator();
             while (iter.hasNext()) {
-                HashMap<String, String> detail = (HashMap<String, String>) iter.next();
+                HashMap<String, String> detail = (HashMap<String, String>)iter.next();
                 detailsMap.put(detail.get("key"), detail.get("value"));
             }
         }
@@ -260,9 +244,9 @@ public class CreateServiceOfferingCmd extends BaseCmd {
         return hypervisorSnapshotReserve;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

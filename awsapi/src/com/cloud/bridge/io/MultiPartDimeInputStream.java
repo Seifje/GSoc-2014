@@ -22,10 +22,9 @@ import java.io.InputStream;
 import org.apache.log4j.Logger;
 
 /**
- * A DIME stream is actually composed of multiple encoded streams.
- * This class is a wrapper around the DimeDelimitedInputStream inorder
- * to provide a simple iterator like interface for all the streams in a
- * DIME encoded message.
+ * A DIME stream is actually composed of multiple encoded streams. This class is
+ * a wrapper around the DimeDelimitedInputStream inorder to provide a simple
+ * iterator like interface for all the streams in a DIME encoded message.
  */
 public class MultiPartDimeInputStream {
     protected final static Logger logger = Logger.getLogger(MultiPartDimeInputStream.class);
@@ -40,18 +39,19 @@ public class MultiPartDimeInputStream {
     protected String typeFormat = null;
 
     /**
-     * The SOAP stream must be first, call nextInputStream to get
-     * access to the first stream and all streams after that.
+     * The SOAP stream must be first, call nextInputStream to get access to the
+     * first stream and all streams after that.
      *
-     * @param is the true input stream holding the incoming request.
+     * @param is
+     *            the true input stream holding the incoming request.
      */
     public MultiPartDimeInputStream(InputStream is) throws IOException {
         this.is = is;
     }
 
     /**
-     * These three methods are DIME specific but provide potentially
-     * useful information about the current stream's data.
+     * These three methods are DIME specific but provide potentially useful
+     * information about the current stream's data.
      *
      * @return URL or MIME type
      */
@@ -65,7 +65,8 @@ public class MultiPartDimeInputStream {
     }
 
     public String getStreamId() {
-        // The soap body might have string identifiers to point to other streams in the message
+        // The soap body might have string identifiers to point to other streams
+        // in the message
         return contentId;
     }
 
@@ -84,9 +85,9 @@ public class MultiPartDimeInputStream {
     }
 
     /**
-     * Move on to the next stream encoded in the DIME stream.
-     * If the current stream has not been all read, then we skip the remaining bytes of
-     * that stream.
+     * Move on to the next stream encoded in the DIME stream. If the current
+     * stream has not been all read, then we skip the remaining bytes of that
+     * stream.
      *
      * @return false if no next input stream, true if next input stream ready
      * @throws IOException
@@ -96,7 +97,8 @@ public class MultiPartDimeInputStream {
             // on the first call to this function get the first stream
             if (0 == count)
                 currentStream = new DimeDelimitedInputStream(is);
-        } else {    // make sure the bytes of the previous stream are all skipped before we start the next
+        } else { // make sure the bytes of the previous stream are all skipped
+                 // before we start the next
             currentStream.close();
             contentId = null;
             type = null;

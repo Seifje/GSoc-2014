@@ -114,8 +114,7 @@ public class HypervisorTemplateAdapter extends TemplateAdapterBase {
         TemplateProfile profile = super.prepare(cmd);
         String url = profile.getUrl();
 
-        if ((!url.toLowerCase().endsWith("iso")) && (!url.toLowerCase().endsWith("iso.zip")) && (!url.toLowerCase().endsWith("iso.bz2")) &&
-            (!url.toLowerCase().endsWith("iso.gz"))) {
+        if ((!url.toLowerCase().endsWith("iso")) && (!url.toLowerCase().endsWith("iso.zip")) && (!url.toLowerCase().endsWith("iso.bz2")) && (!url.toLowerCase().endsWith("iso.gz"))) {
             throw new InvalidParameterValueException("Please specify a valid iso");
         }
 
@@ -152,61 +151,35 @@ public class HypervisorTemplateAdapter extends TemplateAdapterBase {
     }
 
     private void checkFormat(String format, String url) {
-        if ((!url.toLowerCase().endsWith("vhd")) && (!url.toLowerCase().endsWith("vhd.zip")) && (!url.toLowerCase().endsWith("vhd.bz2")) &&
-            (!url.toLowerCase().endsWith("vhdx")) && (!url.toLowerCase().endsWith("vhdx.gz")) &&
-            (!url.toLowerCase().endsWith("vhdx.bz2")) && (!url.toLowerCase().endsWith("vhdx.zip")) &&
-            (!url.toLowerCase().endsWith("vhd.gz")) && (!url.toLowerCase().endsWith("qcow2")) && (!url.toLowerCase().endsWith("qcow2.zip")) &&
-            (!url.toLowerCase().endsWith("qcow2.bz2")) && (!url.toLowerCase().endsWith("qcow2.gz")) && (!url.toLowerCase().endsWith("ova")) &&
-            (!url.toLowerCase().endsWith("ova.zip")) && (!url.toLowerCase().endsWith("ova.bz2")) && (!url.toLowerCase().endsWith("ova.gz")) &&
-            (!url.toLowerCase().endsWith("tar")) && (!url.toLowerCase().endsWith("tar.zip")) && (!url.toLowerCase().endsWith("tar.bz2")) &&
-            (!url.toLowerCase().endsWith("tar.gz")) && (!url.toLowerCase().endsWith("vmdk")) && (!url.toLowerCase().endsWith("vmdk.gz")) &&
-            (!url.toLowerCase().endsWith("vmdk.zip")) && (!url.toLowerCase().endsWith("vmdk.bz2")) && (!url.toLowerCase().endsWith("img")) &&
-            (!url.toLowerCase().endsWith("img.gz")) && (!url.toLowerCase().endsWith("img.zip")) && (!url.toLowerCase().endsWith("img.bz2")) &&
-            (!url.toLowerCase().endsWith("raw")) && (!url.toLowerCase().endsWith("raw.gz")) && (!url.toLowerCase().endsWith("raw.bz2")) &&
-            (!url.toLowerCase().endsWith("raw.zip"))) {
+        if ((!url.toLowerCase().endsWith("vhd")) && (!url.toLowerCase().endsWith("vhd.zip")) && (!url.toLowerCase().endsWith("vhd.bz2")) && (!url.toLowerCase().endsWith("vhdx"))
+                && (!url.toLowerCase().endsWith("vhdx.gz")) && (!url.toLowerCase().endsWith("vhdx.bz2")) && (!url.toLowerCase().endsWith("vhdx.zip"))
+                && (!url.toLowerCase().endsWith("vhd.gz")) && (!url.toLowerCase().endsWith("qcow2")) && (!url.toLowerCase().endsWith("qcow2.zip"))
+                && (!url.toLowerCase().endsWith("qcow2.bz2")) && (!url.toLowerCase().endsWith("qcow2.gz")) && (!url.toLowerCase().endsWith("ova"))
+                && (!url.toLowerCase().endsWith("ova.zip")) && (!url.toLowerCase().endsWith("ova.bz2")) && (!url.toLowerCase().endsWith("ova.gz"))
+                && (!url.toLowerCase().endsWith("tar")) && (!url.toLowerCase().endsWith("tar.zip")) && (!url.toLowerCase().endsWith("tar.bz2"))
+                && (!url.toLowerCase().endsWith("tar.gz")) && (!url.toLowerCase().endsWith("vmdk")) && (!url.toLowerCase().endsWith("vmdk.gz"))
+                && (!url.toLowerCase().endsWith("vmdk.zip")) && (!url.toLowerCase().endsWith("vmdk.bz2")) && (!url.toLowerCase().endsWith("img"))
+                && (!url.toLowerCase().endsWith("img.gz")) && (!url.toLowerCase().endsWith("img.zip")) && (!url.toLowerCase().endsWith("img.bz2"))
+                && (!url.toLowerCase().endsWith("raw")) && (!url.toLowerCase().endsWith("raw.gz")) && (!url.toLowerCase().endsWith("raw.bz2"))
+                && (!url.toLowerCase().endsWith("raw.zip"))) {
             throw new InvalidParameterValueException("Please specify a valid " + format.toLowerCase());
         }
 
-        if ((format.equalsIgnoreCase("vhd")
-                 && (!url.toLowerCase().endsWith("vhd")
-                         && !url.toLowerCase().endsWith("vhd.zip")
-                         && !url.toLowerCase().endsWith("vhd.bz2")
-                         && !url.toLowerCase().endsWith("vhd.gz")))
-            || (format.equalsIgnoreCase("vhdx")
-                 && (!url.toLowerCase().endsWith("vhdx")
-                         && !url.toLowerCase().endsWith("vhdx.zip")
-                         && !url.toLowerCase().endsWith("vhdx.bz2")
-                         && !url.toLowerCase().endsWith("vhdx.gz")))
-            || (format.equalsIgnoreCase("qcow2")
-                 && (!url.toLowerCase().endsWith("qcow2")
-                         && !url.toLowerCase().endsWith("qcow2.zip")
-                         && !url.toLowerCase().endsWith("qcow2.bz2")
-                         && !url.toLowerCase().endsWith("qcow2.gz")))
-            || (format.equalsIgnoreCase("ova")
-                 && (!url.toLowerCase().endsWith("ova")
-                         && !url.toLowerCase().endsWith("ova.zip")
-                         && !url.toLowerCase().endsWith("ova.bz2")
-                         && !url.toLowerCase().endsWith("ova.gz")))
-            || (format.equalsIgnoreCase("tar")
-                 && (!url.toLowerCase().endsWith("tar")
-                         && !url.toLowerCase().endsWith("tar.zip")
-                         && !url.toLowerCase().endsWith("tar.bz2")
-                         && !url.toLowerCase().endsWith("tar.gz")))
-            || (format.equalsIgnoreCase("raw")
-                 && (!url.toLowerCase().endsWith("img")
-                         && !url.toLowerCase().endsWith("img.zip")
-                         && !url.toLowerCase().endsWith("img.bz2")
-                         && !url.toLowerCase().endsWith("img.gz")
-                         && !url.toLowerCase().endsWith("raw")
-                         && !url.toLowerCase().endsWith("raw.bz2")
-                         && !url.toLowerCase().endsWith("raw.zip")
-                         && !url.toLowerCase().endsWith("raw.gz")))
-            || (format.equalsIgnoreCase("vmdk")
-                 && (!url.toLowerCase().endsWith("vmdk")
-                         && !url.toLowerCase().endsWith("vmdk.zip")
-                         && !url.toLowerCase().endsWith("vmdk.bz2")
-                         && !url.toLowerCase().endsWith("vmdk.gz")))
-           ) {
+        if ((format.equalsIgnoreCase("vhd") && (!url.toLowerCase().endsWith("vhd") && !url.toLowerCase().endsWith("vhd.zip") && !url.toLowerCase().endsWith("vhd.bz2") && !url
+                .toLowerCase().endsWith("vhd.gz")))
+                || (format.equalsIgnoreCase("vhdx") && (!url.toLowerCase().endsWith("vhdx") && !url.toLowerCase().endsWith("vhdx.zip") && !url.toLowerCase().endsWith("vhdx.bz2") && !url
+                        .toLowerCase().endsWith("vhdx.gz")))
+                || (format.equalsIgnoreCase("qcow2") && (!url.toLowerCase().endsWith("qcow2") && !url.toLowerCase().endsWith("qcow2.zip")
+                        && !url.toLowerCase().endsWith("qcow2.bz2") && !url.toLowerCase().endsWith("qcow2.gz")))
+                || (format.equalsIgnoreCase("ova") && (!url.toLowerCase().endsWith("ova") && !url.toLowerCase().endsWith("ova.zip") && !url.toLowerCase().endsWith("ova.bz2") && !url
+                        .toLowerCase().endsWith("ova.gz")))
+                || (format.equalsIgnoreCase("tar") && (!url.toLowerCase().endsWith("tar") && !url.toLowerCase().endsWith("tar.zip") && !url.toLowerCase().endsWith("tar.bz2") && !url
+                        .toLowerCase().endsWith("tar.gz")))
+                || (format.equalsIgnoreCase("raw") && (!url.toLowerCase().endsWith("img") && !url.toLowerCase().endsWith("img.zip") && !url.toLowerCase().endsWith("img.bz2")
+                        && !url.toLowerCase().endsWith("img.gz") && !url.toLowerCase().endsWith("raw") && !url.toLowerCase().endsWith("raw.bz2")
+                        && !url.toLowerCase().endsWith("raw.zip") && !url.toLowerCase().endsWith("raw.gz")))
+                || (format.equalsIgnoreCase("vmdk") && (!url.toLowerCase().endsWith("vmdk") && !url.toLowerCase().endsWith("vmdk.zip") && !url.toLowerCase().endsWith("vmdk.bz2") && !url
+                        .toLowerCase().endsWith("vmdk.gz")))) {
             throw new InvalidParameterValueException("Please specify a valid URL. URL:" + url + " is an invalid for the format " + format.toLowerCase());
         }
 
@@ -214,7 +187,9 @@ public class HypervisorTemplateAdapter extends TemplateAdapterBase {
 
     @Override
     public VMTemplateVO create(TemplateProfile profile) {
-        // persist entry in vm_template, vm_template_details and template_zone_ref tables, not that entry at template_store_ref is not created here, and created in createTemplateAsync.
+        // persist entry in vm_template, vm_template_details and
+        // template_zone_ref tables, not that entry at template_store_ref is not
+        // created here, and created in createTemplateAsync.
         VMTemplateVO template = persistTemplate(profile);
 
         if (template == null) {
@@ -228,7 +203,10 @@ public class HypervisorTemplateAdapter extends TemplateAdapterBase {
         }
 
         Set<Long> zoneSet = new HashSet<Long>();
-        Collections.shuffle(imageStores); // For private templates choose a random store. TODO - Have a better algorithm based on size, no. of objects, load etc.
+        Collections.shuffle(imageStores); // For private templates choose a
+        // random store. TODO - Have a better
+        // algorithm based on size, no. of
+        // objects, load etc.
         for (DataStore imageStore : imageStores) {
             // skip data stores for a disabled zone
             Long zoneId = imageStore.getScope().getScopeId();
@@ -245,10 +223,11 @@ public class HypervisorTemplateAdapter extends TemplateAdapterBase {
                     continue;
                 }
 
-                // We want to download private template to one of the image store in a zone
-                if(isPrivateTemplate(template) && zoneSet.contains(zoneId)){
+                // We want to download private template to one of the image
+                // store in a zone
+                if (isPrivateTemplate(template) && zoneSet.contains(zoneId)) {
                     continue;
-                }else {
+                } else {
                     zoneSet.add(zoneId);
                 }
 
@@ -266,10 +245,10 @@ public class HypervisorTemplateAdapter extends TemplateAdapterBase {
         return template;
     }
 
-    private boolean isPrivateTemplate(VMTemplateVO template){
+    private boolean isPrivateTemplate(VMTemplateVO template) {
 
         // if public OR featured OR system template
-        if(template.isPublicTemplate() || template.isFeatured() || template.getTemplateType() == TemplateType.SYSTEM)
+        if (template.isPublicTemplate() || template.isFeatured() || template.getTemplateType() == TemplateType.SYSTEM)
             return false;
         else
             return true;
@@ -284,8 +263,7 @@ public class HypervisorTemplateAdapter extends TemplateAdapterBase {
         }
     }
 
-    protected Void createTemplateAsyncCallBack(AsyncCallbackDispatcher<HypervisorTemplateAdapter, TemplateApiResult> callback,
-        CreateTemplateContext<TemplateApiResult> context) {
+    protected Void createTemplateAsyncCallBack(AsyncCallbackDispatcher<HypervisorTemplateAdapter, TemplateApiResult> callback, CreateTemplateContext<TemplateApiResult> context) {
         TemplateApiResult result = callback.getResult();
         TemplateInfo template = context.template;
         if (result.isSuccess()) {
@@ -308,21 +286,22 @@ public class HypervisorTemplateAdapter extends TemplateAdapterBase {
                 if (tmpltStore != null) {
                     physicalSize = tmpltStore.getPhysicalSize();
                 } else {
-                    s_logger.warn("No entry found in template_store_ref for template id: " + template.getId() + " and image store id: " + ds.getId() +
-                        " at the end of registering template!");
+                    s_logger.warn("No entry found in template_store_ref for template id: " + template.getId() + " and image store id: " + ds.getId()
+                            + " at the end of registering template!");
                 }
                 Scope dsScope = ds.getScope();
                 if (dsScope.getScopeType() == ScopeType.ZONE) {
                     if (dsScope.getScopeId() != null) {
-                        UsageEventUtils.publishUsageEvent(etype, template.getAccountId(), dsScope.getScopeId(), template.getId(), template.getName(), null, null,
-                            physicalSize, template.getSize(), VirtualMachineTemplate.class.getName(), template.getUuid());
+                        UsageEventUtils.publishUsageEvent(etype, template.getAccountId(), dsScope.getScopeId(), template.getId(), template.getName(), null, null, physicalSize,
+                                template.getSize(), VirtualMachineTemplate.class.getName(), template.getUuid());
                     } else {
                         s_logger.warn("Zone scope image store " + ds.getId() + " has a null scope id");
                     }
                 } else if (dsScope.getScopeType() == ScopeType.REGION) {
-                    // publish usage event for region-wide image store using a -1 zoneId for 4.2, need to revisit post-4.2
-                    UsageEventUtils.publishUsageEvent(etype, template.getAccountId(), -1, template.getId(), template.getName(), null, null, physicalSize,
-                        template.getSize(), VirtualMachineTemplate.class.getName(), template.getUuid());
+                    // publish usage event for region-wide image store using a
+                    // -1 zoneId for 4.2, need to revisit post-4.2
+                    UsageEventUtils.publishUsageEvent(etype, template.getAccountId(), -1, template.getId(), template.getName(), null, null, physicalSize, template.getSize(),
+                            VirtualMachineTemplate.class.getName(), template.getUuid());
                 }
                 _resourceLimitMgr.incrementResourceCount(accountId, ResourceType.secondary_storage, template.getSize());
             }
@@ -351,8 +330,7 @@ public class HypervisorTemplateAdapter extends TemplateAdapterBase {
                 for (TemplateDataStoreVO templateStore : templateStores) {
                     if (templateStore.getDownloadState() == Status.DOWNLOAD_IN_PROGRESS) {
                         String errorMsg = "Please specify a template that is not currently being downloaded.";
-                        s_logger.debug("Template: " + template.getName() + " is currently being downloaded to secondary storage host: " + store.getName() +
-                            "; cant' delete it.");
+                        s_logger.debug("Template: " + template.getName() + " is currently being downloaded to secondary storage host: " + store.getName() + "; cant' delete it.");
                         throw new CloudRuntimeException(errorMsg);
                     }
                 }
@@ -400,7 +378,8 @@ public class HypervisorTemplateAdapter extends TemplateAdapterBase {
         }
         if (success) {
             if ((imageStores.size() > 1) && (profile.getZoneId() != null)) {
-                //if template is stored in more than one image stores, and the zone id is not null, then don't delete other templates.
+                // if template is stored in more than one image stores, and the
+                // zone id is not null, then don't delete other templates.
                 return success;
             }
 
@@ -418,11 +397,11 @@ public class HypervisorTemplateAdapter extends TemplateAdapterBase {
                 template.setState(VirtualMachineTemplate.State.Inactive);
                 _tmpltDao.update(template.getId(), template);
 
-                    // Decrement the number of templates and total secondary storage
-                    // space used by the account
-                    Account account = _accountDao.findByIdIncludingRemoved(template.getAccountId());
-                    _resourceLimitMgr.decrementResourceCount(template.getAccountId(), ResourceType.template);
-                    _resourceLimitMgr.recalculateResourceCount(template.getAccountId(), account.getDomainId(), ResourceType.secondary_storage.getOrdinal());
+                // Decrement the number of templates and total secondary storage
+                // space used by the account
+                Account account = _accountDao.findByIdIncludingRemoved(template.getAccountId());
+                _resourceLimitMgr.decrementResourceCount(template.getAccountId(), ResourceType.template);
+                _resourceLimitMgr.recalculateResourceCount(template.getAccountId(), account.getDomainId(), ResourceType.secondary_storage.getOrdinal());
 
             }
 

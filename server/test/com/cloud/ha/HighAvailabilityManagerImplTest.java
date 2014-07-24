@@ -27,6 +27,7 @@ import org.apache.cloudstack.managed.context.ManagedContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -104,15 +105,12 @@ public class HighAvailabilityManagerImplTest {
     HighAvailabilityManagerImpl highAvailabilityManager;
 
     @Before
-    public void setup() throws IllegalArgumentException,
-            IllegalAccessException, NoSuchFieldException, SecurityException {
+    public void setup() throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
         highAvailabilityManager = new HighAvailabilityManagerImpl();
-        for (Field injectField : HighAvailabilityManagerImpl.class
-                .getDeclaredFields()) {
+        for (Field injectField : HighAvailabilityManagerImpl.class.getDeclaredFields()) {
             if (injectField.isAnnotationPresent(Inject.class)) {
                 injectField.setAccessible(true);
-                injectField.set(highAvailabilityManager, this.getClass()
-                        .getDeclaredField(injectField.getName()).get(this));
+                injectField.set(highAvailabilityManager, this.getClass().getDeclaredField(injectField.getName()).get(this));
             }
         }
     }
@@ -121,10 +119,9 @@ public class HighAvailabilityManagerImplTest {
     public void scheduleRestartForVmsOnHost() {
         Mockito.when(hostVO.getType()).thenReturn(Host.Type.Routing);
         Mockito.when(hostVO.getHypervisorType()).thenReturn(HypervisorType.KVM);
-        Mockito.when(_instanceDao.listByHostId(42l)).thenReturn(
-                Arrays.asList(Mockito.mock(VMInstanceVO.class)));
-        Mockito.when(_podDao.findById(Mockito.anyLong())).thenReturn(Mockito.mock(HostPodVO.class));
-        Mockito.when(_dcDao.findById(Mockito.anyLong())).thenReturn(Mockito.mock(DataCenterVO.class));
+        Mockito.when(_instanceDao.listByHostId(42l)).thenReturn(Arrays.asList(Mockito.mock(VMInstanceVO.class)));
+        Mockito.when(_podDao.findById(Matchers.anyLong())).thenReturn(Mockito.mock(HostPodVO.class));
+        Mockito.when(_dcDao.findById(Matchers.anyLong())).thenReturn(Mockito.mock(DataCenterVO.class));
         highAvailabilityManager.scheduleRestartForVmsOnHost(hostVO, true);
     }
 }

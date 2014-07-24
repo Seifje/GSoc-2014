@@ -64,10 +64,12 @@ public class LoadBalancerUsageParser {
         }
 
         // - query usage_volume table with the following criteria:
-        //     - look for an entry for accountId with start date in the given range
-        //     - look for an entry for accountId with end date in the given range
-        //     - look for an entry for accountId with end date null (currently running vm or owned IP)
-        //     - look for an entry for accountId with start date before given range *and* end date after given range
+        // - look for an entry for accountId with start date in the given range
+        // - look for an entry for accountId with end date in the given range
+        // - look for an entry for accountId with end date null (currently
+        // running vm or owned IP)
+        // - look for an entry for accountId with start date before given range
+        // *and* end date after given range
         List<UsageLoadBalancerPolicyVO> usageLBs = s_usageLoadBalancerPolicyDao.getUsageRecords(account.getId(), account.getDomainId(), startDate, endDate, false, 0);
 
         if (usageLBs.isEmpty()) {
@@ -79,7 +81,8 @@ public class LoadBalancerUsageParser {
         Map<String, Pair<Long, Long>> usageMap = new HashMap<String, Pair<Long, Long>>();
         Map<String, LBInfo> lbMap = new HashMap<String, LBInfo>();
 
-        // loop through all the load balancer policies, create a usage record for each
+        // loop through all the load balancer policies, create a usage record
+        // for each
         for (UsageLoadBalancerPolicyVO usageLB : usageLBs) {
             long lbId = usageLB.getId();
             String key = "" + lbId;
@@ -93,12 +96,15 @@ public class LoadBalancerUsageParser {
                 lbDeleteDate = endDate;
             }
 
-            // clip the start date to the beginning of our aggregation range if the vm has been running for a while
+            // clip the start date to the beginning of our aggregation range if
+            // the vm has been running for a while
             if (lbCreateDate.before(startDate)) {
                 lbCreateDate = startDate;
             }
 
-            long currentDuration = (lbDeleteDate.getTime() - lbCreateDate.getTime()) + 1; // make sure this is an inclusive check for milliseconds (i.e. use n - m + 1 to find total number of millis to charge)
+            long currentDuration = (lbDeleteDate.getTime() - lbCreateDate.getTime()) + 1; // make sure this is an inclusive check for
+            // milliseconds (i.e. use n - m + 1 to find
+            // total number of millis to charge)
 
             updateLBUsageData(usageMap, key, usageLB.getId(), currentDuration);
         }
@@ -107,7 +113,8 @@ public class LoadBalancerUsageParser {
             Pair<Long, Long> sgtimeInfo = usageMap.get(lbIdKey);
             long useTime = sgtimeInfo.second().longValue();
 
-            // Only create a usage record if we have a runningTime of bigger than zero.
+            // Only create a usage record if we have a runningTime of bigger
+            // than zero.
             if (useTime > 0L) {
                 LBInfo info = lbMap.get(lbIdKey);
                 createUsageRecord(UsageTypes.LOAD_BALANCER_POLICY, useTime, startDate, endDate, account, info.getId(), info.getZoneId());
@@ -141,17 +148,16 @@ public class LoadBalancerUsageParser {
         String usageDisplay = dFormat.format(usage);
 
         if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Creating Volume usage record for load balancer: " + lbId + ", usage: " + usageDisplay + ", startDate: " + startDate + ", endDate: " +
-                endDate + ", for account: " + account.getId());
+            s_logger.debug("Creating Volume usage record for load balancer: " + lbId + ", usage: " + usageDisplay + ", startDate: " + startDate + ", endDate: " + endDate
+                    + ", for account: " + account.getId());
         }
 
         // Create the usage record
         String usageDesc = "Load Balancing Policy: " + lbId + " usage time";
 
-        //ToDo: get zone id
-        UsageVO usageRecord =
-            new UsageVO(zoneId, account.getId(), account.getDomainId(), usageDesc, usageDisplay + " Hrs", type, new Double(usage), null, null, null, null, lbId, null,
-                startDate, endDate);
+        // ToDo: get zone id
+        UsageVO usageRecord = new UsageVO(zoneId, account.getId(), account.getDomainId(), usageDesc, usageDisplay + " Hrs", type, new Double(usage), null, null, null, null, lbId,
+                null, startDate, endDate);
         s_usageDao.persist(usageRecord);
     }
 

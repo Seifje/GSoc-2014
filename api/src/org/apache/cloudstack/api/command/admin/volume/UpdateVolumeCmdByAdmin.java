@@ -30,10 +30,9 @@ import com.cloud.storage.Volume;
 public class UpdateVolumeCmdByAdmin extends UpdateVolumeCmd {
 
     @Override
-    public void execute(){
-        CallContext.current().setEventDetails("Volume Id: "+getId());
-        Volume result = _volumeService.updateVolume(getId(), getPath(), getState(), getStorageId(), getDisplayVolume(),
-                getCustomId(), getEntityOwnerId(), getChainInfo());
+    public void execute() {
+        CallContext.current().setEventDetails("Volume Id: " + getId());
+        Volume result = _volumeService.updateVolume(getId(), getPath(), getState(), getStorageId(), getDisplayVolume(), getCustomId(), getEntityOwnerId(), getChainInfo());
         if (result != null) {
             VolumeResponse response = _responseGenerator.createVolumeResponse(ResponseView.Full, result);
             response.setResponseName(getCommandName());

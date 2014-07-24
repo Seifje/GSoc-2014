@@ -16,7 +16,6 @@
 // under the License.
 package org.apache.cloudstack.hypervisor.xenserver;
 
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -45,21 +44,19 @@ import com.cloud.vm.VirtualMachineName;
 /**
  *
  * XenServerResourceNewBase is an abstract base class that encapsulates how
- * CloudStack should interact with XenServer after a special XenServer
- * 6.2 hotfix.  From here on, every Resource for future versions of
- * XenServer should use this as the base class.  This base class lessens
- * the amount of load CloudStack places on Xapi because it doesn't use
- * polling as a means to collect data and figure out task completion.
+ * CloudStack should interact with XenServer after a special XenServer 6.2
+ * hotfix. From here on, every Resource for future versions of XenServer should
+ * use this as the base class. This base class lessens the amount of load
+ * CloudStack places on Xapi because it doesn't use polling as a means to
+ * collect data and figure out task completion.
  *
- * This base class differs from CitrixResourceBase in the following ways:
- *   - VM states are detected using Event.from instead of polling.  This
- *     increases the number of threads CloudStack uses but the threads
- *     are mostly idle just waiting for events from XenServer.
- *   - stats are collected through the http interface rather than Xapi plugin.
- *     This change may be promoted to CitrixResourceBase as it's also possible
- *     in previous versions of XenServer.
- *   - Asynchronous task completion is done throught Event.from rather than
- *     polling.
+ * This base class differs from CitrixResourceBase in the following ways: - VM
+ * states are detected using Event.from instead of polling. This increases the
+ * number of threads CloudStack uses but the threads are mostly idle just
+ * waiting for events from XenServer. - stats are collected through the http
+ * interface rather than Xapi plugin. This change may be promoted to
+ * CitrixResourceBase as it's also possible in previous versions of XenServer. -
+ * Asynchronous task completion is done throught Event.from rather than polling.
  *
  */
 public class XenServerResourceNewBase extends XenServer620SP1Resource {
@@ -81,7 +78,8 @@ public class XenServerResourceNewBase extends XenServer620SP1Resource {
                 _listener = new VmEventListener(true);
 
                 //
-                // TODO disable event listener for now. Wait until everything else is ready
+                // TODO disable event listener for now. Wait until everything
+                // else is ready
                 //
 
                 // _listener.start();
@@ -99,8 +97,8 @@ public class XenServerResourceNewBase extends XenServer620SP1Resource {
     protected void waitForTask2(Connection c, Task task, long pollInterval, long timeout) throws XenAPIException, XmlRpcException, TimeoutException {
         long beginTime = System.currentTimeMillis();
         if (s_logger.isTraceEnabled()) {
-            s_logger.trace("Task " + task.getNameLabel(c) + " (" + task.getType(c) + ") sent to " + c.getSessionReference() + " is pending completion with a " + timeout +
-                           "ms timeout");
+            s_logger.trace("Task " + task.getNameLabel(c) + " (" + task.getType(c) + ") sent to " + c.getSessionReference() + " is pending completion with a " + timeout
+                    + "ms timeout");
         }
         Set<String> classes = new HashSet<String>();
         classes.add("Task/" + task.toWireString());
@@ -134,7 +132,7 @@ public class XenServerResourceNewBase extends XenServer620SP1Resource {
                     return;
                 } else {
                     if (s_logger.isDebugEnabled()) {
-                        s_logger.debug("Task: ref:" + task.toWireString() + ", UUID:" + taskRecord.uuid +  " progress: " + taskRecord.progress);
+                        s_logger.debug("Task: ref:" + task.toWireString() + ", UUID:" + taskRecord.uuid + " progress: " + taskRecord.progress);
                     }
 
                 }
@@ -147,7 +145,6 @@ public class XenServerResourceNewBase extends XenServer620SP1Resource {
             }
         }
     }
-
 
     protected class VmEventListener extends Thread {
         boolean _stop = false;
@@ -227,7 +224,8 @@ public class XenServerResourceNewBase extends XenServer620SP1Resource {
             boolean updateMap = false;
             boolean reportChange = false;
 
-            // NOTE: For now we only record change when the VM is stopped.  We don't find out any VMs starting for now.
+            // NOTE: For now we only record change when the VM is stopped. We
+            // don't find out any VMs starting for now.
             synchronized (_cluster.intern()) {
                 Pair<String, VirtualMachine.State> oldState = s_vms.get(_cluster, vm);
                 if (oldState == null) {
@@ -280,9 +278,9 @@ public class XenServerResourceNewBase extends XenServer620SP1Resource {
                 if (reportChange) {
                     Pair<String, VirtualMachine.State> change = _changes.get(vm);
                     if (hostUuid == null) {
-                        // This is really strange code.  It looks like the sync
+                        // This is really strange code. It looks like the sync
                         // code wants this to be set, which is extremely weird
-                        // for VMs that are dead.  Why would I want to set the
+                        // for VMs that are dead. Why would I want to set the
                         // hostUuid if the VM is stopped.
                         hostUuid = oldState.first();
                         if (hostUuid == null) {

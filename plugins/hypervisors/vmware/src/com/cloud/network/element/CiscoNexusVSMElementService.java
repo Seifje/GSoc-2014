@@ -33,6 +33,7 @@ import com.cloud.utils.component.PluggableService;
 public interface CiscoNexusVSMElementService extends PluggableService {
     /**
      * removes a Cisco Nexus VSM
+     * 
      * @param DeleteCiscoNexusVSMCmd
      * @return true if VSM is deleted successfully
      */
@@ -50,6 +51,7 @@ public interface CiscoNexusVSMElementService extends PluggableService {
 
     /**
      * Returns a list of VSMs.
+     * 
      * @param ListCiscoNexusVSMsCmd
      * @return List<CiscoNexusVSMDeviceVO>
      */
@@ -57,7 +59,9 @@ public interface CiscoNexusVSMElementService extends PluggableService {
 
     /**
      * creates API response object for Cisco Nexus VSMs
-     * @param vsmDeviceVO VSM VO object
+     * 
+     * @param vsmDeviceVO
+     *            VSM VO object
      * @return CiscoNexusVSMResponse
      */
 
@@ -65,6 +69,7 @@ public interface CiscoNexusVSMElementService extends PluggableService {
 
     /**
      * Creates a detailed API response object for Cisco Nexus VSMs
+     * 
      * @param CiscoNexusVSMDeviceVO
      * @return CiscoNexusVSMResponse
      */

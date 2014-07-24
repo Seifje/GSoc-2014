@@ -148,7 +148,7 @@ public class LdapUserManager {
         NamingEnumeration<SearchResult> result = context.search(_ldapConfiguration.getBaseDn(), generateGroupSearchFilter(groupName), controls);
 
         final List<LdapUser> users = new ArrayList<LdapUser>();
-        //Expecting only one result which has all the users
+        // Expecting only one result which has all the users
         if (result.hasMoreElements()) {
             Attribute attribute = result.nextElement().getAttributes().get(attributeName);
             NamingEnumeration<?> values = attribute.getAll();

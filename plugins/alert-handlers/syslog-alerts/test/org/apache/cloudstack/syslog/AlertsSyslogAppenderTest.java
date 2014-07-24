@@ -43,7 +43,7 @@ public class AlertsSyslogAppenderTest {
 
     @Test
     public void setSyslogAppendersNegativeTest() {
-        //setting invalid IP for Syslog Hosts
+        // setting invalid IP for Syslog Hosts
         _appender.setSyslogHosts("10.1.1.");
         assertTrue(" list was expected to be empty", _appender._syslogAppenders.isEmpty());
     }
@@ -54,7 +54,7 @@ public class AlertsSyslogAppenderTest {
         _appender.parseMessage(message);
         String createdMessage = _appender.createSyslogMessage();
         assertTrue(" message is not as expected ",
-            createdMessage.contains("alertType:: managementNode" + AlertsSyslogAppender.MESSAGE_DELIMITER_STRING + "message:: Management server node 127.0.0.1 is up"));
+                createdMessage.contains("alertType:: managementNode" + AlertsSyslogAppender.MESSAGE_DELIMITER_STRING + "message:: Management server node 127.0.0.1 is up"));
         assertTrue("severity level not as expected ", createdMessage.contains("WARN"));
     }
 }

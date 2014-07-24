@@ -77,7 +77,6 @@ public interface ResponseObject {
     void setJobStatus(Integer jobStatus);
 
     public enum ResponseView {
-        Full,
-        Restricted
+        Full, Restricted
     }
 }

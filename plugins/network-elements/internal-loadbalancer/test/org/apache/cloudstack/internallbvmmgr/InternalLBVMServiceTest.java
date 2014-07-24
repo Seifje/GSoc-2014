@@ -63,11 +63,11 @@ import com.cloud.vm.dao.DomainRouterDao;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/lb_svc.xml")
 public class InternalLBVMServiceTest extends TestCase {
-    //The interface to test
+    // The interface to test
     @Inject
     InternalLoadBalancerVMService _lbVmSvc;
 
-    //Mocked interfaces
+    // Mocked interfaces
     @Inject
     AccountManager _accountMgr;
     @Inject
@@ -86,10 +86,11 @@ public class InternalLBVMServiceTest extends TestCase {
     @Override
     @Before
     public void setUp() {
-        //mock system offering creation as it's used by configure() method called by initComponentsLifeCycle
+        // mock system offering creation as it's used by configure() method
+        // called by initComponentsLifeCycle
         Mockito.when(_accountMgr.getAccount(1L)).thenReturn(new AccountVO());
-        ServiceOfferingVO off = new ServiceOfferingVO("alena", 1, 1,
-                1, 1, 1, false, "alena", Storage.ProvisioningType.THIN, false, false, null, false, VirtualMachine.Type.InternalLoadBalancerVm, false);
+        ServiceOfferingVO off = new ServiceOfferingVO("alena", 1, 1, 1, 1, 1, false, "alena", Storage.ProvisioningType.THIN, false, false, null, false,
+                VirtualMachine.Type.InternalLoadBalancerVm, false);
         off = setId(off, 1);
         Mockito.when(_svcOffDao.persistSystemServiceOffering(Matchers.any(ServiceOfferingVO.class))).thenReturn(off);
 
@@ -100,12 +101,10 @@ public class InternalLBVMServiceTest extends TestCase {
         Mockito.when(_accountDao.findByIdIncludingRemoved(Matchers.anyLong())).thenReturn(new AccountVO(2));
         CallContext.register(_accountMgr.getSystemUser(), _accountMgr.getSystemAccount());
 
-        DomainRouterVO validVm =
-            new DomainRouterVO(validVmId, off.getId(), 1, "alena", 1, HypervisorType.XenServer, 1, 1, 1, false, 0, false, null, false, false,
+        DomainRouterVO validVm = new DomainRouterVO(validVmId, off.getId(), 1, "alena", 1, HypervisorType.XenServer, 1, 1, 1, false, 0, false, null, false, false,
                 VirtualMachine.Type.InternalLoadBalancerVm, null);
         validVm.setRole(Role.INTERNAL_LB_VM);
-        DomainRouterVO nonInternalLbVm =
-            new DomainRouterVO(validVmId, off.getId(), 1, "alena", 1, HypervisorType.XenServer, 1, 1, 1, false, 0, false, null, false, false,
+        DomainRouterVO nonInternalLbVm = new DomainRouterVO(validVmId, off.getId(), 1, "alena", 1, HypervisorType.XenServer, 1, 1, 1, false, 0, false, null, false, false,
                 VirtualMachine.Type.DomainRouter, null);
         nonInternalLbVm.setRole(Role.VIRTUAL_ROUTER);
 
@@ -120,7 +119,7 @@ public class InternalLBVMServiceTest extends TestCase {
         CallContext.unregister();
     }
 
-    //TESTS FOR START COMMAND
+    // TESTS FOR START COMMAND
 
     @Test(expected = InvalidParameterValueException.class)
     public void startNonExistingVm() {
@@ -184,7 +183,7 @@ public class InternalLBVMServiceTest extends TestCase {
         }
     }
 
-    //TEST FOR STOP COMMAND
+    // TEST FOR STOP COMMAND
     @Test(expected = InvalidParameterValueException.class)
     public void stopNonExistingVm() {
         String expectedExcText = null;

@@ -118,7 +118,7 @@ public class NeutronNetwork {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        NeutronNetwork other = (NeutronNetwork) obj;
+        NeutronNetwork other = (NeutronNetwork)obj;
         if (name == null) {
             if (other.name != null) {
                 return false;
@@ -170,7 +170,7 @@ public class NeutronNetwork {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        NeutronNetwork other = (NeutronNetwork) obj;
+        NeutronNetwork other = (NeutronNetwork)obj;
         if (name == null) {
             if (other.name != null) {
                 return false;

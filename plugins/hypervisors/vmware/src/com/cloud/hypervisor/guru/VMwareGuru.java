@@ -145,12 +145,11 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
     }
 
     static final ConfigKey<Boolean> VmwareReserveCpu = new ConfigKey<Boolean>(Boolean.class, "vmware.reserve.cpu", "Advanced", "false",
-        "Specify whether or not to reserve CPU when not overprovisioning, In case of cpu overprovisioning we will always reserve cpu.", true, ConfigKey.Scope.Cluster,
-        null);
+            "Specify whether or not to reserve CPU when not overprovisioning, In case of cpu overprovisioning we will always reserve cpu.", true, ConfigKey.Scope.Cluster, null);
 
     static final ConfigKey<Boolean> VmwareReserveMemory = new ConfigKey<Boolean>(Boolean.class, "vmware.reserve.cpu", "Advanced", "false",
-        "Specify whether or not to reserve memory when not overprovisioning, In case of memory overprovisioning we will always reserve memory.", true,
-        ConfigKey.Scope.Cluster, null);
+            "Specify whether or not to reserve memory when not overprovisioning, In case of memory overprovisioning we will always reserve memory.", true, ConfigKey.Scope.Cluster,
+            null);
 
     @Override
     public HypervisorType getHypervisorType() {
@@ -167,8 +166,8 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
             details = new HashMap<String, String>();
 
         Type vmType = vm.getType();
-        boolean userVm = !(vmType.equals(VirtualMachine.Type.DomainRouter) || vmType.equals(VirtualMachine.Type.ConsoleProxy)
-                || vmType.equals(VirtualMachine.Type.SecondaryStorageVm));
+        boolean userVm = !(vmType.equals(VirtualMachine.Type.DomainRouter) || vmType.equals(VirtualMachine.Type.ConsoleProxy) || vmType
+                .equals(VirtualMachine.Type.SecondaryStorageVm));
 
         String nicDeviceType = details.get(VmDetailConstants.NIC_ADAPTER);
         if (!userVm) {
@@ -318,7 +317,8 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
 
         hostId = _vmDao.findById(vmId).getHostId();
         if (hostId == null) {
-            // If VM is in stopped state then hostId would be undefined. Hence read last host's Id instead.
+            // If VM is in stopped state then hostId would be undefined. Hence
+            // read last host's Id instead.
             hostId = _vmDao.findById(vmId).getLastHostId();
         }
         clusterId = _hostDao.findById(hostId).getClusterId();
@@ -354,8 +354,9 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
     public Pair<Boolean, Long> getCommandHostDelegation(long hostId, Command cmd) {
         boolean needDelegation = false;
 
-        //NOTE: the hostid can be a hypervisor host, or a ssvm agent. For copycommand, if it's for volume upload, the hypervisor
-        //type is empty, so we need to check the format of volume at first.
+        // NOTE: the hostid can be a hypervisor host, or a ssvm agent. For
+        // copycommand, if it's for volume upload, the hypervisor
+        // type is empty, so we need to check the format of volume at first.
         if (cmd instanceof CopyCommand) {
             CopyCommand cpyCommand = (CopyCommand)cmd;
             DataTO srcData = cpyCommand.getSrcTO();
@@ -374,8 +375,8 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
                 return new Pair<Boolean, Long>(Boolean.FALSE, new Long(hostId));
             }
 
-            if (destData.getObjectType() == DataObjectType.VOLUME && destStoreTO.getRole() == DataStoreRole.Primary &&
-                srcData.getObjectType() == DataObjectType.TEMPLATE && srcStoreTO.getRole() == DataStoreRole.Primary) {
+            if (destData.getObjectType() == DataObjectType.VOLUME && destStoreTO.getRole() == DataStoreRole.Primary && srcData.getObjectType() == DataObjectType.TEMPLATE
+                    && srcStoreTO.getRole() == DataStoreRole.Primary) {
                 needDelegation = false;
             } else {
                 needDelegation = true;
@@ -418,20 +419,24 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
             cmd.setContextParam("noderuninfo", String.format("%d-%d", _clusterMgr.getManagementNodeId(), _clusterMgr.getCurrentRunId()));
             cmd.setContextParam("vCenterSessionTimeout", String.valueOf(_vmwareMgr.getVcenterSessionTimeout()));
 
-            if (cmd instanceof BackupSnapshotCommand || cmd instanceof CreatePrivateTemplateFromVolumeCommand ||
-                cmd instanceof CreatePrivateTemplateFromSnapshotCommand || cmd instanceof CopyVolumeCommand || cmd instanceof CopyCommand ||
-                cmd instanceof CreateVolumeOVACommand || cmd instanceof PrepareOVAPackingCommand || cmd instanceof CreateVolumeFromSnapshotCommand) {
+            if (cmd instanceof BackupSnapshotCommand || cmd instanceof CreatePrivateTemplateFromVolumeCommand || cmd instanceof CreatePrivateTemplateFromSnapshotCommand
+                    || cmd instanceof CopyVolumeCommand || cmd instanceof CopyCommand || cmd instanceof CreateVolumeOVACommand || cmd instanceof PrepareOVAPackingCommand
+                    || cmd instanceof CreateVolumeFromSnapshotCommand) {
 
                 String workerName = _vmwareMgr.composeWorkerName();
                 long checkPointId = 1;
-                // FIXME: Fix                    long checkPointId = _checkPointMgr.pushCheckPoint(new VmwareCleanupMaid(hostDetails.get("guid"), workerName));
+                // FIXME: Fix long checkPointId =
+                // _checkPointMgr.pushCheckPoint(new
+                // VmwareCleanupMaid(hostDetails.get("guid"), workerName));
                 cmd.setContextParam("worker", workerName);
                 cmd.setContextParam("checkpoint", String.valueOf(checkPointId));
 
                 // some commands use 2 workers
                 String workerName2 = _vmwareMgr.composeWorkerName();
                 long checkPointId2 = 1;
-                // FIXME: Fix                    long checkPointId2 = _checkPointMgr.pushCheckPoint(new VmwareCleanupMaid(hostDetails.get("guid"), workerName2));
+                // FIXME: Fix long checkPointId2 =
+                // _checkPointMgr.pushCheckPoint(new
+                // VmwareCleanupMaid(hostDetails.get("guid"), workerName2));
                 cmd.setContextParam("worker2", workerName2);
                 cmd.setContextParam("checkpoint2", String.valueOf(checkPointId2));
             }
@@ -475,8 +480,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
                 // We need the traffic label to figure out which vSwitch has the
                 // portgroup
                 PhysicalNetworkTrafficTypeVO trafficTypeVO = _physicalNetworkTrafficTypeDao.findBy(networkVO.getPhysicalNetworkId(), networkVO.getTrafficType());
-                UnregisterNicCommand unregisterNicCommand =
-                    new UnregisterNicCommand(vm.getInstanceName(), trafficTypeVO.getVmwareNetworkLabel(), UUID.fromString(nic.getUuid()));
+                UnregisterNicCommand unregisterNicCommand = new UnregisterNicCommand(vm.getInstanceName(), trafficTypeVO.getVmwareNetworkLabel(), UUID.fromString(nic.getUuid()));
                 commands.add(unregisterNicCommand);
             }
         }
@@ -503,9 +507,12 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
             for (VolumeVO volume : volumes) {
                 StoragePoolVO storagePool = _storagePoolDao.findById(volume.getPoolId());
 
-                // storagePool should be null if we are expunging a volume that was never
-                // attached to a VM that was started (the "trick" for storagePool to be null
-                // is that none of the VMs this volume may have been attached to were ever started,
+                // storagePool should be null if we are expunging a volume that
+                // was never
+                // attached to a VM that was started (the "trick" for
+                // storagePool to be null
+                // is that none of the VMs this volume may have been attached to
+                // were ever started,
                 // so the volume was never assigned to a storage pool)
                 if (storagePool != null && storagePool.isManaged() && volume.getVolumeType() == Volume.Type.ROOT) {
                     VolumeInfo volumeInfo = _volFactory.getVolume(volume.getId());

@@ -30,8 +30,7 @@ import org.springframework.core.type.filter.TypeFilter;
 import org.apache.cloudstack.test.utils.SpringUtils;
 
 @Configuration
-@ComponentScan(basePackageClasses = {UserVmCloneSettingDaoImpl.class}, includeFilters = {@Filter(value = UserVmCloneSettingDaoTestConfiguration.Library.class,
-                                                                                                 type = FilterType.CUSTOM)}, useDefaultFilters = false)
+@ComponentScan(basePackageClasses = {UserVmCloneSettingDaoImpl.class}, includeFilters = {@Filter(value = UserVmCloneSettingDaoTestConfiguration.Library.class, type = FilterType.CUSTOM)}, useDefaultFilters = false)
 public class UserVmCloneSettingDaoTestConfiguration {
 
     public static class Library implements TypeFilter {

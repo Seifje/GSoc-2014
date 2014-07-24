@@ -102,8 +102,8 @@ public class UploadManagerImpl extends ManagerBase implements UploadManager {
     private boolean hvm;
 
     @Override
-    public String uploadPublicTemplate(long id, String url, String name, ImageFormat format, Long accountId, String descr, String cksum, String installPathPrefix,
-            String userName, String passwd, long templateSizeInBytes) {
+    public String uploadPublicTemplate(long id, String url, String name, ImageFormat format, Long accountId, String descr, String cksum, String installPathPrefix, String userName,
+            String passwd, long templateSizeInBytes) {
 
         UUID uuid = UUID.randomUUID();
         String jobId = uuid.toString();
@@ -219,16 +219,14 @@ public class UploadManagerImpl extends ManagerBase implements UploadManager {
             td.stopUpload();
             sleep();
             break;
-            /*case RESTART:
-            td.stopUpload();
-            sleep();
-            threadPool.execute(td);
-            break;*/
+        /*
+         * case RESTART: td.stopUpload(); sleep(); threadPool.execute(td);
+         * break;
+         */
         case PURGE:
             td.stopUpload();
-            answer =
-                    new UploadAnswer(jobId, getUploadPct(jobId), getUploadError(jobId), getUploadStatus2(jobId), getUploadLocalPath(jobId), getInstallPath(jobId),
-                            getUploadTemplateSize(jobId));
+            answer = new UploadAnswer(jobId, getUploadPct(jobId), getUploadError(jobId), getUploadStatus2(jobId), getUploadLocalPath(jobId), getInstallPath(jobId),
+                    getUploadTemplateSize(jobId));
             jobs.remove(jobId);
             return answer;
         default:
@@ -247,9 +245,8 @@ public class UploadManagerImpl extends ManagerBase implements UploadManager {
 
         String user = null;
         String password = null;
-        String jobId =
-                uploadPublicTemplate(cmd.getId(), cmd.getUrl(), cmd.getName(), cmd.getFormat(), cmd.getAccountId(), cmd.getDescription(), cmd.getChecksum(),
-                        cmd.getInstallPath(), user, password, cmd.getTemplateSizeInBytes());
+        String jobId = uploadPublicTemplate(cmd.getId(), cmd.getUrl(), cmd.getName(), cmd.getFormat(), cmd.getAccountId(), cmd.getDescription(), cmd.getChecksum(),
+                cmd.getInstallPath(), user, password, cmd.getTemplateSizeInBytes());
         sleep();
         return new UploadAnswer(jobId, getUploadPct(jobId), getUploadError(jobId), getUploadStatus2(jobId), getUploadLocalPath(jobId), getInstallPath(jobId),
                 getUploadTemplateSize(jobId));
@@ -264,7 +261,8 @@ public class UploadManagerImpl extends ManagerBase implements UploadManager {
             s_logger.error(errorString);
             return new CreateEntityDownloadURLAnswer(errorString, CreateEntityDownloadURLAnswer.RESULT_FAILURE);
         }
-        // Create the directory structure so that its visible under apache server root
+        // Create the directory structure so that its visible under apache
+        // server root
         String extractDir = "/var/www/html/userdata/";
         Script command = new Script("mkdir", s_logger);
         command.add("-p");
@@ -287,7 +285,9 @@ public class UploadManagerImpl extends ManagerBase implements UploadManager {
             return new CreateEntityDownloadURLAnswer(errorString, CreateEntityDownloadURLAnswer.RESULT_FAILURE);
         }
 
-        // Create a symbolic link from the actual directory to the template location. The entity would be directly visible under /var/www/html/userdata/cmd.getInstallPath();
+        // Create a symbolic link from the actual directory to the template
+        // location. The entity would be directly visible under
+        // /var/www/html/userdata/cmd.getInstallPath();
         command = new Script("/bin/bash", s_logger);
         command.add("-c");
         command.add("ln -sf /mnt/SecStorage/" + cmd.getParent() + File.separator + cmd.getInstallPath() + " " + extractDir + uuid);
@@ -305,23 +305,27 @@ public class UploadManagerImpl extends ManagerBase implements UploadManager {
     @Override
     public Answer handleDeleteEntityDownloadURLCommand(DeleteEntityDownloadURLCommand cmd) {
 
-        //Delete the soft link. Example path = volumes/8/74eeb2c6-8ab1-4357-841f-2e9d06d1f360.vhd
+        // Delete the soft link. Example path =
+        // volumes/8/74eeb2c6-8ab1-4357-841f-2e9d06d1f360.vhd
         s_logger.warn("handleDeleteEntityDownloadURLCommand Path:" + cmd.getPath() + " Type:" + cmd.getType().toString());
         String path = cmd.getPath();
         Script command = new Script("/bin/bash", s_logger);
         command.add("-c");
 
-        //We just need to remove the UUID.vhd
+        // We just need to remove the UUID.vhd
         String extractUrl = cmd.getExtractUrl();
         command.add("unlink /var/www/html/userdata/" + extractUrl.substring(extractUrl.lastIndexOf(File.separator) + 1));
         String result = command.execute();
         if (result != null) {
-            // FIXME - Ideally should bail out if you cant delete symlink. Not doing it right now.
-            // This is because the ssvm might already be destroyed and the symlinks do not exist.
+            // FIXME - Ideally should bail out if you cant delete symlink. Not
+            // doing it right now.
+            // This is because the ssvm might already be destroyed and the
+            // symlinks do not exist.
             s_logger.warn("Error in deleting symlink :" + result);
         }
 
-        // If its a volume also delete the Hard link since it was created only for the purpose of download.
+        // If its a volume also delete the Hard link since it was created only
+        // for the purpose of download.
         if (cmd.getType() == Upload.Type.VOLUME) {
             command = new Script("/bin/bash", s_logger);
             command.add("-c");
@@ -382,7 +386,7 @@ public class UploadManagerImpl extends ManagerBase implements UploadManager {
         if (inSystemVM != null && "true".equalsIgnoreCase(inSystemVM)) {
             s_logger.info("UploadManager: starting additional services since we are inside system vm");
             startAdditionalServices();
-            //blockOutgoingOnPrivate();
+            // blockOutgoingOnPrivate();
         }
 
         value = (String)params.get("install.numthreads");
@@ -430,7 +434,8 @@ public class UploadManagerImpl extends ManagerBase implements UploadManager {
     }
 
     /**
-     * Get notified of change of job status. Executed in context of uploader thread
+     * Get notified of change of job status. Executed in context of uploader
+     * thread
      *
      * @param jobId
      *            the id of the job
@@ -451,7 +456,8 @@ public class UploadManagerImpl extends ManagerBase implements UploadManager {
         case ABORTED:
         case NOT_STARTED:
         case UNRECOVERABLE_ERROR:
-            // Delete the entity only if its a volume. TO DO - find a better way of finding it a volume.
+            // Delete the entity only if its a volume. TO DO - find a better way
+            // of finding it a volume.
             if (uj.getTemplateUploader().getUploadLocalPath().indexOf("volume") > -1) {
                 uj.cleanup();
             }
@@ -478,7 +484,8 @@ public class UploadManagerImpl extends ManagerBase implements UploadManager {
                 tu.setStatus(Status.POST_UPLOAD_FINISHED);
                 tu.setUploadError("Upload completed successfully at " + new SimpleDateFormat().format(new Date()));
             }
-            // Delete the entity only if its a volume. TO DO - find a better way of finding it a volume.
+            // Delete the entity only if its a volume. TO DO - find a better way
+            // of finding it a volume.
             if (uj.getTemplateUploader().getUploadLocalPath().indexOf("volume") > -1) {
                 uj.cleanup();
             }
@@ -502,38 +509,45 @@ public class UploadManagerImpl extends ManagerBase implements UploadManager {
 
     private boolean checkAndStartApache() {
 
-        //Check whether the Apache server is running
+        // Check whether the Apache server is running
         Script command = new Script("/bin/bash", s_logger);
         command.add("-c");
         command.add("if [ -d /etc/apache2 ] ; then service apache2 status | grep pid; else service httpd status | grep pid; fi ");
         String result = command.execute();
 
-        //Apache Server is not running. Try to start it.
+        // Apache Server is not running. Try to start it.
         if (result != null) {
 
-            /*s_logger.warn("Apache server not running, trying to start it");
-            String port = Integer.toString(TemplateConstants.DEFAULT_TMPLT_COPY_PORT);
-            String intf = TemplateConstants.DEFAULT_TMPLT_COPY_INTF;
-
-            command = new Script("/bin/bash", s_logger);
-            command.add("-c");
-            command.add("iptables -D INPUT -i " + intf + " -p tcp -m state --state NEW -m tcp --dport " + port + " -j DROP;" +
-                        "iptables -D INPUT -i " + intf + " -p tcp -m state --state NEW -m tcp --dport " + port + " -j HTTP;" +
-                        "iptables -D INPUT -i " + intf + " -p tcp -m state --state NEW -m tcp --dport " + "443" + " -j DROP;" +
-                        "iptables -D INPUT -i " + intf + " -p tcp -m state --state NEW -m tcp --dport " + "443" + " -j HTTP;" +
-                        "iptables -F HTTP;" +
-                        "iptables -X HTTP;" +
-                        "iptables -N HTTP;" +
-                        "iptables -I INPUT -i " + intf + " -p tcp -m state --state NEW -m tcp --dport " + port + " -j DROP;" +
-                        "iptables -I INPUT -i " + intf + " -p tcp -m state --state NEW -m tcp --dport " + "443" + " -j DROP;" +
-                        "iptables -I INPUT -i " + intf + " -p tcp -m state --state NEW -m tcp --dport " + port + " -j HTTP;" +
-                        "iptables -I INPUT -i " + intf + " -p tcp -m state --state NEW -m tcp --dport " + "443" + " -j HTTP;");
-
-            result = command.execute();
-            if (result != null) {
-                s_logger.warn("Error in opening up httpd port err=" + result );
-                return false;
-            }*/
+            /*
+             * s_logger.warn("Apache server not running, trying to start it");
+             * String port =
+             * Integer.toString(TemplateConstants.DEFAULT_TMPLT_COPY_PORT);
+             * String intf = TemplateConstants.DEFAULT_TMPLT_COPY_INTF;
+             *
+             * command = new Script("/bin/bash", s_logger); command.add("-c");
+             * command.add("iptables -D INPUT -i " + intf +
+             * " -p tcp -m state --state NEW -m tcp --dport " + port +
+             * " -j DROP;" + "iptables -D INPUT -i " + intf +
+             * " -p tcp -m state --state NEW -m tcp --dport " + port +
+             * " -j HTTP;" + "iptables -D INPUT -i " + intf +
+             * " -p tcp -m state --state NEW -m tcp --dport " + "443" +
+             * " -j DROP;" + "iptables -D INPUT -i " + intf +
+             * " -p tcp -m state --state NEW -m tcp --dport " + "443" +
+             * " -j HTTP;" + "iptables -F HTTP;" + "iptables -X HTTP;" +
+             * "iptables -N HTTP;" + "iptables -I INPUT -i " + intf +
+             * " -p tcp -m state --state NEW -m tcp --dport " + port +
+             * " -j DROP;" + "iptables -I INPUT -i " + intf +
+             * " -p tcp -m state --state NEW -m tcp --dport " + "443" +
+             * " -j DROP;" + "iptables -I INPUT -i " + intf +
+             * " -p tcp -m state --state NEW -m tcp --dport " + port +
+             * " -j HTTP;" + "iptables -I INPUT -i " + intf +
+             * " -p tcp -m state --state NEW -m tcp --dport " + "443" +
+             * " -j HTTP;");
+             *
+             * result = command.execute(); if (result != null) {
+             * s_logger.warn("Error in opening up httpd port err=" + result );
+             * return false; }
+             */
 
             command = new Script("/bin/bash", s_logger);
             command.add("-c");

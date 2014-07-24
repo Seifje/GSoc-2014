@@ -92,9 +92,11 @@ public abstract class BaseCmd {
     public static Pattern newInputDateFormat = Pattern.compile("[\\d]+-[\\d]+-[\\d]+ [\\d]+:[\\d]+:[\\d]+");
     private static final DateFormat s_outputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
     protected static final Map<Class<?>, List<Field>> fieldsForCmdClass = new HashMap<Class<?>, List<Field>>();
+
     public static enum HTTPMethod {
         GET, POST, PUT, DELETE
     }
+
     public static enum CommandType {
         BOOLEAN, DATE, FLOAT, INTEGER, SHORT, LIST, LONG, OBJECT, MAP, STRING, TZDATE, UUID
     }
@@ -104,7 +106,6 @@ public abstract class BaseCmd {
     private HTTPMethod httpMethod;
     @Parameter(name = "response", type = CommandType.STRING)
     private String responseType;
-
 
     @Inject
     public ConfigurationService _configService;
@@ -192,7 +193,7 @@ public abstract class BaseCmd {
     public UUIDManager _uuidMgr;
 
     public abstract void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException, NetworkRuleConflictException;
+    ResourceAllocationException, NetworkRuleConflictException;
 
     public void configure() {
     }
@@ -228,18 +229,20 @@ public abstract class BaseCmd {
     }
 
     /**
-     * For some reason this method does not return the actual command name, but more a name that
-     * is used to create the response. So you can expect for a XCmd a value like xcmdresponse. Anyways
-     * this methods is used in too many places so for now instead of changing it we just create another
-     * method {@link BaseCmd#getActualCommandName()} that returns the value from {@link APICommand#name()}
+     * For some reason this method does not return the actual command name, but
+     * more a name that is used to create the response. So you can expect for a
+     * XCmd a value like xcmdresponse. Anyways this methods is used in too many
+     * places so for now instead of changing it we just create another method
+     * {@link BaseCmd#getActualCommandName()} that returns the value from
+     * {@link APICommand#name()}
      *
      * @return
      */
     public abstract String getCommandName();
 
-
     /**
-     * Gets the CommandName based on the class annotations: the value from {@link APICommand#name()}
+     * Gets the CommandName based on the class annotations: the value from
+     * {@link APICommand#name()}
      *
      * @return the value from {@link APICommand#name()}
      */
@@ -250,12 +253,12 @@ public abstract class BaseCmd {
         } else {
             cmdName = this.getClass().getName();
         }
-       return cmdName;
+        return cmdName;
     }
 
     /**
-     * For commands the API framework needs to know the owner of the object being acted upon. This method is
-     * used to determine that information.
+     * For commands the API framework needs to know the owner of the object
+     * being acted upon. This method is used to determine that information.
      *
      * @return the id of the account that owns the object being acted upon
      */
@@ -292,21 +295,22 @@ public abstract class BaseCmd {
                 final Parameter parameterAnnotation = field.getAnnotation(Parameter.class);
                 if ((parameterAnnotation != null) && parameterAnnotation.expose()) {
                     filteredFields.add(field);
-                    }
                 }
+            }
 
             // Cache the prepared list for future use
             fieldsForCmdClass.put(clazz, filteredFields);
-                    }
+        }
         return filteredFields;
-                }
+    }
 
     /**
-     * This method doesn't return all the @{link Parameter}, but only the ones exposed
-     * and allowed for current @{link RoleType}. This method will get the fields for a given
-     * Cmd class only once and never again, so in case of a dynamic update the result would
-     * be obsolete (this might be a plugin update. It is agreed upon that we will not do
-     * upgrades dynamically but in case we come back on that decision we need to revisit this)
+     * This method doesn't return all the @{link Parameter}, but only the ones
+     * exposed and allowed for current @{link RoleType}. This method will get
+     * the fields for a given Cmd class only once and never again, so in case of
+     * a dynamic update the result would be obsolete (this might be a plugin
+     * update. It is agreed upon that we will not do upgrades dynamically but in
+     * case we come back on that decision we need to revisit this)
      *
      * @return
      */
@@ -318,7 +322,8 @@ public abstract class BaseCmd {
         for (final Field field : allFields) {
             final Parameter parameterAnnotation = field.getAnnotation(Parameter.class);
 
-            //TODO: Annotate @Validate on API Cmd classes, FIXME how to process Validate
+            // TODO: Annotate @Validate on API Cmd classes, FIXME how to process
+            // Validate
             final RoleType[] allowedRoles = parameterAnnotation.authorized();
             boolean roleIsAllowed = true;
             if (allowedRoles.length > 0) {
@@ -352,33 +357,36 @@ public abstract class BaseCmd {
     /**
      * To be overwritten by any class who needs specific validation
      */
-    public void validateSpecificParameters(final Map<String, String> params){
+    public void validateSpecificParameters(final Map<String, String> params) {
         // To be overwritten by any class who needs specific validation
     }
 
     /**
-     * display flag is used to control the display of the resource only to the end user. It doesnt affect Root Admin.
+     * display flag is used to control the display of the resource only to the
+     * end user. It doesnt affect Root Admin.
+     *
      * @return display flag
      */
-    public boolean isDisplay(){
+    public boolean isDisplay() {
         CallContext context = CallContext.current();
         Map<Object, Object> contextMap = context.getContextParameters();
         boolean isDisplay = true;
 
-        // Iterate over all the first class entities in context and check their display property.
-        for(Map.Entry<Object, Object> entry : contextMap.entrySet()){
-            try{
+        // Iterate over all the first class entities in context and check their
+        // display property.
+        for (Map.Entry<Object, Object> entry : contextMap.entrySet()) {
+            try {
                 Object key = entry.getKey();
                 Class clz = Class.forName((String)key);
-                if(Displayable.class.isAssignableFrom(clz)){
+                if (Displayable.class.isAssignableFrom(clz)) {
                     final Object objVO = getEntityVO(clz, entry.getValue());
-                    isDisplay = ((Displayable) objVO).isDisplay();
+                    isDisplay = ((Displayable)objVO).isDisplay();
                 }
 
                 // If the flag is false break immediately
-                if(!isDisplay)
+                if (!isDisplay)
                     break;
-            } catch (Exception e){
+            } catch (Exception e) {
                 s_logger.trace("Caught exception while checking first class entities for display property, continuing on", e);
             }
         }
@@ -388,21 +396,23 @@ public abstract class BaseCmd {
 
     }
 
-    private Object getEntityVO(Class entityType, Object entityId){
+    private Object getEntityVO(Class entityType, Object entityId) {
 
-        // entityId can be internal db id or UUID so accordingly call findbyId or findByUUID
+        // entityId can be internal db id or UUID so accordingly call findbyId
+        // or findByUUID
 
-        if (entityId instanceof Long){
+        if (entityId instanceof Long) {
             // Its internal db id - use findById
             return _entityMgr.findById(entityType, (Long)entityId);
-        } else if(entityId instanceof String){
-            try{
-                // In case its an async job the internal db id would be a string because of json deserialization
-                Long internalId = Long.valueOf((String) entityId);
+        } else if (entityId instanceof String) {
+            try {
+                // In case its an async job the internal db id would be a string
+                // because of json deserialization
+                Long internalId = Long.valueOf((String)entityId);
                 return _entityMgr.findById(entityType, internalId);
-            } catch (NumberFormatException e){
-               // It is uuid - use findByUuid`
-               return _entityMgr.findByUuid(entityType, (String)entityId);
+            } catch (NumberFormatException e) {
+                // It is uuid - use findByUuid`
+                return _entityMgr.findByUuid(entityType, (String)entityId);
             }
         }
 

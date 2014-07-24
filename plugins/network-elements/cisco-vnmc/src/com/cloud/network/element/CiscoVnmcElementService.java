@@ -28,7 +28,7 @@ import com.cloud.utils.component.PluggableService;
 
 public interface CiscoVnmcElementService extends PluggableService {
 
-    //public static final Provider CiscoVnmc = new Provider("CiscoVnmc", true);
+    // public static final Provider CiscoVnmc = new Provider("CiscoVnmc", true);
 
     public CiscoVnmcController addCiscoVnmcResource(AddCiscoVnmcResourceCmd cmd);
 

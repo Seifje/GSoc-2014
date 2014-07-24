@@ -26,38 +26,50 @@ public interface VmwareDatacenterDao extends GenericDao<VmwareDatacenterVO, Long
 
     /**
      * Return a VMware Datacenter given guid
-     * @param guid of VMware datacenter
-     * @return VmwareDatacenterVO for the VMware datacenter having the specified guid.
+     * 
+     * @param guid
+     *            of VMware datacenter
+     * @return VmwareDatacenterVO for the VMware datacenter having the specified
+     *         guid.
      */
     VmwareDatacenterVO getVmwareDatacenterByGuid(String guid);
 
     /**
-     * Return a VMware Datacenter given name and vCenter host.
-     * For legacy zones multiple records will be present in the table.
-     * @param name of VMware datacenter
-     * @param vCenter host
+     * Return a VMware Datacenter given name and vCenter host. For legacy zones
+     * multiple records will be present in the table.
+     * 
+     * @param name
+     *            of VMware datacenter
+     * @param vCenter
+     *            host
      * @return VmwareDatacenterVO for the VMware datacenter with given name and
-     * belonging to specified vCenter host.
+     *         belonging to specified vCenter host.
      */
     List<VmwareDatacenterVO> getVmwareDatacenterByNameAndVcenter(String name, String vCenterHost);
 
     /**
      * Return a list of VMware Datacenter given name.
-     * @param name of Vmware datacenter
-     * @return list of VmwareDatacenterVO for VMware datacenters having the specified name.
+     * 
+     * @param name
+     *            of Vmware datacenter
+     * @return list of VmwareDatacenterVO for VMware datacenters having the
+     *         specified name.
      */
     List<VmwareDatacenterVO> listVmwareDatacenterByName(String name);
 
     /**
      * Return a list of VMware Datacenters belonging to specified vCenter
-     * @param vCenter Host
-     * @return list of VmwareDatacenterVO for all VMware datacenters belonging to
-     * specified vCenter
+     * 
+     * @param vCenter
+     *            Host
+     * @return list of VmwareDatacenterVO for all VMware datacenters belonging
+     *         to specified vCenter
      */
     List<VmwareDatacenterVO> listVmwareDatacenterByVcenter(String vCenterHost);
 
     /**
      * Lists all associated VMware datacenter on the management server.
+     * 
      * @return list of VmwareDatacenterVO for all associated VMware datacenters
      */
     List<VmwareDatacenterVO> listAllVmwareDatacenters();

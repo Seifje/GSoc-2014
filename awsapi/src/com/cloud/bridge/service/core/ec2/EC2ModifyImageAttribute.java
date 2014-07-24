@@ -23,7 +23,7 @@ import com.cloud.bridge.service.core.ec2.EC2ImageAttributes.ImageAttribute;
 
 public class EC2ModifyImageAttribute {
 
-    private String imageId = null;     //AMI id
+    private String imageId = null; // AMI id
     private ImageAttribute attribute = null;
     private String description;
     private Boolean isPublic = null;

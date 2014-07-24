@@ -89,10 +89,10 @@ public interface Nic extends Identity, InternalIdentity {
     }
 
     /**
-     * @return reservation id returned by the allocation source. This can be the String version of the database id if
-     *         the
-     *         allocation source does not need it's own implementation of the reservation id. This is passed back to the
-     *         allocation source to release the resource.
+     * @return reservation id returned by the allocation source. This can be the
+     *         String version of the database id if the allocation source does
+     *         not need it's own implementation of the reservation id. This is
+     *         passed back to the allocation source to release the resource.
      */
     String getReservationId();
 

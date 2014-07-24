@@ -42,6 +42,6 @@ public class GetVmDiskStatsAnswer extends Answer {
     }
 
     protected GetVmDiskStatsAnswer() {
-        //no-args constructor for json serialization-deserialization
+        // no-args constructor for json serialization-deserialization
     }
 }

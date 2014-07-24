@@ -117,7 +117,7 @@ public class IPAddressVO implements IpAddress {
     @Column(name = "display", updatable = true, nullable = false)
     protected boolean display = true;
 
-    @Column(name= GenericDao.REMOVED_COLUMN)
+    @Column(name = GenericDao.REMOVED_COLUMN)
     private Date removed;
 
     @Column(name = GenericDao.CREATED_COLUMN)

@@ -36,10 +36,11 @@ public interface HostDao extends GenericDao<HostVO, Long>, StateDao<Status, Stat
     long countBy(long clusterId, ResourceState... states);
 
     /**
-     * Mark all hosts associated with a certain management server
-     * as disconnected.
+     * Mark all hosts associated with a certain management server as
+     * disconnected.
      *
-     * @param msId management server id.
+     * @param msId
+     *            management server id.
      */
     void markHostsAsDisconnected(long msId, long lastPing);
 
@@ -76,7 +77,8 @@ public interface HostDao extends GenericDao<HostVO, Long>, StateDao<Status, Stat
      * @param clusterId
      * @param podId
      * @param dcId
-     * @param haTag TODO
+     * @param haTag
+     *            TODO
      * @return
      */
     List<HostVO> listAllUpAndEnabledNonHAHosts(Type type, Long clusterId, Long podId, long dcId, String haTag);

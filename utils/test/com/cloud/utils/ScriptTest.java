@@ -71,8 +71,7 @@ public class ScriptTest {
         script.add("foo");
         script.add("bar", "baz");
         script.set("blah", "blah");
-        Assert.assertEquals("/bin/echo foo bar baz blah blah ",
-                script.toString());
+        Assert.assertEquals("/bin/echo foo bar baz blah blah ", script.toString());
     }
 
     @Test
@@ -90,8 +89,7 @@ public class ScriptTest {
     @Test
     public void testRunSimpleBashScript() {
         Assume.assumeTrue(SystemUtils.IS_OS_LINUX);
-        Assert.assertEquals("hello world!",
-                Script.runSimpleBashScript("echo 'hello world!'"));
+        Assert.assertEquals("hello world!", Script.runSimpleBashScript("echo 'hello world!'"));
     }
 
     @Test
@@ -114,16 +112,14 @@ public class ScriptTest {
     @Test
     public void runSimpleBashScriptNotExisting() {
         Assume.assumeTrue(SystemUtils.IS_OS_LINUX);
-        String output = Script.runSimpleBashScript("/not/existing/scripts/"
-                + System.currentTimeMillis());
+        String output = Script.runSimpleBashScript("/not/existing/scripts/" + System.currentTimeMillis());
         Assert.assertNull(output);
     }
 
     @Test
     public void testRunSimpleBashScriptWithTimeout() {
         Assume.assumeTrue(SystemUtils.IS_OS_LINUX);
-        Assert.assertEquals("hello world!",
-                Script.runSimpleBashScript("echo 'hello world!'", 1000));
+        Assert.assertEquals("hello world!", Script.runSimpleBashScript("echo 'hello world!'", 1000));
     }
 
     @Test

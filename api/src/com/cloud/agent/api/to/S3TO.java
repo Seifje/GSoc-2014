@@ -47,9 +47,8 @@ public final class S3TO implements S3Utils.ClientOptions, DataStoreTO {
 
     }
 
-    public S3TO(final Long id, final String uuid, final String accessKey, final String secretKey, final String endPoint, final String bucketName,
-            final Boolean httpsFlag, final Integer connectionTimeout, final Integer maxErrorRetry, final Integer socketTimeout, final Date created,
-            final boolean enableRRS, final long maxUploadSize) {
+    public S3TO(final Long id, final String uuid, final String accessKey, final String secretKey, final String endPoint, final String bucketName, final Boolean httpsFlag,
+            final Integer connectionTimeout, final Integer maxErrorRetry, final Integer socketTimeout, final Date created, final boolean enableRRS, final long maxUploadSize) {
 
         super();
 

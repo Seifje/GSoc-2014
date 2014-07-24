@@ -34,8 +34,7 @@ public interface SimulatorManager extends Manager {
 
     public enum AgentType {
         Computing(0), // not used anymore
-        Routing(1),
-        Storage(2);
+        Routing(1), Storage(2);
 
         int value;
 

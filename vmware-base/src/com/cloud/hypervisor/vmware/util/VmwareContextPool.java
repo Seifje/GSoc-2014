@@ -84,12 +84,13 @@ public class VmwareContextPool {
                 context.setPoolInfo(this, poolKey);
 
                 if (s_logger.isTraceEnabled())
-                    s_logger.trace("Return a VmwareContext from the idle pool: " + poolKey + ". current pool size: " + l.size() + ", outstanding count: " +
-                        VmwareContext.getOutstandingContextCount());
+                    s_logger.trace("Return a VmwareContext from the idle pool: " + poolKey + ". current pool size: " + l.size() + ", outstanding count: "
+                            + VmwareContext.getOutstandingContextCount());
                 return context;
             }
 
-            // TODO, we need to control the maximum number of outstanding VmwareContext object in the future
+            // TODO, we need to control the maximum number of outstanding
+            // VmwareContext object in the future
             return null;
         }
     }
@@ -109,8 +110,8 @@ public class VmwareContextPool {
                 l.add(context);
 
                 if (s_logger.isTraceEnabled())
-                    s_logger.trace("Recycle VmwareContext into idle pool: " + context.getPoolKey() + ", current idle pool size: " + l.size() + ", outstanding count: " +
-                        VmwareContext.getOutstandingContextCount());
+                    s_logger.trace("Recycle VmwareContext into idle pool: " + context.getPoolKey() + ", current idle pool size: " + l.size() + ", outstanding count: "
+                            + VmwareContext.getOutstandingContextCount());
             } else {
                 if (s_logger.isTraceEnabled())
                     s_logger.trace("VmwareContextPool queue exceeds limits, queue size: " + l.size());
@@ -149,7 +150,9 @@ public class VmwareContextPool {
 
     private void doKeepAlive() {
         List<VmwareContext> l = new ArrayList<VmwareContext>();
-        int batchSize = (int)(_idleCheckIntervalMs / 1000);    // calculate batch size at 1 request/sec rate
+        int batchSize = (int)(_idleCheckIntervalMs / 1000); // calculate batch
+                                                            // size at 1
+                                                            // request/sec rate
         getKeepAliveCheckContexts(l, batchSize);
 
         for (VmwareContext context : l) {

@@ -43,7 +43,7 @@ import org.mockito.Mockito;
 import com.cloud.utils.PropertiesUtil;
 
 @RunWith(Parameterized.class)
-public class UsageSanityCheckerIT{
+public class UsageSanityCheckerIT {
 
     protected Connection cloudConn;
 
@@ -65,29 +65,22 @@ public class UsageSanityCheckerIT{
 
     protected String expectedErrors;
 
-    protected static final String EXPECTED_ERRORS_1 = "Error: Found 2 usage records with raw_usage > 10\n" +
-            "Error: Found 1 Vm usage records which are created after Vm is destroyed\n" +
-            "Error: Found 2 duplicate allocated Vm entries in vm usage helper table\n" +
-            "Error: Found 1 running Vm entries without corresponding allocated entries in vm usage helper table\n" +
-            "Error: Found 1 volume usage records which are created after volume is removed\n" +
-            "Error: Found 1 template/ISO usage records which are created after it is removed\n" +
-            "Error: Found 1 snapshot usage records which are created after it is removed\n";
+    protected static final String EXPECTED_ERRORS_1 = "Error: Found 2 usage records with raw_usage > 10\n"
+            + "Error: Found 1 Vm usage records which are created after Vm is destroyed\n" + "Error: Found 2 duplicate allocated Vm entries in vm usage helper table\n"
+            + "Error: Found 1 running Vm entries without corresponding allocated entries in vm usage helper table\n"
+            + "Error: Found 1 volume usage records which are created after volume is removed\n"
+            + "Error: Found 1 template/ISO usage records which are created after it is removed\n" + "Error: Found 1 snapshot usage records which are created after it is removed\n";
 
-    protected static final String EXPECTED_ERRORS_2 = "Error: Found 3 usage records with raw_usage > 10\n" +
-            "Error: Found 1 Vm usage records which are created after Vm is destroyed\n" +
-            "Error: Found 8 duplicate running Vm entries in vm usage helper table\n" +
-            "Error: Found 4 duplicate allocated Vm entries in vm usage helper table\n" +
-            "Error: Found 4 running Vm entries without corresponding allocated entries in vm usage helper table\n" +
-            "Error: Found 2 volume usage records which are created after volume is removed\n" +
-            "Error: Found 6 duplicate records in volume usage helper table\n" +
-            "Error: Found 2 template/ISO usage records which are created after it is removed\n" +
-            "Error: Found 1 snapshot usage records which are created after it is removed\n";
+    protected static final String EXPECTED_ERRORS_2 = "Error: Found 3 usage records with raw_usage > 10\n"
+            + "Error: Found 1 Vm usage records which are created after Vm is destroyed\n" + "Error: Found 8 duplicate running Vm entries in vm usage helper table\n"
+            + "Error: Found 4 duplicate allocated Vm entries in vm usage helper table\n"
+            + "Error: Found 4 running Vm entries without corresponding allocated entries in vm usage helper table\n"
+            + "Error: Found 2 volume usage records which are created after volume is removed\n" + "Error: Found 6 duplicate records in volume usage helper table\n"
+            + "Error: Found 2 template/ISO usage records which are created after it is removed\n" + "Error: Found 1 snapshot usage records which are created after it is removed\n";
 
     protected static final String EXPECTED_ERRORS_3 = "";
 
-
-    public UsageSanityCheckerIT(String cloudDbuFileName, String usageDbuFileName,
-            String expectedErrors) {
+    public UsageSanityCheckerIT(String cloudDbuFileName, String usageDbuFileName, String expectedErrors) {
         this.cloudDbuFileName = cloudDbuFileName;
         this.usageDbuFileName = usageDbuFileName;
         this.expectedErrors = expectedErrors;
@@ -95,20 +88,15 @@ public class UsageSanityCheckerIT{
 
     @Parameters
     public static Collection<Object[]> data() {
-        Object [][] data = new Object[][] {
-                {"cloud1.xml", "cloud_usage1.xml", EXPECTED_ERRORS_1},
-                {"cloud2.xml", "cloud_usage2.xml", EXPECTED_ERRORS_2},
-                {"cloud3.xml", "cloud_usage3.xml", EXPECTED_ERRORS_3}
-        };
+        Object[][] data = new Object[][] { {"cloud1.xml", "cloud_usage1.xml", EXPECTED_ERRORS_1}, {"cloud2.xml", "cloud_usage2.xml", EXPECTED_ERRORS_2},
+                {"cloud3.xml", "cloud_usage3.xml", EXPECTED_ERRORS_3}};
         return Arrays.asList(data);
     }
 
     protected Connection createConnection(String dbSchema) throws SQLException {
-        String cloudDbUrl = "jdbc:mysql://"+properties.getProperty("db."+dbSchema+".host") +
-                ":" + properties.getProperty("db."+dbSchema+".port") + "/" +
-                properties.getProperty("db."+dbSchema+".name");
-        return DriverManager.getConnection(cloudDbUrl, properties.getProperty("db."+dbSchema+".username"),
-                properties.getProperty("db."+dbSchema+".password"));
+        String cloudDbUrl = "jdbc:mysql://" + properties.getProperty("db." + dbSchema + ".host") + ":" + properties.getProperty("db." + dbSchema + ".port") + "/"
+                + properties.getProperty("db." + dbSchema + ".name");
+        return DriverManager.getConnection(cloudDbUrl, properties.getProperty("db." + dbSchema + ".username"), properties.getProperty("db." + dbSchema + ".password"));
     }
 
     @Before

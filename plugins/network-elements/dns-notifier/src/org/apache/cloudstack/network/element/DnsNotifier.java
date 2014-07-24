@@ -64,14 +64,15 @@ public class DnsNotifier extends AdapterBase implements NetworkElement {
 
     @Override
     public boolean implement(Network network, NetworkOffering offering, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException, InsufficientCapacityException {
+            ResourceUnavailableException, InsufficientCapacityException {
         return true;
     }
 
     @Override
-    public boolean prepare(Network network, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
-        throws ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException {
-        // signal to the dns server that this vm is up and running and set the ip address to hostname mapping.
+    public boolean prepare(Network network, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException,
+            ResourceUnavailableException, InsufficientCapacityException {
+        // signal to the dns server that this vm is up and running and set the
+        // ip address to hostname mapping.
         vm.getHostName();
         nic.getIp4Address();
         nic.getIp6Address();
@@ -79,12 +80,12 @@ public class DnsNotifier extends AdapterBase implements NetworkElement {
     }
 
     @Override
-    public boolean release(Network network, NicProfile nic, VirtualMachineProfile vm, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public boolean release(Network network, NicProfile nic, VirtualMachineProfile vm, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
         vm.getHostName();
         nic.getIp4Address();
         nic.getIp6Address();
-        // signal to the dns server that the vm is being shutdown and remove the mapping.
+        // signal to the dns server that the vm is being shutdown and remove the
+        // mapping.
         return true;
     }
 
@@ -104,8 +105,7 @@ public class DnsNotifier extends AdapterBase implements NetworkElement {
     }
 
     @Override
-    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
         return true;
     }
 

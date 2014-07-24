@@ -57,7 +57,8 @@ public class ResourceMetaDataManagerTest {
         try {
             _resourceMetaDataMgr.configure(null, null);
         } catch (ConfigurationException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); // To change body of catch statement use File |
+            // Settings | File Templates.
         }
         _resourceMetaDataMgr._volumeDetailDao = _volumeDetailDao;
         _resourceMetaDataMgr._taggedResourceMgr = _taggedResourceMgr;
@@ -66,12 +67,13 @@ public class ResourceMetaDataManagerTest {
     }
 
     // Test removing details
-    //@Test
+    // @Test
     public void testResourceDetails() throws ResourceAllocationException {
 
-        //when(_resourceMetaDataMgr.getResourceId(anyString(), eq(ResourceTag.TaggedResourceType.Volume))).thenReturn(1L);
+        // when(_resourceMetaDataMgr.getResourceId(anyString(),
+        // eq(ResourceTag.TaggedResourceType.Volume))).thenReturn(1L);
         doReturn(1L).when(_taggedResourceMgr).getResourceId(anyString(), eq(ResourceTag.ResourceObjectType.Volume));
-        //           _volumeDetailDao.removeDetails(id, key);
+        // _volumeDetailDao.removeDetails(id, key);
 
         doNothing().when(_volumeDetailDao).removeDetail(anyLong(), anyString());
         doNothing().when(_nicDetailDao).removeDetail(anyLong(), anyString());
@@ -83,7 +85,7 @@ public class ResourceMetaDataManagerTest {
     public void testAddResourceDetails() throws ResourceAllocationException {
 
         doReturn(1L).when(_taggedResourceMgr).getResourceId("1", ResourceTag.ResourceObjectType.Volume);
-        //           _volumeDetailDao.removeDetails(id, key);
+        // _volumeDetailDao.removeDetails(id, key);
 
         doNothing().when(_volumeDetailDao).removeDetail(anyLong(), anyString());
         doNothing().when(_nicDetailDao).removeDetail(anyLong(), anyString());

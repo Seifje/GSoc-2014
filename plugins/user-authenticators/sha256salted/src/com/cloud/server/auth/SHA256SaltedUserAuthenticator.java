@@ -42,8 +42,12 @@ public class SHA256SaltedUserAuthenticator extends DefaultUserAuthenticator {
     private UserAccountDao _userAccountDao;
     private static final int s_saltlen = 32;
 
-    /* (non-Javadoc)
-     * @see com.cloud.server.auth.UserAuthenticator#authenticate(java.lang.String, java.lang.String, java.lang.Long, java.util.Map)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.server.auth.UserAuthenticator#authenticate(java.lang.String,
+     * java.lang.String, java.lang.Long, java.util.Map)
      */
     @Override
     public Pair<Boolean, ActionOnFailedAuthentication> authenticate(String username, String password, Long domainId, Map<String, Object[]> requestParameters) {
@@ -71,7 +75,10 @@ public class SHA256SaltedUserAuthenticator extends DefaultUserAuthenticator {
         }
         try {
             String hashedPassword = encode(password, salt);
-            /* constantTimeEquals comes first in boolean since we need to thwart timing attacks */
+            /*
+             * constantTimeEquals comes first in boolean since we need to thwart
+             * timing attacks
+             */
             boolean result = constantTimeEquals(realPassword, hashedPassword) && realUser;
             ActionOnFailedAuthentication action = null;
             if (!result && realUser) {
@@ -85,7 +92,9 @@ public class SHA256SaltedUserAuthenticator extends DefaultUserAuthenticator {
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.server.auth.UserAuthenticator#encode(java.lang.String)
      */
     @Override

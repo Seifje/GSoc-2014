@@ -30,8 +30,7 @@ import com.cloud.exception.InvalidParameterValueException;
 import com.cloud.org.Cluster;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateCluster", description = "Updates an existing cluster", responseObject = ClusterResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "updateCluster", description = "Updates an existing cluster", responseObject = ClusterResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateClusterCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(AddClusterCmd.class.getName());
 

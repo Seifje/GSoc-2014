@@ -319,16 +319,8 @@ public class NicProfile implements InternalIdentity, Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder("NicProfile[").append(id)
-                .append("-")
-                .append(vmId)
-                .append("-")
-                .append(reservationId)
-                .append("-")
-                .append(ip4Address)
-                .append("-")
-                .append(broadcastUri)
-                .toString();
+        return new StringBuilder("NicProfile[").append(id).append("-").append(vmId).append("-").append(reservationId).append("-").append(ip4Address).append("-")
+                .append(broadcastUri).toString();
     }
 
     public String getIp6Gateway() {

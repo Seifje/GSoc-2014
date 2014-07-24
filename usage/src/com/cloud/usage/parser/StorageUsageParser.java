@@ -65,10 +65,12 @@ public class StorageUsageParser {
         }
 
         // - query usage_volume table with the following criteria:
-        //     - look for an entry for accountId with start date in the given range
-        //     - look for an entry for accountId with end date in the given range
-        //     - look for an entry for accountId with end date null (currently running vm or owned IP)
-        //     - look for an entry for accountId with start date before given range *and* end date after given range
+        // - look for an entry for accountId with start date in the given range
+        // - look for an entry for accountId with end date in the given range
+        // - look for an entry for accountId with end date null (currently
+        // running vm or owned IP)
+        // - look for an entry for accountId with start date before given range
+        // *and* end date after given range
         List<UsageStorageVO> usageUsageStorages = s_usageStorageDao.getUsageRecords(account.getId(), account.getDomainId(), startDate, endDate, false, 0);
 
         if (usageUsageStorages.isEmpty()) {
@@ -102,12 +104,15 @@ public class StorageUsageParser {
                 storageDeleteDate = endDate;
             }
 
-            // clip the start date to the beginning of our aggregation range if the vm has been running for a while
+            // clip the start date to the beginning of our aggregation range if
+            // the vm has been running for a while
             if (storageCreateDate.before(startDate)) {
                 storageCreateDate = startDate;
             }
 
-            long currentDuration = (storageDeleteDate.getTime() - storageCreateDate.getTime()) + 1; // make sure this is an inclusive check for milliseconds (i.e. use n - m + 1 to find total number of millis to charge)
+            long currentDuration = (storageDeleteDate.getTime() - storageCreateDate.getTime()) + 1; // make sure this is an inclusive check for
+            // milliseconds (i.e. use n - m + 1 to find
+            // total number of millis to charge)
 
             updateStorageUsageData(usageMap, key, usageStorage.getId(), currentDuration);
         }
@@ -116,11 +121,12 @@ public class StorageUsageParser {
             Pair<Long, Long> storagetimeInfo = usageMap.get(storageIdKey);
             long useTime = storagetimeInfo.second().longValue();
 
-            // Only create a usage record if we have a runningTime of bigger than zero.
+            // Only create a usage record if we have a runningTime of bigger
+            // than zero.
             if (useTime > 0L) {
                 StorageInfo info = storageMap.get(storageIdKey);
                 createUsageRecord(info.getZoneId(), info.getStorageType(), useTime, startDate, endDate, account, info.getStorageId(), info.getSourceId(), info.getSize(),
-                    info.getVirtualSize());
+                        info.getVirtualSize());
             }
         }
 
@@ -139,8 +145,8 @@ public class StorageUsageParser {
         usageDataMap.put(key, volUsageInfo);
     }
 
-    private static void createUsageRecord(long zoneId, int type, long runningTime, Date startDate, Date endDate, AccountVO account, long storageId, Long sourceId,
-        long size, Long virtualSize) {
+    private static void createUsageRecord(long zoneId, int type, long runningTime, Date startDate, Date endDate, AccountVO account, long storageId, Long sourceId, long size,
+            Long virtualSize) {
         // Our smallest increment is hourly for now
         if (s_logger.isDebugEnabled()) {
             s_logger.debug("Total running time " + runningTime + "ms");
@@ -152,8 +158,8 @@ public class StorageUsageParser {
         String usageDisplay = dFormat.format(usage);
 
         if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Creating Storage usage record for type: " + type + " with id: " + storageId + ", usage: " + usageDisplay + ", startDate: " + startDate +
-                ", endDate: " + endDate + ", for account: " + account.getId());
+            s_logger.debug("Creating Storage usage record for type: " + type + " with id: " + storageId + ", usage: " + usageDisplay + ", startDate: " + startDate + ", endDate: "
+                    + endDate + ", for account: " + account.getId());
         }
 
         String usageDesc = "";
@@ -161,28 +167,27 @@ public class StorageUsageParser {
 
         int usage_type = 0;
         switch (type) {
-            case StorageTypes.TEMPLATE:
-                usage_type = UsageTypes.TEMPLATE;
-                usageDesc += "Template ";
-                tmplSourceId = sourceId;
-                break;
-            case StorageTypes.ISO:
-                usage_type = UsageTypes.ISO;
-                usageDesc += "ISO ";
-                virtualSize = size;
-                break;
-            case StorageTypes.SNAPSHOT:
-                usage_type = UsageTypes.SNAPSHOT;
-                usageDesc += "Snapshot ";
-                break;
+        case StorageTypes.TEMPLATE:
+            usage_type = UsageTypes.TEMPLATE;
+            usageDesc += "Template ";
+            tmplSourceId = sourceId;
+            break;
+        case StorageTypes.ISO:
+            usage_type = UsageTypes.ISO;
+            usageDesc += "ISO ";
+            virtualSize = size;
+            break;
+        case StorageTypes.SNAPSHOT:
+            usage_type = UsageTypes.SNAPSHOT;
+            usageDesc += "Snapshot ";
+            break;
         }
         // Create the usage record
         usageDesc += "Id:" + storageId + " Size:" + size + "VirtualSize:" + virtualSize;
 
-        //ToDo: get zone id
-        UsageVO usageRecord =
-            new UsageVO(zoneId, account.getId(), account.getDomainId(), usageDesc, usageDisplay + " Hrs", usage_type, new Double(usage), null, null, null, tmplSourceId,
-                storageId, size, virtualSize, startDate, endDate);
+        // ToDo: get zone id
+        UsageVO usageRecord = new UsageVO(zoneId, account.getId(), account.getDomainId(), usageDesc, usageDisplay + " Hrs", usage_type, new Double(usage), null, null, null,
+                tmplSourceId, storageId, size, virtualSize, startDate, endDate);
         s_usageDao.persist(usageRecord);
     }
 

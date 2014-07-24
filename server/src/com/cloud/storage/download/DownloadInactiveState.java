@@ -38,7 +38,7 @@ public abstract class DownloadInactiveState extends DownloadState {
 
     @Override
     public String handleDisconnect() {
-        //ignore and stay put
+        // ignore and stay put
         return getName();
     }
 

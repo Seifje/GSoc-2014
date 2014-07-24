@@ -59,7 +59,7 @@ public class AwtVncMouseAdapter extends BaseElement {
      * downwards is represented by a press and release of button 5.
      *
      * @param modifiers
-     *          extended modifiers from AWT mouse event
+     *            extended modifiers from AWT mouse event
      * @return VNC mouse button mask
      */
     public static int mapAwtModifiersToVncButtonMask(int modifiers) {

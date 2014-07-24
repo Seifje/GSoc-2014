@@ -38,43 +38,43 @@ public class AssertingByteBuffer extends ByteBuffer {
     public void writeByte(int b) {
         if (b < 0)
             throw new RuntimeException();
-        //*DEBUG*/System.out.println("WriteByte: "+b+", cursor:"+cursor+".");
+        // *DEBUG*/System.out.println("WriteByte: "+b+", cursor:"+cursor+".");
         assertEquals(readUnsignedByte(), b & 0xff);
     }
 
     @Override
     public void writeShort(int x) {
-        //*DEBUG*/System.out.println("WriteShort: "+x+", cursor:"+cursor+".");
+        // *DEBUG*/System.out.println("WriteShort: "+x+", cursor:"+cursor+".");
         assertEquals(readUnsignedShort(), x & 0xFFff);
     }
 
     @Override
     public void writeShortLE(int x) {
-        //*DEBUG*/System.out.println("WriteShortLE: "+x+", cursor:"+cursor+".");
+        // *DEBUG*/System.out.println("WriteShortLE: "+x+", cursor:"+cursor+".");
         assertEquals(readUnsignedShortLE(), x & 0xFFff);
     }
 
     @Override
     public void writeInt(int i) {
-        //*DEBUG*/System.out.println("WriteInt: "+i+", cursor:"+cursor+".");
+        // *DEBUG*/System.out.println("WriteInt: "+i+", cursor:"+cursor+".");
         assertEquals(readSignedInt(), i);
     }
 
     @Override
     public void writeIntLE(int i) {
-        //*DEBUG*/System.out.println("WriteIntLE: "+i+", cursor:"+cursor+".");
+        // *DEBUG*/System.out.println("WriteIntLE: "+i+", cursor:"+cursor+".");
         assertEquals(readSignedIntLE(), i);
     }
 
     @Override
     public void writeVariableIntLE(int i) {
-        //*DEBUG*/System.out.println("WriteVariableIntLE: "+i+", cursor:"+cursor+".");
+        // *DEBUG*/System.out.println("WriteVariableIntLE: "+i+", cursor:"+cursor+".");
         assertEquals(readVariableSignedIntLE(), i);
     }
 
     @Override
     public void writeString(String actual, Charset charset) {
-        //*DEBUG*/System.out.println("WriteString: "+actual+", cursor:"+cursor+".");
+        // *DEBUG*/System.out.println("WriteString: "+actual+", cursor:"+cursor+".");
         String expected = readString(actual.length(), charset);
         if (!actual.equals(expected))
             throw new RuntimeException("Expected value does not match actual value. Expected value: " + expected + ", actual value: " + actual + ".");
@@ -82,7 +82,7 @@ public class AssertingByteBuffer extends ByteBuffer {
 
     @Override
     public void writeBytes(ByteBuffer actual) {
-        //*DEBUG*/System.out.println("WriteString: "+actual+", cursor:"+cursor+".");
+        // *DEBUG*/System.out.println("WriteString: "+actual+", cursor:"+cursor+".");
         ByteBuffer expected = readBytes(actual.length);
         if (!actual.equals(expected))
             throw new RuntimeException("Expected value does not match actual value. Expected value: " + expected + ", actual value: " + actual + ".");
@@ -91,7 +91,7 @@ public class AssertingByteBuffer extends ByteBuffer {
     @Override
     public void writeBytes(byte[] actualData) {
         ByteBuffer actual = new ByteBuffer(actualData);
-        //*DEBUG*/System.out.println("WriteString: "+actual+", cursor:"+cursor+".");
+        // *DEBUG*/System.out.println("WriteString: "+actual+", cursor:"+cursor+".");
         ByteBuffer expected = readBytes(actual.length);
         if (!actual.equals(expected))
             throw new RuntimeException("Expected value does not match actual value. Expected value: " + expected + ", actual value: " + actual + ".");
@@ -100,7 +100,7 @@ public class AssertingByteBuffer extends ByteBuffer {
     @Override
     public void writeBytes(byte[] actualData, int offset, int length) {
         ByteBuffer actual = new ByteBuffer(actualData, offset, length);
-        //*DEBUG*/System.out.println("WriteString: "+actual+", cursor:"+cursor+".");
+        // *DEBUG*/System.out.println("WriteString: "+actual+", cursor:"+cursor+".");
         ByteBuffer expected = readBytes(actual.length);
         if (!actual.equals(expected))
             throw new RuntimeException("Expected value does not match actual value. Expected value: " + expected + ", actual value: " + actual + ".");

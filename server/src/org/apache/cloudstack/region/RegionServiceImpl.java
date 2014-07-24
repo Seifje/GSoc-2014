@@ -82,8 +82,8 @@ public class RegionServiceImpl extends ManagerBase implements RegionService, Man
      */
     @Override
     public Region addRegion(int id, String name, String endPoint) {
-        //Check for valid Name
-        //Check valid end_point url
+        // Check for valid Name
+        // Check valid end_point url
         return _regionMgr.addRegion(id, name, endPoint);
     }
 
@@ -92,8 +92,8 @@ public class RegionServiceImpl extends ManagerBase implements RegionService, Man
      */
     @Override
     public Region updateRegion(int id, String name, String endPoint) {
-        //Check for valid Name
-        //Check valid end_point url
+        // Check for valid Name
+        // Check valid end_point url
         return _regionMgr.updateRegion(id, name, endPoint);
     }
 

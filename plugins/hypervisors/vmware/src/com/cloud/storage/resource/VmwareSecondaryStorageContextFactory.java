@@ -29,7 +29,8 @@ public class VmwareSecondaryStorageContextFactory {
 
     private static VmwareContextPool s_pool;
 
-    public static int s_vCenterSessionTimeout = 1200000; // Timeout in milliseconds
+    public static int s_vCenterSessionTimeout = 1200000; // Timeout in
+                                                         // milliseconds
 
     public static void initFactoryEnvironment() {
         System.setProperty("axis.socketSecureFactory", "org.apache.axis.components.net.SunFakeTrustSocketFactory");
@@ -59,7 +60,8 @@ public class VmwareSecondaryStorageContextFactory {
         if (context == null) {
             context = create(vCenterAddress, vCenterUserName, vCenterPassword);
         } else {
-            // Validate current context and verify if vCenter session timeout value of the context matches the timeout value set by Admin
+            // Validate current context and verify if vCenter session timeout
+            // value of the context matches the timeout value set by Admin
             if (!context.validate() || (context.getVimClient().getVcenterSessionTimeout() != s_vCenterSessionTimeout)) {
                 s_logger.info("Validation of the context faild. dispose and create a new one");
                 context.close();

@@ -33,7 +33,7 @@ public class DetachIsoCmdByAdmin extends DetachIsoCmd {
     public static final Logger s_logger = Logger.getLogger(DetachIsoCmdByAdmin.class.getName());
 
     @Override
-    public void execute(){
+    public void execute() {
         boolean result = _templateService.detachIso(virtualMachineId);
         if (result) {
             UserVm userVm = _entityMgr.findById(UserVm.class, virtualMachineId);

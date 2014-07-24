@@ -135,8 +135,8 @@ public class BareMetalResourceBase extends ManagerBase implements ServerResource
             _cpuNum = Long.parseLong((String)params.get(ApiConstants.CPU_NUMBER));
         } catch (NumberFormatException e) {
             throw new ConfigurationException(String.format("Unable to parse number of CPU or memory capacity "
-                + "or cpu capacity(cpu number = %1$s memCapacity=%2$s, cpuCapacity=%3$s", params.get(ApiConstants.CPU_NUMBER), params.get(ApiConstants.MEMORY),
-                params.get(ApiConstants.CPU_SPEED)));
+                    + "or cpu capacity(cpu number = %1$s memCapacity=%2$s, cpuCapacity=%3$s", params.get(ApiConstants.CPU_NUMBER), params.get(ApiConstants.MEMORY),
+                    params.get(ApiConstants.CPU_SPEED)));
         }
 
         _zone = (String)params.get("zone");

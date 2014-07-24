@@ -32,8 +32,10 @@ public class OperationTimedoutException extends CloudException {
     // TODO
     // I did a reference search on usage of getCommands() and found none
     //
-    // to prevent serialization problems across boundaries, I'm disabling serialization of _cmds here
-    // getCommands() will still be available within the same serialization boundary, but it will be lost
+    // to prevent serialization problems across boundaries, I'm disabling
+    // serialization of _cmds here
+    // getCommands() will still be available within the same serialization
+    // boundary, but it will be lost
     // when exception is propagated across job boundaries.
     //
     transient Command[] _cmds;

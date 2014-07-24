@@ -32,8 +32,9 @@ import org.apache.cloudstack.api.InternalIdentity;
 import org.apache.cloudstack.network.ExternalNetworkDeviceManager;
 
 /**
- * ExternalLoadBalancerDeviceVO contains information on external load balancer devices (F5/Netscaler VPX,MPX,SDX) added into a deployment
-  */
+ * ExternalLoadBalancerDeviceVO contains information on external load balancer
+ * devices (F5/Netscaler VPX,MPX,SDX) added into a deployment
+ */
 
 @Entity
 @Table(name = "external_load_balancer_devices")
@@ -91,20 +92,23 @@ public class ExternalLoadBalancerDeviceVO implements InternalIdentity, Identity 
     @Column(name = "capacity")
     private long capacity;
 
-    //keeping it enum for future possible states Maintenance, Shutdown
+    // keeping it enum for future possible states Maintenance, Shutdown
     public enum LBDeviceState {
         Enabled, Disabled
     }
 
     public enum LBDeviceAllocationState {
-        Free,      // In this state no networks are using this device for load balancing
-        Shared,    // In this state one or more networks will be using this device for load balancing
-        Dedicated, // In this state this device is dedicated for a single network
-        Provider   // This state is set only for device that can dynamically provision LB appliances
+        Free, // In this state no networks are using this device for load
+        // balancing
+        Shared, // In this state one or more networks will be using this device
+        // for load balancing
+        Dedicated, // In this state this device is dedicated for a single
+        // network
+        Provider // This state is set only for device that can dynamically
+        // provision LB appliances
     }
 
-    public ExternalLoadBalancerDeviceVO(long hostId, long physicalNetworkId, String providerName, String deviceName, long capacity, boolean dedicated,
-            boolean gslbProvider) {
+    public ExternalLoadBalancerDeviceVO(long hostId, long physicalNetworkId, String providerName, String deviceName, long capacity, boolean dedicated, boolean gslbProvider) {
         this.physicalNetworkId = physicalNetworkId;
         this.providerName = providerName;
         this.deviceName = deviceName;

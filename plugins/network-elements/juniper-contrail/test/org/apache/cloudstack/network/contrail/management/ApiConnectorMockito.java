@@ -37,8 +37,7 @@ import com.google.common.collect.ImmutableMap;
 public class ApiConnectorMockito implements ApiConnector {
     private static final Logger s_logger = Logger.getLogger(ApiConnectorMockito.class);
 
-    static final Map<String, ApiObjectBase> object_map = new ImmutableMap.Builder<String, ApiObjectBase>().put("network-ipam:default-network-ipam", new NetworkIpam())
-        .build();
+    static final Map<String, ApiObjectBase> object_map = new ImmutableMap.Builder<String, ApiObjectBase>().put("network-ipam:default-network-ipam", new NetworkIpam()).build();
     private ApiConnectorMock _mock;
     private ApiConnector _spy;
 

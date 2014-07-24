@@ -40,32 +40,37 @@ import com.cloud.utils.net.Ip;
 
 public interface LoadBalancingRulesService {
     /**
-     * Create a load balancer rule from the given ipAddress/port to the given private port
+     * Create a load balancer rule from the given ipAddress/port to the given
+     * private port
+     *
      * @param openFirewall
      *            TODO
-     * @param forDisplay TODO
+     * @param forDisplay
+     *            TODO
      * @param cmd
-     *            the command specifying the ip address, public port, protocol, private port, and algorithm
+     *            the command specifying the ip address, public port, protocol,
+     *            private port, and algorithm
      *
      * @return the newly created LoadBalancerVO if successful, null otherwise
      * @throws InsufficientAddressCapacityException
      */
-    LoadBalancer createPublicLoadBalancerRule(String xId, String name, String description, int srcPortStart, int srcPortEnd, int defPortStart, int defPortEnd,
-        Long ipAddrId, String protocol, String algorithm, long networkId, long lbOwnerId, boolean openFirewall, String lbProtocol, Boolean forDisplay) throws NetworkRuleConflictException,
-        InsufficientAddressCapacityException;
+    LoadBalancer createPublicLoadBalancerRule(String xId, String name, String description, int srcPortStart, int srcPortEnd, int defPortStart, int defPortEnd, Long ipAddrId,
+            String protocol, String algorithm, long networkId, long lbOwnerId, boolean openFirewall, String lbProtocol, Boolean forDisplay) throws NetworkRuleConflictException,
+            InsufficientAddressCapacityException;
 
     LoadBalancer updateLoadBalancerRule(UpdateLoadBalancerRuleCmd cmd);
 
     boolean deleteLoadBalancerRule(long lbRuleId, boolean apply);
 
     /**
-     * Create a stickiness policy to a load balancer from the given stickiness method name and parameters in
-     * (name,value) pairs.
+     * Create a stickiness policy to a load balancer from the given stickiness
+     * method name and parameters in (name,value) pairs.
      *
      * @param cmd
-     *            the command specifying the stickiness method name, params (name,value pairs), policy name and
-     *            description.
-     * @return the newly created stickiness policy if successfull, null otherwise
+     *            the command specifying the stickiness method name, params
+     *            (name,value pairs), policy name and description.
+     * @return the newly created stickiness policy if successfull, null
+     *         otherwise
      * @thows NetworkRuleConflictException
      */
     public StickinessPolicy createLBStickinessPolicy(CreateLBStickinessPolicyCmd cmd) throws NetworkRuleConflictException;
@@ -92,13 +97,14 @@ public interface LoadBalancingRulesService {
     boolean deleteLBHealthCheckPolicy(long healthCheckPolicyId, boolean apply);
 
     /**
-     * Assign a virtual machine or list of virtual machines, or Map of <vmId vmIp> to a load balancer.
+     * Assign a virtual machine or list of virtual machines, or Map of <vmId
+     * vmIp> to a load balancer.
      */
     boolean assignToLoadBalancer(long lbRuleId, List<Long> vmIds, Map<Long, List<String>> vmIdIpMap);
 
     boolean assignSSLCertToLoadBalancerRule(Long lbRuleId, String certName, String publicCert, String privateKey);
 
-    boolean removeFromLoadBalancer(long lbRuleId, List<Long> vmIds,   Map<Long, List<String>> vmIdIpMap);
+    boolean removeFromLoadBalancer(long lbRuleId, List<Long> vmIds, Map<Long, List<String>> vmIdIpMap);
 
     boolean applyLoadBalancerConfig(long lbRuleId) throws ResourceUnavailableException;
 
@@ -107,12 +113,13 @@ public interface LoadBalancingRulesService {
     boolean removeCertFromLoadBalancer(long lbRuleId);
 
     /**
-     * List instances that have either been applied to a load balancer or are eligible to be assigned to a load
-     * balancer.
+     * List instances that have either been applied to a load balancer or are
+     * eligible to be assigned to a load balancer.
      *
      * @param cmd
-     * @return list of vm instances that have been or can be applied to a load balancer along with service state,
-     * if the LB has health check policy created on it from cloudstack.
+     * @return list of vm instances that have been or can be applied to a load
+     *         balancer along with service state, if the LB has health check
+     *         policy created on it from cloudstack.
      */
     Pair<List<? extends UserVm>, List<String>> listLoadBalancerInstances(ListLoadBalancerRuleInstancesCmd cmd);
 
@@ -120,9 +127,9 @@ public interface LoadBalancingRulesService {
      * List load balancer rules based on the given criteria
      *
      * @param cmd
-     *            the command that specifies the criteria to use for listing load balancers. Load balancers can be
-     *            listed
-     *            by id, name, public ip, and vm instance id
+     *            the command that specifies the criteria to use for listing
+     *            load balancers. Load balancers can be listed by id, name,
+     *            public ip, and vm instance id
      * @return list of load balancers that match the criteria
      */
     Pair<List<? extends LoadBalancer>, Integer> searchForLoadBalancers(ListLoadBalancerRulesCmd cmd);

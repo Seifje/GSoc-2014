@@ -36,8 +36,7 @@ public class Asn1Integer extends Tag {
 
         long length = buf.readBerLength();
         if (length > 8)
-            throw new RuntimeException("[" + this + "] ERROR: Integer value is too long: " + length + " bytes. Cannot handle integers more than 8 bytes long. Data: "
-                    + buf + ".");
+            throw new RuntimeException("[" + this + "] ERROR: Integer value is too long: " + length + " bytes. Cannot handle integers more than 8 bytes long. Data: " + buf + ".");
 
         value = buf.readSignedVarInt((int)length);
     }

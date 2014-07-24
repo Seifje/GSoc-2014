@@ -73,7 +73,7 @@ public class NeutronRestApi {
         try {
             // Cast to ProtocolSocketFactory to avoid the deprecated constructor
             // with the SecureProtocolSocketFactory parameter
-            Protocol.registerProtocol(protocol, new Protocol(protocol, (ProtocolSocketFactory) new TrustingProtocolSocketFactory(), HTTPS_PORT));
+            Protocol.registerProtocol(protocol, new Protocol(protocol, (ProtocolSocketFactory)new TrustingProtocolSocketFactory(), HTTPS_PORT));
         } catch (IOException e) {
             s_logger.warn("Failed to register the TrustingProtocolSocketFactory, falling back to default SSLSocketFactory", e);
         }
@@ -156,7 +156,7 @@ public class NeutronRestApi {
 
         public TrustingProtocolSocketFactory() throws IOException {
             // Create a trust manager that does not validate certificate chains
-            TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+            TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
                 @Override
                 public X509Certificate[] getAcceptedIssuers() {
                     return null;
@@ -171,7 +171,7 @@ public class NeutronRestApi {
                 public void checkServerTrusted(final X509Certificate[] certs, final String authType) {
                     // Trust always
                 }
-            } };
+            }};
 
             try {
                 // Install the all-trusting trust manager

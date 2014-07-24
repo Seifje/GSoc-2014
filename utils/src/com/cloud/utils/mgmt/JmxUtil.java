@@ -33,13 +33,13 @@ import javax.management.ObjectName;
 
 public class JmxUtil {
     public static ObjectName registerMBean(ManagementBean mbean) throws MalformedObjectNameException, InstanceAlreadyExistsException, MBeanRegistrationException,
-        NotCompliantMBeanException {
+    NotCompliantMBeanException {
 
         return registerMBean(mbean.getName(), null, mbean);
     }
 
     public static ObjectName registerMBean(String objTypeName, String objInstanceName, Object mbean) throws MalformedObjectNameException, InstanceAlreadyExistsException,
-        MBeanRegistrationException, NotCompliantMBeanException {
+    MBeanRegistrationException, NotCompliantMBeanException {
 
         String name = "com.cloud:type=" + objTypeName;
         if (objInstanceName != null && !objInstanceName.isEmpty())
@@ -60,8 +60,7 @@ public class JmxUtil {
         }
     }
 
-    public static void unregisterMBean(String objTypeName, String objInstanceName) throws MalformedObjectNameException, MBeanRegistrationException,
-        InstanceNotFoundException {
+    public static void unregisterMBean(String objTypeName, String objInstanceName) throws MalformedObjectNameException, MBeanRegistrationException, InstanceNotFoundException {
 
         ObjectName name = composeMBeanName(objTypeName, objInstanceName);
         unregisterMBean(name);

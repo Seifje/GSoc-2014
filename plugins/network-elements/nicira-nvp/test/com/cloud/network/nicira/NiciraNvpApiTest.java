@@ -53,21 +53,12 @@ public class NiciraNvpApiTest {
     protected static final String SCHEMA2 = "myTestSchema2";
     protected static final String HREF = "myTestHref";
     protected static final String HREF2 = "myTestHref2";
-    protected static final String SEC_PROFILE_JSON_RESPONSE =
-            "{\"uuid\" : \"aaaa\","
-            + "\"display_name\" : \"myTestName\","
-            + "\"href\" : \"myTestHref\","
+    protected static final String SEC_PROFILE_JSON_RESPONSE = "{\"uuid\" : \"aaaa\"," + "\"display_name\" : \"myTestName\"," + "\"href\" : \"myTestHref\","
             + "\"schema\" : \"myTestSchema\"}";
 
-    protected static final String SEC_PROFILE_LIST_JSON_RESPONSE = "{\"results\" : [{\"uuid\" : \"aaaa\","
-            + "\"display_name\" : \"myTestName\","
-            + "\"href\" : \"myTestHref\","
-            + "\"schema\" : \"myTestSchema\"},"
-            + "{ \"uuid\" : \"bbbb\","
-            + "\"display_name\" : \"myTestName2\","
-            + "\"href\" : \"myTestHref2\","
-            + "\"schema\" : \"myTestSchema2\"}],"
-            + "\"result_count\": 2}";
+    protected static final String SEC_PROFILE_LIST_JSON_RESPONSE = "{\"results\" : [{\"uuid\" : \"aaaa\"," + "\"display_name\" : \"myTestName\"," + "\"href\" : \"myTestHref\","
+            + "\"schema\" : \"myTestSchema\"}," + "{ \"uuid\" : \"bbbb\"," + "\"display_name\" : \"myTestName2\"," + "\"href\" : \"myTestHref2\","
+            + "\"schema\" : \"myTestSchema2\"}]," + "\"result_count\": 2}";
 
     NiciraNvpApi api;
     HttpClient client = mock(HttpClient.class);
@@ -105,8 +96,7 @@ public class NiciraNvpApiTest {
         method = mock(GetMethod.class);
         when(method.getStatusCode()).thenReturn(HttpStatus.SC_OK);
         when(method.getResponseBodyAsString()).thenReturn(SEC_PROFILE_LIST_JSON_RESPONSE);
-        final NameValuePair[] queryString = new NameValuePair[]{
-                new NameValuePair("fields","*")};
+        final NameValuePair[] queryString = new NameValuePair[] {new NameValuePair("fields", "*")};
 
         // Execute
         final NiciraNvpList<SecurityProfile> actualProfiles = api.findSecurityProfile();
@@ -114,24 +104,15 @@ public class NiciraNvpApiTest {
         // Assert
         verify(method, times(1)).releaseConnection();
         verify(method, times(1)).setQueryString(queryString);
-        assertEquals("Wrong Uuid in the newly created SecurityProfile",
-                UUID, actualProfiles.getResults().get(0).getUuid());
-        assertEquals("Wrong Uuid in the newly created SecurityProfile",
-                HREF, actualProfiles.getResults().get(0).getHref());
-        assertEquals("Wrong Schema in the newly created SecurityProfile",
-                SCHEMA, actualProfiles.getResults().get(0).getSchema());
-        assertEquals("Wrong Uuid in the newly created SecurityProfile",
-                UUID2, actualProfiles.getResults().get(1).getUuid());
-        assertEquals("Wrong Uuid in the newly created SecurityProfile",
-                HREF2, actualProfiles.getResults().get(1).getHref());
-        assertEquals("Wrong Schema in the newly created SecurityProfile",
-                SCHEMA2, actualProfiles.getResults().get(1).getSchema());
-        assertEquals("Wrong Schema in the newly created SecurityProfile",
-                2, actualProfiles.getResultCount());
-        assertEquals("Wrong URI for SecurityProfile creation REST service",
-                NiciraNvpApi.SEC_PROFILE_URI_PREFIX, uri);
-        assertEquals("Wrong URI for SecurityProfile creation REST service",
-                NiciraNvpApi.GET_METHOD_TYPE, type);
+        assertEquals("Wrong Uuid in the newly created SecurityProfile", UUID, actualProfiles.getResults().get(0).getUuid());
+        assertEquals("Wrong Uuid in the newly created SecurityProfile", HREF, actualProfiles.getResults().get(0).getHref());
+        assertEquals("Wrong Schema in the newly created SecurityProfile", SCHEMA, actualProfiles.getResults().get(0).getSchema());
+        assertEquals("Wrong Uuid in the newly created SecurityProfile", UUID2, actualProfiles.getResults().get(1).getUuid());
+        assertEquals("Wrong Uuid in the newly created SecurityProfile", HREF2, actualProfiles.getResults().get(1).getHref());
+        assertEquals("Wrong Schema in the newly created SecurityProfile", SCHEMA2, actualProfiles.getResults().get(1).getSchema());
+        assertEquals("Wrong Schema in the newly created SecurityProfile", 2, actualProfiles.getResultCount());
+        assertEquals("Wrong URI for SecurityProfile creation REST service", NiciraNvpApi.SEC_PROFILE_URI_PREFIX, uri);
+        assertEquals("Wrong URI for SecurityProfile creation REST service", NiciraNvpApi.GET_METHOD_TYPE, type);
     }
 
     @Test
@@ -140,10 +121,7 @@ public class NiciraNvpApiTest {
         method = mock(GetMethod.class);
         when(method.getStatusCode()).thenReturn(HttpStatus.SC_OK);
         when(method.getResponseBodyAsString()).thenReturn(SEC_PROFILE_LIST_JSON_RESPONSE);
-        final NameValuePair[] queryString = new NameValuePair[]{
-                new NameValuePair("uuid", UUID),
-                new NameValuePair("fields","*")
-        };
+        final NameValuePair[] queryString = new NameValuePair[] {new NameValuePair("uuid", UUID), new NameValuePair("fields", "*")};
 
         // Execute
         final NiciraNvpList<SecurityProfile> actualProfiles = api.findSecurityProfile(UUID);
@@ -151,24 +129,15 @@ public class NiciraNvpApiTest {
         // Assert
         verify(method, times(1)).releaseConnection();
         verify(method, times(1)).setQueryString(queryString);
-        assertEquals("Wrong Uuid in the newly created SecurityProfile",
-                UUID, actualProfiles.getResults().get(0).getUuid());
-        assertEquals("Wrong Uuid in the newly created SecurityProfile",
-                HREF, actualProfiles.getResults().get(0).getHref());
-        assertEquals("Wrong Schema in the newly created SecurityProfile",
-                SCHEMA, actualProfiles.getResults().get(0).getSchema());
-        assertEquals("Wrong Uuid in the newly created SecurityProfile",
-                UUID2, actualProfiles.getResults().get(1).getUuid());
-        assertEquals("Wrong Uuid in the newly created SecurityProfile",
-                HREF2, actualProfiles.getResults().get(1).getHref());
-        assertEquals("Wrong Schema in the newly created SecurityProfile",
-                SCHEMA2, actualProfiles.getResults().get(1).getSchema());
-        assertEquals("Wrong Schema in the newly created SecurityProfile",
-                2, actualProfiles.getResultCount());
-        assertEquals("Wrong URI for SecurityProfile creation REST service",
-                NiciraNvpApi.SEC_PROFILE_URI_PREFIX, uri);
-        assertEquals("Wrong HTTP method for SecurityProfile creation REST service",
-                NiciraNvpApi.GET_METHOD_TYPE, type);
+        assertEquals("Wrong Uuid in the newly created SecurityProfile", UUID, actualProfiles.getResults().get(0).getUuid());
+        assertEquals("Wrong Uuid in the newly created SecurityProfile", HREF, actualProfiles.getResults().get(0).getHref());
+        assertEquals("Wrong Schema in the newly created SecurityProfile", SCHEMA, actualProfiles.getResults().get(0).getSchema());
+        assertEquals("Wrong Uuid in the newly created SecurityProfile", UUID2, actualProfiles.getResults().get(1).getUuid());
+        assertEquals("Wrong Uuid in the newly created SecurityProfile", HREF2, actualProfiles.getResults().get(1).getHref());
+        assertEquals("Wrong Schema in the newly created SecurityProfile", SCHEMA2, actualProfiles.getResults().get(1).getSchema());
+        assertEquals("Wrong Schema in the newly created SecurityProfile", 2, actualProfiles.getResultCount());
+        assertEquals("Wrong URI for SecurityProfile creation REST service", NiciraNvpApi.SEC_PROFILE_URI_PREFIX, uri);
+        assertEquals("Wrong HTTP method for SecurityProfile creation REST service", NiciraNvpApi.GET_METHOD_TYPE, type);
     }
 
     @Test
@@ -184,16 +153,11 @@ public class NiciraNvpApiTest {
 
         // Assert
         verify(method, times(1)).releaseConnection();
-        assertEquals("Wrong Uuid in the newly created SecurityProfile",
-                UUID, actualSecProfile.getUuid());
-        assertEquals("Wrong Uuid in the newly created SecurityProfile",
-                HREF, actualSecProfile.getHref());
-        assertEquals("Wrong Schema in the newly created SecurityProfile",
-                SCHEMA, actualSecProfile.getSchema());
-        assertEquals("Wrong URI for SecurityProfile creation REST service",
-                NiciraNvpApi.SEC_PROFILE_URI_PREFIX, uri);
-        assertEquals("Wrong HTTP method for SecurityProfile creation REST service",
-                NiciraNvpApi.POST_METHOD_TYPE, type);
+        assertEquals("Wrong Uuid in the newly created SecurityProfile", UUID, actualSecProfile.getUuid());
+        assertEquals("Wrong Uuid in the newly created SecurityProfile", HREF, actualSecProfile.getHref());
+        assertEquals("Wrong Schema in the newly created SecurityProfile", SCHEMA, actualSecProfile.getSchema());
+        assertEquals("Wrong URI for SecurityProfile creation REST service", NiciraNvpApi.SEC_PROFILE_URI_PREFIX, uri);
+        assertEquals("Wrong HTTP method for SecurityProfile creation REST service", NiciraNvpApi.POST_METHOD_TYPE, type);
     }
 
     @Test
@@ -208,10 +172,8 @@ public class NiciraNvpApiTest {
 
         // Assert
         verify(method, times(1)).releaseConnection();
-        assertEquals("Wrong URI for SecurityProfile creation REST service",
-                UUID_SEC_PROFILE_URI, uri);
-        assertEquals("Wrong HTTP method for SecurityProfile creation REST service",
-                NiciraNvpApi.PUT_METHOD_TYPE, type);
+        assertEquals("Wrong URI for SecurityProfile creation REST service", UUID_SEC_PROFILE_URI, uri);
+        assertEquals("Wrong HTTP method for SecurityProfile creation REST service", NiciraNvpApi.PUT_METHOD_TYPE, type);
     }
 
     @Test
@@ -260,8 +222,8 @@ public class NiciraNvpApiTest {
         final Gson gson = api.restConnector.getGson();
 
         // Execute
-        final SingleDefaultRouteImplicitRoutingConfig singleDefaultRouteImplicitRoutingConfig =
-                (SingleDefaultRouteImplicitRoutingConfig) gson.fromJson("{type : \"SingleDefaultRouteImplicitRoutingConfig\"}", RoutingConfig.class);
+        final SingleDefaultRouteImplicitRoutingConfig singleDefaultRouteImplicitRoutingConfig = (SingleDefaultRouteImplicitRoutingConfig)gson.fromJson(
+                "{type : \"SingleDefaultRouteImplicitRoutingConfig\"}", RoutingConfig.class);
 
         // Assert: JsonParseException should be thrown
         assertEquals("", SingleDefaultRouteImplicitRoutingConfig.class, singleDefaultRouteImplicitRoutingConfig.getClass());
@@ -298,8 +260,7 @@ public class NiciraNvpApiTest {
         final Gson gson = api.restConnector.getGson();
 
         // Execute
-        final SourceNatRule sourceNatRule =
-                (SourceNatRule) gson.fromJson("{type : \"SourceNatRule\"}", NatRule.class);
+        final SourceNatRule sourceNatRule = (SourceNatRule)gson.fromJson("{type : \"SourceNatRule\"}", NatRule.class);
 
         // Assert: JsonParseException should be thrown
         assertEquals("", SourceNatRule.class, sourceNatRule.getClass());
@@ -312,8 +273,7 @@ public class NiciraNvpApiTest {
         final Gson gson = api.restConnector.getGson();
 
         // Execute
-        final DestinationNatRule destinationNatRule =
-                (DestinationNatRule) gson.fromJson("{type : \"DestinationNatRule\"}", NatRule.class);
+        final DestinationNatRule destinationNatRule = (DestinationNatRule)gson.fromJson("{type : \"DestinationNatRule\"}", NatRule.class);
 
         // Assert: JsonParseException should be thrown
         assertEquals("", DestinationNatRule.class, destinationNatRule.getClass());

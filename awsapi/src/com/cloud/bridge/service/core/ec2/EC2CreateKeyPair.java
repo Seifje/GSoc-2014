@@ -35,7 +35,8 @@ public class EC2CreateKeyPair {
     }
 
     /**
-     * @param keyName the keyName to set
+     * @param keyName
+     *            the keyName to set
      */
     public void setKeyName(String keyName) {
         this.keyName = keyName;

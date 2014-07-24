@@ -57,7 +57,7 @@ public class NeutronPortWrapper {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        NeutronPortWrapper other = (NeutronPortWrapper) obj;
+        NeutronPortWrapper other = (NeutronPortWrapper)obj;
         if (port == null) {
             if (other.port != null) {
                 return false;

@@ -105,13 +105,17 @@ public class XenserverSnapshotStrategy extends SnapshotStrategyBase {
 
         // determine full snapshot backup or not
 
-
         boolean fullBackup = true;
         SnapshotDataStoreVO parentSnapshotOnBackupStore = snapshotStoreDao.findLatestSnapshotForVolume(snapshot.getVolumeId(), DataStoreRole.Image);
         HypervisorType hypervisorType = snapshot.getBaseVolume().getHypervisorType();
-        if (parentSnapshotOnBackupStore != null && hypervisorType == Hypervisor.HypervisorType.XenServer) { // CS does incremental backup only for XenServer
-            int _deltaSnapshotMax = NumbersUtil.parseInt(configDao.getValue("snapshot.delta.max"),
-                    SnapshotManager.DELTAMAX);
+        if (parentSnapshotOnBackupStore != null && hypervisorType == Hypervisor.HypervisorType.XenServer) { // CS
+            // does
+            // incremental
+            // backup
+            // only
+            // for
+            // XenServer
+            int _deltaSnapshotMax = NumbersUtil.parseInt(configDao.getValue("snapshot.delta.max"), SnapshotManager.DELTAMAX);
             int deltaSnap = _deltaSnapshotMax;
             int i;
 
@@ -140,10 +144,11 @@ public class XenserverSnapshotStrategy extends SnapshotStrategyBase {
     protected boolean deleteSnapshotChain(SnapshotInfo snapshot) {
         s_logger.debug("delete snapshot chain for snapshot: " + snapshot.getId());
         boolean result = false;
-        boolean resultIsSet = false;   //need to track, the snapshot itself is deleted or not.
+        boolean resultIsSet = false; // need to track, the snapshot itself is
+        // deleted or not.
         try {
-            while (snapshot != null &&
-                (snapshot.getState() == Snapshot.State.Destroying || snapshot.getState() == Snapshot.State.Destroyed || snapshot.getState() == Snapshot.State.Error)) {
+            while (snapshot != null
+                    && (snapshot.getState() == Snapshot.State.Destroying || snapshot.getState() == Snapshot.State.Destroyed || snapshot.getState() == Snapshot.State.Error)) {
                 SnapshotInfo child = snapshot.getChild();
 
                 if (child != null) {
@@ -155,8 +160,11 @@ public class XenserverSnapshotStrategy extends SnapshotStrategyBase {
                 boolean deleted = false;
                 if (parent != null) {
                     if (parent.getPath() != null && parent.getPath().equalsIgnoreCase(snapshot.getPath())) {
-                        //NOTE: if both snapshots share the same path, it's for xenserver's empty delta snapshot. We can't delete the snapshot on the backend, as parent snapshot still reference to it
-                        //Instead, mark it as destroyed in the db.
+                        // NOTE: if both snapshots share the same path, it's for
+                        // xenserver's empty delta snapshot. We can't delete the
+                        // snapshot on the backend, as parent snapshot still
+                        // reference to it
+                        // Instead, mark it as destroyed in the db.
                         s_logger.debug("for empty delta snapshot, only mark it as destroyed in db");
                         snapshot.processEvent(Event.DestroyRequested);
                         snapshot.processEvent(Event.OperationSuccessed);
@@ -235,7 +243,8 @@ public class XenserverSnapshotStrategy extends SnapshotStrategyBase {
             boolean result = deleteSnapshotChain(snapshotOnImage);
             obj.processEvent(Snapshot.Event.OperationSucceeded);
             if (result) {
-                //snapshot is deleted on backup storage, need to delete it on primary storage
+                // snapshot is deleted on backup storage, need to delete it on
+                // primary storage
                 SnapshotDataStoreVO snapshotOnPrimary = snapshotStoreDao.findBySnapshot(snapshotId, DataStoreRole.Primary);
                 if (snapshotOnPrimary != null) {
                     snapshotOnPrimary.setState(State.Destroyed);

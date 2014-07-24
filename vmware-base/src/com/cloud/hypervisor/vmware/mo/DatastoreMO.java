@@ -167,7 +167,8 @@ public class DatastoreMO extends BaseMO {
         if (!DatastoreFile.isFullDatastorePath(fullPath))
             fullPath = String.format("[%s] %s", datastoreName, path);
         DatastoreFile file = new DatastoreFile(fullPath);
-        // Test if file specified is null or empty. We don't need to attempt to delete and return success.
+        // Test if file specified is null or empty. We don't need to attempt to
+        // delete and return success.
         if (file.getFileName() == null || file.getFileName().isEmpty()) {
             return true;
         }
@@ -198,8 +199,8 @@ public class DatastoreMO extends BaseMO {
         return false;
     }
 
-    public boolean copyDatastoreFile(String srcFilePath, ManagedObjectReference morSrcDc, ManagedObjectReference morDestDs, String destFilePath,
-            ManagedObjectReference morDestDc, boolean forceOverwrite) throws Exception {
+    public boolean copyDatastoreFile(String srcFilePath, ManagedObjectReference morSrcDc, ManagedObjectReference morDestDs, String destFilePath, ManagedObjectReference morDestDc,
+            boolean forceOverwrite) throws Exception {
 
         String srcDsName = getName();
         DatastoreMO destDsMo = new DatastoreMO(_context, morDestDs);
@@ -226,8 +227,8 @@ public class DatastoreMO extends BaseMO {
         return false;
     }
 
-    public boolean moveDatastoreFile(String srcFilePath, ManagedObjectReference morSrcDc, ManagedObjectReference morDestDs, String destFilePath,
-            ManagedObjectReference morDestDc, boolean forceOverwrite) throws Exception {
+    public boolean moveDatastoreFile(String srcFilePath, ManagedObjectReference morSrcDc, ManagedObjectReference morDestDs, String destFilePath, ManagedObjectReference morDestDc,
+            boolean forceOverwrite) throws Exception {
 
         String srcDsName = getName();
         DatastoreMO destDsMo = new DatastoreMO(_context, morDestDs);
@@ -275,7 +276,8 @@ public class DatastoreMO extends BaseMO {
                 break;
 
             if (parentFileName.startsWith("/")) {
-                // when parent file is not at the same directory as it is, assume it is at parent directory
+                // when parent file is not at the same directory as it is,
+                // assume it is at parent directory
                 // this is only valid in cloud.com primary storage deployment
                 DatastoreFile dsFile = new DatastoreFile(currentVmdkFullPath);
                 String dir = dsFile.getDir();
@@ -304,8 +306,10 @@ public class DatastoreMO extends BaseMO {
         Pair<DatacenterMO, String> dcPair = getOwnerDatacenter();
         String url = getContext().composeDatastoreBrowseUrl(dcPair.second(), fullPath);
 
-        // TODO, VMware currently does not have a formal API to list Datastore directory content,
-        // folloing hacking may have performance hit if datastore has a large number of files
+        // TODO, VMware currently does not have a formal API to list Datastore
+        // directory content,
+        // folloing hacking may have performance hit if datastore has a large
+        // number of files
         return _context.listDatastoreDirContent(url);
     }
 

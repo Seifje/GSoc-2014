@@ -53,15 +53,15 @@ public abstract class ResourceDetailsDaoBase<R extends ResourceDetail> extends G
     public List<R> findDetails(String name, String value, Boolean display) {
         SearchCriteria<R> sc = AllFieldsSearch.create();
 
-        if(display != null){
+        if (display != null) {
             sc.setParameters("display", display);
         }
 
-        if(name != null){
+        if (name != null) {
             sc.setParameters("name", name);
         }
 
-        if(value != null){
+        if (value != null) {
             sc.setParameters("value", value);
         }
 

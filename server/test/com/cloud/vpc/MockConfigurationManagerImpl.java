@@ -88,8 +88,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
     @Inject
     NetworkOfferingDaoImpl _ntwkOffDao;
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#updateConfiguration(org.apache.cloudstack.api.commands.UpdateCfgCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#updateConfiguration(org.
+     * apache.cloudstack.api.commands.UpdateCfgCmd)
      */
     @Override
     public Configuration updateConfiguration(UpdateCfgCmd cmd) {
@@ -97,8 +101,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#createServiceOffering(org.apache.cloudstack.api.commands.CreateServiceOfferingCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#createServiceOffering(org
+     * .apache.cloudstack.api.commands.CreateServiceOfferingCmd)
      */
     @Override
     public ServiceOffering createServiceOffering(CreateServiceOfferingCmd cmd) {
@@ -106,8 +114,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#updateServiceOffering(org.apache.cloudstack.api.commands.UpdateServiceOfferingCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#updateServiceOffering(org
+     * .apache.cloudstack.api.commands.UpdateServiceOfferingCmd)
      */
     @Override
     public ServiceOffering updateServiceOffering(UpdateServiceOfferingCmd cmd) {
@@ -115,8 +127,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#deleteServiceOffering(org.apache.cloudstack.api.commands.DeleteServiceOfferingCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#deleteServiceOffering(org
+     * .apache.cloudstack.api.commands.DeleteServiceOfferingCmd)
      */
     @Override
     public boolean deleteServiceOffering(DeleteServiceOfferingCmd cmd) {
@@ -124,8 +140,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#updateDiskOffering(org.apache.cloudstack.api.commands.UpdateDiskOfferingCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#updateDiskOffering(org.apache
+     * .cloudstack.api.commands.UpdateDiskOfferingCmd)
      */
     @Override
     public DiskOffering updateDiskOffering(UpdateDiskOfferingCmd cmd) {
@@ -133,8 +153,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#deleteDiskOffering(org.apache.cloudstack.api.commands.DeleteDiskOfferingCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#deleteDiskOffering(org.apache
+     * .cloudstack.api.commands.DeleteDiskOfferingCmd)
      */
     @Override
     public boolean deleteDiskOffering(DeleteDiskOfferingCmd cmd) {
@@ -142,8 +166,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#createDiskOffering(org.apache.cloudstack.api.commands.CreateDiskOfferingCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#createDiskOffering(org.apache
+     * .cloudstack.api.commands.CreateDiskOfferingCmd)
      */
     @Override
     public DiskOffering createDiskOffering(CreateDiskOfferingCmd cmd) {
@@ -151,8 +179,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#createPod(long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.configuration.ConfigurationService#createPod(long,
+     * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
+     * java.lang.String, java.lang.String)
      */
     @Override
     public Pod createPod(long zoneId, String name, String startIp, String endIp, String gateway, String netmask, String allocationState) {
@@ -160,8 +192,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#editPod(org.apache.cloudstack.api.commands.UpdatePodCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#editPod(org.apache.cloudstack
+     * .api.commands.UpdatePodCmd)
      */
     @Override
     public Pod editPod(UpdatePodCmd cmd) {
@@ -169,8 +205,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#deletePod(org.apache.cloudstack.api.commands.DeletePodCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#deletePod(org.apache.cloudstack
+     * .api.commands.DeletePodCmd)
      */
     @Override
     public boolean deletePod(DeletePodCmd cmd) {
@@ -178,8 +218,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#createZone(org.apache.cloudstack.api.commands.CreateZoneCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#createZone(org.apache.cloudstack
+     * .api.commands.CreateZoneCmd)
      */
     @Override
     public DataCenter createZone(CreateZoneCmd cmd) {
@@ -187,8 +231,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#editZone(org.apache.cloudstack.api.commands.UpdateZoneCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#editZone(org.apache.cloudstack
+     * .api.commands.UpdateZoneCmd)
      */
     @Override
     public DataCenter editZone(UpdateZoneCmd cmd) {
@@ -196,8 +244,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#deleteZone(org.apache.cloudstack.api.commands.DeleteZoneCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#deleteZone(org.apache.cloudstack
+     * .api.commands.DeleteZoneCmd)
      */
     @Override
     public boolean deleteZone(DeleteZoneCmd cmd) {
@@ -205,18 +257,26 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#createVlanAndPublicIpRange(org.apache.cloudstack.api.commands.CreateVlanIpRangeCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#createVlanAndPublicIpRange
+     * (org.apache.cloudstack.api.commands.CreateVlanIpRangeCmd)
      */
     @Override
     public Vlan createVlanAndPublicIpRange(CreateVlanIpRangeCmd cmd) throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException,
-        ResourceAllocationException {
+            ResourceAllocationException {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#markDefaultZone(java.lang.String, long, long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#markDefaultZone(java.lang
+     * .String, long, long)
      */
     @Override
     public Account markDefaultZone(String accountName, long domainId, long defaultZoneId) {
@@ -224,8 +284,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#deleteVlanIpRange(org.apache.cloudstack.api.commands.DeleteVlanIpRangeCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#deleteVlanIpRange(org.apache
+     * .cloudstack.api.commands.DeleteVlanIpRangeCmd)
      */
     @Override
     public boolean deleteVlanIpRange(DeleteVlanIpRangeCmd cmd) {
@@ -233,8 +297,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#createNetworkOffering(org.apache.cloudstack.api.commands.CreateNetworkOfferingCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#createNetworkOffering(org
+     * .apache.cloudstack.api.commands.CreateNetworkOfferingCmd)
      */
     @Override
     public NetworkOffering createNetworkOffering(CreateNetworkOfferingCmd cmd) {
@@ -242,8 +310,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#updateNetworkOffering(org.apache.cloudstack.api.commands.UpdateNetworkOfferingCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#updateNetworkOffering(org
+     * .apache.cloudstack.api.commands.UpdateNetworkOfferingCmd)
      */
     @Override
     public NetworkOffering updateNetworkOffering(UpdateNetworkOfferingCmd cmd) {
@@ -251,8 +323,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#searchForNetworkOfferings(org.apache.cloudstack.api.commands.ListNetworkOfferingsCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#searchForNetworkOfferings
+     * (org.apache.cloudstack.api.commands.ListNetworkOfferingsCmd)
      */
     @Override
     public List<? extends NetworkOffering> searchForNetworkOfferings(ListNetworkOfferingsCmd cmd) {
@@ -260,8 +336,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#deleteNetworkOffering(org.apache.cloudstack.api.commands.DeleteNetworkOfferingCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#deleteNetworkOffering(org
+     * .apache.cloudstack.api.commands.DeleteNetworkOfferingCmd)
      */
     @Override
     public boolean deleteNetworkOffering(DeleteNetworkOfferingCmd cmd) {
@@ -269,8 +349,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#getNetworkOfferingNetworkRate(long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#getNetworkOfferingNetworkRate
+     * (long)
      */
     @Override
     public Integer getNetworkOfferingNetworkRate(long networkOfferingId, Long dataCenterId) {
@@ -278,7 +362,9 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.configuration.ConfigurationService#getVlanAccount(long)
      */
     @Override
@@ -287,8 +373,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#listNetworkOfferings(com.cloud.network.Networks.TrafficType, boolean)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#listNetworkOfferings(com
+     * .cloud.network.Networks.TrafficType, boolean)
      */
     @Override
     public List<? extends NetworkOffering> listNetworkOfferings(TrafficType trafficType, boolean systemOnly) {
@@ -296,7 +386,9 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.configuration.ConfigurationService#getDefaultPageSize()
      */
     @Override
@@ -304,8 +396,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return 500L;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#getServiceOfferingNetworkRate(long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#getServiceOfferingNetworkRate
+     * (long)
      */
     @Override
     public Integer getServiceOfferingNetworkRate(long serviceOfferingId, Long dataCenterId) {
@@ -313,8 +409,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationService#isOfferingForVpc(com.cloud.offering.NetworkOffering)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationService#isOfferingForVpc(com.cloud
+     * .offering.NetworkOffering)
      */
     @Override
     public boolean isOfferingForVpc(NetworkOffering offering) {
@@ -342,8 +442,11 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;// TODO Auto-generated method stub
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.utils.component.Manager#configure(java.lang.String, java.util.Map)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.utils.component.Manager#configure(java.lang.String,
+     * java.util.Map)
      */
     @Override
     public boolean configure(String name, Map<String, Object> params) throws ConfigurationException {
@@ -351,7 +454,9 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#start()
      */
     @Override
@@ -360,7 +465,9 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#stop()
      */
     @Override
@@ -369,7 +476,9 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#getName()
      */
     @Override
@@ -378,8 +487,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#updateConfiguration(long, java.lang.String, java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationManager#updateConfiguration(long,
+     * java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
     public String updateConfiguration(long userId, String name, String category, String value, String scope, Long resourceId) {
@@ -387,18 +500,26 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#createPod(long, java.lang.String, long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.configuration.ConfigurationManager#createPod(long,
+     * java.lang.String, long, java.lang.String, java.lang.String,
+     * java.lang.String, java.lang.String, java.lang.String, boolean)
      */
     @Override
     public HostPodVO createPod(long userId, String podName, long zoneId, String gateway, String cidr, String startIp, String endIp, String allocationState,
-        boolean skipGatewayOverlapCheck) {
+            boolean skipGatewayOverlapCheck) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#deleteVlanAndPublicIpRange(long, long, com.cloud.user.Account)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationManager#deleteVlanAndPublicIpRange
+     * (long, long, com.cloud.user.Account)
      */
     @Override
     public boolean deleteVlanAndPublicIpRange(long userId, long vlanDbId, Account caller) {
@@ -406,8 +527,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#checkZoneAccess(com.cloud.user.Account, com.cloud.dc.DataCenter)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationManager#checkZoneAccess(com.cloud
+     * .user.Account, com.cloud.dc.DataCenter)
      */
     @Override
     public void checkZoneAccess(Account caller, DataCenter zone) {
@@ -415,8 +540,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#checkDiskOfferingAccess(com.cloud.user.Account, com.cloud.offering.DiskOffering)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationManager#checkDiskOfferingAccess(
+     * com.cloud.user.Account, com.cloud.offering.DiskOffering)
      */
     @Override
     public void checkDiskOfferingAccess(Account caller, DiskOffering dof) {
@@ -424,31 +553,49 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#createNetworkOffering(java.lang.String, java.lang.String, com.cloud.network.Networks.TrafficType, java.lang.String, boolean, com.cloud.offering.NetworkOffering.Availability, java.lang.Integer, java.util.Map, boolean, com.cloud.network.Network.GuestType, boolean, java.lang.Long, boolean, java.util.Map, boolean)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationManager#createNetworkOffering(java
+     * .lang.String, java.lang.String, com.cloud.network.Networks.TrafficType,
+     * java.lang.String, boolean,
+     * com.cloud.offering.NetworkOffering.Availability, java.lang.Integer,
+     * java.util.Map, boolean, com.cloud.network.Network.GuestType, boolean,
+     * java.lang.Long, boolean, java.util.Map, boolean)
      */
     @Override
     public NetworkOfferingVO createNetworkOffering(String name, String displayText, TrafficType trafficType, String tags, boolean specifyVlan, Availability availability,
-        Integer networkRate, Map<Service, Set<Provider>> serviceProviderMap, boolean isDefault, GuestType type, boolean systemOnly, Long serviceOfferingId,
-        boolean conserveMode, Map<Service, Map<Capability, String>> serviceCapabilityMap, boolean specifyIpRanges, boolean isPersistent,
-        Map<NetworkOffering.Detail, String> details, boolean egressDefaultPolicy, Integer maxconn, boolean enableKeepAlive) {
+            Integer networkRate, Map<Service, Set<Provider>> serviceProviderMap, boolean isDefault, GuestType type, boolean systemOnly, Long serviceOfferingId,
+            boolean conserveMode, Map<Service, Map<Capability, String>> serviceCapabilityMap, boolean specifyIpRanges, boolean isPersistent,
+            Map<NetworkOffering.Detail, String> details, boolean egressDefaultPolicy, Integer maxconn, boolean enableKeepAlive) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#createVlanAndPublicIpRange(long, long, long, boolean, java.lang.Long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.cloud.user.Account)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationManager#createVlanAndPublicIpRange
+     * (long, long, long, boolean, java.lang.Long, java.lang.String,
+     * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
+     * com.cloud.user.Account)
      */
     @Override
     public Vlan createVlanAndPublicIpRange(long zoneId, long networkId, long physicalNetworkId, boolean forVirtualNetwork, Long podId, String startIP, String endIP,
-        String vlanGateway, String vlanNetmask, String vlanId, Account vlanOwner, String startIPv6, String endIPv6, String vlanGatewayv6, String vlanCidrv6)
-        throws InsufficientCapacityException, ConcurrentOperationException, InvalidParameterValueException {
+            String vlanGateway, String vlanNetmask, String vlanId, Account vlanOwner, String startIPv6, String endIPv6, String vlanGatewayv6, String vlanCidrv6)
+            throws InsufficientCapacityException, ConcurrentOperationException, InvalidParameterValueException {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#createDefaultSystemNetworks(long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationManager#createDefaultSystemNetworks
+     * (long)
      */
     @Override
     public void createDefaultSystemNetworks(long zoneId) throws ConcurrentOperationException {
@@ -456,8 +603,11 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#deleteAccountSpecificVirtualRanges(long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.configuration.ConfigurationManager#
+     * deleteAccountSpecificVirtualRanges(long)
      */
     @Override
     public boolean releaseAccountSpecificVirtualRanges(long accountId) {
@@ -465,8 +615,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#editPod(long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.configuration.ConfigurationManager#editPod(long,
+     * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
+     * java.lang.String, java.lang.String)
      */
     @Override
     public Pod editPod(long id, String name, String startIp, String endIp, String gateway, String netmask, String allocationStateStr) {
@@ -474,8 +628,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#checkPodCidrSubnets(long, java.lang.Long, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationManager#checkPodCidrSubnets(long,
+     * java.lang.Long, java.lang.String)
      */
     @Override
     public void checkPodCidrSubnets(long zoneId, Long podIdToBeSkipped, String cidr) {
@@ -483,8 +641,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#findPodAllocationState(com.cloud.dc.HostPodVO)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationManager#findPodAllocationState(com
+     * .cloud.dc.HostPodVO)
      */
     @Override
     public AllocationState findPodAllocationState(HostPodVO pod) {
@@ -492,8 +654,12 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#findClusterAllocationState(com.cloud.dc.ClusterVO)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.ConfigurationManager#findClusterAllocationState
+     * (com.cloud.dc.ClusterVO)
      */
     @Override
     public AllocationState findClusterAllocationState(ClusterVO cluster) {
@@ -501,13 +667,19 @@ public class MockConfigurationManagerImpl extends ManagerBase implements Configu
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.ConfigurationManager#createZone(long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Long, com.cloud.dc.DataCenter.NetworkType, java.lang.String, java.lang.String, boolean, boolean)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.configuration.ConfigurationManager#createZone(long,
+     * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
+     * java.lang.String, java.lang.String, java.lang.String, java.lang.Long,
+     * com.cloud.dc.DataCenter.NetworkType, java.lang.String, java.lang.String,
+     * boolean, boolean)
      */
     @Override
     public DataCenterVO createZone(long userId, String zoneName, String dns1, String dns2, String internalDns1, String internalDns2, String guestCidr, String domain,
-        Long domainId, NetworkType zoneType, String allocationState, String networkDomain, boolean isSecurityGroupEnabled, boolean isLocalStorageEnabled, String ip6Dns1,
-        String ip6Dns2) {
+            Long domainId, NetworkType zoneType, String allocationState, String networkDomain, boolean isSecurityGroupEnabled, boolean isLocalStorageEnabled, String ip6Dns1,
+            String ip6Dns2) {
         // TODO Auto-generated method stub
         return null;
     }

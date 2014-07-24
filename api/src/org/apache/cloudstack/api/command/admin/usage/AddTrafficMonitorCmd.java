@@ -32,21 +32,16 @@ import com.cloud.host.Host;
 import com.cloud.user.Account;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "addTrafficMonitor", description = "Adds Traffic Monitor Host for Direct Network Usage", responseObject = TrafficMonitorResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "addTrafficMonitor", description = "Adds Traffic Monitor Host for Direct Network Usage", responseObject = TrafficMonitorResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class AddTrafficMonitorCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(AddTrafficMonitorCmd.class.getName());
     private static final String s_name = "addtrafficmonitorresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ZONE_ID,
-               type = CommandType.UUID,
-               entityType = ZoneResponse.class,
-               required = true,
-               description = "Zone in which to add the external firewall appliance.")
+    @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, required = true, description = "Zone in which to add the external firewall appliance.")
     private Long zoneId;
 
     @Parameter(name = ApiConstants.URL, type = CommandType.STRING, required = true, description = "URL of the traffic monitor Host")
@@ -58,9 +53,9 @@ public class AddTrafficMonitorCmd extends BaseCmd {
     @Parameter(name = ApiConstants.EXCL_ZONES, type = CommandType.STRING, description = "Traffic going into the listed zones will not be metered")
     private String exclZones;
 
-    ///////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getInclZones() {
         return inclZones;
@@ -78,9 +73,9 @@ public class AddTrafficMonitorCmd extends BaseCmd {
         return url;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

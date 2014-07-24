@@ -29,23 +29,33 @@ import com.cloud.utils.db.GenericDaoBase;
 @Local(value = {ConfigurationDao.class})
 public class MockConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, String> implements ConfigurationDao {
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.dao.ConfigurationDao#getConfiguration(java.lang.String, java.util.Map)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.dao.ConfigurationDao#getConfiguration(java.lang
+     * .String, java.util.Map)
      */
     @Override
     public Map<String, String> getConfiguration(String instance, Map<String, ? extends Object> params) {
         return new HashMap<String, String>();
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.dao.ConfigurationDao#getConfiguration(java.util.Map)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.dao.ConfigurationDao#getConfiguration(java.util
+     * .Map)
      */
     @Override
     public Map<String, String> getConfiguration(Map<String, ? extends Object> params) {
         return new HashMap<String, String>();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.configuration.dao.ConfigurationDao#getConfiguration()
      */
     @Override
@@ -54,8 +64,12 @@ public class MockConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, St
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.dao.ConfigurationDao#update(java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.dao.ConfigurationDao#update(java.lang.String,
+     * java.lang.String)
      */
     @Override
     public boolean update(String name, String value) {
@@ -63,8 +77,11 @@ public class MockConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, St
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.dao.ConfigurationDao#getValue(java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.dao.ConfigurationDao#getValue(java.lang.String)
      */
     @Override
     public String getValue(String name) {
@@ -72,8 +89,12 @@ public class MockConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, St
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.dao.ConfigurationDao#getValueAndInitIfNotExist(java.lang.String, java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.dao.ConfigurationDao#getValueAndInitIfNotExist
+     * (java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
     public String getValueAndInitIfNotExist(String name, String category, String initValue, String desc) {
@@ -81,8 +102,12 @@ public class MockConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, St
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.dao.ConfigurationDao#getValueAndInitIfNotExist(java.lang.String, java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.dao.ConfigurationDao#getValueAndInitIfNotExist
+     * (java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
     public String getValueAndInitIfNotExist(String name, String category, String initValue) {
@@ -90,7 +115,9 @@ public class MockConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, St
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.configuration.dao.ConfigurationDao#isPremium()
      */
     @Override
@@ -99,8 +126,11 @@ public class MockConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, St
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.dao.ConfigurationDao#findByName(java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.dao.ConfigurationDao#findByName(java.lang.String)
      */
     @Override
     public ConfigurationVO findByName(String name) {
@@ -108,8 +138,12 @@ public class MockConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, St
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.configuration.dao.ConfigurationDao#update(java.lang.String, java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.configuration.dao.ConfigurationDao#update(java.lang.String,
+     * java.lang.String, java.lang.String)
      */
     @Override
     public boolean update(String name, String category, String value) {

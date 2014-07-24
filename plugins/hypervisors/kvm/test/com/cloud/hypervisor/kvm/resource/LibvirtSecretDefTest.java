@@ -32,8 +32,8 @@ public class LibvirtSecretDefTest extends TestCase {
         LibvirtSecretDef def = new LibvirtSecretDef(use, uuid);
         def.setVolumeVolume(name);
 
-        String expectedXml = "<secret ephemeral='no' private='no'>\n<uuid>" + uuid + "</uuid>\n" +
-                             "<usage type='" + use.toString() + "'>\n<volume>" + name + "</volume>\n</usage>\n</secret>\n";
+        String expectedXml = "<secret ephemeral='no' private='no'>\n<uuid>" + uuid + "</uuid>\n" + "<usage type='" + use.toString() + "'>\n<volume>" + name
+                + "</volume>\n</usage>\n</secret>\n";
 
         assertEquals(expectedXml, def.toString());
     }
@@ -46,8 +46,8 @@ public class LibvirtSecretDefTest extends TestCase {
         LibvirtSecretDef def = new LibvirtSecretDef(use, uuid);
         def.setCephName(name);
 
-        String expectedXml = "<secret ephemeral='no' private='no'>\n<uuid>" + uuid + "</uuid>\n" +
-                             "<usage type='" + use.toString() + "'>\n<name>" + name + "</name>\n</usage>\n</secret>\n";
+        String expectedXml = "<secret ephemeral='no' private='no'>\n<uuid>" + uuid + "</uuid>\n" + "<usage type='" + use.toString() + "'>\n<name>" + name
+                + "</name>\n</usage>\n</secret>\n";
 
         assertEquals(expectedXml, def.toString());
     }

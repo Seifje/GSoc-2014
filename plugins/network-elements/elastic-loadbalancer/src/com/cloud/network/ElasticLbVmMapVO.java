@@ -50,8 +50,10 @@ public class ElasticLbVmMapVO implements InternalIdentity {
     @Column(name = "elb_vm_id")
     private long elbVmId;
 
-    /*@Column(name = "name", table = "load_balancing_rules", insertable = false, updatable = false)
-    private String lbName;*/
+    /*
+     * @Column(name = "name", table = "load_balancing_rules", insertable =
+     * false, updatable = false) private String lbName;
+     */
 
     @Column(name = "public_ip_address", table = "user_ip_address", insertable = false, updatable = false)
     @Enumerated(value = EnumType.STRING)
@@ -79,9 +81,9 @@ public class ElasticLbVmMapVO implements InternalIdentity {
         return elbVmId;
     }
 
-//    public String getLbName() {
-//        return lbName;
-//    }
+    // public String getLbName() {
+    // return lbName;
+    // }
 
     public long getIpAddressId() {
         return ipAddressId;

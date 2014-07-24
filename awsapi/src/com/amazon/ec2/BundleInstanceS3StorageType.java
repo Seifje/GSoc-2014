@@ -25,15 +25,15 @@
 package com.amazon.ec2;
 
 /**
-*  BundleInstanceS3StorageType bean class
-*/
+ * BundleInstanceS3StorageType bean class
+ */
 
 public class BundleInstanceS3StorageType implements org.apache.axis2.databinding.ADBBean {
-    /* This type was generated from the piece of schema that had
-            name = BundleInstanceS3StorageType
-            Namespace URI = http://ec2.amazonaws.com/doc/2012-08-15/
-            Namespace Prefix = ns1
-            */
+    /*
+     * This type was generated from the piece of schema that had name =
+     * BundleInstanceS3StorageType Namespace URI =
+     * http://ec2.amazonaws.com/doc/2012-08-15/ Namespace Prefix = ns1
+     */
 
     private static java.lang.String generatePrefix(java.lang.String namespace) {
         if (namespace.equals("http://ec2.amazonaws.com/doc/2012-08-15/")) {
@@ -43,23 +43,26 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     /**
-    * field for Bucket
-    */
+     * field for Bucket
+     */
 
     protected java.lang.String localBucket;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getBucket() {
         return localBucket;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Bucket
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Bucket
+     */
     public void setBucket(java.lang.String param) {
 
         this.localBucket = param;
@@ -67,23 +70,26 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     /**
-    * field for Prefix
-    */
+     * field for Prefix
+     */
 
     protected java.lang.String localPrefix;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getPrefix() {
         return localPrefix;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Prefix
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Prefix
+     */
     public void setPrefix(java.lang.String param) {
 
         this.localPrefix = param;
@@ -91,33 +97,37 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     /**
-    * field for AwsAccessKeyId
-    */
+     * field for AwsAccessKeyId
+     */
 
     protected java.lang.String localAwsAccessKeyId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localAwsAccessKeyIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getAwsAccessKeyId() {
         return localAwsAccessKeyId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param AwsAccessKeyId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            AwsAccessKeyId
+     */
     public void setAwsAccessKeyId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localAwsAccessKeyIdTracker = true;
         } else {
             localAwsAccessKeyIdTracker = false;
@@ -129,33 +139,37 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     /**
-    * field for UploadPolicy
-    */
+     * field for UploadPolicy
+     */
 
     protected java.lang.String localUploadPolicy;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localUploadPolicyTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getUploadPolicy() {
         return localUploadPolicy;
     }
 
     /**
-       * Auto generated setter method
-       * @param param UploadPolicy
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            UploadPolicy
+     */
     public void setUploadPolicy(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localUploadPolicyTracker = true;
         } else {
             localUploadPolicyTracker = false;
@@ -167,33 +181,37 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     /**
-    * field for UploadPolicySignature
-    */
+     * field for UploadPolicySignature
+     */
 
     protected java.lang.String localUploadPolicySignature;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localUploadPolicySignatureTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getUploadPolicySignature() {
         return localUploadPolicySignature;
     }
 
     /**
-       * Auto generated setter method
-       * @param param UploadPolicySignature
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            UploadPolicySignature
+     */
     public void setUploadPolicySignature(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localUploadPolicySignatureTracker = true;
         } else {
             localUploadPolicySignatureTracker = false;
@@ -205,9 +223,10 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -220,13 +239,13 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, parentQName) {
 
@@ -239,14 +258,13 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
         java.lang.String prefix = null;
         java.lang.String namespace = null;
@@ -451,8 +469,8 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -464,10 +482,10 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -477,10 +495,10 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -503,7 +521,7 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -531,7 +549,8 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -565,8 +584,8 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -585,9 +604,9 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
         java.util.ArrayList elementList = new java.util.ArrayList();
@@ -641,17 +660,20 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static BundleInstanceS3StorageType parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             BundleInstanceS3StorageType object = new BundleInstanceS3StorageType();
 
@@ -676,7 +698,7 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
                         java.lang.String type = fullTypeName.substring(fullTypeName.indexOf(":") + 1);
 
                         if (!"BundleInstanceS3StorageType".equals(type)) {
-                            //find namespace for the prefix
+                            // find namespace for the prefix
                             java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
                             return (BundleInstanceS3StorageType)com.amazon.ec2.ExtensionMapper.getTypeObject(nsUri, type, reader);
                         }
@@ -685,7 +707,8 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
 
                 }
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -702,10 +725,11 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -720,10 +744,11 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -738,7 +763,7 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -755,7 +780,7 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -764,8 +789,7 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
                 while (!reader.isStartElement() && !reader.isEndElement())
                     reader.next();
 
-                if (reader.isStartElement() &&
-                    new javax.xml.namespace.QName("http://ec2.amazonaws.com/doc/2012-08-15/", "uploadPolicySignature").equals(reader.getName())) {
+                if (reader.isStartElement() && new javax.xml.namespace.QName("http://ec2.amazonaws.com/doc/2012-08-15/", "uploadPolicySignature").equals(reader.getName())) {
 
                     java.lang.String content = reader.getElementText();
 
@@ -773,7 +797,7 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -783,7 +807,8 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
                     reader.next();
 
                 if (reader.isStartElement())
-                    // A start element we are not expecting indicates a trailing invalid property
+                    // A start element we are not expecting indicates a trailing
+                    // invalid property
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
 
             } catch (javax.xml.stream.XMLStreamException e) {
@@ -793,6 +818,6 @@ public class BundleInstanceS3StorageType implements org.apache.axis2.databinding
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

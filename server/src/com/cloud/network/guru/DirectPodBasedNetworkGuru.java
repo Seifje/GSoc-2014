@@ -94,8 +94,8 @@ public class DirectPodBasedNetworkGuru extends DirectNetworkGuru {
     }
 
     @Override
-    public NicProfile allocate(Network network, NicProfile nic, VirtualMachineProfile vm) throws InsufficientVirtualNetworkCapcityException,
-        InsufficientAddressCapacityException, ConcurrentOperationException {
+    public NicProfile allocate(Network network, NicProfile nic, VirtualMachineProfile vm) throws InsufficientVirtualNetworkCapcityException, InsufficientAddressCapacityException,
+            ConcurrentOperationException {
 
         DataCenterVO dc = _dcDao.findById(network.getDataCenterId());
         ReservationStrategy rsStrategy = ReservationStrategy.Start;
@@ -127,7 +127,7 @@ public class DirectPodBasedNetworkGuru extends DirectNetworkGuru {
     @Override
     @DB
     public void reserve(NicProfile nic, Network network, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
-        throws InsufficientVirtualNetworkCapcityException, InsufficientAddressCapacityException, ConcurrentOperationException {
+            throws InsufficientVirtualNetworkCapcityException, InsufficientAddressCapacityException, ConcurrentOperationException {
 
         String oldIp = nic.getIp4Address();
         boolean getNewIp = false;
@@ -135,7 +135,8 @@ public class DirectPodBasedNetworkGuru extends DirectNetworkGuru {
         if (oldIp == null) {
             getNewIp = true;
         } else {
-            // we need to get a new ip address if we try to deploy a vm in a different pod
+            // we need to get a new ip address if we try to deploy a vm in a
+            // different pod
             final IPAddressVO ipVO = _ipAddressDao.findByIpAndSourceNetworkId(network.getId(), oldIp);
             if (ipVO != null) {
                 PodVlanMapVO mapVO = _podVlanDao.listPodVlanMapsByVlan(ipVO.getVlanId());
@@ -143,7 +144,7 @@ public class DirectPodBasedNetworkGuru extends DirectNetworkGuru {
                     Transaction.execute(new TransactionCallbackNoReturn() {
                         @Override
                         public void doInTransactionWithoutResult(TransactionStatus status) {
-                            //release the old ip here
+                            // release the old ip here
                             _ipAddrMgr.markIpAsUnavailable(ipVO.getId());
                             _ipAddressDao.unassignIpAddress(ipVO.getId());
                         }
@@ -156,7 +157,9 @@ public class DirectPodBasedNetworkGuru extends DirectNetworkGuru {
         }
 
         if (getNewIp) {
-            //we don't set reservationStrategy to Create because we need this method to be called again for the case when vm fails to deploy in Pod1, and we try to redeploy it in Pod2
+            // we don't set reservationStrategy to Create because we need this
+            // method to be called again for the case when vm fails to deploy in
+            // Pod1, and we try to redeploy it in Pod2
             getIp(nic, dest.getPod(), vm, network);
         }
 
@@ -167,7 +170,7 @@ public class DirectPodBasedNetworkGuru extends DirectNetworkGuru {
 
     @DB
     protected void getIp(final NicProfile nic, final Pod pod, final VirtualMachineProfile vm, final Network network) throws InsufficientVirtualNetworkCapcityException,
-        InsufficientAddressCapacityException, ConcurrentOperationException {
+            InsufficientAddressCapacityException, ConcurrentOperationException {
         final DataCenter dc = _dcDao.findById(pod.getDataCenterId());
         if (nic.getIp4Address() == null) {
             Transaction.execute(new TransactionCallbackWithExceptionNoReturn<InsufficientAddressCapacityException>() {
@@ -179,14 +182,15 @@ public class DirectPodBasedNetworkGuru extends DirectNetworkGuru {
                     if (!podRefs.isEmpty()) {
                         podRangeGateway = _vlanDao.findById(podRefs.get(0).getVlanDbId()).getVlanGateway();
                     }
-                    //Get ip address from the placeholder and don't allocate a new one
+                    // Get ip address from the placeholder and don't
+                    // allocate a new one
                     if (vm.getType() == VirtualMachine.Type.DomainRouter) {
                         Nic placeholderNic = _networkModel.getPlaceholderNicForRouter(network, pod.getId());
                         if (placeholderNic != null) {
                             IPAddressVO userIp = _ipAddressDao.findByIpAndSourceNetworkId(network.getId(), placeholderNic.getIp4Address());
                             ip = PublicIp.createFromAddrAndVlan(userIp, _vlanDao.findById(userIp.getVlanId()));
-                            s_logger.debug("Nic got an ip address " + placeholderNic.getIp4Address() + " stored in placeholder nic for the network " + network +
-                                " and gateway " + podRangeGateway);
+                            s_logger.debug("Nic got an ip address " + placeholderNic.getIp4Address() + " stored in placeholder nic for the network " + network + " and gateway "
+                                    + podRangeGateway);
                         }
                     }
 
@@ -206,7 +210,8 @@ public class DirectPodBasedNetworkGuru extends DirectNetworkGuru {
                     nic.setReservationId(String.valueOf(ip.getVlanTag()));
                     nic.setMacAddress(ip.getMacAddress());
 
-                    //save the placeholder nic if the vm is the Virtual router
+                    // save the placeholder nic if the vm is the Virtual
+                    // router
                     if (vm.getType() == VirtualMachine.Type.DomainRouter) {
                         Nic placeholderNic = _networkModel.getPlaceholderNicForRouter(network, pod.getId());
                         if (placeholderNic == null) {

@@ -49,9 +49,8 @@ import com.cloud.utils.net.NfsUtils;
 import com.cloud.utils.script.Script;
 
 /**
- * SecondaryStorageDiscoverer is used to discover secondary
- * storage servers and make sure everything it can do is
- * correct.
+ * SecondaryStorageDiscoverer is used to discover secondary storage servers and
+ * make sure everything it can do is correct.
  */
 @Local(value = Discoverer.class)
 public class SecondaryStorageDiscoverer extends DiscovererBase implements Discoverer {
@@ -75,10 +74,9 @@ public class SecondaryStorageDiscoverer extends DiscovererBase implements Discov
     }
 
     @Override
-    public Map<? extends ServerResource, Map<String, String>>
-        find(long dcId, Long podId, Long clusterId, URI uri, String username, String password, List<String> hostTags) {
-        if (!uri.getScheme().equalsIgnoreCase("nfs") && !uri.getScheme().equalsIgnoreCase("cifs") && !uri.getScheme().equalsIgnoreCase("file") &&
-            !uri.getScheme().equalsIgnoreCase("iso") && !uri.getScheme().equalsIgnoreCase("dummy")) {
+    public Map<? extends ServerResource, Map<String, String>> find(long dcId, Long podId, Long clusterId, URI uri, String username, String password, List<String> hostTags) {
+        if (!uri.getScheme().equalsIgnoreCase("nfs") && !uri.getScheme().equalsIgnoreCase("cifs") && !uri.getScheme().equalsIgnoreCase("file")
+                && !uri.getScheme().equalsIgnoreCase("iso") && !uri.getScheme().equalsIgnoreCase("dummy")) {
             s_logger.debug("It's not NFS or file or ISO, so not a secondary storage server: " + uri.toString());
             return null;
         }

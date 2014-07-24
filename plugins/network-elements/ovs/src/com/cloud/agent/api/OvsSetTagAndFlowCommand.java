@@ -16,7 +16,6 @@
 // under the License.
 package com.cloud.agent.api;
 
-
 public class OvsSetTagAndFlowCommand extends Command {
     String vlans;
     String vmName;
@@ -49,8 +48,7 @@ public class OvsSetTagAndFlowCommand extends Command {
         return tag;
     }
 
-    public OvsSetTagAndFlowCommand(String vmName, String tag, String vlans,
-            String seqno, Long vmId) {
+    public OvsSetTagAndFlowCommand(String vmName, String tag, String vlans, String seqno, Long vmId) {
         this.vmName = vmName;
         this.tag = tag;
         this.vlans = vlans;

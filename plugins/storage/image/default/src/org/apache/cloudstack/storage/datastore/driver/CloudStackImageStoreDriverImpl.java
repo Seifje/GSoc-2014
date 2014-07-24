@@ -95,12 +95,12 @@ public class CloudStackImageStoreDriverImpl extends BaseImageStoreDriverImpl {
         if (sslCfg != null) {
             _sslCopy = Boolean.parseBoolean(sslCfg);
         }
-        if(_sslCopy && (_ssvmUrlDomain == null || _ssvmUrlDomain.isEmpty())){
+        if (_sslCopy && (_ssvmUrlDomain == null || _ssvmUrlDomain.isEmpty())) {
             s_logger.warn("Empty secondary storage url domain, ignoring SSL");
             _sslCopy = false;
         }
         if (_sslCopy) {
-            if(_ssvmUrlDomain.startsWith("*")) {
+            if (_ssvmUrlDomain.startsWith("*")) {
                 hostname = ipAddress.replace(".", "-");
                 hostname = hostname + _ssvmUrlDomain.substring(1);
             } else {
@@ -117,7 +117,7 @@ public class CloudStackImageStoreDriverImpl extends BaseImageStoreDriverImpl {
         EndPoint ep = _epSelector.select(store);
 
         // Delete Symlink at ssvm. In case of volume also delete the volume.
-        DeleteEntityDownloadURLCommand cmd = new DeleteEntityDownloadURLCommand(installPath, entityType, downloadUrl, ((ImageStoreEntity) store).getMountPoint());
+        DeleteEntityDownloadURLCommand cmd = new DeleteEntityDownloadURLCommand(installPath, entityType, downloadUrl, ((ImageStoreEntity)store).getMountPoint());
 
         Answer ans = null;
         if (ep == null) {

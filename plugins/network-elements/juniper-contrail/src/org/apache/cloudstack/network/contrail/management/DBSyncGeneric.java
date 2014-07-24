@@ -34,9 +34,10 @@ public class DBSyncGeneric {
 
     private static final Logger s_logger = Logger.getLogger(DBSyncGeneric.class);
 
-    /* for each synchronization VNC class, following methods
-     * needs to be defined.
-     * For e.q : VirtualNetwork class should have createMethodPrefix+"VirtualNetwork" etc
+    /*
+     * for each synchronization VNC class, following methods needs to be
+     * defined. For e.q : VirtualNetwork class should have
+     * createMethodPrefix+"VirtualNetwork" etc
      */
     private final String createMethodPrefix = "create";
     private final String deleteMethodPrefix = "delete";
@@ -44,14 +45,16 @@ public class DBSyncGeneric {
     private final String filterMethodPrefix = "filter";
     private final String equalMethodPrefix = "equal";
     private final String syncMethodPrefix = "sync";
-    /* default db, vnc comparators are implemented based on uuid values,
-     * if user defined comparators are required, then only add these methods
+    /*
+     * default db, vnc comparators are implemented based on uuid values, if user
+     * defined comparators are required, then only add these methods
      */
     private final String dbComparatorMethodPrefix = "dbComparator";
     private final String vncComparatorMethodPrefix = "vncComparator";
 
-    /* sync methods implementation object, if implemented in seperate class
-     * set the scope object
+    /*
+     * sync methods implementation object, if implemented in seperate class set
+     * the scope object
      */
     private Object _scope;
     private HashMap<String, Method> _methodMap;
@@ -103,7 +106,7 @@ public class DBSyncGeneric {
     }
 
     /*
-     *  This API can be used to sync a particular vnc class
+     * This API can be used to sync a particular vnc class
      */
     public Boolean sync(Class<?> cls, Object... parameters) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         String syncMethod = syncMethodPrefix + getClassName(cls);
@@ -233,7 +236,7 @@ public class DBSyncGeneric {
     }
 
     public void syncCollections(Class<?> cls, Collection<?> lhsList, Collection<?> rhsList, boolean modifyMode, SyncStats stats) throws InvocationTargetException,
-        IllegalAccessException, NoSuchMethodException {
+            IllegalAccessException, NoSuchMethodException {
         java.util.Iterator<?> lhsIter = lhsList.iterator();
         java.util.Iterator<?> rhsIter = rhsList.iterator();
 
@@ -321,10 +324,11 @@ public class DBSyncGeneric {
             }
         }
 
-        /* return value of this method indicates state of the db & vnc before sync
-         * false: out of sync, true: in sync;
-         * it does not indicate whether sync operation is performed or not;
-         * Actual sync is done only if _syncMode is UPDATE
+        /*
+         * return value of this method indicates state of the db & vnc before
+         * sync false: out of sync, true: in sync; it does not indicate whether
+         * sync operation is performed or not; Actual sync is done only if
+         * _syncMode is UPDATE
          */
         return stats.isSynchronized();
     }

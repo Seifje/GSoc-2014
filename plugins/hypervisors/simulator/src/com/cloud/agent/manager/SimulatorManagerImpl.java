@@ -412,7 +412,8 @@ public class SimulatorManagerImpl extends ManagerBase implements SimulatorManage
                     answer = this.storageHandler.handleStorageCommands((StorageSubSystemCommand)cmd);
                 } else if (cmd instanceof GetRouterAlertsCommand) {
                     answer = new Answer(cmd);
-                } else if (cmd instanceof VpnUsersCfgCommand || cmd instanceof RemoteAccessVpnCfgCommand || cmd instanceof SetMonitorServiceCommand || cmd instanceof AggregationControlCommand) {
+                } else if (cmd instanceof VpnUsersCfgCommand || cmd instanceof RemoteAccessVpnCfgCommand || cmd instanceof SetMonitorServiceCommand
+                        || cmd instanceof AggregationControlCommand) {
                     answer = new Answer(cmd);
                 } else {
                     s_logger.error("Simulator does not implement command of type " + cmd.toString());

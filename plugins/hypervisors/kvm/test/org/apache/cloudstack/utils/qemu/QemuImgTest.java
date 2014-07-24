@@ -31,7 +31,6 @@ import org.junit.Test;
 
 import org.apache.cloudstack.utils.qemu.QemuImg.PhysicalDiskFormat;
 
-
 @Ignore
 public class QemuImgTest {
 
@@ -108,7 +107,7 @@ public class QemuImgTest {
         qemu.create(file, options);
 
         String allocatedSize = Script.runSimpleBashScript(String.format("ls -alhs %s | awk '{print $1}'", file));
-        String declaredSize  = Script.runSimpleBashScript(String.format("ls -alhs %s | awk '{print $6}'", file));
+        String declaredSize = Script.runSimpleBashScript(String.format("ls -alhs %s | awk '{print $6}'", file));
 
         assertFalse(allocatedSize.equals(declaredSize));
 

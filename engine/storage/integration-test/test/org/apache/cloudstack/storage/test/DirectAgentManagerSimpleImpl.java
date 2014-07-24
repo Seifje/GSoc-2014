@@ -153,8 +153,8 @@ public class DirectAgentManagerSimpleImpl extends ManagerBase implements AgentMa
                 String password = clusterDetailsDao.findDetail(cluster.getId(), "password").getValue();
                 VmwareServerDiscoverer discover = new VmwareServerDiscoverer();
 
-                Map<? extends ServerResource, Map<String, String>> resources =
-                    discover.find(host.getDataCenterId(), host.getPodId(), host.getClusterId(), uri, userName, password, null);
+                Map<? extends ServerResource, Map<String, String>> resources = discover.find(host.getDataCenterId(), host.getPodId(), host.getClusterId(), uri, userName, password,
+                        null);
                 for (Map.Entry<? extends ServerResource, Map<String, String>> entry : resources.entrySet()) {
                     resource = entry.getKey();
                 }
@@ -241,7 +241,8 @@ public class DirectAgentManagerSimpleImpl extends ManagerBase implements AgentMa
         try {
             return _statusStateMachine.transitTo(host, e, host.getId(), _hostDao);
         } catch (NoTransitionException e1) {
-            e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e1.printStackTrace(); // To change body of catch statement use File
+                                  // | Settings | File Templates.
         }
         return true;
 

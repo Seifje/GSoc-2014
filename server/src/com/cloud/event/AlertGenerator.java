@@ -72,16 +72,17 @@ public class AlertGenerator {
         String configKey = Config.PublishAlertEvent.key();
         String value = s_configDao.getValue(configKey);
         boolean configValue = Boolean.parseBoolean(value);
-        if(!configValue)
+        if (!configValue)
             return;
         try {
             s_eventBus = ComponentContext.getComponent(EventBus.class);
         } catch (NoSuchBeanDefinitionException nbe) {
-            return; // no provider is configured to provide events bus, so just return
+            return; // no provider is configured to provide events bus, so just
+            // return
         }
 
-        org.apache.cloudstack.framework.events.Event event =
-            new org.apache.cloudstack.framework.events.Event(ManagementService.Name, EventCategory.ALERT_EVENT.getName(), alertType, null, null);
+        org.apache.cloudstack.framework.events.Event event = new org.apache.cloudstack.framework.events.Event(ManagementService.Name, EventCategory.ALERT_EVENT.getName(),
+                alertType, null, null);
 
         Map<String, String> eventDescription = new HashMap<String, String>();
         DataCenterVO dc = s_dcDao.findById(dataCenterId);

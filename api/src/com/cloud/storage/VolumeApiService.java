@@ -35,8 +35,8 @@ public interface VolumeApiService {
      * Creates the database object for a volume based on the given criteria
      *
      * @param cmd
-     *            the API command wrapping the criteria (account/domainId [admin only], zone, diskOffering, snapshot,
-     *            name)
+     *            the API command wrapping the criteria (account/domainId [admin
+     *            only], zone, diskOffering, snapshot, name)
      * @return the volume object
      */
     Volume allocVolume(CreateVolumeCmd cmd) throws ResourceAllocationException;
@@ -45,8 +45,8 @@ public interface VolumeApiService {
      * Creates the volume based on the given criteria
      *
      * @param cmd
-     *            the API command wrapping the criteria (account/domainId [admin only], zone, diskOffering, snapshot,
-     *            name)
+     *            the API command wrapping the criteria (account/domainId [admin
+     *            only], zone, diskOffering, snapshot, name)
      * @return the volume object
      */
     Volume createVolume(CreateVolumeCmd cmd);
@@ -66,11 +66,12 @@ public interface VolumeApiService {
     /**
      * Uploads the volume to secondary storage
      *
-     * @param UploadVolumeCmdByAdmin cmd
+     * @param UploadVolumeCmdByAdmin
+     *            cmd
      *
      * @return Volume object
      */
-    Volume uploadVolume(UploadVolumeCmd cmd)    throws ResourceAllocationException;
+    Volume uploadVolume(UploadVolumeCmd cmd) throws ResourceAllocationException;
 
     boolean deleteVolume(long volumeId, Account caller) throws ConcurrentOperationException;
 
@@ -88,9 +89,9 @@ public interface VolumeApiService {
      * Extracts the volume to a particular location.
      *
      * @param cmd
-     *            the command specifying url (where the volume needs to be extracted to), zoneId (zone where the volume
-     *            exists),
-     *            id (the id of the volume)
+     *            the command specifying url (where the volume needs to be
+     *            extracted to), zoneId (zone where the volume exists), id (the
+     *            id of the volume)
      *
      */
     String extractVolume(ExtractVolumeCmd cmd);

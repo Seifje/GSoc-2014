@@ -16,13 +16,9 @@
 // under the License.
 package org.apache.cloudstack.api.response;
 
-
 import com.google.gson.annotations.SerializedName;
 import org.apache.cloudstack.api.BaseResponse;
 import com.cloud.serializer.Param;
-
-
-
 
 public class StorageTagResponse extends BaseResponse {
     @SerializedName("id")
@@ -37,30 +33,28 @@ public class StorageTagResponse extends BaseResponse {
     @Param(description = "the name of the storage tag")
     private String name;
 
-	public String getId() {
+    public String getId() {
         return id;
-	}
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public long getPoolId() {
-		return poolId;
-	}
+    public long getPoolId() {
+        return poolId;
+    }
 
-	public void setPoolId(long l) {
-		this.poolId = l;
-	}
+    public void setPoolId(long l) {
+        this.poolId = l;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-    
+    public void setName(String name) {
+        this.name = name;
+    }
 
 }

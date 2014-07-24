@@ -38,11 +38,11 @@ public class OptionParser {
      * Parse options, capture values and return rest of arguments.
      *
      * @param args
-     *          command line arguments to parse
+     *            command line arguments to parse
      * @param startFrom
-     *          number of first argument to start parsing from
+     *            number of first argument to start parsing from
      * @param options
-     *          options to fill with values
+     *            options to fill with values
      * @return rest of command line after first non-option or "--" separator
      */
     public static String[] parseOptions(String args[], int startFrom, Option options[]) {
@@ -72,7 +72,8 @@ public class OptionParser {
 
             Option option = optionMap.get(optionName);
 
-            // If option is not found, then this is argument, unless is starts with
+            // If option is not found, then this is argument, unless is starts
+            // with
             // dash
             if (option == null)
                 if (!optionName.startsWith("-"))
@@ -97,8 +98,7 @@ public class OptionParser {
     /* Example. */
     public static void main(String args[]) {
         if (args.length == 0)
-            args = new String[] {"--help", "--foo", "fooval", "--bar", "123", "-v", "--verbose", "-v", "-a", "a1", "-aa", "a2", "-aaa", "a3", "rest", "of",
-        "arguments"};
+            args = new String[] {"--help", "--foo", "fooval", "--bar", "123", "-v", "--verbose", "-v", "-a", "a1", "-aa", "a2", "-aaa", "a3", "rest", "of", "arguments"};
 
         StringOption foo = new StringOption() {
             {

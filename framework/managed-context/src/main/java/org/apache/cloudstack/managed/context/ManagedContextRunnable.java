@@ -32,9 +32,10 @@ public abstract class ManagedContextRunnable implements Runnable {
     private static ManagedContext context;
     private static boolean managedContext = false;
 
-    /* This is slightly dirty, but the idea is that we only save the ManagedContext
-     * in a static global.  Any ManagedContextListener can be a fully managed object
-     * and not have to rely on global statics
+    /*
+     * This is slightly dirty, but the idea is that we only save the
+     * ManagedContext in a static global. Any ManagedContextListener can be a
+     * fully managed object and not have to rely on global statics
      */
     public static ManagedContext initializeGlobalContext(ManagedContext context) {
         setManagedContext(true);

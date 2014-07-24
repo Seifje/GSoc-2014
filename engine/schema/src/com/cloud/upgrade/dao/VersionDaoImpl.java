@@ -136,7 +136,8 @@ public class VersionDaoImpl extends GenericDaoBase<VersionVO, Long> implements V
                     throw new CloudRuntimeException("Version table contains records for which upgrade wasn't completed");
                 }
 
-                // Use nics table information and is_static_nat field from firewall_rules table to determine version information
+                // Use nics table information and is_static_nat field from
+                // firewall_rules table to determine version information
                 try {
                     s_logger.debug("Version table exists, but it's empty; have to confirm that version is 2.2.2");
                     pstmt = conn.prepareStatement("SHOW TABLES LIKE 'nics'");
@@ -146,8 +147,8 @@ public class VersionDaoImpl extends GenericDaoBase<VersionVO, Long> implements V
                     } else {
                         pstmt = conn.prepareStatement("SELECT is_static_nat from firewall_rules");
                         pstmt.executeQuery();
-                        throw new CloudRuntimeException("Unable to determine the current version, version table exists and empty, " +
-                            "nics table doesn't exist, is_static_nat field exists in firewall_rules table");
+                        throw new CloudRuntimeException("Unable to determine the current version, version table exists and empty, "
+                                + "nics table doesn't exist, is_static_nat field exists in firewall_rules table");
                     }
                 } catch (SQLException e) {
                     s_logger.debug("Assuming the exception means static_nat field doesn't exist in firewall_rules table, returning version 2.2.2");

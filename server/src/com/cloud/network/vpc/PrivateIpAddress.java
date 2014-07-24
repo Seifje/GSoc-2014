@@ -30,8 +30,10 @@ public class PrivateIpAddress implements PrivateIp {
      * @param broadcastUri
      * @param gateway
      * @param netmask
-     * @param macAddress TODO
-     * @param physicalNetworkId TODO
+     * @param macAddress
+     *            TODO
+     * @param physicalNetworkId
+     *            TODO
      */
     public PrivateIpAddress(PrivateIpVO privateIp, String broadcastUri, String gateway, String netmask, String macAddress) {
         super();

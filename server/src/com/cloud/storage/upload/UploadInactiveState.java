@@ -38,7 +38,7 @@ public abstract class UploadInactiveState extends UploadState {
 
     @Override
     public String handleDisconnect() {
-        //ignore and stay put
+        // ignore and stay put
         return getName();
     }
 

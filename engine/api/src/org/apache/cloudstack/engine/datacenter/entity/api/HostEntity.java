@@ -26,7 +26,8 @@ public interface HostEntity extends DataCenterResourceEntity {
     Long getTotalMemory();
 
     /**
-     * @return # of cores in a machine.  Note two cpus with two cores each returns 4.
+     * @return # of cores in a machine. Note two cpus with two cores each
+     *         returns 4.
      */
     Integer getCpus();
 

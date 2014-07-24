@@ -35,8 +35,7 @@ import com.cloud.event.EventTypes;
 import com.cloud.network.as.AutoScalePolicy;
 import com.cloud.user.Account;
 
-@APICommand(name = "deleteAutoScalePolicy", description = "Deletes a autoscale policy.", responseObject = SuccessResponse.class, entityType = {AutoScalePolicy.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteAutoScalePolicy", description = "Deletes a autoscale policy.", responseObject = SuccessResponse.class, entityType = {AutoScalePolicy.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteAutoScalePolicyCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(DeleteAutoScalePolicyCmd.class.getName());
     private static final String s_name = "deleteautoscalepolicyresponse";
@@ -45,11 +44,7 @@ public class DeleteAutoScalePolicyCmd extends BaseAsyncCmd {
     // ///////////////////////////////////////////////////
 
     @ACL(accessType = AccessType.OperateEntry)
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = AutoScalePolicyResponse.class,
-               required = true,
-               description = "the ID of the autoscale policy")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = AutoScalePolicyResponse.class, required = true, description = "the ID of the autoscale policy")
     private Long id;
 
     // ///////////////////////////////////////////////////
@@ -76,8 +71,10 @@ public class DeleteAutoScalePolicyCmd extends BaseAsyncCmd {
             return autoScalePolicy.getAccountId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are
-// tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are
+        // tracked
     }
 
     @Override

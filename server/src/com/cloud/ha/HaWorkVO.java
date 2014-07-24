@@ -46,7 +46,7 @@ public class HaWorkVO implements InternalIdentity {
     private Long id;
 
     @Column(name = "instance_id", updatable = false, nullable = false)
-    private long instanceId;    // vm_instance id
+    private long instanceId; // vm_instance id
 
     @Column(name = "mgmt_server_id", nullable = true)
     private Long serverId;
@@ -195,16 +195,7 @@ public class HaWorkVO implements InternalIdentity {
 
     @Override
     public String toString() {
-        return new StringBuilder("HAWork[").append(id)
-            .append("-")
-            .append(workType)
-            .append("-")
-            .append(instanceId)
-            .append("-")
-            .append(previousState)
-            .append("-")
-            .append(step)
-            .append("]")
-            .toString();
+        return new StringBuilder("HAWork[").append(id).append("-").append(workType).append("-").append(instanceId).append("-").append(previousState).append("-").append(step)
+                .append("]").toString();
     }
 }

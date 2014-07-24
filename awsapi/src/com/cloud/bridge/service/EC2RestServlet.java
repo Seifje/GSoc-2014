@@ -190,8 +190,8 @@ public class EC2RestServlet extends HttpServlet {
     }
 
     /**
-     * We build the path to where the keystore holding the WS-Security X509 certificates
-     * are stored.
+     * We build the path to where the keystore holding the WS-Security X509
+     * certificates are stored.
      */
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -225,7 +225,10 @@ public class EC2RestServlet extends HttpServlet {
             if (installedPath == null)
                 installedPath = System.getProperty("catalina.home");
             String webappPath = config.getServletContext().getRealPath("/");
-            //pathToKeystore = new String( installedPath + File.separator + "webapps" + File.separator + webappName + File.separator + "WEB-INF" + File.separator + "classes" + File.separator + keystore );
+            // pathToKeystore = new String( installedPath + File.separator +
+            // "webapps" + File.separator + webappName + File.separator +
+            // "WEB-INF" + File.separator + "classes" + File.separator +
+            // keystore );
             pathToKeystore = new String(webappPath + File.separator + "WEB-INF" + File.separator + "classes" + File.separator + keystore);
         }
     }
@@ -372,9 +375,14 @@ public class EC2RestServlet extends HttpServlet {
 
             if (e.getCause() != null && e.getCause() instanceof AxisFault) {
                 String errorCode = ((AxisFault)e.getCause()).getFaultCode().getLocalPart();
-                if (errorCode.startsWith("Client.")) // only in a SOAP API client error code is prefixed with Client.
+                if (errorCode.startsWith("Client.")) // only in a SOAP API
+                                                     // client error code is
+                                                     // prefixed with Client.
                     errorCode = errorCode.split("Client.")[1];
-                else if (errorCode.startsWith("Server.")) // only in a SOAP API server error code is prefixed with Server.
+                else if (errorCode.startsWith("Server.")) // only in a SOAP API
+                                                          // server error code
+                                                          // is prefixed with
+                                                          // Server.
                     errorCode = errorCode.split("Server.")[1];
                 faultResponse(response, errorCode, e.getMessage());
             } else {
@@ -401,7 +409,8 @@ public class EC2RestServlet extends HttpServlet {
     }
 
     /**
-     * Provide an easy way to determine the version of the implementation running.
+     * Provide an easy way to determine the version of the implementation
+     * running.
      *
      * This is an unauthenticated REST call.
      */
@@ -412,20 +421,21 @@ public class EC2RestServlet extends HttpServlet {
     }
 
     /**
-     * This request registers the Cloud.com account holder to the EC2 service.   The Cloud.com
-     * account holder saves his API access and secret keys with the EC2 service so that
-     * the EC2 service can make Cloud.com API calls on his behalf.   The given API access
-     * and secret key are saved into the "usercredentials" database table.
+     * This request registers the Cloud.com account holder to the EC2 service.
+     * The Cloud.com account holder saves his API access and secret keys with
+     * the EC2 service so that the EC2 service can make Cloud.com API calls on
+     * his behalf. The given API access and secret key are saved into the
+     * "usercredentials" database table.
      *
-     * This is an unauthenticated REST call.   The only required parameters are 'accesskey' and
-     * 'secretkey'.
+     * This is an unauthenticated REST call. The only required parameters are
+     * 'accesskey' and 'secretkey'.
      *
-     * To verify that the given keys represent an existing account they are used to execute the
-     * Cloud.com's listAccounts API function.   If the keys do not represent a valid account the
-     * listAccounts function will fail.
+     * To verify that the given keys represent an existing account they are used
+     * to execute the Cloud.com's listAccounts API function. If the keys do not
+     * represent a valid account the listAccounts function will fail.
      *
-     * A user can call this REST function any number of times, on each call the Cloud.com secret
-     * key is simply over writes any previously stored value.
+     * A user can call this REST function any number of times, on each call the
+     * Cloud.com secret key is simply over writes any previously stored value.
      *
      * As with all REST calls HTTPS should be used to ensure their security.
      */
@@ -472,20 +482,21 @@ public class EC2RestServlet extends HttpServlet {
     }
 
     /**
-     * The SOAP API for EC2 uses WS-Security to sign all client requests.  This requires that
-     * the client have a public/private key pair and the public key defined by a X509 certificate.
-     * Thus in order for a Cloud.com account holder to use the EC2's SOAP API he must register
-     * his X509 certificate with the EC2 service.   This function allows the Cloud.com account
-     * holder to "load" his X509 certificate into the service.   Note, that the SetUserKeys REST
-     * function must be called before this call.
+     * The SOAP API for EC2 uses WS-Security to sign all client requests. This
+     * requires that the client have a public/private key pair and the public
+     * key defined by a X509 certificate. Thus in order for a Cloud.com account
+     * holder to use the EC2's SOAP API he must register his X509 certificate
+     * with the EC2 service. This function allows the Cloud.com account holder
+     * to "load" his X509 certificate into the service. Note, that the
+     * SetUserKeys REST function must be called before this call.
      *
-     * This is an authenticated REST call and as such must contain all the required REST parameters
-     * including: Signature, Timestamp, Expires, etc.   The signature is calculated using the
-     * Cloud.com account holder's API access and secret keys and the Amazon defined EC2 signature
-     * algorithm.
+     * This is an authenticated REST call and as such must contain all the
+     * required REST parameters including: Signature, Timestamp, Expires, etc.
+     * The signature is calculated using the Cloud.com account holder's API
+     * access and secret keys and the Amazon defined EC2 signature algorithm.
      *
-     * A user can call this REST function any number of times, on each call the X509 certificate
-     * simply over writes any previously stored value.
+     * A user can call this REST function any number of times, on each call the
+     * X509 certificate simply over writes any previously stored value.
      */
     private void setCertificate(HttpServletRequest request, HttpServletResponse response) throws Exception {
         TransactionLegacy txn = null;
@@ -548,15 +559,16 @@ public class EC2RestServlet extends HttpServlet {
     }
 
     /**
-     * The SOAP API for EC2 uses WS-Security to sign all client requests.  This requires that
-     * the client have a public/private key pair and the public key defined by a X509 certificate.
-     * This REST call allows a Cloud.com account holder to remove a previouly "loaded" X509
-     * certificate out of the EC2 service.
+     * The SOAP API for EC2 uses WS-Security to sign all client requests. This
+     * requires that the client have a public/private key pair and the public
+     * key defined by a X509 certificate. This REST call allows a Cloud.com
+     * account holder to remove a previouly "loaded" X509 certificate out of the
+     * EC2 service.
      *
-     * This is an unauthenticated REST call and as such must contain all the required REST parameters
-     * including: Signature, Timestamp, Expires, etc.   The signature is calculated using the
-     * Cloud.com account holder's API access and secret keys and the Amazon defined EC2 signature
-     * algorithm.
+     * This is an unauthenticated REST call and as such must contain all the
+     * required REST parameters including: Signature, Timestamp, Expires, etc.
+     * The signature is calculated using the Cloud.com account holder's API
+     * access and secret keys and the Amazon defined EC2 signature algorithm.
      */
     private void deleteCertificate(HttpServletRequest request, HttpServletResponse response) throws Exception {
         TransactionLegacy txn = null;
@@ -578,9 +590,9 @@ public class EC2RestServlet extends HttpServlet {
                 certStore.store(fsOut, keystorePassword.toCharArray());
 
                 // -> dis-associate the cert's uniqueId with the Cloud API keys
-                /*                  UserCredentialsDao credentialDao = new UserCredentialsDao();
-                 credentialDao.setCertificateId( accessKey[0], null );
-
+                /*
+                 * UserCredentialsDao credentialDao = new UserCredentialsDao();
+                 * credentialDao.setCertificateId( accessKey[0], null );
                  */txn = TransactionLegacy.open(TransactionLegacy.AWSAPI_DB);
                 UserCredentialsVO user = ucDao.getByAccessKey(accessKey[0]);
                 user.setCertUniqueId(null);
@@ -604,9 +616,9 @@ public class EC2RestServlet extends HttpServlet {
     }
 
     /**
-     * Allow the caller to define the mapping between the Amazon instance type strings
-     * (e.g., m1.small, cc1.4xlarge) and the cloudstack service offering ids.  Setting
-     * an existing mapping just over writes the prevous values.
+     * Allow the caller to define the mapping between the Amazon instance type
+     * strings (e.g., m1.small, cc1.4xlarge) and the cloudstack service offering
+     * ids. Setting an existing mapping just over writes the prevous values.
      */
     private void setOfferMapping(HttpServletRequest request, HttpServletResponse response) {
         String amazonOffer = null;
@@ -711,14 +723,14 @@ public class EC2RestServlet extends HttpServlet {
     }
 
     /**
-     * The approach taken here is to map these REST calls into the same objects used
-     * to implement the matching SOAP requests (e.g., AttachVolume).   This is done by parsing
-     * out the URL parameters and loading them into the relevant EC2XXX object(s).   Once
-     * the parameters are loaded the appropriate EC2Engine function is called to perform
-     * the requested action.   The result of the EC2Engine function is a standard
-     * Amazon WSDL defined object (e.g., AttachVolumeResponse Java object).   Finally the
-     * serialize method is called on the returned response object to obtain the extected
-     * response XML.
+     * The approach taken here is to map these REST calls into the same objects
+     * used to implement the matching SOAP requests (e.g., AttachVolume). This
+     * is done by parsing out the URL parameters and loading them into the
+     * relevant EC2XXX object(s). Once the parameters are loaded the appropriate
+     * EC2Engine function is called to perform the requested action. The result
+     * of the EC2Engine function is a standard Amazon WSDL defined object (e.g.,
+     * AttachVolumeResponse Java object). Finally the serialize method is called
+     * on the returned response object to obtain the extected response XML.
      */
     private void attachVolume(HttpServletRequest request, HttpServletResponse response) throws ADBException, XMLStreamException, IOException {
         EC2Volume EC2request = new EC2Volume();
@@ -751,8 +763,9 @@ public class EC2RestServlet extends HttpServlet {
     }
 
     /**
-     * The SOAP equivalent of this function appears to allow multiple permissions per request, yet
-     * in the REST API documentation only one permission is allowed.
+     * The SOAP equivalent of this function appears to allow multiple
+     * permissions per request, yet in the REST API documentation only one
+     * permission is allowed.
      */
     private void revokeSecurityGroupIngress(HttpServletRequest request, HttpServletResponse response) throws ADBException, XMLStreamException, IOException {
         EC2AuthorizeRevokeSecurityGroup EC2request = new EC2AuthorizeRevokeSecurityGroup();
@@ -764,7 +777,8 @@ public class EC2RestServlet extends HttpServlet {
             throw new EC2ServiceException(ClientError.MissingParamter, "Missing required parameter - GroupName");
         }
 
-        // -> not clear how many parameters there are until we fail to get IpPermissions.n.IpProtocol
+        // -> not clear how many parameters there are until we fail to get
+        // IpPermissions.n.IpProtocol
         int nCount = 1, mCount;
         do {
             EC2IpPermission perm = new EC2IpPermission();
@@ -802,7 +816,8 @@ public class EC2RestServlet extends HttpServlet {
                 mCount++;
             } while (true);
 
-            // -> list: IpPermissions.n.Groups.m.UserId and IpPermissions.n.Groups.m.GroupName
+            // -> list: IpPermissions.n.Groups.m.UserId and
+            // IpPermissions.n.Groups.m.GroupName
             mCount = 1;
             do {
                 EC2SecurityGroup group = new EC2SecurityGroup();
@@ -833,8 +848,8 @@ public class EC2RestServlet extends HttpServlet {
         }
 
         // -> execute the request
-        RevokeSecurityGroupIngressResponse EC2response =
-            EC2SoapServiceImpl.toRevokeSecurityGroupIngressResponse(ServiceProvider.getInstance().getEC2Engine().revokeSecurityGroup(EC2request));
+        RevokeSecurityGroupIngressResponse EC2response = EC2SoapServiceImpl.toRevokeSecurityGroupIngressResponse(ServiceProvider.getInstance().getEC2Engine()
+                .revokeSecurityGroup(EC2request));
         serializeResponse(response, EC2response);
     }
 
@@ -849,7 +864,8 @@ public class EC2RestServlet extends HttpServlet {
             throw new EC2ServiceException(ClientError.MissingParamter, "Missing required parameter 'Groupname'");
         }
 
-        // -> not clear how many parameters there are until we fail to get IpPermissions.n.IpProtocol
+        // -> not clear how many parameters there are until we fail to get
+        // IpPermissions.n.IpProtocol
         int nCount = 1;
         do {
             EC2IpPermission perm = new EC2IpPermission();
@@ -888,7 +904,8 @@ public class EC2RestServlet extends HttpServlet {
 
             } while (true);
 
-            // -> list: IpPermissions.n.Groups.m.UserId and IpPermissions.n.Groups.m.GroupName
+            // -> list: IpPermissions.n.Groups.m.UserId and
+            // IpPermissions.n.Groups.m.GroupName
             mCount = 1;
             do {
                 String[] user = request.getParameterValues("IpPermissions." + nCount + ".Groups." + mCount + ".UserId");
@@ -918,8 +935,8 @@ public class EC2RestServlet extends HttpServlet {
         }
 
         // -> execute the request
-        AuthorizeSecurityGroupIngressResponse EC2response =
-            EC2SoapServiceImpl.toAuthorizeSecurityGroupIngressResponse(ServiceProvider.getInstance().getEC2Engine().authorizeSecurityGroup(EC2request));
+        AuthorizeSecurityGroupIngressResponse EC2response = EC2SoapServiceImpl.toAuthorizeSecurityGroupIngressResponse(ServiceProvider.getInstance().getEC2Engine()
+                .authorizeSecurityGroup(EC2request));
         serializeResponse(response, EC2response);
     }
 
@@ -1015,8 +1032,8 @@ public class EC2RestServlet extends HttpServlet {
         }
 
         // -> execute the request
-        CreateSecurityGroupResponse EC2response =
-            EC2SoapServiceImpl.toCreateSecurityGroupResponse(ServiceProvider.getInstance().getEC2Engine().createSecurityGroup(groupName, groupDescription));
+        CreateSecurityGroupResponse EC2response = EC2SoapServiceImpl.toCreateSecurityGroupResponse(ServiceProvider.getInstance().getEC2Engine()
+                .createSecurityGroup(groupName, groupDescription));
         serializeResponse(response, EC2response);
     }
 
@@ -1031,8 +1048,7 @@ public class EC2RestServlet extends HttpServlet {
         }
 
         // -> execute the request
-        DeleteSecurityGroupResponse EC2response =
-            EC2SoapServiceImpl.toDeleteSecurityGroupResponse(ServiceProvider.getInstance().getEC2Engine().deleteSecurityGroup(groupName));
+        DeleteSecurityGroupResponse EC2response = EC2SoapServiceImpl.toDeleteSecurityGroupResponse(ServiceProvider.getInstance().getEC2Engine().deleteSecurityGroup(groupName));
         serializeResponse(response, EC2response);
     }
 
@@ -1159,7 +1175,7 @@ public class EC2RestServlet extends HttpServlet {
             ec2request.setAttribute(ImageAttribute.description);
             ec2request.setDescription(description[0]);
         } else {
-            //add all launch permissions to ec2request
+            // add all launch permissions to ec2request
             ec2request = addLaunchPermImageAttribute(request, ec2request);
             if (ec2request.getLaunchPermissionSet().length > 0)
                 ec2request.setAttribute(ImageAttribute.launchPermission);
@@ -1169,8 +1185,7 @@ public class EC2RestServlet extends HttpServlet {
         }
 
         // -> execute the request
-        ModifyImageAttributeResponse EC2response =
-            EC2SoapServiceImpl.toModifyImageAttributeResponse(ServiceProvider.getInstance().getEC2Engine().modifyImageAttribute(ec2request));
+        ModifyImageAttributeResponse EC2response = EC2SoapServiceImpl.toModifyImageAttributeResponse(ServiceProvider.getInstance().getEC2Engine().modifyImageAttribute(ec2request));
         serializeResponse(response, EC2response);
     }
 
@@ -1234,15 +1249,15 @@ public class EC2RestServlet extends HttpServlet {
         ec2request.addLaunchPermission(launchPermission);
 
         // -> execute the request
-        ResetImageAttributeResponse EC2response =
-            EC2SoapServiceImpl.toResetImageAttributeResponse(ServiceProvider.getInstance().getEC2Engine().modifyImageAttribute(ec2request));
+        ResetImageAttributeResponse EC2response = EC2SoapServiceImpl.toResetImageAttributeResponse(ServiceProvider.getInstance().getEC2Engine().modifyImageAttribute(ec2request));
         serializeResponse(response, EC2response);
     }
 
     private void runInstances(HttpServletRequest request, HttpServletResponse response) throws ADBException, XMLStreamException, IOException {
         EC2RunInstances EC2request = new EC2RunInstances();
 
-        // -> so in the Amazon docs for this REST call there is no userData even though there is in the SOAP docs
+        // -> so in the Amazon docs for this REST call there is no userData even
+        // though there is in the SOAP docs
         String[] imageId = request.getParameterValues("ImageId");
         if (null != imageId && 0 < imageId.length)
             EC2request.setTemplateId(imageId[0]);
@@ -1418,8 +1433,9 @@ public class EC2RestServlet extends HttpServlet {
     }
 
     /**
-     * We are reusing the SOAP code to process this request.   We then use Axiom to serialize the
-     * resulting EC2 Amazon object into XML to return to the client.
+     * We are reusing the SOAP code to process this request. We then use Axiom
+     * to serialize the resulting EC2 Amazon object into XML to return to the
+     * client.
      */
     private void describeAvailabilityZones(HttpServletRequest request, HttpServletResponse response) throws ADBException, XMLStreamException, IOException {
         EC2DescribeAvailabilityZones EC2request = new EC2DescribeAvailabilityZones();
@@ -1446,15 +1462,16 @@ public class EC2RestServlet extends HttpServlet {
         }
 
         // -> execute the request
-        DescribeAvailabilityZonesResponse EC2response =
-            EC2SoapServiceImpl.toDescribeAvailabilityZonesResponse(ServiceProvider.getInstance().getEC2Engine().describeAvailabilityZones(EC2request));
+        DescribeAvailabilityZonesResponse EC2response = EC2SoapServiceImpl.toDescribeAvailabilityZonesResponse(ServiceProvider.getInstance().getEC2Engine()
+                .describeAvailabilityZones(EC2request));
         serializeResponse(response, EC2response);
     }
 
     private void describeImages(HttpServletRequest request, HttpServletResponse response) throws ADBException, XMLStreamException, IOException {
         EC2DescribeImages EC2request = new EC2DescribeImages();
 
-        // -> load in all the "ImageId.n" parameters if any, and ignore all other parameters
+        // -> load in all the "ImageId.n" parameters if any, and ignore all
+        // other parameters
         Enumeration<?> names = request.getParameterNames();
         while (names.hasMoreElements()) {
             String key = (String)names.nextElement();
@@ -1502,8 +1519,8 @@ public class EC2RestServlet extends HttpServlet {
             throw new EC2ServiceException(ClientError.MissingParamter, "Missing required parameter - Attribute");
         }
 
-        DescribeImageAttributeResponse EC2response =
-            EC2SoapServiceImpl.toDescribeImageAttributeResponse(ServiceProvider.getInstance().getEC2Engine().describeImageAttribute(ec2request));
+        DescribeImageAttributeResponse EC2response = EC2SoapServiceImpl.toDescribeImageAttributeResponse(ServiceProvider.getInstance().getEC2Engine()
+                .describeImageAttribute(ec2request));
         serializeResponse(response, EC2response);
     }
 
@@ -1680,8 +1697,8 @@ public class EC2RestServlet extends HttpServlet {
         }
 
         // -> execute the request
-        DescribeInstanceAttributeResponse EC2response =
-            EC2SoapServiceImpl.toDescribeInstanceAttributeResponse(ServiceProvider.getInstance().getEC2Engine().describeInstances(EC2request));
+        DescribeInstanceAttributeResponse EC2response = EC2SoapServiceImpl.toDescribeInstanceAttributeResponse(ServiceProvider.getInstance().getEC2Engine()
+                .describeInstances(EC2request));
         serializeResponse(response, EC2response);
     }
 
@@ -1710,15 +1727,16 @@ public class EC2RestServlet extends HttpServlet {
         }
 
         // -> execute the request
-        ModifyInstanceAttributeResponse EC2response =
-            EC2SoapServiceImpl.toModifyInstanceAttributeResponse(ServiceProvider.getInstance().getEC2Engine().modifyInstanceAttribute(ec2Request));
+        ModifyInstanceAttributeResponse EC2response = EC2SoapServiceImpl.toModifyInstanceAttributeResponse(ServiceProvider.getInstance().getEC2Engine()
+                .modifyInstanceAttribute(ec2Request));
         serializeResponse(response, EC2response);
     }
 
     private void describeSnapshots(HttpServletRequest request, HttpServletResponse response) throws ADBException, XMLStreamException, IOException {
         EC2DescribeSnapshots EC2request = new EC2DescribeSnapshots();
 
-        // -> load in all the "SnapshotId.n" parameters if any, and ignore any other parameters
+        // -> load in all the "SnapshotId.n" parameters if any, and ignore any
+        // other parameters
         Enumeration<?> names = request.getParameterNames();
         while (names.hasMoreElements()) {
             String key = (String)names.nextElement();
@@ -1769,18 +1787,15 @@ public class EC2RestServlet extends HttpServlet {
 
         // -> execute the request
         EC2Engine engine = ServiceProvider.getInstance().getEC2Engine();
-        DescribeVolumesResponse EC2response =
-            EC2SoapServiceImpl.toDescribeVolumesResponse(ServiceProvider.getInstance().getEC2Engine().describeVolumes(EC2request), engine);
+        DescribeVolumesResponse EC2response = EC2SoapServiceImpl.toDescribeVolumesResponse(ServiceProvider.getInstance().getEC2Engine().describeVolumes(EC2request), engine);
         serializeResponse(response, EC2response);
     }
 
     /**
      * Example of how the filters are defined in a REST request:
      * https://<server>/?Action=DescribeVolumes
-     * &Filter.1.Name=attachment.instance-id
-     * &Filter.1.Value.1=i-1a2b3c4d
-     * &Filter.2.Name=attachment.delete-on-termination
-     * &Filter.2.Value.1=true
+     * &Filter.1.Name=attachment.instance-id &Filter.1.Value.1=i-1a2b3c4d
+     * &Filter.2.Name=attachment.delete-on-termination &Filter.2.Value.1=true
      *
      * @param request
      * @return List<EC2Filter>
@@ -1986,20 +2001,22 @@ public class EC2RestServlet extends HttpServlet {
     }
 
     /**
-     * This function implements the EC2 REST authentication algorithm.   It uses the given
-     * "AWSAccessKeyId" parameter to look up the Cloud.com account holder's secret key which is
-     * used as input to the signature calculation.  In addition, it tests the given "Expires"
-     * parameter to see if the signature has expired and if so the request fails.
+     * This function implements the EC2 REST authentication algorithm. It uses
+     * the given "AWSAccessKeyId" parameter to look up the Cloud.com account
+     * holder's secret key which is used as input to the signature calculation.
+     * In addition, it tests the given "Expires" parameter to see if the
+     * signature has expired and if so the request fails.
      */
     private boolean authenticateRequest(HttpServletRequest request, HttpServletResponse response) throws SignatureException, IOException, InstantiationException,
-        IllegalAccessException, ClassNotFoundException, SQLException, ParseException {
+            IllegalAccessException, ClassNotFoundException, SQLException, ParseException {
         String cloudSecretKey = null;
         String cloudAccessKey = null;
         String signature = null;
         String sigMethod = null;
 
         // [A] Basic parameters required for an authenticated rest request
-        //  -> note that the Servlet engine will un-URL encode all parameters we extract via "getParameterValues()" calls
+        // -> note that the Servlet engine will un-URL encode all parameters we
+        // extract via "getParameterValues()" calls
         String[] awsAccess = request.getParameterValues("AWSAccessKeyId");
         if (null != awsAccess && 0 < awsAccess.length)
             cloudAccessKey = awsAccess[0];
@@ -2045,11 +2062,12 @@ public class EC2RestServlet extends HttpServlet {
         // -> can have only one but not both { Expires | Timestamp } headers
         String[] expires = request.getParameterValues("Expires");
         if (null != expires && 0 < expires.length) {
-            // -> contains the date and time at which the signature included in the request EXPIRES
-            if (hasSignatureExpired(expires[0])) { //InvalidSecurity.RequestHasExpired
+            // -> contains the date and time at which the signature included in
+            // the request EXPIRES
+            if (hasSignatureExpired(expires[0])) { // InvalidSecurity.RequestHasExpired
                 throw new EC2ServiceException(ClientError.InvalidSecurity_RequestHasExpired, "Expires parameter indicates signature has expired: " + expires[0]);
             }
-        } else {    // -> contains the date and time at which the request is SIGNED
+        } else { // -> contains the date and time at which the request is SIGNED
             String[] time = request.getParameterValues("Timestamp");
             if (null == time || 0 == time.length) {
                 throw new EC2ServiceException(ClientError.MissingParamter, "Missing required parameter -" + " Timestamp/Expires");
@@ -2064,7 +2082,7 @@ public class EC2RestServlet extends HttpServlet {
         }
 
         // [C] Verify the signature
-        //  -> getting the query-string in this way maintains its URL encoding
+        // -> getting the query-string in this way maintains its URL encoding
         EC2RestAuth restAuth = new EC2RestAuth();
         restAuth.setHostHeader(request.getHeader("Host"));
         String requestUri = request.getRequestURI();
@@ -2088,8 +2106,11 @@ public class EC2RestServlet extends HttpServlet {
                     // exclude the signature string obviously. ;)
                     if (paramName.equalsIgnoreCase("Signature"))
                         continue;
-                    // URLEncoder performs application/x-www-form-urlencoded-type encoding and not Percent encoding
-                    // according to RFC 3986 as required by Amazon, we need to Percent-encode (URL Encode)
+                    // URLEncoder performs
+                    // application/x-www-form-urlencoded-type encoding and not
+                    // Percent encoding
+                    // according to RFC 3986 as required by Amazon, we need to
+                    // Percent-encode (URL Encode)
                     String encodedValue = URLEncoder.encode(request.getParameter(paramName), "UTF-8").replace("+", "%20").replace("*", "%2A");
                     if (queryString == null)
                         queryString = paramName + "=" + encodedValue;
@@ -2120,7 +2141,7 @@ public class EC2RestServlet extends HttpServlet {
             return false;
 
         Date expiredTime = cal.getTime();
-        Date today = new Date();   // -> gets set to time of creation
+        Date today = new Date(); // -> gets set to time of creation
         if (0 >= expiredTime.compareTo(today)) {
             logger.debug("timestamp given: [" + timeStamp + "], now: [" + today.toString() + "]");
             return true;

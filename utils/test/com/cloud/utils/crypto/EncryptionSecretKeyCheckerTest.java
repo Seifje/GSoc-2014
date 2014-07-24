@@ -32,14 +32,14 @@ import com.cloud.utils.exception.CloudRuntimeException;
 
 public class EncryptionSecretKeyCheckerTest {
 
-  private EncryptionSecretKeyChecker checker = new EncryptionSecretKeyChecker();
+    private EncryptionSecretKeyChecker checker = new EncryptionSecretKeyChecker();
 
-  @Test(expected = CloudRuntimeException.class)
-  public void testKeyFileDoesNotExists() throws IOException, URISyntaxException {
-    Assert.assertNotNull(checker);
-    Properties properties = DbProperties.getDbProperties();
-    properties.setProperty("db.cloud.encryption.type", "file");
-    checker.check(properties);
-  }
+    @Test(expected = CloudRuntimeException.class)
+    public void testKeyFileDoesNotExists() throws IOException, URISyntaxException {
+        Assert.assertNotNull(checker);
+        Properties properties = DbProperties.getDbProperties();
+        properties.setProperty("db.cloud.encryption.type", "file");
+        checker.check(properties);
+    }
 
 }

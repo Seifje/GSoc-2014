@@ -24,7 +24,7 @@ import org.apache.cloudstack.resourcedetail.ResourceDetailsDaoBase;
 import org.apache.cloudstack.resourcedetail.Site2SiteVpnGatewayDetailVO;
 
 @Component
-@Local(value = { Site2SiteVpnGatewayDetailsDao.class })
+@Local(value = {Site2SiteVpnGatewayDetailsDao.class})
 public class Site2SiteVpnGatewayDetailsDaoImpl extends ResourceDetailsDaoBase<Site2SiteVpnGatewayDetailVO> implements Site2SiteVpnGatewayDetailsDao {
 
     @Override

@@ -33,8 +33,6 @@ import com.cloud.uservm.UserVm;
 public class StopVMCmdByAdmin extends StopVMCmd {
     public static final Logger s_logger = Logger.getLogger(StopVMCmdByAdmin.class.getName());
 
-
-
     @Override
     public void execute() throws ServerApiException, ConcurrentOperationException {
         CallContext.current().setEventDetails("Vm Id: " + getId());

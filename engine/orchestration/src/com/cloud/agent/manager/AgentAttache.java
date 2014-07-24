@@ -59,7 +59,7 @@ import com.cloud.host.Status;
 import com.cloud.utils.concurrency.NamedThreadFactory;
 
 /**
- *  AgentAttache provides basic commands to be implemented.
+ * AgentAttache provides basic commands to be implemented.
  */
 public abstract class AgentAttache {
     private static final Logger s_logger = Logger.getLogger(AgentAttache.class);
@@ -109,9 +109,9 @@ public abstract class AgentAttache {
     protected AgentManagerImpl _agentMgr;
 
     public final static String[] s_commandsAllowedInMaintenanceMode = new String[] {MaintainCommand.class.toString(), MigrateCommand.class.toString(),
-        StopCommand.class.toString(), CheckVirtualMachineCommand.class.toString(), PingTestCommand.class.toString(), CheckHealthCommand.class.toString(),
-        ReadyCommand.class.toString(), ShutdownCommand.class.toString(), SetupCommand.class.toString(),
-        CleanupNetworkRulesCmd.class.toString(), CheckNetworkCommand.class.toString(), PvlanSetupCommand.class.toString()};
+            StopCommand.class.toString(), CheckVirtualMachineCommand.class.toString(), PingTestCommand.class.toString(), CheckHealthCommand.class.toString(),
+            ReadyCommand.class.toString(), ShutdownCommand.class.toString(), SetupCommand.class.toString(), CleanupNetworkRulesCmd.class.toString(),
+            CheckNetworkCommand.class.toString(), PvlanSetupCommand.class.toString()};
     protected final static String[] s_commandsNotAllowedInConnectingMode = new String[] {StartCommand.class.toString(), CreateCommand.class.toString()};
     static {
         Arrays.sort(s_commandsAllowedInMaintenanceMode);
@@ -256,7 +256,7 @@ public abstract class AgentAttache {
                 final Map.Entry<Long, Listener> entry = it.next();
                 final Listener monitor = entry.getValue();
                 if (!monitor.isRecurring()) {
-                    //TODO - remove this debug statement later
+                    // TODO - remove this debug statement later
                     s_logger.debug("Listener is " + entry.getValue() + " waiting on " + entry.getKey());
                     nonRecurringListenersList.add(monitor);
                 }
@@ -297,7 +297,9 @@ public abstract class AgentAttache {
             _agentMgr.notifyAnswersToMonitors(_id, seq, answers);
 
         } finally {
-            // we should always trigger next command execution, even in failure cases - otherwise in exception case all the remaining will be stuck in the sync queue forever
+            // we should always trigger next command execution, even in failure
+            // cases - otherwise in exception case all the remaining will be
+            // stuck in the sync queue forever
             if (resp.executeInSequence()) {
                 sendNext(seq);
             }
@@ -331,7 +333,8 @@ public abstract class AgentAttache {
         if (obj == null) {
             return false;
         }
-        // No need to handle a ClassCastException. If the classes are different, then equals can return false straight ahead.
+        // No need to handle a ClassCastException. If the classes are different,
+        // then equals can return false straight ahead.
         if (this.getClass() != obj.getClass()) {
             return false;
         }
@@ -477,7 +480,7 @@ public abstract class AgentAttache {
     }
 
     public void process(final Answer[] answers) {
-        //do nothing
+        // do nothing
     }
 
     /**
@@ -490,12 +493,15 @@ public abstract class AgentAttache {
 
     /**
      * Process disconnect.
-     * @param state state of the agent.
+     *
+     * @param state
+     *            state of the agent.
      */
     public abstract void disconnect(final Status state);
 
     /**
      * Is the agent closed for more commands?
+     *
      * @return true if unable to reach agent or false if reachable.
      */
     protected abstract boolean isClosed();

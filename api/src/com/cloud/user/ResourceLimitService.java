@@ -27,7 +27,8 @@ import com.cloud.exception.ResourceAllocationException;
 public interface ResourceLimitService {
 
     /**
-     * Updates an existing resource limit with the specified details. If a limit doesn't exist, will create one.
+     * Updates an existing resource limit with the specified details. If a limit
+     * doesn't exist, will create one.
      *
      * @param accountId
      *            TODO
@@ -56,7 +57,8 @@ public interface ResourceLimitService {
     List<? extends ResourceCount> recalculateResourceCount(Long accountId, Long domainId, Integer typeId);
 
     /**
-     * Search for resource limits for the given id and/or account and/or type and/or domain.
+     * Search for resource limits for the given id and/or account and/or type
+     * and/or domain.
      *
      * @param id
      *            TODO
@@ -71,8 +73,9 @@ public interface ResourceLimitService {
     public List<? extends ResourceLimit> searchForLimits(Long id, Long accountId, Long domainId, Integer type, Long startIndex, Long pageSizeVal);
 
     /**
-     * Finds the resource limit for a specified account and type. If the account has an infinite limit, will check
-     * the account's parent domain, and if that limit is also infinite, will return the ROOT domain's limit.
+     * Finds the resource limit for a specified account and type. If the account
+     * has an infinite limit, will check the account's parent domain, and if
+     * that limit is also infinite, will return the ROOT domain's limit.
      *
      * @param account
      * @param type
@@ -81,8 +84,10 @@ public interface ResourceLimitService {
     public long findCorrectResourceLimitForAccount(Account account, ResourceType type);
 
     /**
-     * This call should be used when we have already queried resource limit for an account. This is to handle
-     * some corner cases where queried limit may be null.
+     * This call should be used when we have already queried resource limit for
+     * an account. This is to handle some corner cases where queried limit may
+     * be null.
+     *
      * @param accountType
      * @param limit
      * @param type
@@ -91,8 +96,8 @@ public interface ResourceLimitService {
     public long findCorrectResourceLimitForAccount(long accountId, Long limit, ResourceType type);
 
     /**
-     * Finds the resource limit for a specified domain and type. If the domain has an infinite limit, will check
-     * up the domain hierarchy
+     * Finds the resource limit for a specified domain and type. If the domain
+     * has an infinite limit, will check up the domain hierarchy
      *
      * @param account
      * @param type
@@ -124,8 +129,9 @@ public interface ResourceLimitService {
      * @param account
      * @param type
      * @param count
-     *            the number of resources being allocated, count will be added to current allocation and compared
-     *            against maximum allowed allocation
+     *            the number of resources being allocated, count will be added
+     *            to current allocation and compared against maximum allowed
+     *            allocation
      * @throws ResourceAllocationException
      */
     public void checkResourceLimit(Account account, ResourceCount.ResourceType type, long... count) throws ResourceAllocationException;
@@ -140,20 +146,22 @@ public interface ResourceLimitService {
     public long getResourceCount(Account account, ResourceType type);
 
     /**
-     * Checks if a limit has been exceeded for an account if displayResource flag is on
+     * Checks if a limit has been exceeded for an account if displayResource
+     * flag is on
      *
      * @param account
      * @param type
      * @param displayResource
      * @param count
-     *            the number of resources being allocated, count will be added to current allocation and compared
-     *            against maximum allowed allocation
+     *            the number of resources being allocated, count will be added
+     *            to current allocation and compared against maximum allowed
+     *            allocation
      * @throws ResourceAllocationException
      */
     void checkResourceLimit(Account account, ResourceType type, Boolean displayResource, long... count) throws ResourceAllocationException;
 
     /**
-     * Increments the resource count  if displayResource flag is on
+     * Increments the resource count if displayResource flag is on
      *
      * @param accountId
      * @param type
@@ -163,7 +171,8 @@ public interface ResourceLimitService {
     void incrementResourceCount(long accountId, ResourceType type, Boolean displayResource, Long... delta);
 
     /**
-     * Increments/Decrements the resource count  depending on the displayResource flag is turned on or off respectively
+     * Increments/Decrements the resource count depending on the displayResource
+     * flag is turned on or off respectively
      *
      * @param accountId
      * @param type
@@ -173,7 +182,7 @@ public interface ResourceLimitService {
     void changeResourceCount(long accountId, ResourceType type, Boolean displayResource, Long... delta);
 
     /**
-     * Decrements the resource count  if displayResource flag is on
+     * Decrements the resource count if displayResource flag is on
      *
      * @param accountId
      * @param type

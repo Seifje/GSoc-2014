@@ -45,9 +45,7 @@ import com.cloud.network.security.SecurityGroup;
 import com.cloud.network.security.SecurityRule;
 import com.cloud.utils.StringUtils;
 
-@APICommand(name = "authorizeSecurityGroupEgress", responseObject = SecurityGroupRuleResponse.class, description = "Authorizes a particular egress rule for this security group", since = "3.0.0", entityType = {SecurityGroup.class},
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "authorizeSecurityGroupEgress", responseObject = SecurityGroupRuleResponse.class, description = "Authorizes a particular egress rule for this security group", since = "3.0.0", entityType = {SecurityGroup.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 @SuppressWarnings("rawtypes")
 public class AuthorizeSecurityGroupEgressCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(AuthorizeSecurityGroupIngressCmd.class.getName());
@@ -79,10 +77,7 @@ public class AuthorizeSecurityGroupEgressCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.USER_SECURITY_GROUP_LIST, type = CommandType.MAP, description = "user to security group mapping")
     private Map userSecurityGroupList;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               description = "an optional domainId for the security group. If the account parameter is used, domainId must also be used.",
-               entityType = DomainResponse.class)
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, description = "an optional domainId for the security group. If the account parameter is used, domainId must also be used.", entityType = DomainResponse.class)
     private Long domainId;
 
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "an optional account for the security group. Must be used with domainId.")
@@ -92,17 +87,18 @@ public class AuthorizeSecurityGroupEgressCmd extends BaseAsyncCmd {
     private Long projectId;
 
     @ACL(accessType = AccessType.OperateEntry)
-    @Parameter(name=ApiConstants.SECURITY_GROUP_ID, type=CommandType.UUID, description="The ID of the security group. Mutually exclusive with securityGroupName parameter", entityType=SecurityGroupResponse.class)
+    @Parameter(name = ApiConstants.SECURITY_GROUP_ID, type = CommandType.UUID, description = "The ID of the security group. Mutually exclusive with securityGroupName parameter", entityType = SecurityGroupResponse.class)
     private Long securityGroupId;
 
-    // This @ACL will not work, since we don't have a way to convert this parameter to the entity like securityGroupId.
-    //@ACL(accessType = AccessType.OperateEntry)
-    @Parameter(name=ApiConstants.SECURITY_GROUP_NAME, type=CommandType.STRING, description="The name of the security group. Mutually exclusive with securityGroupName parameter")
+    // This @ACL will not work, since we don't have a way to convert this
+    // parameter to the entity like securityGroupId.
+    // @ACL(accessType = AccessType.OperateEntry)
+    @Parameter(name = ApiConstants.SECURITY_GROUP_NAME, type = CommandType.STRING, description = "The name of the security group. Mutually exclusive with securityGroupName parameter")
     private String securityGroupName;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getAccountName() {
         return accountName;

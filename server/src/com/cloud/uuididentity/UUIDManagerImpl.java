@@ -38,7 +38,7 @@ public class UUIDManagerImpl implements UUIDManager {
     EntityManager _entityMgr;
     @Inject
     AccountManager _accountMgr;
-    //TODO - Make this configurable.
+    // TODO - Make this configurable.
     private static final int UUID_RETRY = 3;
 
     @Override
@@ -94,7 +94,7 @@ public class UUIDManagerImpl implements UUIDManager {
 
         if (customId == null) { // if no customid is passed then generate it.
             int retry = UUID_RETRY;
-            while (retry-- != 0) {  // there might be collision so retry
+            while (retry-- != 0) { // there might be collision so retry
                 String uuid = UUID.randomUUID().toString();
                 if (IsUuidUnique(entityType, uuid))
                     return uuid;

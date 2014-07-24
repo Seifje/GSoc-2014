@@ -104,14 +104,14 @@ public class XenServerStorageProcessor implements StorageProcessor {
 
         String isoURL = null;
         if (store == null) {
-            TemplateObjectTO iso = (TemplateObjectTO) disk.getData();
+            TemplateObjectTO iso = (TemplateObjectTO)disk.getData();
             isoURL = iso.getName();
         } else {
             if (!(store instanceof NfsTO)) {
                 s_logger.debug("Can't attach a iso which is not created on nfs: ");
                 return new AttachAnswer("Can't attach a iso which is not created on nfs: ");
             }
-            NfsTO nfsStore = (NfsTO) store;
+            NfsTO nfsStore = (NfsTO)store;
             isoURL = nfsStore.getUrl() + File.separator + data.getPath();
         }
 
@@ -187,7 +187,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
             Map<String, String> details = disk.getDetails();
             boolean isManaged = Boolean.parseBoolean(details.get(DiskTO.MANAGED));
 
-            // if the VM is not running and we're not dealing with managed storage, just return success (nothing to do here)
+            // if the VM is not running and we're not dealing with managed
+            // storage, just return success (nothing to do here)
             // this should probably never actually happen
             if (vmNotRunning && !isManaged) {
                 return new AttachAnswer(disk);
@@ -285,14 +286,14 @@ public class XenServerStorageProcessor implements StorageProcessor {
 
         String isoURL = null;
         if (store == null) {
-            TemplateObjectTO iso = (TemplateObjectTO) disk.getData();
+            TemplateObjectTO iso = (TemplateObjectTO)disk.getData();
             isoURL = iso.getName();
         } else {
             if (!(store instanceof NfsTO)) {
                 s_logger.debug("Can't attach a iso which is not created on nfs: ");
                 return new AttachAnswer("Can't attach a iso which is not created on nfs: ");
             }
-            NfsTO nfsStore = (NfsTO) store;
+            NfsTO nfsStore = (NfsTO)store;
             isoURL = nfsStore.getUrl() + File.separator + data.getPath();
         }
 
@@ -363,7 +364,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
             } catch (CloudRuntimeException ex) {
             }
 
-            // if the VM is not running and we're not dealing with managed storage, just return success (nothing to do here)
+            // if the VM is not running and we're not dealing with managed
+            // storage, just return success (nothing to do here)
             // this should probably never actually happen
             if (vmNotRunning && !cmd.isManaged()) {
                 return new DettachAnswer(disk);
@@ -445,7 +447,7 @@ public class XenServerStorageProcessor implements StorageProcessor {
     @Override
     public Answer createSnapshot(CreateObjectCommand cmd) {
         Connection conn = hypervisorResource.getConnection();
-        SnapshotObjectTO snapshotTO = (SnapshotObjectTO) cmd.getData();
+        SnapshotObjectTO snapshotTO = (SnapshotObjectTO)cmd.getData();
         long snapshotId = snapshotTO.getId();
         String snapshotName = snapshotTO.getName();
         String details = "create snapshot operation Failed for snapshotId: " + snapshotId;
@@ -463,7 +465,7 @@ public class XenServerStorageProcessor implements StorageProcessor {
 
             snapshotUUID = snapshot.getUuid(conn);
             String preSnapshotUUID = snapshotTO.getParentSnapshotPath();
-            //check if it is a empty snapshot
+            // check if it is a empty snapshot
             if (preSnapshotUUID != null) {
                 SR sr = volume.getSR(conn);
                 String srUUID = sr.getUuid(conn);
@@ -552,8 +554,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
                 }
 
                 if (server.equals(dc.get("server")) && serverpath.equals(dc.get("serverpath"))) {
-                    throw new CloudRuntimeException("There is a SR using the same configuration server:" + dc.get("server") + ", serverpath:" + dc.get("serverpath") +
-                            " for pool " + pool.getUuid() + "on host:" + hypervisorResource.getHost().uuid);
+                    throw new CloudRuntimeException("There is a SR using the same configuration server:" + dc.get("server") + ", serverpath:" + dc.get("serverpath") + " for pool "
+                            + pool.getUuid() + "on host:" + hypervisorResource.getHost().uuid);
                 }
 
             }
@@ -616,8 +618,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
                         continue;
                     }
                     if (target.equals(dc.get("target")) && targetiqn.equals(dc.get("targetIQN")) && lunid.equals(dc.get("lunid"))) {
-                        throw new CloudRuntimeException("There is a SR using the same configuration target:" + dc.get("target") + ",  targetIQN:" + dc.get("targetIQN") +
-                                ", lunid:" + dc.get("lunid") + " for pool " + pool.getUuid() + "on host:" + hypervisorResource.getHost().uuid);
+                        throw new CloudRuntimeException("There is a SR using the same configuration target:" + dc.get("target") + ",  targetIQN:" + dc.get("targetIQN")
+                                + ", lunid:" + dc.get("lunid") + " for pool " + pool.getUuid() + "on host:" + hypervisorResource.getHost().uuid);
                     }
                 }
                 deviceConfig.put("target", target);
@@ -707,9 +709,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
             }
             return new Answer(cmd, true, "success");
         } catch (Exception e) {
-            String msg =
-                    "Catch Exception " + e.getClass().getName() + ", create StoragePool failed due to " + e.toString() + " on host:" +
-                            hypervisorResource.getHost().uuid + " pool: " + pool.getHost() + pool.getPath();
+            String msg = "Catch Exception " + e.getClass().getName() + ", create StoragePool failed due to " + e.toString() + " on host:" + hypervisorResource.getHost().uuid
+                    + " pool: " + pool.getHost() + pool.getPath();
             s_logger.warn(msg, e);
             return new Answer(cmd, false, msg);
         }
@@ -723,7 +724,7 @@ public class XenServerStorageProcessor implements StorageProcessor {
         boolean result = false;
         try {
             if (destObj.getPath() == null) {
-                //need to create volume at first
+                // need to create volume at first
 
             }
             vdi = VDI.getByUuid(conn, destObj.getPath());
@@ -755,11 +756,11 @@ public class XenServerStorageProcessor implements StorageProcessor {
             }
 
             String vdiPath = pbdLocation + "/" + vdiLocation + ".vhd";
-            //download a url into vdipath
-            //downloadHttpToLocalFile(vdiPath, template.getPath());
+            // download a url into vdipath
+            // downloadHttpToLocalFile(vdiPath, template.getPath());
             hypervisorResource.callHostPlugin(conn, "storagePlugin", "downloadTemplateFromUrl", "destPath", vdiPath, "srcUrl", srcObj.getPath());
             result = true;
-            //return new CopyCmdAnswer(cmd, vdi.getUuid(conn));
+            // return new CopyCmdAnswer(cmd, vdi.getUuid(conn));
         } catch (BadServerResponse e) {
             s_logger.debug("Failed to download template", e);
         } catch (XenAPIException e) {
@@ -823,9 +824,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
 
     private String copy_vhd_from_secondarystorage(Connection conn, String mountpoint, String sruuid, int wait) {
         String nameLabel = "cloud-" + UUID.randomUUID().toString();
-        String results =
-                hypervisorResource.callHostPluginAsync(conn, "vmopspremium", "copy_vhd_from_secondarystorage", wait, "mountpoint", mountpoint, "sruuid", sruuid, "namelabel",
-                        nameLabel);
+        String results = hypervisorResource.callHostPluginAsync(conn, "vmopspremium", "copy_vhd_from_secondarystorage", wait, "mountpoint", mountpoint, "sruuid", sruuid,
+                "namelabel", nameLabel);
         String errMsg = null;
         if (results == null || results.isEmpty()) {
             errMsg = "copy_vhd_from_secondarystorage return null";
@@ -874,9 +874,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
     }
 
     protected String getVhdParent(Connection conn, String primaryStorageSRUuid, String snapshotUuid, Boolean isISCSI) {
-        String parentUuid =
-                hypervisorResource.callHostPlugin(conn, "vmopsSnapshot", "getVhdParent", "primaryStorageSRUuid", primaryStorageSRUuid, "snapshotUuid", snapshotUuid,
-                        "isISCSI", isISCSI.toString());
+        String parentUuid = hypervisorResource.callHostPlugin(conn, "vmopsSnapshot", "getVhdParent", "primaryStorageSRUuid", primaryStorageSRUuid, "snapshotUuid", snapshotUuid,
+                "isISCSI", isISCSI.toString());
 
         if (parentUuid == null || parentUuid.isEmpty() || parentUuid.equalsIgnoreCase("None")) {
             s_logger.debug("Unable to get parent of VHD " + snapshotUuid + " in SR " + primaryStorageSRUuid);
@@ -895,8 +894,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
 
         try {
             if ((srcDataStoreTo instanceof NfsTO) && (srcDataTo.getObjectType() == DataObjectType.TEMPLATE)) {
-                NfsTO srcImageStore = (NfsTO) srcDataStoreTo;
-                TemplateObjectTO srcTemplateObjectTo = (TemplateObjectTO) srcDataTo;
+                NfsTO srcImageStore = (NfsTO)srcDataStoreTo;
+                TemplateObjectTO srcTemplateObjectTo = (TemplateObjectTO)srcDataTo;
                 String storeUrl = srcImageStore.getUrl();
                 URI uri = new URI(storeUrl);
                 String tmplPath = uri.getHost() + ":" + uri.getPath() + "/" + srcDataTo.getPath();
@@ -1007,7 +1006,7 @@ public class XenServerStorageProcessor implements StorageProcessor {
     @Override
     public Answer createVolume(CreateObjectCommand cmd) {
         DataTO data = cmd.getData();
-        VolumeObjectTO volume = (VolumeObjectTO) data;
+        VolumeObjectTO volume = (VolumeObjectTO)data;
 
         try {
             Connection conn = hypervisorResource.getConnection();
@@ -1039,7 +1038,7 @@ public class XenServerStorageProcessor implements StorageProcessor {
         Connection conn = hypervisorResource.getConnection();
         DataTO srcData = cmd.getSrcTO();
         DataTO destData = cmd.getDestTO();
-        VolumeObjectTO volume = (VolumeObjectTO) destData;
+        VolumeObjectTO volume = (VolumeObjectTO)destData;
         VDI vdi = null;
         try {
             VDI tmpltvdi = null;
@@ -1070,12 +1069,12 @@ public class XenServerStorageProcessor implements StorageProcessor {
         DataTO srcData = cmd.getSrcTO();
         DataTO destData = cmd.getDestTO();
         int wait = cmd.getWait();
-        VolumeObjectTO srcVolume = (VolumeObjectTO) srcData;
-        VolumeObjectTO destVolume = (VolumeObjectTO) destData;
+        VolumeObjectTO srcVolume = (VolumeObjectTO)srcData;
+        VolumeObjectTO destVolume = (VolumeObjectTO)destData;
         DataStoreTO srcStore = srcVolume.getDataStore();
 
         if (srcStore instanceof NfsTO) {
-            NfsTO nfsStore = (NfsTO) srcStore;
+            NfsTO nfsStore = (NfsTO)srcStore;
             try {
                 SR primaryStoragePool = hypervisorResource.getStorageRepository(conn, destVolume.getDataStore().getUuid());
                 String srUuid = primaryStoragePool.getUuid(conn);
@@ -1101,15 +1100,15 @@ public class XenServerStorageProcessor implements StorageProcessor {
     @Override
     public Answer copyVolumeFromPrimaryToSecondary(CopyCommand cmd) {
         Connection conn = hypervisorResource.getConnection();
-        VolumeObjectTO srcVolume = (VolumeObjectTO) cmd.getSrcTO();
-        VolumeObjectTO destVolume = (VolumeObjectTO) cmd.getDestTO();
+        VolumeObjectTO srcVolume = (VolumeObjectTO)cmd.getSrcTO();
+        VolumeObjectTO destVolume = (VolumeObjectTO)cmd.getDestTO();
         int wait = cmd.getWait();
         DataStoreTO destStore = destVolume.getDataStore();
 
         if (destStore instanceof NfsTO) {
             SR secondaryStorage = null;
             try {
-                NfsTO nfsStore = (NfsTO) destStore;
+                NfsTO nfsStore = (NfsTO)destStore;
                 URI uri = new URI(nfsStore.getUrl());
                 // Create the volume folder
                 if (!hypervisorResource.createSecondaryStorageFolder(conn, uri.getHost() + ":" + uri.getPath(), destVolume.getPath())) {
@@ -1141,9 +1140,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
     boolean swiftUpload(Connection conn, SwiftTO swift, String container, String ldir, String lfilename, Boolean isISCSI, int wait) {
         String result = null;
         try {
-            result =
-                    hypervisorResource.callHostPluginAsync(conn, "swiftxenserver", "swift", wait, "op", "upload", "url", swift.getUrl(), "account", swift.getAccount(), "username",
-                            swift.getUserName(), "key", swift.getKey(), "container", container, "ldir", ldir, "lfilename", lfilename, "isISCSI", isISCSI.toString());
+            result = hypervisorResource.callHostPluginAsync(conn, "swiftxenserver", "swift", wait, "op", "upload", "url", swift.getUrl(), "account", swift.getAccount(),
+                    "username", swift.getUserName(), "key", swift.getKey(), "container", container, "ldir", ldir, "lfilename", lfilename, "isISCSI", isISCSI.toString());
             if (result != null && result.equals("true")) {
                 return true;
             }
@@ -1156,9 +1154,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
     protected String deleteSnapshotBackup(Connection conn, String localMountPoint, String path, String secondaryStorageMountPath, String backupUUID) {
 
         // If anybody modifies the formatting below again, I'll skin them
-        String result =
-                hypervisorResource.callHostPlugin(conn, "vmopsSnapshot", "deleteSnapshotBackup", "backupUUID", backupUUID, "path", path, "secondaryStorageMountPath",
-                        secondaryStorageMountPath, "localMountPoint", localMountPoint);
+        String result = hypervisorResource.callHostPlugin(conn, "vmopsSnapshot", "deleteSnapshotBackup", "backupUUID", backupUUID, "path", path, "secondaryStorageMountPath",
+                secondaryStorageMountPath, "localMountPoint", localMountPoint);
 
         return result;
     }
@@ -1177,12 +1174,13 @@ public class XenServerStorageProcessor implements StorageProcessor {
         return lfilename;
     }
 
-    protected String backupSnapshotToS3(final Connection connection, final S3TO s3, final String srUuid, final String folder, final String snapshotUuid,
-                                        final Boolean iSCSIFlag, final int wait) {
+    protected String backupSnapshotToS3(final Connection connection, final S3TO s3, final String srUuid, final String folder, final String snapshotUuid, final Boolean iSCSIFlag,
+            final int wait) {
 
         final String filename = iSCSIFlag ? "VHD-" + snapshotUuid : snapshotUuid + ".vhd";
         final String dir = (iSCSIFlag ? "/dev/VG_XenStorage-" : "/var/run/sr-mount/") + srUuid;
-        final String key = folder + "/" + filename; // String.format("/snapshots/%1$s", snapshotUuid);
+        final String key = folder + "/" + filename; // String.format("/snapshots/%1$s",
+        // snapshotUuid);
 
         try {
 
@@ -1190,8 +1188,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
             // https workaround for Introspector bug that does not
             // recognize Boolean accessor methods ...
 
-            parameters.addAll(Arrays.asList("operation", "put", "filename", dir + "/" + filename, "iSCSIFlag", iSCSIFlag.toString(), "bucket", s3.getBucketName(), "key",
-                    key, "https", s3.isHttps() != null ? s3.isHttps().toString() : "null", "maxSingleUploadSizeInBytes", String.valueOf(s3.getMaxSingleUploadSizeInBytes())));
+            parameters.addAll(Arrays.asList("operation", "put", "filename", dir + "/" + filename, "iSCSIFlag", iSCSIFlag.toString(), "bucket", s3.getBucketName(), "key", key,
+                    "https", s3.isHttps() != null ? s3.isHttps().toString() : "null", "maxSingleUploadSizeInBytes", String.valueOf(s3.getMaxSingleUploadSizeInBytes())));
             final String result = hypervisorResource.callHostPluginAsync(connection, "s3xenserver", "s3", wait, parameters.toArray(new String[parameters.size()]));
 
             if (result != null && result.equals("true")) {
@@ -1208,17 +1206,17 @@ public class XenServerStorageProcessor implements StorageProcessor {
     }
 
     protected Long getSnapshotSize(Connection conn, String primaryStorageSRUuid, String snapshotUuid, Boolean isISCSI, int wait) {
-        String physicalSize = hypervisorResource.callHostPluginAsync(conn, "vmopsSnapshot", "getSnapshotSize", wait,
-                "primaryStorageSRUuid", primaryStorageSRUuid, "snapshotUuid", snapshotUuid, "isISCSI", isISCSI.toString());
+        String physicalSize = hypervisorResource.callHostPluginAsync(conn, "vmopsSnapshot", "getSnapshotSize", wait, "primaryStorageSRUuid", primaryStorageSRUuid, "snapshotUuid",
+                snapshotUuid, "isISCSI", isISCSI.toString());
         if (physicalSize == null || physicalSize.isEmpty()) {
-            return (long) 0;
+            return (long)0;
         } else {
             return Long.parseLong(physicalSize);
         }
     }
 
-    protected String backupSnapshot(Connection conn, String primaryStorageSRUuid, String localMountPoint, String path, String secondaryStorageMountPath,
-                                    String snapshotUuid, String prevBackupUuid, Boolean isISCSI, int wait) {
+    protected String backupSnapshot(Connection conn, String primaryStorageSRUuid, String localMountPoint, String path, String secondaryStorageMountPath, String snapshotUuid,
+            String prevBackupUuid, Boolean isISCSI, int wait) {
         String backupSnapshotUuid = null;
 
         if (prevBackupUuid == null) {
@@ -1228,30 +1226,28 @@ public class XenServerStorageProcessor implements StorageProcessor {
         // Each argument is put in a separate line for readability.
         // Using more lines does not harm the environment.
         String backupUuid = UUID.randomUUID().toString();
-        String results =
-                hypervisorResource.callHostPluginAsync(conn, "vmopsSnapshot", "backupSnapshot", wait, "primaryStorageSRUuid", primaryStorageSRUuid, "path", path,
-                        "secondaryStorageMountPath", secondaryStorageMountPath, "snapshotUuid", snapshotUuid, "prevBackupUuid", prevBackupUuid, "backupUuid", backupUuid,
-                        "isISCSI", isISCSI.toString(), "localMountPoint", localMountPoint);
+        String results = hypervisorResource.callHostPluginAsync(conn, "vmopsSnapshot", "backupSnapshot", wait, "primaryStorageSRUuid", primaryStorageSRUuid, "path", path,
+                "secondaryStorageMountPath", secondaryStorageMountPath, "snapshotUuid", snapshotUuid, "prevBackupUuid", prevBackupUuid, "backupUuid", backupUuid, "isISCSI",
+                isISCSI.toString(), "localMountPoint", localMountPoint);
         String errMsg = null;
         if (results == null || results.isEmpty()) {
-            errMsg =
-                    "Could not copy backupUuid: " + backupSnapshotUuid + " from primary storage " + primaryStorageSRUuid + " to secondary storage " +
-                            secondaryStorageMountPath + " due to null";
+            errMsg = "Could not copy backupUuid: " + backupSnapshotUuid + " from primary storage " + primaryStorageSRUuid + " to secondary storage " + secondaryStorageMountPath
+                    + " due to null";
         } else {
 
             String[] tmp = results.split("#");
             String status = tmp[0];
             backupSnapshotUuid = tmp[1];
             // status == "1" if and only if backupSnapshotUuid != null
-            // So we don't rely on status value but return backupSnapshotUuid as an
+            // So we don't rely on status value but return backupSnapshotUuid as
+            // an
             // indicator of success.
             if (status != null && status.equalsIgnoreCase("1") && backupSnapshotUuid != null) {
                 s_logger.debug("Successfully copied backupUuid: " + backupSnapshotUuid + " to secondary storage");
                 return results;
             } else {
-                errMsg =
-                        "Could not copy backupUuid: " + backupSnapshotUuid + " from primary storage " + primaryStorageSRUuid + " to secondary storage " +
-                                secondaryStorageMountPath + " due to " + tmp[1];
+                errMsg = "Could not copy backupUuid: " + backupSnapshotUuid + " from primary storage " + primaryStorageSRUuid + " to secondary storage "
+                        + secondaryStorageMountPath + " due to " + tmp[1];
             }
         }
         String source = backupUuid + ".vhd";
@@ -1294,7 +1290,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
         try {
             VDI snapshot = getVDIbyUuid(conn, lastSnapshotUuid);
             if (snapshot == null) {
-                // since this is just used to cleanup leftover bad snapshots, no need to throw exception
+                // since this is just used to cleanup leftover bad snapshots, no
+                // need to throw exception
                 s_logger.warn("Could not destroy snapshot " + lastSnapshotUuid + " due to can not find it");
                 return false;
             }
@@ -1322,17 +1319,17 @@ public class XenServerStorageProcessor implements StorageProcessor {
         NfsTO cacheStore = null;
         String destPath = null;
         if (cacheData != null) {
-            cacheStore = (NfsTO) cacheData.getDataStore();
+            cacheStore = (NfsTO)cacheData.getDataStore();
             secondaryStorageUrl = cacheStore.getUrl();
             destPath = cacheData.getPath();
         } else {
-            cacheStore = (NfsTO) destData.getDataStore();
+            cacheStore = (NfsTO)destData.getDataStore();
             secondaryStorageUrl = cacheStore.getUrl();
             destPath = destData.getPath();
         }
 
-        SnapshotObjectTO snapshotTO = (SnapshotObjectTO) srcData;
-        SnapshotObjectTO snapshotOnImage = (SnapshotObjectTO) destData;
+        SnapshotObjectTO snapshotTO = (SnapshotObjectTO)srcData;
+        SnapshotObjectTO snapshotOnImage = (SnapshotObjectTO)destData;
         String snapshotUuid = snapshotTO.getPath();
         String volumeUuid = snapshotTO.getVolume().getPath();
 
@@ -1349,8 +1346,7 @@ public class XenServerStorageProcessor implements StorageProcessor {
         try {
             SR primaryStorageSR = hypervisorResource.getSRByNameLabelandHost(conn, primaryStorageNameLabel);
             if (primaryStorageSR == null) {
-                throw new InternalErrorException("Could not backup snapshot because the primary Storage SR could not be created from the name label: " +
-                        primaryStorageNameLabel);
+                throw new InternalErrorException("Could not backup snapshot because the primary Storage SR could not be created from the name label: " + primaryStorageNameLabel);
             }
             String psUuid = primaryStorageSR.getUuid(conn);
             Boolean isISCSI = IsISCSI(primaryStorageSR.getType(conn));
@@ -1403,7 +1399,7 @@ public class XenServerStorageProcessor implements StorageProcessor {
                     if (destStore instanceof SwiftTO) {
                         try {
                             String container = "S-" + snapshotTO.getVolume().getVolumeId().toString();
-                            String destSnapshotName = swiftBackupSnapshot(conn, (SwiftTO) destStore, snapshotSr.getUuid(conn), snapshotBackupUuid, container, false, wait);
+                            String destSnapshotName = swiftBackupSnapshot(conn, (SwiftTO)destStore, snapshotSr.getUuid(conn), snapshotBackupUuid, container, false, wait);
                             String swiftPath = container + File.separator + destSnapshotName;
                             finalPath = swiftPath;
                         } finally {
@@ -1416,7 +1412,7 @@ public class XenServerStorageProcessor implements StorageProcessor {
 
                     } else if (destStore instanceof S3TO) {
                         try {
-                            finalPath = backupSnapshotToS3(conn, (S3TO) destStore, snapshotSr.getUuid(conn), folder, snapshotBackupUuid, isISCSI, wait);
+                            finalPath = backupSnapshotToS3(conn, (S3TO)destStore, snapshotSr.getUuid(conn), folder, snapshotBackupUuid, isISCSI, wait);
                             if (finalPath == null) {
                                 throw new CloudRuntimeException("S3 upload of snapshots " + snapshotBackupUuid + " failed");
                             }
@@ -1427,7 +1423,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
                                 s_logger.debug("Failed to delete snapshot on cache storages", e);
                             }
                         }
-                        // finalPath = folder + File.separator + snapshotBackupUuid;
+                        // finalPath = folder + File.separator +
+                        // snapshotBackupUuid;
                     } else {
                         finalPath = folder + File.separator + snapshotBackupUuid;
                     }
@@ -1441,18 +1438,16 @@ public class XenServerStorageProcessor implements StorageProcessor {
                 String primaryStorageSRUuid = primaryStorageSR.getUuid(conn);
                 if (destStore instanceof SwiftTO) {
                     String container = "S-" + snapshotTO.getVolume().getVolumeId().toString();
-                    snapshotBackupUuid =
-                            swiftBackupSnapshot(conn, (SwiftTO) destStore, primaryStorageSRUuid, snapshotPaUuid, "S-" + snapshotTO.getVolume().getVolumeId().toString(),
-                                    isISCSI, wait);
+                    snapshotBackupUuid = swiftBackupSnapshot(conn, (SwiftTO)destStore, primaryStorageSRUuid, snapshotPaUuid,
+                            "S-" + snapshotTO.getVolume().getVolumeId().toString(), isISCSI, wait);
                     finalPath = container + File.separator + snapshotBackupUuid;
                 } else if (destStore instanceof S3TO) {
-                    finalPath = backupSnapshotToS3(conn, (S3TO) destStore, primaryStorageSRUuid, folder, snapshotPaUuid, isISCSI, wait);
+                    finalPath = backupSnapshotToS3(conn, (S3TO)destStore, primaryStorageSRUuid, folder, snapshotPaUuid, isISCSI, wait);
                     if (finalPath == null) {
                         throw new CloudRuntimeException("S3 upload of snapshots " + snapshotPaUuid + " failed");
                     }
                 } else {
-                    String results =
-                            backupSnapshot(conn, primaryStorageSRUuid, localMountPoint, folder, secondaryStorageMountPath, snapshotUuid, prevBackupUuid, isISCSI, wait);
+                    String results = backupSnapshot(conn, primaryStorageSRUuid, localMountPoint, folder, secondaryStorageMountPath, snapshotUuid, prevBackupUuid, isISCSI, wait);
 
                     String[] tmp = results.split("#");
                     snapshotBackupUuid = tmp[1];
@@ -1496,9 +1491,9 @@ public class XenServerStorageProcessor implements StorageProcessor {
     @Override
     public Answer createTemplateFromVolume(CopyCommand cmd) {
         Connection conn = hypervisorResource.getConnection();
-        VolumeObjectTO volume = (VolumeObjectTO) cmd.getSrcTO();
-        TemplateObjectTO template = (TemplateObjectTO) cmd.getDestTO();
-        NfsTO destStore = (NfsTO) cmd.getDestTO().getDataStore();
+        VolumeObjectTO volume = (VolumeObjectTO)cmd.getSrcTO();
+        TemplateObjectTO template = (TemplateObjectTO)cmd.getDestTO();
+        NfsTO destStore = (NfsTO)cmd.getDestTO().getDataStore();
         int wait = cmd.getWait();
 
         String secondaryStoragePoolURL = destStore.getUrl();
@@ -1540,9 +1535,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
             long physicalSize = tmpltVDI.getPhysicalUtilisation(conn);
             // create the template.properties file
             String templatePath = secondaryStorageMountPath + "/" + installPath;
-            result =
-                    hypervisorResource.postCreatePrivateTemplate(conn, templatePath, tmpltFilename, tmpltUUID, userSpecifiedName, null, physicalSize, virtualSize,
-                            template.getId());
+            result = hypervisorResource.postCreatePrivateTemplate(conn, templatePath, tmpltFilename, tmpltUUID, userSpecifiedName, null, physicalSize, virtualSize,
+                    template.getId());
             if (!result) {
                 throw new CloudRuntimeException("Could not create the template.properties file on secondary storage dir: " + tmpltURI);
             }
@@ -1572,14 +1566,15 @@ public class XenServerStorageProcessor implements StorageProcessor {
 
     @Override
     public Answer createTemplateFromSnapshot(CopyCommand cmd) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 
     @Override
     public Answer createVolumeFromSnapshot(CopyCommand cmd) {
         Connection conn = hypervisorResource.getConnection();
         DataTO srcData = cmd.getSrcTO();
-        SnapshotObjectTO snapshot = (SnapshotObjectTO) srcData;
+        SnapshotObjectTO snapshot = (SnapshotObjectTO)srcData;
         DataTO destData = cmd.getDestTO();
         DataStoreTO imageStore = srcData.getDataStore();
 
@@ -1587,7 +1582,7 @@ public class XenServerStorageProcessor implements StorageProcessor {
             return new CopyCmdAnswer("unsupported protocol");
         }
 
-        NfsTO nfsImageStore = (NfsTO) imageStore;
+        NfsTO nfsImageStore = (NfsTO)imageStore;
         String primaryStorageNameLabel = destData.getDataStore().getUuid();
         String secondaryStorageUrl = nfsImageStore.getUrl();
         int wait = cmd.getWait();
@@ -1603,8 +1598,8 @@ public class XenServerStorageProcessor implements StorageProcessor {
         try {
             SR primaryStorageSR = hypervisorResource.getSRByNameLabelandHost(conn, primaryStorageNameLabel);
             if (primaryStorageSR == null) {
-                throw new InternalErrorException("Could not create volume from snapshot because the primary Storage SR could not be created from the name label: " +
-                        primaryStorageNameLabel);
+                throw new InternalErrorException("Could not create volume from snapshot because the primary Storage SR could not be created from the name label: "
+                        + primaryStorageNameLabel);
             }
             // Get the absolute path of the snapshot on the secondary storage.
             String snapshotInstallPath = snapshot.getPath();
@@ -1643,7 +1638,7 @@ public class XenServerStorageProcessor implements StorageProcessor {
 
     @Override
     public Answer deleteSnapshot(DeleteCommand cmd) {
-        SnapshotObjectTO snapshot = (SnapshotObjectTO) cmd.getData();
+        SnapshotObjectTO snapshot = (SnapshotObjectTO)cmd.getData();
         DataStoreTO store = snapshot.getDataStore();
         if (store.getRole() == DataStoreRole.Primary) {
             Connection conn = hypervisorResource.getConnection();

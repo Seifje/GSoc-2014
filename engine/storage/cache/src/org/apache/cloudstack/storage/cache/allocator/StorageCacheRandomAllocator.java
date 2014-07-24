@@ -74,7 +74,8 @@ public class StorageCacheRandomAllocator implements StorageCacheAllocator {
             return null;
         }
 
-        // if there are multiple cache stores, we give priority to the one where data is already there
+        // if there are multiple cache stores, we give priority to the one where
+        // data is already there
         if (cacheStores.size() > 1) {
             for (DataStore store : cacheStores) {
                 DataObjectInStore obj = objectInStoreMgr.findObject(data, store);
@@ -90,6 +91,5 @@ public class StorageCacheRandomAllocator implements StorageCacheAllocator {
         return cacheStores.get(0);
 
     }
-
 
 }

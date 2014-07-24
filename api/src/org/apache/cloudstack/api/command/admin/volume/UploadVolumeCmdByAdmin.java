@@ -36,22 +36,18 @@ import com.cloud.storage.Volume;
 public class UploadVolumeCmdByAdmin extends UploadVolumeCmd {
     public static final Logger s_logger = Logger.getLogger(UploadVolumeCmdByAdmin.class.getName());
 
-
     @Override
-    public void execute() throws ResourceUnavailableException,
-            InsufficientCapacityException, ServerApiException,
-            ConcurrentOperationException, ResourceAllocationException,
-            NetworkRuleConflictException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
+    NetworkRuleConflictException {
 
-            Volume volume = _volumeService.uploadVolume(this);
-            if (volume != null){
+        Volume volume = _volumeService.uploadVolume(this);
+        if (volume != null) {
             VolumeResponse response = _responseGenerator.createVolumeResponse(ResponseView.Full, volume);
-                response.setResponseName(getCommandName());
-                setResponseObject(response);
-            } else {
-                throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to upload volume");
-            }
+            response.setResponseName(getCommandName());
+            setResponseObject(response);
+        } else {
+            throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to upload volume");
+        }
     }
-
 
 }

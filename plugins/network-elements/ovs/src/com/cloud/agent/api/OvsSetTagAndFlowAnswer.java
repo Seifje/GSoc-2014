@@ -16,7 +16,6 @@
 // under the License.
 package com.cloud.agent.api;
 
-
 public class OvsSetTagAndFlowAnswer extends Answer {
     Long vmId;
     Long seqno;

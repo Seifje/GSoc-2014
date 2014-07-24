@@ -55,19 +55,14 @@ import com.cloud.utils.exception.CloudRuntimeException;
 
 /**
  * Request is a simple wrapper around command and answer to add sequencing,
- * versioning, and flags. Note that the version here represents the changes
- * in the over the wire protocol. For example, if we decide to not use Gson.
- * It does not version the changes in the actual commands. That's expected
- * to be done by adding new classes to the command and answer list.
+ * versioning, and flags. Note that the version here represents the changes in
+ * the over the wire protocol. For example, if we decide to not use Gson. It
+ * does not version the changes in the actual commands. That's expected to be
+ * done by adding new classes to the command and answer list.
  *
- * A request looks as follows:
- * 1. Version - 1 byte;
- * 2. Flags - 3 bytes;
- * 3. Sequence - 8 bytes;
- * 4. Length - 4 bytes;
- * 5. ManagementServerId - 8 bytes;
- * 6. AgentId - 8 bytes;
- * 7. Data Package.
+ * A request looks as follows: 1. Version - 1 byte; 2. Flags - 3 bytes; 3.
+ * Sequence - 8 bytes; 4. Length - 4 bytes; 5. ManagementServerId - 8 bytes; 6.
+ * AgentId - 8 bytes; 7. Data Package.
  *
  */
 public class Request {
@@ -439,7 +434,7 @@ public class Request {
         buf.append(", Ver: ").append(_ver.toString());
         buf.append(", Flags: ").append(Integer.toBinaryString(getFlags())).append(", ");
         String cleanContent = content.toString();
-        if(cleanContent.contains("password")) {
+        if (cleanContent.contains("password")) {
             buf.append(cleanPassword(cleanContent));
         } else {
             buf.append(content);
@@ -469,13 +464,15 @@ public class Request {
 
     /**
      * Factory method for Request and Response. It expects the bytes to be
-     * correctly formed so it's possible that it throws underflow exceptions
-     * but you shouldn't be concerned about that since that all bytes sent in
-     * should already be formatted correctly.
+     * correctly formed so it's possible that it throws underflow exceptions but
+     * you shouldn't be concerned about that since that all bytes sent in should
+     * already be formatted correctly.
      *
-     * @param bytes bytes to be converted.
+     * @param bytes
+     *            bytes to be converted.
      * @return Request or Response depending on the data.
-     * @throws ClassNotFoundException if the Command or Answer can not be formed.
+     * @throws ClassNotFoundException
+     *             if the Command or Answer can not be formed.
      * @throws
      */
     public static Request parse(final byte[] bytes) throws ClassNotFoundException, UnsupportedVersionException {

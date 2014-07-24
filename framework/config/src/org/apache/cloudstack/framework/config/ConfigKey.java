@@ -24,8 +24,8 @@ import org.apache.cloudstack.framework.config.impl.ConfigurationVO;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 /**
- * ConfigKey supplants the original Config.java.  It is just a class
- * declaration where others can declare their config variables.
+ * ConfigKey supplants the original Config.java. It is just a class declaration
+ * where others can declare their config variables.
  *
  */
 public class ConfigKey<T> {
@@ -73,7 +73,9 @@ public class ConfigKey<T> {
     private final String _name;
     private final String _defaultValue;
     private final String _description;
-    private final Scope _scope; // Parameter can be at different levels (Zone/cluster/pool/account), by default every parameter is at global
+    private final Scope _scope; // Parameter can be at different levels
+    // (Zone/cluster/pool/account), by default every
+    // parameter is at global
     private final boolean _isDynamic;
     private final T _multiplier;
     T _value = null;

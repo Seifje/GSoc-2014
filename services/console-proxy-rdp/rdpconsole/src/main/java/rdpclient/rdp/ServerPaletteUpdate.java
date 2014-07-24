@@ -42,25 +42,30 @@ public class ServerPaletteUpdate extends BaseElement {
         if (verbose)
             System.out.println("[" + this + "] INFO: Data received: " + buf + ".");
 
-        // (2 bytes): A 16-bit, unsigned integer. The update type. This field MUST
+        // (2 bytes): A 16-bit, unsigned integer. The update type. This field
+        // MUST
         // be set to UPDATETYPE_PALETTE (0x0002).
         int updateType = buf.readUnsignedShortLE();
         if (updateType != UPDATETYPE_PALETTE)
             throw new RuntimeException("Unexpected update type. Expected type: UPDATETYPE_PALETTE (0x0002), actual value: " + updateType + ", data: " + buf + ".");
 
-        // pad2Octets (2 bytes): A 16-bit, unsigned integer. Padding. Values in this
+        // pad2Octets (2 bytes): A 16-bit, unsigned integer. Padding. Values in
+        // this
         // field MUST be ignored.
         buf.skipBytes(2);
 
-        // (4 bytes): A 32-bit, unsigned integer. The number of RGB triplets in the
-        // paletteData field. This field MUST be set to 256 (the number of entries
+        // (4 bytes): A 32-bit, unsigned integer. The number of RGB triplets in
+        // the
+        // paletteData field. This field MUST be set to 256 (the number of
+        // entries
         // in an 8 bpp palette).
         int numberColors = (int)buf.readUnsignedIntLE();
         if (numberColors != 256)
-            throw new RuntimeException("Unexpected value for number of color field in server Palette Update packet. Expected value: 256 colors, actual value: "
-                    + numberColors + ", data: " + buf + ".");
+            throw new RuntimeException("Unexpected value for number of color field in server Palette Update packet. Expected value: 256 colors, actual value: " + numberColors
+                    + ", data: " + buf + ".");
 
-        // (variable): An array of palette entries in RGB triplet format packed on
+        // (variable): An array of palette entries in RGB triplet format packed
+        // on
         // byte boundaries. The number of triplet entries is given by the
         // numberColors field.
         ByteBuffer paletteEntries = buf.readBytes(numberColors * 3);

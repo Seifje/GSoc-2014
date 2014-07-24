@@ -62,8 +62,8 @@ import com.cloud.bridge.util.OrderedPair;
 import com.cloud.bridge.util.StringHelper;
 
 /**
- * Creates an SCSP client to a CAStor cluster, configured in "storage.root",
- * and use CAStor as the back-end storage instead of a file system.
+ * Creates an SCSP client to a CAStor cluster, configured in "storage.root", and
+ * use CAStor as the back-end storage instead of a file system.
  */
 public class S3CAStorBucketAdapter implements S3BucketAdapter {
     protected final static Logger s_logger = Logger.getLogger(S3CAStorBucketAdapter.class);
@@ -78,24 +78,35 @@ public class S3CAStorBucketAdapter implements S3BucketAdapter {
     private static final int DEFAULT_SCSP_PORT = 80;
     private static final int DEFAULT_MAX_POOL_SIZE = 50;
     private static final int DEFAULT_MAX_RETRIES = 5;
-    private static final int CONNECTION_TIMEOUT = 60 * 1000; // Request activity timeout - 1 minute
-    private static final int CM_IDLE_TIMEOUT = 60 * 1000; // HttpConnectionManager idle timeout - 1 minute
-    private static final int LOCATOR_RETRY_TIMEOUT = 0; // StaticLocator pool retry timeout
+    private static final int CONNECTION_TIMEOUT = 60 * 1000; // Request activity
+                                                             // timeout - 1
+                                                             // minute
+    private static final int CM_IDLE_TIMEOUT = 60 * 1000; // HttpConnectionManager
+                                                          // idle timeout - 1
+                                                          // minute
+    private static final int LOCATOR_RETRY_TIMEOUT = 0; // StaticLocator pool
+                                                        // retry timeout
 
-    private ScspClient _scspClient;  // talks to CAStor cluster
-    private Locator _locator;         // maintains list of CAStor nodes
-    private String _domain;          // domain where all CloudStack streams will live
+    private ScspClient _scspClient; // talks to CAStor cluster
+    private Locator _locator; // maintains list of CAStor nodes
+    private String _domain; // domain where all CloudStack streams will live
 
     private synchronized ScspClient myClient(String mountedRoot) {
         if (_scspClient != null) {
             return _scspClient;
         }
-        // The castor cluster is specified either by listing the ip addresses of some nodes, or
-        // by specifying "zeroconf=" and the cluster's mdns name -- this is "cluster" in castor's node.cfg.
-        // The "domain" to store streams can be specified. If not specified, streams will be written
-        // without a "domain" query arg, so they will go into the castor default domain.
-        // The port is optional and must be at the end of the config string, defaults to 80.
-        // Examples: "castor 172.16.78.130 172.16.78.131 80", "castor 172.16.78.130 domain=mycluster.example.com",
+        // The castor cluster is specified either by listing the ip addresses of
+        // some nodes, or
+        // by specifying "zeroconf=" and the cluster's mdns name -- this is
+        // "cluster" in castor's node.cfg.
+        // The "domain" to store streams can be specified. If not specified,
+        // streams will be written
+        // without a "domain" query arg, so they will go into the castor default
+        // domain.
+        // The port is optional and must be at the end of the config string,
+        // defaults to 80.
+        // Examples: "castor 172.16.78.130 172.16.78.131 80",
+        // "castor 172.16.78.130 domain=mycluster.example.com",
         // "castor zeroconf=mycluster.example.com domain=mycluster.example.com 80"
         String[] cfg = mountedRoot.split(" ");
         int numIPs = cfg.length - 1;
@@ -113,7 +124,9 @@ public class S3CAStorBucketAdapter implements S3BucketAdapter {
         HashSet<String> ips = new HashSet<String>();
         String clusterName = null;
         for (int i = 0; i < numIPs; ++i) {
-            String option = cfg[i + 1]; // ip address or zeroconf=mycluster.example.com or domain=mydomain.example.com
+            String option = cfg[i + 1]; // ip address or
+                                        // zeroconf=mycluster.example.com or
+                                        // domain=mydomain.example.com
             if (option.toLowerCase().startsWith("zeroconf=")) {
                 String[] confStr = option.split("=");
                 if (confStr.length != 2) {
@@ -133,7 +146,8 @@ public class S3CAStorBucketAdapter implements S3BucketAdapter {
         if (clusterName == null && ips.isEmpty()) {
             throw new ConfigurationException("No CAStor nodes specified in '" + mountedRoot + "'");
         }
-        String[] castorNodes = ips.toArray(new String[0]);  // list of configured nodes
+        String[] castorNodes = ips.toArray(new String[0]); // list of configured
+                                                           // nodes
         if (clusterName == null) {
             try {
                 _locator = new StaticLocator(castorNodes, castorPort, LOCATOR_RETRY_TIMEOUT);
@@ -143,7 +157,9 @@ public class S3CAStorBucketAdapter implements S3BucketAdapter {
             }
         } else {
             try {
-                clusterName = clusterName.replace(".", "_"); // workaround needed for CAStorSDK 1.3.1
+                clusterName = clusterName.replace(".", "_"); // workaround
+                                                             // needed for
+                                                             // CAStorSDK 1.3.1
                 _locator = new ZeroconfLocator(clusterName);
                 _locator.start();
             } catch (IOException e) {
@@ -151,8 +167,8 @@ public class S3CAStorBucketAdapter implements S3BucketAdapter {
             }
         }
         try {
-            s_logger.info("CAStor client starting: " + (_domain == null ? "default domain" : "domain " + _domain) + " " +
-                (clusterName == null ? Arrays.toString(castorNodes) : clusterName) + " :" + castorPort);
+            s_logger.info("CAStor client starting: " + (_domain == null ? "default domain" : "domain " + _domain) + " "
+                    + (clusterName == null ? Arrays.toString(castorNodes) : clusterName) + " :" + castorPort);
             _scspClient = new ScspClient(_locator, castorPort, DEFAULT_MAX_POOL_SIZE, DEFAULT_MAX_RETRIES, CONNECTION_TIMEOUT, CM_IDLE_TIMEOUT);
             _scspClient.start();
         } catch (Exception e) {
@@ -167,7 +183,8 @@ public class S3CAStorBucketAdapter implements S3BucketAdapter {
         // or add read method that returns the body as an unread
         // InputStream for use by loadObject() and loadObjectRange().
 
-        myClient(mountedRoot); // make sure castorNodes and castorPort initialized
+        myClient(mountedRoot); // make sure castorNodes and castorPort
+                               // initialized
         InetSocketAddress nodeAddr = _locator.locate();
         if (nodeAddr == null) {
             throw new ConfigurationException("Unable to locate CAStor node with locator " + _locator);
@@ -198,8 +215,7 @@ public class S3CAStorBucketAdapter implements S3BucketAdapter {
             ScspResponse bwResponse = myClient(mountedRoot).write(bucket, new ByteArrayInputStream("".getBytes()), 0, domainQueryArg(), new ScspHeaders());
             if (bwResponse.getHttpStatusCode() != HTTP_CREATED) {
                 if (bwResponse.getHttpStatusCode() == HTTP_PRECONDITION_FAILED)
-                    s_logger.error("CAStor unable to create bucket " + bucket + " because domain " + (this._domain == null ? "(default)" : this._domain) +
-                        " does not exist");
+                    s_logger.error("CAStor unable to create bucket " + bucket + " because domain " + (this._domain == null ? "(default)" : this._domain) + " does not exist");
                 else
                     s_logger.error("CAStor unable to create bucket " + bucket + ": " + bwResponse.getHttpStatusCode());
                 throw new OutOfStorageException("CAStor unable to create bucket " + bucket + ": " + bwResponse.getHttpStatusCode());
@@ -263,7 +279,7 @@ public class S3CAStorBucketAdapter implements S3BucketAdapter {
                     md5.update(buffer, 0, len);
 
                 }
-                //Convert MD5 digest to (lowercase) hex String
+                // Convert MD5 digest to (lowercase) hex String
                 retVal = StringHelper.toHexString(md5.digest());
 
             } catch (IOException e) {
@@ -280,8 +296,8 @@ public class S3CAStorBucketAdapter implements S3BucketAdapter {
             }
 
             try {
-                ScspResponse bwResponse =
-                    myClient(mountedRoot).write(bucket + "/" + fileName, new ResettableFileInputStream(spoolFile), streamLen, domainQueryArg(), new ScspHeaders());
+                ScspResponse bwResponse = myClient(mountedRoot).write(bucket + "/" + fileName, new ResettableFileInputStream(spoolFile), streamLen, domainQueryArg(),
+                        new ScspHeaders());
                 if (bwResponse.getHttpStatusCode() >= HTTP_UNSUCCESSFUL) {
                     s_logger.error("CAStor write responded with error " + bwResponse.getHttpStatusCode());
                     throw new OutOfStorageException("Unable to write object to CAStor " + bucket + "/" + fileName + ": " + bwResponse.getHttpStatusCode());
@@ -306,74 +322,68 @@ public class S3CAStorBucketAdapter implements S3BucketAdapter {
     }
 
     /**
-     * From a list of files (each being one part of the multipart upload), concatentate all files into a single
-     * object that can be accessed by normal S3 calls.    This function could take a long time since a multipart is
-     * allowed to have upto 10,000 parts (each 5 gib long).      Amazon defines that while this operation is in progress
-     * whitespace is sent back to the client inorder to keep the HTTP connection alive.
+     * From a list of files (each being one part of the multipart upload),
+     * concatentate all files into a single object that can be accessed by
+     * normal S3 calls. This function could take a long time since a multipart
+     * is allowed to have upto 10,000 parts (each 5 gib long). Amazon defines
+     * that while this operation is in progress whitespace is sent back to the
+     * client inorder to keep the HTTP connection alive.
      *
-     * @param mountedRoot - where both the source and dest buckets are located
-     * @param destBucket - resulting location of the concatenated objects
-     * @param fileName - resulting file name of the concatenated objects
-     * @param sourceBucket - special bucket used to save uploaded file parts
-     * @param parts - an array of file names in the sourceBucket
-     * @param client - if not null, then keep the servlet connection alive while this potentially long concatentation takes place
-     * @return OrderedPair with the first value the MD5 of the final object, and the second value the length of the final object
+     * @param mountedRoot
+     *            - where both the source and dest buckets are located
+     * @param destBucket
+     *            - resulting location of the concatenated objects
+     * @param fileName
+     *            - resulting file name of the concatenated objects
+     * @param sourceBucket
+     *            - special bucket used to save uploaded file parts
+     * @param parts
+     *            - an array of file names in the sourceBucket
+     * @param client
+     *            - if not null, then keep the servlet connection alive while
+     *            this potentially long concatentation takes place
+     * @return OrderedPair with the first value the MD5 of the final object, and
+     *         the second value the length of the final object
      */
     @Override
-    public OrderedPair<String, Long> concatentateObjects(String mountedRoot, String destBucket, String fileName, String sourceBucket, S3MultipartPart[] parts,
-        OutputStream client) {
+    public OrderedPair<String, Long> concatentateObjects(String mountedRoot, String destBucket, String fileName, String sourceBucket, S3MultipartPart[] parts, OutputStream client) {
         // TODO
         throw new UnsupportedException("Multipart upload support not yet implemented in CAStor plugin");
 
         /*
-        MessageDigest md5;
-        long totalLength = 0;
-
-        try {
-            md5 = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            s_logger.error("Unexpected exception " + e.getMessage(), e);
-            throw new InternalErrorException("Unable to get MD5 MessageDigest", e);
-        }
-
-        File file = new File(getBucketFolderDir(mountedRoot, destBucket) + File.separatorChar + fileName);
-        try {
-            // -> when versioning is off we need to rewrite the file contents
-            file.delete();
-            file.createNewFile();
-
-            final FileOutputStream fos = new FileOutputStream(file);
-            byte[] buffer = new byte[4096];
-
-            // -> get the input stream for the next file part
-            for( int i=0; i < parts.length; i++ )
-            {
-               DataHandler nextPart = loadObject( mountedRoot, sourceBucket, parts[i].getPath());
-               InputStream is = nextPart.getInputStream();
-
-               int len = 0;
-               while( (len = is.read(buffer)) > 0) {
-                   fos.write(buffer, 0, len);
-                   md5.update(buffer, 0, len);
-                   totalLength += len;
-               }
-               is.close();
-
-               // -> after each file write tell the client we are still here to keep connection alive
-               if (null != client) {
-                   client.write( new String(" ").getBytes());
-                   client.flush();
-               }
-            }
-            fos.close();
-            return new OrderedPair<String, Long>(StringHelper.toHexString(md5.digest()), new Long(totalLength));
-            //Create an ordered pair whose first element is the MD4 digest as a (lowercase) hex String
-        }
-        catch(IOException e) {
-            s_logger.error("concatentateObjects unexpected exception " + e.getMessage(), e);
-            throw new OutOfStorageException(e);
-        }
-        */
+         * MessageDigest md5; long totalLength = 0;
+         * 
+         * try { md5 = MessageDigest.getInstance("MD5"); } catch
+         * (NoSuchAlgorithmException e) { s_logger.error("Unexpected exception "
+         * + e.getMessage(), e); throw new
+         * InternalErrorException("Unable to get MD5 MessageDigest", e); }
+         * 
+         * File file = new File(getBucketFolderDir(mountedRoot, destBucket) +
+         * File.separatorChar + fileName); try { // -> when versioning is off we
+         * need to rewrite the file contents file.delete();
+         * file.createNewFile();
+         * 
+         * final FileOutputStream fos = new FileOutputStream(file); byte[]
+         * buffer = new byte[4096];
+         * 
+         * // -> get the input stream for the next file part for( int i=0; i <
+         * parts.length; i++ ) { DataHandler nextPart = loadObject( mountedRoot,
+         * sourceBucket, parts[i].getPath()); InputStream is =
+         * nextPart.getInputStream();
+         * 
+         * int len = 0; while( (len = is.read(buffer)) > 0) { fos.write(buffer,
+         * 0, len); md5.update(buffer, 0, len); totalLength += len; }
+         * is.close();
+         * 
+         * // -> after each file write tell the client we are still here to keep
+         * connection alive if (null != client) { client.write( new
+         * String(" ").getBytes()); client.flush(); } } fos.close(); return new
+         * OrderedPair<String, Long>(StringHelper.toHexString(md5.digest()), new
+         * Long(totalLength)); //Create an ordered pair whose first element is
+         * the MD4 digest as a (lowercase) hex String } catch(IOException e) {
+         * s_logger.error("concatentateObjects unexpected exception " +
+         * e.getMessage(), e); throw new OutOfStorageException(e); }
+         */
     }
 
     @Override

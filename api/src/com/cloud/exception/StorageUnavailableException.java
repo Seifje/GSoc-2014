@@ -20,8 +20,7 @@ import com.cloud.storage.StoragePool;
 import com.cloud.utils.SerialVersionUID;
 
 /**
- * If the cause is due to storage pool unavailable, calling
- * problem with.
+ * If the cause is due to storage pool unavailable, calling problem with.
  *
  */
 public class StorageUnavailableException extends ResourceUnavailableException {

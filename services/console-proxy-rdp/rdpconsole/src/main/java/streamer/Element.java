@@ -19,8 +19,9 @@ package streamer;
 import java.util.Set;
 
 /**
- * Element is basic building block for constructing data processing pipes. It has one or more contact pads, which can
- * be wired with other elements using links.
+ * Element is basic building block for constructing data processing pipes. It
+ * has one or more contact pads, which can be wired with other elements using
+ * links.
  */
 public interface Element {
 
@@ -31,8 +32,8 @@ public interface Element {
     public static final String STDIN = "stdin";
 
     /**
-     * Name of pad for standard output. Should be set in all elements except pure
-     * sources.
+     * Name of pad for standard output. Should be set in all elements except
+     * pure sources.
      */
     public static final String STDOUT = "stdout";
 
@@ -40,7 +41,7 @@ public interface Element {
      * Get link connected to given pad.
      *
      * @param padName
-     *          Standard pads are "stdin" and "stdout".
+     *            Standard pads are "stdin" and "stdout".
      */
     Link getLink(String padName);
 
@@ -53,7 +54,7 @@ public interface Element {
      * Connect link to given pad.
      *
      * @param padName
-     *          a pad name. Standard pads are "stdin" and "stdout".
+     *            a pad name. Standard pads are "stdin" and "stdout".
      */
     void setLink(String padName, Link link, Direction direction);
 
@@ -61,7 +62,7 @@ public interface Element {
      * Disconnect link from given pad.
      *
      * @param padName
-     *          Standard pads are "stdin" and "stdout".
+     *            Standard pads are "stdin" and "stdout".
      */
     void dropLink(String padName);
 
@@ -70,8 +71,8 @@ public interface Element {
      * pads for data, handle data and push result to it sink(s), if any.
      *
      * @param block
-     *          block until data will be available, or do a slight delay at least,
-     *          when data is not available
+     *            block until data will be available, or do a slight delay at
+     *            least, when data is not available
      */
     void poll(boolean block);
 
@@ -79,9 +80,9 @@ public interface Element {
      * Handle incoming data.
      *
      * @param buf
-     *          a data
+     *            a data
      * @param link
-     *          TODO
+     *            TODO
      */
     void handleData(ByteBuffer buf, Link link);
 
@@ -89,10 +90,10 @@ public interface Element {
      * Handle event.
      *
      * @param event
-     *          an event
+     *            an event
      * @param direction
-     *          if IN, then send event to input pads, when OUT, then send to
-     *          output pads
+     *            if IN, then send event to input pads, when OUT, then send to
+     *            output pads
      */
     void handleEvent(Event event, Direction direction);
 
@@ -109,7 +110,8 @@ public interface Element {
     /**
      * Drop link.
      *
-     * @param link a link to drop
+     * @param link
+     *            a link to drop
      */
     void dropLink(Link link);
 

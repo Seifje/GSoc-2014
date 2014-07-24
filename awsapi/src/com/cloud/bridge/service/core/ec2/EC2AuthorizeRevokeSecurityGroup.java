@@ -22,7 +22,16 @@ import java.util.List;
 public class EC2AuthorizeRevokeSecurityGroup {
 
     private String name;
-    private List<EC2IpPermission> permissionSet = new ArrayList<EC2IpPermission>();    // a list of permissions to be removed from the group
+    private List<EC2IpPermission> permissionSet = new ArrayList<EC2IpPermission>(); // a
+                                                                                    // list
+                                                                                    // of
+                                                                                    // permissions
+                                                                                    // to
+                                                                                    // be
+                                                                                    // removed
+                                                                                    // from
+                                                                                    // the
+                                                                                    // group
 
     public EC2AuthorizeRevokeSecurityGroup() {
         name = null;

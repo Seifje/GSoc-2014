@@ -214,8 +214,9 @@ public class ElasticLoadBalancerManagerImpl extends ManagerBase implements Elast
                 elbVm.getPrivateIpAddress(), null, null, maxconn, offering.isKeepAliveEnabled());
         cmd.setAccessDetail(NetworkElementCommand.ROUTER_IP, elbVm.getPrivateIpAddress());
         cmd.setAccessDetail(NetworkElementCommand.ROUTER_NAME, elbVm.getInstanceName());
-        //FIXME: why are we setting attributes directly? Ick!! There should be accessors and
-        //the constructor should set defaults.
+        // FIXME: why are we setting attributes directly? Ick!! There should be
+        // accessors and
+        // the constructor should set defaults.
         cmd.lbStatsVisibility = _configDao.getValue(Config.NetworkLBHaproxyStatsVisbility.key());
         cmd.lbStatsUri = _configDao.getValue(Config.NetworkLBHaproxyStatsUri.key());
         cmd.lbStatsAuth = _configDao.getValue(Config.NetworkLBHaproxyStatsAuth.key());
@@ -232,7 +233,9 @@ public class ElasticLoadBalancerManagerImpl extends ManagerBase implements Elast
         return sendCommandsToRouter(elbVm, cmds);
     }
 
-    protected DomainRouterVO findElbVmForLb(LoadBalancingRule lb) {//TODO: use a table to lookup
+    protected DomainRouterVO findElbVmForLb(LoadBalancingRule lb) {// TODO: use
+                                                                   // a table to
+                                                                   // lookup
         Network ntwk = _networkModel.getNetwork(lb.getNetworkId());
         long sourceIpId = _networkModel.getPublicIpAddress(lb.getSourceIp().addr(), ntwk.getDataCenterId()).getId();
         ElasticLbVmMapVO map = _elbVmMapDao.findOneByIp(sourceIpId);
@@ -257,7 +260,7 @@ public class ElasticLoadBalancerManagerImpl extends ManagerBase implements Elast
         }
 
         if (elbVm.getState() == State.Running) {
-            //resend all rules for the public ip
+            // resend all rules for the public ip
             long sourceIpId = _networkModel.getPublicIpAddress(rules.get(0).getSourceIp().addr(), network.getDataCenterId()).getId();
             List<LoadBalancerVO> lbs = _lbDao.listByIpAddress(sourceIpId);
             List<LoadBalancingRule> lbRules = new ArrayList<LoadBalancingRule>();
@@ -295,9 +298,8 @@ public class ElasticLoadBalancerManagerImpl extends ManagerBase implements Elast
         _elasticLbVmRamSize = NumbersUtil.parseInt(configs.get(Config.ElasticLoadBalancerVmMemory.key()), DEFAULT_ELB_VM_RAMSIZE);
         _elasticLbvmCpuMHz = NumbersUtil.parseInt(configs.get(Config.ElasticLoadBalancerVmCpuMhz.key()), DEFAULT_ELB_VM_CPU_MHZ);
         _elasticLbvmNumCpu = NumbersUtil.parseInt(configs.get(Config.ElasticLoadBalancerVmNumVcpu.key()), 1);
-        _elasticLbVmOffering = new ServiceOfferingVO("System Offering For Elastic LB VM", _elasticLbvmNumCpu,
-                _elasticLbVmRamSize, _elasticLbvmCpuMHz, 0, 0, true, null, Storage.ProvisioningType.THIN, useLocalStorage,
-                true, null, true, VirtualMachine.Type.ElasticLoadBalancerVm, true);
+        _elasticLbVmOffering = new ServiceOfferingVO("System Offering For Elastic LB VM", _elasticLbvmNumCpu, _elasticLbVmRamSize, _elasticLbvmCpuMHz, 0, 0, true, null,
+                Storage.ProvisioningType.THIN, useLocalStorage, true, null, true, VirtualMachine.Type.ElasticLoadBalancerVm, true);
         _elasticLbVmOffering.setUniqueName(ServiceOffering.elbVmDefaultOffUniqueName);
         _elasticLbVmOffering = _serviceOfferingDao.persistSystemServiceOffering(_elasticLbVmOffering);
 
@@ -443,7 +445,7 @@ public class ElasticLoadBalancerManagerImpl extends ManagerBase implements Elast
             if (nic.getTrafficType() == TrafficType.Management) {
                 buf.append(" localgw=").append(dest.getPod().getGateway());
             } else if (nic.getTrafficType() == TrafficType.Control) {
-                //  control command is sent over management network in VMware
+                // control command is sent over management network in VMware
                 if (dest.getHost().getHypervisorType() == HypervisorType.VMware) {
                     if (s_logger.isInfoEnabled()) {
                         s_logger.info("Check if we need to add management server explicit route to ELB vm. pod cidr: " + dest.getPod().getCidrAddress() + "/"
@@ -454,7 +456,8 @@ public class ElasticLoadBalancerManagerImpl extends ManagerBase implements Elast
                     if (s_logger.isDebugEnabled()) {
                         s_logger.debug("Added management server explicit route to ELB vm.");
                     }
-                    // always add management explicit route, for basic networking setup
+                    // always add management explicit route, for basic
+                    // networking setup
                     buf.append(" mgmtcidr=").append(_mgmtCidr);
                     buf.append(" localgw=").append(dest.getPod().getGateway());
 
@@ -585,7 +588,7 @@ public class ElasticLoadBalancerManagerImpl extends ManagerBase implements Elast
 
     @SuppressWarnings("unused")
     public void processStopOrRebootAnswer(final DomainRouterVO elbVm, Answer answer) {
-        //TODO: process network usage stats
+        // TODO: process network usage stats
     }
 
     @Override

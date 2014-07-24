@@ -24,7 +24,7 @@ import com.cloud.utils.component.Adapter;
 
 public interface ClusterServiceAdapter extends Adapter {
     final ConfigKey<Integer> ClusterMessageTimeOut = new ConfigKey<Integer>(Integer.class, "cluster.message.timeout.seconds", "Advance", "300",
-        "Time (in seconds) to wait before a inter-management server message post times out.", true);
+            "Time (in seconds) to wait before a inter-management server message post times out.", true);
 
     public ClusterService getPeerService(String strPeer) throws RemoteException;
 

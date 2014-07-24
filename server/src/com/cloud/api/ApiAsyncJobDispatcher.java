@@ -77,7 +77,6 @@ public class ApiAsyncJobDispatcher extends AdapterBase implements AsyncJobDispat
             String acctIdStr = params.get("ctxAccountId");
             String contextDetails = params.get("ctxDetails");
 
-
             Long userId = null;
             Account accountObject = null;
 
@@ -98,9 +97,10 @@ public class ApiAsyncJobDispatcher extends AdapterBase implements AsyncJobDispat
             }
 
             CallContext ctx = CallContext.register(user, accountObject);
-            if(contextDetails != null){
-                Type objectMapType = new TypeToken<Map<Object, Object>>() {}.getType();
-                ctx.putContextParameters((Map<Object, Object>) gson.fromJson(contextDetails, objectMapType));
+            if (contextDetails != null) {
+                Type objectMapType = new TypeToken<Map<Object, Object>>() {
+                }.getType();
+                ctx.putContextParameters((Map<Object, Object>)gson.fromJson(contextDetails, objectMapType));
             }
 
             try {
@@ -129,8 +129,9 @@ public class ApiAsyncJobDispatcher extends AdapterBase implements AsyncJobDispat
             response.setErrorText(errorMsg);
             response.setResponseName((cmdObj == null) ? "unknowncommandresponse" : cmdObj.getCommandName());
 
-            // FIXME:  setting resultCode to ApiErrorCode.INTERNAL_ERROR is not right, usually executors have their exception handling
-            //         and we need to preserve that as much as possible here
+            // FIXME: setting resultCode to ApiErrorCode.INTERNAL_ERROR is not
+            // right, usually executors have their exception handling
+            // and we need to preserve that as much as possible here
             _asyncJobMgr.completeAsyncJob(job.getId(), JobInfo.Status.FAILED, ApiErrorCode.INTERNAL_ERROR.getHttpCode(), ApiSerializerHelper.toSerializedString(response));
         }
     }

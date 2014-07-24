@@ -28,8 +28,8 @@ public interface PortProfileDao extends GenericDao<PortProfileVO, Long> {
     PortProfileVO findByName(String portProfileName);
 
     /*
-     * Returns true if there already is any portprofile that trunks
-     * vlan IDs in a specified range.
+     * Returns true if there already is any portprofile that trunks vlan IDs in
+     * a specified range.
      */
     boolean doesVlanRangeClash(int lowVlanId, int highVlanId);
 
@@ -45,7 +45,8 @@ public interface PortProfileDao extends GenericDao<PortProfileVO, Long> {
      * List<PortProfileVO> listByVlanId(int vlanId);
      *
      * List all uplink portprofiles (these represent physical ports).
-     * List<PortProfileVO> listAllUplinkPortProfiles();    // we may have to provide some filter, like clusterId or zoneId or something.
+     * List<PortProfileVO> listAllUplinkPortProfiles(); // we may have to
+     * provide some filter, like clusterId or zoneId or something.
      *
      */
 }

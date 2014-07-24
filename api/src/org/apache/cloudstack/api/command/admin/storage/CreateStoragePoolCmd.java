@@ -38,16 +38,15 @@ import com.cloud.storage.StoragePool;
 import com.cloud.user.Account;
 
 @SuppressWarnings("rawtypes")
-@APICommand(name = "createStoragePool", description = "Creates a storage pool.", responseObject = StoragePoolResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createStoragePool", description = "Creates a storage pool.", responseObject = StoragePoolResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateStoragePoolCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(CreateStoragePoolCmd.class.getName());
 
     private static final String s_name = "createstoragepoolresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.CLUSTER_ID, type = CommandType.UUID, entityType = ClusterResponse.class, description = "the cluster ID for the storage pool")
     private Long clusterId;
@@ -85,15 +84,12 @@ public class CreateStoragePoolCmd extends BaseCmd {
     @Parameter(name = ApiConstants.CAPACITY_BYTES, type = CommandType.LONG, required = false, description = "bytes CloudStack can provision from this storage pool")
     private Long capacityBytes;
 
-    @Parameter(name = ApiConstants.HYPERVISOR,
-               type = CommandType.STRING,
-               required = false,
-               description = "hypervisor type of the hosts in zone that will be attached to this storage pool. KVM, VMware supported as of now.")
+    @Parameter(name = ApiConstants.HYPERVISOR, type = CommandType.STRING, required = false, description = "hypervisor type of the hosts in zone that will be attached to this storage pool. KVM, VMware supported as of now.")
     private String hypervisor;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getClusterId() {
         return clusterId;

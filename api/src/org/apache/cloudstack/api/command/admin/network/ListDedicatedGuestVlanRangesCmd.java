@@ -36,49 +36,40 @@ import com.cloud.network.GuestVlan;
 import com.cloud.user.Account;
 import com.cloud.utils.Pair;
 
-@APICommand(name = "listDedicatedGuestVlanRanges", description = "Lists dedicated guest vlan ranges", responseObject = GuestVlanRangeResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listDedicatedGuestVlanRanges", description = "Lists dedicated guest vlan ranges", responseObject = GuestVlanRangeResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListDedicatedGuestVlanRangesCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListDedicatedGuestVlanRangesCmd.class.getName());
 
     private static final String s_name = "listdedicatedguestvlanrangesresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = GuestVlanRangeResponse.class, description = "list dedicated guest vlan ranges by id")
     private Long id;
 
-    @Parameter(name = ApiConstants.ACCOUNT,
-               type = CommandType.STRING,
-               description = "the account with which the guest VLAN range is associated. Must be used with the domainId parameter.")
+    @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "the account with which the guest VLAN range is associated. Must be used with the domainId parameter.")
     private String accountName;
 
     @Parameter(name = ApiConstants.PROJECT_ID, type = CommandType.UUID, entityType = ProjectResponse.class, description = "project who will own the guest VLAN range")
     private Long projectId;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               entityType = DomainResponse.class,
-               description = "the domain ID with which the guest VLAN range is associated.  If used with the account parameter, returns all guest VLAN ranges for that account in the specified domain.")
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "the domain ID with which the guest VLAN range is associated.  If used with the account parameter, returns all guest VLAN ranges for that account in the specified domain.")
     private Long domainId;
 
     @Parameter(name = ApiConstants.GUEST_VLAN_RANGE, type = CommandType.STRING, description = "the dedicated guest vlan range")
     private String guestVlanRange;
 
-    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = PhysicalNetworkResponse.class,
-               description = "physical network id of the guest VLAN range")
+    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, description = "physical network id of the guest VLAN range")
     private Long physicalNetworkId;
 
     @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, description = "zone of the guest VLAN range")
     private Long zoneId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -108,9 +99,9 @@ public class ListDedicatedGuestVlanRangesCmd extends BaseListCmd {
         return zoneId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

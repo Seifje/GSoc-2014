@@ -94,13 +94,14 @@ public class ActionEventInterceptor implements ComponentMethodInterceptor, Metho
                 return;
 
             if (actionEvent.create()) {
-                //This start event has to be used for subsequent events of this action
-                startEventId = ActionEventUtils.onCreatedActionEvent(userId, accountId, EventVO.LEVEL_INFO, eventType,
-                        isEventDisplayEnabled, "Successfully created entity for " + eventDescription);
+                // This start event has to be used for subsequent events of this
+                // action
+                startEventId = ActionEventUtils.onCreatedActionEvent(userId, accountId, EventVO.LEVEL_INFO, eventType, isEventDisplayEnabled, "Successfully created entity for "
+                        + eventDescription);
                 ctx.setStartEventId(startEventId);
             } else {
-                ActionEventUtils.onCompletedActionEvent(userId, accountId, EventVO.LEVEL_INFO, eventType,
-                        isEventDisplayEnabled, "Successfully completed " + eventDescription, startEventId);
+                ActionEventUtils.onCompletedActionEvent(userId, accountId, EventVO.LEVEL_INFO, eventType, isEventDisplayEnabled, "Successfully completed " + eventDescription,
+                        startEventId);
             }
         }
     }
@@ -120,12 +121,11 @@ public class ActionEventInterceptor implements ComponentMethodInterceptor, Metho
                 return;
 
             if (actionEvent.create()) {
-                long eventId = ActionEventUtils.onCreatedActionEvent(userId, accountId, EventVO.LEVEL_ERROR, eventType,
-                            isEventDisplayEnabled, "Error while creating entity for " + eventDescription);
+                long eventId = ActionEventUtils.onCreatedActionEvent(userId, accountId, EventVO.LEVEL_ERROR, eventType, isEventDisplayEnabled, "Error while creating entity for "
+                        + eventDescription);
                 ctx.setStartEventId(eventId);
             } else {
-                ActionEventUtils.onCompletedActionEvent(userId, accountId, EventVO.LEVEL_ERROR, eventType, isEventDisplayEnabled,
-                        "Error while " + eventDescription, startEventId);
+                ActionEventUtils.onCompletedActionEvent(userId, accountId, EventVO.LEVEL_ERROR, eventType, isEventDisplayEnabled, "Error while " + eventDescription, startEventId);
             }
         }
     }

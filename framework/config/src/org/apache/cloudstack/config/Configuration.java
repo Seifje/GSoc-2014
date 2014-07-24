@@ -47,7 +47,7 @@ public interface Configuration {
     String getName();
 
     /**
-     * @return Value set by the administrator.  Defaults to the defaultValue.
+     * @return Value set by the administrator. Defaults to the defaultValue.
      */
     String getValue();
 
@@ -57,28 +57,31 @@ public interface Configuration {
     String getDescription();
 
     /**
-     * @return Default value for this parameter.  Null indicates this parameter is optional.
+     * @return Default value for this parameter. Null indicates this parameter
+     *         is optional.
      */
     String getDefaultValue();
 
     /**
-     * @return Scope for the parameter.  Null indicates that this parameter is
-     * always global.  A non-null value indicates that this parameter can be
-     * set at a certain organization level.
+     * @return Scope for the parameter. Null indicates that this parameter is
+     *         always global. A non-null value indicates that this parameter can
+     *         be set at a certain organization level.
      */
     String getScope();
 
     /**
-     * @return can the configuration parameter be changed without restarting the server.
+     * @return can the configuration parameter be changed without restarting the
+     *         server.
      */
     boolean isDynamic();
 
     /**
-     * @return The date this VO was updated by the components.  Note that this is not
-     * a date for when an administrator updates the value.  This is when the system
-     * updated this value.  By searching on this field gives you all the config
-     * parameters that have changed in an upgrade.  Null value indicates that this
-     * parameter is no longer used and can be deleted.
+     * @return The date this VO was updated by the components. Note that this is
+     *         not a date for when an administrator updates the value. This is
+     *         when the system updated this value. By searching on this field
+     *         gives you all the config parameters that have changed in an
+     *         upgrade. Null value indicates that this parameter is no longer
+     *         used and can be deleted.
      */
     Date getUpdated();
 }

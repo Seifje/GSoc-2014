@@ -39,8 +39,7 @@ import com.cloud.network.dao.ExternalFirewallDeviceVO;
 import com.cloud.network.element.JuniperSRXFirewallElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "configureSrxFirewall", responseObject = SrxFirewallResponse.class, description = "Configures a SRX firewall device",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "configureSrxFirewall", responseObject = SrxFirewallResponse.class, description = "Configures a SRX firewall device", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ConfigureSrxFirewallCmd extends BaseAsyncCmd {
 
     public static final Logger s_logger = Logger.getLogger(ConfigureSrxFirewallCmd.class.getName());
@@ -48,26 +47,19 @@ public class ConfigureSrxFirewallCmd extends BaseAsyncCmd {
     @Inject
     JuniperSRXFirewallElementService _srxFwService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.FIREWALL_DEVICE_ID,
-               type = CommandType.UUID,
-               entityType = SrxFirewallResponse.class,
-               required = true,
-               description = "SRX firewall device ID")
+    @Parameter(name = ApiConstants.FIREWALL_DEVICE_ID, type = CommandType.UUID, entityType = SrxFirewallResponse.class, required = true, description = "SRX firewall device ID")
     private Long fwDeviceId;
 
-    @Parameter(name = ApiConstants.FIREWALL_DEVICE_CAPACITY,
-               type = CommandType.LONG,
-               required = false,
-               description = "capacity of the firewall device, Capacity will be interpreted as number of networks device can handle")
+    @Parameter(name = ApiConstants.FIREWALL_DEVICE_CAPACITY, type = CommandType.LONG, required = false, description = "capacity of the firewall device, Capacity will be interpreted as number of networks device can handle")
     private Long capacity;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getFirewallDeviceId() {
         return fwDeviceId;
@@ -77,13 +69,12 @@ public class ConfigureSrxFirewallCmd extends BaseAsyncCmd {
         return capacity;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             ExternalFirewallDeviceVO fwDeviceVO = _srxFwService.configureSrxFirewall(this);
             if (fwDeviceVO != null) {

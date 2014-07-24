@@ -38,7 +38,9 @@ public class PropertiesUtil {
 
     /**
      * Searches the class path and local paths to find the config file.
-     * @param path path to find.  if it starts with / then it's absolute path.
+     *
+     * @param path
+     *            path to find. if it starts with / then it's absolute path.
      * @return File or null if not found at all.
      */
 
@@ -108,8 +110,8 @@ public class PropertiesUtil {
     }
 
     /*
-     * Returns an InputStream for the given resource
-     * This is needed to read the files within a jar in classpath.
+     * Returns an InputStream for the given resource This is needed to read the
+     * files within a jar in classpath.
      */
     public static InputStream openStreamFromURL(String path) {
         ClassLoader cl = PropertiesUtil.class.getClassLoader();
@@ -126,7 +128,8 @@ public class PropertiesUtil {
     }
 
     // Returns key=value pairs by parsing a commands.properties/config file
-    // with syntax; key=cmd;value (with this syntax cmd is stripped) and key=value
+    // with syntax; key=cmd;value (with this syntax cmd is stripped) and
+    // key=value
     public static Map<String, String> processConfigFile(String[] configFiles) {
         Map<String, String> configMap = new HashMap<String, String>();
         Properties preProcessedCommands = new Properties();
@@ -136,7 +139,8 @@ public class PropertiesUtil {
                 try {
                     loadFromFile(preProcessedCommands, commandsFile);
                 } catch (FileNotFoundException fnfex) {
-                    // in case of a file within a jar in classpath, try to open stream using url
+                    // in case of a file within a jar in classpath, try to open
+                    // stream using url
                     InputStream stream = PropertiesUtil.openStreamFromURL(configFile);
                     if (stream != null) {
                         try {
@@ -164,8 +168,11 @@ public class PropertiesUtil {
 
     /**
      * Load a Properties object with contents from a File.
-     * @param properties the properties object to be loaded
-     * @param file  the file to load from
+     *
+     * @param properties
+     *            the properties object to be loaded
+     * @param file
+     *            the file to load from
      * @throws IOException
      */
     public static void loadFromFile(Properties properties, File file) throws IOException {

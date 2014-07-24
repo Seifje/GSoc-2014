@@ -357,7 +357,8 @@ public interface ResponseGenerator {
 
     /**
      * @param resourceTag
-     * @param keyValueOnly TODO
+     * @param keyValueOnly
+     *            TODO
      * @return
      */
     ResourceTagResponse createResourceTagResponse(ResourceTag resourceTag, boolean keyValueOnly);

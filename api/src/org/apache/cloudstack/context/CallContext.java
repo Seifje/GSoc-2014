@@ -34,9 +34,9 @@ import com.cloud.utils.db.EntityManager;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 /**
- * CallContext records information about the environment the call is made.  This
- * class must be always be available in all CloudStack code.  Every thread
- * entry point must set the context and remove it when the thread finishes.
+ * CallContext records information about the environment the call is made. This
+ * class must be always be available in all CloudStack code. Every thread entry
+ * point must set the context and remove it when the thread finishes.
  */
 public class CallContext {
     private static final Logger s_logger = Logger.getLogger(CallContext.class);
@@ -55,7 +55,8 @@ public class CallContext {
     private String eventDescription;
     private String eventDetails;
     private String eventType;
-    private boolean isEventDisplayEnabled = true; // default to true unless specifically set
+    private boolean isEventDisplayEnabled = true; // default to true unless
+    // specifically set
     private User user;
     private long userId;
     private final Map<Object, Object> context = new HashMap<Object, Object>();
@@ -116,11 +117,15 @@ public class CallContext {
     public static CallContext current() {
         CallContext context = s_currentContext.get();
 
-        // TODO other than async job and api dispatches, there are many system background running threads
-        // that do not setup CallContext at all, however, many places in code that are touched by these background tasks
-        // assume not-null CallContext. Following is a fix to address therefore caused NPE problems
+        // TODO other than async job and api dispatches, there are many system
+        // background running threads
+        // that do not setup CallContext at all, however, many places in code
+        // that are touched by these background tasks
+        // assume not-null CallContext. Following is a fix to address therefore
+        // caused NPE problems
         //
-        // There are security implications with this. It assumes that all system background running threads are
+        // There are security implications with this. It assumes that all system
+        // background running threads are
         // indeed have no problem in running under system context.
         //
         if (context == null) {
@@ -134,9 +139,12 @@ public class CallContext {
      * This method should only be called if you can propagate the context id
      * from another CallContext.
      *
-     * @param callingUser calling user
-     * @param callingAccount calling account
-     * @param contextId context id propagated from another call context
+     * @param callingUser
+     *            calling user
+     * @param callingAccount
+     *            calling account
+     * @param contextId
+     *            context id propagated from another call context
      * @return CallContext
      */
     public static CallContext register(User callingUser, Account callingAccount, String contextId) {
@@ -145,12 +153,17 @@ public class CallContext {
 
     protected static CallContext register(User callingUser, Account callingAccount, Long userId, Long accountId, String contextId) {
         /*
-                Unit tests will have multiple times of setup/tear-down call to this, remove assertions to all unit test to run
-                assert s_currentContext.get() == null : "There's a context already so what does this new register context mean? " + s_currentContext.get().toString();
-                if (s_currentContext.get() != null) { // FIXME: This should be removed soon.  I added this check only to surface all the places that have this problem.
-                    throw new CloudRuntimeException("There's a context already so what does this new register context mean? " + s_currentContext.get().toString());
-                }
-        */
+         * Unit tests will have multiple times of setup/tear-down call to this,
+         * remove assertions to all unit test to run assert
+         * s_currentContext.get() == null :
+         * "There's a context already so what does this new register context mean? "
+         * + s_currentContext.get().toString(); if (s_currentContext.get() !=
+         * null) { // FIXME: This should be removed soon. I added this check
+         * only to surface all the places that have this problem. throw new
+         * CloudRuntimeException(
+         * "There's a context already so what does this new register context mean? "
+         * + s_currentContext.get().toString()); }
+         */
         CallContext callingContext = null;
         if (userId == null || accountId == null) {
             callingContext = new CallContext(callingUser, callingAccount, contextId);
@@ -316,7 +329,9 @@ public class CallContext {
 
     /**
      * Whether to display the event to the end user.
-     * @return true - if the event is to be displayed to the end user, false otherwise.
+     *
+     * @return true - if the event is to be displayed to the end user, false
+     *         otherwise.
      */
     public boolean isEventDisplayEnabled() {
         return isEventDisplayEnabled;
@@ -330,9 +345,10 @@ public class CallContext {
         return context;
     }
 
-    public void putContextParameters(Map<Object, Object> details){
-        if (details == null) return;
-        for(Object key : details.keySet()){
+    public void putContextParameters(Map<Object, Object> details) {
+        if (details == null)
+            return;
+        for (Object key : details.keySet()) {
             putContextParameter(key, details.get(key));
         }
     }
@@ -347,12 +363,6 @@ public class CallContext {
 
     @Override
     public String toString() {
-        return new StringBuilder("CCtxt[acct=").append(getCallingAccountId())
-            .append("; user=")
-            .append(getCallingUserId())
-            .append("; id=")
-            .append(contextId)
-            .append("]")
-            .toString();
+        return new StringBuilder("CCtxt[acct=").append(getCallingAccountId()).append("; user=").append(getCallingUserId()).append("; id=").append(contextId).append("]").toString();
     }
 }

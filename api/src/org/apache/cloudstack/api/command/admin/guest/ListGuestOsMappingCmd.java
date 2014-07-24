@@ -32,16 +32,15 @@ import org.apache.cloudstack.api.response.ListResponse;
 import com.cloud.storage.GuestOSHypervisor;
 import com.cloud.utils.Pair;
 
-@APICommand(name = "listGuestOsMapping", description = "Lists all available OS mappings for given hypervisor", responseObject = GuestOsMappingResponse.class,
-        since = "4.4.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listGuestOsMapping", description = "Lists all available OS mappings for given hypervisor", responseObject = GuestOsMappingResponse.class, since = "4.4.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListGuestOsMappingCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListGuestOsMappingCmd.class.getName());
 
     private static final String s_name = "listguestosmappingresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = GuestOsMappingResponse.class, required = false, description = "list mapping by its UUID")
     private Long id;
@@ -55,9 +54,9 @@ public class ListGuestOsMappingCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.HYPERVISOR_VERSION, type = CommandType.STRING, required = false, description = "list Guest OS mapping by hypervisor version. Must be used with hypervisor parameter")
     private String hypervisorVersion;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -75,9 +74,9 @@ public class ListGuestOsMappingCmd extends BaseListCmd {
         return hypervisorVersion;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

@@ -25,23 +25,23 @@ public final class LdapUtils {
         final StringBuilder sb = new StringBuilder();
         for (final char character : filter.toCharArray()) {
             switch (character) {
-                case '\\':
-                    sb.append("\\5c");
-                    break;
-                case '*':
-                    sb.append("\\2a");
-                    break;
-                case '(':
-                    sb.append("\\28");
-                    break;
-                case ')':
-                    sb.append("\\29");
-                    break;
-                case '\u0000':
-                    sb.append("\\00");
-                    break;
-                default:
-                    sb.append(character);
+            case '\\':
+                sb.append("\\5c");
+                break;
+            case '*':
+                sb.append("\\2a");
+                break;
+            case '(':
+                sb.append("\\28");
+                break;
+            case ')':
+                sb.append("\\29");
+                break;
+            case '\u0000':
+                sb.append("\\00");
+                break;
+            default:
+                sb.append(character);
             }
         }
         return sb.toString();

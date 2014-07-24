@@ -58,9 +58,8 @@ public class CloudStackClientTestCase extends BaseTestCase {
         command.setParam("page", "1");
         command.setParam("pagesize", "20");
         try {
-            List<CloudStackUserVm> vms =
-                client.listCall(command, API_KEY, SECRET_KEY, "listvirtualmachinesresponse", "virtualmachine", new TypeToken<List<CloudStackUserVm>>() {
-                }.getType());
+            List<CloudStackUserVm> vms = client.listCall(command, API_KEY, SECRET_KEY, "listvirtualmachinesresponse", "virtualmachine", new TypeToken<List<CloudStackUserVm>>() {
+            }.getType());
 
             for (CloudStackUserVm vm : vms) {
                 logger.info("id: " + vm.getId() + ", name: " + vm.getName());

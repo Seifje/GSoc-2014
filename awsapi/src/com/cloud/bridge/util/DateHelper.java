@@ -43,13 +43,14 @@ public class DateHelper {
 
     public static Date parseISO8601DateString(String dateString) throws ParseException {
         // -> SimpleDateFormat uses GMT[-+]hh:mm for the TZ so first we need to
-        //    convert the string with this value
+        // convert the string with this value
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
 
-        //this is zero time so we need to add that TZ indicator for
+        // this is zero time so we need to add that TZ indicator for
         if (dateString.endsWith("Z")) {
             dateString = dateString.substring(0, dateString.length() - 1) + "GMT-00:00";
-        } else {    // -> -0700 is valid but we need to change it to -07:00 for SimpleDateFormat
+        } else { // -> -0700 is valid but we need to change it to -07:00 for
+                 // SimpleDateFormat
             dateString = dateString.replaceFirst("-(\\d\\d)(\\d\\d)", "-$1:$2");
 
             int inset = 6;
@@ -58,7 +59,7 @@ public class DateHelper {
             dateString = s0 + "GMT" + s1;
         }
 
-        //System.out.println( "parseDate: [" + dateString + "]" );
+        // System.out.println( "parseDate: [" + dateString + "]" );
         return df.parse(dateString);
     }
 

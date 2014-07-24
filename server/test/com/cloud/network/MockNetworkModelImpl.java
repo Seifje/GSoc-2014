@@ -51,15 +51,20 @@ import com.cloud.vm.VirtualMachine;
 @Local(value = {NetworkModel.class})
 public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
 
-    /* (non-Javadoc)
-     * @see com.cloud.utils.component.Manager#configure(java.lang.String, java.util.Map)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.utils.component.Manager#configure(java.lang.String,
+     * java.util.Map)
      */
     @Override
     public boolean configure(String name, Map<String, Object> params) throws ConfigurationException {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#start()
      */
     @Override
@@ -67,7 +72,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#stop()
      */
     @Override
@@ -75,7 +82,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#getName()
      */
     @Override
@@ -83,8 +92,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return "MockNetworkModelImpl";
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#listPublicIpsAssignedToGuestNtwk(long, long, java.lang.Boolean)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#listPublicIpsAssignedToGuestNtwk(long,
+     * long, java.lang.Boolean)
      */
     @Override
     public List<IPAddressVO> listPublicIpsAssignedToGuestNtwk(long accountId, long associatedNetworkId, Boolean sourceNat) {
@@ -92,17 +105,25 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-   * @see com.cloud.network.NetworkModel#listPublicIpsAssignedToGuestNtwk(long, long, java.lang.Boolean)
-   */
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#listPublicIpsAssignedToGuestNtwk(long,
+     * long, java.lang.Boolean)
+     */
     @Override
     public List<IPAddressVO> listPublicIpsAssignedToGuestNtwk(long associatedNetworkId, Boolean sourceNat) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getSystemAccountNetworkOfferings(java.lang.String[])
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getSystemAccountNetworkOfferings(java.
+     * lang.String[])
      */
     @Override
     public List<NetworkOfferingVO> getSystemAccountNetworkOfferings(String... offeringNames) {
@@ -110,7 +131,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getNics(long)
      */
     @Override
@@ -119,8 +142,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getNextAvailableMacAddressInNetwork(long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getNextAvailableMacAddressInNetwork(long)
      */
     @Override
     public String getNextAvailableMacAddressInNetwork(long networkConfigurationId) throws InsufficientAddressCapacityException {
@@ -128,7 +154,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getPublicIpAddress(long)
      */
     @Override
@@ -137,7 +165,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#listPodVlans(long)
      */
     @Override
@@ -146,7 +176,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#listNetworksUsedByVm(long, boolean)
      */
     @Override
@@ -155,7 +187,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getNicInNetwork(long, long)
      */
     @Override
@@ -164,8 +198,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getNicsForTraffic(long, com.cloud.network.Networks.TrafficType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#getNicsForTraffic(long,
+     * com.cloud.network.Networks.TrafficType)
      */
     @Override
     public List<? extends Nic> getNicsForTraffic(long vmId, TrafficType type) {
@@ -173,7 +210,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getDefaultNetworkForVm(long)
      */
     @Override
@@ -182,7 +221,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getDefaultNic(long)
      */
     @Override
@@ -191,8 +232,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getUserDataUpdateProvider(com.cloud.network.Network)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getUserDataUpdateProvider(com.cloud.network
+     * .Network)
      */
     @Override
     public UserDataServiceProvider getUserDataUpdateProvider(Network network) {
@@ -200,8 +245,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#networkIsConfiguredForExternalNetworking(long, long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#networkIsConfiguredForExternalNetworking
+     * (long, long)
      */
     @Override
     public boolean networkIsConfiguredForExternalNetworking(long zoneId, long networkId) {
@@ -209,8 +258,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getNetworkServiceCapabilities(long, com.cloud.network.Network.Service)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#getNetworkServiceCapabilities(long,
+     * com.cloud.network.Network.Service)
      */
     @Override
     public Map<Capability, String> getNetworkServiceCapabilities(long networkId, Service service) {
@@ -218,8 +270,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#areServicesSupportedByNetworkOffering(long, com.cloud.network.Network.Service[])
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#areServicesSupportedByNetworkOffering(
+     * long, com.cloud.network.Network.Service[])
      */
     @Override
     public boolean areServicesSupportedByNetworkOffering(long networkOfferingId, Service... services) {
@@ -227,8 +283,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getNetworkWithSGWithFreeIPs(java.lang.Long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getNetworkWithSGWithFreeIPs(java.lang.
+     * Long)
      */
     @Override
     public NetworkVO getNetworkWithSGWithFreeIPs(Long zoneId) {
@@ -236,8 +296,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getNetworkWithSecurityGroupEnabled(java.lang.Long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getNetworkWithSecurityGroupEnabled(java
+     * .lang.Long)
      */
     @Override
     public NetworkVO getNetworkWithSecurityGroupEnabled(Long zoneId) {
@@ -245,8 +309,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getIpOfNetworkElementInVirtualNetwork(long, long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getIpOfNetworkElementInVirtualNetwork(
+     * long, long)
      */
     @Override
     public String getIpOfNetworkElementInVirtualNetwork(long accountId, long dataCenterId) {
@@ -254,8 +322,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#listNetworksForAccount(long, long, com.cloud.network.Network.GuestType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#listNetworksForAccount(long, long,
+     * com.cloud.network.Network.GuestType)
      */
     @Override
     public List<NetworkVO> listNetworksForAccount(long accountId, long zoneId, GuestType type) {
@@ -263,8 +334,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#listAllNetworksInAllZonesByType(com.cloud.network.Network.GuestType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#listAllNetworksInAllZonesByType(com.cloud
+     * .network.Network.GuestType)
      */
     @Override
     public List<NetworkVO> listAllNetworksInAllZonesByType(GuestType type) {
@@ -272,7 +347,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getStartIpAddress(long)
      */
     @Override
@@ -281,7 +358,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getIpInNetwork(long, long)
      */
     @Override
@@ -290,8 +369,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getIpInNetworkIncludingRemoved(long, long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#getIpInNetworkIncludingRemoved(long,
+     * long)
      */
     @Override
     public String getIpInNetworkIncludingRemoved(long vmId, long networkId) {
@@ -299,7 +381,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getPodIdForVlan(long)
      */
     @Override
@@ -308,7 +392,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#listNetworkOfferingsForUpgrade(long)
      */
     @Override
@@ -317,8 +403,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#isSecurityGroupSupportedInNetwork(com.cloud.network.Network)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#isSecurityGroupSupportedInNetwork(com.
+     * cloud.network.Network)
      */
     @Override
     public boolean isSecurityGroupSupportedInNetwork(Network network) {
@@ -326,8 +416,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#isProviderSupportServiceInNetwork(long, com.cloud.network.Network.Service, com.cloud.network.Network.Provider)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#isProviderSupportServiceInNetwork(long,
+     * com.cloud.network.Network.Service, com.cloud.network.Network.Provider)
      */
     @Override
     public boolean isProviderSupportServiceInNetwork(long networkId, Service service, Provider provider) {
@@ -335,8 +429,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#isProviderEnabledInPhysicalNetwork(long, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#isProviderEnabledInPhysicalNetwork(long,
+     * java.lang.String)
      */
     @Override
     public boolean isProviderEnabledInPhysicalNetwork(long physicalNetowrkId, String providerName) {
@@ -344,8 +442,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getNetworkTag(com.cloud.hypervisor.Hypervisor.HypervisorType, com.cloud.network.Network)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getNetworkTag(com.cloud.hypervisor.Hypervisor
+     * .HypervisorType, com.cloud.network.Network)
      */
     @Override
     public String getNetworkTag(HypervisorType hType, Network network) {
@@ -353,8 +455,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getElementServices(com.cloud.network.Network.Provider)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getElementServices(com.cloud.network.Network
+     * .Provider)
      */
     @Override
     public List<Service> getElementServices(Provider provider) {
@@ -362,8 +468,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#canElementEnableIndividualServices(com.cloud.network.Network.Provider)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#canElementEnableIndividualServices(com
+     * .cloud.network.Network.Provider)
      */
     @Override
     public boolean canElementEnableIndividualServices(Provider provider) {
@@ -371,8 +481,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#areServicesSupportedInNetwork(long, com.cloud.network.Network.Service[])
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#areServicesSupportedInNetwork(long,
+     * com.cloud.network.Network.Service[])
      */
     @Override
     public boolean areServicesSupportedInNetwork(long networkId, Service... services) {
@@ -380,8 +493,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#isNetworkSystem(com.cloud.network.Network)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#isNetworkSystem(com.cloud.network.Network)
      */
     @Override
     public boolean isNetworkSystem(Network network) {
@@ -389,8 +505,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getNetworkOfferingServiceCapabilities(com.cloud.offering.NetworkOffering, com.cloud.network.Network.Service)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getNetworkOfferingServiceCapabilities(
+     * com.cloud.offering.NetworkOffering, com.cloud.network.Network.Service)
      */
     @Override
     public Map<Capability, String> getNetworkOfferingServiceCapabilities(NetworkOffering offering, Service service) {
@@ -398,8 +518,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getPhysicalNetworkId(com.cloud.network.Network)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getPhysicalNetworkId(com.cloud.network
+     * .Network)
      */
     @Override
     public Long getPhysicalNetworkId(Network network) {
@@ -407,7 +531,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getAllowSubdomainAccessGlobal()
      */
     @Override
@@ -416,8 +542,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#isProviderForNetwork(com.cloud.network.Network.Provider, long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#isProviderForNetwork(com.cloud.network
+     * .Network.Provider, long)
      */
     @Override
     public boolean isProviderForNetwork(Provider provider, long networkId) {
@@ -425,8 +555,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#isProviderForNetworkOffering(com.cloud.network.Network.Provider, long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#isProviderForNetworkOffering(com.cloud
+     * .network.Network.Provider, long)
      */
     @Override
     public boolean isProviderForNetworkOffering(Provider provider, long networkOfferingId) {
@@ -434,8 +568,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#canProviderSupportServices(java.util.Map)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#canProviderSupportServices(java.util.Map)
      */
     @Override
     public void canProviderSupportServices(Map<Provider, Set<Service>> providersMap) {
@@ -443,8 +580,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getPhysicalNetworkInfo(long, com.cloud.hypervisor.Hypervisor.HypervisorType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#getPhysicalNetworkInfo(long,
+     * com.cloud.hypervisor.Hypervisor.HypervisorType)
      */
     @Override
     public List<PhysicalNetworkSetupInfo> getPhysicalNetworkInfo(long dcId, HypervisorType hypervisorType) {
@@ -452,7 +592,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#canAddDefaultSecurityGroup()
      */
     @Override
@@ -461,7 +603,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#listNetworkOfferingServices(long)
      */
     @Override
@@ -470,8 +614,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#areServicesEnabledInZone(long, com.cloud.offering.NetworkOffering, java.util.List)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#areServicesEnabledInZone(long,
+     * com.cloud.offering.NetworkOffering, java.util.List)
      */
     @Override
     public boolean areServicesEnabledInZone(long zoneId, NetworkOffering offering, List<Service> services) {
@@ -479,8 +626,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#checkIpForService(com.cloud.network.IPAddressVO, com.cloud.network.Network.Service, java.lang.Long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#checkIpForService(com.cloud.network.
+     * IPAddressVO, com.cloud.network.Network.Service, java.lang.Long)
      */
     @Override
     public boolean checkIpForService(IpAddress ip, Service service, Long networkId) {
@@ -488,8 +638,13 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#checkCapabilityForProvider(java.util.Set, com.cloud.network.Network.Service, com.cloud.network.Network.Capability, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#checkCapabilityForProvider(java.util.Set,
+     * com.cloud.network.Network.Service, com.cloud.network.Network.Capability,
+     * java.lang.String)
      */
     @Override
     public void checkCapabilityForProvider(Set<Provider> providers, Service service, Capability cap, String capValue) {
@@ -497,8 +652,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getDefaultUniqueProviderForService(java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getDefaultUniqueProviderForService(java
+     * .lang.String)
      */
     @Override
     public Provider getDefaultUniqueProviderForService(String serviceName) {
@@ -506,8 +665,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#checkNetworkPermissions(com.cloud.user.Account, com.cloud.network.Network)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#checkNetworkPermissions(com.cloud.user
+     * .Account, com.cloud.network.Network)
      */
     @Override
     public void checkNetworkPermissions(Account owner, Network network) {
@@ -515,8 +678,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getDefaultManagementTrafficLabel(long, com.cloud.hypervisor.Hypervisor.HypervisorType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getDefaultManagementTrafficLabel(long,
+     * com.cloud.hypervisor.Hypervisor.HypervisorType)
      */
     @Override
     public String getDefaultManagementTrafficLabel(long zoneId, HypervisorType hypervisorType) {
@@ -524,8 +691,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getDefaultStorageTrafficLabel(long, com.cloud.hypervisor.Hypervisor.HypervisorType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#getDefaultStorageTrafficLabel(long,
+     * com.cloud.hypervisor.Hypervisor.HypervisorType)
      */
     @Override
     public String getDefaultStorageTrafficLabel(long zoneId, HypervisorType hypervisorType) {
@@ -533,8 +703,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getDefaultPublicTrafficLabel(long, com.cloud.hypervisor.Hypervisor.HypervisorType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#getDefaultPublicTrafficLabel(long,
+     * com.cloud.hypervisor.Hypervisor.HypervisorType)
      */
     @Override
     public String getDefaultPublicTrafficLabel(long dcId, HypervisorType vmware) {
@@ -542,8 +715,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getDefaultGuestTrafficLabel(long, com.cloud.hypervisor.Hypervisor.HypervisorType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#getDefaultGuestTrafficLabel(long,
+     * com.cloud.hypervisor.Hypervisor.HypervisorType)
      */
     @Override
     public String getDefaultGuestTrafficLabel(long dcId, HypervisorType vmware) {
@@ -551,8 +727,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getElementImplementingProvider(java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getElementImplementingProvider(java.lang
+     * .String)
      */
     @Override
     public NetworkElement getElementImplementingProvider(String providerName) {
@@ -560,7 +740,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getAccountNetworkDomain(long, long)
      */
     @Override
@@ -569,7 +751,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getNtwkOffDistinctProviders(long)
      */
     @Override
@@ -578,8 +762,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#listPublicIpsAssignedToAccount(long, long, java.lang.Boolean)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#listPublicIpsAssignedToAccount(long,
+     * long, java.lang.Boolean)
      */
     @Override
     public List<IPAddressVO> listPublicIpsAssignedToAccount(long accountId, long dcId, Boolean sourceNat) {
@@ -587,8 +774,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getPhysicalNtwksSupportingTrafficType(long, com.cloud.network.Networks.TrafficType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getPhysicalNtwksSupportingTrafficType(
+     * long, com.cloud.network.Networks.TrafficType)
      */
     @Override
     public List<? extends PhysicalNetwork> getPhysicalNtwksSupportingTrafficType(long zoneId, TrafficType trafficType) {
@@ -596,7 +787,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#isPrivateGateway(com.cloud.vm.Nic)
      */
     @Override
@@ -605,7 +798,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getNetworkCapabilities(long)
      */
     @Override
@@ -614,8 +809,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getSystemNetworkByZoneAndTrafficType(long, com.cloud.network.Networks.TrafficType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getSystemNetworkByZoneAndTrafficType(long,
+     * com.cloud.network.Networks.TrafficType)
      */
     @Override
     public Network getSystemNetworkByZoneAndTrafficType(long zoneId, TrafficType trafficType) {
@@ -623,7 +822,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getDedicatedNetworkDomain(long)
      */
     @Override
@@ -632,8 +833,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getNetworkOfferingServiceProvidersMap(long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getNetworkOfferingServiceProvidersMap(
+     * long)
      */
     @Override
     public Map<Service, Set<Provider>> getNetworkOfferingServiceProvidersMap(long networkOfferingId) {
@@ -641,8 +846,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#listSupportedNetworkServiceProviders(java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#listSupportedNetworkServiceProviders(java
+     * .lang.String)
      */
     @Override
     public List<? extends Provider> listSupportedNetworkServiceProviders(String serviceName) {
@@ -650,7 +859,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#listNetworksByVpc(long)
      */
     @Override
@@ -659,8 +870,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#canUseForDeploy(com.cloud.network.Network)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#canUseForDeploy(com.cloud.network.Network)
      */
     @Override
     public boolean canUseForDeploy(Network network) {
@@ -668,7 +882,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getExclusiveGuestNetwork(long)
      */
     @Override
@@ -677,8 +893,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#findPhysicalNetworkId(long, java.lang.String, com.cloud.network.Networks.TrafficType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#findPhysicalNetworkId(long,
+     * java.lang.String, com.cloud.network.Networks.TrafficType)
      */
     @Override
     public long findPhysicalNetworkId(long zoneId, String tag, TrafficType trafficType) {
@@ -686,7 +905,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return 0;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getNetworkRate(long, java.lang.Long)
      */
     @Override
@@ -695,7 +916,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#isVmPartOfNetwork(long, long)
      */
     @Override
@@ -704,8 +927,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getDefaultPhysicalNetworkByZoneAndTrafficType(long, com.cloud.network.Networks.TrafficType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getDefaultPhysicalNetworkByZoneAndTrafficType
+     * (long, com.cloud.network.Networks.TrafficType)
      */
     @Override
     public PhysicalNetwork getDefaultPhysicalNetworkByZoneAndTrafficType(long zoneId, TrafficType trafficType) {
@@ -713,7 +940,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getNetwork(long)
      */
     @Override
@@ -722,7 +951,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getIp(long)
      */
     @Override
@@ -731,8 +962,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#isNetworkAvailableInDomain(long, long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#isNetworkAvailableInDomain(long,
+     * long)
      */
     @Override
     public boolean isNetworkAvailableInDomain(long networkId, long domainId) {
@@ -740,8 +974,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getNicProfile(com.cloud.vm.VirtualMachine, long, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getNicProfile(com.cloud.vm.VirtualMachine,
+     * long, java.lang.String)
      */
     @Override
     public NicProfile getNicProfile(VirtualMachine vm, long networkId, String broadcastUri) {
@@ -749,8 +987,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getAvailableIps(com.cloud.network.Network, java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getAvailableIps(com.cloud.network.Network,
+     * java.lang.String)
      */
     @Override
     public Set<Long> getAvailableIps(Network network, String requestedIp) {
@@ -758,7 +1000,9 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.NetworkModel#getDomainNetworkDomain(long, long)
      */
     @Override
@@ -767,8 +1011,11 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getIpToServices(java.util.List, boolean, boolean)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.NetworkModel#getIpToServices(java.util.List,
+     * boolean, boolean)
      */
     @Override
     public Map<PublicIpAddress, Set<Service>> getIpToServices(List<? extends PublicIpAddress> publicIps, boolean rulesRevoked, boolean includingFirewall) {
@@ -776,8 +1023,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getProviderToIpList(com.cloud.network.Network, java.util.Map)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getProviderToIpList(com.cloud.network.
+     * Network, java.util.Map)
      */
     @Override
     public Map<Provider, ArrayList<PublicIpAddress>> getProviderToIpList(Network network, Map<PublicIpAddress, Set<Service>> ipToServices) {
@@ -785,8 +1036,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#getSourceNatIpAddressForGuestNetwork(com.cloud.user.Account, com.cloud.network.Network)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#getSourceNatIpAddressForGuestNetwork(com
+     * .cloud.user.Account, com.cloud.network.Network)
      */
     @Override
     public PublicIpAddress getSourceNatIpAddressForGuestNetwork(Account owner, Network guestNetwork) {
@@ -794,8 +1049,12 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.NetworkModel#isNetworkInlineMode(com.cloud.network.Network)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.NetworkModel#isNetworkInlineMode(com.cloud.network.
+     * Network)
      */
     @Override
     public boolean isNetworkInlineMode(Network network) {
@@ -885,7 +1144,8 @@ public class MockNetworkModelImpl extends ManagerBase implements NetworkModel {
 
     @Override
     public boolean getNetworkEgressDefaultPolicy(Long networkId) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return false; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 
 }

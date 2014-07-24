@@ -48,7 +48,7 @@ public class ClientX224ConnectionRequestPDU extends OneTimeSwitch {
     protected String userName;
 
     /**
-     * Protocol to use:  RDP_NEG_REQ_PROTOCOL_SSL or RDP_NEG_REQ_PROTOCOL_HYBRID.
+     * Protocol to use: RDP_NEG_REQ_PROTOCOL_SSL or RDP_NEG_REQ_PROTOCOL_HYBRID.
      */
     protected int protocol;
 
@@ -125,10 +125,11 @@ public class ClientX224ConnectionRequestPDU extends OneTimeSwitch {
 
         byte[] packet = new byte[] {
 
-                0x03, // TPKT Header: version = 3
+        0x03, // TPKT Header: version = 3
                 0x00, // TPKT Header: Reserved = 0
                 0x00, // TPKT Header: Packet length - high part
-                0x2c, // TPKT Header: Packet length - low part (total = 44 bytes)
+                0x2c, // TPKT Header: Packet length - low part (total = 44
+                // bytes)
                 0x27, // X.224: Length indicator (39 bytes)
                 (byte)0xe0, // X.224: Type (high nibble) = 0xe = CR TPDU;
                 // credit (low nibble) = 0
@@ -143,7 +144,7 @@ public class ClientX224ConnectionRequestPDU extends OneTimeSwitch {
                 0x00, // RDP_NEG_REQ::flags (0)
                 0x08, 0x00, // RDP_NEG_REQ::length (8 bytes)
                 0x01, 0x00, 0x00, 0x00 // RDP_NEG_REQ: Requested protocols
-                // (PROTOCOL_SSL in little endian format)
+        // (PROTOCOL_SSL in little endian format)
         };
 
         MockSource source = new MockSource("source", ByteBuffer.convertByteArraysToByteBuffers(new byte[] {1, 2, 3}));

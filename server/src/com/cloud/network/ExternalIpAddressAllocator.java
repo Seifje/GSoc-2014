@@ -93,13 +93,13 @@ public class ExternalIpAddressAllocator extends AdapterBase implements IpAddrAll
 
     @Override
     public IpAddr getPublicIpAddress(String macAddr, long dcId, long podId) {
-        /*TODO: call API to get  ip address from external DHCP server*/
+        /* TODO: call API to get ip address from external DHCP server */
         return getPrivateIpAddress(macAddr, dcId, podId);
     }
 
     @Override
     public boolean releasePrivateIpAddress(String ip, long dcId, long podId) {
-        /*TODO: call API to release the ip address from external DHCP server*/
+        /* TODO: call API to release the ip address from external DHCP server */
         if (_externalIpAllocatorUrl == null || _externalIpAllocatorUrl.equalsIgnoreCase("")) {
             return false;
         }
@@ -132,7 +132,7 @@ public class ExternalIpAddressAllocator extends AdapterBase implements IpAddrAll
 
     @Override
     public boolean releasePublicIpAddress(String ip, long dcId, long podId) {
-        /*TODO: call API to release the ip address from external DHCP server*/
+        /* TODO: call API to release the ip address from external DHCP server */
         return releasePrivateIpAddress(ip, dcId, podId);
     }
 

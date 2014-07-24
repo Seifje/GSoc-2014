@@ -83,7 +83,7 @@ public class NeutronPortAdapterTest {
         NeutronPortWrapper portWrapper = new NeutronPortWrapper();
         portWrapper.setPort(port);
 
-        NeutronPortWrapper returnValue = (NeutronPortWrapper) gsonNeutronPort.fromJson(jsonString, TypeToken.get(portWrapper.getClass()).getType());
+        NeutronPortWrapper returnValue = (NeutronPortWrapper)gsonNeutronPort.fromJson(jsonString, TypeToken.get(portWrapper.getClass()).getType());
 
         Assert.assertNotNull(returnValue);
         Assert.assertEquals("ca31aa7f-84c7-416d-bc00-1f84927367e0", returnValue.getPort().getMacAddress());

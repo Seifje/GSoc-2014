@@ -35,8 +35,7 @@ import com.cloud.exception.NetworkRuleConflictException;
 import com.cloud.exception.ResourceAllocationException;
 import com.cloud.exception.ResourceUnavailableException;
 
-@APICommand(name = "deleteStratosphereSsp", responseObject = SuccessResponse.class, description = "Removes stratosphere ssp server",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteStratosphereSsp", responseObject = SuccessResponse.class, description = "Removes stratosphere ssp server", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteSspCmd extends BaseCmd {
     private static final Logger s_logger = Logger.getLogger(AddSspCmd.class.getName());
     @Inject
@@ -57,7 +56,7 @@ public class DeleteSspCmd extends BaseCmd {
 
     @Override
     public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ConcurrentOperationException, ResourceAllocationException,
-        NetworkRuleConflictException {
+            NetworkRuleConflictException {
         s_logger.trace("execute");
         SuccessResponse resp = new SuccessResponse();
         resp.setSuccess(_service.deleteSspHost(this));

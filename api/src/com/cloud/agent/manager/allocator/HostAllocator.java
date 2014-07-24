@@ -30,22 +30,28 @@ import com.cloud.vm.VirtualMachineProfile;
 public interface HostAllocator extends Adapter {
 
     /**
-     * @param UserVm vm
-     * @param ServiceOffering offering
+     * @param UserVm
+     *            vm
+     * @param ServiceOffering
+     *            offering
      **/
     boolean isVirtualMachineUpgradable(final VirtualMachine vm, final ServiceOffering offering);
 
     /**
-    * Determines which physical hosts are suitable to
-    * allocate the guest virtual machines on
-    *
-    * @param VirtualMachineProfile vmProfile
-    * @param DeploymentPlan plan
-    * @param GuestType type
-    * @param ExcludeList avoid
-    * @param int returnUpTo (use -1 to return all possible hosts)
-    * @return List<Host> List of hosts that are suitable for VM allocation
-    **/
+     * Determines which physical hosts are suitable to allocate the guest
+     * virtual machines on
+     *
+     * @param VirtualMachineProfile
+     *            vmProfile
+     * @param DeploymentPlan
+     *            plan
+     * @param GuestType
+     *            type
+     * @param ExcludeList
+     *            avoid
+     * @param int returnUpTo (use -1 to return all possible hosts)
+     * @return List<Host> List of hosts that are suitable for VM allocation
+     **/
 
     public List<Host> allocateTo(VirtualMachineProfile vmProfile, DeploymentPlan plan, Type type, ExcludeList avoid, int returnUpTo);
 
@@ -100,7 +106,7 @@ public interface HostAllocator extends Adapter {
      * @return List<Host> List of hosts that are suitable for VM allocation
      **/
     public List<Host> allocateTo(VirtualMachineProfile vmProfile, DeploymentPlan plan, Type type, ExcludeList avoid, List<? extends Host> hosts, int returnUpTo,
-        boolean considerReservedCapacity);
+            boolean considerReservedCapacity);
 
     public static int RETURN_UPTO_ALL = -1;
 

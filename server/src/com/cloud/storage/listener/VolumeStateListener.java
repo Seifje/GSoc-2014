@@ -66,18 +66,18 @@ public class VolumeStateListener implements StateListener<State, Event, Volume> 
         String configKey = Config.PublishResourceStateEvent.key();
         String value = _configDao.getValue(configKey);
         boolean configValue = Boolean.parseBoolean(value);
-        if(!configValue)
+        if (!configValue)
             return;
         try {
             s_eventBus = ComponentContext.getComponent(EventBus.class);
         } catch (NoSuchBeanDefinitionException nbe) {
-            return; // no provider is configured to provide events bus, so just return
+            return; // no provider is configured to provide events bus, so just
+            // return
         }
 
         String resourceName = getEntityFromClassName(Volume.class.getName());
-        org.apache.cloudstack.framework.events.Event eventMsg =
-            new org.apache.cloudstack.framework.events.Event(ManagementService.Name, EventCategory.RESOURCE_STATE_CHANGE_EVENT.getName(), event, resourceName,
-                vo.getUuid());
+        org.apache.cloudstack.framework.events.Event eventMsg = new org.apache.cloudstack.framework.events.Event(ManagementService.Name,
+                EventCategory.RESOURCE_STATE_CHANGE_EVENT.getName(), event, resourceName, vo.getUuid());
         Map<String, String> eventDescription = new HashMap<String, String>();
         eventDescription.put("resource", resourceName);
         eventDescription.put("id", vo.getUuid());

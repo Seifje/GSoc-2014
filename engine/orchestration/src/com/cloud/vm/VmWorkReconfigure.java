@@ -16,15 +16,13 @@
 // under the License.
 package com.cloud.vm;
 
-
 public class VmWorkReconfigure extends VmWork {
     private static final long serialVersionUID = -4517030323758086615L;
 
     Long newServiceOfferingId;
     boolean sameHost;
 
-    public VmWorkReconfigure(long userId, long accountId, long vmId, String handlerName,
-            Long newServiceOfferingId, boolean sameHost) {
+    public VmWorkReconfigure(long userId, long accountId, long vmId, String handlerName, Long newServiceOfferingId, boolean sameHost) {
 
         super(userId, accountId, vmId, handlerName);
 

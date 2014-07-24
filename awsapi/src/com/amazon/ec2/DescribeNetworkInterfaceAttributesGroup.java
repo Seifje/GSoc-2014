@@ -25,15 +25,15 @@
 package com.amazon.ec2;
 
 /**
-*  DescribeNetworkInterfaceAttributesGroup bean class
-*/
+ * DescribeNetworkInterfaceAttributesGroup bean class
+ */
 
 public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2.databinding.ADBBean {
-    /* This type was generated from the piece of schema that had
-            name = DescribeNetworkInterfaceAttributesGroup
-            Namespace URI = http://ec2.amazonaws.com/doc/2012-08-15/
-            Namespace Prefix = ns1
-            */
+    /*
+     * This type was generated from the piece of schema that had name =
+     * DescribeNetworkInterfaceAttributesGroup Namespace URI =
+     * http://ec2.amazonaws.com/doc/2012-08-15/ Namespace Prefix = ns1
+     */
 
     private static java.lang.String generatePrefix(java.lang.String namespace) {
         if (namespace.equals("http://ec2.amazonaws.com/doc/2012-08-15/")) {
@@ -42,8 +42,9 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
         return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
     }
 
-    /** Whenever a new property is set ensure all others are unset
-     *  There can be only one choice and the last one wins
+    /**
+     * Whenever a new property is set ensure all others are unset There can be
+     * only one choice and the last one wins
      */
     private void clearAllSettingTrackers() {
 
@@ -58,35 +59,39 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     }
 
     /**
-    * field for Description
-    */
+     * field for Description
+     */
 
     protected com.amazon.ec2.EmptyElementType localDescription;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localDescriptionTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.EmptyElementType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.EmptyElementType
+     */
     public com.amazon.ec2.EmptyElementType getDescription() {
         return localDescription;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Description
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Description
+     */
     public void setDescription(com.amazon.ec2.EmptyElementType param) {
 
         clearAllSettingTrackers();
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localDescriptionTracker = true;
         } else {
             localDescriptionTracker = false;
@@ -98,35 +103,39 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     }
 
     /**
-    * field for SourceDestCheck
-    */
+     * field for SourceDestCheck
+     */
 
     protected com.amazon.ec2.EmptyElementType localSourceDestCheck;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localSourceDestCheckTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.EmptyElementType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.EmptyElementType
+     */
     public com.amazon.ec2.EmptyElementType getSourceDestCheck() {
         return localSourceDestCheck;
     }
 
     /**
-       * Auto generated setter method
-       * @param param SourceDestCheck
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            SourceDestCheck
+     */
     public void setSourceDestCheck(com.amazon.ec2.EmptyElementType param) {
 
         clearAllSettingTrackers();
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localSourceDestCheckTracker = true;
         } else {
             localSourceDestCheckTracker = false;
@@ -138,35 +147,39 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     }
 
     /**
-    * field for GroupSet
-    */
+     * field for GroupSet
+     */
 
     protected com.amazon.ec2.EmptyElementType localGroupSet;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localGroupSetTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.EmptyElementType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.EmptyElementType
+     */
     public com.amazon.ec2.EmptyElementType getGroupSet() {
         return localGroupSet;
     }
 
     /**
-       * Auto generated setter method
-       * @param param GroupSet
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            GroupSet
+     */
     public void setGroupSet(com.amazon.ec2.EmptyElementType param) {
 
         clearAllSettingTrackers();
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localGroupSetTracker = true;
         } else {
             localGroupSetTracker = false;
@@ -178,35 +191,39 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     }
 
     /**
-    * field for Attachment
-    */
+     * field for Attachment
+     */
 
     protected com.amazon.ec2.EmptyElementType localAttachment;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localAttachmentTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.EmptyElementType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.EmptyElementType
+     */
     public com.amazon.ec2.EmptyElementType getAttachment() {
         return localAttachment;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Attachment
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Attachment
+     */
     public void setAttachment(com.amazon.ec2.EmptyElementType param) {
 
         clearAllSettingTrackers();
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localAttachmentTracker = true;
         } else {
             localAttachmentTracker = false;
@@ -218,9 +235,10 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -233,13 +251,13 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, parentQName) {
 
@@ -252,14 +270,13 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
         java.lang.String prefix = null;
         java.lang.String namespace = null;
@@ -304,8 +321,8 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -317,10 +334,10 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -330,10 +347,10 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -356,7 +373,7 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -384,7 +401,8 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -418,8 +436,8 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -438,9 +456,9 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
         java.util.ArrayList elementList = new java.util.ArrayList();
@@ -484,17 +502,20 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static DescribeNetworkInterfaceAttributesGroup parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             DescribeNetworkInterfaceAttributesGroup object = new DescribeNetworkInterfaceAttributesGroup();
 
@@ -507,7 +528,8 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
                 while (!reader.isStartElement() && !reader.isEndElement())
                     reader.next();
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -517,7 +539,7 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else
 
@@ -527,7 +549,7 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else
 
@@ -537,7 +559,7 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else
 
@@ -547,7 +569,7 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
             } catch (javax.xml.stream.XMLStreamException e) {
                 throw new java.lang.Exception(e);
@@ -556,6 +578,6 @@ public class DescribeNetworkInterfaceAttributesGroup implements org.apache.axis2
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

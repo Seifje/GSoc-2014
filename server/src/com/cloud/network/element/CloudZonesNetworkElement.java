@@ -102,7 +102,7 @@ public class CloudZonesNetworkElement extends AdapterBase implements NetworkElem
 
     @Override
     public boolean implement(Network network, NetworkOffering offering, DeployDestination dest, ReservationContext context) throws ResourceUnavailableException,
-        ConcurrentOperationException, InsufficientCapacityException {
+            ConcurrentOperationException, InsufficientCapacityException {
         if (!canHandle(dest, offering.getTrafficType())) {
             return false;
         }
@@ -112,7 +112,7 @@ public class CloudZonesNetworkElement extends AdapterBase implements NetworkElem
 
     @Override
     public boolean prepare(Network network, NicProfile nic, VirtualMachineProfile vmProfile, DeployDestination dest, ReservationContext context)
-        throws ConcurrentOperationException, InsufficientCapacityException, ResourceUnavailableException {
+            throws ConcurrentOperationException, InsufficientCapacityException, ResourceUnavailableException {
         return true;
     }
 
@@ -149,8 +149,8 @@ public class CloudZonesNetworkElement extends AdapterBase implements NetworkElem
         return capabilities;
     }
 
-    private VmDataCommand generateVmDataCommand(String vmPrivateIpAddress, String userData, String serviceOffering, String zoneName, String guestIpAddress,
-        String vmName, String vmInstanceName, long vmId, String vmUuid, String publicKey) {
+    private VmDataCommand generateVmDataCommand(String vmPrivateIpAddress, String userData, String serviceOffering, String zoneName, String guestIpAddress, String vmName,
+            String vmInstanceName, long vmId, String vmUuid, String publicKey) {
         VmDataCommand cmd = new VmDataCommand(vmPrivateIpAddress, vmName, _networkMgr.getExecuteInSeqNtwkElmtCmd());
 
         cmd.addVmData("userdata", "user-data", userData);
@@ -187,8 +187,7 @@ public class CloudZonesNetworkElement extends AdapterBase implements NetworkElem
     }
 
     @Override
-    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
         // TODO Auto-generated method stub
         return true;
     }
@@ -200,7 +199,7 @@ public class CloudZonesNetworkElement extends AdapterBase implements NetworkElem
 
     @Override
     public boolean addPasswordAndUserdata(Network network, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
-        throws ConcurrentOperationException, InsufficientCapacityException, ResourceUnavailableException {
+            throws ConcurrentOperationException, InsufficientCapacityException, ResourceUnavailableException {
         if (canHandle(dest, network.getTrafficType())) {
 
             if (vm.getType() != VirtualMachine.Type.User) {
@@ -223,9 +222,9 @@ public class CloudZonesNetworkElement extends AdapterBase implements NetworkElem
             String zoneName = _dcDao.findById(network.getDataCenterId()).getName();
 
             cmds.addCommand(
-                "vmdata",
-                generateVmDataCommand(nic.getIp4Address(), userData, serviceOffering, zoneName, nic.getIp4Address(), uservm.getHostName(), uservm.getInstanceName(),
-                    uservm.getId(), uservm.getUuid(), sshPublicKey));
+                    "vmdata",
+                    generateVmDataCommand(nic.getIp4Address(), userData, serviceOffering, zoneName, nic.getIp4Address(), uservm.getHostName(), uservm.getInstanceName(),
+                            uservm.getId(), uservm.getUuid(), sshPublicKey));
             try {
                 _agentManager.send(dest.getHost().getId(), cmds);
             } catch (OperationTimedoutException e) {

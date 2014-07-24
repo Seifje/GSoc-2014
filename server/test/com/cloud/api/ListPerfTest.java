@@ -22,8 +22,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test fixture to do performance test for list command
- * Currently we commented out this test suite since it requires a real MS and Db running.
+ * Test fixture to do performance test for list command Currently we commented
+ * out this test suite since it requires a real MS and Db running.
  *
  */
 public class ListPerfTest extends APITest {

@@ -21,7 +21,7 @@ package com.cloud.network.nicira;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 @SuppressWarnings("serial")
@@ -33,7 +33,6 @@ public abstract class AccessRule implements Serializable {
     protected String ethertype = ETHERTYPE_IPV4;
 
     protected int protocol;
-
 
     public String getEthertype() {
         return ethertype;
@@ -53,6 +52,6 @@ public abstract class AccessRule implements Serializable {
 
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE, false);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE, false);
     }
 }

@@ -33,7 +33,9 @@ public interface TemplateUploader extends Runnable {
 
     /**
      * Initiate upload
-     * @param callback completion callback to be called after upload is complete
+     *
+     * @param callback
+     *            completion callback to be called after upload is complete
      * @return bytes uploaded
      */
     public long upload(UploadCompleteCallback callback);
@@ -50,29 +52,35 @@ public interface TemplateUploader extends Runnable {
 
     /**
      * Get the status of the upload
+     *
      * @return status of upload
      */
     public TemplateUploader.Status getStatus();
 
     /**
      * Get time taken to upload so far
+     *
      * @return time in seconds taken to upload
      */
     public long getUploadTime();
 
     /**
      * Get bytes uploaded
+     *
      * @return bytes uploaded so far
      */
     public long getUploadedBytes();
 
     /**
      * Get the error if any
+     *
      * @return error string if any
      */
     public String getUploadError();
 
-    /** Get local path of the uploaded file
+    /**
+     * Get local path of the uploaded file
+     *
      * @return local path of the file uploaded
      */
     public String getUploadLocalPath();

@@ -32,7 +32,8 @@ import com.cloud.utils.DateUtil;
 import com.cloud.utils.Pair;
 
 /**
- * Note: toPairList and appendPairList only support simple POJO objects currently
+ * Note: toPairList and appendPairList only support simple POJO objects
+ * currently
  */
 public class SerializerHelper {
     public static final Logger s_logger = Logger.getLogger(SerializerHelper.class.getName());
@@ -130,8 +131,8 @@ public class SerializerHelper {
                                 l.add(new Pair<String, Object>(paramName, fieldValue.toString()));
                             }
                         }
-                        //else
-                        //    l.add(new Pair<String, Object>(paramName, ""));
+                        // else
+                        // l.add(new Pair<String, Object>(paramName, ""));
                     } catch (IllegalArgumentException e) {
                         s_logger.error("Illegal argument exception when calling POJO " + o.getClass().getName() + " get method for property: " + propName);
 
@@ -155,8 +156,8 @@ public class SerializerHelper {
             s_logger.error("Security exception in getting POJO " + o.getClass().getName() + " get method for property: " + propName);
         } catch (NoSuchMethodException e1) {
             if (s_logger.isTraceEnabled()) {
-                s_logger.trace("POJO " + o.getClass().getName() + " does not have " + methodName + "() method for property: " + propName +
-                    ", will check is-prefixed method to see if it is boolean property");
+                s_logger.trace("POJO " + o.getClass().getName() + " does not have " + methodName + "() method for property: " + propName
+                        + ", will check is-prefixed method to see if it is boolean property");
             }
         }
 

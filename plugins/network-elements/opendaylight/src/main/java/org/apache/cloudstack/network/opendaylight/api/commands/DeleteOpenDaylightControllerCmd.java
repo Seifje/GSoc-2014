@@ -40,22 +40,21 @@ import com.cloud.exception.NetworkRuleConflictException;
 import com.cloud.exception.ResourceAllocationException;
 import com.cloud.exception.ResourceUnavailableException;
 
-@APICommand(name = "deleteOpenDaylightController", responseObject = OpenDaylightControllerResponse.class, description = "Removes an OpenDyalight controler",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteOpenDaylightController", responseObject = OpenDaylightControllerResponse.class, description = "Removes an OpenDyalight controler", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteOpenDaylightControllerCmd extends BaseAsyncCmd {
     @Inject
     private OpenDaylightControllerResourceManager resourceManager;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = OpenDaylightControllerResponse.class, required = true, description = "OpenDaylight Controller ID")
     private Long id;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -81,17 +80,17 @@ public class DeleteOpenDaylightControllerCmd extends BaseAsyncCmd {
         return CallContext.current().getCallingAccount().getId();
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
     @Override
     public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
-    NetworkRuleConflictException {
+            NetworkRuleConflictException {
         try {
             resourceManager.deleteController(this);
             SuccessResponse response = new SuccessResponse(getCommandName());
             response.setResponseName(getCommandName());
-            setResponseObject(response); //FIXME
+            setResponseObject(response); // FIXME
         } catch (InvalidParameterValueException e) {
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to delete OpenDaylight controller.");
         }

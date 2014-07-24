@@ -37,10 +37,10 @@ public class RegisterTemplateCmdByAdmin extends RegisterTemplateCmd {
     public static final Logger s_logger = Logger.getLogger(RegisterTemplateCmdByAdmin.class.getName());
 
     @Override
-    public void execute() throws ResourceAllocationException{
+    public void execute() throws ResourceAllocationException {
         try {
             VirtualMachineTemplate template = _templateService.registerTemplate(this);
-            if (template != null){
+            if (template != null) {
                 ListResponse<TemplateResponse> response = new ListResponse<TemplateResponse>();
                 List<TemplateResponse> templateResponses = _responseGenerator.createTemplateResponses(ResponseView.Full, template, zoneId, false);
                 response.setResponses(templateResponses);

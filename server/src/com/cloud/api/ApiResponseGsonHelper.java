@@ -27,7 +27,8 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.GsonBuilder;
 
 /**
- * The ApiResonseGsonHelper is different from ApiGsonHelper - it registeres one more adapter for String type required for api response encoding
+ * The ApiResonseGsonHelper is different from ApiGsonHelper - it registeres one
+ * more adapter for String type required for api response encoding
  */
 public class ApiResponseGsonHelper {
     private static final GsonBuilder s_gBuilder;
@@ -46,9 +47,12 @@ public class ApiResponseGsonHelper {
 
     private static class ExclStrat implements ExclusionStrategy {
 
+        @Override
         public boolean shouldSkipClass(Class<?> arg0) {
             return false;
         }
+
+        @Override
         public boolean shouldSkipField(FieldAttributes f) {
 
             Param param = f.getAnnotation(Param.class);

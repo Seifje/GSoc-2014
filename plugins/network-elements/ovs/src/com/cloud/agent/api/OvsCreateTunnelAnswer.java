@@ -16,7 +16,6 @@
 // under the License.
 package com.cloud.agent.api;
 
-
 public class OvsCreateTunnelAnswer extends Answer {
     Long from;
     Long to;
@@ -29,8 +28,7 @@ public class OvsCreateTunnelAnswer extends Answer {
     int key;
     String bridge;
 
-    public OvsCreateTunnelAnswer(Command cmd, boolean success, String details,
-            String bridge) {
+    public OvsCreateTunnelAnswer(Command cmd, boolean success, String details, String bridge) {
         super(cmd, success, details);
         OvsCreateTunnelCommand c = (OvsCreateTunnelCommand)cmd;
         from = c.getFrom();
@@ -43,8 +41,7 @@ public class OvsCreateTunnelAnswer extends Answer {
         this.bridge = bridge;
     }
 
-    public OvsCreateTunnelAnswer(Command cmd, boolean success, String details,
-            String inPortName, String bridge) {
+    public OvsCreateTunnelAnswer(Command cmd, boolean success, String details, String inPortName, String bridge) {
         this(cmd, success, details, bridge);
         this.inPortName = inPortName;
     }

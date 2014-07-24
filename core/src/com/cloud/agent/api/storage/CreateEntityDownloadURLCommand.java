@@ -20,9 +20,11 @@ import com.cloud.agent.api.to.DataTO;
 
 public class CreateEntityDownloadURLCommand extends AbstractDownloadCommand {
 
-    public CreateEntityDownloadURLCommand(String parent, String installPath, String uuid, DataTO data) { // this constructor is for creating template download url
+    public CreateEntityDownloadURLCommand(String parent, String installPath, String uuid, DataTO data) { // this constructor is for creating
+        // template download url
         super();
-        this.parent = parent; // parent is required as not the template can be child of one of many parents
+        this.parent = parent; // parent is required as not the template can be
+        // child of one of many parents
         this.installPath = installPath;
         this.extractLinkUUID = uuid;
         this.data = data;

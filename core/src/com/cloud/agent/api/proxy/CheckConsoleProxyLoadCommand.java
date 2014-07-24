@@ -17,7 +17,8 @@
 package com.cloud.agent.api.proxy;
 
 /**
- * CheckConsoleProxyLoadCommand implements one-shot console proxy load-scan command
+ * CheckConsoleProxyLoadCommand implements one-shot console proxy load-scan
+ * command
  */
 public class CheckConsoleProxyLoadCommand extends ProxyCommand {
 

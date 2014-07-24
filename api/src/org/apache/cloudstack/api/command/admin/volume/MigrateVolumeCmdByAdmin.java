@@ -25,13 +25,11 @@ import org.apache.cloudstack.api.response.VolumeResponse;
 
 import com.cloud.storage.Volume;
 
-
 @APICommand(name = "migrateVolume", description = "Migrate volume", responseObject = VolumeResponse.class, since = "3.0.0", responseView = ResponseView.Full)
 public class MigrateVolumeCmdByAdmin extends MigrateVolumeCmd {
 
-
     @Override
-    public void execute(){
+    public void execute() {
         Volume result;
 
         result = _volumeService.migrateVolume(this);

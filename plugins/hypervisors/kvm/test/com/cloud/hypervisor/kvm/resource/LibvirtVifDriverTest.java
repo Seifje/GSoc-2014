@@ -135,7 +135,8 @@ public class LibvirtVifDriverTest {
     @Test
     public void testWhenExplicitlySetDifferentDefault() throws ConfigurationException {
 
-        // Tests when explicitly set vif driver to OVS when using regular bridges and vice versa
+        // Tests when explicitly set vif driver to OVS when using regular
+        // bridges and vice versa
         Map<String, Object> params = new HashMap<String, Object>();
 
         // Switch res' bridge type for test purposes
@@ -178,7 +179,8 @@ public class LibvirtVifDriverTest {
         res._bridgeType = BridgeType.NATIVE;
         configure(params);
 
-        // Set all traffic types to use default, because bad traffic type should be ignored
+        // Set all traffic types to use default, because bad traffic type should
+        // be ignored
         for (TrafficType trafficType : TrafficType.values()) {
             assertions.put(trafficType, bridgeVifDriver);
         }
@@ -193,7 +195,8 @@ public class LibvirtVifDriverTest {
         res._bridgeType = BridgeType.NATIVE;
         configure(params);
 
-        // Set all traffic types to use default, because bad traffic type should be ignored
+        // Set all traffic types to use default, because bad traffic type should
+        // be ignored
         for (TrafficType trafficType : TrafficType.values()) {
             assertions.put(trafficType, bridgeVifDriver);
         }

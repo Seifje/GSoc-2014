@@ -85,8 +85,8 @@ public class OutcomeImpl<T> implements Outcome<T> {
     }
 
     /**
-     * This method can be overridden by children classes to retrieve the
-     * actual object.
+     * This method can be overridden by children classes to retrieve the actual
+     * object.
      */
     protected T retrieve() {
         return _result;

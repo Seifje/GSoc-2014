@@ -33,12 +33,14 @@ public interface RegionManager {
 
     /**
      * Returns the Id of local Region
+     *
      * @return
      */
     public int getId();
 
     /**
      * Adds a peer Region to the local Region
+     *
      * @param id
      * @param name
      * @param endPoint
@@ -48,6 +50,7 @@ public interface RegionManager {
 
     /**
      * Update details of the Region with specified Id
+     *
      * @param id
      * @param name
      * @param endPoint
@@ -64,7 +67,9 @@ public interface RegionManager {
      */
     boolean removeRegion(int id);
 
-    /** List all Regions or by Id/Name
+    /**
+     * List all Regions or by Id/Name
+     *
      * @param id
      * @param name
      * @return List of Regions
@@ -82,17 +87,19 @@ public interface RegionManager {
     boolean deleteUserAccount(long accountId);
 
     /**
-     * Updates an account
-     * isPopagate falg is set to true if sent from peer Region
+     * Updates an account isPopagate falg is set to true if sent from peer
+     * Region
      *
      * @param cmd
-     *            - the parameter containing accountId or account nameand domainId
+     *            - the parameter containing accountId or account nameand
+     *            domainId
      * @return updated account object
      */
     Account updateAccount(UpdateAccountCmd cmd);
 
     /**
      * Disables an account by accountName and domainId or accountId
+     *
      * @param accountName
      * @param domainId
      * @param id
@@ -107,7 +114,8 @@ public interface RegionManager {
      * Enables an account by accountId
      *
      * @param accountName
-     *            - the enableAccount command defining the accountId to be deleted.
+     *            - the enableAccount command defining the accountId to be
+     *            deleted.
      * @param domainId
      *            TODO
      * @param accountId
@@ -117,6 +125,7 @@ public interface RegionManager {
 
     /**
      * Deletes user by Id
+     *
      * @param deleteUserCmd
      * @return
      */
@@ -133,6 +142,7 @@ public interface RegionManager {
 
     /**
      * Deletes domain by Id
+     *
      * @param id
      * @param cleanup
      * @return true if delete was successful, false otherwise

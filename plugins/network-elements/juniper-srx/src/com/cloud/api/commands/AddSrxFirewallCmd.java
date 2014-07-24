@@ -40,23 +40,18 @@ import com.cloud.network.dao.ExternalFirewallDeviceVO;
 import com.cloud.network.element.JuniperSRXFirewallElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "addSrxFirewall", responseObject = SrxFirewallResponse.class, description = "Adds a SRX firewall device",
-        requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
+@APICommand(name = "addSrxFirewall", responseObject = SrxFirewallResponse.class, description = "Adds a SRX firewall device", requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
 public class AddSrxFirewallCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(AddSrxFirewallCmd.class.getName());
     private static final String s_name = "addsrxfirewallresponse";
     @Inject
     JuniperSRXFirewallElementService _srxFwService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = PhysicalNetworkResponse.class,
-               required = true,
-               description = "the Physical Network ID")
+    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, required = true, description = "the Physical Network ID")
     private Long physicalNetworkId;
 
     @Parameter(name = ApiConstants.URL, type = CommandType.STRING, required = true, description = "URL of the SRX appliance.")
@@ -71,9 +66,9 @@ public class AddSrxFirewallCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.NETWORK_DEVICE_TYPE, type = CommandType.STRING, required = true, description = "supports only JuniperSRXFirewall")
     private String deviceType;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getPhysicalNetworkId() {
         return physicalNetworkId;
@@ -95,13 +90,12 @@ public class AddSrxFirewallCmd extends BaseAsyncCmd {
         return deviceType;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             ExternalFirewallDeviceVO fwDeviceVO = _srxFwService.addSrxFirewall(this);
             if (fwDeviceVO != null) {

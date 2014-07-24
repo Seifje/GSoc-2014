@@ -34,24 +34,15 @@ import com.cloud.exception.ResourceAllocationException;
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateStorageNetworkIpRange",
-            description = "Update a Storage network IP range, only allowed when no IPs in this range have been allocated.",
-            responseObject = StorageNetworkIpRangeResponse.class,
-            since = "3.0.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "updateStorageNetworkIpRange", description = "Update a Storage network IP range, only allowed when no IPs in this range have been allocated.", responseObject = StorageNetworkIpRangeResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateStorageNetworkIpRangeCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateStorageNetworkIpRangeCmd.class);
     private static final String s_name = "updatestoragenetworkiprangeresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = StorageNetworkIpRangeResponse.class,
-               required = true,
-               description = "UUID of storage network ip range")
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = StorageNetworkIpRangeResponse.class, required = true, description = "UUID of storage network ip range")
     private Long id;
 
     @Parameter(name = ApiConstants.START_IP, type = CommandType.STRING, description = "the beginning IP address")
@@ -66,9 +57,9 @@ public class UpdateStorageNetworkIpRangeCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.NETMASK, type = CommandType.STRING, description = "the netmask for storage network")
     private String netmask;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
     public String getEndIp() {
         return endIp;
     }
@@ -100,8 +91,7 @@ public class UpdateStorageNetworkIpRangeCmd extends BaseAsyncCmd {
     }
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             StorageNetworkIpRange result = _storageNetworkService.updateIpRange(this);
             StorageNetworkIpRangeResponse response = _responseGenerator.createStorageNetworkIpRangeResponse(result);

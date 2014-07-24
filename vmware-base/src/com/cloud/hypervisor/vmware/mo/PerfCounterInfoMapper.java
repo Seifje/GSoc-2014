@@ -25,7 +25,8 @@ import com.vmware.vim25.PerfCounterInfo;
 import com.vmware.vim25.PerfSummaryType;
 
 public class PerfCounterInfoMapper {
-    // map <group name, counter name, list of PerfCounterInfo based on rollupType>
+    // map <group name, counter name, list of PerfCounterInfo based on
+    // rollupType>
     Map<String, Map<String, List<PerfCounterInfo>>> _mapCounterInfos = new HashMap<String, Map<String, List<PerfCounterInfo>>>();
 
     public PerfCounterInfoMapper(PerfCounterInfo[] counterInfos) {

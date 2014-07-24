@@ -163,7 +163,8 @@ public class LoadBalanceRuleHandler {
 
     public LoadBalancer handleCreateLoadBalancerRule(CreateLoadBalancerRuleCmd lb, Account account, long networkId) throws InsufficientAddressCapacityException,
             NetworkRuleConflictException {
-        //this part of code is executed when the LB provider is Elastic Load Balancer vm
+        // this part of code is executed when the LB provider is Elastic Load
+        // Balancer vm
         if (!_networkModel.isProviderSupportServiceInNetwork(lb.getNetworkId(), Service.Lb, Provider.ElasticLoadBalancerVm)) {
             return null;
         }
@@ -279,7 +280,7 @@ public class LoadBalanceRuleHandler {
                 elbVm = _routerDao.persist(elbVm);
                 _itMgr.allocate(elbVm.getInstanceName(), template, _elasticLbVmOffering, networks, plan, null);
                 elbVm = _routerDao.findById(elbVm.getId());
-                //TODO: create usage stats
+                // TODO: create usage stats
             }
 
             State state = elbVm.getState();

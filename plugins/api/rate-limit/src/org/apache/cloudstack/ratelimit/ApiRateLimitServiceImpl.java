@@ -161,7 +161,10 @@ public class ApiRateLimitServiceImpl extends AdapterBase implements APIChecker, 
             entry = _store.create(accountId, timeToLive);
         }
 
-        /* Increment the client count and see whether we have hit the maximum allowed clients yet. */
+        /*
+         * Increment the client count and see whether we have hit the maximum
+         * allowed clients yet.
+         */
         int current = entry.incrementAndGet();
 
         if (current <= maxAllowed) {
@@ -169,7 +172,8 @@ public class ApiRateLimitServiceImpl extends AdapterBase implements APIChecker, 
             return true;
         } else {
             long expireAfter = entry.getExpireDuration();
-            // for this exception, we can just show the same message to user and admin users.
+            // for this exception, we can just show the same message to user and
+            // admin users.
             String msg = "The given user has reached his/her account api limit, please retry after " + expireAfter + " ms.";
             s_logger.warn(msg);
             throw new RequestLimitException(msg);

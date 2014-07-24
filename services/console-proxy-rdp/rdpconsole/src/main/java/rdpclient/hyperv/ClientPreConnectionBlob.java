@@ -57,8 +57,8 @@ public class ClientPreConnectionBlob extends OneTimeSwitch {
         ByteBuffer buf = new ByteBuffer(1024, true);
 
         // Header
-        buf.writeBytes(new byte[] {(byte)0x5e, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x02,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,});
+        buf.writeBytes(new byte[] {(byte)0x5e, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x02, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,});
 
         // Length of string in wide characters + two wide \0 (LE)
         buf.writeShortLE(data.length() + 2);
@@ -85,25 +85,49 @@ public class ClientPreConnectionBlob extends OneTimeSwitch {
         /* @formatter:off */
         byte[] packet = new byte[] {
                 // Header
-                (byte) 0x5e, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
-                (byte) 0x00, (byte) 0x00, (byte) 0x02, (byte) 0x00, (byte) 0x00, (byte) 0x00,
-                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x5e,
+                (byte) 0x00,
+                (byte) 0x00,
+                (byte) 0x00,
+                (byte) 0x00,
+                (byte) 0x00,
+                (byte) 0x00,
+                (byte) 0x00,
+                (byte) 0x02,
+                (byte) 0x00,
+                (byte) 0x00,
+                (byte) 0x00,
+                (byte) 0x00,
+                (byte) 0x00,
+                (byte) 0x00,
+                (byte) 0x00,
 
                 // Length of string in wide characters + two wide \0 (LE)
-                (byte) 0x26, (byte) 0x00,
+                (byte) 0x26,
+                (byte) 0x00,
 
                 // Wide string
-                (byte) 0x33, (byte) 0x00, (byte) 0x39, (byte) 0x00, (byte) 0x34, (byte) 0x00, (byte) 0x31, (byte) 0x00, (byte) 0x38, (byte) 0x00, (byte) 0x46,
-                (byte) 0x00, (byte) 0x39, (byte) 0x00, (byte) 0x30, (byte) 0x00, (byte) 0x2d, (byte) 0x00, (byte) 0x36, (byte) 0x00, (byte) 0x44, (byte) 0x00,
-                (byte) 0x30, (byte) 0x00, (byte) 0x33, (byte) 0x00, (byte) 0x2d, (byte) 0x00, (byte) 0x34, (byte) 0x00, (byte) 0x36, (byte) 0x00, (byte) 0x38,
-                (byte) 0x00, (byte) 0x45, (byte) 0x00, (byte) 0x2d, (byte) 0x00, (byte) 0x42, (byte) 0x00, (byte) 0x37, (byte) 0x00, (byte) 0x39, (byte) 0x00,
-                (byte) 0x36, (byte) 0x00, (byte) 0x2d, (byte) 0x00, (byte) 0x39, (byte) 0x00, (byte) 0x31, (byte) 0x00, (byte) 0x43, (byte) 0x00, (byte) 0x36,
-                (byte) 0x00, (byte) 0x30, (byte) 0x00, (byte) 0x44, (byte) 0x00, (byte) 0x44, (byte) 0x00, (byte) 0x36, (byte) 0x00, (byte) 0x36, (byte) 0x00,
-                (byte) 0x35, (byte) 0x00, (byte) 0x33, (byte) 0x00, (byte) 0x41, (byte) 0x00,
+                (byte) 0x33, (byte) 0x00, (byte) 0x39, (byte) 0x00,
+                (byte) 0x34, (byte) 0x00, (byte) 0x31, (byte) 0x00,
+                (byte) 0x38, (byte) 0x00, (byte) 0x46, (byte) 0x00,
+                (byte) 0x39, (byte) 0x00, (byte) 0x30, (byte) 0x00,
+                (byte) 0x2d, (byte) 0x00, (byte) 0x36, (byte) 0x00,
+                (byte) 0x44, (byte) 0x00, (byte) 0x30, (byte) 0x00,
+                (byte) 0x33, (byte) 0x00, (byte) 0x2d, (byte) 0x00,
+                (byte) 0x34, (byte) 0x00, (byte) 0x36, (byte) 0x00,
+                (byte) 0x38, (byte) 0x00, (byte) 0x45, (byte) 0x00,
+                (byte) 0x2d, (byte) 0x00, (byte) 0x42, (byte) 0x00,
+                (byte) 0x37, (byte) 0x00, (byte) 0x39, (byte) 0x00,
+                (byte) 0x36, (byte) 0x00, (byte) 0x2d, (byte) 0x00,
+                (byte) 0x39, (byte) 0x00, (byte) 0x31, (byte) 0x00,
+                (byte) 0x43, (byte) 0x00, (byte) 0x36, (byte) 0x00,
+                (byte) 0x30, (byte) 0x00, (byte) 0x44, (byte) 0x00,
+                (byte) 0x44, (byte) 0x00, (byte) 0x36, (byte) 0x00,
+                (byte) 0x36, (byte) 0x00, (byte) 0x35, (byte) 0x00,
+                (byte) 0x33, (byte) 0x00, (byte) 0x41, (byte) 0x00,
 
                 // Two wide \0
-                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
-        };
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, };
         /* @formatter:on */
 
         MockSource source = new MockSource("source", ByteBuffer.convertByteArraysToByteBuffers(new byte[] {1, 2, 3}));

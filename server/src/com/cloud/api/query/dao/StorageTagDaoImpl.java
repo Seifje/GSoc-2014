@@ -54,20 +54,19 @@ public class StorageTagDaoImpl extends GenericDaoBase<StorageTagVO, Long> implem
         spIdSearch.and("id", spIdSearch.entity().getId(), SearchCriteria.Op.EQ);
         spIdSearch.done();
 
-        _count = "select count(distinct id) from storage_tag_view WHERE ";//storage_tag_view
+        _count = "select count(distinct id) from storage_tag_view WHERE ";// storage_tag_view
     }
 
     @Override
     public StorageTagResponse newStorageTagResponse(StorageTagVO tag) {
         StorageTagResponse tagResponse = new StorageTagResponse();
-       
+
         tagResponse.setName(tag.getName());
         tagResponse.setPoolId(tag.getPoolId());
-               
+
         tagResponse.setObjectName("storagetag");
         return tagResponse;
     }
-
 
     @Override
     public List<StorageTagVO> searchByIds(Long... spIds) {
@@ -112,7 +111,5 @@ public class StorageTagDaoImpl extends GenericDaoBase<StorageTagVO, Long> implem
         }
         return uvList;
     }
-
-
 
 }

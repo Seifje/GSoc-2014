@@ -49,8 +49,11 @@ public class NetworkACLItemCidrsDaoImpl extends GenericDaoBase<NetworkACLItemCid
         cidrsSearch.done();
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.dao.NetworkAclItemCidrsDao#persist(long, java.util.List)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.network.dao.NetworkAclItemCidrsDao#persist(long,
+     * java.util.List)
      */
     @Override
     public void persist(long networkACLItemId, List<String> cidrs) {
@@ -64,7 +67,9 @@ public class NetworkACLItemCidrsDaoImpl extends GenericDaoBase<NetworkACLItemCid
         txn.commit();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.dao.NetworkAclItemCidrsDao#getCidrs(long)
      */
     @Override

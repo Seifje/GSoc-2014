@@ -200,8 +200,7 @@ public class UserVmManagerTest {
 
     // Test restoreVm when VM is in stopped state
     @Test
-    public void testRestoreVMF2() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void testRestoreVMF2() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
 
         doReturn(VirtualMachine.State.Stopped).when(_vmMock).getState();
         when(_vmDao.findById(anyLong())).thenReturn(_vmMock);
@@ -237,8 +236,7 @@ public class UserVmManagerTest {
 
     // Test restoreVM when VM is in running state
     @Test
-    public void testRestoreVMF3() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void testRestoreVMF3() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
 
         doReturn(VirtualMachine.State.Running).when(_vmMock).getState();
         when(_vmDao.findById(anyLong())).thenReturn(_vmMock);
@@ -274,8 +272,7 @@ public class UserVmManagerTest {
 
     // Test restoreVM on providing new template Id, when VM is in running state
     @Test
-    public void testRestoreVMF4() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void testRestoreVMF4() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         doReturn(VirtualMachine.State.Running).when(_vmMock).getState();
         when(_vmDao.findById(anyLong())).thenReturn(_vmMock);
         when(_volsDao.findByInstanceAndType(314L, Volume.Type.ROOT)).thenReturn(_rootVols);
@@ -315,10 +312,10 @@ public class UserVmManagerTest {
 
     }
 
-    // Test restoreVM on providing new ISO Id, when VM(deployed using ISO) is in running state
+    // Test restoreVM on providing new ISO Id, when VM(deployed using ISO) is in
+    // running state
     @Test
-    public void testRestoreVMF5() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void testRestoreVMF5() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         doReturn(VirtualMachine.State.Running).when(_vmMock).getState();
         when(_vmDao.findById(anyLong())).thenReturn(_vmMock);
         when(_volsDao.findByInstanceAndType(314L, Volume.Type.ROOT)).thenReturn(_rootVols);
@@ -364,7 +361,7 @@ public class UserVmManagerTest {
 
     // Test scaleVm on incompatible HV.
     @Test(expected = InvalidParameterValueException.class)
-    public void testScaleVMF1()  throws Exception {
+    public void testScaleVMF1() throws Exception {
 
         ScaleVMCmd cmd = new ScaleVMCmd();
         Class<?> _class = cmd.getClass();
@@ -379,10 +376,11 @@ public class UserVmManagerTest {
 
         when(_vmInstanceDao.findById(anyLong())).thenReturn(_vmInstance);
 
-       // UserContext.current().setEventDetails("Vm Id: "+getId());
+        // UserContext.current().setEventDetails("Vm Id: "+getId());
         Account account = new AccountVO("testaccount", 1L, "networkdomain", (short)0, "uuid");
         UserVO user = new UserVO(1, "testuser", "password", "firstname", "lastName", "email", "timezone", UUID.randomUUID().toString());
-        //AccountVO(String accountName, long domainId, String networkDomain, short type, int regionId)
+        // AccountVO(String accountName, long domainId, String networkDomain,
+        // short type, int regionId)
         doReturn(VirtualMachine.State.Running).when(_vmInstance).getState();
 
         CallContext.register(user, account);
@@ -396,7 +394,7 @@ public class UserVmManagerTest {
 
     // Test scaleVm on equal service offerings.
     @Test(expected = InvalidParameterValueException.class)
-    public void testScaleVMF2()  throws Exception {
+    public void testScaleVMF2() throws Exception {
 
         ScaleVMCmd cmd = new ScaleVMCmd();
         Class<?> _class = cmd.getClass();
@@ -418,8 +416,8 @@ public class UserVmManagerTest {
 
         doNothing().when(_itMgr).checkIfCanUpgrade(_vmMock, _offeringVo);
 
-        ServiceOffering so1 =  getSvcoffering(512);
-        ServiceOffering so2 =  getSvcoffering(256);
+        ServiceOffering so1 = getSvcoffering(512);
+        ServiceOffering so2 = getSvcoffering(256);
 
         when(_offeringDao.findById(anyLong())).thenReturn((ServiceOfferingVO)so1);
         when(_offeringDao.findByIdIncludingRemoved(anyLong(), anyLong())).thenReturn((ServiceOfferingVO)so1);
@@ -436,8 +434,8 @@ public class UserVmManagerTest {
     }
 
     // Test scaleVm for Stopped vm.
-    //@Test(expected=InvalidParameterValueException.class)
-    public void testScaleVMF3()  throws Exception {
+    // @Test(expected=InvalidParameterValueException.class)
+    public void testScaleVMF3() throws Exception {
 
         ScaleVMCmd cmd = new ScaleVMCmd();
         Class<?> _class = cmd.getClass();
@@ -453,8 +451,8 @@ public class UserVmManagerTest {
         when(_vmInstanceDao.findById(anyLong())).thenReturn(_vmInstance);
         doReturn(Hypervisor.HypervisorType.XenServer).when(_vmInstance).getHypervisorType();
 
-        ServiceOffering so1 =  getSvcoffering(512);
-        ServiceOffering so2 =  getSvcoffering(256);
+        ServiceOffering so1 = getSvcoffering(512);
+        ServiceOffering so2 = getSvcoffering(256);
 
         when(_entityMgr.findById(eq(ServiceOffering.class), anyLong())).thenReturn(so2);
         when(_entityMgr.findById(ServiceOffering.class, 1L)).thenReturn(so1);
@@ -464,7 +462,7 @@ public class UserVmManagerTest {
 
         doReturn(true).when(_itMgr).upgradeVmDb(anyLong(), anyLong());
 
-        //when(_vmDao.findById(anyLong())).thenReturn(_vmMock);
+        // when(_vmDao.findById(anyLong())).thenReturn(_vmMock);
 
         Account account = new AccountVO("testaccount", 1L, "networkdomain", (short)0, UUID.randomUUID().toString());
         UserVO user = new UserVO(1, "testuser", "password", "firstname", "lastName", "email", "timezone", UUID.randomUUID().toString());
@@ -478,7 +476,7 @@ public class UserVmManagerTest {
     }
 
     // Test scaleVm for Running vm. Full positive test.
-    public void testScaleVMF4()  throws Exception {
+    public void testScaleVMF4() throws Exception {
 
         ScaleVMCmd cmd = new ScaleVMCmd();
         Class<?> _class = cmd.getClass();
@@ -491,24 +489,26 @@ public class UserVmManagerTest {
         serviceOfferingIdField.setAccessible(true);
         serviceOfferingIdField.set(cmd, 1L);
 
-        //UserContext.current().setEventDetails("Vm Id: "+getId());
-        //Account account = (Account) new AccountVO("testaccount", 1L, "networkdomain", (short) 0, 1);
-        //AccountVO(String accountName, long domainId, String networkDomain, short type, int regionId)
-        //UserContext.registerContext(1, account, null, true);
+        // UserContext.current().setEventDetails("Vm Id: "+getId());
+        // Account account = (Account) new AccountVO("testaccount", 1L,
+        // "networkdomain", (short) 0, 1);
+        // AccountVO(String accountName, long domainId, String networkDomain,
+        // short type, int regionId)
+        // UserContext.registerContext(1, account, null, true);
 
         when(_vmInstanceDao.findById(anyLong())).thenReturn(_vmInstance);
         doReturn(Hypervisor.HypervisorType.XenServer).when(_vmInstance).getHypervisorType();
 
-        ServiceOffering so1 =  getSvcoffering(512);
-        ServiceOffering so2 =  getSvcoffering(256);
+        ServiceOffering so1 = getSvcoffering(512);
+        ServiceOffering so2 = getSvcoffering(256);
 
         when(_entityMgr.findById(eq(ServiceOffering.class), anyLong())).thenReturn(so2);
         when(_entityMgr.findById(ServiceOffering.class, 1L)).thenReturn(so1);
 
         doReturn(VirtualMachine.State.Running).when(_vmInstance).getState();
 
-        //when(ApiDBUtils.getCpuOverprovisioningFactor()).thenReturn(3f);
-        when(_capacityMgr.checkIfHostHasCapacity(anyLong(), anyInt(), anyLong(), anyBoolean(), anyFloat(), anyFloat(),  anyBoolean())).thenReturn(false);
+        // when(ApiDBUtils.getCpuOverprovisioningFactor()).thenReturn(3f);
+        when(_capacityMgr.checkIfHostHasCapacity(anyLong(), anyInt(), anyLong(), anyBoolean(), anyFloat(), anyFloat(), anyBoolean())).thenReturn(false);
         when(_itMgr.reConfigureVm(_vmInstance.getUuid(), so1, false)).thenReturn(_vmInstance);
 
         doReturn(true).when(_itMgr).upgradeVmDb(anyLong(), anyLong());
@@ -528,25 +528,24 @@ public class UserVmManagerTest {
 
     private ServiceOfferingVO getSvcoffering(int ramSize) {
 
-        long id  = 4L;
+        long id = 4L;
         String name = "name";
         String displayText = "displayText";
         int cpu = 1;
-        //int ramSize = 256;
+        // int ramSize = 256;
         int speed = 128;
 
         boolean ha = false;
         boolean useLocalStorage = false;
 
-        ServiceOfferingVO serviceOffering =
-            new ServiceOfferingVO(name, cpu, ramSize, speed, null, null, ha, displayText, Storage.ProvisioningType.THIN,
-                    useLocalStorage, false, null, false, null, false);
+        ServiceOfferingVO serviceOffering = new ServiceOfferingVO(name, cpu, ramSize, speed, null, null, ha, displayText, Storage.ProvisioningType.THIN, useLocalStorage, false,
+                null, false, null, false);
         return serviceOffering;
     }
 
     // Test Move VM b/w accounts where caller is not ROOT/Domain admin
     @Test(expected = InvalidParameterValueException.class)
-    public void testMoveVmToUser1()  throws Exception {
+    public void testMoveVmToUser1() throws Exception {
         AssignVMCmd cmd = new AssignVMCmd();
         Class<?> _class = cmd.getClass();
 
@@ -569,15 +568,16 @@ public class UserVmManagerTest {
         CallContext.register(user, caller);
         try {
 
-        _userVmMgr.moveVMToUser(cmd);
+            _userVmMgr.moveVMToUser(cmd);
         } finally {
             CallContext.unregister();
         }
     }
 
-    // Test Move VM b/w accounts where caller doesn't have access to the old or new account
+    // Test Move VM b/w accounts where caller doesn't have access to the old or
+    // new account
     @Test(expected = PermissionDeniedException.class)
-    public void testMoveVmToUser2()  throws Exception {
+    public void testMoveVmToUser2() throws Exception {
         AssignVMCmd cmd = new AssignVMCmd();
         Class<?> _class = cmd.getClass();
 
@@ -609,7 +609,7 @@ public class UserVmManagerTest {
         when(_accountService.getActiveAccountByName(anyString(), anyLong())).thenReturn(newAccount);
 
         doThrow(new PermissionDeniedException("Access check failed")).when(_accountMgr).checkAccess(any(Account.class), any(AccessType.class), any(Boolean.class),
-            any(ControlledEntity.class));
+                any(ControlledEntity.class));
 
         CallContext.register(user, caller);
 

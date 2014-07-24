@@ -93,6 +93,7 @@ public class StringUtils {
 
     /**
      * Converts a List of tags to a comma separated list
+     *
      * @param tags
      * @return String containing a comma separated list of tags
      */
@@ -133,10 +134,13 @@ public class StringUtils {
             char c = s.charAt(i);
             if ((c >> 7) > 0) {
                 sb.append("\\u");
-                sb.append(hexChar[(c >> 12) & 0xF]); // append the hex character for the left-most 4-bits
-                sb.append(hexChar[(c >> 8) & 0xF]);  // hex for the second group of 4-bits from the left
-                sb.append(hexChar[(c >> 4) & 0xF]);  // hex for the third group
-                sb.append(hexChar[c & 0xF]);         // hex for the last group, e.g., the right most 4-bits
+                sb.append(hexChar[(c >> 12) & 0xF]); // append the hex character
+                // for the left-most 4-bits
+                sb.append(hexChar[(c >> 8) & 0xF]); // hex for the second group
+                // of 4-bits from the left
+                sb.append(hexChar[(c >> 4) & 0xF]); // hex for the third group
+                sb.append(hexChar[c & 0xF]); // hex for the last group, e.g.,
+                // the right most 4-bits
             } else {
                 sb.append(c);
             }
@@ -158,7 +162,8 @@ public class StringUtils {
         return sb.toString();
     }
 
-    // removes a password request param and it's value, also considering password is in query parameter value which has been url encoded
+    // removes a password request param and it's value, also considering
+    // password is in query parameter value which has been url encoded
     private static final Pattern REGEX_PASSWORD_QUERYSTRING = Pattern.compile("(&|%26)?((p|P)assword|accesskey|secretkey)(=|%3D).*?(?=(%26|[&'\"]))");
 
     // removes a password/accesskey/ property from a response json object
@@ -170,7 +175,8 @@ public class StringUtils {
 
     private static final Pattern REGEX_REDUNDANT_AND = Pattern.compile("(&|%26)(&|%26)+");
 
-    // Responsible for stripping sensitive content from request and response strings
+    // Responsible for stripping sensitive content from request and response
+    // strings
     public static String cleanString(String stringToClean) {
         String cleanResult = "";
         if (stringToClean != null) {

@@ -65,12 +65,12 @@ public class ClientMCSChannelJoinRequestServerMCSChannelConfirmPDUs extends OneT
         int rtSuccess = buf.readUnsignedByte() >> 4;
         if (rtSuccess != 0)
             throw new RuntimeException("[" + this + "] ERROR: Cannot connect to channel: request failed. Error code: " + rtSuccess + ", channel ID: "
-                    + channels[channelRequestsSent - 1]
-                            + ", data: " + buf + ".");
+                    + channels[channelRequestsSent - 1] + ", data: " + buf + ".");
 
         // Initiator and requested fields MAY be ignored, however, the channelId
         // field MUST be examined. If the value of the channelId field does not
-        // correspond with the value of the channelId field sent in the previous MCS
+        // correspond with the value of the channelId field sent in the previous
+        // MCS
         // Channel Join Request PDU the connection SHOULD be dropped.
 
         // Initiator: 1007 (6+1001)
@@ -84,8 +84,8 @@ public class ClientMCSChannelJoinRequestServerMCSChannelConfirmPDUs extends OneT
         // Actual channel
         int actualChannel = buf.readUnsignedShort();
         if (actualChannel != channels[channelRequestsSent - 1])
-            throw new RuntimeException("Unexpeceted channeld ID returned. Expected channeld ID: " + channels[channelRequestsSent - 1] + ", actual channel ID: "
-                    + actualChannel + ", data: " + buf + ".");
+            throw new RuntimeException("Unexpeceted channeld ID returned. Expected channeld ID: " + channels[channelRequestsSent - 1] + ", actual channel ID: " + actualChannel
+                    + ", data: " + buf + ".");
 
         state.channelJoined(actualChannel);
 
@@ -111,7 +111,8 @@ public class ClientMCSChannelJoinRequestServerMCSChannelConfirmPDUs extends OneT
 
         buf.writeByte(0x38); // Channel Join request
 
-        buf.writeShort(state.serverUserChannelId - 1001); // ChannelJoinRequest::initiator: 1004
+        buf.writeShort(state.serverUserChannelId - 1001); // ChannelJoinRequest::initiator:
+        // 1004
         buf.writeShort(channel);
 
         pushDataToOTOut(buf);
@@ -128,80 +129,83 @@ public class ClientMCSChannelJoinRequestServerMCSChannelConfirmPDUs extends OneT
         // System.setProperty("streamer.Pipeline.debug", "true");
 
         /* @formatter:off */
-        byte[] clientRequestPacket = new byte[] {
-                0x03, 0x00, 0x00, 0x0c,  //  TPKT Header (length = 12 bytes)
-                0x02, (byte) 0xf0, (byte) 0x80,  //  X.224 Data TPDU
+        byte[] clientRequestPacket = new byte[] { 0x03, 0x00, 0x00, 0x0c, // TPKT
+                // Header
+                // (length
+                // =
+                // 12
+                // bytes)
+                0x02, (byte) 0xf0, (byte) 0x80, // X.224 Data TPDU
 
                 // PER encoded (ALIGNED variant of BASIC-PER) PDU contents:
                 0x38, 0x00, 0x03, 0x03, (byte) 0xef,
 
                 // 0x38:
                 // 0 - --\
-                // 0 -   |
-                // 1 -   | CHOICE: From DomainMCSPDU select channelJoinRequest (14)
-                // 1 -   | of type ChannelJoinRequest
-                // 1 -   |
+                // 0 - |
+                // 1 - | CHOICE: From DomainMCSPDU select channelJoinRequest (14)
+                // 1 - | of type ChannelJoinRequest
+                // 1 - |
                 // 0 - --/
                 // 0 - padding
                 // 0 - padding
 
                 // 0x00:
                 // 0 - --\
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
-                //       | ChannelJoinRequest::initiator = 0x03 + 1001 = 1004
+                // 0 - |
+                // 0 - |
+                // 0 - |
+                // 0 - |
+                // 0 - |
+                // 0 - |
+                // 0 - |
+                // | ChannelJoinRequest::initiator = 0x03 + 1001 = 1004
                 // 0x03: |
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
-                // 1 -   |
-                // 1 -   |
+                // 0 - |
+                // 0 - |
+                // 0 - |
+                // 0 - |
+                // 0 - |
+                // 1 - |
+                // 1 - |
                 // 0 - --/
 
                 // 0x03:
                 // 0 - --\
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
-                // 1 -   |
-                // 1 -   |
-                //       | ChannelJoinRequest::channelId = 0x03ef = 1007
+                // 0 - |
+                // 0 - |
+                // 0 - |
+                // 0 - |
+                // 0 - |
+                // 1 - |
+                // 1 - |
+                // | ChannelJoinRequest::channelId = 0x03ef = 1007
                 // 0xef: |
-                // 1 -   |
-                // 1 -   |
-                // 1 -   |
-                // 0 -   |
-                // 1 -   |
-                // 1 -   |
-                // 1 -   |
+                // 1 - |
+                // 1 - |
+                // 1 - |
+                // 0 - |
+                // 1 - |
+                // 1 - |
+                // 1 - |
                 // 1 - --/
         };
 
         byte[] serverResponsePacket = new byte[] {
                 // MCS Channel Confirm
-                (byte)0x3e,
+                (byte) 0x3e,
 
                 // result: rt-successful (0)
-                (byte)0x00,
+                (byte) 0x00,
 
                 // Initiator: 1007 (6+1001)
-                (byte)0x00, (byte)0x06,
+                (byte) 0x00, (byte) 0x06,
 
                 // Requested channel
-                (byte)0x03, (byte)0xef,
+                (byte) 0x03, (byte) 0xef,
 
                 // Actual channel
-                (byte)0x03, (byte)0xef,
-        };
+                (byte) 0x03, (byte) 0xef, };
         /* @formatter:on */
 
         RdpState rdpState = new RdpState();

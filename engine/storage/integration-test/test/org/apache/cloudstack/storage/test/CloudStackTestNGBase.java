@@ -71,11 +71,11 @@ public class CloudStackTestNGBase extends AbstractTestNGSpringContextTests {
 
     @BeforeMethod(alwaysRun = true)
     @Parameters({"devcloud-host-uuid", "devcloud-host-gateway", "devcloud-host-cidr", "devcloud-host-ip", "template-url", "devcloud-local-storage-uuid",
-        "primary-storage-want-to-add", "devcloud-secondary-storage", "s3-accesskey", "s3-secretkey", "s3-endpoint", "s3-template-bucket", "s3-usehttps",
-        "image-install-path", "primary-storage-uuid-want-to-add", "script-path", "hypervisor"})
-    protected void setup(String hostuuid, String gateway, String cidr, String hostIp, String templateUrl, String localStorageUuid, String primaryStorage,
-        String secondaryStorage, String s3AccessKey, String s3SecretKey, String s3Endpoint, String s3TemplateBucket, String s3Usehttps, String imageInstallPath,
-        String primaryStorageUuid, String scriptPath, String hypervisor) {
+            "primary-storage-want-to-add", "devcloud-secondary-storage", "s3-accesskey", "s3-secretkey", "s3-endpoint", "s3-template-bucket", "s3-usehttps", "image-install-path",
+            "primary-storage-uuid-want-to-add", "script-path", "hypervisor"})
+    protected void setup(String hostuuid, String gateway, String cidr, String hostIp, String templateUrl, String localStorageUuid, String primaryStorage, String secondaryStorage,
+            String s3AccessKey, String s3SecretKey, String s3Endpoint, String s3TemplateBucket, String s3Usehttps, String imageInstallPath, String primaryStorageUuid,
+            String scriptPath, String hypervisor) {
         this.hostGuid = hostuuid;
         this.hostGateway = gateway;
         this.hostCidr = cidr;

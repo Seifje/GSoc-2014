@@ -42,12 +42,12 @@ public class VmRulesetLogDaoImpl extends GenericDaoBase<VmRulesetLogVO, Long> im
     protected static final Logger s_logger = Logger.getLogger(VmRulesetLogDaoImpl.class);
     private SearchBuilder<VmRulesetLogVO> VmIdSearch;
     private String InsertOrUpdateSQl = "INSERT INTO op_vm_ruleset_log (instance_id, created, logsequence) "
-        + " VALUES(?, now(), 1) ON DUPLICATE KEY UPDATE logsequence=logsequence+1";
+            + " VALUES(?, now(), 1) ON DUPLICATE KEY UPDATE logsequence=logsequence+1";
     private static HashMap<Integer, String> cachedPrepStmtStrings = new HashMap<Integer, String>();
     final static private int cacheStringSizes[] = {512, 256, 128, 64, 32, 16, 8, 4, 2, 1};
 
     static {
-        //prepare the cache.
+        // prepare the cache.
         for (int size : cacheStringSizes) {
             cachedPrepStmtStrings.put(size, createPrepStatementString(size));
         }
@@ -80,7 +80,7 @@ public class VmRulesetLogDaoImpl extends GenericDaoBase<VmRulesetLogVO, Long> im
 
     @Override
     public int createOrUpdate(Set<Long> workItems) {
-        //return createOrUpdateUsingBatch(workItems);
+        // return createOrUpdateUsingBatch(workItems);
         return createOrUpdateUsingMultiInsert(workItems);
     }
 

@@ -91,7 +91,8 @@ public class ProjectJoinDaoImpl extends GenericDaoBase<ProjectJoinVO, Long> impl
             }
         }
 
-        //set resource limit/count information for the project (by getting the info of the project's account)
+        // set resource limit/count information for the project (by getting the
+        // info of the project's account)
         Account account = _accountDao.findByIdIncludingRemoved(proj.getProjectAccountId());
         AccountJoinVO accountJn = ApiDBUtils.newAccountView(account);
         _accountJoinDao.setResourceLimits(accountJn, false, response);

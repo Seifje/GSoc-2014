@@ -182,12 +182,16 @@ public class SecurityGroupQueueTest extends TestCase {
 
         int totalDequeued = 0;
         for (int i = 0; i < numConsumers; i++) {
-            //System.out.println("Consumer " + i + " ask to dequeue " + consumers[i].getNumJobsToDequeue() + ", dequeued " + consumers[i].getNumJobsDequeued());
+            // System.out.println("Consumer " + i + " ask to dequeue " +
+            // consumers[i].getNumJobsToDequeue() + ", dequeued " +
+            // consumers[i].getNumJobsDequeued());
             totalDequeued += consumers[i].getNumJobsDequeued();
         }
         int totalQueued = 0;
         for (int i = 0; i < numProducers; i++) {
-            //System.out.println("Producer " + i + " ask to queue " + producers[i].getTotalWork() + ", queued " + producers[i].getNewWork());
+            // System.out.println("Producer " + i + " ask to queue " +
+            // producers[i].getTotalWork() + ", queued " +
+            // producers[i].getNewWork());
             totalQueued += producers[i].getNewWork();
         }
         System.out.println("Total jobs dequeued = " + totalDequeued + ", num queued=" + totalQueued + " queue current size=" + queue.size());

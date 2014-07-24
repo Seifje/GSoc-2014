@@ -90,7 +90,6 @@ public class VolumeApiServiceImplTest {
     DetachVolumeCmd detachCmd = new DetachVolumeCmd();
     Class<?> _detachCmdClass = detachCmd.getClass();
 
-
     @Before
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -117,38 +116,31 @@ public class VolumeApiServiceImplTest {
         TransactionLegacy txn = TransactionLegacy.open("runVolumeDaoImplTest");
         try {
             // volume of running vm id=1
-            VolumeVO volumeOfRunningVm = new VolumeVO("root", 1L, 1L, 1L, 1L, 1L, "root", "root", Storage.ProvisioningType.THIN, 1, null,
-                    null, "root", Volume.Type.ROOT);
+            VolumeVO volumeOfRunningVm = new VolumeVO("root", 1L, 1L, 1L, 1L, 1L, "root", "root", Storage.ProvisioningType.THIN, 1, null, null, "root", Volume.Type.ROOT);
             when(_svc._volsDao.findById(1L)).thenReturn(volumeOfRunningVm);
 
-            UserVmVO runningVm = new UserVmVO(1L, "vm", "vm", 1, HypervisorType.XenServer, 1L, false,
-                    false, 1L, 1L, 1L, null, "vm", null);
+            UserVmVO runningVm = new UserVmVO(1L, "vm", "vm", 1, HypervisorType.XenServer, 1L, false, false, 1L, 1L, 1L, null, "vm", null);
             runningVm.setState(State.Running);
             runningVm.setDataCenterId(1L);
             when(_svc._userVmDao.findById(1L)).thenReturn(runningVm);
 
             // volume of stopped vm id=2
-            VolumeVO volumeOfStoppedVm = new VolumeVO("root", 1L, 1L, 1L, 1L, 2L, "root", "root", Storage.ProvisioningType.THIN, 1, null,
-                    null, "root", Volume.Type.ROOT);
+            VolumeVO volumeOfStoppedVm = new VolumeVO("root", 1L, 1L, 1L, 1L, 2L, "root", "root", Storage.ProvisioningType.THIN, 1, null, null, "root", Volume.Type.ROOT);
             volumeOfStoppedVm.setPoolId(1L);
             when(_svc._volsDao.findById(2L)).thenReturn(volumeOfStoppedVm);
 
-            UserVmVO stoppedVm = new UserVmVO(2L, "vm", "vm", 1, HypervisorType.XenServer, 1L, false,
-                    false, 1L, 1L, 1L, null, "vm", null);
+            UserVmVO stoppedVm = new UserVmVO(2L, "vm", "vm", 1, HypervisorType.XenServer, 1L, false, false, 1L, 1L, 1L, null, "vm", null);
             stoppedVm.setState(State.Stopped);
             stoppedVm.setDataCenterId(1L);
             when(_svc._userVmDao.findById(2L)).thenReturn(stoppedVm);
 
-
             // volume of hyperV vm id=3
-            UserVmVO hyperVVm = new UserVmVO(3L, "vm", "vm", 1, HypervisorType.Hyperv, 1L, false,
-                    false, 1L, 1L, 1L, null, "vm", null);
+            UserVmVO hyperVVm = new UserVmVO(3L, "vm", "vm", 1, HypervisorType.Hyperv, 1L, false, false, 1L, 1L, 1L, null, "vm", null);
             hyperVVm.setState(State.Stopped);
             hyperVVm.setDataCenterId(1L);
             when(_svc._userVmDao.findById(3L)).thenReturn(hyperVVm);
 
-            VolumeVO volumeOfStoppeHyperVVm = new VolumeVO("root", 1L, 1L, 1L, 1L, 3L, "root", "root", Storage.ProvisioningType.THIN, 1, null,
-                    null, "root", Volume.Type.ROOT);
+            VolumeVO volumeOfStoppeHyperVVm = new VolumeVO("root", 1L, 1L, 1L, 1L, 3L, "root", "root", Storage.ProvisioningType.THIN, 1, null, null, "root", Volume.Type.ROOT);
             volumeOfStoppeHyperVVm.setPoolId(1L);
             when(_svc._volsDao.findById(3L)).thenReturn(volumeOfStoppeHyperVVm);
 
@@ -159,8 +151,7 @@ public class VolumeApiServiceImplTest {
             StoragePoolVO managedPool = new StoragePoolVO();
             managedPool.setManaged(true);
             when(_svc._storagePoolDao.findById(2L)).thenReturn(managedPool);
-            VolumeVO managedPoolVolume = new VolumeVO("root", 1L, 1L, 1L, 1L, 2L, "root", "root", Storage.ProvisioningType.THIN, 1, null,
-                    null, "root", Volume.Type.ROOT);
+            VolumeVO managedPoolVolume = new VolumeVO("root", 1L, 1L, 1L, 1L, 2L, "root", "root", Storage.ProvisioningType.THIN, 1, null, null, "root", Volume.Type.ROOT);
             managedPoolVolume.setPoolId(2L);
             when(_svc._volsDao.findById(4L)).thenReturn(managedPoolVolume);
 
@@ -178,8 +169,7 @@ public class VolumeApiServiceImplTest {
             when(correctRootVolume.getInstanceId()).thenReturn(null);
             when(_svc.volFactory.getVolume(6L)).thenReturn(correctRootVolume);
 
-            VolumeVO correctRootVolumeVO = new VolumeVO("root", 1L, 1L, 1L, 1L, 2L, "root", "root", Storage.ProvisioningType.THIN, 1, null,
-                    null, "root", Volume.Type.ROOT);
+            VolumeVO correctRootVolumeVO = new VolumeVO("root", 1L, 1L, 1L, 1L, 2L, "root", "root", Storage.ProvisioningType.THIN, 1, null, null, "root", Volume.Type.ROOT);
             when(_svc._volsDao.findById(6L)).thenReturn(correctRootVolumeVO);
 
             // managed root volume
@@ -191,15 +181,13 @@ public class VolumeApiServiceImplTest {
             when(managedVolume.getPoolId()).thenReturn(2L);
             when(_svc.volFactory.getVolume(7L)).thenReturn(managedVolume);
 
-            VolumeVO managedVolume1 = new VolumeVO("root", 1L, 1L, 1L, 1L, 2L, "root", "root", Storage.ProvisioningType.THIN, 1, null,
-                    null, "root", Volume.Type.ROOT);
+            VolumeVO managedVolume1 = new VolumeVO("root", 1L, 1L, 1L, 1L, 2L, "root", "root", Storage.ProvisioningType.THIN, 1, null, null, "root", Volume.Type.ROOT);
             managedVolume1.setPoolId(2L);
             managedVolume1.setDataCenterId(1L);
             when(_svc._volsDao.findById(7L)).thenReturn(managedVolume1);
 
             // vm having root volume
-            UserVmVO vmHavingRootVolume = new UserVmVO(4L, "vm", "vm", 1, HypervisorType.XenServer, 1L, false,
-                    false, 1L, 1L, 1L, null, "vm", null);
+            UserVmVO vmHavingRootVolume = new UserVmVO(4L, "vm", "vm", 1, HypervisorType.XenServer, 1L, false, false, 1L, 1L, 1L, null, "vm", null);
             vmHavingRootVolume.setState(State.Stopped);
             vmHavingRootVolume.setDataCenterId(1L);
             when(_svc._userVmDao.findById(4L)).thenReturn(vmHavingRootVolume);
@@ -217,8 +205,7 @@ public class VolumeApiServiceImplTest {
             when(uploadedVolume.getState()).thenReturn(Volume.State.Uploaded);
             when(_svc.volFactory.getVolume(8L)).thenReturn(uploadedVolume);
 
-            VolumeVO upVolume = new VolumeVO("root", 1L, 1L, 1L, 1L, 2L, "root", "root", Storage.ProvisioningType.THIN, 1, null,
-                    null, "root", Volume.Type.ROOT);
+            VolumeVO upVolume = new VolumeVO("root", 1L, 1L, 1L, 1L, 2L, "root", "root", Storage.ProvisioningType.THIN, 1, null, null, "root", Volume.Type.ROOT);
             upVolume.setPoolId(1L);
             upVolume.setDataCenterId(1L);
             upVolume.setState(Volume.State.Uploaded);
@@ -240,6 +227,7 @@ public class VolumeApiServiceImplTest {
 
     /**
      * TESTS FOR DETACH ROOT VOLUME, COUNT=4
+     *
      * @throws Exception
      */
 
@@ -307,7 +295,8 @@ public class VolumeApiServiceImplTest {
         _svc.attachVolumeToVM(2L, 7L, 0L);
     }
 
-    // Negative test - root volume can't be attached to the vm already having a root volume attached
+    // Negative test - root volume can't be attached to the vm already having a
+    // root volume attached
     @Test(expected = InvalidParameterValueException.class)
     public void attachRootDiskToVmHavingRootDisk() throws NoSuchFieldException, IllegalAccessException {
         _svc.attachVolumeToVM(4L, 6L, 0L);
@@ -319,7 +308,8 @@ public class VolumeApiServiceImplTest {
         _svc.attachVolumeToVM(2L, 8L, 0L);
     }
 
-    // Positive test - attach ROOT volume in correct state, to the vm not having root volume attached
+    // Positive test - attach ROOT volume in correct state, to the vm not having
+    // root volume attached
     @Test
     public void attachRootVolumePositive() throws NoSuchFieldException, IllegalAccessException {
         thrown.expect(NullPointerException.class);

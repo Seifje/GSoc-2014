@@ -16,7 +16,6 @@
 // under the License.
 package com.cloud.agent.api;
 
-
 public class OvsCreateTunnelCommand extends Command {
     Integer key;
     String remoteIp;
@@ -35,8 +34,7 @@ public class OvsCreateTunnelCommand extends Command {
         return true;
     }
 
-    public OvsCreateTunnelCommand(String remoteIp, Integer key, Long from,
-            Long to, long networkId, String fromIp, String networkName, String networkUuid) {
+    public OvsCreateTunnelCommand(String remoteIp, Integer key, Long from, Long to, long networkId, String fromIp, String networkName, String networkUuid) {
         this.remoteIp = remoteIp;
         this.key = key;
         this.from = from;
@@ -74,7 +72,6 @@ public class OvsCreateTunnelCommand extends Command {
     public String getNetworkName() {
         return networkName;
     }
-
 
     public String getNetworkUuid() {
         return networkUuid;

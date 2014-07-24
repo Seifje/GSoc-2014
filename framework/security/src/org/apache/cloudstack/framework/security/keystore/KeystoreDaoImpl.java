@@ -72,14 +72,16 @@ public class KeystoreDaoImpl extends GenericDaoBase<KeystoreVO, Long> implements
 
     @Override
     public List<KeystoreVO> findCertChain(String domainSuffix) {
-        SearchCriteria<KeystoreVO> sc =  CertChainSearchForDomainSuffix.create();
+        SearchCriteria<KeystoreVO> sc = CertChainSearchForDomainSuffix.create();
         sc.setParameters("domainSuffix", domainSuffix);
         List<KeystoreVO> ks = listBy(sc);
-        Collections.sort(ks, new Comparator() { public int compare(Object o1, Object o2) {
-            Integer seq1 = ((KeystoreVO)o1).getIndex();
-            Integer seq2 = ((KeystoreVO)o2).getIndex();
-            return seq1.compareTo(seq2);
-        }});
+        Collections.sort(ks, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                Integer seq1 = ((KeystoreVO)o1).getIndex();
+                Integer seq2 = ((KeystoreVO)o2).getIndex();
+                return seq1.compareTo(seq2);
+            }
+        });
         return ks;
     }
 
@@ -99,8 +101,7 @@ public class KeystoreDaoImpl extends GenericDaoBase<KeystoreVO, Long> implements
         try {
             txn.start();
 
-            String sql =
-                "INSERT INTO keystore (`name`, `certificate`, `key`, `domain_suffix`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `certificate`=?, `key`=?, `domain_suffix`=?";
+            String sql = "INSERT INTO keystore (`name`, `certificate`, `key`, `domain_suffix`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `certificate`=?, `key`=?, `domain_suffix`=?";
             PreparedStatement pstmt = txn.prepareAutoCloseStatement(sql);
             pstmt.setString(1, name);
             pstmt.setString(2, certificate);

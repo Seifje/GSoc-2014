@@ -33,20 +33,12 @@ public interface Volume extends ControlledEntity, Identity, InternalIdentity, Ba
     };
 
     enum State {
-        Allocated("The volume is allocated but has not been created yet."),
-        Creating("The volume is being created.  getPoolId() should reflect the pool where it is being created."),
-        Ready("The volume is ready to be used."),
-        Migrating("The volume is migrating to other storage pool"),
-        Snapshotting("There is a snapshot created on this volume, not backed up to secondary storage yet"),
-        Resizing("The volume is being resized"),
-        Expunging("The volume is being expunging"),
-        Expunged("The volume is being expunging"),
-        Destroy("The volume is destroyed, and can't be recovered."),
-        Destroying("The volume is destroying, and can't be recovered."),
-        UploadOp("The volume upload operation is in progress or in short the volume is on secondary storage"),
-        Uploading("volume is uploading"),
-        Copying("volume is copying from image store to primary, in case it's an uploaded volume"),
-        Uploaded("volume is uploaded");
+        Allocated("The volume is allocated but has not been created yet."), Creating("The volume is being created.  getPoolId() should reflect the pool where it is being created."), Ready(
+                "The volume is ready to be used."), Migrating("The volume is migrating to other storage pool"), Snapshotting(
+                        "There is a snapshot created on this volume, not backed up to secondary storage yet"), Resizing("The volume is being resized"), Expunging(
+                                "The volume is being expunging"), Expunged("The volume is being expunging"), Destroy("The volume is destroyed, and can't be recovered."), Destroying(
+                                        "The volume is destroying, and can't be recovered."), UploadOp("The volume upload operation is in progress or in short the volume is on secondary storage"), Uploading(
+                                                "volume is uploading"), Copying("volume is copying from image store to primary, in case it's an uploaded volume"), Uploaded("volume is uploaded");
 
         String _description;
 
@@ -101,19 +93,7 @@ public interface Volume extends ControlledEntity, Identity, InternalIdentity, Ba
     }
 
     enum Event {
-        CreateRequested,
-        CopyRequested,
-        CopySucceeded,
-        CopyFailed,
-        OperationFailed,
-        OperationSucceeded,
-        OperationRetry,
-        UploadRequested,
-        MigrationRequested,
-        SnapshotRequested,
-        DestroyRequested,
-        ExpungingRequested,
-        ResizeRequested;
+        CreateRequested, CopyRequested, CopySucceeded, CopyFailed, OperationFailed, OperationSucceeded, OperationRetry, UploadRequested, MigrationRequested, SnapshotRequested, DestroyRequested, ExpungingRequested, ResizeRequested;
     }
 
     /**
@@ -197,5 +177,6 @@ public interface Volume extends ControlledEntity, Identity, InternalIdentity, Ba
     @Deprecated
     boolean isDisplayVolume();
 
+    @Override
     boolean isDisplay();
 }

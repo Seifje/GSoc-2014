@@ -114,25 +114,22 @@ public class LibvirtStoragePool implements KVMStoragePool {
     }
 
     @Override
-    public KVMPhysicalDisk createPhysicalDisk(String name,
-            PhysicalDiskFormat format, Storage.ProvisioningType provisioningType, long size) {
-        return this._storageAdaptor
-                .createPhysicalDisk(name, this, format, provisioningType, size);
+    public KVMPhysicalDisk createPhysicalDisk(String name, PhysicalDiskFormat format, Storage.ProvisioningType provisioningType, long size) {
+        return this._storageAdaptor.createPhysicalDisk(name, this, format, provisioningType, size);
     }
 
     @Override
     public KVMPhysicalDisk createPhysicalDisk(String name, Storage.ProvisioningType provisioningType, long size) {
-        return this._storageAdaptor.createPhysicalDisk(name, this,
-                this.getDefaultFormat(), provisioningType, size);
+        return this._storageAdaptor.createPhysicalDisk(name, this, this.getDefaultFormat(), provisioningType, size);
     }
 
     @Override
     public KVMPhysicalDisk getPhysicalDisk(String volumeUid) {
         KVMPhysicalDisk disk = null;
         String volumeUuid = volumeUid;
-        if ( volumeUid.contains("/") ) {
+        if (volumeUid.contains("/")) {
             String[] tokens = volumeUid.split("/");
-            volumeUuid = tokens[tokens.length -1];
+            volumeUuid = tokens[tokens.length - 1];
         }
         try {
             disk = this._storageAdaptor.getPhysicalDisk(volumeUuid, this);
@@ -146,7 +143,8 @@ public class LibvirtStoragePool implements KVMStoragePool {
             return disk;
         }
         s_logger.debug("find volume bypass libvirt");
-        //For network file system or file system, try to use java file to find the volume, instead of through libvirt. BUG:CLOUDSTACK-4459
+        // For network file system or file system, try to use java file to find
+        // the volume, instead of through libvirt. BUG:CLOUDSTACK-4459
         String localPoolPath = this.getLocalPath();
         File f = new File(localPoolPath + File.separator + volumeUuid);
         if (!f.exists()) {

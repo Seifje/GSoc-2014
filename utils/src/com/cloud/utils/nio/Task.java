@@ -29,11 +29,11 @@ public abstract class Task implements Runnable {
     private static final Logger s_logger = Logger.getLogger(Task.class);
 
     public enum Type {
-        CONNECT,     // Process a new connection.
-        DISCONNECT,  // Process an existing connection disconnecting.
-        DATA,        // data incoming.
+        CONNECT, // Process a new connection.
+        DISCONNECT, // Process an existing connection disconnecting.
+        DATA, // data incoming.
         CONNECT_FAILED, // Connection failed.
-        OTHER        // Allows other tasks to be defined by the caller.
+        OTHER // Allows other tasks to be defined by the caller.
     };
 
     Object _data;

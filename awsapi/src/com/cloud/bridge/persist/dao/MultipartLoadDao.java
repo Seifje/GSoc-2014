@@ -49,8 +49,8 @@ public class MultipartLoadDao {
     }
 
     /**
-     * If a multipart upload exists with the uploadId value then return the non-null creators
-     * accessKey.
+     * If a multipart upload exists with the uploadId value then return the
+     * non-null creators accessKey.
      *
      * @param uploadId
      * @return creator of the multipart upload, and NameKey of upload
@@ -61,9 +61,10 @@ public class MultipartLoadDao {
     }
 
     /**
-     * The multipart upload was either successfully completed or was aborted.   In either case, we need
-     * to remove all of its state from the tables.   Note that we have cascade deletes so all tables with
-     * uploadId as a foreign key are automatically cleaned.
+     * The multipart upload was either successfully completed or was aborted. In
+     * either case, we need to remove all of its state from the tables. Note
+     * that we have cascade deletes so all tables with uploadId as a foreign key
+     * are automatically cleaned.
      *
      * @param uploadId
      *
@@ -83,7 +84,8 @@ public class MultipartLoadDao {
     }
 
     /**
-     * Create a new "in-process" multipart upload entry to keep track of its state.
+     * Create a new "in-process" multipart upload entry to keep track of its
+     * state.
      *
      * @param accessKey
      * @param bucketName
@@ -124,16 +126,19 @@ public class MultipartLoadDao {
     }
 
     /**
-     * Remember all the individual parts that make up the entire multipart upload so that once
-     * the upload is complete all the parts can be glued together into a single object.  Note,
-     * the caller can over write an existing part.
+     * Remember all the individual parts that make up the entire multipart
+     * upload so that once the upload is complete all the parts can be glued
+     * together into a single object. Note, the caller can over write an
+     * existing part.
      *
      * @param uploadId
      * @param partNumber
      * @param md5
      * @param storedPath
      * @param size
-     * @throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
+     * @throws InstantiationException
+     *             , IllegalAccessException, ClassNotFoundException,
+     *             SQLException
      */
     public void savePart(int uploadId, int partNumber, String md5, String storedPath, int size) {
 
@@ -161,6 +166,7 @@ public class MultipartLoadDao {
 
     /**
      * It is possible for there to be a null canned access policy defined.
+     * 
      * @param uploadId
      * @return the value defined in the x-amz-acl header or null
      */
@@ -169,12 +175,15 @@ public class MultipartLoadDao {
     }
 
     /**
-     * When the multipart are being composed into one object we need any meta data to be saved with
-     * the new re-constituted object.
+     * When the multipart are being composed into one object we need any meta
+     * data to be saved with the new re-constituted object.
      *
      * @param uploadId
-     * @return an array of S3MetaDataEntry (will be null if no meta values exist)
-     * @throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
+     * @return an array of S3MetaDataEntry (will be null if no meta values
+     *         exist)
+     * @throws InstantiationException
+     *             , IllegalAccessException, ClassNotFoundException,
+     *             SQLException
      */
     public S3MetaDataEntry[] getMeta(int uploadId) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
         List<S3MetaDataEntry> metaList = new ArrayList<S3MetaDataEntry>();
@@ -202,19 +211,24 @@ public class MultipartLoadDao {
     }
 
     /**
-     * The result has to be ordered by key and if there is more than one identical key then all the
-     * identical keys are ordered by create time.
+     * The result has to be ordered by key and if there is more than one
+     * identical key then all the identical keys are ordered by create time.
      *
      * @param bucketName
      * @param maxParts
-     * @param prefix - can be null
-     * @param keyMarker - can be null
-     * @param uploadIdMarker - can be null, should only be defined if keyMarker is not-null
+     * @param prefix
+     *            - can be null
+     * @param keyMarker
+     *            - can be null
+     * @param uploadIdMarker
+     *            - can be null, should only be defined if keyMarker is not-null
      * @return OrderedPair<S3MultipartUpload[], isTruncated>
-     * @throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
+     * @throws InstantiationException
+     *             , IllegalAccessException, ClassNotFoundException,
+     *             SQLException
      */
     public OrderedPair<S3MultipartUpload[], Boolean> getInitiatedUploads(String bucketName, int maxParts, String prefix, String keyMarker, String uploadIdMarker)
-        throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+            throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
         S3MultipartUpload[] inProgress = new S3MultipartUpload[maxParts];
         boolean isTruncated = false;
         int i = 0;
@@ -247,18 +261,20 @@ public class MultipartLoadDao {
     }
 
     /**
-     * Return info on a range of upload parts that have already been stored in disk.
-     * Note that parts can be uploaded in any order yet we must returned an ordered list
-     * of parts thus we use the "ORDERED BY" clause to sort the list.
+     * Return info on a range of upload parts that have already been stored in
+     * disk. Note that parts can be uploaded in any order yet we must returned
+     * an ordered list of parts thus we use the "ORDERED BY" clause to sort the
+     * list.
      *
      * @param uploadId
      * @param maxParts
      * @param startAt
      * @return an array of S3MultipartPart objects
-     * @throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
+     * @throws InstantiationException
+     *             , IllegalAccessException, ClassNotFoundException,
+     *             SQLException
      */
-    public S3MultipartPart[] getParts(int uploadId, int maxParts, int startAt) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
-        SQLException {
+    public S3MultipartPart[] getParts(int uploadId, int maxParts, int startAt) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
         S3MultipartPart[] parts = new S3MultipartPart[maxParts];
         int i = 0;
         List<MultiPartPartsVO> partsVO;
@@ -292,20 +308,27 @@ public class MultipartLoadDao {
      * How many parts exist after the endMarker part number?
      *
      * @param uploadId
-     * @param endMarker - can be used to see if getUploadedParts was truncated
+     * @param endMarker
+     *            - can be used to see if getUploadedParts was truncated
      * @return number of parts with partNumber greater than endMarker
-     * @throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
+     * @throws InstantiationException
+     *             , IllegalAccessException, ClassNotFoundException,
+     *             SQLException
      */
     public int numParts(int uploadId, int endMarker) {
         return mpartPartsDao.getnumParts(uploadId, endMarker);
     }
 
     /**
-     * A multipart upload request can have zero to many meta data entries to be applied to the
-     * final object.   We need to remember all of the objects meta data until the multipart is complete.
+     * A multipart upload request can have zero to many meta data entries to be
+     * applied to the final object. We need to remember all of the objects meta
+     * data until the multipart is complete.
      *
-     * @param uploadId - defines an in-process multipart upload
-     * @param meta - an array of meta data to be assocated with the uploadId value
+     * @param uploadId
+     *            - defines an in-process multipart upload
+     * @param meta
+     *            - an array of meta data to be assocated with the uploadId
+     *            value
      *
      */
     private void saveMultipartMeta(int uploadId, S3MetaDataEntry[] meta) {
@@ -330,12 +353,14 @@ public class MultipartLoadDao {
     }
 
     /**
-     * Reallocates an array with a new size, and copies the contents
-     * of the old array to the new array.
+     * Reallocates an array with a new size, and copies the contents of the old
+     * array to the new array.
      *
-     * @param oldArray  the old array, to be reallocated.
-     * @param newSize   the new array size.
-     * @return          A new array with the same contents.
+     * @param oldArray
+     *            the old array, to be reallocated.
+     * @param newSize
+     *            the new array size.
+     * @return A new array with the same contents.
      */
     private static Object resizeArray(Object oldArray, int newSize) {
         int oldSize = java.lang.reflect.Array.getLength(oldArray);

@@ -52,8 +52,9 @@ public interface ResourceService {
     Host reconnectHost(ReconnectHostCmd cmd);
 
     /**
-     * We will automatically create a cloud.com cluster to attach to the external cluster and return a hyper host to perform
-     * host related operation within the cluster
+     * We will automatically create a cloud.com cluster to attach to the
+     * external cluster and return a hyper host to perform host related
+     * operation within the cluster
      *
      * @param cmd
      * @return

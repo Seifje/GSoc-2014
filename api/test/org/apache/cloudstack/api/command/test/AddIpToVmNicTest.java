@@ -65,9 +65,7 @@ public class AddIpToVmNicTest extends TestCase {
         AddIpToVmNicCmd ipTonicCmd = Mockito.mock(AddIpToVmNicCmd.class);
         NicSecondaryIp secIp = Mockito.mock(NicSecondaryIp.class);
 
-        Mockito.when(
-            networkService.allocateSecondaryGuestIP(Matchers.anyLong(), Matchers.anyString()))
-            .thenReturn(secIp);
+        Mockito.when(networkService.allocateSecondaryGuestIP(Matchers.anyLong(), Matchers.anyString())).thenReturn(secIp);
 
         ipTonicCmd._networkService = networkService;
         responseGenerator = Mockito.mock(ResponseGenerator.class);
@@ -85,9 +83,7 @@ public class AddIpToVmNicTest extends TestCase {
         NetworkService networkService = Mockito.mock(NetworkService.class);
         AddIpToVmNicCmd ipTonicCmd = Mockito.mock(AddIpToVmNicCmd.class);
 
-        Mockito.when(
-            networkService.allocateSecondaryGuestIP(Matchers.anyLong(), Matchers.anyString()))
-            .thenReturn(null);
+        Mockito.when(networkService.allocateSecondaryGuestIP(Matchers.anyLong(), Matchers.anyString())).thenReturn(null);
 
         ipTonicCmd._networkService = networkService;
 
@@ -99,8 +95,7 @@ public class AddIpToVmNicTest extends TestCase {
     }
 
     @Test
-    public void testRemoveIpFromVmNicSuccess() throws ResourceAllocationException, ResourceUnavailableException, ConcurrentOperationException,
-        InsufficientCapacityException {
+    public void testRemoveIpFromVmNicSuccess() throws ResourceAllocationException, ResourceUnavailableException, ConcurrentOperationException, InsufficientCapacityException {
 
         NetworkService networkService = Mockito.mock(NetworkService.class);
         RemoveIpFromVmNicCmd removeIpFromNic = Mockito.mock(RemoveIpFromVmNicCmd.class);

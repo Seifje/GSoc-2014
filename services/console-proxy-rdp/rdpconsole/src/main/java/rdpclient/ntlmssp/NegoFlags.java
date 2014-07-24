@@ -31,18 +31,18 @@ public class NegoFlags {
      * NTLMSSP_NEGOTIATE_SIGN with NTLMSSP_NEGOTIATE_56 to the server in the
      * NEGOTIATE_MESSAGE, the server MUST return NTLMSSP_NEGOTIATE_56 to the
      * client in the CHALLENGE_MESSAGE. Otherwise it is ignored. If both
-     * NTLMSSP_NEGOTIATE_56 and NTLMSSP_NEGOTIATE_128 are requested and supported
-     * by the client and server, NTLMSSP_NEGOTIATE_56 and NTLMSSP_NEGOTIATE_128
-     * will both be returned to the client. Clients and servers that set
-     * NTLMSSP_NEGOTIATE_SEAL SHOULD set NTLMSSP_NEGOTIATE_56 if it is supported.
-     * An alternate name for this field is
+     * NTLMSSP_NEGOTIATE_56 and NTLMSSP_NEGOTIATE_128 are requested and
+     * supported by the client and server, NTLMSSP_NEGOTIATE_56 and
+     * NTLMSSP_NEGOTIATE_128 will both be returned to the client. Clients and
+     * servers that set NTLMSSP_NEGOTIATE_SEAL SHOULD set NTLMSSP_NEGOTIATE_56
+     * if it is supported. An alternate name for this field is
      */
     public static final int NTLMSSP_NEGOTIATE_56 = 0x80000000;
 
     /**
      * Explicit key exchange. This capability SHOULD be used because it improves
-     * security for message integrity or confidentiality. See sections 3.2.5.1.2,
-     * 3.2.5.2.1, and 3.2.5.2.2 for details.
+     * security for message integrity or confidentiality. See sections
+     * 3.2.5.1.2, 3.2.5.2.1, and 3.2.5.2.2 for details.
      */
     public static final int NTLMSSP_NEGOTIATE_KEY_EXCH = 0x40000000;
 
@@ -51,24 +51,25 @@ public class NegoFlags {
      * NTLMSSP_NEGOTIATE_128. If the client sends NTLMSSP_NEGOTIATE_128 to the
      * server in the NEGOTIATE_MESSAGE, the server MUST return
      * NTLMSSP_NEGOTIATE_128 to the client in the CHALLENGE_MESSAGE only if the
-     * client sets NTLMSSP_NEGOTIATE_SEAL or NTLMSSP_NEGOTIATE_SIGN. Otherwise it
-     * is ignored. If both NTLMSSP_NEGOTIATE_56 and NTLMSSP_NEGOTIATE_128 are
-     * requested and supported by the client and server, NTLMSSP_NEGOTIATE_56 and
-     * NTLMSSP_NEGOTIATE_128 will both be returned to the client. Clients and
-     * servers that set NTLMSSP_NEGOTIATE_SEAL SHOULD set NTLMSSP_NEGOTIATE_128 if
-     * it is supported.
+     * client sets NTLMSSP_NEGOTIATE_SEAL or NTLMSSP_NEGOTIATE_SIGN. Otherwise
+     * it is ignored. If both NTLMSSP_NEGOTIATE_56 and NTLMSSP_NEGOTIATE_128 are
+     * requested and supported by the client and server, NTLMSSP_NEGOTIATE_56
+     * and NTLMSSP_NEGOTIATE_128 will both be returned to the client. Clients
+     * and servers that set NTLMSSP_NEGOTIATE_SEAL SHOULD set
+     * NTLMSSP_NEGOTIATE_128 if it is supported.
      */
     public static final int NTLMSSP_NEGOTIATE_128 = 0x20000000;
 
     /**
-     * Protocol version number. The data corresponding to this flag is provided in
-     * the Version field of the NEGOTIATE_MESSAGE, the CHALLENGE_MESSAGE, and the
-     * AUTHENTICATE_MESSAGE.
+     * Protocol version number. The data corresponding to this flag is provided
+     * in the Version field of the NEGOTIATE_MESSAGE, the CHALLENGE_MESSAGE, and
+     * the AUTHENTICATE_MESSAGE.
      */
     public static final int NTLMSSP_NEGOTIATE_VERSION = 0x02000000;
 
     /**
-     * TargetInfo fields in the CHALLENGE_MESSAGE (section 2.2.1.2) are populated.
+     * TargetInfo fields in the CHALLENGE_MESSAGE (section 2.2.1.2) are
+     * populated.
      */
     public static final int NTLMSSP_NEGOTIATE_TARGET_INFO = 0x00800000;
 
@@ -79,39 +80,41 @@ public class NegoFlags {
     public static final int NTLMSSP_NEGOTIATE_IDENTIFY = 0x00100000;
 
     /**
-     * NTLM v2 session security. NTLM v2 session security is a misnomer because it
-     * is not NTLM v2. It is NTLM v1 using the extended session security that is
-     * also in NTLM v2. NTLMSSP_NEGOTIATE_LM_KEY and
-     * NTLMSSP_NEGOTIATE_EXTENDED_SESSIONSECURITY are mutually exclusive. If both
-     * NTLMSSP_NEGOTIATE_EXTENDED_SESSIONSECURITY and NTLMSSP_NEGOTIATE_LM_KEY are
-     * requested, NTLMSSP_NEGOTIATE_EXTENDED_SESSIONSECURITY alone MUST be
-     * returned to the client. NTLM v2 authentication session key generation MUST
-     * be supported by both the client and the DC in order to be used, and
-     * extended session security signing and sealing requires support from the
-     * client and the server in order to be used.
+     * NTLM v2 session security. NTLM v2 session security is a misnomer because
+     * it is not NTLM v2. It is NTLM v1 using the extended session security that
+     * is also in NTLM v2. NTLMSSP_NEGOTIATE_LM_KEY and
+     * NTLMSSP_NEGOTIATE_EXTENDED_SESSIONSECURITY are mutually exclusive. If
+     * both NTLMSSP_NEGOTIATE_EXTENDED_SESSIONSECURITY and
+     * NTLMSSP_NEGOTIATE_LM_KEY are requested,
+     * NTLMSSP_NEGOTIATE_EXTENDED_SESSIONSECURITY alone MUST be returned to the
+     * client. NTLM v2 authentication session key generation MUST be supported
+     * by both the client and the DC in order to be used, and extended session
+     * security signing and sealing requires support from the client and the
+     * server in order to be used.
      */
     public static final int NTLMSSP_NEGOTIATE_EXTENDED_SESSION_SECURITY = 0x00080000;
 
     /**
      * TargetName MUST be a server name. The data corresponding to this flag is
-     * provided by the server in the TargetName field of the CHALLENGE_MESSAGE. If
-     * this bit is set, then NTLMSSP_TARGET_TYPE_DOMAIN MUST NOT be set. This flag
-     * MUST be ignored in the NEGOTIATE_MESSAGE and the AUTHENTICATE_MESSAGE.
+     * provided by the server in the TargetName field of the CHALLENGE_MESSAGE.
+     * If this bit is set, then NTLMSSP_TARGET_TYPE_DOMAIN MUST NOT be set. This
+     * flag MUST be ignored in the NEGOTIATE_MESSAGE and the
+     * AUTHENTICATE_MESSAGE.
      */
     public static final int NTLMSSP_TARGET_TYPE_SERVER = 0x00020000;
 
     /**
      * TargetName MUST be a domain name. The data corresponding to this flag is
-     * provided by the server in the TargetName field of the CHALLENGE_MESSAGE. If
-     * set, then NTLMSSP_TARGET_TYPE_SERVER MUST NOT be set. This flag MUST be
-     * ignored in the NEGOTIATE_MESSAGE and the AUTHENTICATE_MESSAGE.
+     * provided by the server in the TargetName field of the CHALLENGE_MESSAGE.
+     * If set, then NTLMSSP_TARGET_TYPE_SERVER MUST NOT be set. This flag MUST
+     * be ignored in the NEGOTIATE_MESSAGE and the AUTHENTICATE_MESSAGE.
      */
     public static final int NTLMSSP_TARGET_TYPE_DOMAIN = 0x00010000;
 
     /**
-     * Signature block on all messages. NTLMSSP_NEGOTIATE_ALWAYS_SIGN MUST be set
-     * in the NEGOTIATE_MESSAGE to the server and the CHALLENGE_MESSAGE to the
-     * client. NTLMSSP_NEGOTIATE_ALWAYS_SIGN is overridden by
+     * Signature block on all messages. NTLMSSP_NEGOTIATE_ALWAYS_SIGN MUST be
+     * set in the NEGOTIATE_MESSAGE to the server and the CHALLENGE_MESSAGE to
+     * the client. NTLMSSP_NEGOTIATE_ALWAYS_SIGN is overridden by
      * NTLMSSP_NEGOTIATE_SIGN and NTLMSSP_NEGOTIATE_SEAL, if they are supported.
      */
     public static final int NTLMSSP_NEGOTIATE_ALWAYS_SIGN = 0x00008000;
@@ -144,21 +147,22 @@ public class NegoFlags {
     public static final int NTLMSSP_NEGOTIATE_ANONYMOUS = 0x00000800;
 
     /**
-     * Usage of the NTLM v1 session security protocol. NTLMSSP_NEGOTIATE_NTLM MUST
-     * be set in the NEGOTIATE_MESSAGE to the server and the CHALLENGE_MESSAGE to
-     * the client.
+     * Usage of the NTLM v1 session security protocol. NTLMSSP_NEGOTIATE_NTLM
+     * MUST be set in the NEGOTIATE_MESSAGE to the server and the
+     * CHALLENGE_MESSAGE to the client.
      */
     public static final int NTLMSSP_NEGOTIATE_NTLM = 0x00000200;
 
     /**
      * LAN Manager (LM) session key computation. NTLMSSP_NEGOTIATE_LM_KEY and
-     * NTLMSSP_NEGOTIATE_EXTENDED_SESSIONSECURITY are mutually exclusive. If both
-     * NTLMSSP_NEGOTIATE_LM_KEY and NTLMSSP_NEGOTIATE_EXTENDED_SESSIONSECURITY are
-     * requested, NTLMSSP_NEGOTIATE_EXTENDED_SESSIONSECURITY alone MUST be
-     * returned to the client. NTLM v2 authentication session key generation MUST
-     * be supported by both the client and the DC in order to be used, and
-     * extended session security signing and sealing requires support from the
-     * client and the server to be used.
+     * NTLMSSP_NEGOTIATE_EXTENDED_SESSIONSECURITY are mutually exclusive. If
+     * both NTLMSSP_NEGOTIATE_LM_KEY and
+     * NTLMSSP_NEGOTIATE_EXTENDED_SESSIONSECURITY are requested,
+     * NTLMSSP_NEGOTIATE_EXTENDED_SESSIONSECURITY alone MUST be returned to the
+     * client. NTLM v2 authentication session key generation MUST be supported
+     * by both the client and the DC in order to be used, and extended session
+     * security signing and sealing requires support from the client and the
+     * server to be used.
      */
     public static final int NTLMSSP_NEGOTIATE_LM_KEY = 0x00000080;
 
@@ -172,16 +176,18 @@ public class NegoFlags {
     /**
      * Session key negotiation for message confidentiality. If the client sends
      * NTLMSSP_NEGOTIATE_SEAL to the server in the NEGOTIATE_MESSAGE, the server
-     * MUST return NTLMSSP_NEGOTIATE_SEAL to the client in the CHALLENGE_MESSAGE.
-     * Clients and servers that set NTLMSSP_NEGOTIATE_SEAL SHOULD always set
-     * NTLMSSP_NEGOTIATE_56 and NTLMSSP_NEGOTIATE_128, if they are supported.
+     * MUST return NTLMSSP_NEGOTIATE_SEAL to the client in the
+     * CHALLENGE_MESSAGE. Clients and servers that set NTLMSSP_NEGOTIATE_SEAL
+     * SHOULD always set NTLMSSP_NEGOTIATE_56 and NTLMSSP_NEGOTIATE_128, if they
+     * are supported.
      */
     public static final int NTLMSSP_NEGOTIATE_SEAL = 0x00000020;
 
     /**
      * Session key negotiation for message signatures. If the client sends
      * NTLMSSP_NEGOTIATE_SIGN to the server in the NEGOTIATE_MESSAGE, the server
-     * MUST return NTLMSSP_NEGOTIATE_SIGN to the client in the CHALLENGE_MESSAGE.
+     * MUST return NTLMSSP_NEGOTIATE_SIGN to the client in the
+     * CHALLENGE_MESSAGE.
      */
     public static final int NTLMSSP_NEGOTIATE_SIGN = 0x00000010;
 

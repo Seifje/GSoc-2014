@@ -81,10 +81,12 @@ public class CheckOnHostCommandTest {
             return "10.1.1.1";
         };
 
+        @Override
         public String getStorageUrl() {
             return null;
         }
 
+        @Override
         public String getStorageIpAddress() {
             return "10.1.1.2";
         };

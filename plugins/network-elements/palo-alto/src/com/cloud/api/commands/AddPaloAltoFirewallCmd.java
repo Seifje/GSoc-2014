@@ -40,23 +40,18 @@ import com.cloud.network.dao.ExternalFirewallDeviceVO;
 import com.cloud.network.element.PaloAltoFirewallElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "addPaloAltoFirewall", responseObject = PaloAltoFirewallResponse.class, description = "Adds a Palo Alto firewall device",
-        requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
+@APICommand(name = "addPaloAltoFirewall", responseObject = PaloAltoFirewallResponse.class, description = "Adds a Palo Alto firewall device", requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
 public class AddPaloAltoFirewallCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(AddPaloAltoFirewallCmd.class.getName());
     private static final String s_name = "addpaloaltofirewallresponse";
     @Inject
     PaloAltoFirewallElementService _paFwService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = PhysicalNetworkResponse.class,
-               required = true,
-               description = "the Physical Network ID")
+    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, required = true, description = "the Physical Network ID")
     private Long physicalNetworkId;
 
     @Parameter(name = ApiConstants.URL, type = CommandType.STRING, required = true, description = "URL of the Palo Alto appliance.")
@@ -71,9 +66,9 @@ public class AddPaloAltoFirewallCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.NETWORK_DEVICE_TYPE, type = CommandType.STRING, required = true, description = "supports only PaloAltoFirewall")
     private String deviceType;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getPhysicalNetworkId() {
         return physicalNetworkId;
@@ -95,13 +90,12 @@ public class AddPaloAltoFirewallCmd extends BaseAsyncCmd {
         return deviceType;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             ExternalFirewallDeviceVO fwDeviceVO = _paFwService.addPaloAltoFirewall(this);
             if (fwDeviceVO != null) {

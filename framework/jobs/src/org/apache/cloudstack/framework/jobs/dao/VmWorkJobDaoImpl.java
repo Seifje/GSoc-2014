@@ -130,12 +130,12 @@ public class VmWorkJobDaoImpl extends GenericDaoBase<VmWorkJobVO, Long> implemen
     public void expungeCompletedWorkJobs(final Date cutDate) {
         // current DAO machenism does not support following usage
         /*
-                SearchCriteria<VmWorkJobVO> sc = ExpungeWorkJobSearch.create();
-                sc.setParameters("lastUpdated",cutDate);
-                sc.setParameters("jobStatus", JobInfo.Status.IN_PROGRESS);
-
-                expunge(sc);
-        */
+         * SearchCriteria<VmWorkJobVO> sc = ExpungeWorkJobSearch.create();
+         * sc.setParameters("lastUpdated",cutDate);
+         * sc.setParameters("jobStatus", JobInfo.Status.IN_PROGRESS);
+         *
+         * expunge(sc);
+         */
 
         // loop at application level to avoid mysql deadlock issues
         SearchCriteria<VmWorkJobVO> sc = ExpungingWorkJobSearch.create();
@@ -155,12 +155,13 @@ public class VmWorkJobDaoImpl extends GenericDaoBase<VmWorkJobVO, Long> implemen
     public void expungeLeftoverWorkJobs(final long msid) {
         // current DAO machenism does not support following usage
         /*
-                SearchCriteria<VmWorkJobVO> sc = ExpungePlaceHolderWorkJobSearch.create();
-                sc.setParameters("dispatcher", "VmWorkJobPlaceHolder");
-                sc.setParameters("msid", msid);
-
-                expunge(sc);
-        */
+         * SearchCriteria<VmWorkJobVO> sc =
+         * ExpungePlaceHolderWorkJobSearch.create();
+         * sc.setParameters("dispatcher", "VmWorkJobPlaceHolder");
+         * sc.setParameters("msid", msid);
+         *
+         * expunge(sc);
+         */
         Transaction.execute(new TransactionCallbackNoReturn() {
             @Override
             public void doInTransactionWithoutResult(TransactionStatus status) {
@@ -168,8 +169,8 @@ public class VmWorkJobDaoImpl extends GenericDaoBase<VmWorkJobVO, Long> implemen
 
                 PreparedStatement pstmt = null;
                 try {
-                    pstmt = txn.prepareAutoCloseStatement(
-                            "DELETE FROM vm_work_job WHERE id IN (SELECT id FROM async_job WHERE (job_dispatcher='VmWorkJobPlaceHolder' OR job_dispatcher='VmWorkJobDispatcher') AND job_init_msid=?)");
+                    pstmt = txn
+                            .prepareAutoCloseStatement("DELETE FROM vm_work_job WHERE id IN (SELECT id FROM async_job WHERE (job_dispatcher='VmWorkJobPlaceHolder' OR job_dispatcher='VmWorkJobDispatcher') AND job_init_msid=?)");
                     pstmt.setLong(1, msid);
 
                     pstmt.execute();
@@ -178,8 +179,8 @@ public class VmWorkJobDaoImpl extends GenericDaoBase<VmWorkJobVO, Long> implemen
                 }
 
                 try {
-                    pstmt = txn.prepareAutoCloseStatement(
-                            "DELETE FROM async_job WHERE (job_dispatcher='VmWorkJobPlaceHolder' OR job_dispatcher='VmWorkJobDispatcher') AND job_init_msid=?");
+                    pstmt = txn
+                            .prepareAutoCloseStatement("DELETE FROM async_job WHERE (job_dispatcher='VmWorkJobPlaceHolder' OR job_dispatcher='VmWorkJobDispatcher') AND job_init_msid=?");
                     pstmt.setLong(1, msid);
 
                     pstmt.execute();

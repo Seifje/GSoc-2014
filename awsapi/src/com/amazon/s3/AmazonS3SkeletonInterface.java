@@ -26,14 +26,14 @@ package com.amazon.s3;
 import org.apache.axis2.AxisFault;
 
 /**
- *  AmazonS3SkeletonInterface java skeleton interface for the axisService
+ * AmazonS3SkeletonInterface java skeleton interface for the axisService
  */
 public interface AmazonS3SkeletonInterface {
 
     /**
      * Auto generated method signature
      *
-                                * @param getBucketLoggingStatus
+     * @param getBucketLoggingStatus
      */
 
     public com.amazon.s3.GetBucketLoggingStatusResponse getBucketLoggingStatus(com.amazon.s3.GetBucketLoggingStatus getBucketLoggingStatus);
@@ -41,7 +41,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param copyObject
+     * @param copyObject
      * @throws AxisFault
      */
 
@@ -50,7 +50,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param getBucketAccessControlPolicy
+     * @param getBucketAccessControlPolicy
      */
 
     public com.amazon.s3.GetBucketAccessControlPolicyResponse getBucketAccessControlPolicy(com.amazon.s3.GetBucketAccessControlPolicy getBucketAccessControlPolicy);
@@ -58,7 +58,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param listBucket
+     * @param listBucket
      */
 
     public com.amazon.s3.ListBucketResponse listBucket(com.amazon.s3.ListBucket listBucket);
@@ -66,7 +66,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param putObject
+     * @param putObject
      */
 
     public com.amazon.s3.PutObjectResponse putObject(com.amazon.s3.PutObject putObject);
@@ -74,7 +74,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createBucket
+     * @param createBucket
      */
 
     public com.amazon.s3.CreateBucketResponse createBucket(com.amazon.s3.CreateBucket createBucket);
@@ -82,7 +82,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param listAllMyBuckets
+     * @param listAllMyBuckets
      */
 
     public com.amazon.s3.ListAllMyBucketsResponse listAllMyBuckets(com.amazon.s3.ListAllMyBuckets listAllMyBuckets);
@@ -90,7 +90,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param getObject
+     * @param getObject
      */
 
     public com.amazon.s3.GetObjectResponse getObject(com.amazon.s3.GetObject getObject);
@@ -98,7 +98,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteBucket
+     * @param deleteBucket
      */
 
     public com.amazon.s3.DeleteBucketResponse deleteBucket(com.amazon.s3.DeleteBucket deleteBucket);
@@ -106,7 +106,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param setBucketLoggingStatus
+     * @param setBucketLoggingStatus
      */
 
     public com.amazon.s3.SetBucketLoggingStatusResponse setBucketLoggingStatus(com.amazon.s3.SetBucketLoggingStatus setBucketLoggingStatus);
@@ -114,7 +114,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param getObjectAccessControlPolicy
+     * @param getObjectAccessControlPolicy
      */
 
     public com.amazon.s3.GetObjectAccessControlPolicyResponse getObjectAccessControlPolicy(com.amazon.s3.GetObjectAccessControlPolicy getObjectAccessControlPolicy);
@@ -122,7 +122,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteObject
+     * @param deleteObject
      */
 
     public com.amazon.s3.DeleteObjectResponse deleteObject(com.amazon.s3.DeleteObject deleteObject);
@@ -130,7 +130,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param setBucketAccessControlPolicy
+     * @param setBucketAccessControlPolicy
      */
 
     public com.amazon.s3.SetBucketAccessControlPolicyResponse setBucketAccessControlPolicy(com.amazon.s3.SetBucketAccessControlPolicy setBucketAccessControlPolicy);
@@ -138,7 +138,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param setObjectAccessControlPolicy
+     * @param setObjectAccessControlPolicy
      */
 
     public com.amazon.s3.SetObjectAccessControlPolicyResponse setObjectAccessControlPolicy(com.amazon.s3.SetObjectAccessControlPolicy setObjectAccessControlPolicy);
@@ -146,7 +146,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param putObjectInline
+     * @param putObjectInline
      */
 
     public com.amazon.s3.PutObjectInlineResponse putObjectInline(com.amazon.s3.PutObjectInline putObjectInline);
@@ -154,7 +154,7 @@ public interface AmazonS3SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param getObjectExtended
+     * @param getObjectExtended
      */
 
     public com.amazon.s3.GetObjectExtendedResponse getObjectExtended(com.amazon.s3.GetObjectExtended getObjectExtended);

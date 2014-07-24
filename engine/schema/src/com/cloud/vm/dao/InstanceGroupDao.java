@@ -30,7 +30,9 @@ public interface InstanceGroupDao extends GenericDao<InstanceGroupVO, Long> {
 
     /**
      * Updates name for the vm
-     * @param id - group id
+     *
+     * @param id
+     *            - group id
      * @param name
      */
     void updateVmGroup(long id, String name);

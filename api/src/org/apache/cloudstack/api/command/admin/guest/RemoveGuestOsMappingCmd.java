@@ -32,31 +32,30 @@ import org.apache.cloudstack.context.CallContext;
 import com.cloud.event.EventTypes;
 import com.cloud.user.Account;
 
-@APICommand(name = "removeGuestOsMapping", description = "Removes a Guest OS Mapping.", responseObject = SuccessResponse.class, since = "4.4.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "removeGuestOsMapping", description = "Removes a Guest OS Mapping.", responseObject = SuccessResponse.class, since = "4.4.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class RemoveGuestOsMappingCmd extends BaseAsyncCmd {
 
     public static final Logger s_logger = Logger.getLogger(RemoveGuestOsMappingCmd.class.getName());
     private static final String s_name = "removeguestosmappingresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = GuestOsMappingResponse.class, required = true, description = "ID of the guest OS mapping")
     private Long id;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

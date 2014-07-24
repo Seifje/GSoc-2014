@@ -80,14 +80,15 @@ public class BareMetalDiscoverer extends DiscovererBase implements Discoverer, R
     }
 
     @Override
-    public Map<? extends ServerResource, Map<String, String>>
-        find(long dcId, Long podId, Long clusterId, URI url, String username, String password, List<String> hostTags) throws DiscoveryException {
+    public Map<? extends ServerResource, Map<String, String>> find(long dcId, Long podId, Long clusterId, URI url, String username, String password, List<String> hostTags)
+            throws DiscoveryException {
 
-        /* Enable this after we decide to use addBaremetalHostCmd instead of addHostCmd
-        String discoverName = _params.get(ApiConstants.BAREMETAL_DISCOVER_NAME);
-        if (!this.getClass().getName().equals(discoverName)) {
-            return null;
-        } */
+        /*
+         * Enable this after we decide to use addBaremetalHostCmd instead of
+         * addHostCmd String discoverName =
+         * _params.get(ApiConstants.BAREMETAL_DISCOVER_NAME); if
+         * (!this.getClass().getName().equals(discoverName)) { return null; }
+         */
 
         Map<BareMetalResourceBase, Map<String, String>> resources = new HashMap<BareMetalResourceBase, Map<String, String>>();
         Map<String, String> details = new HashMap<String, String>();
@@ -140,8 +141,7 @@ public class BareMetalDiscoverer extends DiscovererBase implements Discoverer, R
             command.add("password=" + password, ParamType.PASSWORD);
             final String result = command.execute();
             if (result != null) {
-                s_logger.warn(String.format("Can not set up ipmi connection(ip=%1$s, username=%2$s, password=%3$s, args) because %4$s", ipmiIp, username, "******",
-                    result));
+                s_logger.warn(String.format("Can not set up ipmi connection(ip=%1$s, username=%2$s, password=%3$s, args) because %4$s", ipmiIp, username, "******", result));
                 return null;
             }
 
@@ -169,7 +169,7 @@ public class BareMetalDiscoverer extends DiscovererBase implements Discoverer, R
                 String externalUrl = _configDao.getValue(Config.ExternalBaremetalSystemUrl.key());
                 if (externalUrl == null) {
                     throw new IllegalArgumentException(
-                        String.format("You must specify ExternalBaremetalSystemUrl in global config page as ExternalBaremetalResourceClassName is not null"));
+                            String.format("You must specify ExternalBaremetalSystemUrl in global config page as ExternalBaremetalResourceClassName is not null"));
                 }
                 details.put(BaremetalManager.ExternalBaremetalSystemUrl, externalUrl);
             } else {
@@ -206,8 +206,8 @@ public class BareMetalDiscoverer extends DiscovererBase implements Discoverer, R
             zone.setDhcpProvider(Network.Provider.ExternalDhcpServer.getName());
             _dcDao.update(zone.getId(), zone);
 
-            s_logger.debug(String.format("Discover Bare Metal host successfully(ip=%1$s, username=%2$s, password=%3%s,"
-                + "cpuNum=%4$s, cpuCapacity-%5$s, memCapacity=%6$s)", ipmiIp, username, "******", cpuNum, cpuCapacity, memCapacity));
+            s_logger.debug(String.format("Discover Bare Metal host successfully(ip=%1$s, username=%2$s, password=%3%s," + "cpuNum=%4$s, cpuCapacity-%5$s, memCapacity=%6$s)",
+                    ipmiIp, username, "******", cpuNum, cpuCapacity, memCapacity));
             return resources;
         } catch (Exception e) {
             s_logger.warn("Can not set up bare metal agent", e);

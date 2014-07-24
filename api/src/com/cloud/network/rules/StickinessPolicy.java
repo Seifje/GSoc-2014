@@ -38,7 +38,10 @@ public interface StickinessPolicy extends InternalIdentity, Identity, Displayabl
 
     public boolean isRevoke();
 
-    public List<Pair<String, String>> getParams(); /* get params in Map <string,String> format */
+    public List<Pair<String, String>> getParams(); /*
+     * get params in Map
+     * <string,String> format
+     */
 
     @Override
     boolean isDisplay();

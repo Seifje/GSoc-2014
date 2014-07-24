@@ -29,8 +29,8 @@ public interface ServerDBSync {
     public final static short SYNC_STATE_UNKNOWN = -1;
 
     /*
-     * API for syncing all classes of vnc objects with cloudstack
-     * Sync cloudstack and vnc objects.
+     * API for syncing all classes of vnc objects with cloudstack Sync
+     * cloudstack and vnc objects.
      */
     public short syncAll(short syncMode);
 

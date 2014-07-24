@@ -36,7 +36,8 @@ public class EC2VolumeFilterSet {
     private Map<String, String> filterTypes = new HashMap<String, String>();
 
     public EC2VolumeFilterSet() {
-        // -> use these values to check that the proper filter is passed to this type of filter set
+        // -> use these values to check that the proper filter is passed to this
+        // type of filter set
         filterTypes.put("attachment.attach-time", "xsd:dateTime");
         filterTypes.put("attachment.delete-on-termination", "null");
         filterTypes.put("attachment.device", "string");
@@ -50,7 +51,7 @@ public class EC2VolumeFilterSet {
         filterTypes.put("tag-key", "string");
         filterTypes.put("tag-value", "string");
         filterTypes.put("volume-id", "string");
-        //        filterTypes.put( "tag:*",                            "null" );
+        // filterTypes.put( "tag:*", "null" );
     }
 
     public void addFilter(EC2Filter param) {
@@ -60,7 +61,8 @@ public class EC2VolumeFilterSet {
         if (value == null || value.equalsIgnoreCase("null")) {
             throw new EC2ServiceException(ClientError.InvalidFilter, "Filter '" + filterName + "' is invalid");
         }
-        // ToDo we could add checks to make sure the type of a filters value is correct (e.g., an integer)
+        // ToDo we could add checks to make sure the type of a filters value is
+        // correct (e.g., an integer)
         filterSet.add(param);
     }
 
@@ -69,10 +71,12 @@ public class EC2VolumeFilterSet {
     }
 
     /**
-     * For a filter to match a volume just one of its values has to match the volume.
-     * For a volume to be included in the volume response it must pass all the defined filters.
+     * For a filter to match a volume just one of its values has to match the
+     * volume. For a volume to be included in the volume response it must pass
+     * all the defined filters.
      *
-     * @param sampleList - list of volumes to test against the defined filters
+     * @param sampleList
+     *            - list of volumes to test against the defined filters
      * @return EC2DescribeVolumeResponse
      * @throws ParseException
      */
@@ -195,61 +199,61 @@ public class EC2VolumeFilterSet {
         Integer devId = new Integer(deviceId);
         for (String s : set) {
             switch (devId) {
-                case 1:
-                    if (("/dev/sdb").matches(s))
-                        return true;
-                    if (("/dev/xvdb").matches(s))
-                        return true;
-                    break;
+            case 1:
+                if (("/dev/sdb").matches(s))
+                    return true;
+                if (("/dev/xvdb").matches(s))
+                    return true;
+                break;
 
-                case 2:
-                    if (("/dev/sdc").matches(s))
-                        return true;
-                    if (("/dev/xvdc").matches(s))
-                        return true;
-                    break;
+            case 2:
+                if (("/dev/sdc").matches(s))
+                    return true;
+                if (("/dev/xvdc").matches(s))
+                    return true;
+                break;
 
-                case 4:
-                    if (("/dev/sde").matches(s))
-                        return true;
-                    if (("/dev/xvde").matches(s))
-                        return true;
-                    break;
+            case 4:
+                if (("/dev/sde").matches(s))
+                    return true;
+                if (("/dev/xvde").matches(s))
+                    return true;
+                break;
 
-                case 5:
-                    if (("/dev/sdf").matches(s))
-                        return true;
-                    if (("/dev/xvdf").matches(s))
-                        return true;
-                    break;
+            case 5:
+                if (("/dev/sdf").matches(s))
+                    return true;
+                if (("/dev/xvdf").matches(s))
+                    return true;
+                break;
 
-                case 6:
-                    if (("/dev/sdg").matches(s))
-                        return true;
-                    if (("/dev/xvdg").matches(s))
-                        return true;
-                    break;
+            case 6:
+                if (("/dev/sdg").matches(s))
+                    return true;
+                if (("/dev/xvdg").matches(s))
+                    return true;
+                break;
 
-                case 7:
-                    if (("/dev/sdh").matches(s))
-                        return true;
-                    if (("/dev/xvdh").matches(s))
-                        return true;
-                    break;
+            case 7:
+                if (("/dev/sdh").matches(s))
+                    return true;
+                if (("/dev/xvdh").matches(s))
+                    return true;
+                break;
 
-                case 8:
-                    if (("/dev/sdi").matches(s))
-                        return true;
-                    if (("/dev/xvdi").matches(s))
-                        return true;
-                    break;
+            case 8:
+                if (("/dev/sdi").matches(s))
+                    return true;
+                if (("/dev/xvdi").matches(s))
+                    return true;
+                break;
 
-                case 9:
-                    if (("/dev/sdj").matches(s))
-                        return true;
-                    if (("/dev/xvdj").matches(s))
-                        return true;
-                    break;
+            case 9:
+                if (("/dev/sdj").matches(s))
+                    return true;
+                if (("/dev/xvdj").matches(s))
+                    return true;
+                break;
             }
         }
         return false;

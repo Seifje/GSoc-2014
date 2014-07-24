@@ -32,16 +32,15 @@ import org.apache.cloudstack.region.RegionService;
 
 import com.cloud.user.Account;
 
-@APICommand(name = "addRegion", description = "Adds a Region", responseObject = RegionResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "addRegion", description = "Adds a Region", responseObject = RegionResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class AddRegionCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(AddRegionCmd.class.getName());
 
     private static final String s_name = "addregionresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
     @Parameter(name = ApiConstants.ID, type = CommandType.INTEGER, required = true, description = "Id of the Region")
     private Integer id;
 
@@ -54,9 +53,9 @@ public class AddRegionCmd extends BaseCmd {
     @Inject
     public RegionService _regionService;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Integer getId() {
         return id;
@@ -70,9 +69,9 @@ public class AddRegionCmd extends BaseCmd {
         return endPoint;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

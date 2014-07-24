@@ -21,5 +21,6 @@ import com.cloud.utils.component.Manager;
 
 public interface HypervManager extends Manager {
     public String prepareSecondaryStorageStore(long zoneId);
+
     int getRouterExtraPublicNics();
 }

@@ -62,8 +62,7 @@ public class DefaultEndPointSelector implements EndPointSelector {
     private static final Logger s_logger = Logger.getLogger(DefaultEndPointSelector.class);
     @Inject
     HostDao hostDao;
-    private final String findOneHostOnPrimaryStorage =
-        "select h.id from host h, storage_pool_host_ref s  where h.status = 'Up' and h.type = 'Routing' and h.resource_state = 'Enabled' and"
+    private final String findOneHostOnPrimaryStorage = "select h.id from host h, storage_pool_host_ref s  where h.status = 'Up' and h.type = 'Routing' and h.resource_state = 'Enabled' and"
             + " h.id = s.host_id and s.pool_id = ? ";
     private String findOneHypervisorHostInScope = "select h.id from host h where h.status = 'Up' and h.hypervisor_type is not null ";
 
@@ -267,7 +266,10 @@ public class DefaultEndPointSelector implements EndPointSelector {
         if (object instanceof TemplateInfo) {
             TemplateInfo tmplInfo = (TemplateInfo)object;
             if (store.getScope().getScopeType() == ScopeType.ZONE && store.getScope().getScopeId() == null && tmplInfo.getTemplateType() == TemplateType.SYSTEM) {
-                return LocalHostEndpoint.getEndpoint(); // for bootstrap system vm template downloading to region image store
+                return LocalHostEndpoint.getEndpoint(); // for bootstrap system
+                // vm template
+                // downloading to region
+                // image store
             }
         }
         return null;

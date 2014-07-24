@@ -42,7 +42,7 @@ import com.cloud.vm.UserVmManager;
 
 @Configuration
 @ComponentScan(basePackageClasses = {StoragePoolDetailsDaoImpl.class, PrimaryDataStoreDaoImpl.class, VMTemplateDaoImpl.class, HostDaoImpl.class, DomainDaoImpl.class,
-    DataCenterDaoImpl.class}, includeFilters = {@Filter(value = Library.class, type = FilterType.CUSTOM)}, useDefaultFilters = false)
+        DataCenterDaoImpl.class}, includeFilters = {@Filter(value = Library.class, type = FilterType.CUSTOM)}, useDefaultFilters = false)
 public class StorageAllocatorTestConfiguration {
     @Bean
     public UserVmManager UserVmManager() {

@@ -26,17 +26,17 @@ import javax.persistence.Table;
 import org.apache.cloudstack.api.InternalIdentity;
 
 @Entity
-@Table(name="host_gpu_groups")
+@Table(name = "host_gpu_groups")
 public class HostGpuGroupsVO implements InternalIdentity {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
 
-    @Column(name="group_name")
+    @Column(name = "group_name")
     private String groupName;
 
-    @Column(name="host_id")
+    @Column(name = "host_id")
     private long hostId;
 
     protected HostGpuGroupsVO() {

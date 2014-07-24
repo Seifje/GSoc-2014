@@ -22,32 +22,7 @@ import java.util.Map;
 public class S3ConditionFactory {
 
     public enum PolicyConditions {
-        UnknownCondition,
-        StringEquals,
-        StringNotEquals,
-        StringEqualsIgnoreCase,
-        StringNotEqualsIgnoreCase,
-        StringLike,
-        StringNotLike,
-        NumericEquals,
-        NumericNotEquals,
-        NumericLessThan,
-        NumericLessThanEquals,
-        NumericGreaterThan,
-        NumericGreaterThanEquals,
-        DateEquals,
-        DateNotEquals,
-        DateLessThan,
-        DateLessThanEquals,
-        DateGreaterThan,
-        DateGreaterThanEquals,
-        Bool,
-        IpAddress,
-        NotIpAddres,
-        ArnEquals,
-        ArnNotEquals,
-        ArnLike,
-        ArnNotLike
+        UnknownCondition, StringEquals, StringNotEquals, StringEqualsIgnoreCase, StringNotEqualsIgnoreCase, StringLike, StringNotLike, NumericEquals, NumericNotEquals, NumericLessThan, NumericLessThanEquals, NumericGreaterThan, NumericGreaterThanEquals, DateEquals, DateNotEquals, DateLessThan, DateLessThanEquals, DateGreaterThan, DateGreaterThanEquals, Bool, IpAddress, NotIpAddres, ArnEquals, ArnNotEquals, ArnLike, ArnNotLike
     }
 
     // -> map a string name into a policy condition constant
@@ -112,58 +87,58 @@ public class S3ConditionFactory {
         S3PolicyCondition result = null;
 
         switch (type) {
-            case DateEquals:
-            case DateNotEquals:
-            case DateLessThan:
-            case DateLessThanEquals:
-            case DateGreaterThan:
-            case DateGreaterThanEquals:
-                result = new S3PolicyDateCondition();
-                result.setCondition(type);
-                break;
+        case DateEquals:
+        case DateNotEquals:
+        case DateLessThan:
+        case DateLessThanEquals:
+        case DateGreaterThan:
+        case DateGreaterThanEquals:
+            result = new S3PolicyDateCondition();
+            result.setCondition(type);
+            break;
 
-            case StringEquals:
-            case StringNotEquals:
-            case StringEqualsIgnoreCase:
-            case StringNotEqualsIgnoreCase:
-            case StringLike:
-            case StringNotLike:
-                result = new S3PolicyStringCondition();
-                result.setCondition(type);
-                break;
+        case StringEquals:
+        case StringNotEquals:
+        case StringEqualsIgnoreCase:
+        case StringNotEqualsIgnoreCase:
+        case StringLike:
+        case StringNotLike:
+            result = new S3PolicyStringCondition();
+            result.setCondition(type);
+            break;
 
-            case NumericEquals:
-            case NumericNotEquals:
-            case NumericLessThan:
-            case NumericLessThanEquals:
-            case NumericGreaterThan:
-            case NumericGreaterThanEquals:
-                result = new S3PolicyNumericCondition();
-                result.setCondition(type);
-                break;
+        case NumericEquals:
+        case NumericNotEquals:
+        case NumericLessThan:
+        case NumericLessThanEquals:
+        case NumericGreaterThan:
+        case NumericGreaterThanEquals:
+            result = new S3PolicyNumericCondition();
+            result.setCondition(type);
+            break;
 
-            case Bool:
-                result = new S3PolicyBoolCondition();
-                result.setCondition(type);
-                break;
+        case Bool:
+            result = new S3PolicyBoolCondition();
+            result.setCondition(type);
+            break;
 
-            case IpAddress:
-            case NotIpAddres:
-                result = new S3PolicyIPAddressCondition();
-                result.setCondition(type);
-                break;
+        case IpAddress:
+        case NotIpAddres:
+            result = new S3PolicyIPAddressCondition();
+            result.setCondition(type);
+            break;
 
-            case ArnEquals:
-            case ArnNotEquals:
-            case ArnLike:
-            case ArnNotLike:
-                result = new S3PolicyArnCondition();
-                result.setCondition(type);
-                break;
+        case ArnEquals:
+        case ArnNotEquals:
+        case ArnLike:
+        case ArnNotLike:
+            result = new S3PolicyArnCondition();
+            result.setCondition(type);
+            break;
 
-            case UnknownCondition:
-            default:
-                return null;
+        case UnknownCondition:
+        default:
+            return null;
         }
         return result;
     }

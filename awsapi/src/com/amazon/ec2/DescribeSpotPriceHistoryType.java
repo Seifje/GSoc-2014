@@ -25,15 +25,15 @@
 package com.amazon.ec2;
 
 /**
-*  DescribeSpotPriceHistoryType bean class
-*/
+ * DescribeSpotPriceHistoryType bean class
+ */
 
 public class DescribeSpotPriceHistoryType implements org.apache.axis2.databinding.ADBBean {
-    /* This type was generated from the piece of schema that had
-            name = DescribeSpotPriceHistoryType
-            Namespace URI = http://ec2.amazonaws.com/doc/2012-08-15/
-            Namespace Prefix = ns1
-            */
+    /*
+     * This type was generated from the piece of schema that had name =
+     * DescribeSpotPriceHistoryType Namespace URI =
+     * http://ec2.amazonaws.com/doc/2012-08-15/ Namespace Prefix = ns1
+     */
 
     private static java.lang.String generatePrefix(java.lang.String namespace) {
         if (namespace.equals("http://ec2.amazonaws.com/doc/2012-08-15/")) {
@@ -43,33 +43,37 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-    * field for StartTime
-    */
+     * field for StartTime
+     */
 
     protected java.util.Calendar localStartTime;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localStartTimeTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.util.Calendar
-    */
+     * Auto generated getter method
+     * 
+     * @return java.util.Calendar
+     */
     public java.util.Calendar getStartTime() {
         return localStartTime;
     }
 
     /**
-       * Auto generated setter method
-       * @param param StartTime
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            StartTime
+     */
     public void setStartTime(java.util.Calendar param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localStartTimeTracker = true;
         } else {
             localStartTimeTracker = false;
@@ -81,33 +85,37 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-    * field for EndTime
-    */
+     * field for EndTime
+     */
 
     protected java.util.Calendar localEndTime;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localEndTimeTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.util.Calendar
-    */
+     * Auto generated getter method
+     * 
+     * @return java.util.Calendar
+     */
     public java.util.Calendar getEndTime() {
         return localEndTime;
     }
 
     /**
-       * Auto generated setter method
-       * @param param EndTime
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            EndTime
+     */
     public void setEndTime(java.util.Calendar param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localEndTimeTracker = true;
         } else {
             localEndTimeTracker = false;
@@ -119,33 +127,37 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-    * field for InstanceTypeSet
-    */
+     * field for InstanceTypeSet
+     */
 
     protected com.amazon.ec2.InstanceTypeSetType localInstanceTypeSet;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localInstanceTypeSetTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.InstanceTypeSetType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.InstanceTypeSetType
+     */
     public com.amazon.ec2.InstanceTypeSetType getInstanceTypeSet() {
         return localInstanceTypeSet;
     }
 
     /**
-       * Auto generated setter method
-       * @param param InstanceTypeSet
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            InstanceTypeSet
+     */
     public void setInstanceTypeSet(com.amazon.ec2.InstanceTypeSetType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localInstanceTypeSetTracker = true;
         } else {
             localInstanceTypeSetTracker = false;
@@ -157,33 +169,37 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-    * field for ProductDescriptionSet
-    */
+     * field for ProductDescriptionSet
+     */
 
     protected com.amazon.ec2.ProductDescriptionSetType localProductDescriptionSet;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localProductDescriptionSetTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.ProductDescriptionSetType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.ProductDescriptionSetType
+     */
     public com.amazon.ec2.ProductDescriptionSetType getProductDescriptionSet() {
         return localProductDescriptionSet;
     }
 
     /**
-       * Auto generated setter method
-       * @param param ProductDescriptionSet
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            ProductDescriptionSet
+     */
     public void setProductDescriptionSet(com.amazon.ec2.ProductDescriptionSetType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localProductDescriptionSetTracker = true;
         } else {
             localProductDescriptionSetTracker = false;
@@ -195,33 +211,37 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-    * field for FilterSet
-    */
+     * field for FilterSet
+     */
 
     protected com.amazon.ec2.FilterSetType localFilterSet;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localFilterSetTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.FilterSetType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.FilterSetType
+     */
     public com.amazon.ec2.FilterSetType getFilterSet() {
         return localFilterSet;
     }
 
     /**
-       * Auto generated setter method
-       * @param param FilterSet
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            FilterSet
+     */
     public void setFilterSet(com.amazon.ec2.FilterSetType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localFilterSetTracker = true;
         } else {
             localFilterSetTracker = false;
@@ -233,33 +253,37 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-    * field for AvailabilityZone
-    */
+     * field for AvailabilityZone
+     */
 
     protected java.lang.String localAvailabilityZone;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localAvailabilityZoneTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getAvailabilityZone() {
         return localAvailabilityZone;
     }
 
     /**
-       * Auto generated setter method
-       * @param param AvailabilityZone
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            AvailabilityZone
+     */
     public void setAvailabilityZone(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localAvailabilityZoneTracker = true;
         } else {
             localAvailabilityZoneTracker = false;
@@ -271,33 +295,37 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-    * field for MaxResults
-    */
+     * field for MaxResults
+     */
 
     protected java.math.BigInteger localMaxResults;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localMaxResultsTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.math.BigInteger
-    */
+     * Auto generated getter method
+     * 
+     * @return java.math.BigInteger
+     */
     public java.math.BigInteger getMaxResults() {
         return localMaxResults;
     }
 
     /**
-       * Auto generated setter method
-       * @param param MaxResults
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            MaxResults
+     */
     public void setMaxResults(java.math.BigInteger param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localMaxResultsTracker = true;
         } else {
             localMaxResultsTracker = false;
@@ -309,33 +337,37 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-    * field for NextToken
-    */
+     * field for NextToken
+     */
 
     protected java.lang.String localNextToken;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localNextTokenTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getNextToken() {
         return localNextToken;
     }
 
     /**
-       * Auto generated setter method
-       * @param param NextToken
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            NextToken
+     */
     public void setNextToken(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localNextTokenTracker = true;
         } else {
             localNextTokenTracker = false;
@@ -347,9 +379,10 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -362,13 +395,13 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, parentQName) {
 
@@ -381,14 +414,13 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
         java.lang.String prefix = null;
         java.lang.String namespace = null;
@@ -613,8 +645,8 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -626,10 +658,10 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -639,10 +671,10 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -665,7 +697,7 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -693,7 +725,8 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -727,8 +760,8 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -747,9 +780,9 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
         java.util.ArrayList elementList = new java.util.ArrayList();
@@ -830,17 +863,20 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static DescribeSpotPriceHistoryType parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             DescribeSpotPriceHistoryType object = new DescribeSpotPriceHistoryType();
 
@@ -865,7 +901,7 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
                         java.lang.String type = fullTypeName.substring(fullTypeName.indexOf(":") + 1);
 
                         if (!"DescribeSpotPriceHistoryType".equals(type)) {
-                            //find namespace for the prefix
+                            // find namespace for the prefix
                             java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
                             return (DescribeSpotPriceHistoryType)com.amazon.ec2.ExtensionMapper.getTypeObject(nsUri, type, reader);
                         }
@@ -874,7 +910,8 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
 
                 }
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -891,7 +928,7 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -908,7 +945,7 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -923,7 +960,7 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -932,14 +969,13 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
                 while (!reader.isStartElement() && !reader.isEndElement())
                     reader.next();
 
-                if (reader.isStartElement() &&
-                    new javax.xml.namespace.QName("http://ec2.amazonaws.com/doc/2012-08-15/", "productDescriptionSet").equals(reader.getName())) {
+                if (reader.isStartElement() && new javax.xml.namespace.QName("http://ec2.amazonaws.com/doc/2012-08-15/", "productDescriptionSet").equals(reader.getName())) {
 
                     object.setProductDescriptionSet(com.amazon.ec2.ProductDescriptionSetType.Factory.parse(reader));
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -954,7 +990,7 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -971,7 +1007,7 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -988,7 +1024,7 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1005,7 +1041,7 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1015,7 +1051,8 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
                     reader.next();
 
                 if (reader.isStartElement())
-                    // A start element we are not expecting indicates a trailing invalid property
+                    // A start element we are not expecting indicates a trailing
+                    // invalid property
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
 
             } catch (javax.xml.stream.XMLStreamException e) {
@@ -1025,6 +1062,6 @@ public class DescribeSpotPriceHistoryType implements org.apache.axis2.databindin
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

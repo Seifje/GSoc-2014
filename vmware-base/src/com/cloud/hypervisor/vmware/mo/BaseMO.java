@@ -113,7 +113,8 @@ public class BaseMO {
                 CustomFieldDef field = cfmMo.addCustomerFieldDef(fieldName, getMor().getType(), null, null);
                 key = field.getKey();
             } catch (Exception e) {
-                // assuming the exception is caused by concurrent operation from other places
+                // assuming the exception is caused by concurrent operation from
+                // other places
                 // so we retieve the key again
                 key = getCustomFieldKey(fieldName);
             }

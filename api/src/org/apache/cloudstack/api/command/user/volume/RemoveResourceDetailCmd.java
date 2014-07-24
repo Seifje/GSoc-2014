@@ -28,15 +28,14 @@ import org.apache.cloudstack.api.response.SuccessResponse;
 import com.cloud.event.EventTypes;
 import com.cloud.server.ResourceTag;
 
-@APICommand(name = "removeResourceDetail", description = "Removes detail for the Resource.", responseObject = SuccessResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "removeResourceDetail", description = "Removes detail for the Resource.", responseObject = SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class RemoveResourceDetailCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(RemoveResourceDetailCmd.class.getName());
     private static final String s_name = "removeresourcedetailresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.KEY, type = CommandType.STRING, description = "Delete details matching key/value pairs")
     private String key;
@@ -44,16 +43,12 @@ public class RemoveResourceDetailCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.RESOURCE_TYPE, type = CommandType.STRING, required = true, description = "Delete detail by resource type")
     private String resourceType;
 
-    @Parameter(name = ApiConstants.RESOURCE_ID,
-               type = CommandType.STRING,
-               required = true,
-               collectionType = CommandType.STRING,
-               description = "Delete details for resource id")
+    @Parameter(name = ApiConstants.RESOURCE_ID, type = CommandType.STRING, required = true, collectionType = CommandType.STRING, description = "Delete details for resource id")
     private String resourceId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public ResourceTag.ResourceObjectType getResourceType() {
         return _taggedResourceService.getResourceType(resourceType);
@@ -67,9 +62,9 @@ public class RemoveResourceDetailCmd extends BaseAsyncCmd {
         return resourceId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -83,7 +78,7 @@ public class RemoveResourceDetailCmd extends BaseAsyncCmd {
 
     @Override
     public long getEntityOwnerId() {
-        //FIXME - validate the owner here
+        // FIXME - validate the owner here
         return 1;
     }
 

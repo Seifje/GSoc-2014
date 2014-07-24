@@ -22,8 +22,10 @@ public class BufferPool {
         if (minSize >= 0)
             return new byte[minSize];
         else
-            // Return large buffer by default, too minimize number of round trips
-            // between to read full packet when packet is large, but it is important
+            // Return large buffer by default, too minimize number of round
+            // trips
+            // between to read full packet when packet is large, but it is
+            // important
             // to return buffer to pool to reuse it (or null-ify links to it for
             // faster GC)
             // TODO: get free buffer from pool

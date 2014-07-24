@@ -49,18 +49,18 @@ public class LibvirtStorageVolumeDef {
             return null;
         }
 
-        public static volFormat getFormat(QemuImg.PhysicalDiskFormat format){
-            switch (format){
-                case RAW:
-                    return RAW;
-                case QCOW2:
-                    return QCOW2;
-                case DIR:
-                    return DIR;
-                case TAR:
-                    return TAR;
-                default:
-                    throw new NotImplementedException();
+        public static volFormat getFormat(QemuImg.PhysicalDiskFormat format) {
+            switch (format) {
+            case RAW:
+                return RAW;
+            case QCOW2:
+                return QCOW2;
+            case DIR:
+                return DIR;
+            case TAR:
+                return TAR;
+            default:
+                throw new NotImplementedException();
             }
         }
     }

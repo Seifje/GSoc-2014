@@ -21,7 +21,10 @@ import java.util.List;
 
 public class EC2DescribeSnapshots {
 
-    private List<String> snapshotSet = new ArrayList<String>();    // a list of strings identifying snapshots
+    private List<String> snapshotSet = new ArrayList<String>(); // a list of
+                                                                // strings
+                                                                // identifying
+                                                                // snapshots
     private EC2SnapshotFilterSet sfs = null;
     private List<EC2TagKeyValue> resourceTagSet = new ArrayList<EC2TagKeyValue>();
 

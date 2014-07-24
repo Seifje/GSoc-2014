@@ -39,12 +39,11 @@ import com.cloud.utils.db.TransactionLegacy;
 public class UsageVMSnapshotDaoImpl extends GenericDaoBase<UsageVMSnapshotVO, Long> implements UsageVMSnapshotDao {
     public static final Logger s_logger = Logger.getLogger(UsageVMSnapshotDaoImpl.class.getName());
     protected static final String GET_USAGE_RECORDS_BY_ACCOUNT = "SELECT id, zone_id, account_id, domain_id, vm_id, disk_offering_id, size, created, processed "
-        + " FROM usage_vmsnapshot" + " WHERE account_id = ? " + " AND ( (created BETWEEN ? AND ?) OR "
-        + "      (created < ? AND processed is NULL) ) ORDER BY created asc";
+            + " FROM usage_vmsnapshot" + " WHERE account_id = ? " + " AND ( (created BETWEEN ? AND ?) OR " + "      (created < ? AND processed is NULL) ) ORDER BY created asc";
     protected static final String UPDATE_DELETED = "UPDATE usage_vmsnapshot SET processed = ? WHERE account_id = ? AND id = ? and vm_id = ?  and created = ?";
 
-    protected static final String PREVIOUS_QUERY = "SELECT id, zone_id, account_id, domain_id, vm_id, disk_offering_id,size, created, processed "
-        + "FROM usage_vmsnapshot " + "WHERE account_id = ? AND id = ? AND vm_id = ? AND created < ? AND processed IS NULL " + "ORDER BY created desc limit 1";
+    protected static final String PREVIOUS_QUERY = "SELECT id, zone_id, account_id, domain_id, vm_id, disk_offering_id,size, created, processed " + "FROM usage_vmsnapshot "
+            + "WHERE account_id = ? AND id = ? AND vm_id = ? AND created < ? AND processed IS NULL " + "ORDER BY created desc limit 1";
 
     @Override
     public void update(UsageVMSnapshotVO usage) {
@@ -86,7 +85,8 @@ public class UsageVMSnapshotDaoImpl extends GenericDaoBase<UsageVMSnapshotVO, Lo
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                //id, zone_id, account_id, domain_iVMSnapshotVOd, vm_id, disk_offering_id, size, created, processed
+                // id, zone_id, account_id, domain_iVMSnapshotVOd, vm_id,
+                // disk_offering_id, size, created, processed
                 Long vId = Long.valueOf(rs.getLong(1));
                 Long zoneId = Long.valueOf(rs.getLong(2));
                 Long acctId = Long.valueOf(rs.getLong(3));
@@ -137,7 +137,8 @@ public class UsageVMSnapshotDaoImpl extends GenericDaoBase<UsageVMSnapshotVO, Lo
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                //id, zone_id, account_id, domain_iVMSnapshotVOd, vm_id, disk_offering_id, size, created, processed
+                // id, zone_id, account_id, domain_iVMSnapshotVOd, vm_id,
+                // disk_offering_id, size, created, processed
                 Long vId = Long.valueOf(rs.getLong(1));
                 Long zoneId = Long.valueOf(rs.getLong(2));
                 Long acctId = Long.valueOf(rs.getLong(3));

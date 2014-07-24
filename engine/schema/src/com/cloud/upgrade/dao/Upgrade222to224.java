@@ -68,8 +68,7 @@ public class Upgrade222to224 implements DbUpgrade {
         }
         pstmt.close();
 
-        pstmt =
-            conn.prepareStatement("ALTER TABLE `cloud`.`networks` ADD CONSTRAINT `fk_networks__related` FOREIGN KEY(`related`) REFERENCES `networks`(`id`) ON DELETE CASCADE");
+        pstmt = conn.prepareStatement("ALTER TABLE `cloud`.`networks` ADD CONSTRAINT `fk_networks__related` FOREIGN KEY(`related`) REFERENCES `networks`(`id`) ON DELETE CASCADE");
         pstmt.executeUpdate();
         pstmt.close();
     }
@@ -160,8 +159,8 @@ public class Upgrade222to224 implements DbUpgrade {
 
     // fixes bug 9597
     private void fixRecreatableVolumesProblem(Connection conn) throws SQLException {
-        PreparedStatement pstmt =
-            conn.prepareStatement("UPDATE volumes as v SET recreatable=(SELECT recreatable FROM disk_offering d WHERE d.id = v.disk_offering_id) WHERE disk_offering_id != 0");
+        PreparedStatement pstmt = conn
+                .prepareStatement("UPDATE volumes as v SET recreatable=(SELECT recreatable FROM disk_offering d WHERE d.id = v.disk_offering_id) WHERE disk_offering_id != 0");
         pstmt.execute();
         pstmt.close();
 
@@ -185,14 +184,14 @@ public class Upgrade222to224 implements DbUpgrade {
                 String updateSQLSuffix = " where id = ? ) where host_id = ?";
                 String tableName = "host";
                 switch (capacityType) {
-                    case Capacity.CAPACITY_TYPE_MEMORY:
-                    case Capacity.CAPACITY_TYPE_CPU:
-                        tableName = "host";
-                        break;
-                    case Capacity.CAPACITY_TYPE_STORAGE:
-                    case Capacity.CAPACITY_TYPE_STORAGE_ALLOCATED:
-                        tableName = "storage_pool";
-                        break;
+                case Capacity.CAPACITY_TYPE_MEMORY:
+                case Capacity.CAPACITY_TYPE_CPU:
+                    tableName = "host";
+                    break;
+                case Capacity.CAPACITY_TYPE_STORAGE:
+                case Capacity.CAPACITY_TYPE_STORAGE_ALLOCATED:
+                    tableName = "storage_pool";
+                    break;
                 }
                 pstmtUpdate = conn.prepareStatement(updateSQLPrefix + tableName + updateSQLSuffix);
                 pstmtUpdate.setLong(1, hostId);
@@ -256,8 +255,7 @@ public class Upgrade222to224 implements DbUpgrade {
 
     private void updateUserStatsWithNetwork(Connection conn) {
         try {
-            PreparedStatement pstmt =
-                conn.prepareStatement("SELECT id, device_id FROM user_statistics WHERE network_id=0 or network_id is NULL and public_ip_address is NULL");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT id, device_id FROM user_statistics WHERE network_id=0 or network_id is NULL and public_ip_address is NULL");
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -265,7 +263,8 @@ public class Upgrade222to224 implements DbUpgrade {
                 Long instanceId = rs.getLong(2);
 
                 if (instanceId != null && instanceId.longValue() != 0) {
-                    // Check if domR is already expunged; we shouldn't update user stats in this case as nics are gone too
+                    // Check if domR is already expunged; we shouldn't update
+                    // user stats in this case as nics are gone too
                     pstmt = conn.prepareStatement("SELECT * from vm_instance where id=? and removed is not null");
                     pstmt.setLong(1, instanceId);
                     ResultSet rs1 = pstmt.executeQuery();
@@ -299,10 +298,11 @@ public class Upgrade222to224 implements DbUpgrade {
 
             s_logger.debug("Upgraded user_statistics with networkId for DomainRouter device type");
 
-            // update network_id information for ExternalFirewall and ExternalLoadBalancer device types
-            PreparedStatement pstmt1 =
-                conn.prepareStatement("update user_statistics us, user_ip_address uip set us.network_id = uip.network_id where us.public_ip_address = uip.public_ip_address "
-                    + "and us.device_type in ('ExternalFirewall' , 'ExternalLoadBalancer')");
+            // update network_id information for ExternalFirewall and
+            // ExternalLoadBalancer device types
+            PreparedStatement pstmt1 = conn
+                    .prepareStatement("update user_statistics us, user_ip_address uip set us.network_id = uip.network_id where us.public_ip_address = uip.public_ip_address "
+                            + "and us.device_type in ('ExternalFirewall' , 'ExternalLoadBalancer')");
             pstmt1.executeUpdate();
             pstmt1.close();
 
@@ -466,11 +466,13 @@ public class Upgrade222to224 implements DbUpgrade {
         indexesToAdd.add("ALTER TABLE `cloud`.`data_center` ADD  INDEX `i_data_center__domain_id`(`domain_id`)");
 
         keysToAdd.add("ALTER TABLE `cloud`.`vlan` ADD CONSTRAINT `fk_vlan__data_center_id` FOREIGN KEY `fk_vlan__data_center_id`(`data_center_id`) REFERENCES `data_center`(`id`)");
-        keysToAdd.add("ALTER TABLE `cloud`.`op_dc_ip_address_alloc` ADD CONSTRAINT `fk_op_dc_ip_address_alloc__data_center_id` FOREIGN KEY (`data_center_id`) REFERENCES `data_center`(`id`) ON DELETE CASCADE");
+        keysToAdd
+        .add("ALTER TABLE `cloud`.`op_dc_ip_address_alloc` ADD CONSTRAINT `fk_op_dc_ip_address_alloc__data_center_id` FOREIGN KEY (`data_center_id`) REFERENCES `data_center`(`id`) ON DELETE CASCADE");
 
         keysToAdd.add("ALTER TABLE `cloud`.`networks` ADD INDEX `i_networks__removed` (`removed`)");
 
-        indexesToAdd.add("ALTER TABLE `cloud`.`networks` ADD CONSTRAINT `fk_networks__network_offering_id` FOREIGN KEY (`network_offering_id`) REFERENCES `network_offerings`(`id`)");
+        indexesToAdd
+        .add("ALTER TABLE `cloud`.`networks` ADD CONSTRAINT `fk_networks__network_offering_id` FOREIGN KEY (`network_offering_id`) REFERENCES `network_offerings`(`id`)");
         indexesToAdd.add("ALTER TABLE `cloud`.`networks` ADD CONSTRAINT `fk_networks__data_center_id` FOREIGN KEY (`data_center_id`) REFERENCES `data_center` (`id`)");
         indexesToAdd.add("ALTER TABLE `cloud`.`networks` ADD CONSTRAINT `fk_networks__account_id` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)");
         indexesToAdd.add("ALTER TABLE `cloud`.`networks` ADD CONSTRAINT `fk_networks__domain_id` FOREIGN KEY (`domain_id`) REFERENCES `domain` (`id`)");
@@ -512,7 +514,8 @@ public class Upgrade222to224 implements DbUpgrade {
         }
     }
 
-    // In 2.2.x there was a bug when resource_count was incremented when Direct ip was allocated. Have to fix it during the
+    // In 2.2.x there was a bug when resource_count was incremented when Direct
+    // ip was allocated. Have to fix it during the
     // upgrade
     private void fixIPResouceCount(Connection conn) throws SQLException {
         // First set all public_ip fields to be 0

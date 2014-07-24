@@ -21,15 +21,15 @@ import java.util.List;
 import com.cloud.bridge.model.SAclVO;
 
 /**
- * Each relation holds
- * a grantee - which is one of SAcl.GRANTEE_USER, SAcl.GRANTEE_ALLUSERS, SAcl.GRANTEE_AUTHENTICATED
- * a permission - which is one of SAcl.PERMISSION_PASS, SAcl.PERMISSION_NONE, SAcl.PERMISSION_READ,
- *     SAcl.PERMISSION_WRITE, SAcl.PERMISSION_READ_ACL, SAcl.PERMISSION_WRITE_ACL, SAcl.PERMISSION_FULL
- * canonicalUserID
+ * Each relation holds a grantee - which is one of SAcl.GRANTEE_USER,
+ * SAcl.GRANTEE_ALLUSERS, SAcl.GRANTEE_AUTHENTICATED a permission - which is one
+ * of SAcl.PERMISSION_PASS, SAcl.PERMISSION_NONE, SAcl.PERMISSION_READ,
+ * SAcl.PERMISSION_WRITE, SAcl.PERMISSION_READ_ACL, SAcl.PERMISSION_WRITE_ACL,
+ * SAcl.PERMISSION_FULL canonicalUserID
  */
 public class S3Grant {
-    private int grantee;            // SAcl.GRANTEE_USER etc
-    private int permission;            // SAcl.PERMISSION_READ etc
+    private int grantee; // SAcl.GRANTEE_USER etc
+    private int permission; // SAcl.PERMISSION_READ etc
     private String canonicalUserID;
 
     public S3Grant() {
@@ -59,8 +59,10 @@ public class S3Grant {
         this.canonicalUserID = canonicalUserID;
     }
 
-    /* Return an array of S3Grants holding the permissions of grantees by grantee type and their canonicalUserIds.
-     * Used by S3 engine to get ACL policy requests for buckets and objects.
+    /*
+     * Return an array of S3Grants holding the permissions of grantees by
+     * grantee type and their canonicalUserIds. Used by S3 engine to get ACL
+     * policy requests for buckets and objects.
      */
     public static S3Grant[] toGrants(List<SAclVO> grants) {
         if (grants != null) {

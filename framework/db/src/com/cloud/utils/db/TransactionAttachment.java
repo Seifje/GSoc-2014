@@ -17,8 +17,8 @@
 package com.cloud.utils.db;
 
 /**
- * TransactionAttachment are objects added to Transaction such that when
- * the in memory transaction is closed, they are automatically closed.
+ * TransactionAttachment are objects added to Transaction such that when the in
+ * memory transaction is closed, they are automatically closed.
  *
  */
 public interface TransactionAttachment {

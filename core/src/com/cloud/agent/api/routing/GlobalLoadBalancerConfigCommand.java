@@ -22,7 +22,8 @@ import java.util.List;
 import com.cloud.agent.api.Command;
 
 /**
- * GlobalLoadBalancerConfigCommand used for sending the GSLB configuration to GSLB service provider
+ * GlobalLoadBalancerConfigCommand used for sending the GSLB configuration to
+ * GSLB service provider
  */
 public class GlobalLoadBalancerConfigCommand extends Command {
 
@@ -32,13 +33,15 @@ public class GlobalLoadBalancerConfigCommand extends Command {
     // type of the globally load balanced service
     String serviceType;
 
-    // load balancing method to distribute traffic across the sites participating in global service load balancing
+    // load balancing method to distribute traffic across the sites
+    // participating in global service load balancing
     String lbMethod;
 
     // session persistence type
     String persistenceType;
 
-    // unique Id given per gslb rule, that is uniquely represents glsb rule on all participant sites
+    // unique Id given per gslb rule, that is uniquely represents glsb rule on
+    // all participant sites
     long gslbId;
 
     // true if global load balancer rule is being deleted

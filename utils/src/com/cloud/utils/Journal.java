@@ -25,8 +25,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 /**
- * Journal is used to kept what has happened during a process so someone can track
- * what happens during a process.
+ * Journal is used to kept what has happened during a process so someone can
+ * track what happens during a process.
  *
  */
 public class Journal {

@@ -34,16 +34,15 @@ import com.cloud.storage.Volume;
 import com.cloud.storage.snapshot.SnapshotPolicy;
 import com.cloud.user.Account;
 
-@APICommand(name = "createSnapshotPolicy", description = "Creates a snapshot policy for the account.", responseObject = SnapshotPolicyResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createSnapshotPolicy", description = "Creates a snapshot policy for the account.", responseObject = SnapshotPolicyResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateSnapshotPolicyCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(CreateSnapshotPolicyCmd.class.getName());
 
     private static final String s_name = "createsnapshotpolicyresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.INTERVAL_TYPE, type = CommandType.STRING, required = true, description = "valid values are HOURLY, DAILY, WEEKLY, and MONTHLY")
     private String intervalType;
@@ -52,21 +51,18 @@ public class CreateSnapshotPolicyCmd extends BaseCmd {
     private Integer maxSnaps;
 
     @Parameter(name = ApiConstants.SCHEDULE, type = CommandType.STRING, required = true, description = "time the snapshot is scheduled to be taken. " + "Format is:"
-        + "* if HOURLY, MM" + "* if DAILY, MM:HH" + "* if WEEKLY, MM:HH:DD (1-7)" + "* if MONTHLY, MM:HH:DD (1-28)")
+            + "* if HOURLY, MM" + "* if DAILY, MM:HH" + "* if WEEKLY, MM:HH:DD (1-7)" + "* if MONTHLY, MM:HH:DD (1-28)")
     private String schedule;
 
-    @Parameter(name = ApiConstants.TIMEZONE,
-               type = CommandType.STRING,
-               required = true,
-               description = "Specifies a timezone for this command. For more information on the timezone parameter, see Time Zone Format.")
+    @Parameter(name = ApiConstants.TIMEZONE, type = CommandType.STRING, required = true, description = "Specifies a timezone for this command. For more information on the timezone parameter, see Time Zone Format.")
     private String timezone;
 
     @Parameter(name = ApiConstants.VOLUME_ID, type = CommandType.UUID, entityType = VolumeResponse.class, required = true, description = "the ID of the disk volume")
     private Long volumeId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getIntervalType() {
         return intervalType;
@@ -88,9 +84,9 @@ public class CreateSnapshotPolicyCmd extends BaseCmd {
         return volumeId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -105,12 +101,12 @@ public class CreateSnapshotPolicyCmd extends BaseCmd {
         }
 
         Account account = _accountService.getAccount(volume.getAccountId());
-        //Can create templates for enabled projects/accounts only
+        // Can create templates for enabled projects/accounts only
         if (account.getType() == Account.ACCOUNT_TYPE_PROJECT) {
             Project project = _projectService.findByProjectAccountId(volume.getAccountId());
             if (project.getState() != Project.State.Active) {
-                PermissionDeniedException ex =
-                    new PermissionDeniedException("Can't add resources to the specified project id in state=" + project.getState() + " as it's no longer active");
+                PermissionDeniedException ex = new PermissionDeniedException("Can't add resources to the specified project id in state=" + project.getState()
+                        + " as it's no longer active");
                 ex.addProxyObject(project.getUuid(), "projectId");
                 throw ex;
             }

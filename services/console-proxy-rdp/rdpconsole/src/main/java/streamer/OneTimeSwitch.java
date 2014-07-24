@@ -76,7 +76,8 @@ public abstract class OneTimeSwitch extends BaseElement {
         switched = true;
         verbose = false;
 
-        // Rewire links: drop otout link, replace stdout link by stdin to send data
+        // Rewire links: drop otout link, replace stdout link by stdin to send
+        // data
         // directly to stdout
         Link stdout = (Link)outputPads.get(STDOUT);
         Link stdin = (Link)inputPads.get(STDIN);
@@ -126,7 +127,8 @@ public abstract class OneTimeSwitch extends BaseElement {
 
             switchOn();
 
-            // Execute this element onStart(), but do not propagate event further,
+            // Execute this element onStart(), but do not propagate event
+            // further,
             // to not wake up next elements too early
             onStart();
         } else

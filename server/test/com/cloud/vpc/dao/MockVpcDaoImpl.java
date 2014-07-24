@@ -36,7 +36,9 @@ import com.cloud.utils.db.GenericDaoBase;
 public class MockVpcDaoImpl extends GenericDaoBase<VpcVO, Long> implements VpcDao {
     private static final Logger s_logger = Logger.getLogger(MockNetworkOfferingDaoImpl.class);
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.vpc.Dao.VpcDao#getVpcCountByOfferingId(long)
      */
     @Override
@@ -44,7 +46,9 @@ public class MockVpcDaoImpl extends GenericDaoBase<VpcVO, Long> implements VpcDa
         return 100;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.vpc.Dao.VpcDao#getActiveVpcById(long)
      */
     @Override
@@ -57,7 +61,9 @@ public class MockVpcDaoImpl extends GenericDaoBase<VpcVO, Long> implements VpcDa
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.vpc.Dao.VpcDao#listByAccountId(long)
      */
     @Override
@@ -66,7 +72,9 @@ public class MockVpcDaoImpl extends GenericDaoBase<VpcVO, Long> implements VpcDa
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.vpc.Dao.VpcDao#listInactiveVpcs()
      */
     @Override
@@ -75,7 +83,9 @@ public class MockVpcDaoImpl extends GenericDaoBase<VpcVO, Long> implements VpcDa
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.vpc.Dao.VpcDao#countByAccountId(long)
      */
     @Override

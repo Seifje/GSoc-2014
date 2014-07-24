@@ -38,6 +38,7 @@ public class S3PolicyIPAddressCondition extends S3PolicyCondition {
 
     /**
      * Return a set holding all the condition keys kept in this object.
+     * 
      * @return Set<String>
      */
     public Set<ConditionKeys> getAllKeys() {
@@ -45,8 +46,9 @@ public class S3PolicyIPAddressCondition extends S3PolicyCondition {
     }
 
     /**
-     * After calling getAllKeys(), pass in each key from that result to get
-     * the key's associated list of values.
+     * After calling getAllKeys(), pass in each key from that result to get the
+     * key's associated list of values.
+     * 
      * @param key
      * @return String[]
      */
@@ -55,7 +57,9 @@ public class S3PolicyIPAddressCondition extends S3PolicyCondition {
     }
 
     /**
-     * Convert the key's values into the type depending on the what the condition expects.
+     * Convert the key's values into the type depending on the what the
+     * condition expects.
+     * 
      * @throws ParseException
      * @throws IOException
      */
@@ -77,37 +81,41 @@ public class S3PolicyIPAddressCondition extends S3PolicyCondition {
         if (!itr.hasNext())
             return false;
 
-        // -> returns the Internet Protocol (IP) address of the client or last proxy that sent the request.
-        //    For HTTP servlets, same as the value of the CGI variable REMOTE_ADDR.
+        // -> returns the Internet Protocol (IP) address of the client or last
+        // proxy that sent the request.
+        // For HTTP servlets, same as the value of the CGI variable REMOTE_ADDR.
         IpAddressRange toCompareWith = IpAddressRange.parseRange(context.getRemoveAddr());
         if (null == toCompareWith)
             return false;
 
-        // -> all keys in a condition are ANDed together (one false one terminates the entire condition)
+        // -> all keys in a condition are ANDed together (one false one
+        // terminates the entire condition)
         while (itr.hasNext()) {
             ConditionKeys keyName = itr.next();
             IpAddressRange[] valueList = getKeyValues(keyName);
             boolean keyResult = false;
 
-            // -> stop when we hit the first true key value (i.e., key values are 'OR'ed together)
+            // -> stop when we hit the first true key value (i.e., key values
+            // are 'OR'ed together)
             for (int i = 0; i < valueList.length && !keyResult; i++) {
                 switch (condition) {
-                    case IpAddress:
-                        if (valueList[i].contains(toCompareWith))
-                            keyResult = true;
-                        break;
-                    case NotIpAddres:
-                        if (!valueList[i].contains(toCompareWith))
-                            keyResult = true;
-                        break;
-                    default:
-                        return false;
+                case IpAddress:
+                    if (valueList[i].contains(toCompareWith))
+                        keyResult = true;
+                    break;
+                case NotIpAddres:
+                    if (!valueList[i].contains(toCompareWith))
+                        keyResult = true;
+                    break;
+                default:
+                    return false;
                 }
-                logger.info("S3PolicyIPAddressCondition eval - SID: " + SID + ", " + condition + ", key: " + keyName + ", valuePassedIn: " + toCompareWith.toString() +
-                    ", valueInRule: " + valueList[i].toString() + ", result: " + keyResult);
+                logger.info("S3PolicyIPAddressCondition eval - SID: " + SID + ", " + condition + ", key: " + keyName + ", valuePassedIn: " + toCompareWith.toString()
+                        + ", valueInRule: " + valueList[i].toString() + ", result: " + keyResult);
             }
 
-            // -> if all key values are false, false then that key is false and then the entire condition is then false
+            // -> if all key values are false, false then that key is false and
+            // then the entire condition is then false
             if (!keyResult)
                 return false;
         }

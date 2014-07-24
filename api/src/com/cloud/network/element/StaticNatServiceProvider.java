@@ -24,7 +24,9 @@ import com.cloud.network.rules.StaticNat;
 
 public interface StaticNatServiceProvider extends NetworkElement, IpDeployingRequester {
     /**
-     * Creates static nat rule (public IP to private IP mapping) on the network element
+     * Creates static nat rule (public IP to private IP mapping) on the network
+     * element
+     *
      * @param config
      * @param rules
      * @return

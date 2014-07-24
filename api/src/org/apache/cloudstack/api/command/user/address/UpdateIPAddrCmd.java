@@ -38,15 +38,14 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.network.IpAddress;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateIpAddress", description = "Updates an ip address", responseObject = IPAddressResponse.class,
- requestHasSensitiveInfo = false, responseHasSensitiveInfo = false, entityType = { IpAddress.class })
+@APICommand(name = "updateIpAddress", description = "Updates an ip address", responseObject = IPAddressResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false, entityType = {IpAddress.class})
 public class UpdateIPAddrCmd extends BaseAsyncCustomIdCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateIPAddrCmd.class.getName());
     private static final String s_name = "updateipaddressresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = IPAddressResponse.class, required = true, description = "the id of the public ip address"
             + " to update")
@@ -58,9 +57,9 @@ public class UpdateIPAddrCmd extends BaseAsyncCustomIdCmd {
     @Parameter(name = ApiConstants.FOR_DISPLAY, type = CommandType.BOOLEAN, description = "an optional field, whether to the display the ip to the end user or not", since = "4.4", authorized = {RoleType.Admin})
     private Boolean display;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
     @Override
     public String getCommandName() {
         return s_name;
@@ -74,10 +73,9 @@ public class UpdateIPAddrCmd extends BaseAsyncCustomIdCmd {
         return display;
     }
 
-
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
     @Override
     public String getEventType() {
         return EventTypes.EVENT_NET_IP_UPDATE;
@@ -87,7 +85,6 @@ public class UpdateIPAddrCmd extends BaseAsyncCustomIdCmd {
     public String getEventDescription() {
         return ("Updating ip address with id=" + id);
     }
-
 
     @Override
     public long getEntityOwnerId() {
@@ -124,7 +121,7 @@ public class UpdateIPAddrCmd extends BaseAsyncCustomIdCmd {
 
     @Override
     public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
-            NetworkRuleConflictException {
+    NetworkRuleConflictException {
 
         IpAddress result = _networkService.updateIP(getId(), getCustomId(), getDisplayIp());
         IPAddressResponse ipResponse = _responseGenerator.createIPAddressResponse(ResponseView.Restricted, result);

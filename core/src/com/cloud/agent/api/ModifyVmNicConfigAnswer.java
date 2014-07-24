@@ -18,6 +18,7 @@ package com.cloud.agent.api;
 
 public class ModifyVmNicConfigAnswer extends Answer {
     String vmName;
+
     protected ModifyVmNicConfigAnswer() {
     }
 

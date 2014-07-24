@@ -69,8 +69,7 @@ public class AffinityGroupDaoImpl extends GenericDaoBase<AffinityGroupVO, Long> 
         DomainLevelNameSearch = createSearchBuilder();
         DomainLevelNameSearch.and("name", DomainLevelNameSearch.entity().getName(), SearchCriteria.Op.EQ);
         DomainLevelNameSearch.and("aclType", DomainLevelNameSearch.entity().getAclType(), SearchCriteria.Op.EQ);
-        DomainLevelNameSearch.join("domainMapSearch", domainMapSearch, domainMapSearch.entity().getAffinityGroupId(), DomainLevelNameSearch.entity().getId(),
-            JoinType.INNER);
+        DomainLevelNameSearch.join("domainMapSearch", domainMapSearch, domainMapSearch.entity().getAffinityGroupId(), DomainLevelNameSearch.entity().getId(), JoinType.INNER);
         DomainLevelNameSearch.done();
 
         AccountIdTypeSearch = createSearchBuilder();
@@ -82,8 +81,7 @@ public class AffinityGroupDaoImpl extends GenericDaoBase<AffinityGroupVO, Long> 
         DomainLevelTypeSearch = createSearchBuilder();
         DomainLevelTypeSearch.and("type", DomainLevelTypeSearch.entity().getType(), SearchCriteria.Op.EQ);
         DomainLevelTypeSearch.and("aclType", DomainLevelTypeSearch.entity().getAclType(), SearchCriteria.Op.EQ);
-        DomainLevelTypeSearch.join("domainTypeSearch", domainTypeSearch, domainTypeSearch.entity().getAffinityGroupId(), DomainLevelTypeSearch.entity().getId(),
-            JoinType.INNER);
+        DomainLevelTypeSearch.join("domainTypeSearch", domainTypeSearch, domainTypeSearch.entity().getAffinityGroupId(), DomainLevelTypeSearch.entity().getId(), JoinType.INNER);
         DomainLevelTypeSearch.done();
     }
 

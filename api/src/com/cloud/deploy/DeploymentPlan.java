@@ -57,8 +57,7 @@ public interface DeploymentPlan {
     public void setAvoids(ExcludeList avoids);
 
     /**
-     * @return
-     *         the ExcludeList to avoid for deployment
+     * @return the ExcludeList to avoid for deployment
      */
     public ExcludeList getAvoids();
 

@@ -21,9 +21,8 @@ import java.util.ArrayList;
 import com.cloud.utils.exception.CSExceptionErrorCode;
 
 /**
- * by the API response serializer. Any exceptions that are thrown by
- * class, which extends RuntimeException instead of Exception like this
- * class does.
+ * by the API response serializer. Any exceptions that are thrown by class,
+ * which extends RuntimeException instead of Exception like this class does.
  */
 
 public class CloudException extends Exception {

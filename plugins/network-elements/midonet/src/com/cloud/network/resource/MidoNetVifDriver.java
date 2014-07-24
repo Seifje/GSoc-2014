@@ -66,8 +66,7 @@ public class MidoNetVifDriver extends VifDriverBase {
     }
 
     /*
-     * Grab our host id in a file written by Midonet, then
-     * return a Host.
+     * Grab our host id in a file written by Midonet, then return a Host.
      */
     private Host getMyHost(MidonetApi api) {
         Script command = new Script("/bin/bash", _timeout);
@@ -115,15 +114,15 @@ public class MidoNetVifDriver extends VifDriverBase {
 
         if (nic.getBroadcastType() == Networks.BroadcastDomainType.Mido && (nic.getType() == Networks.TrafficType.Guest || nic.getType() == Networks.TrafficType.Public)) {
             /*
-            * create the tap.
-            */
+             * create the tap.
+             */
             String tapName = addTap();
 
             /*
-            * grab the tenant id and the network id from the Broadcast URI.
-            * We need to pluck the values out of the String. The string
-            * should look like "mido://[tenant_id].[bridge_name]"
-            */
+             * grab the tenant id and the network id from the Broadcast URI. We
+             * need to pluck the values out of the String. The string should
+             * look like "mido://[tenant_id].[bridge_name]"
+             */
             MultivaluedMap qNet = new MultivaluedMapImpl();
             String nicAuthority = nic.getBroadcastUri().getAuthority();
             String tenantId = nicAuthority.split("\\.")[0];

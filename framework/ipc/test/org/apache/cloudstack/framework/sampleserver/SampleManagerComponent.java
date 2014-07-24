@@ -81,21 +81,16 @@ public class SampleManagerComponent {
         cmd.setStoragePool("Pool1");
         cmd.setVolumeId("vol1");
 
-        _rpcProvider.newCall()
-            .setCommand("StoragePrepare")
-            .setCommandArg(cmd)
-            .setTimeout(10000)
-            .addCallbackListener(new RpcCallbackListener<SampleStoragePrepareAnswer>() {
-                @Override
-                public void onSuccess(SampleStoragePrepareAnswer result) {
-                    s_logger.info("StoragePrepare return result: " + result.getResult());
-                }
+        _rpcProvider.newCall().setCommand("StoragePrepare").setCommandArg(cmd).setTimeout(10000).addCallbackListener(new RpcCallbackListener<SampleStoragePrepareAnswer>() {
+            @Override
+            public void onSuccess(SampleStoragePrepareAnswer result) {
+                s_logger.info("StoragePrepare return result: " + result.getResult());
+            }
 
-                @Override
-                public void onFailure(RpcException e) {
-                    s_logger.info("StoragePrepare failed");
-                }
-            })
-            .apply();
+            @Override
+            public void onFailure(RpcException e) {
+                s_logger.info("StoragePrepare failed");
+            }
+        }).apply();
     }
 }

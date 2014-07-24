@@ -112,8 +112,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
     private final ReentrantLock _lockSyncMode = new ReentrantLock();
 
     ServerDBSyncImpl() {
-        _vncClasses =
-            new Class[] {net.juniper.contrail.api.types.Domain.class, net.juniper.contrail.api.types.Project.class, NetworkPolicy.class, VirtualNetwork.class,
+        _vncClasses = new Class[] {net.juniper.contrail.api.types.Domain.class, net.juniper.contrail.api.types.Project.class, NetworkPolicy.class, VirtualNetwork.class,
                 VirtualMachine.class, ServiceInstance.class, FloatingIp.class};
         _dbSync = new DBSyncGeneric(this);
     }
@@ -123,8 +122,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
     /*
      * API for syncing all classes of vnc objects with cloudstack
      *
-     * Sync cloudstack and vnc objects.
-     * Order has to be maintained
+     * Sync cloudstack and vnc objects. Order has to be maintained
      */
     @Override
     public short syncAll(short syncMode) {
@@ -135,7 +133,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
         try {
             for (Class<?> cls : _vncClasses) {
 
-                /* lock the sync mode*/
+                /* lock the sync mode */
                 _lockSyncMode.lock();
                 _rwMode = syncMode == DBSyncGeneric.SYNC_MODE_UPDATE;
                 _dbSync.setSyncMode(syncMode);
@@ -230,7 +228,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
     }
 
     /*
-     *  Domain Synchronization methods
+     * Domain Synchronization methods
      */
     public boolean syncDomain() throws Exception {
         final ApiConnector api = _manager.getApiConnector();
@@ -331,7 +329,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
     }
 
     /*
-     *  Project Synchronization methods
+     * Project Synchronization methods
      */
     @SuppressWarnings("unchecked")
     public boolean syncProject() throws Exception {
@@ -445,7 +443,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
     }
 
     /*
-     *  Virtual Network Synchronization methods
+     * Virtual Network Synchronization methods
      */
     @SuppressWarnings({"unchecked"})
     public boolean syncVirtualNetwork() throws Exception {
@@ -518,8 +516,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
             NetworkACLVO acl = _networkACLDao.findById(dbNet.getNetworkACLId());
             NetworkPolicyModel policyModel = _manager.getDatabase().lookupNetworkPolicy(acl.getUuid());
             if (policyModel == null) {
-                s_logger.error("Network(" + dbNet.getName() + ") has ACL but policy model not created: " +
-                                       acl.getUuid() + ", name: " + acl.getName());
+                s_logger.error("Network(" + dbNet.getName() + ") has ACL but policy model not created: " + acl.getUuid() + ", name: " + acl.getName());
             } else {
                 vnModel.addToNetworkPolicy(policyModel);
             }
@@ -598,8 +595,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
             NetworkACLVO acl = _networkACLDao.findById(dbn.getNetworkACLId());
             NetworkPolicyModel policyModel = _manager.getDatabase().lookupNetworkPolicy(acl.getUuid());
             if (policyModel == null) {
-                s_logger.error("Network(" + dbn.getName() + ") has ACL but policy model not created: " +
-                                       acl.getUuid() + ", name: " + acl.getName());
+                s_logger.error("Network(" + dbn.getName() + ") has ACL but policy model not created: " + acl.getUuid() + ", name: " + acl.getName());
             } else {
                 vnModel.addToNetworkPolicy(policyModel);
             }
@@ -628,8 +624,8 @@ public class ServerDBSyncImpl implements ServerDBSync {
                 NetworkPolicyModel oldPolicyModel = current.getNetworkPolicyModel();
                 if (oldPolicyModel != vnModel.getNetworkPolicyModel()) {
                     /*
-                     * if no other VNs are associated with the old policy,
-                     * we could delete it from the Contrail VNC
+                     * if no other VNs are associated with the old policy, we
+                     * could delete it from the Contrail VNC
                      */
                     if (oldPolicyModel != null && !oldPolicyModel.hasDescendents()) {
                         try {
@@ -642,7 +638,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
                 }
             }
         } else {
-            //compare
+            // compare
             if (current != null && current.compare(_manager.getModelController(), vnModel) == false) {
                 syncLogMesg.append("VN# DB: " + _manager.getCanonicalName(dbn) + "; VNC: " + vnet.getName() + "; attributes differ\n");
                 return false;
@@ -652,7 +648,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
     }
 
     /*
-     *  Virtual Machine Synchronization methods
+     * Virtual Machine Synchronization methods
      */
 
     public boolean syncVirtualMachine() {
@@ -780,8 +776,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
             if (vmiModel == null) {
                 vmiModel = new VMInterfaceModel(nic.getUuid());
                 NetworkVO network = _networksDao.findById(nic.getNetworkId());
-                VirtualNetworkModel vnModel =
-                    _manager.getDatabase().lookupVirtualNetwork(network.getUuid(), _manager.getCanonicalName(network), network.getTrafficType());
+                VirtualNetworkModel vnModel = _manager.getDatabase().lookupVirtualNetwork(network.getUuid(), _manager.getCanonicalName(network), network.getTrafficType());
                 if (vnModel == null) {
                     s_logger.warn("Unable to locate virtual-network for network id " + network.getId());
                     continue;
@@ -795,8 +790,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
 
     public Boolean equalVirtualMachine(VMInstanceVO dbVm, VirtualMachine vncVm, StringBuffer syncLogMsg) {
 
-        syncLogMsg.append("VM# DB: " + dbVm.getInstanceName() + "/" + dbVm.getUuid() + "; VNC: " + vncVm.getUuid() + "; action: equal; DB VM State: " + dbVm.getState() +
-            "\n");
+        syncLogMsg.append("VM# DB: " + dbVm.getInstanceName() + "/" + dbVm.getUuid() + "; VNC: " + vncVm.getUuid() + "; action: equal; DB VM State: " + dbVm.getState() + "\n");
 
         VirtualMachineModel vmModel = new VirtualMachineModel(dbVm, dbVm.getUuid());
         vmModel.build(_manager.getModelController(), dbVm);
@@ -821,7 +815,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
                 s_logger.warn("update virtual-machine", ex);
             }
         } else {
-            //compare
+            // compare
             if (current != null && current.compare(_manager.getModelController(), vmModel) == false) {
                 syncLogMsg.append("VM # DB: " + dbVm.getInstanceName() + "; VNC: " + vncVm.getName() + "; attributes differ\n");
                 return false;
@@ -937,9 +931,9 @@ public class ServerDBSyncImpl implements ServerDBSync {
     }
 
     /*
-     *  Network Policy Synchronization methods
+     * Network Policy Synchronization methods
      */
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings({"unchecked"})
     public boolean syncNetworkPolicy() throws Exception {
         final ApiConnector api = _manager.getApiConnector();
         try {
@@ -949,10 +943,10 @@ public class ServerDBSyncImpl implements ServerDBSync {
                 dbAcls = new ArrayList<NetworkACLVO>();
             }
 
-            List<NetworkPolicy> pList = (List<NetworkPolicy>) api.list(NetworkPolicy.class, null);
+            List<NetworkPolicy> pList = (List<NetworkPolicy>)api.list(NetworkPolicy.class, null);
             List<NetworkPolicy> vncList = new ArrayList<NetworkPolicy>();
 
-            for (NetworkPolicy policy:pList) {
+            for (NetworkPolicy policy : pList) {
                 if (!_manager.isSystemDefaultNetworkPolicy(policy)) {
                     vncList.add(policy);
                 }
@@ -967,6 +961,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
 
     public Comparator<NetworkACLVO> dbComparatorNetworkPolicy() {
         Comparator<NetworkACLVO> comparator = new Comparator<NetworkACLVO>() {
+            @Override
             public int compare(NetworkACLVO u1, NetworkACLVO u2) {
                 return u1.getUuid().compareTo(u2.getUuid());
             }
@@ -976,6 +971,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
 
     public Comparator<?> vncComparatorNetworkPolicy() {
         Comparator<?> comparator = new Comparator<NetworkPolicy>() {
+            @Override
             public int compare(NetworkPolicy u1, NetworkPolicy u2) {
                 return u1.getUuid().compareTo(u2.getUuid());
             }
@@ -984,12 +980,10 @@ public class ServerDBSyncImpl implements ServerDBSync {
     }
 
     public void createNetworkPolicy(NetworkACLVO db, StringBuffer syncLogMesg) throws IOException {
-        syncLogMesg.append("Policy# DB: " + db.getName() +
-                "(" + db.getUuid() + "); VNC: none;  action: create\n");
+        syncLogMesg.append("Policy# DB: " + db.getName() + "(" + db.getUuid() + "); VNC: none;  action: create\n");
 
         if (_manager.getDatabase().lookupNetworkPolicy(db.getUuid()) != null) {
-             s_logger.warn("Policy model object is already present in DB: " +
-                                   db.getUuid() + ", name: " + db.getName());
+            s_logger.warn("Policy model object is already present in DB: " + db.getUuid() + ", name: " + db.getName());
         }
         NetworkPolicyModel policyModel = new NetworkPolicyModel(db.getUuid(), db.getName());
         net.juniper.contrail.api.types.Project project = null;
@@ -1019,8 +1013,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
                 }
             } catch (Exception ex) {
                 s_logger.warn("create network-policy", ex);
-                syncLogMesg.append("Error: Policy# VNC : Unable to create network policy " +
-                    db.getName() + "\n");
+                syncLogMesg.append("Error: Policy# VNC : Unable to create network policy " + db.getName() + "\n");
                 return;
             }
             s_logger.debug("add model " + policyModel.getName());
@@ -1049,7 +1042,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
         return dbn.getUuid().compareTo(policy.getUuid());
     }
 
-    public Boolean filterNetworkPolicy(NetworkPolicy policy, StringBuffer syncLogMesg)  {
+    public Boolean filterNetworkPolicy(NetworkPolicy policy, StringBuffer syncLogMesg) {
         if (_manager.isSystemDefaultNetworkPolicy(policy)) {
             syncLogMesg.append("Policy# VNC: " + policy.getName() + " filtered; action: don't delete\n");
             return true;
@@ -1058,8 +1051,7 @@ public class ServerDBSyncImpl implements ServerDBSync {
     }
 
     public Boolean equalNetworkPolicy(NetworkACLVO db, NetworkPolicy policy, StringBuffer syncLogMesg) {
-        syncLogMesg.append("Policy# DB: " + db.getName() +
-                "; VNC: " + policy.getName() + "; action: equal\n");
+        syncLogMesg.append("Policy# DB: " + db.getName() + "; VNC: " + policy.getName() + "; action: equal\n");
         NetworkPolicyModel current = _manager.getDatabase().lookupNetworkPolicy(policy.getUuid());
         NetworkPolicyModel policyModel = new NetworkPolicyModel(db.getUuid(), db.getName());
         net.juniper.contrail.api.types.Project project = null;
@@ -1094,10 +1086,9 @@ public class ServerDBSyncImpl implements ServerDBSync {
                 s_logger.warn("update network-policy", ex);
             }
         } else {
-            //compare
+            // compare
             if (current != null && current.compare(_manager.getModelController(), policyModel) == false) {
-                syncLogMesg.append("Policy# DB: " + db.getName() +
-                        "; VNC: " + policy.getName() + "; attributes differ\n");
+                syncLogMesg.append("Policy# DB: " + db.getName() + "; VNC: " + policy.getName() + "; attributes differ\n");
                 return false;
             }
         }
@@ -1112,7 +1103,9 @@ public class ServerDBSyncImpl implements ServerDBSync {
     /**
      * createServiceInstance
      *
-     * This method should never be invoked since the model objects have been installed already when sync is called.
+     * This method should never be invoked since the model objects have been
+     * installed already when sync is called.
+     *
      * @param siModel
      * @param logMsg
      */
@@ -1155,7 +1148,9 @@ public class ServerDBSyncImpl implements ServerDBSync {
     }
 
     /**
-     * The service-instance model list is build as a result of synchronizing virtual-machines.
+     * The service-instance model list is build as a result of synchronizing
+     * virtual-machines.
+     *
      * @return
      */
     public boolean syncServiceInstance() {

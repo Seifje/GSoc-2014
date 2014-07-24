@@ -53,8 +53,8 @@ public class MockVmMgr implements VmMgr {
     }
 
     @Override
-    public String startVM(String vmName, String vnetId, String gateway, String dns, String privateIP, String privateMac, String privateMask, String publicIP,
-        String publicMac, String publicMask, int cpuCount, int cpuUtilization, long ramSize, String localPath, String vncPassword) {
+    public String startVM(String vmName, String vnetId, String gateway, String dns, String privateIP, String privateMac, String privateMask, String publicIP, String publicMac,
+            String publicMask, int cpuCount, int cpuUtilization, long ramSize, String localPath, String vncPassword) {
 
         if (s_logger.isInfoEnabled()) {
             StringBuffer sb = new StringBuffer();

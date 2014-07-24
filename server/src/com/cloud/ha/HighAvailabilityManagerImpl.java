@@ -80,28 +80,37 @@ import com.cloud.vm.VirtualMachineProfile;
 import com.cloud.vm.dao.VMInstanceDao;
 
 /**
- * HighAvailabilityManagerImpl coordinates the HA process. VMs are registered with the HA Manager for HA. The request is stored
- * within a database backed work queue. HAManager has a number of workers that pick up these work items to perform HA on the
- * VMs.
+ * HighAvailabilityManagerImpl coordinates the HA process. VMs are registered
+ * with the HA Manager for HA. The request is stored within a database backed
+ * work queue. HAManager has a number of workers that pick up these work items
+ * to perform HA on the VMs.
  *
- * The HA process goes as follows: 1. Check with the list of Investigators to determine that the VM is no longer running. If a
- * Investigator finds the VM is still alive, the HA process is stopped and the state of the VM reverts back to its previous
- * state. If a Investigator finds the VM is dead, then HA process is started on the VM, skipping step 2. 2. If the list of
- * Investigators can not determine if the VM is dead or alive. The list of FenceBuilders is invoked to fence off the VM so that
- * it won't do any damage to the storage and network. 3. The VM is marked as stopped. 4. The VM is started again via the normal
- * process of starting VMs. Note that once the VM is marked as stopped, the user may have started the VM himself. 5. VMs that
- * have re-started more than the configured number of times are marked as in Error state and the user is not allowed to restart
- * the VM.
+ * The HA process goes as follows: 1. Check with the list of Investigators to
+ * determine that the VM is no longer running. If a Investigator finds the VM is
+ * still alive, the HA process is stopped and the state of the VM reverts back
+ * to its previous state. If a Investigator finds the VM is dead, then HA
+ * process is started on the VM, skipping step 2. 2. If the list of
+ * Investigators can not determine if the VM is dead or alive. The list of
+ * FenceBuilders is invoked to fence off the VM so that it won't do any damage
+ * to the storage and network. 3. The VM is marked as stopped. 4. The VM is
+ * started again via the normal process of starting VMs. Note that once the VM
+ * is marked as stopped, the user may have started the VM himself. 5. VMs that
+ * have re-started more than the configured number of times are marked as in
+ * Error state and the user is not allowed to restart the VM.
  *
- * @config {@table || Param Name | Description | Values | Default || || workers | number of worker threads to spin off to do the
- *         processing | int | 1 || || time.to.sleep | Time to sleep if no work items are found | seconds | 60 || || max.retries
- *         | number of times to retry start | int | 5 || || time.between.failure | Time elapsed between failures before we
- *         consider it as another retry | seconds | 3600 || || time.between.cleanup | Time to wait before the cleanup thread
- *         runs | seconds | 86400 || || force.ha | Force HA to happen even if the VM says no | boolean | false || ||
- *         ha.retry.wait | time to wait before retrying the work item | seconds | 120 || || stop.retry.wait | time to wait
- *         before retrying the stop | seconds | 120 || * }
+ * @config {@table || Param Name | Description | Values | Default || || workers
+ *         | number of worker threads to spin off to do the processing | int | 1
+ *         || || time.to.sleep | Time to sleep if no work items are found |
+ *         seconds | 60 || || max.retries | number of times to retry start | int
+ *         | 5 || || time.between.failure | Time elapsed between failures before
+ *         we consider it as another retry | seconds | 3600 || ||
+ *         time.between.cleanup | Time to wait before the cleanup thread runs |
+ *         seconds | 86400 || || force.ha | Force HA to happen even if the VM
+ *         says no | boolean | false || || ha.retry.wait | time to wait before
+ *         retrying the work item | seconds | 120 || || stop.retry.wait | time
+ *         to wait before retrying the stop | seconds | 120 || * }
  **/
-@Local(value = { HighAvailabilityManager.class })
+@Local(value = {HighAvailabilityManager.class})
 public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvailabilityManager, ClusterManagerListener {
 
     protected static final Logger s_logger = Logger.getLogger(HighAvailabilityManagerImpl.class);
@@ -150,6 +159,7 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
     }
 
     List<HAPlanner> _haPlanners;
+
     public List<HAPlanner> getHaPlanners() {
         return _haPlanners;
     }
@@ -157,7 +167,6 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
     public void setHaPlanners(List<HAPlanner> haPlanners) {
         _haPlanners = haPlanners;
     }
-
 
     @Inject
     AgentManager _agentMgr;
@@ -261,9 +270,8 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
         HostPodVO podVO = _podDao.findById(host.getPodId());
         String hostDesc = "name: " + host.getName() + " (id:" + host.getId() + "), availability zone: " + dcVO.getName() + ", pod: " + podVO.getName();
 
-        _alertMgr.sendAlert(AlertManager.AlertType.ALERT_TYPE_HOST, host.getDataCenterId(), host.getPodId(), "Host is down, " + hostDesc, "Host [" + hostDesc +
-            "] is down." +
-            ((sb != null) ? sb.toString() : ""));
+        _alertMgr.sendAlert(AlertManager.AlertType.ALERT_TYPE_HOST, host.getDataCenterId(), host.getPodId(), "Host is down, " + hostDesc, "Host [" + hostDesc + "] is down."
+                + ((sb != null) ? sb.toString() : ""));
 
         for (VMInstanceVO vm : vms) {
             if (s_logger.isDebugEnabled()) {
@@ -271,9 +279,8 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
             }
             vm = _instanceDao.findByUuid(vm.getUuid());
             Long hostId = vm.getHostId();
-            if ( hostId != null && !hostId.equals(host.getId()) ) {
-                s_logger.debug("VM " + vm.getInstanceName() + " is not on down host " + host.getId() + " it is on other host "
-                        + hostId + " VM HA is done");
+            if (hostId != null && !hostId.equals(host.getId())) {
+                s_logger.debug("VM " + vm.getInstanceName() + " is not on down host " + host.getId() + " it is on other host " + hostId + " VM HA is done");
                 continue;
             }
             scheduleRestart(vm, investigate);
@@ -353,9 +360,9 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
 
             if (!(_forceHA || vm.isHaEnabled())) {
                 String hostDesc = "id:" + vm.getHostId() + ", availability zone id:" + vm.getDataCenterId() + ", pod id:" + vm.getPodIdToDeployIn();
-                _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "VM (name: " + vm.getHostName() + ", id: " + vm.getId() +
-                    ") stopped unexpectedly on host " + hostDesc, "Virtual Machine " + vm.getHostName() + " (id: " + vm.getId() + ") running on host [" + vm.getHostId() +
-                    "] stopped unexpectedly.");
+                _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "VM (name: " + vm.getHostName() + ", id: " + vm.getId()
+                        + ") stopped unexpectedly on host " + hostDesc, "Virtual Machine " + vm.getHostName() + " (id: " + vm.getId() + ") running on host [" + vm.getHostId()
+                        + "] stopped unexpectedly.");
 
                 if (s_logger.isDebugEnabled()) {
                     s_logger.debug("VM is not HA enabled so we're done.");
@@ -395,8 +402,8 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
             hostId = vm.getLastHostId();
         }
 
-        HaWorkVO work = new HaWorkVO(vm.getId(), vm.getType(), WorkType.HA, investigate ? Step.Investigating : Step.Scheduled,
-                hostId != null ? hostId : 0L, vm.getState(), maxRetries + 1, vm.getUpdated());
+        HaWorkVO work = new HaWorkVO(vm.getId(), vm.getType(), WorkType.HA, investigate ? Step.Investigating : Step.Scheduled, hostId != null ? hostId : 0L, vm.getState(),
+                maxRetries + 1, vm.getUpdated());
         _haDao.persist(work);
 
         if (s_logger.isInfoEnabled()) {
@@ -440,8 +447,8 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
 
         s_logger.info("HA on " + vm);
         if (vm.getState() != work.getPreviousState() || vm.getUpdated() != work.getUpdateTime()) {
-            s_logger.info("VM " + vm + " has been changed.  Current State = " + vm.getState() + " Previous State = " + work.getPreviousState() + " last updated = " +
-                vm.getUpdated() + " previous updated = " + work.getUpdateTime());
+            s_logger.info("VM " + vm + " has been changed.  Current State = " + vm.getState() + " Previous State = " + work.getPreviousState() + " last updated = "
+                    + vm.getUpdated() + " previous updated = " + work.getUpdateTime());
             return null;
         }
 
@@ -513,9 +520,8 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
 
                 if (!fenced) {
                     s_logger.debug("We were unable to fence off the VM " + vm);
-                    _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "Unable to restart " + vm.getHostName() +
-                        " which was running on host " + hostDesc, "Insufficient capacity to restart VM, name: " + vm.getHostName() + ", id: " + vmId +
-                        " which was running on host " + hostDesc);
+                    _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "Unable to restart " + vm.getHostName() + " which was running on host "
+                            + hostDesc, "Insufficient capacity to restart VM, name: " + vm.getHostName() + ", id: " + vmId + " which was running on host " + hostDesc);
                     return (System.currentTimeMillis() >> 10) + _restartRetryInterval;
                 }
 
@@ -578,10 +584,11 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
                 params.put(VirtualMachineProfile.Param.HaTag, _haTag);
             }
 
-            try{
-                // First try starting the vm with its original planner, if it doesn't succeed send HAPlanner as its an emergency.
+            try {
+                // First try starting the vm with its original planner, if it
+                // doesn't succeed send HAPlanner as its an emergency.
                 _itMgr.advanceStart(vm.getUuid(), params, null);
-            }catch (InsufficientCapacityException e){
+            } catch (InsufficientCapacityException e) {
                 s_logger.warn("Failed to deploy vm " + vmId + " with original planner, sending HAPlanner");
                 _itMgr.advanceStart(vm.getUuid(), params, _haPlanners.get(0));
             }
@@ -597,20 +604,20 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
             }
         } catch (final InsufficientCapacityException e) {
             s_logger.warn("Unable to restart " + vm.toString() + " due to " + e.getMessage());
-            _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "Unable to restart " + vm.getHostName() + " which was running on host " +
-                hostDesc, "Insufficient capacity to restart VM, name: " + vm.getHostName() + ", id: " + vmId + " which was running on host " + hostDesc);
+            _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "Unable to restart " + vm.getHostName() + " which was running on host " + hostDesc,
+                    "Insufficient capacity to restart VM, name: " + vm.getHostName() + ", id: " + vmId + " which was running on host " + hostDesc);
         } catch (final ResourceUnavailableException e) {
             s_logger.warn("Unable to restart " + vm.toString() + " due to " + e.getMessage());
-            _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "Unable to restart " + vm.getHostName() + " which was running on host " +
-                hostDesc, "The Storage is unavailable for trying to restart VM, name: " + vm.getHostName() + ", id: " + vmId + " which was running on host " + hostDesc);
+            _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "Unable to restart " + vm.getHostName() + " which was running on host " + hostDesc,
+                    "The Storage is unavailable for trying to restart VM, name: " + vm.getHostName() + ", id: " + vmId + " which was running on host " + hostDesc);
         } catch (ConcurrentOperationException e) {
             s_logger.warn("Unable to restart " + vm.toString() + " due to " + e.getMessage());
-            _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "Unable to restart " + vm.getHostName() + " which was running on host " +
-                hostDesc, "The Storage is unavailable for trying to restart VM, name: " + vm.getHostName() + ", id: " + vmId + " which was running on host " + hostDesc);
+            _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "Unable to restart " + vm.getHostName() + " which was running on host " + hostDesc,
+                    "The Storage is unavailable for trying to restart VM, name: " + vm.getHostName() + ", id: " + vmId + " which was running on host " + hostDesc);
         } catch (OperationTimedoutException e) {
             s_logger.warn("Unable to restart " + vm.toString() + " due to " + e.getMessage());
-            _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "Unable to restart " + vm.getHostName() + " which was running on host " +
-                hostDesc, "The Storage is unavailable for trying to restart VM, name: " + vm.getHostName() + ", id: " + vmId + " which was running on host " + hostDesc);
+            _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "Unable to restart " + vm.getHostName() + " which was running on host " + hostDesc,
+                    "The Storage is unavailable for trying to restart VM, name: " + vm.getHostName() + ", id: " + vmId + " which was running on host " + hostDesc);
         }
         vm = _itMgr.findById(vm.getId());
         work.setUpdateTime(vm.getUpdated());
@@ -627,7 +634,8 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
             _haDao.update(work.getId(), work);
 
             VMInstanceVO vm = _instanceDao.findById(vmId);
-            // First try starting the vm with its original planner, if it doesn't succeed send HAPlanner as its an emergency.
+            // First try starting the vm with its original planner, if it
+            // doesn't succeed send HAPlanner as its an emergency.
             _itMgr.migrateAway(vm.getUuid(), srcHostId);
             return null;
         } catch (InsufficientServerCapacityException e) {
@@ -697,10 +705,10 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
                 s_logger.info("Successfully stopped " + vm);
                 return null;
             } else if (work.getWorkType() == WorkType.CheckStop) {
-                if ((vm.getState() != work.getPreviousState()) || vm.getUpdated() != work.getUpdateTime() || vm.getHostId() == null ||
-                    vm.getHostId().longValue() != work.getHostId()) {
-                    s_logger.info(vm + " is different now.  Scheduled Host: " + work.getHostId() + " Current Host: " +
-                        (vm.getHostId() != null ? vm.getHostId() : "none") + " State: " + vm.getState());
+                if ((vm.getState() != work.getPreviousState()) || vm.getUpdated() != work.getUpdateTime() || vm.getHostId() == null
+                        || vm.getHostId().longValue() != work.getHostId()) {
+                    s_logger.info(vm + " is different now.  Scheduled Host: " + work.getHostId() + " Current Host: " + (vm.getHostId() != null ? vm.getHostId() : "none")
+                            + " State: " + vm.getState());
                     return null;
                 }
 
@@ -708,10 +716,10 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
                 s_logger.info("Stop for " + vm + " was successful");
                 return null;
             } else if (work.getWorkType() == WorkType.ForceStop) {
-                if ((vm.getState() != work.getPreviousState()) || vm.getUpdated() != work.getUpdateTime() || vm.getHostId() == null ||
-                    vm.getHostId().longValue() != work.getHostId()) {
-                    s_logger.info(vm + " is different now.  Scheduled Host: " + work.getHostId() + " Current Host: " +
-                        (vm.getHostId() != null ? vm.getHostId() : "none") + " State: " + vm.getState());
+                if ((vm.getState() != work.getPreviousState()) || vm.getUpdated() != work.getUpdateTime() || vm.getHostId() == null
+                        || vm.getHostId().longValue() != work.getHostId()) {
+                    s_logger.info(vm + " is different now.  Scheduled Host: " + work.getHostId() + " Current Host: " + (vm.getHostId() != null ? vm.getHostId() : "none")
+                            + " State: " + vm.getState());
                     return null;
                 }
 
@@ -919,8 +927,10 @@ public class HighAvailabilityManagerImpl extends ManagerBase implements HighAvai
                     work.setServerId(null);
                     work.setDateTaken(null);
 
-                    // if restart failed in the middle due to exception, VM state may has been changed
-                    // recapture into the HA worker so that it can really continue in it next turn
+                    // if restart failed in the middle due to exception, VM
+                    // state may has been changed
+                    // recapture into the HA worker so that it can really
+                    // continue in it next turn
                     VMInstanceVO vm = _instanceDao.findById(work.getInstanceId());
                     work.setUpdateTime(vm.getUpdated());
                     work.setPreviousState(vm.getState());

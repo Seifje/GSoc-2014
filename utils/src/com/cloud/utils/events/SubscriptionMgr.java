@@ -155,8 +155,7 @@ public class SubscriptionMgr {
                 return false;
 
             if (o instanceof SubscriberInfo) {
-                return this.clazz == ((SubscriberInfo)o).clazz && this.subscriber == ((SubscriberInfo)o).subscriber &&
-                    this.methodName.equals(((SubscriberInfo)o).methodName);
+                return this.clazz == ((SubscriberInfo)o).clazz && this.subscriber == ((SubscriberInfo)o).subscriber && this.methodName.equals(((SubscriberInfo)o).methodName);
             }
             return false;
         }

@@ -41,8 +41,7 @@ import com.cloud.network.dao.ExternalLoadBalancerDeviceVO;
 import com.cloud.network.element.F5ExternalLoadBalancerElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "addF5LoadBalancer", responseObject = F5LoadBalancerResponse.class, description = "Adds a F5 BigIP load balancer device",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "addF5LoadBalancer", responseObject = F5LoadBalancerResponse.class, description = "Adds a F5 BigIP load balancer device", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class AddF5LoadBalancerCmd extends BaseAsyncCmd {
 
     public static final Logger s_logger = Logger.getLogger(AddF5LoadBalancerCmd.class.getName());
@@ -50,15 +49,11 @@ public class AddF5LoadBalancerCmd extends BaseAsyncCmd {
     @Inject
     F5ExternalLoadBalancerElementService _f5DeviceManagerService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = PhysicalNetworkResponse.class,
-               required = true,
-               description = "the Physical Network ID")
+    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, required = true, description = "the Physical Network ID")
     private Long physicalNetworkId;
 
     @Parameter(name = ApiConstants.URL, type = CommandType.STRING, required = true, description = "URL of the F5 load balancer appliance.")
@@ -73,9 +68,9 @@ public class AddF5LoadBalancerCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.NETWORK_DEVICE_TYPE, type = CommandType.STRING, required = true, description = "supports only F5BigIpLoadBalancer")
     private String deviceType;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getPhysicalNetworkId() {
         return physicalNetworkId;
@@ -97,13 +92,12 @@ public class AddF5LoadBalancerCmd extends BaseAsyncCmd {
         return deviceType;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             ExternalLoadBalancerDeviceVO lbDeviceVO = _f5DeviceManagerService.addF5LoadBalancer(this);
             if (lbDeviceVO != null) {

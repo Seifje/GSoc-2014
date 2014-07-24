@@ -87,8 +87,9 @@ public class BigSwitchApiTest {
         verify(gm, times(1)).getStatusCode();
     }
 
-    /* Bit of a roundabout way to ensure that login is called after an un authorized result
-     * It not possible to properly mock login()
+    /*
+     * Bit of a roundabout way to ensure that login is called after an un
+     * authorized result It not possible to properly mock login()
      */
     @Test(expected = BigSwitchVnsApiException.class)
     public void executeMethodTestWithLogin() throws BigSwitchVnsApiException, HttpException, IOException {

@@ -81,7 +81,7 @@ public class ConsoleProxyRdpClient extends ConsoleProxyClientBase {
 
     @Override
     public boolean isHostConnected() {
-        //FIXME
+        // FIXME
         return true;
     }
 

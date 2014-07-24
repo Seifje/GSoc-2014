@@ -85,7 +85,8 @@ public class DistributedVirtualSwitchMO extends BaseMO {
         if (null == pvlanconfig || 0 == pvlanconfig.size()) {
             return result;
         }
-        // Iterate through the pvlanMapList and check if the specified vlan id and pvlan id exist. If they do, set the fields in result accordingly.
+        // Iterate through the pvlanMapList and check if the specified vlan id
+        // and pvlan id exist. If they do, set the fields in result accordingly.
 
         for (VMwareDVSPvlanMapEntry mapEntry : pvlanconfig) {
             int entryVlanid = mapEntry.getPrimaryVlanId();
@@ -106,19 +107,21 @@ public class DistributedVirtualSwitchMO extends BaseMO {
                     result.put(vlanid, HypervisorHostHelper.PvlanType.valueOf(mapEntry.getPvlanType()));
                 }
                 if ((vlanid != secondaryvlanid) && secondaryvlanid == entryVlanid) {
-                    //promiscuous
+                    // promiscuous
                     result.put(secondaryvlanid, HypervisorHostHelper.PvlanType.promiscuous);
                 } else if (secondaryvlanid == entryPvlanid) {
                     result.put(secondaryvlanid, HypervisorHostHelper.PvlanType.valueOf(mapEntry.getPvlanType()));
                 }
 
             }
-            // If we already know that the vlanid is being used as a non primary vlan, it's futile to
+            // If we already know that the vlanid is being used as a non primary
+            // vlan, it's futile to
             // go over the entire list. Return.
             if (result.containsKey(vlanid) && result.get(vlanid) != HypervisorHostHelper.PvlanType.promiscuous)
                 return result;
 
-            // If we've already found both vlanid and pvlanid, we have enough info to make a decision. Return.
+            // If we've already found both vlanid and pvlanid, we have enough
+            // info to make a decision. Return.
             if (result.containsKey(vlanid) && result.containsKey(secondaryvlanid))
                 return result;
         }

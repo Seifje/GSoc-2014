@@ -56,8 +56,7 @@ import com.cloud.vm.VirtualMachineProfile;
 @Component
 @Local(value = NetworkGuru.class)
 public class OvsGuestNetworkGuru extends GuestNetworkGuru {
-    private static final Logger s_logger = Logger
-        .getLogger(OvsGuestNetworkGuru.class);
+    private static final Logger s_logger = Logger.getLogger(OvsGuestNetworkGuru.class);
 
     @Inject
     OvsTunnelManager _ovsTunnelMgr;
@@ -68,43 +67,32 @@ public class OvsGuestNetworkGuru extends GuestNetworkGuru {
 
     OvsGuestNetworkGuru() {
         super();
-        _isolationMethods = new IsolationMethod[] {IsolationMethod.GRE,
-            IsolationMethod.L3, IsolationMethod.VLAN};
+        _isolationMethods = new IsolationMethod[] {IsolationMethod.GRE, IsolationMethod.L3, IsolationMethod.VLAN};
     }
 
     @Override
-    protected boolean canHandle(NetworkOffering offering,
-        final NetworkType networkType, final PhysicalNetwork physicalNetwork) {
+    protected boolean canHandle(NetworkOffering offering, final NetworkType networkType, final PhysicalNetwork physicalNetwork) {
         // This guru handles only Guest Isolated network that supports Source
         // nat service
-        if (networkType == NetworkType.Advanced
-            && isMyTrafficType(offering.getTrafficType())
-            && offering.getGuestType() == Network.GuestType.Isolated
-            && isMyIsolationMethod(physicalNetwork)
-            && _ntwkOfferingSrvcDao.areServicesSupportedByNetworkOffering(
-                offering.getId(), Service.Connectivity)) {
+        if (networkType == NetworkType.Advanced && isMyTrafficType(offering.getTrafficType()) && offering.getGuestType() == Network.GuestType.Isolated
+                && isMyIsolationMethod(physicalNetwork) && _ntwkOfferingSrvcDao.areServicesSupportedByNetworkOffering(offering.getId(), Service.Connectivity)) {
             return true;
         } else {
-            s_logger.trace("We only take care of Guest networks of type   "
-                + GuestType.Isolated + " in zone of type "
-                + NetworkType.Advanced);
+            s_logger.trace("We only take care of Guest networks of type   " + GuestType.Isolated + " in zone of type " + NetworkType.Advanced);
             return false;
         }
     }
 
     @Override
-    public Network design(NetworkOffering offering, DeploymentPlan plan,
-        Network userSpecified, Account owner) {
+    public Network design(NetworkOffering offering, DeploymentPlan plan, Network userSpecified, Account owner) {
 
-        PhysicalNetworkVO physnet = _physicalNetworkDao.findById(plan
-            .getPhysicalNetworkId());
+        PhysicalNetworkVO physnet = _physicalNetworkDao.findById(plan.getPhysicalNetworkId());
         DataCenter dc = _dcDao.findById(plan.getDataCenterId());
         if (!canHandle(offering, dc.getNetworkType(), physnet)) {
             s_logger.debug("Refusing to design this network");
             return null;
         }
-        NetworkVO config = (NetworkVO)super.design(offering, plan,
-            userSpecified, owner);
+        NetworkVO config = (NetworkVO)super.design(offering, plan, userSpecified, owner);
         if (config == null) {
             return null;
         }
@@ -115,11 +103,8 @@ public class OvsGuestNetworkGuru extends GuestNetworkGuru {
     }
 
     @Override
-    public Network implement(Network network, NetworkOffering offering,
-        DeployDestination dest, ReservationContext context)
-        throws InsufficientVirtualNetworkCapcityException {
-        assert (network.getState() == State.Implementing) : "Why are we implementing "
-            + network;
+    public Network implement(Network network, NetworkOffering offering, DeployDestination dest, ReservationContext context) throws InsufficientVirtualNetworkCapcityException {
+        assert (network.getState() == State.Implementing) : "Why are we implementing " + network;
 
         long dcId = dest.getDataCenter().getId();
         NetworkType nwType = dest.getDataCenter().getNetworkType();
@@ -128,18 +113,15 @@ public class OvsGuestNetworkGuru extends GuestNetworkGuru {
         // physical network id can be null in Guest Network in Basic zone, so
         // locate the physical network
         if (physicalNetworkId == null) {
-            physicalNetworkId = _networkModel.findPhysicalNetworkId(dcId,
-                offering.getTags(), offering.getTrafficType());
+            physicalNetworkId = _networkModel.findPhysicalNetworkId(dcId, offering.getTags(), offering.getTrafficType());
         }
-        PhysicalNetworkVO physnet = _physicalNetworkDao
-            .findById(physicalNetworkId);
+        PhysicalNetworkVO physnet = _physicalNetworkDao.findById(physicalNetworkId);
 
         if (!canHandle(offering, nwType, physnet)) {
             s_logger.debug("Refusing to design this network");
             return null;
         }
-        NetworkVO implemented = (NetworkVO)super.implement(network, offering,
-            dest, context);
+        NetworkVO implemented = (NetworkVO)super.implement(network, offering, dest, context);
 
         if (network.getGateway() != null) {
             implemented.setGateway(network.getGateway());
@@ -151,10 +133,11 @@ public class OvsGuestNetworkGuru extends GuestNetworkGuru {
 
         implemented.setBroadcastDomainType(BroadcastDomainType.Vswitch);
 
-        // for the networks that are part of VPC enabled for distributed routing use scheme vs://vpcid.GRE key for network
+        // for the networks that are part of VPC enabled for distributed routing
+        // use scheme vs://vpcid.GRE key for network
         if (network.getVpcId() != null && isVpcEnabledForDistributedRouter(network.getVpcId())) {
             String keyStr = BroadcastDomainType.getValue(implemented.getBroadcastUri());
-            Long vpcid= network.getVpcId();
+            Long vpcid = network.getVpcId();
             implemented.setBroadcastUri(BroadcastDomainType.Vswitch.toUri(vpcid.toString() + "." + keyStr));
         }
 
@@ -162,19 +145,14 @@ public class OvsGuestNetworkGuru extends GuestNetworkGuru {
     }
 
     @Override
-    public void reserve(NicProfile nic, Network network,
-        VirtualMachineProfile vm,
-        DeployDestination dest, ReservationContext context)
-        throws InsufficientVirtualNetworkCapcityException,
-        InsufficientAddressCapacityException {
+    public void reserve(NicProfile nic, Network network, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
+            throws InsufficientVirtualNetworkCapcityException, InsufficientAddressCapacityException {
         // TODO Auto-generated method stub
         super.reserve(nic, network, vm, dest, context);
     }
 
     @Override
-    public boolean release(NicProfile nic,
-        VirtualMachineProfile vm,
-        String reservationId) {
+    public boolean release(NicProfile nic, VirtualMachineProfile vm, String reservationId) {
         // TODO Auto-generated method stub
         return super.release(nic, vm, reservationId);
     }
@@ -182,17 +160,15 @@ public class OvsGuestNetworkGuru extends GuestNetworkGuru {
     @Override
     public void shutdown(NetworkProfile profile, NetworkOffering offering) {
         NetworkVO networkObject = _networkDao.findById(profile.getId());
-        if (networkObject.getBroadcastDomainType() != BroadcastDomainType.Vswitch
-            || networkObject.getBroadcastUri() == null) {
-            s_logger.warn("BroadcastUri is empty or incorrect for guestnetwork "
-                + networkObject.getDisplayText());
+        if (networkObject.getBroadcastDomainType() != BroadcastDomainType.Vswitch || networkObject.getBroadcastUri() == null) {
+            s_logger.warn("BroadcastUri is empty or incorrect for guestnetwork " + networkObject.getDisplayText());
             return;
         }
 
-        if (profile.getBroadcastDomainType() == BroadcastDomainType.Vswitch ) {
+        if (profile.getBroadcastDomainType() == BroadcastDomainType.Vswitch) {
             s_logger.debug("Releasing vnet for the network id=" + profile.getId());
-            _dcDao.releaseVnet(BroadcastDomainType.getValue(profile.getBroadcastUri()), profile.getDataCenterId(), profile.getPhysicalNetworkId(),
-                    profile.getAccountId(), profile.getReservationId());
+            _dcDao.releaseVnet(BroadcastDomainType.getValue(profile.getBroadcastUri()), profile.getDataCenterId(), profile.getPhysicalNetworkId(), profile.getAccountId(),
+                    profile.getReservationId());
         }
         profile.setBroadcastUri(null);
     }
@@ -203,28 +179,15 @@ public class OvsGuestNetworkGuru extends GuestNetworkGuru {
     }
 
     @Override
-    protected void allocateVnet(Network network, NetworkVO implemented,
-        long dcId, long physicalNetworkId, String reservationId)
-        throws InsufficientVirtualNetworkCapcityException {
+    protected void allocateVnet(Network network, NetworkVO implemented, long dcId, long physicalNetworkId, String reservationId) throws InsufficientVirtualNetworkCapcityException {
         if (network.getBroadcastUri() == null) {
-            String vnet = _dcDao.allocateVnet(dcId, physicalNetworkId,
-                network.getAccountId(), reservationId,
-                UseSystemGuestVlans.valueIn(network.getAccountId()));
+            String vnet = _dcDao.allocateVnet(dcId, physicalNetworkId, network.getAccountId(), reservationId, UseSystemGuestVlans.valueIn(network.getAccountId()));
             if (vnet == null) {
-                throw new InsufficientVirtualNetworkCapcityException(
-                    "Unable to allocate vnet as a part of network "
-                        + network + " implement ", DataCenter.class,
-                    dcId);
+                throw new InsufficientVirtualNetworkCapcityException("Unable to allocate vnet as a part of network " + network + " implement ", DataCenter.class, dcId);
             }
-            implemented
-                .setBroadcastUri(BroadcastDomainType.Vswitch.toUri(vnet));
-            ActionEventUtils.onCompletedActionEvent(
-                CallContext.current().getCallingUserId(),
-                network.getAccountId(),
-                EventVO.LEVEL_INFO,
-                EventTypes.EVENT_ZONE_VLAN_ASSIGN,
-                "Assigned Zone Vlan: " + vnet + " Network Id: "
-                    + network.getId(), 0);
+            implemented.setBroadcastUri(BroadcastDomainType.Vswitch.toUri(vnet));
+            ActionEventUtils.onCompletedActionEvent(CallContext.current().getCallingUserId(), network.getAccountId(), EventVO.LEVEL_INFO, EventTypes.EVENT_ZONE_VLAN_ASSIGN,
+                    "Assigned Zone Vlan: " + vnet + " Network Id: " + network.getId(), 0);
         } else {
             implemented.setBroadcastUri(network.getBroadcastUri());
         }

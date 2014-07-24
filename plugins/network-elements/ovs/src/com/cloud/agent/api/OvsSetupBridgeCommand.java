@@ -17,7 +17,6 @@
 
 package com.cloud.agent.api;
 
-
 public class OvsSetupBridgeCommand extends Command {
     String name;
     Long hostId;

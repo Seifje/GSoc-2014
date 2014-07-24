@@ -140,27 +140,32 @@ public class DedicateGuestVlanRangesTest {
         runDedicateGuestVlanRangePostiveTest();
 
         /*
-        * TEST 2: given invalid format for vlan range DedicateGuestVlanRange should fail
-        */
+         * TEST 2: given invalid format for vlan range DedicateGuestVlanRange
+         * should fail
+         */
         runDedicateGuestVlanRangeInvalidFormat();
 
         /*
-         * TEST 3: given vlan range that doesn't exist in the system request should fail
+         * TEST 3: given vlan range that doesn't exist in the system request
+         * should fail
          */
         runDedicateGuestVlanRangeInvalidRangeValue();
 
         /*
-         * TEST 4: given vlan range has vlans that are allocated to a different account request should fail
+         * TEST 4: given vlan range has vlans that are allocated to a different
+         * account request should fail
          */
         runDedicateGuestVlanRangeAllocatedVlans();
 
         /*
-         * TEST 5: given vlan range is already dedicated to another account request should fail
+         * TEST 5: given vlan range is already dedicated to another account
+         * request should fail
          */
         runDedicateGuestVlanRangeDedicatedRange();
 
         /*
-         * TEST 6: given vlan range is partially dedicated to a different account request should fail
+         * TEST 6: given vlan range is partially dedicated to a different
+         * account request should fail
          */
         runDedicateGuestVlanRangePartiallyDedicated();
     }
@@ -171,7 +176,8 @@ public class DedicateGuestVlanRangesTest {
         s_logger.info("Running tests for ReleaseDedicatedGuestVlanRange API");
 
         /*
-         * TEST 1: given valid parameters ReleaseDedicatedGuestVlanRange should succeed
+         * TEST 1: given valid parameters ReleaseDedicatedGuestVlanRange should
+         * succeed
          */
         runReleaseDedicatedGuestVlanRangePostiveTest();
 

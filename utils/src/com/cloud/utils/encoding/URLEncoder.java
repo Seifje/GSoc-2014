@@ -44,7 +44,7 @@ public class URLEncoder {
 
     static CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder(); // or "ISO-8859-1" for ISO Latin 1
 
-    //Array containing the safe characters set.
+    // Array containing the safe characters set.
     protected BitSet safeCharacters = new BitSet(256);
 
     public URLEncoder() {
@@ -97,8 +97,8 @@ public class URLEncoder {
                     rewrittenPath.append('%');
                     int low = toEncode & 0x0f;
                     int high = (toEncode & 0xf0) >> 4;
-                    rewrittenPath.append(hexadecimal[high]);
-                    rewrittenPath.append(hexadecimal[low]);
+                rewrittenPath.append(hexadecimal[high]);
+                rewrittenPath.append(hexadecimal[low]);
                 }
                 buf.reset();
             }

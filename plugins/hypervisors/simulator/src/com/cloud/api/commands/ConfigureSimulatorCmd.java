@@ -39,8 +39,7 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.simulator.MockConfigurationVO;
 import com.cloud.user.Account;
 
-@APICommand(name = "configureSimulator", description = "configure simulator", responseObject = MockResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "configureSimulator", description = "configure simulator", responseObject = MockResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ConfigureSimulatorCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(ConfigureSimulatorCmd.class.getName());
     private static final String s_name = "configuresimulatorresponse";
@@ -48,16 +47,16 @@ public class ConfigureSimulatorCmd extends BaseCmd {
     @Inject
     SimulatorManager _simMgr;
 
-    @Parameter(name=ApiConstants.ZONE_ID, type=CommandType.UUID, entityType=ZoneResponse.class, description="configure range: in a zone")
+    @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, description = "configure range: in a zone")
     private Long zoneId;
 
-    @Parameter(name=ApiConstants.POD_ID, type=CommandType.UUID, entityType=PodResponse.class, description="configure range: in a pod")
+    @Parameter(name = ApiConstants.POD_ID, type = CommandType.UUID, entityType = PodResponse.class, description = "configure range: in a pod")
     private Long podId;
 
-    @Parameter(name=ApiConstants.CLUSTER_ID, type=CommandType.UUID, entityType=ClusterResponse.class, description="configure range: in a cluster")
+    @Parameter(name = ApiConstants.CLUSTER_ID, type = CommandType.UUID, entityType = ClusterResponse.class, description = "configure range: in a cluster")
     private Long clusterId;
 
-    @Parameter(name=ApiConstants.HOST_ID, type=CommandType.UUID, entityType=HostResponse.class, description="configure range: in a host")
+    @Parameter(name = ApiConstants.HOST_ID, type = CommandType.UUID, entityType = HostResponse.class, description = "configure range: in a host")
     private Long hostId;
 
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "which command needs to be configured")
@@ -66,15 +65,14 @@ public class ConfigureSimulatorCmd extends BaseCmd {
     @Parameter(name = ApiConstants.VALUE, type = CommandType.STRING, required = true, description = "configuration options for this command, which is seperated by ;")
     private String values;
 
-    @Parameter(name=ApiConstants.COUNT, type=CommandType.INTEGER, description="number of times the mock is active")
+    @Parameter(name = ApiConstants.COUNT, type = CommandType.INTEGER, description = "number of times the mock is active")
     private Integer count;
 
-    @Parameter(name="jsonresponse", type=CommandType.STRING, description="agent command response to be returned")
+    @Parameter(name = "jsonresponse", type = CommandType.STRING, description = "agent command response to be returned")
     private String jsonResponse;
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         Long id = _simMgr.configureSimulator(zoneId, podId, clusterId, hostId, command, values, count, jsonResponse);
         if (id == null) {
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to configure simulator");

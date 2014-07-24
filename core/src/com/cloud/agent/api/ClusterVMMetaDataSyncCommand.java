@@ -16,7 +16,6 @@
 // under the License.
 package com.cloud.agent.api;
 
-
 public class ClusterVMMetaDataSyncCommand extends Command implements CronCommand {
     int _interval;
 
@@ -25,7 +24,7 @@ public class ClusterVMMetaDataSyncCommand extends Command implements CronCommand
     public ClusterVMMetaDataSyncCommand() {
     }
 
-    public ClusterVMMetaDataSyncCommand(int interval, long clusterId){
+    public ClusterVMMetaDataSyncCommand(int interval, long clusterId) {
         _interval = interval;
         _clusterId = clusterId;
     }

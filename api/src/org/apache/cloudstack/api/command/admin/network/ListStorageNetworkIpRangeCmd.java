@@ -39,38 +39,28 @@ import com.cloud.exception.ResourceAllocationException;
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.user.Account;
 
-@APICommand(name = "listStorageNetworkIpRange", description = "List a storage network IP range.", responseObject = StorageNetworkIpRangeResponse.class, since = "3.0.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listStorageNetworkIpRange", description = "List a storage network IP range.", responseObject = StorageNetworkIpRangeResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListStorageNetworkIpRangeCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListStorageNetworkIpRangeCmd.class);
 
     String _name = "liststoragenetworkiprangeresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = StorageNetworkIpRangeResponse.class,
-               description = "optional parameter. Storaget network IP range uuid, if specicied, using it to search the range.")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = StorageNetworkIpRangeResponse.class, description = "optional parameter. Storaget network IP range uuid, if specicied, using it to search the range.")
     private Long rangeId;
 
-    @Parameter(name = ApiConstants.POD_ID,
-               type = CommandType.UUID,
-               entityType = PodResponse.class,
-               description = "optional parameter. Pod uuid, if specicied and range uuid is absent, using it to search the range.")
+    @Parameter(name = ApiConstants.POD_ID, type = CommandType.UUID, entityType = PodResponse.class, description = "optional parameter. Pod uuid, if specicied and range uuid is absent, using it to search the range.")
     private Long podId;
 
-    @Parameter(name = ApiConstants.ZONE_ID,
-               type = CommandType.UUID,
-               entityType = ZoneResponse.class,
-               description = "optional parameter. Zone uuid, if specicied and both pod uuid and range uuid are absent, using it to search the range.")
+    @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, description = "optional parameter. Zone uuid, if specicied and both pod uuid and range uuid are absent, using it to search the range.")
     private Long zoneId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getRangeId() {
         return rangeId;
@@ -85,8 +75,7 @@ public class ListStorageNetworkIpRangeCmd extends BaseListCmd {
     }
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             List<StorageNetworkIpRange> results = _storageNetworkService.listIpRange(this);
             ListResponse<StorageNetworkIpRangeResponse> response = new ListResponse<StorageNetworkIpRangeResponse>();

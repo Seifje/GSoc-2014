@@ -65,7 +65,6 @@ public class LoadBalancerVMMapDaoImpl extends GenericDaoBase<LoadBalancerVMMapVO
         expunge(sc);
     }
 
-
     @Override
     public List<LoadBalancerVMMapVO> listByInstanceId(long instanceId) {
         SearchCriteria<LoadBalancerVMMapVO> sc = createSearchCriteria();
@@ -107,7 +106,6 @@ public class LoadBalancerVMMapDaoImpl extends GenericDaoBase<LoadBalancerVMMapVO
         return findOneBy(sc);
     }
 
-
     @Override
     public LoadBalancerVMMapVO findByLoadBalancerIdAndVmIdVmIp(long loadBalancerId, long instanceId, String instanceIp) {
         SearchCriteria<LoadBalancerVMMapVO> sc = createSearchCriteria();
@@ -117,7 +115,6 @@ public class LoadBalancerVMMapDaoImpl extends GenericDaoBase<LoadBalancerVMMapVO
 
         return findOneBy(sc);
     }
-
 
     @Override
     public boolean isVmAttachedToLoadBalancer(long loadBalancerId) {

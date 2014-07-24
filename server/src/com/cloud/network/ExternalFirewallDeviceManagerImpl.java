@@ -188,8 +188,7 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
 
     @Override
     @DB
-    public ExternalFirewallDeviceVO addExternalFirewall(long physicalNetworkId, String url, String username, String password, final String deviceName,
-        ServerResource resource) {
+    public ExternalFirewallDeviceVO addExternalFirewall(long physicalNetworkId, String url, String username, String password, final String deviceName, ServerResource resource) {
         String guid;
         PhysicalNetworkVO pNetwork = null;
         NetworkDevice ntwkDevice = NetworkDevice.getNetworkDevice(deviceName);
@@ -197,7 +196,7 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
 
         if ((ntwkDevice == null) || (url == null) || (username == null) || (resource == null) || (password == null)) {
             throw new InvalidParameterValueException("Atleast one of the required parameters (url, username, password,"
-                + " server resource, zone id/physical network id) is not specified or a valid parameter.");
+                    + " server resource, zone id/physical network id) is not specified or a valid parameter.");
         }
 
         pNetwork = _physicalNetworkDao.findById(physicalNetworkId);
@@ -206,14 +205,13 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
         }
         zoneId = pNetwork.getDataCenterId();
 
-        final PhysicalNetworkServiceProviderVO ntwkSvcProvider =
-            _physicalNetworkServiceProviderDao.findByServiceProvider(pNetwork.getId(), ntwkDevice.getNetworkServiceProvder());
+        final PhysicalNetworkServiceProviderVO ntwkSvcProvider = _physicalNetworkServiceProviderDao.findByServiceProvider(pNetwork.getId(), ntwkDevice.getNetworkServiceProvder());
         if (ntwkSvcProvider == null) {
-            throw new CloudRuntimeException("Network Service Provider: " + ntwkDevice.getNetworkServiceProvder() + " is not enabled in the physical network: " +
-                physicalNetworkId + "to add this device");
+            throw new CloudRuntimeException("Network Service Provider: " + ntwkDevice.getNetworkServiceProvder() + " is not enabled in the physical network: " + physicalNetworkId
+                    + "to add this device");
         } else if (ntwkSvcProvider.getState() == PhysicalNetworkServiceProvider.State.Shutdown) {
-            throw new CloudRuntimeException("Network Service Provider: " + ntwkSvcProvider.getProviderName() +
-                " is not added or in shutdown state in the physical network: " + physicalNetworkId + "to add this device");
+            throw new CloudRuntimeException("Network Service Provider: " + ntwkSvcProvider.getProviderName() + " is not added or in shutdown state in the physical network: "
+                    + physicalNetworkId + "to add this device");
         }
 
         URI uri;
@@ -252,17 +250,15 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
             return Transaction.execute(new TransactionCallback<ExternalFirewallDeviceVO>() {
                 @Override
                 public ExternalFirewallDeviceVO doInTransaction(TransactionStatus status) {
-                    boolean dedicatedUse =
-                        (configParams.get(ApiConstants.FIREWALL_DEVICE_DEDICATED) != null) ? Boolean.parseBoolean(configParams.get(ApiConstants.FIREWALL_DEVICE_DEDICATED))
-                            : false;
+                    boolean dedicatedUse = (configParams.get(ApiConstants.FIREWALL_DEVICE_DEDICATED) != null) ? Boolean.parseBoolean(configParams
+                            .get(ApiConstants.FIREWALL_DEVICE_DEDICATED)) : false;
                     long capacity = NumbersUtil.parseLong(configParams.get(ApiConstants.FIREWALL_DEVICE_CAPACITY), 0);
                     if (capacity == 0) {
                         capacity = _defaultFwCapacity;
                     }
 
-                    ExternalFirewallDeviceVO fwDevice =
-                        new ExternalFirewallDeviceVO(externalFirewall.getId(), pNetworkFinal.getId(), ntwkSvcProvider.getProviderName(), deviceName, capacity,
-                            dedicatedUse);
+                    ExternalFirewallDeviceVO fwDevice = new ExternalFirewallDeviceVO(externalFirewall.getId(), pNetworkFinal.getId(), ntwkSvcProvider.getProviderName(),
+                            deviceName, capacity, dedicatedUse);
 
                     _externalFirewallDeviceDao.persist(fwDevice);
 
@@ -323,8 +319,7 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
             throw new InvalidParameterValueException("Atleast one of ther required parameter physical networkId, device name is missing or invalid.");
         }
 
-        PhysicalNetworkServiceProviderVO ntwkSvcProvider =
-            _physicalNetworkServiceProviderDao.findByServiceProvider(pNetwork.getId(), fwNetworkDevice.getNetworkServiceProvder());
+        PhysicalNetworkServiceProviderVO ntwkSvcProvider = _physicalNetworkServiceProviderDao.findByServiceProvider(pNetwork.getId(), fwNetworkDevice.getNetworkServiceProvder());
         if (ntwkSvcProvider == null) {
             return null;
         }
@@ -358,15 +353,18 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
         long physicalNetworkId = network.getPhysicalNetworkId();
         List<ExternalFirewallDeviceVO> fwDevices = _externalFirewallDeviceDao.listByPhysicalNetwork(physicalNetworkId);
 
-        // loop through the firewall device in the physical network and pick the first-fit
+        // loop through the firewall device in the physical network and pick the
+        // first-fit
         for (ExternalFirewallDeviceVO fwDevice : fwDevices) {
             // max number of guest networks that can be mapped to this device
             long fullCapacity = fwDevice.getCapacity();
             if (fullCapacity == 0) {
-                fullCapacity = _defaultFwCapacity; // if capacity not configured then use the default
+                fullCapacity = _defaultFwCapacity; // if capacity not configured
+                // then use the default
             }
 
-            // get the list of guest networks that are mapped to this load balancer
+            // get the list of guest networks that are mapped to this load
+            // balancer
             List<NetworkExternalFirewallVO> mappedNetworks = _networkExternalFirewallDao.listByFirewallDeviceId(fwDevice.getId());
 
             long usedCapacity = (mappedNetworks == null) ? 0 : mappedNetworks.size();
@@ -375,7 +373,7 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
             }
         }
         throw new InsufficientNetworkCapacityException("Unable to find a firewall provider with sufficient capcity " + " to implement the network", DataCenter.class,
-            network.getDataCenterId());
+                network.getDataCenterId());
     }
 
     @DB
@@ -455,7 +453,7 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
             ExternalFirewallDeviceVO fwDeviceVO = getExternalFirewallForNetwork(network);
             if (fwDeviceVO == null) {
                 s_logger.warn("Network shutdown requested on external firewall element, which did not implement the network."
-                    + " Either network implement failed half way through or already network shutdown is completed.");
+                        + " Either network implement failed half way through or already network shutdown is completed.");
                 return true;
             }
             externalFirewall = _hostDao.findById(fwDeviceVO.getHostId());
@@ -484,7 +482,8 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
             }
         }
 
-        // Send a command to the external firewall to implement or shutdown the guest network
+        // Send a command to the external firewall to implement or shutdown the
+        // guest network
         long guestVlanTag = Long.parseLong(BroadcastDomainType.getValue(network.getBroadcastUri()));
         String guestVlanGateway = network.getGateway();
         String guestVlanCidr = network.getCidr();
@@ -514,11 +513,11 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
         if (answer == null || !answer.getResult()) {
             String action = add ? "implement" : "shutdown";
             String answerDetails = (answer != null) ? answer.getDetails() : "answer was null";
-            String msg =
-                "External firewall was unable to " + action + " the guest network on the external firewall in zone " + zone.getName() + " due to " + answerDetails;
+            String msg = "External firewall was unable to " + action + " the guest network on the external firewall in zone " + zone.getName() + " due to " + answerDetails;
             s_logger.error(msg);
             if (!add && (!reservedIpAddressesForGuestNetwork.contains(network.getGateway()))) {
-                // If we failed the implementation as well, then just return, no complain
+                // If we failed the implementation as well, then just return, no
+                // complain
                 s_logger.error("Skip the shutdown of guest network on SRX because it seems we didn't implement it as well");
                 return true;
             }
@@ -526,11 +525,13 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
         }
 
         if (add && (!reservedIpAddressesForGuestNetwork.contains(network.getGateway()))) {
-            // Insert a new NIC for this guest network to reserve the gateway address
+            // Insert a new NIC for this guest network to reserve the gateway
+            // address
             _networkMgr.savePlaceholderNic(network, network.getGateway(), null, null);
         }
 
-        // Delete any mappings used for inline external load balancers in this network
+        // Delete any mappings used for inline external load balancers in this
+        // network
         List<NicVO> nicsInNetwork = _nicDao.listByNetworkId(network.getId());
         for (NicVO nic : nicsInNetwork) {
             InlineLoadBalancerNicMapVO mapping = _inlineLoadBalancerNicMapDao.findByNicId(nic.getId());
@@ -541,7 +542,8 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
             }
         }
 
-        // on network shutdown, delete placeHolder nics used for the firewall device
+        // on network shutdown, delete placeHolder nics used for the firewall
+        // device
         if (!add) {
             List<NicVO> nics = _nicDao.listByNetworkId(network.getId());
             for (NicVO nic : nics) {
@@ -554,8 +556,8 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
         }
 
         String action = add ? "implemented" : "shut down";
-        s_logger.debug("External firewall has " + action + " the guest network for account " + account.getAccountName() + "(id = " + account.getAccountId() +
-            ") with VLAN tag " + guestVlanTag);
+        s_logger.debug("External firewall has " + action + " the guest network for account " + account.getAccountName() + "(id = " + account.getAccountId() + ") with VLAN tag "
+                + guestVlanTag);
 
         return true;
     }
@@ -566,7 +568,8 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
         long zoneId = network.getDataCenterId();
         DataCenterVO zone = _dcDao.findById(zoneId);
         ExternalFirewallDeviceVO fwDeviceVO = getExternalFirewallForNetwork(network);
-        // During destroy, device reference may already been clean up, then we just return true
+        // During destroy, device reference may already been clean up, then we
+        // just return true
         if (fwDeviceVO == null) {
             return true;
         }
@@ -575,8 +578,8 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
         assert (externalFirewall != null);
 
         if (network.getState() == Network.State.Allocated) {
-            s_logger.debug("External firewall was asked to apply firewall rules for network with ID " + network.getId() +
-                "; this network is not implemented. Skipping backend commands.");
+            s_logger.debug("External firewall was asked to apply firewall rules for network with ID " + network.getId()
+                    + "; this network is not implemented. Skipping backend commands.");
             return true;
         }
 
@@ -603,7 +606,7 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
             rulesTO.add(ruleTO);
         }
 
-        //Firewall rules configured for staticNAT/PF
+        // Firewall rules configured for staticNAT/PF
         sendFirewallRules(rulesTO, zone, externalFirewall.getId());
 
         return true;
@@ -618,8 +621,8 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
         assert (externalFirewall != null);
 
         if (network.getState() == Network.State.Allocated) {
-            s_logger.debug("External firewall was asked to apply firewall rules for network with ID " + network.getId() +
-                "; this network is not implemented. Skipping backend commands.");
+            s_logger.debug("External firewall was asked to apply firewall rules for network with ID " + network.getId()
+                    + "; this network is not implemented. Skipping backend commands.");
             return true;
         }
 
@@ -629,8 +632,8 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
             IpAddress sourceIp = _networkModel.getIp(rule.getSourceIpAddressId());
             Vlan vlan = _vlanDao.findById(sourceIp.getVlanId());
 
-            StaticNatRuleTO ruleTO =
-                new StaticNatRuleTO(0, vlan.getVlanTag(), sourceIp.getAddress().addr(), -1, -1, rule.getDestIpAddress(), -1, -1, "any", rule.isForRevoke(), false);
+            StaticNatRuleTO ruleTO = new StaticNatRuleTO(0, vlan.getVlanTag(), sourceIp.getAddress().addr(), -1, -1, rule.getDestIpAddress(), -1, -1, "any", rule.isForRevoke(),
+                    false);
             staticNatRules.add(ruleTO);
         }
 
@@ -706,8 +709,7 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
 
         String maskedIpRange = ipRange[0] + "-" + ipRange[1];
 
-        RemoteAccessVpnCfgCommand createVpnCmd =
-            new RemoteAccessVpnCfgCommand(create, ip.getAddress().addr(), vpn.getLocalIp(), maskedIpRange, vpn.getIpsecPresharedKey(), false);
+        RemoteAccessVpnCfgCommand createVpnCmd = new RemoteAccessVpnCfgCommand(create, ip.getAddress().addr(), vpn.getLocalIp(), maskedIpRange, vpn.getIpsecPresharedKey(), false);
         createVpnCmd.setAccessDetail(NetworkElementCommand.ACCOUNT_ID, String.valueOf(network.getAccountId()));
         createVpnCmd.setAccessDetail(NetworkElementCommand.GUEST_NETWORK_CIDR, network.getCidr());
         Answer answer = _agentMgr.easySend(externalFirewall.getId(), createVpnCmd);
@@ -768,7 +770,7 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
         }
         Integer lowestVlanTag = null;
         List<Pair<Integer, Integer>> vnetList = pNetwork.getVnet();
-        //finding the vlanrange in which the vlanTag lies.
+        // finding the vlanrange in which the vlanTag lies.
         for (Pair<Integer, Integer> vnet : vnetList) {
             if (vlanTag >= vnet.first() && vlanTag <= vnet.second()) {
                 lowestVlanTag = vnet.first();
@@ -823,8 +825,8 @@ public abstract class ExternalFirewallDeviceManagerImpl extends AdapterBase impl
         assert (externalFirewall != null);
 
         if (network.getState() == Network.State.Allocated) {
-            s_logger.debug("External firewall was asked to apply firewall rules for network with ID " + network.getId() +
-                "; this network is not implemented. Skipping backend commands.");
+            s_logger.debug("External firewall was asked to apply firewall rules for network with ID " + network.getId()
+                    + "; this network is not implemented. Skipping backend commands.");
             return true;
         }
 

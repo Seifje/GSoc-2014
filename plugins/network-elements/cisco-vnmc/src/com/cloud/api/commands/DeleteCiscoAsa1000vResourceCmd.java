@@ -38,40 +38,34 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.network.element.CiscoAsa1000vService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "deleteCiscoAsa1000vResource", responseObject = SuccessResponse.class, description = "Deletes a Cisco ASA 1000v appliance",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteCiscoAsa1000vResource", responseObject = SuccessResponse.class, description = "Deletes a Cisco ASA 1000v appliance", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteCiscoAsa1000vResourceCmd extends BaseCmd {
     private static final Logger s_logger = Logger.getLogger(DeleteCiscoAsa1000vResourceCmd.class.getName());
     private static final String s_name = "deleteCiscoAsa1000vResource";
     @Inject
     CiscoAsa1000vService _ciscoAsa1000vService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.RESOURCE_ID,
-               type = CommandType.UUID,
-               required = true,
-               entityType = CiscoAsa1000vResourceResponse.class,
-               description = "Cisco ASA 1000v resource ID")
+    @Parameter(name = ApiConstants.RESOURCE_ID, type = CommandType.UUID, required = true, entityType = CiscoAsa1000vResourceResponse.class, description = "Cisco ASA 1000v resource ID")
     private Long ciscoAsa1000vResourceId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getCiscoAsa1000vResourceId() {
         return ciscoAsa1000vResourceId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             boolean result = _ciscoAsa1000vService.deleteCiscoAsa1000vResource(this);
             if (result) {

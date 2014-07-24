@@ -30,24 +30,20 @@ import org.apache.cloudstack.context.CallContext;
 import com.cloud.domain.Domain;
 import com.cloud.user.Account;
 
-@APICommand(name = "createDomain", description = "Creates a domain", responseObject = DomainResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createDomain", description = "Creates a domain", responseObject = DomainResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateDomainCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(CreateDomainCmd.class.getName());
 
     private static final String s_name = "createdomainresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "creates domain with this name")
     private String domainName;
 
-    @Parameter(name = ApiConstants.PARENT_DOMAIN_ID,
-               type = CommandType.UUID,
-               entityType = DomainResponse.class,
-               description = "assigns new domain a parent domain by domain ID of the parent.  If no parent domain is specied, the ROOT domain is assumed.")
+    @Parameter(name = ApiConstants.PARENT_DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "assigns new domain a parent domain by domain ID of the parent.  If no parent domain is specied, the ROOT domain is assumed.")
     private Long parentDomainId;
 
     @Parameter(name = ApiConstants.NETWORK_DOMAIN, type = CommandType.STRING, description = "Network domain for networks in the domain")
@@ -56,9 +52,9 @@ public class CreateDomainCmd extends BaseCmd {
     @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.STRING, description = "Domain UUID, required for adding domain from another Region")
     private String domainUUID;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getDomainName() {
         return domainName;
@@ -76,9 +72,9 @@ public class CreateDomainCmd extends BaseCmd {
         return domainUUID;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

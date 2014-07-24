@@ -155,23 +155,23 @@ public class VMInterfaceModel extends ModelObjectBase {
         Network network = controller.getNetworkDao().findById(nic.getNetworkId());
 
         switch (nic.getState()) {
-            case Allocated:
-            case Reserved:
-                _nicActive = true;
-                break;
-            default:
-                _nicActive = false;
-                break;
+        case Allocated:
+        case Reserved:
+            _nicActive = true;
+            break;
+        default:
+            _nicActive = false;
+            break;
         }
 
         switch (network.getState()) {
-            case Implemented:
-            case Setup:
-                _netActive = true;
-                break;
-            default:
-                _netActive = false;
-                break;
+        case Implemented:
+        case Setup:
+            _netActive = true;
+            break;
+        default:
+            _netActive = false;
+            break;
         }
         assert _vnModel != null;
         _networkId = _vnModel.getUuid();
@@ -211,7 +211,8 @@ public class VMInterfaceModel extends ModelObjectBase {
             vmi.setUuid(_uuid);
             vmi.setVirtualNetwork(_vnModel.getVirtualNetwork());
         } else {
-            // Do not try to update VMI to routing-instance references. These are managed by schema-transformer.
+            // Do not try to update VMI to routing-instance references. These
+            // are managed by schema-transformer.
             vmi.clearRoutingInstance();
         }
         _vmi = vmi;
@@ -244,7 +245,8 @@ public class VMInterfaceModel extends ModelObjectBase {
             }
             successor.update(controller);
         }
-        // TODO: if there are no instance-ip successors present and we have an instance-ip object reference
+        // TODO: if there are no instance-ip successors present and we have an
+        // instance-ip object reference
         // delete the object.
         if (ipCount == 0) {
             s_logger.warn("virtual-machine-interface " + _uuid + " has no instance-ip");

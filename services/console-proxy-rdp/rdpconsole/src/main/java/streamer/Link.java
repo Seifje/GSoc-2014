@@ -26,7 +26,7 @@ public interface Link extends DataSource, DataSink, Runnable {
      * Wire this link with given sink.
      *
      * @param sink
-     *          an Element
+     *            an Element
      * @return same sink element, for chaining
      */
     Element setSink(Element sink);
@@ -35,7 +35,7 @@ public interface Link extends DataSource, DataSink, Runnable {
      * Wire this link with given source.
      *
      * @param source
-     *          an Element
+     *            an Element
      * @return same source element, for chaining
      */
     Element setSource(Element source);

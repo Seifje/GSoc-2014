@@ -32,7 +32,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class LoadBalancerRuleVmMapResponse extends BaseResponse {
 
-
     @SerializedName("loadbalancerruleinstance")
     @Param(description = "the user vm set for lb rule")
     private UserVmResponse UserVmResponse;
@@ -48,7 +47,5 @@ public class LoadBalancerRuleVmMapResponse extends BaseResponse {
     public void setUserVmResponse(UserVmResponse userVmResponse) {
         this.UserVmResponse = userVmResponse;
     }
-
-
 
 }

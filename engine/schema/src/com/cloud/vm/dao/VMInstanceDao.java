@@ -34,13 +34,16 @@ import com.cloud.vm.VirtualMachine.State;
 public interface VMInstanceDao extends GenericDao<VMInstanceVO, Long>, StateDao<State, VirtualMachine.Event, VirtualMachine> {
     /**
      * What are the vms running on this host?
-     * @param hostId host.
+     *
+     * @param hostId
+     *            host.
      * @return list of VMInstanceVO running on that host.
      */
     List<VMInstanceVO> listByHostId(long hostId);
 
     /**
      * List VMs by zone ID
+     *
      * @param zoneId
      * @return list of VMInstanceVO in the specified zone
      */
@@ -48,6 +51,7 @@ public interface VMInstanceDao extends GenericDao<VMInstanceVO, Long>, StateDao<
 
     /**
      * List VMs by pod ID
+     *
      * @param podId
      * @return list of VMInstanceVO in the specified pod
      */
@@ -55,15 +59,18 @@ public interface VMInstanceDao extends GenericDao<VMInstanceVO, Long>, StateDao<
 
     /**
      * Lists non-expunged VMs by zone ID and templateId
+     *
      * @param zoneId
-     * @return list of VMInstanceVO in the specified zone, deployed from the specified template, that are not expunged
+     * @return list of VMInstanceVO in the specified zone, deployed from the
+     *         specified template, that are not expunged
      */
     public List<VMInstanceVO> listNonExpungedByZoneAndTemplate(long zoneId, long templateId);
 
     /**
      * Find vm instance with names like.
      *
-     * @param name name that fits SQL like.
+     * @param name
+     *            name that fits SQL like.
      * @return list of VMInstanceVO
      */
     List<VMInstanceVO> findVMInstancesLike(String name);
@@ -98,9 +105,13 @@ public interface VMInstanceDao extends GenericDao<VMInstanceVO, Long>, StateDao<
 
     public List<Long> findIdsOfAllocatedVirtualRoutersForAccount(long accountId);
 
-    List<VMInstanceVO> listByClusterId(long clusterId);  // this does not pull up VMs which are starting
+    List<VMInstanceVO> listByClusterId(long clusterId); // this does not pull up
+    // VMs which are
+    // starting
 
-    List<VMInstanceVO> listLHByClusterId(long clusterId);  // get all the VMs even starting one on this cluster
+    List<VMInstanceVO> listLHByClusterId(long clusterId); // get all the VMs
+    // even starting one
+    // on this cluster
 
     List<VMInstanceVO> listVmsMigratingFromHost(Long hostId);
 

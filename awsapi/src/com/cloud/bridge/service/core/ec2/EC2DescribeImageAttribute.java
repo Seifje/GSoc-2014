@@ -20,7 +20,7 @@ import com.cloud.bridge.service.core.ec2.EC2ImageAttributes.ImageAttribute;
 
 public class EC2DescribeImageAttribute {
 
-    private String imageId = null;     //AMI id
+    private String imageId = null; // AMI id
     private ImageAttribute attribute = null;
 
     public EC2DescribeImageAttribute() {

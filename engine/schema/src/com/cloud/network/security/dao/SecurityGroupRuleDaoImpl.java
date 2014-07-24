@@ -137,7 +137,7 @@ public class SecurityGroupRuleDaoImpl extends GenericDaoBase<SecurityGroupRuleVO
         SearchBuilder<SecurityGroupVO> ngSb = _securityGroupDao.createSearchBuilder();
         ngSb.and("groupName", ngSb.entity().getName(), SearchCriteria.Op.EQ);
         protoPortsAndSecurityGroupNameSearch.join("groupName", ngSb, protoPortsAndSecurityGroupNameSearch.entity().getAllowedNetworkId(), ngSb.entity().getId(),
-            JoinBuilder.JoinType.INNER);
+                JoinBuilder.JoinType.INNER);
         protoPortsAndSecurityGroupNameSearch.done();
         return super.configure(name, params);
     }

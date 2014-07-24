@@ -155,7 +155,7 @@ public class ApiDiscoveryServiceImpl extends ComponentLifecycleBase implements A
             responseResponse.setName(serializedName.value());
             responseResponse.setDescription(param.description());
             responseResponse.setType(responseField.getType().getSimpleName().toLowerCase());
-            //If response is not of primitive type - we have a nested entity
+            // If response is not of primitive type - we have a nested entity
             Class fieldClass = param.responseObject();
             if (fieldClass != null) {
                 Class<?> superClass = fieldClass.getSuperclass();

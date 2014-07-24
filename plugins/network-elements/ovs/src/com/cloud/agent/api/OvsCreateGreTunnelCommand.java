@@ -16,7 +16,6 @@
 // under the License.
 package com.cloud.agent.api;
 
-
 public class OvsCreateGreTunnelCommand extends Command {
     String remoteIp;
     String key;
@@ -28,8 +27,7 @@ public class OvsCreateGreTunnelCommand extends Command {
         return true;
     }
 
-    public OvsCreateGreTunnelCommand(String remoteIp, String key, long from,
-            long to) {
+    public OvsCreateGreTunnelCommand(String remoteIp, String key, long from, long to) {
         this.remoteIp = remoteIp;
         this.key = key;
         this.from = from;

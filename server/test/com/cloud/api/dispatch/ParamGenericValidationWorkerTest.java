@@ -105,7 +105,7 @@ public class ParamGenericValidationWorkerTest {
         params.put("_", "");
         params.put("addedParam", "");
 
-        Account account = new AccountVO("testaccount", 1L, "networkdomain", (short) 0, "uuid");
+        Account account = new AccountVO("testaccount", 1L, "networkdomain", (short)0, "uuid");
         UserVO user = new UserVO(1, "testuser", "password", "firstname", "lastName", "email", "timezone", UUID.randomUUID().toString());
         CallContext.register(user, account);
         // Execute
@@ -129,7 +129,7 @@ public class ParamGenericValidationWorkerTest {
         params.put("addedParam", "");
         params.put(unknownParamKey, "");
 
-        Account account = new AccountVO("testaccount", 1L, "networkdomain", (short) 0, "uuid");
+        Account account = new AccountVO("testaccount", 1L, "networkdomain", (short)0, "uuid");
         UserVO user = new UserVO(1, "testuser", "password", "firstname", "lastName", "email", "timezone", UUID.randomUUID().toString());
         CallContext.register(user, account);
 
@@ -189,8 +189,7 @@ public class ParamGenericValidationWorkerTest {
     }
 }
 
-
-@APICommand(name=ParamGenericValidationWorkerTest.FAKE_CMD_NAME, responseObject=BaseResponse.class)
+@APICommand(name = ParamGenericValidationWorkerTest.FAKE_CMD_NAME, responseObject = BaseResponse.class)
 class FakeCmd extends BaseCmd {
 
     @Parameter(name = "addedParam")
@@ -205,17 +204,19 @@ class FakeCmd extends BaseCmd {
     public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
             NetworkRuleConflictException {
     }
+
     @Override
     public String getCommandName() {
         return null;
     }
+
     @Override
     public long getEntityOwnerId() {
         return 0;
     }
 }
 
-@APICommand(name=ParamGenericValidationWorkerTest.FAKE_CMD_ROLE_NAME, responseObject=BaseResponse.class)
+@APICommand(name = ParamGenericValidationWorkerTest.FAKE_CMD_ROLE_NAME, responseObject = BaseResponse.class)
 class FakeCmdWithRoleAdmin extends FakeCmd {
 
     @Parameter(name = "paramWithRole", authorized = {RoleType.Admin})

@@ -237,8 +237,7 @@ public class MockStorageManagerImpl extends ManagerBase implements MockStorageMa
             txn.close();
         }
 
-        VolumeTO volumeTo =
-            new VolumeTO(cmd.getVolumeId(), dskch.getType(), sf.getType(), sf.getUuid(), volume.getName(), storagePool.getMountPoint(), volume.getPath(),
+        VolumeTO volumeTo = new VolumeTO(cmd.getVolumeId(), dskch.getType(), sf.getType(), sf.getUuid(), volume.getName(), storagePool.getMountPoint(), volume.getPath(),
                 volume.getSize(), null);
 
         return new CreateAnswer(cmd, volumeTo);
@@ -455,8 +454,8 @@ public class MockStorageManagerImpl extends ManagerBase implements MockStorageMa
 
             Map<Long, TemplateProp> templateInfos = new HashMap<Long, TemplateProp>();
             for (MockVolumeVO volume : volumes) {
-                templateInfos.put(volume.getId(),
-                    new TemplateProp(volume.getName(), volume.getPath().replaceAll(storage.getMountPoint(), ""), volume.getSize(), volume.getSize(), true, false));
+                templateInfos.put(volume.getId(), new TemplateProp(volume.getName(), volume.getPath().replaceAll(storage.getMountPoint(), ""), volume.getSize(), volume.getSize(),
+                        true, false));
             }
             txn.commit();
             return new ListVolumeAnswer(cmd.getSecUrl(), templateInfos);
@@ -488,8 +487,8 @@ public class MockStorageManagerImpl extends ManagerBase implements MockStorageMa
 
             Map<String, TemplateProp> templateInfos = new HashMap<String, TemplateProp>();
             for (MockVolumeVO template : templates) {
-                templateInfos.put(template.getName(), new TemplateProp(template.getName(), template.getPath().replaceAll(storage.getMountPoint(), ""),
-                    template.getSize(), template.getSize(), true, false));
+                templateInfos.put(template.getName(),
+                        new TemplateProp(template.getName(), template.getPath().replaceAll(storage.getMountPoint(), ""), template.getSize(), template.getSize(), true, false));
             }
             return new ListTemplateAnswer(nfsUrl, templateInfos);
         } catch (Exception ex) {
@@ -572,8 +571,8 @@ public class MockStorageManagerImpl extends ManagerBase implements MockStorageMa
             txn = TransactionLegacy.open(TransactionLegacy.CLOUD_DB);
             txn.close();
         }
-        return new DownloadAnswer(String.valueOf(volume.getId()), 0, "Downloading", Status.DOWNLOAD_IN_PROGRESS, cmd.getName(), cmd.getName(), volume.getSize(),
-            volume.getSize(), null);
+        return new DownloadAnswer(String.valueOf(volume.getId()), 0, "Downloading", Status.DOWNLOAD_IN_PROGRESS, cmd.getName(), cmd.getName(), volume.getSize(), volume.getSize(),
+                null);
     }
 
     @Override
@@ -596,13 +595,12 @@ public class MockStorageManagerImpl extends ManagerBase implements MockStorageMa
                 volume.setStatus(Status.DOWNLOADED);
                 _mockVolumeDao.update(volume.getId(), volume);
                 txn.commit();
-                return new DownloadAnswer(cmd.getJobId(), 100, cmd, com.cloud.storage.VMTemplateStorageResourceAssoc.Status.DOWNLOADED, volume.getPath(),
-                    volume.getName());
+                return new DownloadAnswer(cmd.getJobId(), 100, cmd, com.cloud.storage.VMTemplateStorageResourceAssoc.Status.DOWNLOADED, volume.getPath(), volume.getName());
             } else {
                 _mockVolumeDao.update(volume.getId(), volume);
                 txn.commit();
-                return new DownloadAnswer(cmd.getJobId(), (int)(pct * 100.0), cmd, com.cloud.storage.VMTemplateStorageResourceAssoc.Status.DOWNLOAD_IN_PROGRESS,
-                    volume.getPath(), volume.getName());
+                return new DownloadAnswer(cmd.getJobId(), (int)(pct * 100.0), cmd, com.cloud.storage.VMTemplateStorageResourceAssoc.Status.DOWNLOAD_IN_PROGRESS, volume.getPath(),
+                        volume.getName());
             }
         } catch (Exception ex) {
             txn.rollback();
@@ -963,8 +961,8 @@ public class MockStorageManagerImpl extends ManagerBase implements MockStorageMa
                 txn.close();
             }
         }
-        return new StoragePoolInfo(storagePool.getUuid(), host.getPrivateIpAddress(), storagePool.getMountPoint(), storagePool.getMountPoint(),
-            storagePool.getPoolType(), storagePool.getCapacity(), storagePool.getCapacity());
+        return new StoragePoolInfo(storagePool.getUuid(), host.getPrivateIpAddress(), storagePool.getMountPoint(), storagePool.getMountPoint(), storagePool.getPoolType(),
+                storagePool.getCapacity(), storagePool.getCapacity());
     }
 
     @Override
@@ -1022,8 +1020,8 @@ public class MockStorageManagerImpl extends ManagerBase implements MockStorageMa
                 txn.close();
             }
         }
-        return new StoragePoolInfo(storagePool.getUuid(), host.getPrivateIpAddress(), storagePool.getMountPoint(), storagePool.getMountPoint(),
-            storagePool.getPoolType(), storagePool.getCapacity(), 0);
+        return new StoragePoolInfo(storagePool.getUuid(), host.getPrivateIpAddress(), storagePool.getMountPoint(), storagePool.getMountPoint(), storagePool.getPoolType(),
+                storagePool.getCapacity(), 0);
     }
 
     @Override

@@ -40,8 +40,7 @@ import com.cloud.network.rules.LoadBalancer;
 import com.cloud.network.rules.StickinessPolicy;
 import com.cloud.user.Account;
 
-@APICommand(name = "createLBStickinessPolicy", description = "Creates a Load Balancer stickiness policy ", responseObject = LBStickinessResponse.class, since = "3.0.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createLBStickinessPolicy", description = "Creates a Load Balancer stickiness policy ", responseObject = LBStickinessResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 @SuppressWarnings("rawtypes")
 public class CreateLBStickinessPolicyCmd extends BaseAsyncCreateCmd {
     public static final Logger s_logger = Logger.getLogger(CreateLBStickinessPolicyCmd.class.getName());
@@ -52,11 +51,7 @@ public class CreateLBStickinessPolicyCmd extends BaseAsyncCreateCmd {
     // ////////////// API parameters /////////////////////
     // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.LBID,
-               type = CommandType.UUID,
-               entityType = FirewallRuleResponse.class,
-               required = true,
-               description = "the ID of the load balancer rule")
+    @Parameter(name = ApiConstants.LBID, type = CommandType.UUID, entityType = FirewallRuleResponse.class, required = true, description = "the ID of the load balancer rule")
     private Long lbRuleId;
 
     @Parameter(name = ApiConstants.DESCRIPTION, type = CommandType.STRING, description = "the description of the LB Stickiness policy")
@@ -65,10 +60,7 @@ public class CreateLBStickinessPolicyCmd extends BaseAsyncCreateCmd {
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "name of the LB Stickiness policy")
     private String lbStickinessPolicyName;
 
-    @Parameter(name = ApiConstants.METHOD_NAME,
-               type = CommandType.STRING,
-               required = true,
-               description = "name of the LB Stickiness policy method, possible values can be obtained from ListNetworks API ")
+    @Parameter(name = ApiConstants.METHOD_NAME, type = CommandType.STRING, required = true, description = "name of the LB Stickiness policy method, possible values can be obtained from ListNetworks API ")
     private String stickinessMethodName;
 
     @Parameter(name = ApiConstants.PARAM_LIST, type = CommandType.MAP, description = "param list. Example: param[0].name=cookiename&param[0].value=LBCookie ")
@@ -76,7 +68,6 @@ public class CreateLBStickinessPolicyCmd extends BaseAsyncCreateCmd {
 
     @Parameter(name = ApiConstants.FOR_DISPLAY, type = CommandType.BOOLEAN, description = "an optional field, whether to the display the rule to the end user or not", since = "4.4", authorized = {RoleType.Admin})
     private Boolean display;
-
 
     // ///////////////////////////////////////////////////
     // ///////////////// Accessors ///////////////////////
@@ -89,7 +80,7 @@ public class CreateLBStickinessPolicyCmd extends BaseAsyncCreateCmd {
 
     @Override
     public boolean isDisplay() {
-        if(display == null)
+        if (display == null)
             return true;
         else
             return display;
@@ -131,7 +122,9 @@ public class CreateLBStickinessPolicyCmd extends BaseAsyncCreateCmd {
             return account.getId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
     @Override
@@ -143,7 +136,8 @@ public class CreateLBStickinessPolicyCmd extends BaseAsyncCreateCmd {
             CallContext.current().setEventDetails("Rule Id: " + getEntityId());
             success = _lbService.applyLBStickinessPolicy(this);
             if (success) {
-                // State might be different after the rule is applied, so get new object here
+                // State might be different after the rule is applied, so get
+                // new object here
                 policy = _entityMgr.findById(StickinessPolicy.class, getEntityId());
                 LoadBalancer lb = _lbService.findById(policy.getLoadBalancerId());
                 LBStickinessResponse spResponse = _responseGenerator.createLBStickinessPolicyResponse(policy, lb);

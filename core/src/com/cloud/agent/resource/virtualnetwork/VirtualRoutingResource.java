@@ -85,10 +85,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * VirtualNetworkResource controls and configures virtual networking
  *
- * @config
- * {@table
- *    || Param Name | Description | Values | Default ||
- *  }
+ * @config {@table || Param Name | Description | Values | Default || * }
  **/
 public class VirtualRoutingResource {
     protected class VRScripts {
@@ -127,7 +124,7 @@ public class VirtualRoutingResource {
 
     private static final Logger s_logger = Logger.getLogger(VirtualRoutingResource.class);
     private VirtualRouterDeployer _vrDeployer;
-    private Map <String, Queue> _vrAggregateCommandsSet;
+    private Map<String, Queue> _vrAggregateCommandsSet;
     protected Map<String, Lock> _vrLockMap = new HashMap<String, Lock>();
 
     private String _name;
@@ -175,7 +172,7 @@ public class VirtualRoutingResource {
                 _vrAggregateCommandsSet.get(routerName).add(cmd);
                 aggregated = true;
                 // Clean up would be done after command has been executed
-                //TODO: Deal with group answer as well
+                // TODO: Deal with group answer as well
                 return new Answer(cmd);
             }
 
@@ -279,7 +276,7 @@ public class VirtualRoutingResource {
         } else if (cmd instanceof GetDomRVersionCmd) {
             return execute((GetDomRVersionCmd)cmd);
         } else if (cmd instanceof CheckS2SVpnConnectionsCommand) {
-            return execute((CheckS2SVpnConnectionsCommand) cmd);
+            return execute((CheckS2SVpnConnectionsCommand)cmd);
         } else if (cmd instanceof GetRouterAlertsCommand) {
             return execute((GetRouterAlertsCommand)cmd);
         } else {
@@ -324,19 +321,21 @@ public class VirtualRoutingResource {
                     results[i].setDetails(c.getInfo() + " - failed: " + results[i].getDetails());
                 }
             }
-            i ++;
+            i++;
         }
-        i = 0; j = 0;
+        i = 0;
+        j = 0;
         while (j < answersCount) {
             resultsString[j] = results[i].getDetails();
             if (!results[i].isSuccess()) {
                 finalResult = false;
             }
-            // Fill the resultsString with the last result of execution, mostly in 1:n
+            // Fill the resultsString with the last result of execution, mostly
+            // in 1:n
             if (i < cfg.size() - 1) {
-                i ++;
+                i++;
             }
-            j ++;
+            j++;
         }
         return new GroupAnswer(cmd, finalResult, answersCount, resultsString);
     }
@@ -450,7 +449,7 @@ public class VirtualRoutingResource {
             }
         } else {
             for (StaticNatRuleTO rule : cmd.getRules()) {
-                //1:1 NAT needs instanceip;publicip;domrip;op
+                // 1:1 NAT needs instanceip;publicip;domrip;op
                 StringBuilder args = new StringBuilder();
                 args.append(rule.revoked() ? " -D " : " -A ");
                 args.append(" -l ").append(rule.getSrcIp());
@@ -614,7 +613,8 @@ public class VirtualRoutingResource {
         for (IpAliasTO ipAliasTO : revokedIpAliasTOs) {
             args = args + ipAliasTO.getAlias_count() + ":" + ipAliasTO.getRouterip() + ":" + ipAliasTO.getNetmask() + "-";
         }
-        //this is to ensure that thre is some argument passed to the deleteipAlias script  when there are no revoked rules.
+        // this is to ensure that thre is some argument passed to the
+        // deleteipAlias script when there are no revoked rules.
         args = args + "- ";
         List<IpAliasTO> activeIpAliasTOs = cmd.getCreateIpAliasTos();
         for (IpAliasTO ipAliasTO : activeIpAliasTOs) {
@@ -748,7 +748,7 @@ public class VirtualRoutingResource {
         LinkedList<ConfigItem> cfg = new LinkedList<>();
 
         String config = cmd.getConfiguration();
-        String disableMonitoring =  cmd.getAccessDetail(NetworkElementCommand.ROUTER_MONITORING_ENABLE);
+        String disableMonitoring = cmd.getAccessDetail(NetworkElementCommand.ROUTER_MONITORING_ENABLE);
 
         String args = " -c " + config;
         if (disableMonitoring != null) {
@@ -781,12 +781,13 @@ public class VirtualRoutingResource {
         String dev = "eth" + nic.getDeviceId();
         String netmask = NetUtils.getSubNet(routerGIP, nic.getNetmask());
         String args = "";
-        if(cmd.isAdd() == false) {
-            //pass the argument to script to delete the network
-            args +=" -D";
+        if (cmd.isAdd() == false) {
+            // pass the argument to script to delete the network
+            args += " -D";
         } else {
-            // pass create option argument if the ip needs to be added to eth device
-            args +=" -C";
+            // pass create option argument if the ip needs to be added to eth
+            // device
+            args += " -C";
         }
         args += " -M " + nic.getMac();
         args += " -d " + dev;
@@ -931,7 +932,7 @@ public class VirtualRoutingResource {
                 }
             }
         } else {
-            for (IpAddressTO ip: cmd.getIpAddresses()) {
+            for (IpAddressTO ip : cmd.getIpAddresses()) {
                 String args = "";
                 if (ip.isAdd()) {
                     args += "-A";
@@ -1157,7 +1158,7 @@ public class VirtualRoutingResource {
                     }
                 }
                 String cfgFilePath = "/var/cache/cloud/";
-                String cfgFileName = "VR-"+ UUID.randomUUID().toString() + ".cfg";
+                String cfgFileName = "VR-" + UUID.randomUUID().toString() + ".cfg";
                 ExecutionResult result = _vrDeployer.createFileInVR(cmd.getRouterAccessIp(), cfgFilePath, cfgFileName, sb.toString());
                 if (!result.isSuccess()) {
                     return new Answer(cmd, false, result.getDetails());

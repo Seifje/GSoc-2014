@@ -87,27 +87,32 @@ public class GlobalLoadBalancingRulesServiceImplTest extends TestCase {
         s_logger.info("Running tests for CreateGlobalLoadBalancerRule() service API");
 
         /*
-         * TEST 1: given valid parameters CreateGlobalLoadBalancerRule should succeed
+         * TEST 1: given valid parameters CreateGlobalLoadBalancerRule should
+         * succeed
          */
         runCreateGlobalLoadBalancerRulePostiveTest();
 
         /*
-         * TEST 2: given invalid algorithm CreateGlobalLoadBalancerRule should fail
+         * TEST 2: given invalid algorithm CreateGlobalLoadBalancerRule should
+         * fail
          */
         runCreateGlobalLoadBalancerRuleInvalidAlgorithm();
 
         /*
-         * TEST 3: given invalid persistence method CreateGlobalLoadBalancerRule should fail
+         * TEST 3: given invalid persistence method CreateGlobalLoadBalancerRule
+         * should fail
          */
         runCreateGlobalLoadBalancerRuleInvalidStickyMethod();
 
         /*
-         * TEST 4: given invalid service type CreateGlobalLoadBalancerRule should fail
+         * TEST 4: given invalid service type CreateGlobalLoadBalancerRule
+         * should fail
          */
         runCreateGlobalLoadBalancerRuleInvalidServiceType();
 
         /*
-         * TEST 5: given 'domain name' that is already used by a different GSLB rule CreateGlobalLoadBalancerRule should fail
+         * TEST 5: given 'domain name' that is already used by a different GSLB
+         * rule CreateGlobalLoadBalancerRule should fail
          */
         runCreateGlobalLoadBalancerRuleInvalidDomainName();
     }
@@ -118,19 +123,22 @@ public class GlobalLoadBalancingRulesServiceImplTest extends TestCase {
         s_logger.info("Running tests for AssignToGlobalLoadBalancerRule() service API");
 
         /*
-         * TEST 1: given valid gslb rule id, valid lb rule id, and  caller has access to both the rules
-         * assignToGlobalLoadBalancerRule service API should succeed
+         * TEST 1: given valid gslb rule id, valid lb rule id, and caller has
+         * access to both the rules assignToGlobalLoadBalancerRule service API
+         * should succeed
          */
         runAssignToGlobalLoadBalancerRuleTest();
 
         /*
-         * TEST 2: given valid gslb rule id, two valid Lb rules but both belong to same zone then
-         * assignToGlobalLoadBalancerRule service API should fail
+         * TEST 2: given valid gslb rule id, two valid Lb rules but both belong
+         * to same zone then assignToGlobalLoadBalancerRule service API should
+         * fail
          */
         runAssignToGlobalLoadBalancerRuleTestSameZoneLb();
 
         /*
-         * TEST 3: if gslb rule is in revoke state assignToGlobalLoadBalancerRule service API should fail
+         * TEST 3: if gslb rule is in revoke state
+         * assignToGlobalLoadBalancerRule service API should fail
          */
         runAssignToGlobalLoadBalancerRuleTestRevokedState();
     }
@@ -141,20 +149,22 @@ public class GlobalLoadBalancingRulesServiceImplTest extends TestCase {
         s_logger.info("Running tests for RemoveFromGlobalLoadBalancerRule() service API");
 
         /*
-         * TEST 1: given valid gslb rule id, valid lb rule id and is assigned to given gslb rule id
-         * then RemoveFromGlobalLoadBalancerRule service API should succeed
+         * TEST 1: given valid gslb rule id, valid lb rule id and is assigned to
+         * given gslb rule id then RemoveFromGlobalLoadBalancerRule service API
+         * should succeed
          */
         runRemoveFromGlobalLoadBalancerRuleTest();
 
         /*
-         * TEST 2: given valid gslb rule id, valid lb rule id but NOT assigned to given gslb rule id
-         * then RemoveFromGlobalLoadBalancerRule service API should fail
+         * TEST 2: given valid gslb rule id, valid lb rule id but NOT assigned
+         * to given gslb rule id then RemoveFromGlobalLoadBalancerRule service
+         * API should fail
          */
         runRemoveFromGlobalLoadBalancerRuleTestUnassignedLb();
 
         /*
-         * TEST 3: given valid gslb rule id, INVALID lb rule id then RemoveFromGlobalLoadBalancerRule
-         * service API should fail
+         * TEST 3: given valid gslb rule id, INVALID lb rule id then
+         * RemoveFromGlobalLoadBalancerRule service API should fail
          */
         runRemoveFromGlobalLoadBalancerRuleTestInvalidLb();
     }
@@ -165,14 +175,16 @@ public class GlobalLoadBalancingRulesServiceImplTest extends TestCase {
         s_logger.info("Running tests for DeleteGlobalLoadBalancerRule() service API");
 
         /*
-         * TEST 1: given valid gslb rule id with assigned Lb rules, DeleteGlobalLoadBalancerRule()
-         * call should succeed, and Gslb rule should be set to revoke state
+         * TEST 1: given valid gslb rule id with assigned Lb rules,
+         * DeleteGlobalLoadBalancerRule() call should succeed, and Gslb rule
+         * should be set to revoke state
          */
         runDeleteGlobalLoadBalancerRuleTestWithNoLbRules();
 
         /*
-         * TEST 2: given valid gslb rule id with assigned Lb rules, DeleteGlobalLoadBalancerRule()
-         * call should succeed, and Gslb rule should be set to revoke state
+         * TEST 2: given valid gslb rule id with assigned Lb rules,
+         * DeleteGlobalLoadBalancerRule() call should succeed, and Gslb rule
+         * should be set to revoke state
          */
         runDeleteGlobalLoadBalancerRuleTestWithLbRules();
 
@@ -526,8 +538,8 @@ public class GlobalLoadBalancingRulesServiceImplTest extends TestCase {
         gslbRuleId.setAccessible(true);
         gslbRuleId.set(assignCmd, new Long(1));
 
-        GlobalLoadBalancerRuleVO gslbRule =
-            new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1, GlobalLoadBalancerRule.State.Active);
+        GlobalLoadBalancerRuleVO gslbRule = new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1,
+                GlobalLoadBalancerRule.State.Active);
         when(gslbServiceImpl._gslbRuleDao.findById(new Long(1))).thenReturn(gslbRule);
 
         LoadBalancerVO lbRule = new LoadBalancerVO();
@@ -589,8 +601,8 @@ public class GlobalLoadBalancingRulesServiceImplTest extends TestCase {
         gslbRuleId.setAccessible(true);
         gslbRuleId.set(assignCmd, new Long(1));
 
-        GlobalLoadBalancerRuleVO gslbRule =
-            new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 3, 1, GlobalLoadBalancerRule.State.Active);
+        GlobalLoadBalancerRuleVO gslbRule = new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 3, 1,
+                GlobalLoadBalancerRule.State.Active);
         when(gslbServiceImpl._gslbRuleDao.findById(new Long(1))).thenReturn(gslbRule);
 
         LoadBalancerVO lbRule1 = new LoadBalancerVO();
@@ -674,8 +686,8 @@ public class GlobalLoadBalancingRulesServiceImplTest extends TestCase {
         gslbRuleId.setAccessible(true);
         gslbRuleId.set(assignCmd, new Long(1));
 
-        GlobalLoadBalancerRuleVO gslbRule =
-            new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1, GlobalLoadBalancerRule.State.Revoke);
+        GlobalLoadBalancerRuleVO gslbRule = new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1,
+                GlobalLoadBalancerRule.State.Revoke);
         when(gslbServiceImpl._gslbRuleDao.findById(new Long(1))).thenReturn(gslbRule);
 
         LoadBalancerVO lbRule = new LoadBalancerVO();
@@ -732,8 +744,8 @@ public class GlobalLoadBalancingRulesServiceImplTest extends TestCase {
         gslbRuleId.setAccessible(true);
         gslbRuleId.set(removeFromGslbCmd, new Long(1));
 
-        GlobalLoadBalancerRuleVO gslbRule =
-            new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1, GlobalLoadBalancerRule.State.Active);
+        GlobalLoadBalancerRuleVO gslbRule = new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1,
+                GlobalLoadBalancerRule.State.Active);
         when(gslbServiceImpl._gslbRuleDao.findById(new Long(1))).thenReturn(gslbRule);
 
         LoadBalancerVO lbRule = new LoadBalancerVO();
@@ -804,8 +816,8 @@ public class GlobalLoadBalancingRulesServiceImplTest extends TestCase {
         gslbRuleId.setAccessible(true);
         gslbRuleId.set(removeFromGslbCmd, new Long(1));
 
-        GlobalLoadBalancerRuleVO gslbRule =
-            new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1, GlobalLoadBalancerRule.State.Active);
+        GlobalLoadBalancerRuleVO gslbRule = new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1,
+                GlobalLoadBalancerRule.State.Active);
         when(gslbServiceImpl._gslbRuleDao.findById(new Long(1))).thenReturn(gslbRule);
 
         LoadBalancerVO lbRule = new LoadBalancerVO();
@@ -865,8 +877,8 @@ public class GlobalLoadBalancingRulesServiceImplTest extends TestCase {
         gslbRuleId.setAccessible(true);
         gslbRuleId.set(removeFromGslbCmd, new Long(1));
 
-        GlobalLoadBalancerRuleVO gslbRule =
-            new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1, GlobalLoadBalancerRule.State.Active);
+        GlobalLoadBalancerRuleVO gslbRule = new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1,
+                GlobalLoadBalancerRule.State.Active);
         when(gslbServiceImpl._gslbRuleDao.findById(new Long(1))).thenReturn(gslbRule);
 
         Field lbRules = _class.getDeclaredField("loadBalancerRulesIds");
@@ -909,8 +921,8 @@ public class GlobalLoadBalancingRulesServiceImplTest extends TestCase {
         gslbRuleId.setAccessible(true);
         gslbRuleId.set(deleteCmd, new Long(1));
 
-        GlobalLoadBalancerRuleVO gslbRule =
-            new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1, GlobalLoadBalancerRule.State.Active);
+        GlobalLoadBalancerRuleVO gslbRule = new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1,
+                GlobalLoadBalancerRule.State.Active);
         when(gslbServiceImpl._gslbRuleDao.findById(new Long(1))).thenReturn(gslbRule);
 
         GlobalLoadBalancerLbRuleMapVO gslbLbMap = new GlobalLoadBalancerLbRuleMapVO();
@@ -955,8 +967,8 @@ public class GlobalLoadBalancingRulesServiceImplTest extends TestCase {
         gslbRuleId.setAccessible(true);
         gslbRuleId.set(deleteCmd, new Long(1));
 
-        GlobalLoadBalancerRuleVO gslbRule =
-            new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1, GlobalLoadBalancerRule.State.Active);
+        GlobalLoadBalancerRuleVO gslbRule = new GlobalLoadBalancerRuleVO("test-gslb-rule", "test-gslb-rule", "test-domain", "roundrobin", "sourceip", "tcp", 1, 1, 1,
+                GlobalLoadBalancerRule.State.Active);
         when(gslbServiceImpl._gslbRuleDao.findById(new Long(1))).thenReturn(gslbRule);
 
         GlobalLoadBalancerLbRuleMapVO gslbLmMap = new GlobalLoadBalancerLbRuleMapVO(1, 1, 1);

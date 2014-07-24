@@ -53,7 +53,8 @@ public class LicenseAssignmentManagerMO extends BaseMO {
         // Retrieve host license properties
         List<KeyAnyValue> props = getHostLicenseProperties(hostMor);
 
-        // Check host license properties to see if specified feature is supported by the license.
+        // Check host license properties to see if specified feature is
+        // supported by the license.
         for (KeyAnyValue prop : props) {
             String key = prop.getKey();
             if (key.equalsIgnoreCase(LICENSE_INFO_FEATURE)) {

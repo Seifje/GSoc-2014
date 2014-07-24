@@ -39,9 +39,12 @@ public class S3ListAllMyBucketsEntry {
         // java.util.Date d = cal.getTime();
 
         // java.util.Date d = creationDate.getTime();
-        // com.cloud.bridge.util.ISO8601SimpleDateTimeFormat sdf = new com.cloud.bridge.util.ISO8601SimpleDateTimeFormat();
+        // com.cloud.bridge.util.ISO8601SimpleDateTimeFormat sdf = new
+        // com.cloud.bridge.util.ISO8601SimpleDateTimeFormat();
         // sdf.format(d);
-        // java.lang.StringBuffer b = com.cloud.bridge.util.ISO8601SimpleDateTimeFormat.format(d); return b;
+        // java.lang.StringBuffer b =
+        // com.cloud.bridge.util.ISO8601SimpleDateTimeFormat.format(d); return
+        // b;
 
         return creationDate;
 

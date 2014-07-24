@@ -73,7 +73,8 @@ public class CiscoNexusVSMDeviceDaoImpl extends GenericDaoBase<CiscoNexusVSMDevi
         fullTableSearch = createSearchBuilder();
         fullTableSearch.done();
 
-        // We may add more and conditions by specifying more fields, like say, accountId.
+        // We may add more and conditions by specifying more fields, like say,
+        // accountId.
     }
 
     @Override

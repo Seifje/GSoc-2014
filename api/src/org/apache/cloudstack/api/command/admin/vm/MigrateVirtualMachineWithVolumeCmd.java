@@ -44,43 +44,28 @@ import com.cloud.user.Account;
 import com.cloud.uservm.UserVm;
 import com.cloud.vm.VirtualMachine;
 
-@APICommand(name = "migrateVirtualMachineWithVolume",
-            description = "Attempts Migration of a VM with its volumes to a different host",
-        responseObject = UserVmResponse.class, entityType = {VirtualMachine.class},
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = true)
+@APICommand(name = "migrateVirtualMachineWithVolume", description = "Attempts Migration of a VM with its volumes to a different host", responseObject = UserVmResponse.class, entityType = {VirtualMachine.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = true)
 public class MigrateVirtualMachineWithVolumeCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(MigrateVMCmd.class.getName());
 
     private static final String s_name = "migratevirtualmachinewithvolumeresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.HOST_ID,
-               type = CommandType.UUID,
-               entityType = HostResponse.class,
-               required = true,
-               description = "Destination Host ID to migrate VM to.")
+    @Parameter(name = ApiConstants.HOST_ID, type = CommandType.UUID, entityType = HostResponse.class, required = true, description = "Destination Host ID to migrate VM to.")
     private Long hostId;
 
-    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID,
-               type = CommandType.UUID,
-               entityType = UserVmResponse.class,
-               required = true,
-               description = "the ID of the virtual machine")
+    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID, type = CommandType.UUID, entityType = UserVmResponse.class, required = true, description = "the ID of the virtual machine")
     private Long virtualMachineId;
 
-    @Parameter(name = ApiConstants.MIGRATE_TO,
-               type = CommandType.MAP,
-               required = false,
-            description = "Map of pool to which each volume should be migrated (volume/pool pair)")
+    @Parameter(name = ApiConstants.MIGRATE_TO, type = CommandType.MAP, required = false, description = "Map of pool to which each volume should be migrated (volume/pool pair)")
     private Map migrateVolumeTo;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getHostId() {
         return hostId;
@@ -105,9 +90,9 @@ public class MigrateVirtualMachineWithVolumeCmd extends BaseAsyncCmd {
         return volumeToPoolMap;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

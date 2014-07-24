@@ -112,7 +112,7 @@ public class NetworkACLItemDaoImpl extends GenericDaoBase<NetworkACLItemVO, Long
         SearchCriteria<NetworkACLItemVO> sc = AllFieldsSearch.create();
         sc.setParameters("aclId", aclId);
         List<NetworkACLItemVO> list = listBy(sc);
-        for(NetworkACLItemVO item :list) {
+        for (NetworkACLItemVO item : list) {
             loadCidrs(item);
         }
         return list;
@@ -132,7 +132,7 @@ public class NetworkACLItemDaoImpl extends GenericDaoBase<NetworkACLItemVO, Long
         sc.setParameters("aclId", aclId);
         sc.setParameters("number", number);
         NetworkACLItemVO vo = findOneBy(sc);
-        if(vo != null) {
+        if (vo != null) {
             loadCidrs(vo);
         }
         return vo;

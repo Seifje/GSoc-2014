@@ -42,8 +42,9 @@ import com.cloud.utils.db.TransactionLegacy;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 /**
- * DataCenterVnetDaoImpl maintains the one-to-many relationship between
- * data center/physical_network and the vnet that appears within the physical network.
+ * DataCenterVnetDaoImpl maintains the one-to-many relationship between data
+ * center/physical_network and the vnet that appears within the physical
+ * network.
  */
 @Component
 @DB
@@ -127,9 +128,8 @@ public class DataCenterVnetDaoImpl extends GenericDaoBase<DataCenterVnetVO, Long
 
     @Override
     @DB
-    //In the List<string> argument each string is a vlan. not a vlanRange.
-        public
-        void add(long dcId, long physicalNetworkId, List<String> vnets) {
+    // In the List<string> argument each string is a vlan. not a vlanRange.
+    public void add(long dcId, long physicalNetworkId, List<String> vnets) {
         String insertVnet = "INSERT INTO `cloud`.`op_dc_vnet_alloc` (vnet, data_center_id, physical_network_id) VALUES ( ?, ?, ?)";
 
         TransactionLegacy txn = TransactionLegacy.currentTxn();
@@ -149,7 +149,7 @@ public class DataCenterVnetDaoImpl extends GenericDaoBase<DataCenterVnetVO, Long
         }
     }
 
-    //In the List<string> argument each string is a vlan. not a vlanRange.
+    // In the List<string> argument each string is a vlan. not a vlanRange.
     @Override
     public void deleteVnets(TransactionLegacy txn, long dcId, long physicalNetworkId, List<String> vnets) {
         String deleteVnet = "DELETE FROM `cloud`.`op_dc_vnet_alloc` WHERE data_center_id=? AND physical_network_id=? AND taken IS NULL AND vnet=?";
@@ -265,7 +265,7 @@ public class DataCenterVnetDaoImpl extends GenericDaoBase<DataCenterVnetVO, Long
         AccountGuestVlanMapSearch = _accountGuestVlanMapDao.createSearchBuilder();
         AccountGuestVlanMapSearch.and("accountId", AccountGuestVlanMapSearch.entity().getAccountId(), SearchCriteria.Op.EQ);
         countVnetsDedicatedToAccount.join("AccountGuestVlanMapSearch", AccountGuestVlanMapSearch, countVnetsDedicatedToAccount.entity().getAccountGuestVlanMapId(),
-            AccountGuestVlanMapSearch.entity().getId(), JoinBuilder.JoinType.INNER);
+                AccountGuestVlanMapSearch.entity().getId(), JoinBuilder.JoinType.INNER);
         countVnetsDedicatedToAccount.select(null, Func.COUNT, countVnetsDedicatedToAccount.entity().getId());
         countVnetsDedicatedToAccount.done();
         AccountGuestVlanMapSearch.done();

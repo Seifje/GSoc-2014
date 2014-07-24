@@ -133,9 +133,18 @@ public class TestDbSetup {
         int port = TestDbSetup.findFreePort();
         TestDbSetup.startMysqlServer(port, startScript);
         copyDbPropertiesFile();
-        /* both of these files needs to have mysql port, username password details */
-        TestDbSetup.updateSqlPort(port, "db.properties"); /* for cloudstack runtime */
-        TestDbSetup.updateSqlPort(port, "../../../utils/conf/db.properties.override"); /* for deploying db */
+        /*
+         * both of these files needs to have mysql port, username password
+         * details
+         */
+        TestDbSetup.updateSqlPort(port, "db.properties"); /*
+                                                          * for cloudstack
+                                                          * runtime
+                                                          */
+        TestDbSetup.updateSqlPort(port, "../../../utils/conf/db.properties.override"); /*
+                                                                                       * for deploying
+                                                                                       * db
+                                                                                       */
         TestDbSetup.initCloudstackDb();
         return port;
     }

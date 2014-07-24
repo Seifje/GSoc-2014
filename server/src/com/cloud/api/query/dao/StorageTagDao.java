@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.apache.cloudstack.api.response.StorageTagResponse;
 
-
 import com.cloud.api.query.vo.StorageTagVO;
 import com.cloud.utils.db.GenericDao;
 
@@ -28,13 +27,18 @@ public interface StorageTagDao extends GenericDao<StorageTagVO, Long> {
 
     StorageTagResponse newStorageTagResponse(StorageTagVO host);
 
-    /*  StorageTagResponse setStorageTagResponse(StorageTagResponse response, StorageTagVO host);
-
-   StorageTagResponse newStoragePoolForMigrationResponse(StoragePoolJoinVO host);
-
-    StorageTagResponse setStoragePoolForMigrationResponse(StorageTagResponse response, StoragePoolJoinVO host);
-
-    List<StoragePoolJoinVO> newStoragePoolView(StoragePool group);*/
+    /*
+     * StorageTagResponse setStorageTagResponse(StorageTagResponse response,
+     * StorageTagVO host);
+     *
+     * StorageTagResponse newStoragePoolForMigrationResponse(StoragePoolJoinVO
+     * host);
+     *
+     * StorageTagResponse setStoragePoolForMigrationResponse(StorageTagResponse
+     * response, StoragePoolJoinVO host);
+     *
+     * List<StoragePoolJoinVO> newStoragePoolView(StoragePool group);
+     */
 
     List<StorageTagVO> searchByIds(Long... spIds);
 

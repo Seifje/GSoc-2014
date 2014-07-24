@@ -33,9 +33,9 @@ import com.cloud.utils.Pair;
 
 /**
  * VmWorkJobHandlerProxy can not be used as standalone due to run-time
- * reflection usage in its implementation, run-time reflection conflicts with Spring proxy mode.
- * It means that we can not instantiate VmWorkJobHandlerProxy beans directly in Spring and expect
- * it can handle VmWork directly from there.
+ * reflection usage in its implementation, run-time reflection conflicts with
+ * Spring proxy mode. It means that we can not instantiate VmWorkJobHandlerProxy
+ * beans directly in Spring and expect it can handle VmWork directly from there.
  *
  */
 public class VmWorkJobHandlerProxy implements VmWorkJobHandler {
@@ -114,7 +114,8 @@ public class VmWorkJobHandlerProxy implements VmWorkJobHandler {
             } catch (InvocationTargetException e) {
                 s_logger.error("Invocation exception, caused by: " + e.getCause());
 
-                // legacy CloudStack code relies on checked exception for error handling
+                // legacy CloudStack code relies on checked exception for error
+                // handling
                 // we need to re-throw the real exception here
                 if (e.getCause() != null && e.getCause() instanceof Exception) {
                     s_logger.info("Rethrow exception " + e.getCause());

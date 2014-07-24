@@ -42,13 +42,16 @@ public interface VpcService {
      * @param vpcName
      * @param displayText
      * @param cidr
-     * @param networkDomain TODO
-     * @param displayVpc TODO
+     * @param networkDomain
+     *            TODO
+     * @param displayVpc
+     *            TODO
      * @return
-     * @throws ResourceAllocationException TODO
+     * @throws ResourceAllocationException
+     *             TODO
      */
     public Vpc createVpc(long zoneId, long vpcOffId, long vpcOwnerId, String vpcName, String displayText, String cidr, String networkDomain, Boolean displayVpc)
-        throws ResourceAllocationException;
+            throws ResourceAllocationException;
 
     /**
      * Deletes a VPC
@@ -67,8 +70,10 @@ public interface VpcService {
      * @param vpcId
      * @param vpcName
      * @param displayText
-     * @param customId TODO
-     * @param displayVpc TODO
+     * @param customId
+     *            TODO
+     * @param displayVpc
+     *            TODO
      * @return
      */
     public Vpc updateVpc(long vpcId, String vpcName, String displayText, String customId, Boolean displayVpc);
@@ -81,31 +86,41 @@ public interface VpcService {
      * @param displayText
      * @param supportedServicesStr
      * @param cidr
-     * @param state TODO
+     * @param state
+     *            TODO
      * @param accountName
      * @param domainId
      * @param keyword
      * @param startIndex
      * @param pageSizeVal
-     * @param zoneId TODO
-     * @param isRecursive TODO
-     * @param listAll TODO
-     * @param restartRequired TODO
-     * @param tags TODO
-     * @param projectId TODO
-     * @param display TODO
+     * @param zoneId
+     *            TODO
+     * @param isRecursive
+     *            TODO
+     * @param listAll
+     *            TODO
+     * @param restartRequired
+     *            TODO
+     * @param tags
+     *            TODO
+     * @param projectId
+     *            TODO
+     * @param display
+     *            TODO
      * @param vpc
      * @return
      */
     public List<? extends Vpc> listVpcs(Long id, String vpcName, String displayText, List<String> supportedServicesStr, String cidr, Long vpcOffId, String state,
-        String accountName, Long domainId, String keyword, Long startIndex, Long pageSizeVal, Long zoneId, Boolean isRecursive, Boolean listAll, Boolean restartRequired,
-        Map<String, String> tags, Long projectId, Boolean display);
+            String accountName, Long domainId, String keyword, Long startIndex, Long pageSizeVal, Long zoneId, Boolean isRecursive, Boolean listAll, Boolean restartRequired,
+            Map<String, String> tags, Long projectId, Boolean display);
 
     /**
-     * Starts VPC which includes starting VPC provider and applying all the neworking rules on the backend
+     * Starts VPC which includes starting VPC provider and applying all the
+     * neworking rules on the backend
      *
      * @param vpcId
-     * @param destroyOnFailure TODO
+     * @param destroyOnFailure
+     *            TODO
      * @return
      * @throws InsufficientCapacityException
      * @throws ResourceUnavailableException
@@ -114,7 +129,8 @@ public interface VpcService {
     boolean startVpc(long vpcId, boolean destroyOnFailure) throws ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException;
 
     /**
-     * Shuts down the VPC which includes shutting down all VPC provider and rules cleanup on the backend
+     * Shuts down the VPC which includes shutting down all VPC provider and
+     * rules cleanup on the backend
      *
      * @param vpcId
      * @return
@@ -144,7 +160,8 @@ public interface VpcService {
      * Persists VPC private gateway in the Database.
      *
      *
-     * @param vpcId TODO
+     * @param vpcId
+     *            TODO
      * @param physicalNetworkId
      * @param vlan
      * @param ipAddress
@@ -160,13 +177,14 @@ public interface VpcService {
      * @throws ResourceAllocationException
      */
     public PrivateGateway createVpcPrivateGateway(long vpcId, Long physicalNetworkId, String vlan, String ipAddress, String gateway, String netmask, long gatewayOwnerId,
-        Long networkOfferingId, Boolean isSoruceNat, Long aclId) throws ResourceAllocationException, ConcurrentOperationException, InsufficientCapacityException;
+            Long networkOfferingId, Boolean isSoruceNat, Long aclId) throws ResourceAllocationException, ConcurrentOperationException, InsufficientCapacityException;
 
     /**
      * Applies VPC private gateway on the backend, so it becomes functional
      *
      * @param gatewayId
-     * @param destroyOnFailure TODO
+     * @param destroyOnFailure
+     *            TODO
      * @return
      * @throws ResourceUnavailableException
      * @throws ConcurrentOperationException
@@ -246,6 +264,6 @@ public interface VpcService {
      * @throws ConcurrentOperationException
      */
     IpAddress associateIPToVpc(long ipId, long vpcId) throws ResourceAllocationException, ResourceUnavailableException, InsufficientAddressCapacityException,
-        ConcurrentOperationException;
+    ConcurrentOperationException;
 
 }

@@ -147,8 +147,7 @@ public class PipelineImpl implements Pipeline {
             String id = element.getId();
 
             if (this.elements.containsKey(id))
-                throw new RuntimeException("This pipeline already contains element with same ID. New element: " + element + ", existing element: "
-                        + this.elements.get(id) + ".");
+                throw new RuntimeException("This pipeline already contains element with same ID. New element: " + element + ", existing element: " + this.elements.get(id) + ".");
 
             this.elements.put(id, element);
         }
@@ -187,8 +186,7 @@ public class PipelineImpl implements Pipeline {
             elements[i] = get(elementName);
 
             if (elements[i] == null)
-                throw new RuntimeException("Cannot find element by name in this pipeline. Element name: \"" + elementName + "\" (" + elementNames[i] + "), pipeline: "
-                        + this + ".");
+                throw new RuntimeException("Cannot find element by name in this pipeline. Element name: \"" + elementName + "\" (" + elementNames[i] + "), pipeline: " + this + ".");
 
             i++;
         }

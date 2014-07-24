@@ -20,8 +20,8 @@ import com.cloud.org.Cluster;
 import com.cloud.utils.SerialVersionUID;
 
 /**
- * virtual machine.  The type gives the type of virtual machine we are
- * trying to start.
+ * virtual machine. The type gives the type of virtual machine we are trying to
+ * start.
  */
 public class InsufficientServerCapacityException extends InsufficientCapacityException {
 

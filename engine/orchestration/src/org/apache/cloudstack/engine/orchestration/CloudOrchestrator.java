@@ -99,8 +99,8 @@ public class CloudOrchestrator implements OrchestrationService {
     public CloudOrchestrator() {
     }
 
-    public VirtualMachineEntity createFromScratch(String uuid, String iso, String os, String hypervisor, String hostName, int cpu, int speed, long memory,
-        List<String> networks, List<String> computeTags, Map<String, String> details, String owner) {
+    public VirtualMachineEntity createFromScratch(String uuid, String iso, String os, String hypervisor, String hostName, int cpu, int speed, long memory, List<String> networks,
+            List<String> computeTags, Map<String, String> details, String owner) {
         return null;
     }
 
@@ -153,17 +153,19 @@ public class CloudOrchestrator implements OrchestrationService {
     }
 
     @Override
-    public VirtualMachineEntity createVirtualMachine(String id, String owner, String templateId, String hostName, String displayName, String hypervisor, int cpu,
-        int speed, long memory, Long diskSize, List<String> computeTags, List<String> rootDiskTags, Map<String, NicProfile> networkNicMap, DeploymentPlan plan,
-        Long rootDiskSize) throws InsufficientCapacityException {
+    public VirtualMachineEntity createVirtualMachine(String id, String owner, String templateId, String hostName, String displayName, String hypervisor, int cpu, int speed,
+            long memory, Long diskSize, List<String> computeTags, List<String> rootDiskTags, Map<String, NicProfile> networkNicMap, DeploymentPlan plan, Long rootDiskSize)
+            throws InsufficientCapacityException {
 
-        // VirtualMachineEntityImpl vmEntity = new VirtualMachineEntityImpl(id, owner, hostName, displayName, cpu, speed, memory, computeTags, rootDiskTags, networks,
+        // VirtualMachineEntityImpl vmEntity = new VirtualMachineEntityImpl(id,
+        // owner, hostName, displayName, cpu, speed, memory, computeTags,
+        // rootDiskTags, networks,
         // vmEntityManager);
 
         LinkedHashMap<NetworkVO, List<? extends NicProfile>> networkIpMap = new LinkedHashMap<NetworkVO, List<? extends NicProfile>>();
         for (String uuid : networkNicMap.keySet()) {
             NetworkVO network = _networkDao.findByUuid(uuid);
-            if(network != null){
+            if (network != null) {
                 networkIpMap.put(network, new ArrayList<NicProfile>(Arrays.asList(networkNicMap.get(uuid))));
             }
         }
@@ -173,11 +175,13 @@ public class CloudOrchestrator implements OrchestrationService {
 
         HypervisorType hypervisorType = HypervisorType.valueOf(hypervisor);
 
-        //load vm instance and offerings and call virtualMachineManagerImpl
+        // load vm instance and offerings and call virtualMachineManagerImpl
         VMInstanceVO vm = _vmDao.findByUuid(id);
 
-        // If the template represents an ISO, a disk offering must be passed in, and will be used to create the root disk
-        // Else, a disk offering is optional, and if present will be used to create the data disk
+        // If the template represents an ISO, a disk offering must be passed in,
+        // and will be used to create the root disk
+        // Else, a disk offering is optional, and if present will be used to
+        // create the data disk
 
         DiskOfferingInfo rootDiskOfferingInfo = new DiskOfferingInfo();
         List<DiskOfferingInfo> dataDiskOfferings = new ArrayList<DiskOfferingInfo>();
@@ -234,21 +238,23 @@ public class CloudOrchestrator implements OrchestrationService {
         }
 
         _itMgr.allocate(vm.getInstanceName(), _templateDao.findById(new Long(templateId)), computeOffering, rootDiskOfferingInfo, dataDiskOfferings, networkIpMap, plan,
-            hypervisorType);
+                hypervisorType);
 
         return vmEntity;
     }
 
     @Override
-    public VirtualMachineEntity createVirtualMachineFromScratch(String id, String owner, String isoId, String hostName, String displayName, String hypervisor, String os,
-        int cpu, int speed, long memory, Long diskSize, List<String> computeTags, List<String> rootDiskTags, Map<String, NicProfile> networkNicMap, DeploymentPlan plan)
-        throws InsufficientCapacityException {
+    public VirtualMachineEntity createVirtualMachineFromScratch(String id, String owner, String isoId, String hostName, String displayName, String hypervisor, String os, int cpu,
+            int speed, long memory, Long diskSize, List<String> computeTags, List<String> rootDiskTags, Map<String, NicProfile> networkNicMap, DeploymentPlan plan)
+            throws InsufficientCapacityException {
 
-        // VirtualMachineEntityImpl vmEntity = new VirtualMachineEntityImpl(id, owner, hostName, displayName, cpu, speed, memory, computeTags, rootDiskTags, networks, vmEntityManager);
+        // VirtualMachineEntityImpl vmEntity = new VirtualMachineEntityImpl(id,
+        // owner, hostName, displayName, cpu, speed, memory, computeTags,
+        // rootDiskTags, networks, vmEntityManager);
         VirtualMachineEntityImpl vmEntity = ComponentContext.inject(VirtualMachineEntityImpl.class);
         vmEntity.init(id, owner, hostName, displayName, cpu, speed, memory, computeTags, rootDiskTags, new ArrayList<String>(networkNicMap.keySet()));
 
-        //load vm instance and offerings and call virtualMachineManagerImpl
+        // load vm instance and offerings and call virtualMachineManagerImpl
         VMInstanceVO vm = _vmDao.findByUuid(id);
 
         ServiceOfferingVO computeOffering = _serviceOfferingDao.findById(vm.getId(), vm.getServiceOfferingId());
@@ -292,14 +298,15 @@ public class CloudOrchestrator implements OrchestrationService {
         LinkedHashMap<Network, List<? extends NicProfile>> networkIpMap = new LinkedHashMap<Network, List<? extends NicProfile>>();
         for (String uuid : networkNicMap.keySet()) {
             NetworkVO network = _networkDao.findByUuid(uuid);
-            if(network != null){
+            if (network != null) {
                 networkIpMap.put(network, new ArrayList<NicProfile>(Arrays.asList(networkNicMap.get(uuid))));
             }
         }
 
         HypervisorType hypervisorType = HypervisorType.valueOf(hypervisor);
 
-        _itMgr.allocate(vm.getInstanceName(), _templateDao.findById(new Long(isoId)), computeOffering, rootDiskOfferingInfo, new ArrayList<DiskOfferingInfo>(), networkIpMap, plan, hypervisorType);
+        _itMgr.allocate(vm.getInstanceName(), _templateDao.findById(new Long(isoId)), computeOffering, rootDiskOfferingInfo, new ArrayList<DiskOfferingInfo>(), networkIpMap, plan,
+                hypervisorType);
 
         return vmEntity;
     }

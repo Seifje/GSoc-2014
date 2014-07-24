@@ -105,8 +105,7 @@ public class BareMetalPingServiceImpl extends BareMetalPxeServiceBase implements
         try {
             String tpl = profile.getTemplate().getUrl();
             assert tpl != null : "How can a null template get here!!!";
-            PreparePxeServerCommand cmd =
-                new PreparePxeServerCommand(ip, mac, mask, gateway, dns, tpl, profile.getVirtualMachine().getInstanceName(), dest.getHost().getName());
+            PreparePxeServerCommand cmd = new PreparePxeServerCommand(ip, mac, mask, gateway, dns, tpl, profile.getVirtualMachine().getInstanceName(), dest.getHost().getName());
             PreparePxeServerAnswer ans = (PreparePxeServerAnswer)_agentMgr.send(pxeServerId, cmd);
             if (!ans.getResult()) {
                 s_logger.warn("Unable tot program PXE server: " + pxeVo.getId() + " because " + ans.getDetails());
@@ -175,14 +174,14 @@ public class BareMetalPingServiceImpl extends BareMetalPxeServiceBase implements
         }
         zoneId = pNetwork.getDataCenterId();
 
-        PhysicalNetworkServiceProviderVO ntwkSvcProvider =
-            _physicalNetworkServiceProviderDao.findByServiceProvider(pNetwork.getId(), BaremetalPxeManager.BAREMETAL_PXE_SERVICE_PROVIDER.getName());
+        PhysicalNetworkServiceProviderVO ntwkSvcProvider = _physicalNetworkServiceProviderDao.findByServiceProvider(pNetwork.getId(),
+                BaremetalPxeManager.BAREMETAL_PXE_SERVICE_PROVIDER.getName());
         if (ntwkSvcProvider == null) {
-            throw new CloudRuntimeException("Network Service Provider: " + BaremetalPxeManager.BAREMETAL_PXE_SERVICE_PROVIDER.getName() +
-                " is not enabled in the physical network: " + cmd.getPhysicalNetworkId() + "to add this device");
+            throw new CloudRuntimeException("Network Service Provider: " + BaremetalPxeManager.BAREMETAL_PXE_SERVICE_PROVIDER.getName()
+                    + " is not enabled in the physical network: " + cmd.getPhysicalNetworkId() + "to add this device");
         } else if (ntwkSvcProvider.getState() == PhysicalNetworkServiceProvider.State.Shutdown) {
-            throw new CloudRuntimeException("Network Service Provider: " + ntwkSvcProvider.getProviderName() + " is in shutdown state in the physical network: " +
-                cmd.getPhysicalNetworkId() + "to add this device");
+            throw new CloudRuntimeException("Network Service Provider: " + ntwkSvcProvider.getProviderName() + " is in shutdown state in the physical network: "
+                    + cmd.getPhysicalNetworkId() + "to add this device");
         }
 
         HostPodVO pod = _podDao.findById(cmd.getPodId());

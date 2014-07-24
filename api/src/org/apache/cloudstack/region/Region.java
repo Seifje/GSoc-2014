@@ -37,8 +37,9 @@ public interface Region {
     public void enableService(Service service);
 
     /**
-     * A region level service, is a service that constitute services across one or more zones in the region or a service
-     * made available to all the zones in the region.
+     * A region level service, is a service that constitute services across one
+     * or more zones in the region or a service made available to all the zones
+     * in the region.
      */
     public static class Service {
 

@@ -22,7 +22,7 @@ import java.util.List;
 public class EC2Volume {
 
     private String id;
-    private Long size;   // <- in gigs
+    private Long size; // <- in gigs
     private String zoneName;
     private String instanceId;
     private String snapshotId;
@@ -139,70 +139,80 @@ public class EC2Volume {
     }
 
     /**
-     * @param id the id to set
+     * @param id
+     *            the id to set
      */
     public void setId(String id) {
         this.id = id;
     }
 
     /**
-     * @param zoneName the zoneName to set
+     * @param zoneName
+     *            the zoneName to set
      */
     public void setZoneName(String zoneName) {
         this.zoneName = zoneName;
     }
 
     /**
-     * @param instanceId the instanceId to set
+     * @param instanceId
+     *            the instanceId to set
      */
     public void setInstanceId(String instanceId) {
         this.instanceId = instanceId;
     }
 
     /**
-     * @param snapshotId the snapshotId to set
+     * @param snapshotId
+     *            the snapshotId to set
      */
     public void setSnapshotId(String snapshotId) {
         this.snapshotId = snapshotId;
     }
 
     /**
-     * @param device the device to set
+     * @param device
+     *            the device to set
      */
     public void setDevice(String device) {
         this.device = device;
     }
 
     /**
-     * @param deviceId the deviceId to set
+     * @param deviceId
+     *            the deviceId to set
      */
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
 
     /**
-     * @param state the state to set
+     * @param state
+     *            the state to set
      */
     public void setState(String state) {
         this.state = state;
     }
 
     /**
-     * @param type the type to set
+     * @param type
+     *            the type to set
      */
     public void setType(String type) {
         this.type = type;
     }
 
     /**
-     * @param VMState the VMState to set
+     * @param VMState
+     *            the VMState to set
      */
     public void setVMState(String VMState) {
         this.VMState = VMState;
     }
 
     /**
-     * @param hypervisor the hypervisor to set
+     * @param hypervisor
+     *            the hypervisor to set
      */
     public void setHypervisor(String hypervisor) {
         this.hypervisor = hypervisor;
@@ -223,21 +233,24 @@ public class EC2Volume {
     }
 
     /**
-     * @param created the created to set
+     * @param created
+     *            the created to set
      */
     public void setCreated(String created) {
         this.created = created;
     }
 
     /**
-     * @param attached the attached to set
+     * @param attached
+     *            the attached to set
      */
     public void setAttached(String attached) {
         this.attached = attached;
     }
 
     /**
-     * @param state of the attached VM to set
+     * @param state
+     *            of the attached VM to set
      */
     public void setAttachmentState(String attachedState) {
         this.attachmentState = attachedState;

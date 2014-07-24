@@ -54,10 +54,10 @@ public class ConsoleProxyAjaxHandler implements HttpHandler {
             throw e;
         } catch (IllegalArgumentException e) {
             s_logger.warn("Exception, ", e);
-            t.sendResponseHeaders(400, -1);     // bad request
+            t.sendResponseHeaders(400, -1); // bad request
         } catch (Throwable e) {
             s_logger.error("Unexpected exception, ", e);
-            t.sendResponseHeaders(500, -1);     // server error
+            t.sendResponseHeaders(500, -1); // server error
         } finally {
             t.close();
         }
@@ -140,8 +140,7 @@ public class ConsoleProxyAjaxHandler implements HttpHandler {
 
             s_logger.warn("Failed to create viewer due to " + e.getMessage(), e);
 
-            String[] content =
-                new String[] {"<html><head></head><body>", "<div id=\"main_panel\" tabindex=\"1\">",
+            String[] content = new String[] {"<html><head></head><body>", "<div id=\"main_panel\" tabindex=\"1\">",
                     "<p>Access is denied for the console session. Please close the window and retry again</p>", "</div></body></html>"};
 
             StringBuffer sb = new StringBuffer();
@@ -289,58 +288,30 @@ public class ConsoleProxyAjaxHandler implements HttpHandler {
 
         String str;
         switch (event) {
-            case 1:     // mouse move
-            case 2:     // mouse down
-            case 3:     // mouse up
-            case 8:     // mouse double click
-                str = queryMap.get("x");
-                if (str != null) {
-                    try {
-                        x = Integer.parseInt(str);
-                    } catch (NumberFormatException e) {
-                        s_logger.warn("Invalid number parameter in query string: " + str);
-                        throw new IllegalArgumentException(e);
-                    }
+        case 1: // mouse move
+        case 2: // mouse down
+        case 3: // mouse up
+        case 8: // mouse double click
+            str = queryMap.get("x");
+            if (str != null) {
+                try {
+                    x = Integer.parseInt(str);
+                } catch (NumberFormatException e) {
+                    s_logger.warn("Invalid number parameter in query string: " + str);
+                    throw new IllegalArgumentException(e);
                 }
-                str = queryMap.get("y");
-                if (str != null) {
-                    try {
-                        y = Integer.parseInt(str);
-                    } catch (NumberFormatException e) {
-                        s_logger.warn("Invalid number parameter in query string: " + str);
-                        throw new IllegalArgumentException(e);
-                    }
+            }
+            str = queryMap.get("y");
+            if (str != null) {
+                try {
+                    y = Integer.parseInt(str);
+                } catch (NumberFormatException e) {
+                    s_logger.warn("Invalid number parameter in query string: " + str);
+                    throw new IllegalArgumentException(e);
                 }
+            }
 
-                if (event != 1) {
-                    str = queryMap.get("code");
-                    try {
-                        code = Integer.parseInt(str);
-                    } catch (NumberFormatException e) {
-                        s_logger.warn("Invalid number parameter in query string: " + str);
-                        throw new IllegalArgumentException(e);
-                    }
-
-                    str = queryMap.get("modifier");
-                    try {
-                        modifiers = Integer.parseInt(str);
-                    } catch (NumberFormatException e) {
-                        s_logger.warn("Invalid number parameter in query string: " + str);
-                        throw new IllegalArgumentException(e);
-                    }
-
-                    if (s_logger.isTraceEnabled())
-                        s_logger.trace("Handle client mouse event. event: " + event + ", x: " + x + ", y: " + y + ", button: " + code + ", modifier: " + modifiers);
-                } else {
-                    if (s_logger.isTraceEnabled())
-                        s_logger.trace("Handle client mouse move event. x: " + x + ", y: " + y);
-                }
-                viewer.sendClientMouseEvent(InputEventType.fromEventCode(event), x, y, code, modifiers);
-                break;
-
-            case 4:     // key press
-            case 5:     // key down
-            case 6:     // key up
+            if (event != 1) {
                 str = queryMap.get("code");
                 try {
                     code = Integer.parseInt(str);
@@ -357,13 +328,41 @@ public class ConsoleProxyAjaxHandler implements HttpHandler {
                     throw new IllegalArgumentException(e);
                 }
 
-                if (s_logger.isDebugEnabled())
-                    s_logger.debug("Handle client keyboard event. event: " + event + ", code: " + code + ", modifier: " + modifiers);
-                viewer.sendClientRawKeyboardEvent(InputEventType.fromEventCode(event), code, modifiers);
-                break;
+                if (s_logger.isTraceEnabled())
+                    s_logger.trace("Handle client mouse event. event: " + event + ", x: " + x + ", y: " + y + ", button: " + code + ", modifier: " + modifiers);
+            } else {
+                if (s_logger.isTraceEnabled())
+                    s_logger.trace("Handle client mouse move event. x: " + x + ", y: " + y);
+            }
+            viewer.sendClientMouseEvent(InputEventType.fromEventCode(event), x, y, code, modifiers);
+            break;
 
-            default:
-                break;
+        case 4: // key press
+        case 5: // key down
+        case 6: // key up
+            str = queryMap.get("code");
+            try {
+                code = Integer.parseInt(str);
+            } catch (NumberFormatException e) {
+                s_logger.warn("Invalid number parameter in query string: " + str);
+                throw new IllegalArgumentException(e);
+            }
+
+            str = queryMap.get("modifier");
+            try {
+                modifiers = Integer.parseInt(str);
+            } catch (NumberFormatException e) {
+                s_logger.warn("Invalid number parameter in query string: " + str);
+                throw new IllegalArgumentException(e);
+            }
+
+            if (s_logger.isDebugEnabled())
+                s_logger.debug("Handle client keyboard event. event: " + event + ", code: " + code + ", modifier: " + modifiers);
+            viewer.sendClientRawKeyboardEvent(InputEventType.fromEventCode(event), code, modifiers);
+            break;
+
+        default:
+            break;
         }
     }
 

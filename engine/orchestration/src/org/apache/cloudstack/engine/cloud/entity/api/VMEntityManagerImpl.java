@@ -140,18 +140,17 @@ public class VMEntityManagerImpl implements VMEntityManager {
 
     @Override
     public String reserveVirtualMachine(VMEntityVO vmEntityVO, DeploymentPlanner plannerToUse, DeploymentPlan planToDeploy, ExcludeList exclude)
-        throws InsufficientCapacityException, ResourceUnavailableException {
+            throws InsufficientCapacityException, ResourceUnavailableException {
 
-        //call planner and get the deployDestination.
-        //load vm instance and offerings and call virtualMachineManagerImpl
-        //FIXME: profile should work on VirtualMachineEntity
+        // call planner and get the deployDestination.
+        // load vm instance and offerings and call virtualMachineManagerImpl
+        // FIXME: profile should work on VirtualMachineEntity
         VMInstanceVO vm = _vmDao.findByUuid(vmEntityVO.getUuid());
         VirtualMachineProfileImpl vmProfile = new VirtualMachineProfileImpl(vm);
         vmProfile.setServiceOffering(_serviceOfferingDao.findByIdIncludingRemoved(vm.getId(), vm.getServiceOfferingId()));
         DataCenterDeployment plan = new DataCenterDeployment(vm.getDataCenterId(), vm.getPodIdToDeployIn(), null, null, null, null);
         if (planToDeploy != null && planToDeploy.getDataCenterId() != 0) {
-            plan =
-                new DataCenterDeployment(planToDeploy.getDataCenterId(), planToDeploy.getPodId(), planToDeploy.getClusterId(), planToDeploy.getHostId(),
+            plan = new DataCenterDeployment(planToDeploy.getDataCenterId(), planToDeploy.getPodId(), planToDeploy.getClusterId(), planToDeploy.getHostId(),
                     planToDeploy.getPoolId(), planToDeploy.getPhysicalNetworkId());
         }
 
@@ -172,12 +171,11 @@ public class VMEntityManagerImpl implements VMEntityManager {
                             // cannot satisfy the plan passed in to the
                             // planner
                             throw new ResourceUnavailableException(
-                                "Root volume is ready in different cluster, Deployment plan provided cannot be satisfied, unable to create a deployment for " + vm,
-                                Cluster.class, clusterIdSpecified);
+                                    "Root volume is ready in different cluster, Deployment plan provided cannot be satisfied, unable to create a deployment for " + vm,
+                                    Cluster.class, clusterIdSpecified);
                         }
                     }
-                    plan =
-                        new DataCenterDeployment(planToDeploy.getDataCenterId(), planToDeploy.getPodId(), planToDeploy.getClusterId(), planToDeploy.getHostId(),
+                    plan = new DataCenterDeployment(planToDeploy.getDataCenterId(), planToDeploy.getPodId(), planToDeploy.getClusterId(), planToDeploy.getHostId(),
                             vol.getPoolId(), null, null);
                 } else {
                     plan = new DataCenterDeployment(rootVolDcId, rootVolPodId, rootVolClusterId, null, vol.getPoolId(), null, null);
@@ -212,23 +210,23 @@ public class VMEntityManagerImpl implements VMEntityManager {
                 return UUID.randomUUID().toString();
             } else {
                 throw new InsufficientServerCapacityException("Unable to create a deployment for " + vmProfile, DataCenter.class, plan.getDataCenterId(),
-                    areAffinityGroupsAssociated(vmProfile));
+                        areAffinityGroupsAssociated(vmProfile));
             }
         }
     }
 
     @Override
     public void deployVirtualMachine(String reservationId, VMEntityVO vmEntityVO, String caller, Map<VirtualMachineProfile.Param, Object> params)
-        throws InsufficientCapacityException, ResourceUnavailableException {
-        //grab the VM Id and destination using the reservationId.
+            throws InsufficientCapacityException, ResourceUnavailableException {
+        // grab the VM Id and destination using the reservationId.
 
         VMInstanceVO vm = _vmDao.findByUuid(vmEntityVO.getUuid());
 
         VMReservationVO vmReservation = _reservationDao.findByReservationId(reservationId);
         if (vmReservation != null) {
 
-            DataCenterDeployment reservedPlan =
-                new DataCenterDeployment(vm.getDataCenterId(), vmReservation.getPodId(), vmReservation.getClusterId(), vmReservation.getHostId(), null, null);
+            DataCenterDeployment reservedPlan = new DataCenterDeployment(vm.getDataCenterId(), vmReservation.getPodId(), vmReservation.getClusterId(), vmReservation.getHostId(),
+                    null, null);
             try {
                 _itMgr.start(vm.getUuid(), params, reservedPlan, _planningMgr.getDeploymentPlannerByName(vmReservation.getDeploymentPlanner()));
             } catch (Exception ex) {

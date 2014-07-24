@@ -79,7 +79,7 @@ public class VpcVO implements Vpc {
     @Column(name = "display", updatable = true, nullable = false)
     protected boolean display = true;
 
-    @Column(name="uses_distributed_router")
+    @Column(name = "uses_distributed_router")
     boolean usesDistributedRouter = false;
 
     @Column(name = "region_level_vpc")
@@ -89,8 +89,8 @@ public class VpcVO implements Vpc {
         uuid = UUID.randomUUID().toString();
     }
 
-    public VpcVO(long zoneId, String name, String displayText, long accountId, long domainId, long vpcOffId, String cidr,
-                 String networkDomain, boolean useDistributedRouter, boolean regionLevelVpc) {
+    public VpcVO(long zoneId, String name, String displayText, long accountId, long domainId, long vpcOffId, String cidr, String networkDomain, boolean useDistributedRouter,
+            boolean regionLevelVpc) {
         this.zoneId = zoneId;
         this.name = name;
         this.displayText = displayText;
@@ -199,7 +199,6 @@ public class VpcVO implements Vpc {
     public boolean isRegionLevelVpc() {
         return regionLevelVpc;
     }
-
 
     public void setDisplay(boolean display) {
         this.display = display;

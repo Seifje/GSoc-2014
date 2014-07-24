@@ -107,7 +107,8 @@ public class NetworkOfferingDaoImpl extends GenericDaoBase<NetworkOfferingVO, Lo
             vo = persist(offering);
             return vo;
         } catch (EntityExistsException e) {
-            // Assume it's conflict on unique name from two different management servers.
+            // Assume it's conflict on unique name from two different management
+            // servers.
             return findByUniqueName(offering.getName());
         }
     }
@@ -157,7 +158,7 @@ public class NetworkOfferingDaoImpl extends GenericDaoBase<NetworkOfferingVO, Lo
 
         sc.addAnd("state", SearchCriteria.Op.EQ, NetworkOffering.State.Enabled);
 
-        //specify Vlan should be the same
+        // specify Vlan should be the same
         sc.addAnd("specifyVlan", SearchCriteria.Op.EQ, originalOffering.getSpecifyVlan());
 
         return customSearch(sc, null);
@@ -177,10 +178,10 @@ public class NetworkOfferingDaoImpl extends GenericDaoBase<NetworkOfferingVO, Lo
     public NetworkOfferingVO persist(NetworkOfferingVO off, Map<Detail, String> details) {
         TransactionLegacy txn = TransactionLegacy.currentTxn();
         txn.start();
-        //1) persist the offering
+        // 1) persist the offering
         NetworkOfferingVO vo = super.persist(off);
 
-        //2) persist the details
+        // 2) persist the details
         if (details != null && !details.isEmpty()) {
             for (NetworkOffering.Detail detail : details.keySet()) {
                 _detailsDao.persist(new NetworkOfferingDetailsVO(off.getId(), detail, details.get(detail)));

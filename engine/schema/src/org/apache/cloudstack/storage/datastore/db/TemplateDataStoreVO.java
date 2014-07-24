@@ -148,24 +148,24 @@ public class TemplateDataStoreVO implements StateObject<ObjectInDataStoreStateMa
         this.installPath = installPath;
         setDownloadUrl(downloadUrl);
         switch (downloadState) {
-            case DOWNLOADED:
-                state = ObjectInDataStoreStateMachine.State.Ready;
-                break;
-            case CREATING:
-            case DOWNLOAD_IN_PROGRESS:
-            case UPLOAD_IN_PROGRESS:
-                state = ObjectInDataStoreStateMachine.State.Creating2;
-                break;
-            case DOWNLOAD_ERROR:
-            case UPLOAD_ERROR:
-                state = ObjectInDataStoreStateMachine.State.Failed;
-                break;
-            case ABANDONED:
-                state = ObjectInDataStoreStateMachine.State.Destroyed;
-                break;
-            default:
-                state = ObjectInDataStoreStateMachine.State.Allocated;
-                break;
+        case DOWNLOADED:
+            state = ObjectInDataStoreStateMachine.State.Ready;
+            break;
+        case CREATING:
+        case DOWNLOAD_IN_PROGRESS:
+        case UPLOAD_IN_PROGRESS:
+            state = ObjectInDataStoreStateMachine.State.Creating2;
+            break;
+        case DOWNLOAD_ERROR:
+        case UPLOAD_ERROR:
+            state = ObjectInDataStoreStateMachine.State.Failed;
+            break;
+        case ABANDONED:
+            state = ObjectInDataStoreStateMachine.State.Destroyed;
+            break;
+        default:
+            state = ObjectInDataStoreStateMachine.State.Allocated;
+            break;
         }
     }
 
@@ -380,8 +380,7 @@ public class TemplateDataStoreVO implements StateObject<ObjectInDataStoreStateMa
     public void decrRefCnt() {
         if (refCnt > 0) {
             refCnt--;
-        }
-        else{
+        } else {
             s_logger.warn("We should not try to decrement a zero reference count even though our code has guarded");
         }
     }

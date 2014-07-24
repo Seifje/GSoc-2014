@@ -72,7 +72,7 @@ import com.cloud.vm.VirtualMachine;
 
 public class EventTypes {
 
-    //map of Event and corresponding entity for which Event is applicable
+    // map of Event and corresponding entity for which Event is applicable
     private static Map<String, Object> entityEventDetails = null;
 
     // VM Events
@@ -128,7 +128,7 @@ public class EventTypes {
     public static final String EVENT_FIREWALL_CLOSE = "FIREWALL.CLOSE";
     public static final String EVENT_FIREWALL_UPDATE = "FIREWALL.UPDATE";
 
-    //NIC Events
+    // NIC Events
     public static final String EVENT_NIC_CREATE = "NIC.CREATE";
     public static final String EVENT_NIC_DELETE = "NIC.DELETE";
     public static final String EVENT_NIC_UPDATE = "NIC.UPDATE";
@@ -178,10 +178,10 @@ public class EventTypes {
     public static final String EVENT_USER_ENABLE = "USER.ENABLE";
     public static final String EVENT_USER_LOCK = "USER.LOCK";
 
-    //registering SSH keypair events
+    // registering SSH keypair events
     public static final String EVENT_REGISTER_SSH_KEYPAIR = "REGISTER.SSH.KEYPAIR";
 
-    //register for user API and secret keys
+    // register for user API and secret keys
     public static final String EVENT_REGISTER_FOR_SECRET_API_KEY = "REGISTER.USER.KEY";
 
     // Template Events
@@ -363,7 +363,8 @@ public class EventTypes {
     public static final String EVENT_EXTERNAL_LB_DEVICE_DELETE = "PHYSICAL.LOADBALANCER.DELETE";
     public static final String EVENT_EXTERNAL_LB_DEVICE_CONFIGURE = "PHYSICAL.LOADBALANCER.CONFIGURE";
 
-    // external switch management device events (E.g.: Cisco Nexus 1000v Virtual Supervisor Module.
+    // external switch management device events (E.g.: Cisco Nexus 1000v Virtual
+    // Supervisor Module.
     public static final String EVENT_EXTERNAL_SWITCH_MGMT_DEVICE_ADD = "SWITCH.MGMT.ADD";
     public static final String EVENT_EXTERNAL_SWITCH_MGMT_DEVICE_DELETE = "SWITCH.MGMT.DELETE";
     public static final String EVENT_EXTERNAL_SWITCH_MGMT_DEVICE_CONFIGURE = "SWITCH.MGMT.CONFIGURE";
@@ -486,7 +487,7 @@ public class EventTypes {
     // Object store migration
     public static final String EVENT_MIGRATE_PREPARE_SECONDARY_STORAGE = "MIGRATE.PREPARE.SS";
 
-    //Alert generation
+    // Alert generation
     public static final String ALERT_GENERATE = "ALERT.GENERATE";
 
     // OpenDaylight
@@ -494,7 +495,7 @@ public class EventTypes {
     public static final String EVENT_EXTERNAL_OPENDAYLIGHT_DELETE_CONTROLLER = "PHYSICAL.ODLCONTROLLER.DELETE";
     public static final String EVENT_EXTERNAL_OPENDAYLIGHT_CONFIGURE_CONTROLLER = "PHYSICAL.ODLCONTROLLER.CONFIGURE";
 
-    //Guest OS related events
+    // Guest OS related events
     public static final String EVENT_GUEST_OS_ADD = "GUEST.OS.ADD";
     public static final String EVENT_GUEST_OS_REMOVE = "GUEST.OS.REMOVE";
     public static final String EVENT_GUEST_OS_UPDATE = "GUEST.OS.UPDATE";
@@ -504,7 +505,8 @@ public class EventTypes {
 
     static {
 
-        // TODO: need a way to force author adding event types to declare the entity details as well, with out braking
+        // TODO: need a way to force author adding event types to declare the
+        // entity details as well, with out braking
 
         entityEventDetails = new HashMap<String, Object>();
 
@@ -760,7 +762,8 @@ public class EventTypes {
         entityEventDetails.put(EVENT_EXTERNAL_LB_DEVICE_DELETE, PhysicalNetwork.class);
         entityEventDetails.put(EVENT_EXTERNAL_LB_DEVICE_CONFIGURE, PhysicalNetwork.class);
 
-        // external switch management device events (E.g.: Cisco Nexus 1000v Virtual Supervisor Module.
+        // external switch management device events (E.g.: Cisco Nexus 1000v
+        // Virtual Supervisor Module.
         entityEventDetails.put(EVENT_EXTERNAL_SWITCH_MGMT_DEVICE_ADD, "Nexus1000v");
         entityEventDetails.put(EVENT_EXTERNAL_SWITCH_MGMT_DEVICE_DELETE, "Nexus1000v");
         entityEventDetails.put(EVENT_EXTERNAL_SWITCH_MGMT_DEVICE_CONFIGURE, "Nexus1000v");
@@ -832,7 +835,7 @@ public class EventTypes {
         entityEventDetails.put(EVENT_EXTERNAL_OPENDAYLIGHT_DELETE_CONTROLLER, "OpenDaylightController");
         entityEventDetails.put(EVENT_EXTERNAL_OPENDAYLIGHT_CONFIGURE_CONTROLLER, "OpenDaylightController");
 
-        //Guest OS
+        // Guest OS
         entityEventDetails.put(EVENT_GUEST_OS_ADD, GuestOS.class);
         entityEventDetails.put(EVENT_GUEST_OS_REMOVE, GuestOS.class);
         entityEventDetails.put(EVENT_GUEST_OS_UPDATE, GuestOS.class);
@@ -845,9 +848,9 @@ public class EventTypes {
         Object entityClass = entityEventDetails.get(eventName);
         if (entityClass == null) {
             return null;
-        } else if (entityClass instanceof String){
+        } else if (entityClass instanceof String) {
             return (String)entityClass;
-        } else if (entityClass instanceof Class){
+        } else if (entityClass instanceof Class) {
             String entityClassName = ((Class)entityClass).getName();
             int index = entityClassName.lastIndexOf(".");
             String entityName = entityClassName;
@@ -863,7 +866,7 @@ public class EventTypes {
     public static Class getEntityClassForEvent(String eventName) {
         Object clz = entityEventDetails.get(eventName);
 
-        if(clz instanceof Class){
+        if (clz instanceof Class) {
             return (Class)entityEventDetails.get(eventName);
         }
 

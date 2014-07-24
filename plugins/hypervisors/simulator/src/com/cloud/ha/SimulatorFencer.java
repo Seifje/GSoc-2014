@@ -39,16 +39,19 @@ import com.cloud.resource.ResourceManager;
 import com.cloud.utils.component.AdapterBase;
 import com.cloud.vm.VirtualMachine;
 
-@Local(value=FenceBuilder.class)
+@Local(value = FenceBuilder.class)
 public class SimulatorFencer extends AdapterBase implements FenceBuilder {
     private static final Logger s_logger = Logger.getLogger(SimulatorFencer.class);
 
-    @Inject HostDao _hostDao;
-    @Inject AgentManager _agentMgr;
-    @Inject ResourceManager _resourceMgr;
+    @Inject
+    HostDao _hostDao;
+    @Inject
+    AgentManager _agentMgr;
+    @Inject
+    ResourceManager _resourceMgr;
+
     @Override
-    public boolean configure(String name, Map<String, Object> params)
-            throws ConfigurationException {
+    public boolean configure(String name, Map<String, Object> params) throws ConfigurationException {
         // TODO Auto-generated method stub
         return true;
     }
@@ -81,10 +84,10 @@ public class SimulatorFencer extends AdapterBase implements FenceBuilder {
 
         for (HostVO h : hosts) {
             if (h.getHypervisorType() == HypervisorType.Simulator) {
-                if( h.getStatus() != Status.Up ) {
+                if (h.getStatus() != Status.Up) {
                     continue;
                 }
-                if( h.getId() == host.getId() ) {
+                if (h.getId() == host.getId()) {
                     continue;
                 }
                 FenceAnswer answer = null;

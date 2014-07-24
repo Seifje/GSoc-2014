@@ -162,8 +162,9 @@ public class RESTServiceConnectorTest {
         verify(gm, times(1)).getStatusCode();
     }
 
-    /* Bit of a roundabout way to ensure that login is called after an un authorized result
-     * It not possible to properly mock login()
+    /*
+     * Bit of a roundabout way to ensure that login is called after an un
+     * authorized result It not possible to properly mock login()
      */
     public void testExecuteMethodWithLoginSucced2ndAttempt() throws CloudstackRESTException, HttpException, IOException {
         // Prepare
@@ -171,10 +172,9 @@ public class RESTServiceConnectorTest {
         when(gm.getStatusCode()).thenReturn(HttpStatus.SC_UNAUTHORIZED).thenReturn(HttpStatus.SC_UNAUTHORIZED);
 
         final RESTValidationStrategy previousValidationStrategy = connector.validation;
-        connector.validation = new RESTValidationStrategy(){
+        connector.validation = new RESTValidationStrategy() {
             @Override
-            protected void login(final String protocol, final HttpClient client)
-                    throws CloudstackRESTException {
+            protected void login(final String protocol, final HttpClient client) throws CloudstackRESTException {
                 // Do nothing
             }
         };

@@ -27,12 +27,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Specifically, it implements the Moore machine.
- * so someone else can add/modify states easily without regression.
- * business logic anyways.
+ * Specifically, it implements the Moore machine. so someone else can add/modify
+ * states easily without regression. business logic anyways.
  *
- * @param <S> state
- * @param <E> event
+ * @param <S>
+ *            state
+ * @param <E>
+ *            event
  */
 public class StateMachine2<S, E, V extends StateObject<S>> {
     private final HashMap<S, StateEntry> _states = new HashMap<S, StateEntry>();
@@ -150,8 +151,8 @@ public class StateMachine2<S, E, V extends StateObject<S>> {
         }
 
         public void addTransition(E e, S s) {
-            assert !nextStates.containsKey(e) : "State " + getStateStr() + " already contains a transition to state " + nextStates.get(e).toString() + " via event " +
-                e.toString() + ".  Please revisit the rule you're adding to state " + s.toString();
+            assert !nextStates.containsKey(e) : "State " + getStateStr() + " already contains a transition to state " + nextStates.get(e).toString() + " via event " + e.toString()
+            + ".  Please revisit the rule you're adding to state " + s.toString();
             nextStates.put(e, s);
         }
 

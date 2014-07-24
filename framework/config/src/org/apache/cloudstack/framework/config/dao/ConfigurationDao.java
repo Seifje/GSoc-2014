@@ -26,11 +26,12 @@ public interface ConfigurationDao extends GenericDao<ConfigurationVO, String> {
 
     /**
      *
-     *    1. params passed in.
-     *    2. configuration for the instance.
-     *    3. configuration for the DEFAULT instance.
+     * 1. params passed in. 2. configuration for the instance. 3. configuration
+     * for the DEFAULT instance.
      *
-     * @param params parameters from the components.xml which will override the database values.
+     * @param params
+     *            parameters from the components.xml which will override the
+     *            database values.
      * @return a consolidated look at the configuration parameters.
      */
     public Map<String, String> getConfiguration(String instance, Map<String, ? extends Object> params);
@@ -41,13 +42,16 @@ public interface ConfigurationDao extends GenericDao<ConfigurationVO, String> {
 
     /**
      * Updates a configuration value
-     * @param value the new value
+     *
+     * @param value
+     *            the new value
      * @return true if success, false if failure
      */
     public boolean update(String name, String value);
 
     /**
      * Gets the value for the specified configuration name
+     *
      * @return value
      */
     public String getValue(String name);
@@ -58,6 +62,7 @@ public interface ConfigurationDao extends GenericDao<ConfigurationVO, String> {
 
     /**
      * returns whether or not this is a premium configuration
+     *
      * @return true if premium configuration, false otherwise
      */
     boolean isPremium();

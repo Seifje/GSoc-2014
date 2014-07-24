@@ -54,7 +54,9 @@ public class ConfigureStaticNatRulesOnLogicalRouterCommand extends Command {
         this.rules = rules;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.agent.api.Command#executeInSequence()
      */
     @Override

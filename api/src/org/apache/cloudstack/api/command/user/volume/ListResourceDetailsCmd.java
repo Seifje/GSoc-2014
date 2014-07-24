@@ -30,8 +30,7 @@ import org.apache.cloudstack.api.response.ResourceTagResponse;
 
 import com.cloud.server.ResourceTag;
 
-@APICommand(name = "listResourceDetails", description = "List resource detail(s)", responseObject = ResourceTagResponse.class, since = "4.2",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listResourceDetails", description = "List resource detail(s)", responseObject = ResourceTagResponse.class, since = "4.2", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListResourceDetailsCmd extends BaseListProjectAndAccountResourcesCmd {
     private static final String s_name = "listresourcedetailsresponse";
 
@@ -44,12 +43,11 @@ public class ListResourceDetailsCmd extends BaseListProjectAndAccountResourcesCm
     @Parameter(name = ApiConstants.KEY, type = CommandType.STRING, description = "list by key")
     private String key;
 
-    @Parameter(name = ApiConstants.VALUE, type = CommandType.STRING, description = "list by key, value. Needs to be passed only along with key" ,
-            since = "4.4", authorized = { RoleType.Admin })
+    @Parameter(name = ApiConstants.VALUE, type = CommandType.STRING, description = "list by key, value. Needs to be passed only along with key", since = "4.4", authorized = {RoleType.Admin})
     private String value;
 
     @Parameter(name = ApiConstants.FOR_DISPLAY, type = CommandType.BOOLEAN, description = "if set to true, only details marked with display=true, are returned."
-            + " False by default", since = "4.3", authorized = { RoleType.Admin })
+            + " False by default", since = "4.3", authorized = {RoleType.Admin})
     private Boolean forDisplay;
 
     public String getResourceId() {
@@ -77,9 +75,9 @@ public class ListResourceDetailsCmd extends BaseListProjectAndAccountResourcesCm
         return super.getDisplay();
     }
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public void execute() {

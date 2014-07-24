@@ -134,9 +134,9 @@ public class S3RestServlet extends HttpServlet {
     }
 
     /**
-     * POST requests do not get authenticated on entry.   The associated
-     * access key and signature headers are embedded in the message not encoded
-     * as HTTP headers.
+     * POST requests do not get authenticated on entry. The associated access
+     * key and signature headers are embedded in the message not encoded as HTTP
+     * headers.
      */
     private void processRequest(HttpServletRequest request, HttpServletResponse response, String method) {
         TransactionLegacy txn = TransactionLegacy.open("cloudbridge", TransactionLegacy.AWSAPI_DB, true);
@@ -210,7 +210,8 @@ public class S3RestServlet extends HttpServlet {
     }
 
     /**
-     * Provide an easy way to determine the version of the implementation running.
+     * Provide an easy way to determine the version of the implementation
+     * running.
      *
      * This is an unauthenticated REST call.
      */
@@ -221,20 +222,21 @@ public class S3RestServlet extends HttpServlet {
     }
 
     /**
-     * This request registers the user Cloud.com account holder to the S3 service.   The Cloud.com
-     * account holder saves his API access and secret keys with the S3 service so that
-     * each rest call he makes can be verified was originated from him.   The given API access
-     * and secret key are saved into the "usercredentials" database table.
+     * This request registers the user Cloud.com account holder to the S3
+     * service. The Cloud.com account holder saves his API access and secret
+     * keys with the S3 service so that each rest call he makes can be verified
+     * was originated from him. The given API access and secret key are saved
+     * into the "usercredentials" database table.
      *
-     * This is an unauthenticated REST call.   The only required parameters are 'accesskey' and
-     * 'secretkey'.
+     * This is an unauthenticated REST call. The only required parameters are
+     * 'accesskey' and 'secretkey'.
      *
-     * To verify that the given keys represent an existing account they are used to execute the
-     * Cloud.com's listAccounts API function.   If the keys do not represent a valid account the
-     * listAccounts function will fail.
+     * To verify that the given keys represent an existing account they are used
+     * to execute the Cloud.com's listAccounts API function. If the keys do not
+     * represent a valid account the listAccounts function will fail.
      *
-     * A user can call this REST function any number of times, on each call the Cloud.com secret
-     * key is simply over writes any previously stored value.
+     * A user can call this REST function any number of times, on each call the
+     * Cloud.com secret key is simply over writes any previously stored value.
      *
      * As with all REST calls HTTPS should be used to ensure their security.
      */
@@ -265,15 +267,16 @@ public class S3RestServlet extends HttpServlet {
 
         try {
             // -> use the keys to see if the account actually exists
-            //ServiceProvider.getInstance().getEC2Engine().validateAccount( accessKey[0], secretKey[0] );
-            //UserCredentialsDaoImpl credentialDao = new UserCredentialsDao();
+            // ServiceProvider.getInstance().getEC2Engine().validateAccount(
+            // accessKey[0], secretKey[0] );
+            // UserCredentialsDaoImpl credentialDao = new UserCredentialsDao();
             TransactionLegacy txn = TransactionLegacy.open(TransactionLegacy.AWSAPI_DB);
             txn.start();
             UserCredentialsVO user = new UserCredentialsVO(accessKey[0], secretKey[0]);
             user = ucDao.persist(user);
             txn.commit();
             txn.close();
-            //credentialDao.setUserKeys( accessKey[0], secretKey[0] );
+            // credentialDao.setUserKeys( accessKey[0], secretKey[0] );
 
         } catch (Exception e) {
             logger.error("SetUserKeys " + e.getMessage(), e);
@@ -286,8 +289,9 @@ public class S3RestServlet extends HttpServlet {
     }
 
     /**
-     * We are using the S3AuthParams class to hide where the header values are coming
-     * from so that the authenticateRequest call can be made from several places.
+     * We are using the S3AuthParams class to hide where the header values are
+     * coming from so that the authenticateRequest call can be made from several
+     * places.
      */
     public static S3AuthParams extractRequestHeaders(HttpServletRequest request) {
         S3AuthParams params = new S3AuthParams();
@@ -305,8 +309,8 @@ public class S3RestServlet extends HttpServlet {
         return params;
     }
 
-    public static void authenticateRequest(HttpServletRequest request, S3AuthParams params) throws InstantiationException, IllegalAccessException,
-        ClassNotFoundException, SQLException {
+    public static void authenticateRequest(HttpServletRequest request, S3AuthParams params) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
+            SQLException {
         RestAuth auth = new RestAuth(ServiceProvider.getInstance().getUseSubDomain());
         String AWSAccessKey = null;
         String signature = null;
@@ -364,7 +368,7 @@ public class S3RestServlet extends HttpServlet {
     }
 
     private ServletAction routeRequest(HttpServletRequest request) {
-        //  URL routing for S3 REST calls.
+        // URL routing for S3 REST calls.
         String pathInfo = request.getPathInfo();
         String bucketName = null;
         String key = null;
@@ -377,21 +381,25 @@ public class S3RestServlet extends HttpServlet {
         if ((pathInfo == null) || (pathInfo.indexOf('/') != 0))
             if ("POST".equalsIgnoreCase(request.getMethod()))
             // Case where request is POST operation with no pathinfo
-            // This is the POST alternative to PUT described at s3.amazonaws.com API doc page 141
+            // This is the POST alternative to PUT described at s3.amazonaws.com
+            // API doc page 141
             {
                 return routePlainPostRequest(request);
             }
 
-        // Irrespective of whether the requester is using subdomain or full host naming of path expressions
-        // to buckets, wherever the request is made up of a service endpoint followed by a /, in AWS S3 this always
+        // Irrespective of whether the requester is using subdomain or full host
+        // naming of path expressions
+        // to buckets, wherever the request is made up of a service endpoint
+        // followed by a /, in AWS S3 this always
         // conveys a ListAllMyBuckets command
 
         if ((serviceEndpoint.equalsIgnoreCase(host)) && (pathInfo.equalsIgnoreCase("/"))) {
             request.setAttribute(S3Constants.BUCKET_ATTR_KEY, "/");
-            return new S3BucketAction();   // for ListAllMyBuckets
+            return new S3BucketAction(); // for ListAllMyBuckets
         }
 
-        // Because there is a leading / at position 0 of pathInfo, now subtract this to process the remainder
+        // Because there is a leading / at position 0 of pathInfo, now subtract
+        // this to process the remainder
         pathInfo = pathInfo.substring(1);
 
         if (ServiceProvider.getInstance().getUseSubDomain())
@@ -419,7 +427,7 @@ public class S3RestServlet extends HttpServlet {
 
         {
 
-            int endPos = pathInfo.indexOf('/');  // Subsequent / character?
+            int endPos = pathInfo.indexOf('/'); // Subsequent / character?
 
             if (endPos < 1) {
                 bucketName = pathInfo;
@@ -470,13 +478,16 @@ public class S3RestServlet extends HttpServlet {
     }
 
     // Route for the case where request is POST operation with no pathinfo
-    // This is the POST alternative to PUT described at s3.amazonaws.com API doc, Amazon Simple
+    // This is the POST alternative to PUT described at s3.amazonaws.com API
+    // doc, Amazon Simple
     // Storage Service API Reference API Version 2006-03-01 page 141.
-    // The purpose of the plain POST operation is to add an object to a specified bucket using HTML forms.
+    // The purpose of the plain POST operation is to add an object to a
+    // specified bucket using HTML forms.
 
     private S3ObjectAction routePlainPostRequest(HttpServletRequest request) {
         // TODO - Remove the unnecessary fields below
-        // Obtain the mandatory fields from the HTML form or otherwise fail with a logger message
+        // Obtain the mandatory fields from the HTML form or otherwise fail with
+        // a logger message
         String keyString = request.getParameter("key");
         String metatagString = request.getParameter("x-amz-meta-tag");
         String bucketString = request.getParameter("Bucket");
@@ -515,9 +526,9 @@ public class S3RestServlet extends HttpServlet {
     }
 
     /**
-     * A DIME request is really a SOAP request that we are dealing with, and so its
-     * authentication is the SOAP authentication approach.   Since Axis2 does not handle
-     * DIME messages we deal with them here.
+     * A DIME request is really a SOAP request that we are dealing with, and so
+     * its authentication is the SOAP authentication approach. Since Axis2 does
+     * not handle DIME messages we deal with them here.
      *
      * @param request
      * @param response
@@ -536,10 +547,11 @@ public class S3RestServlet extends HttpServlet {
 
             // -> the first stream MUST be the SOAP party
             if (ds.nextInputStream()) {
-                //logger.debug( "DIME msg [" + ds.getStreamType() + "," + ds.getStreamTypeFormat() + "," + ds.getStreamId() + "]" );
+                // logger.debug( "DIME msg [" + ds.getStreamType() + "," +
+                // ds.getStreamTypeFormat() + "," + ds.getStreamId() + "]" );
                 byte[] buffer = new byte[8192];
                 bytesRead = ds.read(buffer, 0, 8192);
-                //logger.debug( "DIME SOAP Bytes read: " + bytesRead );
+                // logger.debug( "DIME SOAP Bytes read: " + bytesRead );
                 ByteArrayInputStream bis = new ByteArrayInputStream(buffer, 0, bytesRead);
                 putRequest = toEnginePutObjectRequest(bis);
             }
@@ -550,7 +562,8 @@ public class S3RestServlet extends HttpServlet {
                 putRequest.setData(is);
             }
 
-            // -> need to do SOAP level auth here, on failure return the SOAP fault
+            // -> need to do SOAP level auth here, on failure return the SOAP
+            // fault
             StringBuffer xml = new StringBuffer();
             String AWSAccessKey = putRequest.getAccessKey();
             UserInfo info = ServiceProvider.getInstance().getUserInfo(AWSAccessKey);
@@ -576,7 +589,8 @@ public class S3RestServlet extends HttpServlet {
                 return;
             }
 
-            // -> PutObject S3 Bucket Policy would be done in the engine.handleRequest() call
+            // -> PutObject S3 Bucket Policy would be done in the
+            // engine.handleRequest() call
             UserContext.current().initContext(AWSAccessKey, info.getSecretKey(), AWSAccessKey, "S3 DIME request", request);
             putResponse = engine.handleRequest(putRequest);
 
@@ -602,9 +616,9 @@ public class S3RestServlet extends HttpServlet {
     }
 
     /**
-     * Convert the SOAP XML we extract from the DIME message into our local object.
-     * Here Axis2 is not parsing the SOAP for us.   I tried to use the Amazon PutObject
-     * parser but it keep throwing exceptions.
+     * Convert the SOAP XML we extract from the DIME message into our local
+     * object. Here Axis2 is not parsing the SOAP for us. I tried to use the
+     * Amazon PutObject parser but it keep throwing exceptions.
      *
      * @param putObjectInline
      * @return
@@ -680,7 +694,8 @@ public class S3RestServlet extends HttpServlet {
                 parent = part.item(i);
                 metaEntry[i] = new S3MetaDataEntry();
 
-                // -> get a list of all the children elements of the 'Metadata' parent element
+                // -> get a list of all the children elements of the 'Metadata'
+                // parent element
                 if (null != (children = parent.getChildNodes())) {
                     int numChildren = children.getLength();
                     for (int j = 0; j < numChildren; j++) {
@@ -711,7 +726,8 @@ public class S3RestServlet extends HttpServlet {
                 parent = part.item(i);
                 S3Grant engineGrant = new S3Grant();
 
-                // -> get a list of all the children elements of the 'Grant' parent element
+                // -> get a list of all the children elements of the 'Grant'
+                // parent element
                 if (null != (children = parent.getChildNodes())) {
                     int numChildren = children.getLength();
                     for (int j = 0; j < numChildren; j++) {

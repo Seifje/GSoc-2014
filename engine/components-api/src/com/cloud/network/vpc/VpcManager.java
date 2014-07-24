@@ -48,6 +48,7 @@ public interface VpcManager {
 
     /**
      * Returns all existing VPCs for a given account
+     *
      * @param accountId
      * @return
      */
@@ -57,8 +58,10 @@ public interface VpcManager {
      * Destroys the VPC
      *
      * @param vpc
-     * @param caller TODO
-     * @param callerUserId TODO
+     * @param caller
+     *            TODO
+     * @param callerUserId
+     *            TODO
      * @return
      * @throws ConcurrentOperationException
      * @throws ResourceUnavailableException
@@ -106,12 +109,10 @@ public interface VpcManager {
      * @throws InsufficientCapacityException
      * @throws ResourceAllocationException
      */
-    Network
-        createVpcGuestNetwork(long ntwkOffId, String name, String displayText, String gateway, String cidr, String vlanId, String networkDomain, Account owner,
-            Long domainId, PhysicalNetwork pNtwk, long zoneId, ACLType aclType, Boolean subdomainAccess, long vpcId, Long aclId, Account caller,
-            Boolean displayNetworkEnabled)
+    Network createVpcGuestNetwork(long ntwkOffId, String name, String displayText, String gateway, String cidr, String vlanId, String networkDomain, Account owner, Long domainId,
+            PhysicalNetwork pNtwk, long zoneId, ACLType aclType, Boolean subdomainAccess, long vpcId, Long aclId, Account caller, Boolean displayNetworkEnabled)
 
-            throws ConcurrentOperationException, InsufficientCapacityException, ResourceAllocationException;
+                    throws ConcurrentOperationException, InsufficientCapacityException, ResourceAllocationException;
 
     /**
      * Assigns source nat public IP address to VPC
@@ -125,10 +126,12 @@ public interface VpcManager {
     PublicIp assignSourceNatIpAddressToVpc(Account owner, Vpc vpc) throws InsufficientAddressCapacityException, ConcurrentOperationException;
 
     /**
-     * Validates network offering to find if it can be used for network creation in VPC
+     * Validates network offering to find if it can be used for network creation
+     * in VPC
      *
      * @param guestNtwkOff
-     * @param supportedSvcs TODO
+     * @param supportedSvcs
+     *            TODO
      */
     void validateNtwkOffForVpc(NetworkOffering guestNtwkOff, List<Service> supportedSvcs);
 
@@ -139,6 +142,7 @@ public interface VpcManager {
 
     /**
      * Lists all the services and providers that the current VPC suppots
+     *
      * @param vpcOffId
      * @return map of Service to Provider(s) map
      */
@@ -146,23 +150,26 @@ public interface VpcManager {
 
     /**
      * Returns VPC that is ready to be used
+     *
      * @param vpcId
      * @return VPC object
      */
     public Vpc getActiveVpc(long vpcId);
 
     /**
-     * Performs network offering validation to determine if it can be used for network upgrade inside the VPC
+     * Performs network offering validation to determine if it can be used for
+     * network upgrade inside the VPC
+     *
      * @param networkId
      * @param newNtwkOffId
      * @param newCidr
      * @param newNetworkDomain
      * @param vpc
      * @param gateway
-     * @param networkOwner TODO
+     * @param networkOwner
+     *            TODO
      */
-        void
-        validateNtwkOffForNtwkInVpc(Long networkId, long newNtwkOffId, String newCidr, String newNetworkDomain, Vpc vpc, String gateway, Account networkOwner, Long aclId);
+    void validateNtwkOffForNtwkInVpc(Long networkId, long newNtwkOffId, String newCidr, String newNetworkDomain, Vpc vpc, String gateway, Account networkOwner, Long aclId);
 
     List<PrivateGateway> getVpcPrivateGateways(long vpcId);
 }

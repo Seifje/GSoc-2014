@@ -20,8 +20,8 @@ import com.cloud.storage.StoragePool;
 import com.cloud.utils.SerialVersionUID;
 
 /**
- * InsufficientStorageCapcityException is thrown when there's not enough
- * storage space to create the VM.
+ * InsufficientStorageCapcityException is thrown when there's not enough storage
+ * space to create the VM.
  */
 public class InsufficientStorageCapacityException extends InsufficientCapacityException {
 

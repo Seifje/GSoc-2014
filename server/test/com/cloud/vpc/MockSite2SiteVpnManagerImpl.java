@@ -51,8 +51,12 @@ import com.cloud.vm.DomainRouterVO;
 @Local(value = {Site2SiteVpnManager.class, Site2SiteVpnService.class})
 public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2SiteVpnManager, Site2SiteVpnService {
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnService#createVpnGateway(org.apache.cloudstack.api.commands.CreateVpnGatewayCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnService#createVpnGateway(org.apache
+     * .cloudstack.api.commands.CreateVpnGatewayCmd)
      */
     @Override
     public Site2SiteVpnGateway createVpnGateway(CreateVpnGatewayCmd cmd) {
@@ -60,8 +64,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnService#createCustomerGateway(org.apache.cloudstack.api.commands.CreateVpnCustomerGatewayCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnService#createCustomerGateway(org.apache
+     * .cloudstack.api.commands.CreateVpnCustomerGatewayCmd)
      */
     @Override
     public Site2SiteCustomerGateway createCustomerGateway(CreateVpnCustomerGatewayCmd cmd) {
@@ -69,7 +77,9 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.network.vpn.Site2SiteVpnService#startVpnConnection(long)
      */
     @Override
@@ -78,8 +88,11 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnService#getVpnGateway(java.lang.Long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnService#getVpnGateway(java.lang.Long)
      */
     @Override
     public Site2SiteVpnGateway getVpnGateway(Long vpnGatewayId) {
@@ -87,8 +100,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnService#createVpnConnection(org.apache.cloudstack.api.commands.CreateVpnConnectionCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnService#createVpnConnection(org.apache
+     * .cloudstack.api.commands.CreateVpnConnectionCmd)
      */
     @Override
     public Site2SiteVpnConnection createVpnConnection(CreateVpnConnectionCmd cmd) throws NetworkRuleConflictException {
@@ -96,8 +113,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnService#deleteCustomerGateway(org.apache.cloudstack.api.commands.DeleteVpnCustomerGatewayCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnService#deleteCustomerGateway(org.apache
+     * .cloudstack.api.commands.DeleteVpnCustomerGatewayCmd)
      */
     @Override
     public boolean deleteCustomerGateway(DeleteVpnCustomerGatewayCmd deleteVpnCustomerGatewayCmd) {
@@ -105,8 +126,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnService#deleteVpnGateway(org.apache.cloudstack.api.commands.DeleteVpnGatewayCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnService#deleteVpnGateway(org.apache
+     * .cloudstack.api.commands.DeleteVpnGatewayCmd)
      */
     @Override
     public boolean deleteVpnGateway(DeleteVpnGatewayCmd deleteVpnGatewayCmd) {
@@ -114,8 +139,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnService#deleteVpnConnection(org.apache.cloudstack.api.commands.DeleteVpnConnectionCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnService#deleteVpnConnection(org.apache
+     * .cloudstack.api.commands.DeleteVpnConnectionCmd)
      */
     @Override
     public boolean deleteVpnConnection(DeleteVpnConnectionCmd deleteVpnConnectionCmd) throws ResourceUnavailableException {
@@ -123,8 +152,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnService#resetVpnConnection(org.apache.cloudstack.api.commands.ResetVpnConnectionCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnService#resetVpnConnection(org.apache
+     * .cloudstack.api.commands.ResetVpnConnectionCmd)
      */
     @Override
     public Site2SiteVpnConnection resetVpnConnection(ResetVpnConnectionCmd resetVpnConnectionCmd) throws ResourceUnavailableException {
@@ -132,8 +165,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnService#searchForCustomerGateways(org.apache.cloudstack.api.commands.ListVpnCustomerGatewaysCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnService#searchForCustomerGateways(org
+     * .apache.cloudstack.api.commands.ListVpnCustomerGatewaysCmd)
      */
     @Override
     public Pair<List<? extends Site2SiteCustomerGateway>, Integer> searchForCustomerGateways(ListVpnCustomerGatewaysCmd listVpnCustomerGatewaysCmd) {
@@ -141,8 +178,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnService#searchForVpnGateways(org.apache.cloudstack.api.commands.ListVpnGatewaysCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnService#searchForVpnGateways(org.apache
+     * .cloudstack.api.commands.ListVpnGatewaysCmd)
      */
     @Override
     public Pair<List<? extends Site2SiteVpnGateway>, Integer> searchForVpnGateways(ListVpnGatewaysCmd listVpnGatewaysCmd) {
@@ -150,8 +191,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnService#searchForVpnConnections(org.apache.cloudstack.api.commands.ListVpnConnectionsCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnService#searchForVpnConnections(org
+     * .apache.cloudstack.api.commands.ListVpnConnectionsCmd)
      */
     @Override
     public Pair<List<? extends Site2SiteVpnConnection>, Integer> searchForVpnConnections(ListVpnConnectionsCmd listVpnConnectionsCmd) {
@@ -159,8 +204,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnService#updateCustomerGateway(org.apache.cloudstack.api.commands.UpdateVpnCustomerGatewayCmd)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnService#updateCustomerGateway(org.apache
+     * .cloudstack.api.commands.UpdateVpnCustomerGatewayCmd)
      */
     @Override
     public Site2SiteCustomerGateway updateCustomerGateway(UpdateVpnCustomerGatewayCmd updateVpnCustomerGatewayCmd) {
@@ -168,8 +217,11 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnManager#cleanupVpnConnectionByVpc(long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnManager#cleanupVpnConnectionByVpc(long)
      */
     @Override
     public boolean cleanupVpnConnectionByVpc(long vpcId) {
@@ -177,8 +229,11 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnManager#cleanupVpnGatewayByVpc(long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnManager#cleanupVpnGatewayByVpc(long)
      */
     @Override
     public boolean cleanupVpnGatewayByVpc(long vpcId) {
@@ -186,8 +241,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnManager#markDisconnectVpnConnByVpc(long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnManager#markDisconnectVpnConnByVpc(
+     * long)
      */
     @Override
     public void markDisconnectVpnConnByVpc(long vpcId) {
@@ -195,8 +254,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
 
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnManager#getConnectionsForRouter(com.cloud.vm.DomainRouterVO)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnManager#getConnectionsForRouter(com
+     * .cloud.vm.DomainRouterVO)
      */
     @Override
     public List<Site2SiteVpnConnectionVO> getConnectionsForRouter(DomainRouterVO router) {
@@ -204,8 +267,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnManager#deleteCustomerGatewayByAccount(long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnManager#deleteCustomerGatewayByAccount
+     * (long)
      */
     @Override
     public boolean deleteCustomerGatewayByAccount(long accountId) {
@@ -213,8 +280,11 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.utils.component.Manager#configure(java.lang.String, java.util.Map)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.cloud.utils.component.Manager#configure(java.lang.String,
+     * java.util.Map)
      */
     @Override
     public boolean configure(String name, Map<String, Object> params) throws ConfigurationException {
@@ -222,7 +292,9 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#start()
      */
     @Override
@@ -231,7 +303,9 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#stop()
      */
     @Override
@@ -240,7 +314,9 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.utils.component.Manager#getName()
      */
     @Override
@@ -249,8 +325,12 @@ public class MockSite2SiteVpnManagerImpl extends ManagerBase implements Site2Sit
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.cloud.network.vpn.Site2SiteVpnManager#reconnectDisconnectedVpnByVpc(java.lang.Long)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.cloud.network.vpn.Site2SiteVpnManager#reconnectDisconnectedVpnByVpc
+     * (java.lang.Long)
      */
     @Override
     public void reconnectDisconnectedVpnByVpc(Long vpcId) {

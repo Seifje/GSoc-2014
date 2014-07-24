@@ -170,8 +170,8 @@ public class TemplatePrimaryDataStoreVO implements StateObject<ObjectInDataStore
         this.markedForGC = false;
     }
 
-    public TemplatePrimaryDataStoreVO(long poolId, long templateId, Date lastUpdated, int downloadPercent, Status downloadState, String localDownloadPath,
-            String errorString, String jobId, String installPath, long templateSize) {
+    public TemplatePrimaryDataStoreVO(long poolId, long templateId, Date lastUpdated, int downloadPercent, Status downloadState, String localDownloadPath, String errorString,
+            String jobId, String installPath, long templateSize) {
         super();
         this.poolId = poolId;
         this.templateId = templateId;
@@ -243,15 +243,7 @@ public class TemplatePrimaryDataStoreVO implements StateObject<ObjectInDataStore
 
     @Override
     public String toString() {
-        return new StringBuilder("TmplPool[").append(id)
-            .append("-")
-            .append(templateId)
-            .append("-")
-            .append("poolId")
-            .append("-")
-            .append(installPath)
-            .append("]")
-            .toString();
+        return new StringBuilder("TmplPool[").append(id).append("-").append(templateId).append("-").append("poolId").append("-").append(installPath).append("]").toString();
     }
 
     @Override

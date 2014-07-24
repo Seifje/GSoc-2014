@@ -71,8 +71,10 @@ public class StaticRouteVO implements StaticRoute {
      * @param vpcGatewayId
      * @param cidr
      * @param vpcId
-     * @param accountId TODO
-     * @param domainId TODO
+     * @param accountId
+     *            TODO
+     * @param domainId
+     *            TODO
      */
     public StaticRouteVO(long vpcGatewayId, String cidr, Long vpcId, long accountId, long domainId) {
         super();

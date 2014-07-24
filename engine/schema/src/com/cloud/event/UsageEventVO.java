@@ -97,7 +97,7 @@ public class UsageEventVO implements UsageEvent {
         this.resourceName = resourceName;
     }
 
-    //IPAddress usage event
+    // IPAddress usage event
     public UsageEventVO(String usageType, long accountId, long zoneId, long ipAddressId, String ipAddress, boolean isSourceNat, String guestType, boolean isSystem) {
         this.type = usageType;
         this.accountId = accountId;
@@ -109,8 +109,9 @@ public class UsageEventVO implements UsageEvent {
         this.templateId = (isSystem ? 1L : 0L);
     }
 
-    //Snapshot usage event
-    //Snapshots have size as the actual (physical) size and virtual_size as the allocated size
+    // Snapshot usage event
+    // Snapshots have size as the actual (physical) size and virtual_size as the
+    // allocated size
     public UsageEventVO(String usageType, long accountId, long zoneId, long resourceId, String resourceName, Long offeringId, Long templateId, Long size, Long virtualSize) {
         this.type = usageType;
         this.accountId = accountId;
@@ -134,7 +135,7 @@ public class UsageEventVO implements UsageEvent {
         this.resourceType = resourceType;
     }
 
-    //Security Group usage event
+    // Security Group usage event
     public UsageEventVO(String usageType, long accountId, long zoneId, long vmId, long securityGroupId) {
         this.type = usageType;
         this.accountId = accountId;

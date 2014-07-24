@@ -27,8 +27,13 @@ import com.cloud.vm.VirtualMachine.State;
 
 public class XenServerPoolVms {
     private static final Logger s_logger = Logger.getLogger(XenServerPoolVms.class);
-    private final Map<String/* clusterId */, HashMap<String/* vm name */, Pair<String/* host uuid */, State/* vm state */>>> _clusterVms =
-        new ConcurrentHashMap<String, HashMap<String, Pair<String, State>>>();
+    private final Map<String/* clusterId */, HashMap<String/* vm name */, Pair<String/*
+                                                                                            * host
+                                                                                            * uuid
+                                                                                            */, State/*
+                                                                                                      * vm
+                                                                                                      * state
+                                                                                                      */>>> _clusterVms = new ConcurrentHashMap<String, HashMap<String, Pair<String, State>>>();
 
     public HashMap<String, Pair<String, State>> getClusterVmState(String clusterId) {
         HashMap<String, Pair<String, State>> _vms = _clusterVms.get(clusterId);
@@ -48,7 +53,10 @@ public class XenServerPoolVms {
     public State getState(String clusterId, String name) {
         HashMap<String, Pair<String, State>> vms = getClusterVmState(clusterId);
         Pair<String, State> pv = vms.get(name);
-        return pv == null ? State.Stopped : pv.second(); // if a VM is absent on the cluster, it is effectively in stopped state.
+        return pv == null ? State.Stopped : pv.second(); // if a VM is absent on
+        // the cluster, it is
+        // effectively in
+        // stopped state.
     }
 
     public Pair<String, State> get(String clusterId, String name) {
@@ -79,7 +87,10 @@ public class XenServerPoolVms {
     @Override
     public String toString() {
         StringBuilder sbuf = new StringBuilder("PoolVms=");
-        for (HashMap<String/* vm name */, Pair<String/* host uuid */, State/* vm state */>> clusterVM : _clusterVms.values()) {
+        for (HashMap<String/* vm name */, Pair<String/* host uuid */, State/*
+                                                                                  * vm
+                                                                                  * state
+                                                                                  */>> clusterVM : _clusterVms.values()) {
             for (String vmname : clusterVM.keySet()) {
                 sbuf.append(vmname).append("-").append(clusterVM.get(vmname).second()).append(",");
             }

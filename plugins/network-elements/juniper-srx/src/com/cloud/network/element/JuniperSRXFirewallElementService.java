@@ -38,6 +38,7 @@ public interface JuniperSRXFirewallElementService extends PluggableService {
 
     /**
      * adds a SRX firewall device in to a physical network
+     * 
      * @param AddSrxFirewallCmd
      * @return ExternalFirewallDeviceVO object for the firewall added
      */
@@ -45,6 +46,7 @@ public interface JuniperSRXFirewallElementService extends PluggableService {
 
     /**
      * removes SRX firewall device from a physical network
+     * 
      * @param DeleteSrxFirewallCmd
      * @return true if firewall device successfully deleted
      */
@@ -52,6 +54,7 @@ public interface JuniperSRXFirewallElementService extends PluggableService {
 
     /**
      * configures a SRX firewal device added in a physical network
+     * 
      * @param ConfigureSrxFirewallCmd
      * @return ExternalFirewallDeviceVO for the device configured
      */
@@ -59,13 +62,16 @@ public interface JuniperSRXFirewallElementService extends PluggableService {
 
     /**
      * lists all the SRX firewall devices added in to a physical network
+     * 
      * @param ListSrxFirewallsCmd
-     * @return list of ExternalFirewallDeviceVO for the devices in the physical network.
+     * @return list of ExternalFirewallDeviceVO for the devices in the physical
+     *         network.
      */
     public List<ExternalFirewallDeviceVO> listSrxFirewalls(ListSrxFirewallsCmd cmd);
 
     /**
      * lists all the guest networks using a SRX firewall device
+     * 
      * @param ListSrxFirewallNetworksCmd
      * @return list of the guest networks that are using this F5 load balancer
      */
@@ -75,21 +81,17 @@ public interface JuniperSRXFirewallElementService extends PluggableService {
 
     @Deprecated
     // API helper function supported for backward compatibility
-        public
-        Host addExternalFirewall(AddExternalFirewallCmd cmd);
+    public Host addExternalFirewall(AddExternalFirewallCmd cmd);
 
     @Deprecated
     // API helper function supported for backward compatibility
-        public
-        boolean deleteExternalFirewall(DeleteExternalFirewallCmd cmd);
+    public boolean deleteExternalFirewall(DeleteExternalFirewallCmd cmd);
 
     @Deprecated
     // API helper function supported for backward compatibility
-        public
-        List<Host> listExternalFirewalls(ListExternalFirewallsCmd cmd);
+    public List<Host> listExternalFirewalls(ListExternalFirewallsCmd cmd);
 
     @Deprecated
     // API helper function supported for backward compatibility
-        public
-        ExternalFirewallResponse createExternalFirewallResponse(Host externalFirewall);
+    public ExternalFirewallResponse createExternalFirewallResponse(Host externalFirewall);
 }

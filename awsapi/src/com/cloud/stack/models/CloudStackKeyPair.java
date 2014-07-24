@@ -28,7 +28,7 @@ public class CloudStackKeyPair {
     private String privatekey;
 
     /**
-     *  Empty Constructor...
+     * Empty Constructor...
      */
     public CloudStackKeyPair() {
 

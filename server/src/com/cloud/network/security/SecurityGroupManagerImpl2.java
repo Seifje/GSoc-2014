@@ -45,7 +45,8 @@ import com.cloud.vm.NicVO;
 import com.cloud.vm.VirtualMachine.State;
 
 /**
- * Same as the base class -- except it uses the abstracted security group work queue
+ * Same as the base class -- except it uses the abstracted security group work
+ * queue
  *
  */
 @Local(value = {SecurityGroupManager.class, SecurityGroupService.class})
@@ -92,9 +93,8 @@ public class SecurityGroupManagerImpl2 extends SecurityGroupManagerImpl {
     }
 
     @Override
-    //@DB
-        public
-        void scheduleRulesetUpdateToHosts(List<Long> affectedVms, boolean updateSeqno, Long delayMs) {
+    // @DB
+    public void scheduleRulesetUpdateToHosts(List<Long> affectedVms, boolean updateSeqno, Long delayMs) {
         if (affectedVms.size() == 0) {
             return;
         }
@@ -107,8 +107,8 @@ public class SecurityGroupManagerImpl2 extends SecurityGroupManagerImpl {
         workItems.removeAll(_disabledVms);
 
         if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Security Group Mgr v2: scheduling ruleset updates for " + affectedVms.size() + " vms " + " (unique=" + workItems.size() +
-                "), current queue size=" + _workQueue.size());
+            s_logger.debug("Security Group Mgr v2: scheduling ruleset updates for " + affectedVms.size() + " vms " + " (unique=" + workItems.size() + "), current queue size="
+                    + _workQueue.size());
         }
 
         Profiler p = new Profiler();
@@ -124,8 +124,8 @@ public class SecurityGroupManagerImpl2 extends SecurityGroupManagerImpl {
         _mBean.logScheduledDetails(workItems);
         p.stop();
         if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Security Group Mgr v2: done scheduling ruleset updates for " + workItems.size() + " vms: num new jobs=" + newJobs +
-                " num rows insert or updated=" + updated + " time taken=" + p.getDuration());
+            s_logger.debug("Security Group Mgr v2: done scheduling ruleset updates for " + workItems.size() + " vms: num new jobs=" + newJobs + " num rows insert or updated="
+                    + updated + " time taken=" + p.getDuration());
         }
     }
 
@@ -184,19 +184,17 @@ public class SecurityGroupManagerImpl2 extends SecurityGroupManagerImpl {
                 List<String> nicSecIps = null;
                 if (nic != null) {
                     if (nic.getSecondaryIp()) {
-                        //get secondary ips of the vm
+                        // get secondary ips of the vm
                         long networkId = nic.getNetworkId();
                         nicSecIps = _nicSecIpDao.getSecondaryIpAddressesForNic(nic.getId());
                     }
                 }
-                SecurityGroupRulesCmd cmd =
-                    generateRulesetCmd(vm.getInstanceName(), vm.getPrivateIpAddress(), vm.getPrivateMacAddress(), vm.getId(), null, work.getLogsequenceNumber(),
-                        ingressRules, egressRules, nicSecIps);
+                SecurityGroupRulesCmd cmd = generateRulesetCmd(vm.getInstanceName(), vm.getPrivateIpAddress(), vm.getPrivateMacAddress(), vm.getId(), null,
+                        work.getLogsequenceNumber(), ingressRules, egressRules, nicSecIps);
                 cmd.setMsId(_serverId);
                 if (s_logger.isDebugEnabled()) {
-                    s_logger.debug("SecurityGroupManager v2: sending ruleset update for vm " + vm.getInstanceName() + ":ingress num rules=" +
-                        cmd.getIngressRuleSet().length + ":egress num rules=" + cmd.getEgressRuleSet().length + " num cidrs=" + cmd.getTotalNumCidrs() + " sig=" +
-                        cmd.getSignature());
+                    s_logger.debug("SecurityGroupManager v2: sending ruleset update for vm " + vm.getInstanceName() + ":ingress num rules=" + cmd.getIngressRuleSet().length
+                            + ":egress num rules=" + cmd.getEgressRuleSet().length + " num cidrs=" + cmd.getTotalNumCidrs() + " sig=" + cmd.getSignature());
                 }
                 Commands cmds = new Commands(cmd);
                 try {
@@ -221,14 +219,16 @@ public class SecurityGroupManagerImpl2 extends SecurityGroupManagerImpl {
 
     @Override
     public void cleanupFinishedWork() {
-        //TODO: over time clean up op_vm_ruleset_log table for destroyed vms
+        // TODO: over time clean up op_vm_ruleset_log table for destroyed vms
     }
 
     /*
-     * Same as the superclass, except that we use the  ip address(es) returned from the join
-     * made with the nics table when retrieving the SecurityGroupVmMapVO. If a vm has a single
-     * nic then that nic is the default and then this query is correct. If the vm has multiple nics
-     * then we get all ips, including the default nic ip. This is also probably the correct behavior.
+     * Same as the superclass, except that we use the ip address(es) returned
+     * from the join made with the nics table when retrieving the
+     * SecurityGroupVmMapVO. If a vm has a single nic then that nic is the
+     * default and then this query is correct. If the vm has multiple nics then
+     * we get all ips, including the default nic ip. This is also probably the
+     * correct behavior.
      */
     @Override
     protected Map<PortAndProto, Set<String>> generateRulesForVM(Long userVmId, SecurityRuleType type) {
@@ -247,9 +247,11 @@ public class SecurityGroupManagerImpl2 extends SecurityGroupManagerImpl {
                 if (rule.getAllowedNetworkId() != null) {
                     List<SecurityGroupVMMapVO> allowedInstances = _securityGroupVMMapDao.listBySecurityGroup(rule.getAllowedNetworkId(), State.Running);
                     for (SecurityGroupVMMapVO ngmapVO : allowedInstances) {
-                        //here, we differ from the superclass: instead of creating N more queries to the
-                        //nics table, we use what's already there in the VO since the listBySecurityGroup already
-                        //did a join with the nics table
+                        // here, we differ from the superclass: instead of
+                        // creating N more queries to the
+                        // nics table, we use what's already there in the VO
+                        // since the listBySecurityGroup already
+                        // did a join with the nics table
                         String cidr = ngmapVO.getGuestIpAddress() + "/32";
                         cidrs.add(cidr);
                     }

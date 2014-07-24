@@ -35,6 +35,7 @@ public interface SnapshotScheduler extends Manager, Scheduler {
 
     /**
      * Remove schedule for volumeId, policyId combination
+     *
      * @param volumeId
      * @param policyId
      * @return

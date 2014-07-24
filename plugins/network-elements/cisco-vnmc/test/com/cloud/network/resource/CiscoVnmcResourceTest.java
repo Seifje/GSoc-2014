@@ -73,19 +73,19 @@ public class CiscoVnmcResourceTest {
         _parameters.put("timeout", "300");
     }
 
-    //@Test(expected=ConfigurationException.class)
+    // @Test(expected=ConfigurationException.class)
     public void resourceConfigureFailure() throws ConfigurationException {
         _resource.configure("CiscoVnmcResource", Collections.<String, Object> emptyMap());
     }
 
-    //@Test
+    // @Test
     public void resourceConfigure() throws ConfigurationException {
         _resource.configure("CiscoVnmcResource", _parameters);
         assertTrue("CiscoVnmc".equals(_resource.getName()));
         assertTrue(_resource.getType() == Host.Type.ExternalFirewall);
     }
 
-    //@Test
+    // @Test
     public void testInitialization() throws ConfigurationException {
         _resource.configure("CiscoVnmcResource", _parameters);
         StartupCommand[] sc = _resource.initialize();
@@ -155,10 +155,8 @@ public class CiscoVnmcResourceTest {
         when(_connection.createTenantVDCAclPolicy(anyString(), anyString())).thenReturn(true);
         when(_connection.createTenantVDCAclPolicyRef(anyString(), anyString(), anyBoolean())).thenReturn(true);
         when(_connection.deleteTenantVDCAclRule(anyString(), anyLong(), anyString())).thenReturn(true);
-        when(_connection.createTenantVDCIngressAclRule(anyString(), anyLong(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString())).thenReturn(
-            true);
-        when(_connection.createTenantVDCEgressAclRule(anyString(), anyLong(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString())).thenReturn(
-            true);
+        when(_connection.createTenantVDCIngressAclRule(anyString(), anyLong(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString())).thenReturn(true);
+        when(_connection.createTenantVDCEgressAclRule(anyString(), anyLong(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString())).thenReturn(true);
         when(_connection.associateAclPolicySet(anyString())).thenReturn(true);
 
         Answer answer = _resource.executeRequest(cmd);

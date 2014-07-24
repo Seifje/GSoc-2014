@@ -157,8 +157,8 @@ public class NetworkUsageManagerImpl extends ManagerBase implements NetworkUsage
         }
 
         String ipAddress = uri.getHost();
-        //String numRetries = params.get("numretries");
-        //String timeout = params.get("timeout");
+        // String numRetries = params.get("numretries");
+        // String timeout = params.get("timeout");
 
         TrafficSentinelResource resource = new TrafficSentinelResource();
         String guid = getTrafficMonitorGuid(zoneId, NetworkUsageResourceName.TrafficSentinel, ipAddress);
@@ -273,7 +273,8 @@ public class NetworkUsageManagerImpl extends ManagerBase implements NetworkUsage
         @DB
         public boolean processAnswers(long agentId, long seq, Answer[] answers) {
             /*
-             * Do not collect Direct Network usage stats if the Traffic Monitor is not owned by this mgmt server
+             * Do not collect Direct Network usage stats if the Traffic Monitor
+             * is not owned by this mgmt server
              */
             HostVO host = _hostDao.findById(agentId);
             if (host != null) {
@@ -312,7 +313,7 @@ public class NetworkUsageManagerImpl extends ManagerBase implements NetworkUsage
             }
             Date lastCollection = new Date(new Long(lastCollectDetail.getValue()));
 
-            //Get list of IPs currently allocated
+            // Get list of IPs currently allocated
             List<IPAddressVO> allocatedIps = listAllocatedDirectIps(zoneId);
             Calendar rightNow = Calendar.getInstance();
 
@@ -323,20 +324,39 @@ public class NetworkUsageManagerImpl extends ManagerBase implements NetworkUsage
             final Date now = rightNow.getTime();
 
             if (lastCollection.after(now)) {
-                s_logger.debug("Current time is less than 2 hours after last collection time : " + lastCollection.toString() +
-                    ". Skipping direct network usage collection");
+                s_logger.debug("Current time is less than 2 hours after last collection time : " + lastCollection.toString() + ". Skipping direct network usage collection");
                 return false;
             }
 
-            //Get IP Assign/Release events from lastCollection time till now
+            // Get IP Assign/Release events from lastCollection time till now
             List<UsageEventVO> IpEvents = _eventDao.listDirectIpEvents(lastCollection, now, zoneId);
 
             Map<String, Date> ipAssigment = new HashMap<String, Date>();
-            List<UsageIPAddressVO> IpPartialUsage = new ArrayList<UsageIPAddressVO>(); //Ips which were allocated only for the part of collection duration
-            List<UsageIPAddressVO> fullDurationIpUsage = new ArrayList<UsageIPAddressVO>(); //Ips which were allocated only for the entire collection duration
+            List<UsageIPAddressVO> IpPartialUsage = new ArrayList<UsageIPAddressVO>(); // Ips
+            // which
+            // were
+            // allocated
+            // only
+            // for
+            // the
+            // part
+            // of
+            // collection
+            // duration
+            List<UsageIPAddressVO> fullDurationIpUsage = new ArrayList<UsageIPAddressVO>(); // Ips
+            // which
+            // were
+            // allocated
+            // only
+            // for
+            // the
+            // entire
+            // collection
+            // duration
 
             // Use UsageEvents to track the IP assignment
-            // Add them to IpUsage list with account_id , ip_address, alloc_date, release_date
+            // Add them to IpUsage list with account_id , ip_address,
+            // alloc_date, release_date
 
             for (UsageEventVO IpEvent : IpEvents) {
                 String address = IpEvent.getResourceName();
@@ -357,17 +377,21 @@ public class NetworkUsageManagerImpl extends ManagerBase implements NetworkUsage
             List<String> IpList = new ArrayList<String>();
             for (IPAddressVO ip : allocatedIps) {
                 if (ip.getAllocatedToAccountId() == Account.ACCOUNT_ID_SYSTEM) {
-                    //Ignore usage for system account
+                    // Ignore usage for system account
                     continue;
                 }
                 String address = (ip.getAddress()).toString();
                 if (ipAssigment.containsKey(address)) {
-                    // Ip was assigned during the current period but not release till Date now
+                    // Ip was assigned during the current period but not release
+                    // till Date now
                     IpPartialUsage.add(new UsageIPAddressVO(ip.getAllocatedToAccountId(), address, ipAssigment.get(address), now));
                 } else {
-                    // Ip was not assigned or released during current period. Consider entire duration for usage calculation (lastCollection to now)
+                    // Ip was not assigned or released during current period.
+                    // Consider entire duration for usage calculation
+                    // (lastCollection to now)
                     fullDurationIpUsage.add(new UsageIPAddressVO(ip.getAllocatedToAccountId(), address, lastCollection, now));
-                    //Store just the Ips to send the list as part of DirectNetworkUsageCommand
+                    // Store just the Ips to send the list as part of
+                    // DirectNetworkUsageCommand
                     IpList.add(address);
                 }
 
@@ -375,7 +399,7 @@ public class NetworkUsageManagerImpl extends ManagerBase implements NetworkUsage
 
             final List<UserStatisticsVO> collectedStats = new ArrayList<UserStatisticsVO>();
 
-            //Get usage for Ips which were assigned for the entire duration
+            // Get usage for Ips which were assigned for the entire duration
             if (fullDurationIpUsage.size() > 0) {
                 DirectNetworkUsageCommand cmd = new DirectNetworkUsageCommand(IpList, lastCollection, now, _TSinclZones, _TSexclZones);
                 DirectNetworkUsageAnswer answer = (DirectNetworkUsageAnswer)_agentMgr.easySend(host.getId(), cmd);
@@ -406,7 +430,8 @@ public class NetworkUsageManagerImpl extends ManagerBase implements NetworkUsage
                 }
             }
 
-            //Get usage for Ips which were assigned for part of the duration period
+            // Get usage for Ips which were assigned for part of the duration
+            // period
             for (UsageIPAddressVO usageIp : IpPartialUsage) {
                 IpList = new ArrayList<String>();
                 IpList.add(usageIp.getAddress());
@@ -442,7 +467,8 @@ public class NetworkUsageManagerImpl extends ManagerBase implements NetworkUsage
                 s_logger.debug("No new direct network stats. No need to persist");
                 return false;
             }
-            //Persist all the stats and last_collection time in a single transaction
+            // Persist all the stats and last_collection time in a single
+            // transaction
             Transaction.execute(new TransactionCallbackNoReturn() {
                 @Override
                 public void doInTransactionWithoutResult(TransactionStatus status) {

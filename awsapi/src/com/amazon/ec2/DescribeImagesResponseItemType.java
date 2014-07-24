@@ -25,15 +25,15 @@
 package com.amazon.ec2;
 
 /**
-*  DescribeImagesResponseItemType bean class
-*/
+ * DescribeImagesResponseItemType bean class
+ */
 
 public class DescribeImagesResponseItemType implements org.apache.axis2.databinding.ADBBean {
-    /* This type was generated from the piece of schema that had
-            name = DescribeImagesResponseItemType
-            Namespace URI = http://ec2.amazonaws.com/doc/2012-08-15/
-            Namespace Prefix = ns1
-            */
+    /*
+     * This type was generated from the piece of schema that had name =
+     * DescribeImagesResponseItemType Namespace URI =
+     * http://ec2.amazonaws.com/doc/2012-08-15/ Namespace Prefix = ns1
+     */
 
     private static java.lang.String generatePrefix(java.lang.String namespace) {
         if (namespace.equals("http://ec2.amazonaws.com/doc/2012-08-15/")) {
@@ -43,23 +43,26 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for ImageId
-    */
+     * field for ImageId
+     */
 
     protected java.lang.String localImageId;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getImageId() {
         return localImageId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param ImageId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            ImageId
+     */
     public void setImageId(java.lang.String param) {
 
         this.localImageId = param;
@@ -67,33 +70,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for ImageLocation
-    */
+     * field for ImageLocation
+     */
 
     protected java.lang.String localImageLocation;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localImageLocationTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getImageLocation() {
         return localImageLocation;
     }
 
     /**
-       * Auto generated setter method
-       * @param param ImageLocation
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            ImageLocation
+     */
     public void setImageLocation(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localImageLocationTracker = true;
         } else {
             localImageLocationTracker = false;
@@ -105,23 +112,26 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for ImageState
-    */
+     * field for ImageState
+     */
 
     protected java.lang.String localImageState;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getImageState() {
         return localImageState;
     }
 
     /**
-       * Auto generated setter method
-       * @param param ImageState
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            ImageState
+     */
     public void setImageState(java.lang.String param) {
 
         this.localImageState = param;
@@ -129,23 +139,26 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for ImageOwnerId
-    */
+     * field for ImageOwnerId
+     */
 
     protected java.lang.String localImageOwnerId;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getImageOwnerId() {
         return localImageOwnerId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param ImageOwnerId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            ImageOwnerId
+     */
     public void setImageOwnerId(java.lang.String param) {
 
         this.localImageOwnerId = param;
@@ -153,23 +166,26 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for IsPublic
-    */
+     * field for IsPublic
+     */
 
     protected boolean localIsPublic;
 
     /**
-    * Auto generated getter method
-    * @return boolean
-    */
+     * Auto generated getter method
+     * 
+     * @return boolean
+     */
     public boolean getIsPublic() {
         return localIsPublic;
     }
 
     /**
-       * Auto generated setter method
-       * @param param IsPublic
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            IsPublic
+     */
     public void setIsPublic(boolean param) {
 
         this.localIsPublic = param;
@@ -177,33 +193,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for ProductCodes
-    */
+     * field for ProductCodes
+     */
 
     protected com.amazon.ec2.ProductCodesSetType localProductCodes;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localProductCodesTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.ProductCodesSetType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.ProductCodesSetType
+     */
     public com.amazon.ec2.ProductCodesSetType getProductCodes() {
         return localProductCodes;
     }
 
     /**
-       * Auto generated setter method
-       * @param param ProductCodes
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            ProductCodes
+     */
     public void setProductCodes(com.amazon.ec2.ProductCodesSetType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localProductCodesTracker = true;
         } else {
             localProductCodesTracker = false;
@@ -215,33 +235,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for Architecture
-    */
+     * field for Architecture
+     */
 
     protected java.lang.String localArchitecture;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localArchitectureTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getArchitecture() {
         return localArchitecture;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Architecture
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Architecture
+     */
     public void setArchitecture(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localArchitectureTracker = true;
         } else {
             localArchitectureTracker = false;
@@ -253,33 +277,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for ImageType
-    */
+     * field for ImageType
+     */
 
     protected java.lang.String localImageType;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localImageTypeTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getImageType() {
         return localImageType;
     }
 
     /**
-       * Auto generated setter method
-       * @param param ImageType
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            ImageType
+     */
     public void setImageType(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localImageTypeTracker = true;
         } else {
             localImageTypeTracker = false;
@@ -291,33 +319,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for KernelId
-    */
+     * field for KernelId
+     */
 
     protected java.lang.String localKernelId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localKernelIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getKernelId() {
         return localKernelId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param KernelId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            KernelId
+     */
     public void setKernelId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localKernelIdTracker = true;
         } else {
             localKernelIdTracker = false;
@@ -329,33 +361,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for RamdiskId
-    */
+     * field for RamdiskId
+     */
 
     protected java.lang.String localRamdiskId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localRamdiskIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getRamdiskId() {
         return localRamdiskId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param RamdiskId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            RamdiskId
+     */
     public void setRamdiskId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localRamdiskIdTracker = true;
         } else {
             localRamdiskIdTracker = false;
@@ -367,33 +403,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for Platform
-    */
+     * field for Platform
+     */
 
     protected java.lang.String localPlatform;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localPlatformTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getPlatform() {
         return localPlatform;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Platform
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Platform
+     */
     public void setPlatform(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localPlatformTracker = true;
         } else {
             localPlatformTracker = false;
@@ -405,33 +445,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for StateReason
-    */
+     * field for StateReason
+     */
 
     protected com.amazon.ec2.StateReasonType localStateReason;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localStateReasonTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.StateReasonType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.StateReasonType
+     */
     public com.amazon.ec2.StateReasonType getStateReason() {
         return localStateReason;
     }
 
     /**
-       * Auto generated setter method
-       * @param param StateReason
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            StateReason
+     */
     public void setStateReason(com.amazon.ec2.StateReasonType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localStateReasonTracker = true;
         } else {
             localStateReasonTracker = false;
@@ -443,33 +487,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for ImageOwnerAlias
-    */
+     * field for ImageOwnerAlias
+     */
 
     protected java.lang.String localImageOwnerAlias;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localImageOwnerAliasTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getImageOwnerAlias() {
         return localImageOwnerAlias;
     }
 
     /**
-       * Auto generated setter method
-       * @param param ImageOwnerAlias
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            ImageOwnerAlias
+     */
     public void setImageOwnerAlias(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localImageOwnerAliasTracker = true;
         } else {
             localImageOwnerAliasTracker = false;
@@ -481,33 +529,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for Name
-    */
+     * field for Name
+     */
 
     protected java.lang.String localName;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localNameTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getName() {
         return localName;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Name
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Name
+     */
     public void setName(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localNameTracker = true;
         } else {
             localNameTracker = false;
@@ -519,33 +571,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for Description
-    */
+     * field for Description
+     */
 
     protected java.lang.String localDescription;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localDescriptionTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getDescription() {
         return localDescription;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Description
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Description
+     */
     public void setDescription(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localDescriptionTracker = true;
         } else {
             localDescriptionTracker = false;
@@ -557,33 +613,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for RootDeviceType
-    */
+     * field for RootDeviceType
+     */
 
     protected java.lang.String localRootDeviceType;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localRootDeviceTypeTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getRootDeviceType() {
         return localRootDeviceType;
     }
 
     /**
-       * Auto generated setter method
-       * @param param RootDeviceType
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            RootDeviceType
+     */
     public void setRootDeviceType(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localRootDeviceTypeTracker = true;
         } else {
             localRootDeviceTypeTracker = false;
@@ -595,33 +655,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for RootDeviceName
-    */
+     * field for RootDeviceName
+     */
 
     protected java.lang.String localRootDeviceName;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localRootDeviceNameTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getRootDeviceName() {
         return localRootDeviceName;
     }
 
     /**
-       * Auto generated setter method
-       * @param param RootDeviceName
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            RootDeviceName
+     */
     public void setRootDeviceName(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localRootDeviceNameTracker = true;
         } else {
             localRootDeviceNameTracker = false;
@@ -633,33 +697,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for BlockDeviceMapping
-    */
+     * field for BlockDeviceMapping
+     */
 
     protected com.amazon.ec2.BlockDeviceMappingType localBlockDeviceMapping;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localBlockDeviceMappingTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.BlockDeviceMappingType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.BlockDeviceMappingType
+     */
     public com.amazon.ec2.BlockDeviceMappingType getBlockDeviceMapping() {
         return localBlockDeviceMapping;
     }
 
     /**
-       * Auto generated setter method
-       * @param param BlockDeviceMapping
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            BlockDeviceMapping
+     */
     public void setBlockDeviceMapping(com.amazon.ec2.BlockDeviceMappingType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localBlockDeviceMappingTracker = true;
         } else {
             localBlockDeviceMappingTracker = false;
@@ -671,33 +739,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for VirtualizationType
-    */
+     * field for VirtualizationType
+     */
 
     protected java.lang.String localVirtualizationType;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localVirtualizationTypeTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getVirtualizationType() {
         return localVirtualizationType;
     }
 
     /**
-       * Auto generated setter method
-       * @param param VirtualizationType
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            VirtualizationType
+     */
     public void setVirtualizationType(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localVirtualizationTypeTracker = true;
         } else {
             localVirtualizationTypeTracker = false;
@@ -709,33 +781,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for TagSet
-    */
+     * field for TagSet
+     */
 
     protected com.amazon.ec2.ResourceTagSetType localTagSet;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localTagSetTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.ResourceTagSetType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.ResourceTagSetType
+     */
     public com.amazon.ec2.ResourceTagSetType getTagSet() {
         return localTagSet;
     }
 
     /**
-       * Auto generated setter method
-       * @param param TagSet
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            TagSet
+     */
     public void setTagSet(com.amazon.ec2.ResourceTagSetType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localTagSetTracker = true;
         } else {
             localTagSetTracker = false;
@@ -747,33 +823,37 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * field for Hypervisor
-    */
+     * field for Hypervisor
+     */
 
     protected java.lang.String localHypervisor;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localHypervisorTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getHypervisor() {
         return localHypervisor;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Hypervisor
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Hypervisor
+     */
     public void setHypervisor(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localHypervisorTracker = true;
         } else {
             localHypervisorTracker = false;
@@ -785,9 +865,10 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -800,13 +881,13 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, parentQName) {
 
@@ -819,14 +900,13 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
         java.lang.String prefix = null;
         java.lang.String namespace = null;
@@ -1445,8 +1525,8 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -1458,10 +1538,10 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -1471,10 +1551,10 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -1497,7 +1577,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -1525,7 +1605,8 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -1559,8 +1640,8 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -1579,9 +1660,9 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
         java.util.ArrayList elementList = new java.util.ArrayList();
@@ -1768,17 +1849,20 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static DescribeImagesResponseItemType parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             DescribeImagesResponseItemType object = new DescribeImagesResponseItemType();
 
@@ -1803,7 +1887,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
                         java.lang.String type = fullTypeName.substring(fullTypeName.indexOf(":") + 1);
 
                         if (!"DescribeImagesResponseItemType".equals(type)) {
-                            //find namespace for the prefix
+                            // find namespace for the prefix
                             java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
                             return (DescribeImagesResponseItemType)com.amazon.ec2.ExtensionMapper.getTypeObject(nsUri, type, reader);
                         }
@@ -1812,7 +1896,8 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                 }
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -1829,10 +1914,11 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1847,7 +1933,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1864,10 +1950,11 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1882,10 +1969,11 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1900,10 +1988,11 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1916,7 +2005,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1933,7 +2022,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1950,7 +2039,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1967,7 +2056,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1984,7 +2073,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2001,7 +2090,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2016,7 +2105,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2033,7 +2122,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2050,7 +2139,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2067,7 +2156,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2084,7 +2173,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2101,7 +2190,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2116,7 +2205,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2133,7 +2222,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2148,7 +2237,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2165,7 +2254,7 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2175,7 +2264,8 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
                     reader.next();
 
                 if (reader.isStartElement())
-                    // A start element we are not expecting indicates a trailing invalid property
+                    // A start element we are not expecting indicates a trailing
+                    // invalid property
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
 
             } catch (javax.xml.stream.XMLStreamException e) {
@@ -2185,6 +2275,6 @@ public class DescribeImagesResponseItemType implements org.apache.axis2.databind
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

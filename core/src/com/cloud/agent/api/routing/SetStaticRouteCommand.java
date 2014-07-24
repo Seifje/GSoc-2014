@@ -43,7 +43,8 @@ public class SetStaticRouteCommand extends NetworkElementCommand {
         String[][] result = new String[2][];
         Set<String> toAdd = new HashSet<String>();
         for (StaticRouteProfile route : staticRoutes) {
-            /*  example  :  ip:gateway:cidr,
+            /*
+             * example : ip:gateway:cidr,
              */
             String cidr = route.getCidr();
             String subnet = NetUtils.getCidrSubNet(cidr);

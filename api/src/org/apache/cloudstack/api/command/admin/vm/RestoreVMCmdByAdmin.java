@@ -37,8 +37,7 @@ public class RestoreVMCmdByAdmin extends RestoreVMCmd {
     public static final Logger s_logger = Logger.getLogger(RestoreVMCmdByAdmin.class);
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-            ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         UserVm result;
         CallContext.current().setEventDetails("Vm Id: " + getVmId());
         result = _userVmService.restoreVM(this);

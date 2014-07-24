@@ -75,6 +75,7 @@ public class VirtualMachineModel extends ModelObjectBase {
 
     /**
      * Resynchronize internal state from the cloudstack DB object.
+     *
      * @param instance
      */
     public void build(ModelController controller, VMInstanceVO instance) {
@@ -85,21 +86,28 @@ public class VirtualMachineModel extends ModelObjectBase {
             final Gson json = new Gson();
             Map<String, String> kvmap = json.fromJson(userVm.getUserData(), new TypeToken<Map<String, String>>() {
             }.getType());
-            //Renamed "data" to "serviceUuid" because it's clearer.
+            // Renamed "data" to "serviceUuid" because it's clearer.
             String serviceUuid = kvmap.get("service-instance");
             if (serviceUuid != null) {
                 /*
-                 * UUID.fromString() does not validate an UUID properly. I tried, for example, informing less digits in the UUID, where 12 were expected,
-                 * and the UUID.fromstring() did not thrown the exception as expected. However, if you try UUID.fromString("aaa") it breaks, but if you try
-                 * UUID.fromString("3dd4fa6e-2899-4429-b818-d34fe8df5") it doesn't (the last portion should have 12, instead of 9 digits).
+                 * UUID.fromString() does not validate an UUID properly. I
+                 * tried, for example, informing less digits in the UUID, where
+                 * 12 were expected, and the UUID.fromstring() did not thrown
+                 * the exception as expected. However, if you try
+                 * UUID.fromString("aaa") it breaks, but if you try
+                 * UUID.fromString("3dd4fa6e-2899-4429-b818-d34fe8df5") it
+                 * doesn't (the last portion should have 12, instead of 9
+                 * digits).
                  *
-                 * In other fix I added the validate UUID method to the UuidUtil classes.
+                 * In other fix I added the validate UUID method to the UuidUtil
+                 * classes.
                  */
                 if (UuidUtils.validateUUID(serviceUuid)) {
                     /* link the object with the service instance */
                     buildServiceInstance(controller, serviceUuid);
                 } else {
-                    // Throw a CloudRuntimeException in case the UUID is not valid.
+                    // Throw a CloudRuntimeException in case the UUID is not
+                    // valid.
                     String message = "Invalid UUID ({0}) given for the service-instance for VM {1}.";
                     message = MessageFormat.format(message, instance.getId(), serviceUuid);
                     s_logger.warn(message);
@@ -110,7 +118,8 @@ public class VirtualMachineModel extends ModelObjectBase {
     }
 
     /**
-     * Link the virtual machine with the service instance when recovering state from database.
+     * Link the virtual machine with the service instance when recovering state
+     * from database.
      *
      * @param controller
      * @param serviceUuid
@@ -122,7 +131,7 @@ public class VirtualMachineModel extends ModelObjectBase {
 
         ServiceInstance siObj;
         try {
-            siObj = (ServiceInstance) api.findById(ServiceInstance.class, serviceUuid);
+            siObj = (ServiceInstance)api.findById(ServiceInstance.class, serviceUuid);
         } catch (IOException ex) {
             s_logger.warn("service-instance read", ex);
             throw new CloudRuntimeException("Unable to read service-instance object", ex);
@@ -137,9 +146,9 @@ public class VirtualMachineModel extends ModelObjectBase {
             manager.getDatabase().getServiceInstances().add(siModel);
         }
         /*
-         * The code that was under the ELSE was never executed and due to that has been removed.
-         * Also, in the case siObj was null, it was going pass it as parameter to the build() method in the
-         * siModel object.
+         * The code that was under the ELSE was never executed and due to that
+         * has been removed. Also, in the case siObj was null, it was going pass
+         * it as parameter to the build() method in the siModel object.
          */
         _serviceModel = siModel;
     }
@@ -221,28 +230,28 @@ public class VirtualMachineModel extends ModelObjectBase {
 
     boolean isActiveInstance(VMInstanceVO instance) {
         switch (instance.getState()) {
-            case Migrating:
-            case Starting:
-            case Running:
-            case Shutdowned:
-            case Stopped:
-            case Stopping:
-                return true;
+        case Migrating:
+        case Starting:
+        case Running:
+        case Shutdowned:
+        case Stopped:
+        case Stopping:
+            return true;
 
-            case Destroyed:
-            case Error:
-            case Expunging:
-                return false;
+        case Destroyed:
+        case Error:
+        case Expunging:
+            return false;
 
-            default:
-                s_logger.warn("Unknown VMInstance state " + instance.getState().getDescription());
+        default:
+            s_logger.warn("Unknown VMInstance state " + instance.getState().getDescription());
         }
         return true;
     }
 
     /**
-     * Initialize the object properties based on the DB object.
-     * Common code between plugin calls and DBSync.
+     * Initialize the object properties based on the DB object. Common code
+     * between plugin calls and DBSync.
      */
     public void setProperties(ModelController controller, VMInstanceVO instance) {
         ContrailManager manager = controller.getManager();
@@ -259,7 +268,9 @@ public class VirtualMachineModel extends ModelObjectBase {
     }
 
     /**
-     * Link the virtual machine with a service instance via programmatic API call.
+     * Link the virtual machine with a service instance via programmatic API
+     * call.
+     *
      * @throws IOException
      */
     public void setServiceInstance(ModelController controller, VMInstanceVO instance, ServiceInstanceModel serviceModel) throws IOException {
@@ -279,17 +290,17 @@ public class VirtualMachineModel extends ModelObjectBase {
             String tag;
 
             switch (nic.getDeviceId()) {
-                case 0:
-                    tag = "management";
-                    break;
-                case 1:
-                    tag = "left";
-                    break;
-                case 2:
-                    tag = "right";
-                    break;
-                default:
-                    tag = null;
+            case 0:
+                tag = "management";
+                break;
+            case 1:
+                tag = "left";
+                break;
+            case 2:
+                tag = "right";
+                break;
+            default:
+                tag = null;
             }
 
             VMInterfaceModel vmiModel = getVMInterface(nic.getUuid());
@@ -360,26 +371,26 @@ public class VirtualMachineModel extends ModelObjectBase {
     @Override
     public boolean verify(ModelController controller) {
         assert _initialized : "initialized is false";
-    assert _uuid != null : "uuid is not set";
+        assert _uuid != null : "uuid is not set";
 
-    ApiConnector api = controller.getApiAccessor();
+        ApiConnector api = controller.getApiAccessor();
 
-    try {
-        _vm = (VirtualMachine) api.findById(VirtualMachine.class, _uuid);
-    } catch (IOException e) {
-        s_logger.error("virtual-machine verify", e);
-    }
+        try {
+            _vm = (VirtualMachine)api.findById(VirtualMachine.class, _uuid);
+        } catch (IOException e) {
+            s_logger.error("virtual-machine verify", e);
+        }
 
-    if (_vm == null) {
-        return false;
-    }
-
-    for (ModelObject successor: successors()) {
-        if (!successor.verify(controller)) {
+        if (_vm == null) {
             return false;
         }
-    }
-    return true;
+
+        for (ModelObject successor : successors()) {
+            if (!successor.verify(controller)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

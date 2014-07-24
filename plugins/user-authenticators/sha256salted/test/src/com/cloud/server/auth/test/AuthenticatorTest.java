@@ -67,9 +67,9 @@ public class AuthenticatorTest {
         when(_userAccountDao.getUserAccount("admin", 0L)).thenReturn(adminAccount);
         when(_userAccountDao.getUserAccount("admin20Byte", 0L)).thenReturn(adminAccount20Byte);
         when(_userAccountDao.getUserAccount("fake", 0L)).thenReturn(null);
-        //32 byte salt, and password="password"
+        // 32 byte salt, and password="password"
         when(adminAccount.getPassword()).thenReturn("WS3UHhBPKHZeV+G3jnn7G2N3luXgLSfL+2ORDieXa1U=:VhuFOrOU2IpsjKYH8cH1VDaDBh/VivjMcuADjeEbIig=");
-        //20 byte salt, and password="password"
+        // 20 byte salt, and password="password"
         when(adminAccount20Byte.getPassword()).thenReturn("QL2NsxVEmRuDaNRkvIyADny7C5w=:JoegiytiWnoBAxmSD/PwBZZYqkr746x2KzPrZNw4NgI=");
 
     }
@@ -99,25 +99,28 @@ public class AuthenticatorTest {
         assertEquals("20 byte user bad password not authenticated", false, authenticator.authenticate("admin20Byte", "fake", 0L, dummyMap).first());
     }
 
-//    @Test
-//    public void testTiming() throws UnsupportedEncodingException, NoSuchAlgorithmException {
-//        Map<String, Object[]> dummyMap = new HashMap<String, Object[]>();
-//        Double threshold = (double)500000; //half a millisecond
-//
-//        Long t1 = System.nanoTime();
-//        authenticator.authenticate("admin", "password", 0L, dummyMap);
-//        Long t2 = System.nanoTime();
-//        authenticator.authenticate("admin20Byte", "password", 0L, dummyMap);
-//        Long t3 = System.nanoTime();
-//        authenticator.authenticate("fake", "fake", 0L, dummyMap);
-//        Long t4 = System.nanoTime();
-//        authenticator.authenticate("admin", "fake", 0L, dummyMap);
-//        Long t5 = System.nanoTime();
-//        Long diff1 = t2 - t1;
-//        Long diff2 = t3 - t2;
-//        Long diff3 = t4 - t3;
-//        Long diff4 = t5 - t4;
-//        Assert.assertTrue("All computation times within " + threshold / 1000000 + " milisecond",
-//                (diff1 <= threshold) && (diff2 <= threshold) && (diff3 <= threshold) && (diff4 <= threshold));
-//    }
+    // @Test
+    // public void testTiming() throws UnsupportedEncodingException,
+    // NoSuchAlgorithmException {
+    // Map<String, Object[]> dummyMap = new HashMap<String, Object[]>();
+    // Double threshold = (double)500000; //half a millisecond
+    //
+    // Long t1 = System.nanoTime();
+    // authenticator.authenticate("admin", "password", 0L, dummyMap);
+    // Long t2 = System.nanoTime();
+    // authenticator.authenticate("admin20Byte", "password", 0L, dummyMap);
+    // Long t3 = System.nanoTime();
+    // authenticator.authenticate("fake", "fake", 0L, dummyMap);
+    // Long t4 = System.nanoTime();
+    // authenticator.authenticate("admin", "fake", 0L, dummyMap);
+    // Long t5 = System.nanoTime();
+    // Long diff1 = t2 - t1;
+    // Long diff2 = t3 - t2;
+    // Long diff3 = t4 - t3;
+    // Long diff4 = t5 - t4;
+    // Assert.assertTrue("All computation times within " + threshold / 1000000 +
+    // " milisecond",
+    // (diff1 <= threshold) && (diff2 <= threshold) && (diff3 <= threshold) &&
+    // (diff4 <= threshold));
+    // }
 }

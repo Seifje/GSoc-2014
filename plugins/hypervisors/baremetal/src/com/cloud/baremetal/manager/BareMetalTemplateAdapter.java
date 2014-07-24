@@ -96,8 +96,7 @@ public class BareMetalTemplateAdapter extends TemplateAdapterBase implements Tem
 
     private void templateCreateUsage(VMTemplateVO template, long dcId) {
         if (template.getAccountId() != Account.ACCOUNT_ID_SYSTEM) {
-            UsageEventVO usageEvent =
-                new UsageEventVO(EventTypes.EVENT_TEMPLATE_CREATE, template.getAccountId(), dcId, template.getId(), template.getName(), null,
+            UsageEventVO usageEvent = new UsageEventVO(EventTypes.EVENT_TEMPLATE_CREATE, template.getAccountId(), dcId, template.getId(), template.getName(), null,
                     template.getSourceTemplateId(), 0L);
             _usageEventDao.persist(usageEvent);
         }
@@ -108,9 +107,9 @@ public class BareMetalTemplateAdapter extends TemplateAdapterBase implements Tem
         VMTemplateVO template = persistTemplate(profile);
         Long zoneId = profile.getZoneId();
 
-        // create an entry at template_store_ref with store_id = null to represent that this template is ready for use.
-        TemplateDataStoreVO vmTemplateHost =
-            new TemplateDataStoreVO(null, template.getId(), new Date(), 100, Status.DOWNLOADED, null, null, null, null, template.getUrl());
+        // create an entry at template_store_ref with store_id = null to
+        // represent that this template is ready for use.
+        TemplateDataStoreVO vmTemplateHost = new TemplateDataStoreVO(null, template.getId(), new Date(), 100, Status.DOWNLOADED, null, null, null, null, template.getUrl());
         this._tmpltStoreDao.persist(vmTemplateHost);
 
         if (zoneId == null || zoneId == -1) {
@@ -189,7 +188,8 @@ public class BareMetalTemplateAdapter extends TemplateAdapterBase implements Tem
 
         s_logger.debug("Successfully marked template host refs for template: " + template.getName() + " as destroyed in zone: " + zoneName);
 
-        // If there are no more non-destroyed template host entries for this template, delete it
+        // If there are no more non-destroyed template host entries for this
+        // template, delete it
         if (success && (_tmpltStoreDao.listByTemplate(templateId).size() == 0)) {
             long accountId = template.getAccountId();
 
@@ -200,7 +200,8 @@ public class BareMetalTemplateAdapter extends TemplateAdapterBase implements Tem
                     s_logger.debug("Failed to acquire lock when deleting template with ID: " + templateId);
                     success = false;
                 } else if (_tmpltDao.remove(templateId)) {
-                    // Decrement the number of templates and total secondary storage space used by the account.
+                    // Decrement the number of templates and total secondary
+                    // storage space used by the account.
                     _resourceLimitMgr.decrementResourceCount(accountId, ResourceType.template);
                     _resourceLimitMgr.recalculateResourceCount(accountId, template.getDomainId(), ResourceType.secondary_storage.getOrdinal());
                 }

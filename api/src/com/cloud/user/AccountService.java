@@ -29,7 +29,8 @@ import com.cloud.exception.PermissionDeniedException;
 public interface AccountService {
 
     /**
-     * Creates a new user and account, stores the password as is so encrypted passwords are recommended.
+     * Creates a new user and account, stores the password as is so encrypted
+     * passwords are recommended.
      *
      * @param userName
      *            TODO
@@ -54,12 +55,12 @@ public interface AccountService {
      *
      * @return the user if created successfully, null otherwise
      */
-    UserAccount createUserAccount(String userName, String password, String firstName, String lastName, String email, String timezone, String accountName,
-        short accountType, Long domainId, String networkDomain, Map<String, String> details, String accountUUID, String userUUID);
+    UserAccount createUserAccount(String userName, String password, String firstName, String lastName, String email, String timezone, String accountName, short accountType,
+            Long domainId, String networkDomain, Map<String, String> details, String accountUUID, String userUUID);
 
     /**
-     * Locks a user by userId. A locked user cannot access the API, but will still have running VMs/IP addresses
-     * allocated/etc.
+     * Locks a user by userId. A locked user cannot access the API, but will
+     * still have running VMs/IP addresses allocated/etc.
      *
      * @param userId
      * @return UserAccount object
@@ -70,8 +71,7 @@ public interface AccountService {
 
     User getSystemUser();
 
-        User
-        createUser(String userName, String password, String firstName, String lastName, String email, String timeZone, String accountName, Long domainId, String userUUID);
+    User createUser(String userName, String password, String firstName, String lastName, String email, String timeZone, String accountName, Long domainId, String userUUID);
 
     boolean isAdmin(Long accountId);
 
@@ -107,14 +107,15 @@ public interface AccountService {
 
     void checkAccess(Account account, AccessType accessType, boolean sameOwner, ControlledEntity... entities) throws PermissionDeniedException;
 
-    void checkAccess(Account account, AccessType accessType, boolean sameOwner, String apiName,
-            ControlledEntity... entities) throws PermissionDeniedException;
+    void checkAccess(Account account, AccessType accessType, boolean sameOwner, String apiName, ControlledEntity... entities) throws PermissionDeniedException;
 
     Long finalyzeAccountId(String accountName, Long domainId, Long projectId, boolean enabledOnly);
 
     /**
      * returns the user account object for a given user id
-     * @param userId user id
+     *
+     * @param userId
+     *            user id
      * @return useraccount object if it exists else null
      */
     UserAccount getUserAccountById(Long userId);

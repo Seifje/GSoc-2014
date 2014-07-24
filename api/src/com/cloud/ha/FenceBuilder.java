@@ -24,8 +24,10 @@ public interface FenceBuilder extends Adapter {
     /**
      * Fence off the vm.
      *
-     * @param vm vm
-     * @param host host where the vm was running on.
+     * @param vm
+     *            vm
+     * @param host
+     *            host where the vm was running on.
      */
     public Boolean fenceOff(VirtualMachine vm, Host host);
 }

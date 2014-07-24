@@ -44,7 +44,8 @@ public class ConsoleProxyHttpHandlerHelper {
             }
         }
 
-        // This is a ugly solution for now. We will do encryption/decryption translation
+        // This is a ugly solution for now. We will do encryption/decryption
+        // translation
         // here to make it transparent to rest of the code.
         if (map.get("token") != null) {
             ConsoleProxyPasswordBasedEncryptor encryptor = new ConsoleProxyPasswordBasedEncryptor(ConsoleProxy.getEncryptorPassword());

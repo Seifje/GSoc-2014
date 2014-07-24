@@ -33,14 +33,11 @@ import com.cloud.utils.backoff.BackoffAlgorithm;
 import com.cloud.utils.component.AdapterBase;
 
 /**
- * An implementation of BackoffAlgorithm that waits for some seconds.
- * After the time the client can try to perform the operation again.
+ * An implementation of BackoffAlgorithm that waits for some seconds. After the
+ * time the client can try to perform the operation again.
  *
- * @config
- * {@table
- *    || Param Name | Description | Values | Default ||
- *    || seconds    | seconds to sleep | integer | 5 ||
- *  }
+ * @config {@table || Param Name | Description | Values | Default || || seconds
+ *         | seconds to sleep | integer | 5 || * }
  **/
 @Local(value = {BackoffAlgorithm.class})
 public class ConstantTimeBackoff extends AdapterBase implements BackoffAlgorithm, ConstantTimeBackoffMBean {

@@ -64,7 +64,8 @@ public class UserVmDomRInvestigator extends AbstractInvestigatorImpl {
         if (s_logger.isDebugEnabled()) {
             s_logger.debug("testing if " + vm + " is alive");
         }
-        // to verify that the VM is alive, we ask the domR (router) to ping the VM (private IP)
+        // to verify that the VM is alive, we ask the domR (router) to ping the
+        // VM (private IP)
         UserVmVO userVm = _userVmDao.findById(vm.getId());
 
         List<? extends Nic> nics = _networkMgr.getNicsForTraffic(userVm.getId(), TrafficType.Guest);
@@ -126,10 +127,12 @@ public class UserVmDomRInvestigator extends AbstractInvestigatorImpl {
             }
             if (hostState == Status.Up) {
                 if (s_logger.isDebugEnabled()) {
-                    s_logger.debug("ping from (" + hostId + ") to agent's host ip address (" + agent.getPrivateIpAddress() +
-                        ") successful, returning that agent is disconnected");
+                    s_logger.debug("ping from (" + hostId + ") to agent's host ip address (" + agent.getPrivateIpAddress() + ") successful, returning that agent is disconnected");
                 }
-                return Status.Disconnected; // the computing host ip is ping-able, but the computing agent is down, report that the agent is disconnected
+                return Status.Disconnected; // the computing host ip is
+                // ping-able, but the computing
+                // agent is down, report that the
+                // agent is disconnected
             } else if (hostState == Status.Down) {
                 if (s_logger.isDebugEnabled()) {
                     s_logger.debug("returning host state: " + hostState);
@@ -138,7 +141,8 @@ public class UserVmDomRInvestigator extends AbstractInvestigatorImpl {
             }
         }
 
-        // could not reach agent, could not reach agent's host, unclear what the problem is but it'll require more investigation...
+        // could not reach agent, could not reach agent's host, unclear what the
+        // problem is but it'll require more investigation...
         if (s_logger.isDebugEnabled()) {
             s_logger.debug("could not reach agent, could not reach agent's host, returning that we don't have enough information");
         }
@@ -170,8 +174,8 @@ public class UserVmDomRInvestigator extends AbstractInvestigatorImpl {
                 Answer pingTestAnswer = _agentMgr.easySend(hostId, new PingTestCommand(routerPrivateIp, privateIp));
                 if (pingTestAnswer != null && pingTestAnswer.getResult()) {
                     if (s_logger.isDebugEnabled()) {
-                        s_logger.debug("user vm's " + vm.getHostName() + " ip address " + privateIp + "  has been successfully pinged from the Virtual Router " +
-                            router.getHostName() + ", returning that vm is alive");
+                        s_logger.debug("user vm's " + vm.getHostName() + " ip address " + privateIp + "  has been successfully pinged from the Virtual Router "
+                                + router.getHostName() + ", returning that vm is alive");
                     }
                     return Boolean.TRUE;
                 }

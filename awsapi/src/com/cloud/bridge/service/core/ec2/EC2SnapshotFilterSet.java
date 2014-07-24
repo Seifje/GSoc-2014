@@ -37,7 +37,8 @@ public class EC2SnapshotFilterSet {
     private Map<String, String> filterTypes = new HashMap<String, String>();
 
     public EC2SnapshotFilterSet() {
-        // -> use these values to check that the proper filter is passed to this type of filter set
+        // -> use these values to check that the proper filter is passed to this
+        // type of filter set
         filterTypes.put("owner-alias", "string");
         filterTypes.put("owner-id", "string");
         filterTypes.put("snapshot-id", "string");
@@ -57,7 +58,8 @@ public class EC2SnapshotFilterSet {
                 throw new EC2ServiceException(ClientError.InvalidFilter, "Filter '" + filterName + "' is invalid");
             }
         }
-        // ToDo we could add checks to make sure the type of a filters value is correct (e.g., an integer)
+        // ToDo we could add checks to make sure the type of a filters value is
+        // correct (e.g., an integer)
         filterSet.add(param);
     }
 
@@ -66,10 +68,12 @@ public class EC2SnapshotFilterSet {
     }
 
     /**
-     * For a filter to match a snapshot just one of its values has to match the volume.
-     * For a snapshot to be included in the instance response it must pass all the defined filters.
+     * For a filter to match a snapshot just one of its values has to match the
+     * volume. For a snapshot to be included in the instance response it must
+     * pass all the defined filters.
      *
-     * @param sampleList - list of snapshots to test against the defined filters
+     * @param sampleList
+     *            - list of snapshots to test against the defined filters
      * @return EC2DescribeSnapshotsResponse
      * @throws ParseException
      */
@@ -146,7 +150,8 @@ public class EC2SnapshotFilterSet {
             return false;
 
         for (String s : set) {
-            //System.out.println( "contsinsString: " + lookingFor + " " + set[i] );
+            // System.out.println( "contsinsString: " + lookingFor + " " +
+            // set[i] );
             if (lookingFor.matches(s))
                 return true;
         }
@@ -162,7 +167,8 @@ public class EC2SnapshotFilterSet {
 
     private boolean containsLong(long lookingFor, String[] set) {
         for (String s : set) {
-            //System.out.println( "contsinsInteger: " + lookingFor + " " + set[i] );
+            // System.out.println( "contsinsInteger: " + lookingFor + " " +
+            // set[i] );
             int temp = Integer.parseInt(s);
             if (lookingFor == temp)
                 return true;
@@ -174,7 +180,8 @@ public class EC2SnapshotFilterSet {
         lookingFor.setTimeZone(TimeZone.getTimeZone("GMT"));
         Date lookingForDate = lookingFor.getTime();
         for (String s : set) {
-            //System.out.println( "contsinsCalendar: " + lookingFor + " " + set[i] );
+            // System.out.println( "contsinsCalendar: " + lookingFor + " " +
+            // set[i] );
             Calendar toMatch = EC2RestAuth.parseDateString(s);
             toMatch.setTimeZone(TimeZone.getTimeZone("GMT"));
             Date toMatchDate = toMatch.getTime();

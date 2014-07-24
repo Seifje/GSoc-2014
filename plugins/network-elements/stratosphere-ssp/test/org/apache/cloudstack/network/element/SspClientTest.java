@@ -58,8 +58,7 @@ public class SspClientTest {
 
         HttpClient client = mock(HttpClient.class);
         doReturn(client).when(sspClient).getHttpClient();
-        String body = "{\"uuid\":\"" + tenant_net_uuid + "\",\"name\":\"" + networkName
-                + "\",\"tenant_uuid\":\"" + uuid + "\"}";
+        String body = "{\"uuid\":\"" + tenant_net_uuid + "\",\"name\":\"" + networkName + "\",\"tenant_uuid\":\"" + uuid + "\"}";
         when(client.execute(any(HttpUriRequest.class), any(BasicResponseHandler.class))).thenReturn(body);
 
         SspClient.TenantNetwork tnet = sspClient.createTenantNetwork(uuid, networkName);

@@ -53,7 +53,7 @@ public interface RfbConstants {
     /**
      * Pseudo-encodings.
      */
-    public final static int ENCODING_CURSOR = -239 /*0xFFFFFF11*/, ENCODING_DESKTOP_SIZE = -223 /*0xFFFFFF21*/;
+    public final static int ENCODING_CURSOR = -239 /* 0xFFFFFF11 */, ENCODING_DESKTOP_SIZE = -223 /* 0xFFFFFF21 */;
 
     /**
      * Encodings, which we support.
@@ -61,7 +61,8 @@ public interface RfbConstants {
     public final static int[] SUPPORTED_ENCODINGS_ARRAY = {ENCODING_RAW, ENCODING_COPY_RECT, ENCODING_DESKTOP_SIZE};
 
     /**
-     * Frame buffer update request type: update of whole screen or partial update.
+     * Frame buffer update request type: update of whole screen or partial
+     * update.
      */
     public static final int FRAMEBUFFER_FULL_UPDATE_REQUEST = 0, FRAMEBUFFER_INCREMENTAL_UPDATE_REQUEST = 1;
 

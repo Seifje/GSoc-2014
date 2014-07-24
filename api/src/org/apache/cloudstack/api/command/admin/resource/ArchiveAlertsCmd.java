@@ -33,8 +33,7 @@ import org.apache.cloudstack.api.response.SuccessResponse;
 import com.cloud.exception.InvalidParameterValueException;
 import com.cloud.user.Account;
 
-@APICommand(name = "archiveAlerts", description = "Archive one or more alerts.", responseObject = SuccessResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "archiveAlerts", description = "Archive one or more alerts.", responseObject = SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ArchiveAlertsCmd extends BaseCmd {
 
     public static final Logger s_logger = Logger.getLogger(ArchiveAlertsCmd.class.getName());
@@ -45,19 +44,15 @@ public class ArchiveAlertsCmd extends BaseCmd {
     // ////////////// API parameters /////////////////////
     // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.IDS,
-               type = CommandType.LIST,
-               collectionType = CommandType.UUID,
-               entityType = AlertResponse.class,
-               description = "the IDs of the alerts")
+    @Parameter(name = ApiConstants.IDS, type = CommandType.LIST, collectionType = CommandType.UUID, entityType = AlertResponse.class, description = "the IDs of the alerts")
     private List<Long> ids;
 
     @Parameter(name = ApiConstants.END_DATE, type = CommandType.DATE, description = "end date range to archive alerts"
-        + " (including) this date (use format \"yyyy-MM-dd\" or the new format \"yyyy-MM-ddThh:mm:ss\")")
+            + " (including) this date (use format \"yyyy-MM-dd\" or the new format \"yyyy-MM-ddThh:mm:ss\")")
     private Date endDate;
 
     @Parameter(name = ApiConstants.START_DATE, type = CommandType.DATE, description = "start date range to archive alerts"
-        + " (including) this date (use format \"yyyy-MM-dd\" or the new format \"yyyy-MM-ddThh:mm:ss\")")
+            + " (including) this date (use format \"yyyy-MM-dd\" or the new format \"yyyy-MM-ddThh:mm:ss\")")
     private Date startDate;
 
     @Parameter(name = ApiConstants.TYPE, type = CommandType.STRING, description = "archive by alert type")

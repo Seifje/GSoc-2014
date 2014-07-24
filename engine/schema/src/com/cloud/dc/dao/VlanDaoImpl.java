@@ -48,8 +48,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 @Local(value = {VlanDao.class})
 public class VlanDaoImpl extends GenericDaoBase<VlanVO, Long> implements VlanDao {
 
-    private final String FindZoneWideVlans =
-        "SELECT * FROM vlan WHERE data_center_id=? and vlan_type=? and vlan_id!=? and id not in (select vlan_db_id from account_vlan_map)";
+    private final String FindZoneWideVlans = "SELECT * FROM vlan WHERE data_center_id=? and vlan_type=? and vlan_id!=? and id not in (select vlan_db_id from account_vlan_map)";
 
     protected SearchBuilder<VlanVO> ZoneVlanIdSearch;
     protected SearchBuilder<VlanVO> ZoneSearch;
@@ -142,7 +141,8 @@ public class VlanDaoImpl extends GenericDaoBase<VlanVO, Long> implements VlanDao
 
     @Override
     public List<VlanVO> listVlansForPod(long podId) {
-        //FIXME: use a join statement to improve the performance (should be minor since we expect only one or two
+        // FIXME: use a join statement to improve the performance (should be
+        // minor since we expect only one or two
         List<PodVlanMapVO> vlanMaps = _podVlanMapDao.listPodVlanMapsByPod(podId);
         List<VlanVO> result = new ArrayList<VlanVO>();
         for (PodVlanMapVO pvmvo : vlanMaps) {
@@ -153,7 +153,8 @@ public class VlanDaoImpl extends GenericDaoBase<VlanVO, Long> implements VlanDao
 
     @Override
     public List<VlanVO> listVlansForPodByType(long podId, VlanType vlanType) {
-        //FIXME: use a join statement to improve the performance (should be minor since we expect only one or two)
+        // FIXME: use a join statement to improve the performance (should be
+        // minor since we expect only one or two)
         List<PodVlanMapVO> vlanMaps = _podVlanMapDao.listPodVlanMapsByPod(podId);
         List<VlanVO> result = new ArrayList<VlanVO>();
         for (PodVlanMapVO pvmvo : vlanMaps) {
@@ -167,7 +168,8 @@ public class VlanDaoImpl extends GenericDaoBase<VlanVO, Long> implements VlanDao
 
     @Override
     public List<VlanVO> listVlansForAccountByType(Long zoneId, long accountId, VlanType vlanType) {
-        //FIXME: use a join statement to improve the performance (should be minor since we expect only one or two)
+        // FIXME: use a join statement to improve the performance (should be
+        // minor since we expect only one or two)
         List<AccountVlanMapVO> vlanMaps = _accountVlanMapDao.listAccountVlanMapsByAccount(accountId);
         List<VlanVO> result = new ArrayList<VlanVO>();
         for (AccountVlanMapVO acvmvo : vlanMaps) {
@@ -215,7 +217,7 @@ public class VlanDaoImpl extends GenericDaoBase<VlanVO, Long> implements VlanDao
         AccountVlanMapSearch = _accountVlanMapDao.createSearchBuilder();
         AccountVlanMapSearch.and("accountId", AccountVlanMapSearch.entity().getAccountId(), SearchCriteria.Op.NULL);
         ZoneWideNonDedicatedVlanSearch.join("AccountVlanMapSearch", AccountVlanMapSearch, ZoneWideNonDedicatedVlanSearch.entity().getId(), AccountVlanMapSearch.entity()
-            .getVlanDbId(), JoinBuilder.JoinType.LEFTOUTER);
+                .getVlanDbId(), JoinBuilder.JoinType.LEFTOUTER);
         ZoneWideNonDedicatedVlanSearch.done();
         AccountVlanMapSearch.done();
 
@@ -223,7 +225,7 @@ public class VlanDaoImpl extends GenericDaoBase<VlanVO, Long> implements VlanDao
         AccountVlanMapSearch = _accountVlanMapDao.createSearchBuilder();
         AccountVlanMapSearch.and("accountId", AccountVlanMapSearch.entity().getAccountId(), SearchCriteria.Op.EQ);
         DedicatedVlanSearch.join("AccountVlanMapSearch", AccountVlanMapSearch, DedicatedVlanSearch.entity().getId(), AccountVlanMapSearch.entity().getVlanDbId(),
-            JoinBuilder.JoinType.LEFTOUTER);
+                JoinBuilder.JoinType.LEFTOUTER);
         DedicatedVlanSearch.done();
         AccountVlanMapSearch.done();
 
@@ -255,11 +257,12 @@ public class VlanDaoImpl extends GenericDaoBase<VlanVO, Long> implements VlanDao
             return null;
         }
 
-        // Try to find an empty VLAN with the same tag/subnet as a VLAN that is full
+        // Try to find an empty VLAN with the same tag/subnet as a VLAN that is
+        // full
         for (VlanVO fullVlan : fullVlans) {
             for (VlanVO emptyVlan : emptyVlans) {
-                if (fullVlan.getVlanTag().equals(emptyVlan.getVlanTag()) && fullVlan.getVlanGateway().equals(emptyVlan.getVlanGateway()) &&
-                    fullVlan.getVlanNetmask().equals(emptyVlan.getVlanNetmask())) {
+                if (fullVlan.getVlanTag().equals(emptyVlan.getVlanTag()) && fullVlan.getVlanGateway().equals(emptyVlan.getVlanGateway())
+                        && fullVlan.getVlanNetmask().equals(emptyVlan.getVlanNetmask())) {
                     return emptyVlan;
                 }
             }
@@ -290,11 +293,12 @@ public class VlanDaoImpl extends GenericDaoBase<VlanVO, Long> implements VlanDao
         }
 
         return null;
-//        String ipAddress = _ipAddressDao.assignIpAddress(accountId, domainId, vlan.getId(), false).getAddress();
-//        if (ipAddress == null) {
-//            return null;
-//        }
-//        return new Pair<String, VlanVO>(ipAddress, vlan);
+        // String ipAddress = _ipAddressDao.assignIpAddress(accountId, domainId,
+        // vlan.getId(), false).getAddress();
+        // if (ipAddress == null) {
+        // return null;
+        // }
+        // return new Pair<String, VlanVO>(ipAddress, vlan);
 
     }
 

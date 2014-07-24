@@ -33,15 +33,14 @@ import org.apache.cloudstack.region.RegionService;
 import com.cloud.domain.Domain;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateDomain", description = "Updates a domain with a new name", responseObject = DomainResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "updateDomain", description = "Updates a domain with a new name", responseObject = DomainResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateDomainCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateDomainCmd.class.getName());
     private static final String s_name = "updatedomainresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = DomainResponse.class, required = true, description = "ID of domain to update")
     private Long id;
@@ -49,17 +48,15 @@ public class UpdateDomainCmd extends BaseCmd {
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, description = "updates domain with this name")
     private String domainName;
 
-    @Parameter(name = ApiConstants.NETWORK_DOMAIN,
-               type = CommandType.STRING,
-               description = "Network domain for the domain's networks; empty string will update domainName with NULL value")
+    @Parameter(name = ApiConstants.NETWORK_DOMAIN, type = CommandType.STRING, description = "Network domain for the domain's networks; empty string will update domainName with NULL value")
     private String networkDomain;
 
     @Inject
     RegionService _regionService;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -73,9 +70,9 @@ public class UpdateDomainCmd extends BaseCmd {
         return networkDomain;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

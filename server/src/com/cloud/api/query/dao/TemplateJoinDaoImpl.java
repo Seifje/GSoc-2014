@@ -51,7 +51,6 @@ import com.cloud.utils.db.GenericDaoBase;
 import com.cloud.utils.db.SearchBuilder;
 import com.cloud.utils.db.SearchCriteria;
 
-
 @Component
 @Local(value = {TemplateJoinDao.class})
 public class TemplateJoinDaoImpl extends GenericDaoBase<TemplateJoinVO, Long> implements TemplateJoinDao {
@@ -59,7 +58,7 @@ public class TemplateJoinDaoImpl extends GenericDaoBase<TemplateJoinVO, Long> im
     public static final Logger s_logger = Logger.getLogger(TemplateJoinDaoImpl.class);
 
     @Inject
-    private ConfigurationDao  _configDao;
+    private ConfigurationDao _configDao;
     @Inject
     private AccountService _accountService;
 
@@ -200,7 +199,8 @@ public class TemplateJoinDaoImpl extends GenericDaoBase<TemplateJoinVO, Long> im
         return templateResponse;
     }
 
-    //TODO: This is to keep compatibility with 4.1 API, where updateTemplateCmd and updateIsoCmd will return a simpler TemplateResponse
+    // TODO: This is to keep compatibility with 4.1 API, where updateTemplateCmd
+    // and updateIsoCmd will return a simpler TemplateResponse
     // compared to listTemplates and listIsos.
     @Override
     public TemplateResponse newUpdateResponse(TemplateJoinVO result) {
@@ -279,7 +279,8 @@ public class TemplateJoinDaoImpl extends GenericDaoBase<TemplateJoinVO, Long> im
         isoResponse.setExtractable(iso.isExtractable() && !(iso.getTemplateType() == TemplateType.PERHOST));
         isoResponse.setCreated(iso.getCreatedOnStore());
         if (iso.getTemplateType() == TemplateType.PERHOST) {
-            // for xs-tools.iso and vmware-tools.iso, we didn't download, but is ready to use.
+            // for xs-tools.iso and vmware-tools.iso, we didn't download, but is
+            // ready to use.
             isoResponse.setReady(true);
         } else {
             isoResponse.setReady(iso.getState() == ObjectInDataStoreStateMachine.State.Ready);

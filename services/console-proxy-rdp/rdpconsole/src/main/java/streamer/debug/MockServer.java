@@ -95,7 +95,7 @@ public class MockServer implements Runnable {
                                 if (packet.data[j] != actualData[j]) {
                                     throw new AssertionError("Actual byte #" + (j + 1) + " of client request for packet #" + (i + 1) + " (\"" + packet.id + "\")"
                                             + " does not match corresponding byte of expected client request. Actual byte: " + actualData[j] + ", expected byte: " + packet.data[j]
-                                                    + ".");
+                                            + ".");
                                 }
                             }
                         }

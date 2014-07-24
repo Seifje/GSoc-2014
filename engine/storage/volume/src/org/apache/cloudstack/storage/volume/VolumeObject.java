@@ -111,6 +111,7 @@ public class VolumeObject implements VolumeInfo {
         }
         return null;
     }
+
     @Override
     public String getUuid() {
         return volumeVO.getUuid();
@@ -267,8 +268,8 @@ public class VolumeObject implements VolumeInfo {
         }
         DataObjectInStore obj = objectInStoreMgr.findObject(volumeVO.getId(), DataObjectType.VOLUME, dataStore.getId(), dataStore.getRole());
         if (obj.getState() != ObjectInDataStoreStateMachine.State.Ready) {
-            return dataStore.getUri() + "&" + EncodingType.OBJTYPE + "=" + DataObjectType.VOLUME + "&" + EncodingType.SIZE + "=" + volumeVO.getSize() + "&" +
-                EncodingType.NAME + "=" + volumeVO.getName();
+            return dataStore.getUri() + "&" + EncodingType.OBJTYPE + "=" + DataObjectType.VOLUME + "&" + EncodingType.SIZE + "=" + volumeVO.getSize() + "&" + EncodingType.NAME
+                    + "=" + volumeVO.getName();
         } else {
             return dataStore.getUri() + "&" + EncodingType.OBJTYPE + "=" + DataObjectType.VOLUME + "&" + EncodingType.PATH + "=" + obj.getInstallPath();
         }
@@ -292,8 +293,8 @@ public class VolumeObject implements VolumeInfo {
             }
             if (dataStore.getRole() == DataStoreRole.Image) {
                 objectInStoreMgr.update(this, event);
-                if (volumeVO.getState() == Volume.State.Migrating || volumeVO.getState() == Volume.State.Copying ||
-                    volumeVO.getState() == Volume.State.Uploaded || volumeVO.getState() == Volume.State.Expunged) {
+                if (volumeVO.getState() == Volume.State.Migrating || volumeVO.getState() == Volume.State.Copying || volumeVO.getState() == Volume.State.Uploaded
+                        || volumeVO.getState() == Volume.State.Expunged) {
                     return;
                 }
                 if (event == ObjectInDataStoreStateMachine.Event.CreateOnlyRequested) {
@@ -328,8 +329,7 @@ public class VolumeObject implements VolumeInfo {
             throw new CloudRuntimeException("Failed to update state:" + e.toString());
         } finally {
             // in case of OperationFailed, expunge the entry
-            if (event == ObjectInDataStoreStateMachine.Event.OperationFailed &&
-                (volumeVO.getState() != Volume.State.Copying && volumeVO.getState() != Volume.State.Uploaded)) {
+            if (event == ObjectInDataStoreStateMachine.Event.OperationFailed && (volumeVO.getState() != Volume.State.Copying && volumeVO.getState() != Volume.State.Uploaded)) {
                 objectInStoreMgr.deleteIfNotReady(this);
             }
         }
@@ -662,7 +662,7 @@ public class VolumeObject implements VolumeInfo {
     }
 
     @Override
-    public ProvisioningType getProvisioningType(){
+    public ProvisioningType getProvisioningType() {
         return this.volumeVO.getProvisioningType();
     }
 

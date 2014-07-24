@@ -40,8 +40,7 @@ import com.cloud.dc.DedicatedResourceVO;
 import com.cloud.dc.DedicatedResources;
 import com.cloud.utils.Pair;
 
-@APICommand(name = "listDedicatedZones", description = "List dedicated zones.", responseObject = DedicateZoneResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listDedicatedZones", description = "List dedicated zones.", responseObject = DedicateZoneResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListDedicatedZonesCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListDedicatedZonesCmd.class.getName());
 
@@ -49,9 +48,9 @@ public class ListDedicatedZonesCmd extends BaseListCmd {
     @Inject
     DedicatedService _dedicatedservice;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
     @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, description = "the ID of the Zone")
     private Long zoneId;
 
@@ -61,15 +60,12 @@ public class ListDedicatedZonesCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "the name of the account associated with the zone. Must be used with domainId.")
     private String accountName;
 
-    @Parameter(name = ApiConstants.AFFINITY_GROUP_ID,
-               type = CommandType.UUID,
-               entityType = AffinityGroupResponse.class,
-               description = "list dedicated zones by affinity group")
+    @Parameter(name = ApiConstants.AFFINITY_GROUP_ID, type = CommandType.UUID, entityType = AffinityGroupResponse.class, description = "list dedicated zones by affinity group")
     private Long affinityGroupId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getZoneId() {
         return zoneId;
@@ -87,9 +83,9 @@ public class ListDedicatedZonesCmd extends BaseListCmd {
         return affinityGroupId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

@@ -40,8 +40,7 @@ import com.cloud.network.dao.ExternalLoadBalancerDeviceVO;
 import com.cloud.network.element.F5ExternalLoadBalancerElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "configureF5LoadBalancer", responseObject = F5LoadBalancerResponse.class, description = "configures a F5 load balancer device",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "configureF5LoadBalancer", responseObject = F5LoadBalancerResponse.class, description = "configures a F5 load balancer device", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ConfigureF5LoadBalancerCmd extends BaseAsyncCmd {
 
     public static final Logger s_logger = Logger.getLogger(ConfigureF5LoadBalancerCmd.class.getName());
@@ -49,26 +48,19 @@ public class ConfigureF5LoadBalancerCmd extends BaseAsyncCmd {
     @Inject
     F5ExternalLoadBalancerElementService _f5DeviceManagerService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_ID,
-               type = CommandType.UUID,
-               entityType = F5LoadBalancerResponse.class,
-               required = true,
-               description = "F5 load balancer device ID")
+    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_ID, type = CommandType.UUID, entityType = F5LoadBalancerResponse.class, required = true, description = "F5 load balancer device ID")
     private Long lbDeviceId;
 
-    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_CAPACITY,
-               type = CommandType.LONG,
-               required = false,
-               description = "capacity of the device, Capacity will be interpreted as number of networks device can handle")
+    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_CAPACITY, type = CommandType.LONG, required = false, description = "capacity of the device, Capacity will be interpreted as number of networks device can handle")
     private Long capacity;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getLoadBalancerDeviceId() {
         return lbDeviceId;
@@ -78,13 +70,12 @@ public class ConfigureF5LoadBalancerCmd extends BaseAsyncCmd {
         return capacity;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             ExternalLoadBalancerDeviceVO lbDeviceVO = _f5DeviceManagerService.configureF5LoadBalancer(this);
             if (lbDeviceVO != null) {

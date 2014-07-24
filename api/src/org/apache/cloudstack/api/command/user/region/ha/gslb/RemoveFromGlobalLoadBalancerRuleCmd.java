@@ -41,38 +41,26 @@ import com.cloud.region.ha.GlobalLoadBalancingRulesService;
 import com.cloud.user.Account;
 import com.cloud.utils.StringUtils;
 
-@APICommand(name = "removeFromGlobalLoadBalancerRule",
-            description = "Removes a load balancer rule association with" + " global load balancer rule",
-            responseObject = SuccessResponse.class,
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "removeFromGlobalLoadBalancerRule", description = "Removes a load balancer rule association with" + " global load balancer rule", responseObject = SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class RemoveFromGlobalLoadBalancerRuleCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(RemoveFromGlobalLoadBalancerRuleCmd.class.getName());
 
     private static final String s_name = "removefromloadbalancerruleresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = GlobalLoadBalancerResponse.class,
-               required = true,
-               description = "The ID of the load balancer rule")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = GlobalLoadBalancerResponse.class, required = true, description = "The ID of the load balancer rule")
     private Long id;
 
-    @Parameter(name = ApiConstants.LOAD_BALANCER_RULE_LIST,
-               type = CommandType.LIST,
-               collectionType = CommandType.UUID,
-               entityType = FirewallRuleResponse.class,
-               required = true,
-               description = "the list load balancer rules that " + "will be assigned to gloabal load balacner rule")
+    @Parameter(name = ApiConstants.LOAD_BALANCER_RULE_LIST, type = CommandType.LIST, collectionType = CommandType.UUID, entityType = FirewallRuleResponse.class, required = true, description = "the list load balancer rules that "
+            + "will be assigned to gloabal load balacner rule")
     private List<Long> loadBalancerRulesIds;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getGlobalLoadBalancerRuleId() {
         return id;
@@ -82,9 +70,9 @@ public class RemoveFromGlobalLoadBalancerRuleCmd extends BaseAsyncCmd {
         return loadBalancerRulesIds;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Inject
     public GlobalLoadBalancingRulesService _gslbService;
@@ -98,7 +86,9 @@ public class RemoveFromGlobalLoadBalancerRuleCmd extends BaseAsyncCmd {
     public long getEntityOwnerId() {
         GlobalLoadBalancerRule globalLoadBalancerRule = _entityMgr.findById(GlobalLoadBalancerRule.class, getGlobalLoadBalancerRuleId());
         if (globalLoadBalancerRule == null) {
-            return Account.ACCOUNT_ID_SYSTEM; // bad id given, parent this command to SYSTEM so ERROR events are tracked
+            return Account.ACCOUNT_ID_SYSTEM; // bad id given, parent this
+            // command to SYSTEM so ERROR
+            // events are tracked
         }
         return globalLoadBalancerRule.getAccountId();
     }
@@ -115,8 +105,7 @@ public class RemoveFromGlobalLoadBalancerRuleCmd extends BaseAsyncCmd {
 
     @Override
     public void execute() {
-        CallContext.current().setEventDetails(
-            "Global Load balancer rule Id: " + getGlobalLoadBalancerRuleId() + " VmIds: " + StringUtils.join(getLoadBalancerRulesIds(), ","));
+        CallContext.current().setEventDetails("Global Load balancer rule Id: " + getGlobalLoadBalancerRuleId() + " VmIds: " + StringUtils.join(getLoadBalancerRulesIds(), ","));
         boolean result = _gslbService.removeFromGlobalLoadBalancerRule(this);
         if (result) {
             SuccessResponse response = new SuccessResponse(getCommandName());

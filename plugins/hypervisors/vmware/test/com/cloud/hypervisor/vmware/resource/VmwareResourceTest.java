@@ -72,7 +72,7 @@ public class VmwareResourceTest {
         when(cmd.getVirtualMachine()).thenReturn(vmSpec);
     }
 
-    //Test successful scaling up the vm
+    // Test successful scaling up the vm
     @Test
     public void testScaleVMF1() throws Exception {
         when(_resource.getHyperHost(context, null)).thenReturn(hyperHost);

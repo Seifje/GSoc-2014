@@ -18,6 +18,7 @@
 //
 
 package com.cloud.network.nicira;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -175,29 +176,25 @@ public class NiciraNvpApi {
     }
 
     /**
-     * PUT item given a UUID as key and an item object
-     * with the new data
+     * PUT item given a UUID as key and an item object with the new data
      *
      * @param item
      * @param uuid
      * @throws NiciraNvpApiException
      */
-    public <T> void update(final T item, final String uuid)
-                    throws NiciraNvpApiException {
+    public <T> void update(final T item, final String uuid) throws NiciraNvpApiException {
         final String uri = prefixMap.get(item.getClass()) + "/" + uuid;
         updateWithUri(item, uri);
     }
 
     /**
-     * PUT item given a UUID as key and an item object
-     * with the new data
+     * PUT item given a UUID as key and an item object with the new data
      *
      * @param item
      * @param uuid
      * @throws NiciraNvpApiException
      */
-    public <T> void updateWithUri(final T item, final String uri)
-                    throws NiciraNvpApiException {
+    public <T> void updateWithUri(final T item, final String uri) throws NiciraNvpApiException {
         try {
             restConnector.executeUpdateObject(item, uri, Collections.<String, String> emptyMap());
         } catch (final CloudstackRESTException e) {
@@ -211,8 +208,7 @@ public class NiciraNvpApi {
      * @param securityProfileUuid
      * @throws NiciraNvpApiException
      */
-    public <T> void delete(final String uuid, final Class<T> clazz)
-            throws NiciraNvpApiException {
+    public <T> void delete(final String uuid, final Class<T> clazz) throws NiciraNvpApiException {
         final String uri = prefixMap.get(clazz) + "/" + uuid;
         deleteWithUri(uri);
     }
@@ -223,8 +219,7 @@ public class NiciraNvpApi {
      * @param securityProfileUuid
      * @throws NiciraNvpApiException
      */
-    public <T> void deleteWithUri(final String uri)
-            throws NiciraNvpApiException {
+    public <T> void deleteWithUri(final String uri) throws NiciraNvpApiException {
         try {
             restConnector.executeDeleteObject(uri);
         } catch (final CloudstackRESTException e) {
@@ -256,9 +251,8 @@ public class NiciraNvpApi {
     /**
      * GET list of {@link SecurityProfile} filtered by UUID
      *
-     * We could have invoked the service:
-     * SEC_PROFILE_URI_PREFIX + "/" + securityProfileUuid
-     * but it is not working currently
+     * We could have invoked the service: SEC_PROFILE_URI_PREFIX + "/" +
+     * securityProfileUuid but it is not working currently
      *
      * @param uuid
      * @return
@@ -269,16 +263,14 @@ public class NiciraNvpApi {
     }
 
     /**
-     * PUT {@link SecurityProfile} given a UUID as key and a {@link SecurityProfile}
-     * with the new data
+     * PUT {@link SecurityProfile} given a UUID as key and a
+     * {@link SecurityProfile} with the new data
      *
      * @param securityProfile
      * @param securityProfileUuid
      * @throws NiciraNvpApiException
      */
-    public void updateSecurityProfile(final SecurityProfile securityProfile,
-            final String securityProfileUuid)
-                    throws NiciraNvpApiException {
+    public void updateSecurityProfile(final SecurityProfile securityProfile, final String securityProfileUuid) throws NiciraNvpApiException {
         update(securityProfile, securityProfileUuid);
     }
 
@@ -288,11 +280,9 @@ public class NiciraNvpApi {
      * @param securityProfileUuid
      * @throws NiciraNvpApiException
      */
-    public void deleteSecurityProfile(final String securityProfileUuid)
-            throws NiciraNvpApiException {
+    public void deleteSecurityProfile(final String securityProfileUuid) throws NiciraNvpApiException {
         delete(securityProfileUuid, SecurityProfile.class);
     }
-
 
     /**
      * POST {@link Acl}
@@ -327,16 +317,13 @@ public class NiciraNvpApi {
     }
 
     /**
-     * PUT {@link Acl} given a UUID as key and a {@link Acl}
-     * with the new data
+     * PUT {@link Acl} given a UUID as key and a {@link Acl} with the new data
      *
      * @param acl
      * @param aclUuid
      * @throws NiciraNvpApiException
      */
-    public void updateAcl(final Acl acl,
-            final String aclUuid)
-                    throws NiciraNvpApiException {
+    public void updateAcl(final Acl acl, final String aclUuid) throws NiciraNvpApiException {
         update(acl, aclUuid);
     }
 
@@ -383,9 +370,7 @@ public class NiciraNvpApi {
      * @param logicalSwitchUuid
      * @throws NiciraNvpApiException
      */
-    public void updateLogicalSwitch(final LogicalSwitch logicalSwitch,
-            final String logicalSwitchUuid)
-                    throws NiciraNvpApiException {
+    public void updateLogicalSwitch(final LogicalSwitch logicalSwitch, final String logicalSwitchUuid) throws NiciraNvpApiException {
         update(logicalSwitch, logicalSwitchUuid);
     }
 
@@ -403,8 +388,7 @@ public class NiciraNvpApi {
         updateWithUri(logicalSwitchPort, uri);
     }
 
-    public void updateLogicalSwitchPortAttachment(final String logicalSwitchUuid, final String logicalSwitchPortUuid,
-            final Attachment attachment) throws NiciraNvpApiException {
+    public void updateLogicalSwitchPortAttachment(final String logicalSwitchUuid, final String logicalSwitchPortUuid, final Attachment attachment) throws NiciraNvpApiException {
         final String uri = SWITCH_URI_PREFIX + "/" + logicalSwitchUuid + "/lport/" + logicalSwitchPortUuid + "/attachment";
         updateWithUri(attachment, uri);
     }
@@ -520,9 +504,7 @@ public class NiciraNvpApi {
         return findLogicalRouter(logicalRouterUuid).getResults().get(0);
     }
 
-    public void updateLogicalRouter(final LogicalRouter logicalRouter,
-            final String logicalRouterUuid)
-                    throws NiciraNvpApiException {
+    public void updateLogicalRouter(final LogicalRouter logicalRouter, final String logicalRouterUuid) throws NiciraNvpApiException {
         update(logicalRouter, logicalRouterUuid);
     }
 
@@ -546,8 +528,7 @@ public class NiciraNvpApi {
         updateWithUri(logicalRouterPort, uri);
     }
 
-    public void updateLogicalRouterPortAttachment(final String logicalRouterUuid, final String logicalRouterPortUuid, final Attachment attachment)
-            throws NiciraNvpApiException {
+    public void updateLogicalRouterPortAttachment(final String logicalRouterUuid, final String logicalRouterPortUuid, final Attachment attachment) throws NiciraNvpApiException {
         final String uri = ROUTER_URI_PREFIX + "/" + logicalRouterUuid + "/lport/" + logicalRouterPortUuid + "/attachment";
         updateWithUri(attachment, uri);
     }
@@ -567,8 +548,8 @@ public class NiciraNvpApi {
         deleteWithUri(uri);
     }
 
-    public NiciraNvpList<LogicalRouterPort> findLogicalRouterPortByGatewayServiceAndVlanId(final String logicalRouterUuid, final String gatewayServiceUuid,
-            final long vlanId) throws NiciraNvpApiException {
+    public NiciraNvpList<LogicalRouterPort> findLogicalRouterPortByGatewayServiceAndVlanId(final String logicalRouterUuid, final String gatewayServiceUuid, final long vlanId)
+            throws NiciraNvpApiException {
         final String uri = ROUTER_URI_PREFIX + "/" + logicalRouterUuid + "/lport";
         final Map<String, String> params = new HashMap<String, String>();
         params.put("attachment_gwsvc_uuid", gatewayServiceUuid);

@@ -312,8 +312,10 @@ public class VirtualMachineMO extends BaseMO {
         if (result) {
             _context.waitForTaskProgressDone(morTask);
 
-            // It seems that even if a power-off task is returned done, VM state may still not be marked,
-            // wait up to 5 seconds to make sure to avoid race conditioning for immediate following on operations
+            // It seems that even if a power-off task is returned done, VM state
+            // may still not be marked,
+            // wait up to 5 seconds to make sure to avoid race conditioning for
+            // immediate following on operations
             // that relies on a powered-off VM
             long startTick = System.currentTimeMillis();
             while (getResetSafePowerState() != VirtualMachinePowerState.POWERED_OFF && System.currentTimeMillis() - startTick < 5000) {
@@ -340,12 +342,17 @@ public class VirtualMachineMO extends BaseMO {
 
         VirtualMachinePowerState powerState = VirtualMachinePowerState.POWERED_OFF;
 
-        // This is really ugly, there is a case that when windows guest VM is doing sysprep, the temporary
-        // rebooting process may let us pick up a "poweredOff" state during VMsync process, this can trigger
-        // a series actions. Unfortunately, from VMware API we can not distinguish power state into such details.
-        // We hope by giving it 3 second to re-read the state can cover this as a short-term solution.
+        // This is really ugly, there is a case that when windows guest VM is
+        // doing sysprep, the temporary
+        // rebooting process may let us pick up a "poweredOff" state during
+        // VMsync process, this can trigger
+        // a series actions. Unfortunately, from VMware API we can not
+        // distinguish power state into such details.
+        // We hope by giving it 3 second to re-read the state can cover this as
+        // a short-term solution.
         //
-        // In the future, VMsync should not kick off CloudStack action (this is not a HA case) based on VM
+        // In the future, VMsync should not kick off CloudStack action (this is
+        // not a HA case) based on VM
         // state report, until then we can remove this hacking fix
         for (int i = 0; i < 3; i++) {
             powerState = (VirtualMachinePowerState)getContext().getVimClient().getDynamicProperty(_mor, "runtime.powerState");
@@ -546,11 +553,11 @@ public class VirtualMachineMO extends BaseMO {
         return true;
     }
 
-    public String
-    getSnapshotDiskFileDatastorePath(VirtualMachineFileInfo vmFileInfo, List<Pair<ManagedObjectReference, String>> datastoreMounts, String snapshotDiskFile)
+    public String getSnapshotDiskFileDatastorePath(VirtualMachineFileInfo vmFileInfo, List<Pair<ManagedObjectReference, String>> datastoreMounts, String snapshotDiskFile)
             throws Exception {
 
-        // if file path start with "/", need to search all datastore mounts on the host in order
+        // if file path start with "/", need to search all datastore mounts on
+        // the host in order
         // to form fully qualified datastore path
         if (snapshotDiskFile.startsWith("/")) {
             for (Pair<ManagedObjectReference, String> mount : datastoreMounts) {
@@ -654,8 +661,7 @@ public class VirtualMachineMO extends BaseMO {
         return false;
     }
 
-    public boolean createFullClone(String cloneName, ManagedObjectReference morFolder, ManagedObjectReference morResourcePool, ManagedObjectReference morDs)
-            throws Exception {
+    public boolean createFullClone(String cloneName, ManagedObjectReference morFolder, ManagedObjectReference morResourcePool, ManagedObjectReference morDs) throws Exception {
 
         VirtualMachineCloneSpec cloneSpec = new VirtualMachineCloneSpec();
         VirtualMachineRelocateSpec relocSpec = new VirtualMachineRelocateSpec();
@@ -829,9 +835,8 @@ public class VirtualMachineMO extends BaseMO {
                     }
                 }
 
-                NetworkDetails details =
-                        new NetworkDetails(name, oc.getObj(), (morVms != null ? morVms.getManagedObjectReference().toArray(
-                                new ManagedObjectReference[morVms.getManagedObjectReference().size()]) : null), gcTagValue);
+                NetworkDetails details = new NetworkDetails(name, oc.getObj(), (morVms != null ? morVms.getManagedObjectReference().toArray(
+                        new ManagedObjectReference[morVms.getManagedObjectReference().size()]) : null), gcTagValue);
 
                 networks.add(details);
             }
@@ -843,6 +848,7 @@ public class VirtualMachineMO extends BaseMO {
 
     /**
      * Retrieve path info to access VM files via vSphere web interface
+     * 
      * @return [0] vm-name, [1] data-center-name, [2] datastore-name
      * @throws Exception
      */
@@ -855,9 +861,9 @@ public class VirtualMachineMO extends BaseMO {
         String vmxFilePath = fileInfo.getVmPathName();
         String vmxPathTokens[] = vmxFilePath.split("\\[|\\]|/");
         assert (vmxPathTokens.length == 4);
-        pathInfo[1] = vmxPathTokens[1].trim();                            // vSphere vm name
-        pathInfo[2] = dcInfo.second();                                    // vSphere datacenter name
-        pathInfo[3] = vmxPathTokens[0].trim();                            // vSphere datastore name
+        pathInfo[1] = vmxPathTokens[1].trim(); // vSphere vm name
+        pathInfo[2] = dcInfo.second(); // vSphere datacenter name
+        pathInfo[3] = vmxPathTokens[0].trim(); // vSphere datastore name
         return pathInfo;
     }
 
@@ -963,13 +969,13 @@ public class VirtualMachineMO extends BaseMO {
     }
 
     // vmdkDatastorePath: [datastore name] vmdkFilePath
-    public void createDisk(String vmdkDatastorePath, VirtualDiskType diskType, VirtualDiskMode diskMode, String rdmDeviceName, int sizeInMb,
-            ManagedObjectReference morDs, int controllerKey) throws Exception {
+    public void createDisk(String vmdkDatastorePath, VirtualDiskType diskType, VirtualDiskMode diskMode, String rdmDeviceName, int sizeInMb, ManagedObjectReference morDs,
+            int controllerKey) throws Exception {
 
         if (s_logger.isTraceEnabled())
-            s_logger.trace("vCenter API trace - createDisk(). target MOR: " + _mor.getValue() + ", vmdkDatastorePath: " + vmdkDatastorePath + ", sizeInMb: " + sizeInMb +
-                    ", diskType: " + diskType + ", diskMode: " + diskMode + ", rdmDeviceName: " + rdmDeviceName + ", datastore: " + morDs.getValue() + ", controllerKey: " +
-                    controllerKey);
+            s_logger.trace("vCenter API trace - createDisk(). target MOR: " + _mor.getValue() + ", vmdkDatastorePath: " + vmdkDatastorePath + ", sizeInMb: " + sizeInMb
+                    + ", diskType: " + diskType + ", diskMode: " + diskMode + ", rdmDeviceName: " + rdmDeviceName + ", datastore: " + morDs.getValue() + ", controllerKey: "
+                    + controllerKey);
 
         assert (vmdkDatastorePath != null);
         assert (morDs != null);
@@ -1052,8 +1058,8 @@ public class VirtualMachineMO extends BaseMO {
     public void attachDisk(String[] vmdkDatastorePathChain, ManagedObjectReference morDs) throws Exception {
 
         if (s_logger.isTraceEnabled())
-            s_logger.trace("vCenter API trace - attachDisk(). target MOR: " + _mor.getValue() + ", vmdkDatastorePath: " + new Gson().toJson(vmdkDatastorePathChain) +
-                    ", datastore: " + morDs.getValue());
+            s_logger.trace("vCenter API trace - attachDisk(). target MOR: " + _mor.getValue() + ", vmdkDatastorePath: " + new Gson().toJson(vmdkDatastorePathChain)
+                    + ", datastore: " + morDs.getValue());
 
         VirtualDevice newDisk = VmwareHelper.prepareDiskDevice(this, null, getScsiDeviceControllerKey(), vmdkDatastorePathChain, morDs, -1, 1);
         VirtualMachineConfigSpec reConfigSpec = new VirtualMachineConfigSpec();
@@ -1112,10 +1118,11 @@ public class VirtualMachineMO extends BaseMO {
     public List<Pair<String, ManagedObjectReference>> detachDisk(String vmdkDatastorePath, boolean deleteBackingFile) throws Exception {
 
         if (s_logger.isTraceEnabled())
-            s_logger.trace("vCenter API trace - detachDisk(). target MOR: " + _mor.getValue() + ", vmdkDatastorePath: " + vmdkDatastorePath + ", deleteBacking: " +
-                    deleteBackingFile);
+            s_logger.trace("vCenter API trace - detachDisk(). target MOR: " + _mor.getValue() + ", vmdkDatastorePath: " + vmdkDatastorePath + ", deleteBacking: "
+                    + deleteBackingFile);
 
-        // Note: if VM has been taken snapshot, original backing file will be renamed, therefore, when we try to find the matching
+        // Note: if VM has been taken snapshot, original backing file will be
+        // renamed, therefore, when we try to find the matching
         // VirtualDisk, we only perform prefix matching
         Pair<VirtualDisk, String> deviceInfo = getDiskDevice(vmdkDatastorePath, false);
         if (deviceInfo == null) {
@@ -1147,7 +1154,8 @@ public class VirtualMachineMO extends BaseMO {
         }
         _context.waitForTaskProgressDone(morTask);
 
-        // VMware does not update snapshot references to the detached disk, we have to work around it
+        // VMware does not update snapshot references to the detached disk, we
+        // have to work around it
         SnapshotDescriptor snapshotDescriptor = null;
         try {
             snapshotDescriptor = getSnapshotDescriptor();
@@ -1209,8 +1217,8 @@ public class VirtualMachineMO extends BaseMO {
     public void attachIso(String isoDatastorePath, ManagedObjectReference morDs, boolean connect, boolean connectAtBoot) throws Exception {
 
         if (s_logger.isTraceEnabled())
-            s_logger.trace("vCenter API trace - attachIso(). target MOR: " + _mor.getValue() + ", isoDatastorePath: " + isoDatastorePath + ", datastore: " +
-                    morDs.getValue() + ", connect: " + connect + ", connectAtBoot: " + connectAtBoot);
+            s_logger.trace("vCenter API trace - attachIso(). target MOR: " + _mor.getValue() + ", isoDatastorePath: " + isoDatastorePath + ", datastore: " + morDs.getValue()
+                    + ", connect: " + connect + ", connectAtBoot: " + connectAtBoot);
 
         assert (isoDatastorePath != null);
         assert (morDs != null);
@@ -1238,7 +1246,8 @@ public class VirtualMachineMO extends BaseMO {
         cdRom.setBacking(backingInfo);
 
         VirtualMachineConfigSpec reConfigSpec = new VirtualMachineConfigSpec();
-        //VirtualDeviceConfigSpec[] deviceConfigSpecArray = new VirtualDeviceConfigSpec[1];
+        // VirtualDeviceConfigSpec[] deviceConfigSpecArray = new
+        // VirtualDeviceConfigSpec[1];
         VirtualDeviceConfigSpec deviceConfigSpec = new VirtualDeviceConfigSpec();
 
         deviceConfigSpec.setDevice(cdRom);
@@ -1248,7 +1257,7 @@ public class VirtualMachineMO extends BaseMO {
             deviceConfigSpec.setOperation(VirtualDeviceConfigSpecOperation.EDIT);
         }
 
-        //deviceConfigSpecArray[0] = deviceConfigSpec;
+        // deviceConfigSpecArray[0] = deviceConfigSpec;
         reConfigSpec.getDeviceChange().add(deviceConfigSpec);
 
         ManagedObjectReference morTask = _context.getService().reconfigVMTask(_mor, reConfigSpec);
@@ -1282,13 +1291,14 @@ public class VirtualMachineMO extends BaseMO {
         device.setBacking(backingInfo);
 
         VirtualMachineConfigSpec reConfigSpec = new VirtualMachineConfigSpec();
-        //VirtualDeviceConfigSpec[] deviceConfigSpecArray = new VirtualDeviceConfigSpec[1];
+        // VirtualDeviceConfigSpec[] deviceConfigSpecArray = new
+        // VirtualDeviceConfigSpec[1];
         VirtualDeviceConfigSpec deviceConfigSpec = new VirtualDeviceConfigSpec();
 
         deviceConfigSpec.setDevice(device);
         deviceConfigSpec.setOperation(VirtualDeviceConfigSpecOperation.EDIT);
 
-        //deviceConfigSpecArray[0] = deviceConfigSpec;
+        // deviceConfigSpecArray[0] = deviceConfigSpec;
         reConfigSpec.getDeviceChange().add(deviceConfigSpec);
 
         ManagedObjectReference morTask = _context.getService().reconfigVMTask(_mor, reConfigSpec);
@@ -1317,8 +1327,8 @@ public class VirtualMachineMO extends BaseMO {
                                         s_logger.trace("msg text: " + msg.getText());
                                     }
                                     if ("msg.cdromdisconnect.locked".equalsIgnoreCase(msg.getId())) {
-                                        s_logger.info("Found that VM has a pending question that we need to answer programmatically, question id: " + msg.getId() +
-                                                ", for safe operation we will automatically decline it");
+                                        s_logger.info("Found that VM has a pending question that we need to answer programmatically, question id: " + msg.getId()
+                                                + ", for safe operation we will automatically decline it");
                                         vmMo.answerVM(question.getId(), "1");
                                         break;
                                     }
@@ -1334,8 +1344,8 @@ public class VirtualMachineMO extends BaseMO {
                                 msgId = tokens[0];
                                 msgText = tokens[1];
                                 if ("msg.cdromdisconnect.locked".equalsIgnoreCase(msgId)) {
-                                    s_logger.info("Found that VM has a pending question that we need to answer programmatically, question id: " + question.getId() +
-                                            ". Message id : " + msgId + ". Message text : " + msgText + ", for safe operation we will automatically decline it.");
+                                    s_logger.info("Found that VM has a pending question that we need to answer programmatically, question id: " + question.getId()
+                                            + ". Message id : " + msgId + ". Message text : " + msgText + ", for safe operation we will automatically decline it.");
                                     vmMo.answerVM(question.getId(), "1");
                                 }
                             }
@@ -1480,7 +1490,9 @@ public class VirtualMachineMO extends BaseMO {
 
                         // tar files into OVA
                         if (packToOva) {
-                            // Important! we need to sync file system before we can safely use tar to work around a linux kernal bug(or feature)
+                            // Important! we need to sync file system before we
+                            // can safely use tar to work around a linux kernal
+                            // bug(or feature)
                             s_logger.info("Sync file system before we package OVA...");
 
                             Script commandSync = new Script(true, "sync", 0, s_logger);
@@ -1489,7 +1501,10 @@ public class VirtualMachineMO extends BaseMO {
                             Script command = new Script(false, "tar", 0, s_logger);
                             command.setWorkDir(exportDir);
                             command.add("-cf", exportName + ".ova");
-                            command.add(exportName + ".ovf");        // OVF file should be the first file in OVA archive
+                            command.add(exportName + ".ovf"); // OVF file should
+                                                              // be the first
+                                                              // file in OVA
+                                                              // archive
                             for (String name : fileNames) {
                                 command.add((new File(name).getName()));
                             }
@@ -1497,7 +1512,8 @@ public class VirtualMachineMO extends BaseMO {
                             s_logger.info("Package OVA with commmand: " + command.toString());
                             command.execute();
 
-                            // to be safe, physically test existence of the target OVA file
+                            // to be safe, physically test existence of the
+                            // target OVA file
                             if ((new File(exportDir + File.separator + exportName + ".ova")).exists()) {
                                 success = true;
                             } else {
@@ -1572,7 +1588,8 @@ public class VirtualMachineMO extends BaseMO {
         }
         _context.uploadResourceContent(vmxUrl, bos.toByteArray());
 
-        // It seems that I don't need to do re-registration. VMware has bug in writing the correct snapshot's VMDK path to
+        // It seems that I don't need to do re-registration. VMware has bug in
+        // writing the correct snapshot's VMDK path to
         // its disk backing info anyway.
         // redoRegistration();
     }
@@ -1798,8 +1815,8 @@ public class VirtualMachineMO extends BaseMO {
     public List<String> getVmdkFileBaseNames() throws Exception {
         List<String> vmdkFileBaseNames = new ArrayList<String>();
         VirtualDevice[] devices = getAllDiskDevice();
-        for(VirtualDevice device : devices) {
-            if(device instanceof VirtualDisk) {
+        for (VirtualDevice device : devices) {
+            if (device instanceof VirtualDisk) {
                 vmdkFileBaseNames.add(getVmdkFileBaseName((VirtualDisk)device));
             }
         }
@@ -1809,7 +1826,7 @@ public class VirtualMachineMO extends BaseMO {
     public String getVmdkFileBaseName(VirtualDisk disk) throws Exception {
         String vmdkFileBaseName = null;
         VirtualDeviceBackingInfo backingInfo = disk.getBacking();
-        if(backingInfo instanceof VirtualDiskFlatVer2BackingInfo) {
+        if (backingInfo instanceof VirtualDiskFlatVer2BackingInfo) {
             VirtualDiskFlatVer2BackingInfo diskBackingInfo = (VirtualDiskFlatVer2BackingInfo)backingInfo;
             DatastoreFile dsBackingFile = new DatastoreFile(diskBackingInfo.getFileName());
             vmdkFileBaseName = dsBackingFile.getFileBaseName();
@@ -2055,8 +2072,10 @@ public class VirtualMachineMO extends BaseMO {
 
                     pathList.add(new Pair<String, ManagedObjectReference>(diskBackingInfo.getFileName(), diskBackingInfo.getDatastore()));
                 } catch (Exception e) {
-                    // if snapshot directory has been changed to place other than default. VMware has a bug
-                    // that its corresponding disk backing info is not updated correctly. therefore, we will try search
+                    // if snapshot directory has been changed to place other
+                    // than default. VMware has a bug
+                    // that its corresponding disk backing info is not updated
+                    // correctly. therefore, we will try search
                     // in snapshot directory one more time
                     DatastoreFile currentFile = new DatastoreFile(diskBackingInfo.getFileName());
                     String vmdkFullDsPath = snapshotDirFile.getCompanionPath(currentFile.getFileName());
@@ -2438,8 +2457,8 @@ public class VirtualMachineMO extends BaseMO {
                                         s_logger.trace("msg text: " + msg.getText());
                                     }
                                     if ("msg.cdromdisconnect.locked".equalsIgnoreCase(msg.getId())) {
-                                        s_logger.info("Found that VM has a pending question that we need to answer programmatically, question id: " + msg.getId() +
-                                                ", for safe operation we will automatically decline it");
+                                        s_logger.info("Found that VM has a pending question that we need to answer programmatically, question id: " + msg.getId()
+                                                + ", for safe operation we will automatically decline it");
                                         vmMo.answerVM(question.getId(), "1");
                                         break;
                                     }
@@ -2455,8 +2474,8 @@ public class VirtualMachineMO extends BaseMO {
                                 msgId = tokens[0];
                                 msgText = tokens[1];
                                 if ("msg.cdromdisconnect.locked".equalsIgnoreCase(msgId)) {
-                                    s_logger.info("Found that VM has a pending question that we need to answer programmatically, question id: " + question.getId() +
-                                            ". Message id : " + msgId + ". Message text : " + msgText + ", for safe operation we will automatically decline it.");
+                                    s_logger.info("Found that VM has a pending question that we need to answer programmatically, question id: " + question.getId()
+                                            + ". Message id : " + msgId + ". Message text : " + msgText + ", for safe operation we will automatically decline it.");
                                     vmMo.answerVM(question.getId(), "1");
                                 }
                             }
@@ -2540,7 +2559,8 @@ public class VirtualMachineMO extends BaseMO {
     }
 
     public int getCoresPerSocket() throws Exception {
-        // number of cores per socket is 1 in case of ESXi. It's not defined explicitly and the property is support since vSphere API 5.0.
+        // number of cores per socket is 1 in case of ESXi. It's not defined
+        // explicitly and the property is support since vSphere API 5.0.
         String apiVersion = HypervisorHostHelper.getVcenterApiVersion(_context);
         if (apiVersion.compareTo("5.0") < 0) {
             return 1;
@@ -2582,7 +2602,8 @@ public class VirtualMachineMO extends BaseMO {
         }
 
         // Check if virtual machine is using hardware version 8 or later.
-        // If hardware version is 7, then only 1 core per socket is supported. Hot adding multi-core vcpus is not allowed if hardware version is 7.
+        // If hardware version is 7, then only 1 core per socket is supported.
+        // Hot adding multi-core vcpus is not allowed if hardware version is 7.
         if (virtualHardwareVersion >= 8) {
             virtualHardwareSupportsCpuHotAdd = true;
         } else if (virtualHardwareVersion == 7) {

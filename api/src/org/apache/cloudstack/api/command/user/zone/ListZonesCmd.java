@@ -34,23 +34,20 @@ import org.apache.cloudstack.api.response.ZoneResponse;
 
 import com.cloud.exception.InvalidParameterValueException;
 
-@APICommand(name = "listZones", description = "Lists zones", responseObject = ZoneResponse.class, responseView = ResponseView.Restricted,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listZones", description = "Lists zones", responseObject = ZoneResponse.class, responseView = ResponseView.Restricted, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListZonesCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListZonesCmd.class.getName());
 
     private static final String s_name = "listzonesresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = ZoneResponse.class, description = "the ID of the zone")
     private Long id;
 
-    @Parameter(name = ApiConstants.AVAILABLE,
-               type = CommandType.BOOLEAN,
-               description = "true if you want to retrieve all available Zones. False if you only want to return the Zones"
-                   + " from which you have at least one VM. Default is false.")
+    @Parameter(name = ApiConstants.AVAILABLE, type = CommandType.BOOLEAN, description = "true if you want to retrieve all available Zones. False if you only want to return the Zones"
+            + " from which you have at least one VM. Default is false.")
     private Boolean available;
 
     @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "the ID of the domain associated with the zone")
@@ -68,9 +65,9 @@ public class ListZonesCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.TAGS, type = CommandType.MAP, description = "List zones by resource tags (key/value pairs)", since = "4.3")
     private Map tags;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -115,9 +112,9 @@ public class ListZonesCmd extends BaseListCmd {
         return tagsMap;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

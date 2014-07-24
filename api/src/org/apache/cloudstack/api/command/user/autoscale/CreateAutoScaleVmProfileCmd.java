@@ -43,11 +43,7 @@ import com.cloud.network.as.AutoScaleVmProfile;
 import com.cloud.user.Account;
 import com.cloud.user.User;
 
-@APICommand(name = "createAutoScaleVmProfile",
-            description = "Creates a profile that contains information about the virtual machine which will be provisioned automatically by autoscale feature.",
-        responseObject = AutoScaleVmProfileResponse.class, entityType = {AutoScaleVmProfile.class},
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "createAutoScaleVmProfile", description = "Creates a profile that contains information about the virtual machine which will be provisioned automatically by autoscale feature.", responseObject = AutoScaleVmProfileResponse.class, entityType = {AutoScaleVmProfile.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 @SuppressWarnings("rawtypes")
 public class CreateAutoScaleVmProfileCmd extends BaseAsyncCreateCmd {
     public static final Logger s_logger = Logger.getLogger(CreateAutoScaleVmProfileCmd.class.getName());
@@ -58,46 +54,25 @@ public class CreateAutoScaleVmProfileCmd extends BaseAsyncCreateCmd {
     // ////////////// API parameters /////////////////////
     // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ZONE_ID,
-               type = CommandType.UUID,
-               entityType = ZoneResponse.class,
-               required = true,
-               description = "availability zone for the auto deployed virtual machine")
+    @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, required = true, description = "availability zone for the auto deployed virtual machine")
     private Long zoneId;
 
-    @Parameter(name = ApiConstants.SERVICE_OFFERING_ID,
-               type = CommandType.UUID,
-               entityType = ServiceOfferingResponse.class,
-               required = true,
-               description = "the service offering of the auto deployed virtual machine")
+    @Parameter(name = ApiConstants.SERVICE_OFFERING_ID, type = CommandType.UUID, entityType = ServiceOfferingResponse.class, required = true, description = "the service offering of the auto deployed virtual machine")
     private Long serviceOfferingId;
 
-    @Parameter(name = ApiConstants.TEMPLATE_ID,
-               type = CommandType.UUID,
-               entityType = TemplateResponse.class,
-               required = true,
-               description = "the template of the auto deployed virtual machine")
+    @Parameter(name = ApiConstants.TEMPLATE_ID, type = CommandType.UUID, entityType = TemplateResponse.class, required = true, description = "the template of the auto deployed virtual machine")
     private Long templateId;
 
-    @Parameter(name = ApiConstants.OTHER_DEPLOY_PARAMS,
-               type = CommandType.STRING,
-               description = "parameters other than zoneId/serviceOfferringId/templateId of the auto deployed virtual machine")
+    @Parameter(name = ApiConstants.OTHER_DEPLOY_PARAMS, type = CommandType.STRING, description = "parameters other than zoneId/serviceOfferringId/templateId of the auto deployed virtual machine")
     private String otherDeployParams;
 
-    @Parameter(name = ApiConstants.AUTOSCALE_VM_DESTROY_TIME,
-               type = CommandType.INTEGER,
-               description = "the time allowed for existing connections to get closed before a vm is destroyed")
+    @Parameter(name = ApiConstants.AUTOSCALE_VM_DESTROY_TIME, type = CommandType.INTEGER, description = "the time allowed for existing connections to get closed before a vm is destroyed")
     private Integer destroyVmGraceperiod;
 
-    @Parameter(name = ApiConstants.COUNTERPARAM_LIST,
-               type = CommandType.MAP,
-               description = "counterparam list. Example: counterparam[0].name=snmpcommunity&counterparam[0].value=public&counterparam[1].name=snmpport&counterparam[1].value=161")
+    @Parameter(name = ApiConstants.COUNTERPARAM_LIST, type = CommandType.MAP, description = "counterparam list. Example: counterparam[0].name=snmpcommunity&counterparam[0].value=public&counterparam[1].name=snmpport&counterparam[1].value=161")
     private Map counterParamList;
 
-    @Parameter(name = ApiConstants.AUTOSCALE_USER_ID,
-               type = CommandType.UUID,
-               entityType = UserResponse.class,
-               description = "the ID of the user used to launch and destroy the VMs")
+    @Parameter(name = ApiConstants.AUTOSCALE_USER_ID, type = CommandType.UUID, entityType = UserResponse.class, description = "the ID of the user used to launch and destroy the VMs")
     private Long autoscaleUserId;
 
     @Parameter(name = ApiConstants.FOR_DISPLAY, type = CommandType.BOOLEAN, description = "an optional field, whether to the display the profile to the end user or not", since = "4.4", authorized = {RoleType.Admin})
@@ -138,7 +113,7 @@ public class CreateAutoScaleVmProfileCmd extends BaseAsyncCreateCmd {
 
     @Override
     public boolean isDisplay() {
-        if(display == null)
+        if (display == null)
             return true;
         else
             return display;
@@ -186,9 +161,11 @@ public class CreateAutoScaleVmProfileCmd extends BaseAsyncCreateCmd {
         }
         if (otherDeployParams == null)
             return;
-        String[] keyValues = otherDeployParams.split("&"); // hostid=123, hypervisor=xenserver
+        String[] keyValues = otherDeployParams.split("&"); // hostid=123,
+        // hypervisor=xenserver
         for (String keyValue : keyValues) { // keyValue == "hostid=123"
-            String[] keyAndValue = keyValue.split("="); // keyValue = hostid, 123
+            String[] keyAndValue = keyValue.split("="); // keyValue = hostid,
+            // 123
             if (keyAndValue.length != 2) {
                 throw new InvalidParameterValueException("Invalid parameter in otherDeployParam : " + keyValue);
             }

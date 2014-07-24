@@ -25,9 +25,10 @@ import com.cloud.bridge.service.core.s3.S3PolicyAction.PolicyActions;
 public class S3BucketPolicy {
 
     /**
-     * 'NORESULT' is returned when no applicable statement can be found to evaluate
-     * for the S3 access request.  If no evaluated statement results to true then the
-     * default deny result is returned (allow ACL definitions to override it).
+     * 'NORESULT' is returned when no applicable statement can be found to
+     * evaluate for the S3 access request. If no evaluated statement results to
+     * true then the default deny result is returned (allow ACL definitions to
+     * override it).
      */
     public enum PolicyAccess {
         ALLOW, DEFAULT_DENY, DENY
@@ -66,13 +67,17 @@ public class S3BucketPolicy {
     }
 
     /**
-     * This function evaluates all applicable policy statements.  Following the "evaluation logic"
-     * as defined by Amazon the type of access derived from the policy is returned.
+     * This function evaluates all applicable policy statements. Following the
+     * "evaluation logic" as defined by Amazon the type of access derived from
+     * the policy is returned.
      *
-     * @param context - parameters from either the REST or SOAP request
-     * @param objectToAccess - key to the S3 object in the bucket associated by this policy, should be
-     *                         null if access is just to the bucket.
-     * @param userAccount - the user performing the access request
+     * @param context
+     *            - parameters from either the REST or SOAP request
+     * @param objectToAccess
+     *            - key to the S3 object in the bucket associated by this
+     *            policy, should be null if access is just to the bucket.
+     * @param userAccount
+     *            - the user performing the access request
      * @return PolicyAccess type
      * @throws Exception
      */
@@ -96,7 +101,8 @@ public class S3BucketPolicy {
     }
 
     /**
-     * To support debugging we print out what the parsing process has resulted in.
+     * To support debugging we print out what the parsing process has resulted
+     * in.
      */
     public String toString() {
 
@@ -117,7 +123,8 @@ public class S3BucketPolicy {
     }
 
     /**
-     * Does the Policy Statement have anything to do with the requested access by the user?
+     * Does the Policy Statement have anything to do with the requested access
+     * by the user?
      *
      * @return true - statement is relevant, false it is not
      */
@@ -128,13 +135,16 @@ public class S3BucketPolicy {
         S3PolicyPrincipal principals = oneStatement.getPrincipals();
         if (null == principals || !principals.contains(userAccount))
             return false;
-        //System.out.println( "Statement: " + oneStatement.getSid() + " principal matches");
+        // System.out.println( "Statement: " + oneStatement.getSid() +
+        // " principal matches");
 
         // [B] Is the operationRequested included in the policy statement?
-        //  -> if the value in "NotAction:" matches that requested then the statement does not apply
-        //  (i.e., "refers to all actions other" than defined).
+        // -> if the value in "NotAction:" matches that requested then the
+        // statement does not apply
+        // (i.e., "refers to all actions other" than defined).
         PolicyActions notActions = oneStatement.getNotAction();
-        //System.out.println( "Statement: NotAction:" + notActions + " op requested: " + operationRequested );
+        // System.out.println( "Statement: NotAction:" + notActions +
+        // " op requested: " + operationRequested );
 
         if (PolicyActions.UnknownAction != notActions) {
             if (notActions == operationRequested)
@@ -143,11 +153,13 @@ public class S3BucketPolicy {
             S3PolicyAction actions = oneStatement.getActions();
             if (null == actions || !actions.contains(operationRequested))
                 return false;
-            //System.out.println( "Statement: " + oneStatement.getSid() + " action matches");
+            // System.out.println( "Statement: " + oneStatement.getSid() +
+            // " action matches");
         }
 
-        // [C] Does the objectToAccess included in the resource of the policy statement?
-        //  -> is it just the bucket being accessed?
+        // [C] Does the objectToAccess included in the resource of the policy
+        // statement?
+        // -> is it just the bucket being accessed?
         if (null == objectToAccess)
             path = bucketName;
         else
@@ -156,7 +168,8 @@ public class S3BucketPolicy {
         if (!oneStatement.containsResource(path))
             return false;
 
-        //System.out.println( "Statement: " + oneStatement.getSid() + " is relevant to access request");
+        // System.out.println( "Statement: " + oneStatement.getSid() +
+        // " is relevant to access request");
         return true;
     }
 }

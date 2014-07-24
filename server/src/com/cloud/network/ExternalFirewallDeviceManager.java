@@ -36,35 +36,51 @@ public interface ExternalFirewallDeviceManager extends Manager {
 
     /**
      * adds a firewall device in to a physical network
-     * @param physicalNetworkId physical network id of the network in to which device to be added
-     * @param url url encoding device IP and device configuration parameter
-     * @param username username
-     * @param password password
-     * @param deviceName device name
-     * @param server resource that will handle the commands specific to this device
+     *
+     * @param physicalNetworkId
+     *            physical network id of the network in to which device to be
+     *            added
+     * @param url
+     *            url encoding device IP and device configuration parameter
+     * @param username
+     *            username
+     * @param password
+     *            password
+     * @param deviceName
+     *            device name
+     * @param server
+     *            resource that will handle the commands specific to this device
      * @return Host object for the device added
      */
     public ExternalFirewallDeviceVO addExternalFirewall(long physicalNetworkId, String url, String username, String password, String deviceName, ServerResource resource);
 
     /**
      * deletes load balancer device added in to a physical network
+     *
      * @param hostId
      * @return true if device successfully deleted
      */
     public boolean deleteExternalFirewall(Long hostId);
 
     /**
-     * list external firewall devices of given device name type added in to a physical network
+     * list external firewall devices of given device name type added in to a
+     * physical network
+     *
      * @param physicalNetworkId
      * @param deviceName
-     * @return list of host objects for the external load balancers added in to the physical network
+     * @return list of host objects for the external load balancers added in to
+     *         the physical network
      */
     public List<Host> listExternalFirewalls(long physicalNetworkId, String deviceName);
 
     /**
      * finds a suitable firewall device which can be used by this network
-     * @param network guest network
-     * @param dedicatedLb true if a dedicated load balancer is needed for this guest network
+     *
+     * @param network
+     *            guest network
+     * @param dedicatedLb
+     *            true if a dedicated load balancer is needed for this guest
+     *            network
      * @return ExternalLoadBalancerDeviceVO corresponding to the suitable device
      * @throws InsufficientCapacityException
      */
@@ -72,22 +88,30 @@ public interface ExternalFirewallDeviceManager extends Manager {
 
     /**
      * returns the firewall device allocated for the guest network
-     * @param network guest network id
-     * @return ExternalFirewallDeviceVO object corresponding the firewall device assigned for this guest network
+     *
+     * @param network
+     *            guest network id
+     * @return ExternalFirewallDeviceVO object corresponding the firewall device
+     *         assigned for this guest network
      */
     public ExternalFirewallDeviceVO getExternalFirewallForNetwork(Network network);
 
     /**
      * applies firewall rules
-     * @param network guest network if
-     * @param rules load balancer rules
+     *
+     * @param network
+     *            guest network if
+     * @param rules
+     *            load balancer rules
      * @return true if successfully applied rules
      * @throws ResourceUnavailableException
      */
     public boolean applyFirewallRules(Network network, List<? extends FirewallRule> rules) throws ResourceUnavailableException;
 
     /**
-     * implements or shutdowns guest network on the firewall device assigned to the guest network
+     * implements or shutdowns guest network on the firewall device assigned to
+     * the guest network
+     *
      * @param add
      * @param guestConfig
      * @return
@@ -98,8 +122,11 @@ public interface ExternalFirewallDeviceManager extends Manager {
 
     /**
      * applies port forwarding rules
-     * @param network guest network if
-     * @param rules load balancer rules
+     *
+     * @param network
+     *            guest network if
+     * @param rules
+     *            load balancer rules
      * @return true if successfully applied rules
      * @throws ResourceUnavailableException
      */

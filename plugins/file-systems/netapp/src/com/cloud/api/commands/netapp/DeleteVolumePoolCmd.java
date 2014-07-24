@@ -36,8 +36,7 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.netapp.NetappManager;
 import com.cloud.server.api.response.netapp.DeleteVolumePoolCmdResponse;
 
-@APICommand(name = "deletePool", description = "Delete a pool", responseObject = DeleteVolumePoolCmdResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deletePool", description = "Delete a pool", responseObject = DeleteVolumePoolCmdResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteVolumePoolCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(DeleteVolumePoolCmd.class.getName());
     private static final String s_name = "deletepoolresponse";
@@ -49,8 +48,7 @@ public class DeleteVolumePoolCmd extends BaseCmd {
     NetappManager netappMgr;
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             netappMgr.deletePool(poolName);
             DeleteVolumePoolCmdResponse response = new DeleteVolumePoolCmdResponse();

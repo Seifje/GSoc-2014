@@ -25,15 +25,15 @@
 package com.amazon.ec2;
 
 /**
-*  DescribeReservedInstancesOfferingsSetType bean class
-*/
+ * DescribeReservedInstancesOfferingsSetType bean class
+ */
 
 public class DescribeReservedInstancesOfferingsSetType implements org.apache.axis2.databinding.ADBBean {
-    /* This type was generated from the piece of schema that had
-            name = DescribeReservedInstancesOfferingsSetType
-            Namespace URI = http://ec2.amazonaws.com/doc/2012-08-15/
-            Namespace Prefix = ns1
-            */
+    /*
+     * This type was generated from the piece of schema that had name =
+     * DescribeReservedInstancesOfferingsSetType Namespace URI =
+     * http://ec2.amazonaws.com/doc/2012-08-15/ Namespace Prefix = ns1
+     */
 
     private static java.lang.String generatePrefix(java.lang.String namespace) {
         if (namespace.equals("http://ec2.amazonaws.com/doc/2012-08-15/")) {
@@ -43,22 +43,23 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
     }
 
     /**
-    * field for Item
-    * This was an Array!
-    */
+     * field for Item This was an Array!
+     */
 
     protected com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType[] localItem;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localItemTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType[]
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType[]
+     */
     public com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType[] getItem() {
         return localItem;
     }
@@ -72,14 +73,16 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
 
     /**
      * Auto generated setter method
-     * @param param Item
+     * 
+     * @param param
+     *            Item
      */
     public void setItem(com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType[] param) {
 
         validateItem(param);
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localItemTracker = true;
         } else {
             localItemTracker = false;
@@ -90,28 +93,31 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
     }
 
     /**
-    * Auto generated add method for the array for convenience
-    * @param param com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType
-    */
+     * Auto generated add method for the array for convenience
+     * 
+     * @param param
+     *            com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType
+     */
     public void addItem(com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType param) {
         if (localItem == null) {
             localItem = new com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType[] {};
         }
 
-        //update the setting tracker
+        // update the setting tracker
         localItemTracker = true;
 
         java.util.List list = org.apache.axis2.databinding.utils.ConverterUtil.toList(localItem);
         list.add(param);
-        this.localItem =
-            (com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType[])list.toArray(new com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType[list.size()]);
+        this.localItem = (com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType[])list
+                .toArray(new com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType[list.size()]);
 
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -124,13 +130,13 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, parentQName) {
 
@@ -143,14 +149,13 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
         java.lang.String prefix = null;
         java.lang.String namespace = null;
@@ -192,7 +197,8 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
                         localItem[i].serialize(new javax.xml.namespace.QName("http://ec2.amazonaws.com/doc/2012-08-15/", "item"), factory, xmlWriter);
                     } else {
 
-                        // we don't have to do any thing since minOccures is zero
+                        // we don't have to do any thing since minOccures is
+                        // zero
 
                     }
 
@@ -210,8 +216,8 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -223,10 +229,10 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -236,10 +242,10 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -262,7 +268,7 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -290,7 +296,8 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -324,8 +331,8 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -344,9 +351,9 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
         java.util.ArrayList elementList = new java.util.ArrayList();
@@ -379,17 +386,20 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static DescribeReservedInstancesOfferingsSetType parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             DescribeReservedInstancesOfferingsSetType object = new DescribeReservedInstancesOfferingsSetType();
 
@@ -414,7 +424,7 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
                         java.lang.String type = fullTypeName.substring(fullTypeName.indexOf(":") + 1);
 
                         if (!"DescribeReservedInstancesOfferingsSetType".equals(type)) {
-                            //find namespace for the prefix
+                            // find namespace for the prefix
                             java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
                             return (DescribeReservedInstancesOfferingsSetType)com.amazon.ec2.ExtensionMapper.getTypeObject(nsUri, type, reader);
                         }
@@ -423,7 +433,8 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
 
                 }
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -439,7 +450,8 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
                     // Process the array and step past its final element's end.
                     list1.add(com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType.Factory.parse(reader));
 
-                    //loop until we find a start element that is not part of this array
+                    // loop until we find a start element that is not part of
+                    // this array
                     boolean loopDone1 = false;
                     while (!loopDone1) {
                         // We should be at the end element, but make sure
@@ -451,7 +463,8 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
                         while (!reader.isStartElement() && !reader.isEndElement())
                             reader.next();
                         if (reader.isEndElement()) {
-                            //two continuous end elements means we are exiting the xml structure
+                            // two continuous end elements means we are exiting
+                            // the xml structure
                             loopDone1 = true;
                         } else {
                             if (new javax.xml.namespace.QName("http://ec2.amazonaws.com/doc/2012-08-15/", "item").equals(reader.getName())) {
@@ -462,12 +475,12 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
                             }
                         }
                     }
-                    // call the converter utility  to convert and set the array
+                    // call the converter utility to convert and set the array
 
                     object.setItem((com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType[])org.apache.axis2.databinding.utils.ConverterUtil.convertToArray(
-                        com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType.class, list1));
+                            com.amazon.ec2.DescribeReservedInstancesOfferingsSetItemType.class, list1));
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -477,7 +490,8 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
                     reader.next();
 
                 if (reader.isStartElement())
-                    // A start element we are not expecting indicates a trailing invalid property
+                    // A start element we are not expecting indicates a trailing
+                    // invalid property
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
 
             } catch (javax.xml.stream.XMLStreamException e) {
@@ -487,6 +501,6 @@ public class DescribeReservedInstancesOfferingsSetType implements org.apache.axi
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

@@ -29,7 +29,6 @@ import javax.persistence.Table;
 
 import com.cloud.server.ResourceTag;
 
-
 @Entity
 @Table(name = "resource_tags")
 public class ResourceTagVO implements ResourceTag {
@@ -78,8 +77,10 @@ public class ResourceTagVO implements ResourceTag {
      * @param domainId
      * @param resourceId
      * @param resourceType
-     * @param customer TODO
-     * @param resourceUuid TODO
+     * @param customer
+     *            TODO
+     * @param resourceUuid
+     *            TODO
      */
     public ResourceTagVO(String key, String value, long accountId, long domainId, long resourceId, ResourceObjectType resourceType, String customer, String resourceUuid) {
         super();
@@ -97,19 +98,8 @@ public class ResourceTagVO implements ResourceTag {
     @Override
     public String toString() {
         StringBuilder buf = new StringBuilder("Tag[");
-        buf.append(id)
-            .append("|key=")
-            .append(key)
-            .append("|value=")
-            .append(domainId)
-            .append("|value=")
-            .append("|resourceType=")
-            .append(resourceType)
-            .append("|resourceId=")
-            .append(resourceId)
-            .append("|accountId=")
-            .append(accountId)
-            .append("]");
+        buf.append(id).append("|key=").append(key).append("|value=").append(domainId).append("|value=").append("|resourceType=").append(resourceType).append("|resourceId=")
+        .append(resourceId).append("|accountId=").append(accountId).append("]");
         return buf.toString();
     }
 

@@ -34,23 +34,20 @@ import com.cloud.exception.InsufficientCapacityException;
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.uservm.UserVm;
 
-
 @APICommand(name = "updateVMAffinityGroup", description = "Updates the affinity/anti-affinity group associations of a virtual machine. The VM has to be stopped and restarted for the "
         + "new properties to take effect.", responseObject = UserVmResponse.class, responseView = ResponseView.Full)
 public class UpdateVMAffinityGroupCmdByAdmin extends UpdateVMAffinityGroupCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateVMAffinityGroupCmdByAdmin.class.getName());
 
-
     @Override
-    public void execute() throws ResourceUnavailableException,
-            InsufficientCapacityException, ServerApiException {
-        CallContext.current().setEventDetails("Vm Id: "+getId());
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException {
+        CallContext.current().setEventDetails("Vm Id: " + getId());
         UserVm result = _affinityGroupService.updateVMAffinityGroups(getId(), getAffinityGroupIdList());
         ArrayList<VMDetails> dc = new ArrayList<VMDetails>();
         dc.add(VMDetails.valueOf("affgrp"));
         EnumSet<VMDetails> details = EnumSet.copyOf(dc);
 
-        if (result != null){
+        if (result != null) {
             UserVmResponse response = _responseGenerator.createUserVmResponse(ResponseView.Full, "virtualmachine", details, result).get(0);
             response.setResponseName(getCommandName());
             setResponseObject(response);
@@ -58,6 +55,5 @@ public class UpdateVMAffinityGroupCmdByAdmin extends UpdateVMAffinityGroupCmd {
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to update vm's affinity groups");
         }
     }
-
 
 }

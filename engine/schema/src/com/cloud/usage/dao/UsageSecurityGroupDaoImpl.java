@@ -38,17 +38,15 @@ import com.cloud.utils.db.TransactionLegacy;
 public class UsageSecurityGroupDaoImpl extends GenericDaoBase<UsageSecurityGroupVO, Long> implements UsageSecurityGroupDao {
     public static final Logger s_logger = Logger.getLogger(UsageSecurityGroupDaoImpl.class.getName());
 
-    protected static final String UPDATE_DELETED =
-        "UPDATE usage_security_group SET deleted = ? WHERE account_id = ? AND vm_instance_id = ? AND security_group_id = ? and deleted IS NULL";
+    protected static final String UPDATE_DELETED = "UPDATE usage_security_group SET deleted = ? WHERE account_id = ? AND vm_instance_id = ? AND security_group_id = ? and deleted IS NULL";
     protected static final String GET_USAGE_RECORDS_BY_ACCOUNT = "SELECT zone_id, account_id, domain_id, vm_instance_id, security_group_id, created, deleted "
-        + "FROM usage_security_group " + "WHERE account_id = ? AND ((deleted IS NULL) OR (created BETWEEN ? AND ?) OR "
-        + "      (deleted BETWEEN ? AND ?) OR ((created <= ?) AND (deleted >= ?)))";
+            + "FROM usage_security_group " + "WHERE account_id = ? AND ((deleted IS NULL) OR (created BETWEEN ? AND ?) OR "
+            + "      (deleted BETWEEN ? AND ?) OR ((created <= ?) AND (deleted >= ?)))";
     protected static final String GET_USAGE_RECORDS_BY_DOMAIN = "SELECT zone_id, account_id, domain_id, vm_instance_id, security_group_id, created, deleted "
-        + "FROM usage_security_group " + "WHERE domain_id = ? AND ((deleted IS NULL) OR (created BETWEEN ? AND ?) OR "
-        + "      (deleted BETWEEN ? AND ?) OR ((created <= ?) AND (deleted >= ?)))";
+            + "FROM usage_security_group " + "WHERE domain_id = ? AND ((deleted IS NULL) OR (created BETWEEN ? AND ?) OR "
+            + "      (deleted BETWEEN ? AND ?) OR ((created <= ?) AND (deleted >= ?)))";
     protected static final String GET_ALL_USAGE_RECORDS = "SELECT zone_id, account_id, domain_id, vm_instance_id, security_group_id, created, deleted "
-        + "FROM usage_security_group " + "WHERE (deleted IS NULL) OR (created BETWEEN ? AND ?) OR "
-        + "      (deleted BETWEEN ? AND ?) OR ((created <= ?) AND (deleted >= ?))";
+            + "FROM usage_security_group " + "WHERE (deleted IS NULL) OR (created BETWEEN ? AND ?) OR " + "      (deleted BETWEEN ? AND ?) OR ((created <= ?) AND (deleted >= ?))";
 
     public UsageSecurityGroupDaoImpl() {
     }
@@ -118,7 +116,8 @@ public class UsageSecurityGroupDaoImpl extends GenericDaoBase<UsageSecurityGroup
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                //zoneId, account_id, domain_id, vm_instance_id, security_group_id, created, deleted
+                // zoneId, account_id, domain_id, vm_instance_id,
+                // security_group_id, created, deleted
                 Long zoneId = Long.valueOf(rs.getLong(1));
                 Long acctId = Long.valueOf(rs.getLong(2));
                 Long dId = Long.valueOf(rs.getLong(3));

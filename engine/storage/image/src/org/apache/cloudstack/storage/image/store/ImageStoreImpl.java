@@ -209,5 +209,4 @@ public class ImageStoreImpl implements ImageStoreEntity {
         driver.deleteEntityExtractUrl(this, installPath, url, entityType);
     }
 
-
 }

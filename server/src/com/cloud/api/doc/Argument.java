@@ -112,6 +112,7 @@ public class Argument implements Comparable {
 
     @Override
     public String toString() {
-        return "name=" + this.name + ", description=" + description + ", required=" + required + ", type=" + this.type + ", sinceVersion=" + this.sinceVersion + ", arguments=" + this.arguments + ", dataType=" + this.dataType;
+        return "name=" + this.name + ", description=" + description + ", required=" + required + ", type=" + this.type + ", sinceVersion=" + this.sinceVersion + ", arguments="
+                + this.arguments + ", dataType=" + this.dataType;
     }
 }

@@ -256,8 +256,8 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
 
         String publicIp = _networkModel.getIp(lb.getSourceIpAddressId()).getAddress().addr();
         DataCenterVO zone = _dcDao.findById(network.getDataCenterId());
-        String statsEntryIdentifier =
-            "account " + account.getAccountName() + ", zone " + zone.getName() + ", network ID " + networkId + ", host ID " + externalLoadBalancer.getName();
+        String statsEntryIdentifier = "account " + account.getAccountName() + ", zone " + zone.getName() + ", network ID " + networkId + ", host ID "
+                + externalLoadBalancer.getName();
 
         long newCurrentBytesSent = 0;
         long newCurrentBytesReceived = 0;
@@ -267,7 +267,8 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
             statsEntryIdentifier += ", public IP: " + publicIp;
             boolean inline = _networkModel.isNetworkInlineMode(network);
             if (externalLoadBalancer.getType().equals(Host.Type.ExternalLoadBalancer) && inline) {
-                // Look up stats for the guest IP address that's mapped to the public IP address
+                // Look up stats for the guest IP address that's mapped to the
+                // public IP address
                 InlineLoadBalancerNicMapVO mapping = _inlineLoadBalancerNicMapDao.findByPublicIpAddress(publicIp);
 
                 if (mapping != null) {
@@ -295,7 +296,7 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
     }
 
     private void commitStats(final long networkId, final HostVO externalLoadBalancer, final long accountId, final String publicIp, final DataCenterVO zone,
-        final String statsEntryIdentifier, final long newCurrentBytesSent, final long newCurrentBytesReceived) {
+            final String statsEntryIdentifier, final long newCurrentBytesSent, final long newCurrentBytesReceived) {
         Transaction.execute(new TransactionCallbackNoReturn() {
             @Override
             public void doInTransactionWithoutResult(TransactionStatus status) {
@@ -307,9 +308,8 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
                     long oldNetBytesReceived = userStats.getNetBytesReceived();
                     long oldCurrentBytesSent = userStats.getCurrentBytesSent();
                     long oldCurrentBytesReceived = userStats.getCurrentBytesReceived();
-                    String warning =
-                        "Received an external network stats byte count that was less than the stored value. Zone ID: " + userStats.getDataCenterId() + ", account ID: " +
-                            userStats.getAccountId() + ".";
+                    String warning = "Received an external network stats byte count that was less than the stored value. Zone ID: " + userStats.getDataCenterId()
+                            + ", account ID: " + userStats.getAccountId() + ".";
 
                     userStats.setCurrentBytesSent(newCurrentBytesSent);
                     if (oldCurrentBytesSent > newCurrentBytesSent) {
@@ -489,9 +489,8 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
             long oldNetBytesReceived = userStats.getNetBytesReceived();
             long oldCurrentBytesSent = userStats.getCurrentBytesSent();
             long oldCurrentBytesReceived = userStats.getCurrentBytesReceived();
-            String warning =
-                "Received an external network stats byte count that was less than the stored value. Zone ID: " + userStats.getDataCenterId() + ", account ID: " +
-                    userStats.getAccountId() + ".";
+            String warning = "Received an external network stats byte count that was less than the stored value. Zone ID: " + userStats.getDataCenterId() + ", account ID: "
+                    + userStats.getAccountId() + ".";
 
             userStats.setCurrentBytesSent(newCurrentBytesSent);
             if (oldCurrentBytesSent > newCurrentBytesSent) {
@@ -508,7 +507,8 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
             return _userStatsDao.update(userStats.getId(), userStats);
         }
 
-        // Creates a new stats entry for the specified parameters, if one doesn't already exist.
+        // Creates a new stats entry for the specified parameters, if one
+        // doesn't already exist.
         private boolean createStatsEntry(long accountId, long zoneId, long networkId, String publicIp, long hostId) {
             HostVO host = _hostDao.findById(hostId);
             UserStatisticsVO userStats = _userStatsDao.findBy(accountId, zoneId, networkId, publicIp, hostId, host.getType().toString());
@@ -519,15 +519,14 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
             }
         }
 
-        // Updates an existing stats entry with new data from the specified usage answer.
-        private boolean updateStatsEntry(long accountId, long zoneId, long networkId, String publicIp, long hostId, ExternalNetworkResourceUsageAnswer answer,
-            boolean inline) {
+        // Updates an existing stats entry with new data from the specified
+        // usage answer.
+        private boolean updateStatsEntry(long accountId, long zoneId, long networkId, String publicIp, long hostId, ExternalNetworkResourceUsageAnswer answer, boolean inline) {
             AccountVO account = _accountDao.findById(accountId);
             DataCenterVO zone = _dcDao.findById(zoneId);
             NetworkVO network = _networkDao.findById(networkId);
             HostVO host = _hostDao.findById(hostId);
-            String statsEntryIdentifier =
-                "account " + account.getAccountName() + ", zone " + zone.getName() + ", network ID " + networkId + ", host ID " + host.getName();
+            String statsEntryIdentifier = "account " + account.getAccountName() + ", zone " + zone.getName() + ", network ID " + networkId + ", host ID " + host.getName();
 
             long newCurrentBytesSent = 0;
             long newCurrentBytesReceived = 0;
@@ -537,7 +536,8 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
                 statsEntryIdentifier += ", public IP: " + publicIp;
 
                 if (host.getType().equals(Host.Type.ExternalLoadBalancer) && inline) {
-                    // Look up stats for the guest IP address that's mapped to the public IP address
+                    // Look up stats for the guest IP address that's mapped to
+                    // the public IP address
                     InlineLoadBalancerNicMapVO mapping = _inlineLoadBalancerNicMapDao.findByPublicIpAddress(publicIp);
 
                     if (mapping != null) {
@@ -595,7 +595,7 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
         }
 
         private boolean createOrUpdateStatsEntry(boolean create, long accountId, long zoneId, long networkId, String publicIp, long hostId,
-            ExternalNetworkResourceUsageAnswer answer, boolean inline) {
+                ExternalNetworkResourceUsageAnswer answer, boolean inline) {
             if (create) {
                 return createStatsEntry(accountId, zoneId, networkId, publicIp, hostId);
             } else {
@@ -605,11 +605,11 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
 
         /*
          * Creates/updates all necessary stats entries for an account and zone.
-         * Stats entries are created for source NAT IP addresses, static NAT rules, port forwarding rules, and load
-         * balancing rules
+         * Stats entries are created for source NAT IP addresses, static NAT
+         * rules, port forwarding rules, and load balancing rules
          */
         private boolean manageStatsEntries(final boolean create, final long accountId, final long zoneId, final Network network, final HostVO externalFirewall,
-            final ExternalNetworkResourceUsageAnswer firewallAnswer, final HostVO externalLoadBalancer, final ExternalNetworkResourceUsageAnswer lbAnswer) {
+                final ExternalNetworkResourceUsageAnswer firewallAnswer, final HostVO externalLoadBalancer, final ExternalNetworkResourceUsageAnswer lbAnswer) {
             final String accountErrorMsg = "Failed to update external network stats entry. Details: account ID = " + accountId;
             try {
                 Transaction.execute(new TransactionCallbackNoReturn() {
@@ -628,7 +628,8 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
 
                         if (externalFirewall != null && firewallAnswer != null) {
                             if (!sharedSourceNat) {
-                                // Manage the entry for this network's source NAT IP address
+                                // Manage the entry for this network's source
+                                // NAT IP address
                                 List<IPAddressVO> sourceNatIps = _ipAddressDao.listByAssociatedNetwork(network.getId(), true);
                                 if (sourceNatIps.size() == 1) {
                                     String publicIp = sourceNatIps.get(0).getAddress().addr();
@@ -637,7 +638,8 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
                                     }
                                 }
 
-                                // Manage one entry for each static NAT rule in this network
+                                // Manage one entry for each static NAT rule in
+                                // this network
                                 List<IPAddressVO> staticNatIps = _ipAddressDao.listStaticNatPublicIps(network.getId());
                                 for (IPAddressVO staticNatIp : staticNatIps) {
                                     String publicIp = staticNatIp.getAddress().addr();
@@ -646,7 +648,8 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
                                     }
                                 }
 
-                                // Manage one entry for each port forwarding rule in this network
+                                // Manage one entry for each port forwarding
+                                // rule in this network
                                 List<PortForwardingRuleVO> portForwardingRules = _portForwardingRulesDao.listByNetwork(network.getId());
                                 for (PortForwardingRuleVO portForwardingRule : portForwardingRules) {
                                     String publicIp = _networkModel.getIp(portForwardingRule.getSourceIpAddressId()).getAddress().addr();
@@ -655,14 +658,16 @@ public class ExternalDeviceUsageManagerImpl extends ManagerBase implements Exter
                                     }
                                 }
                             } else {
-                                // Manage the account-wide entry for the external firewall
+                                // Manage the account-wide entry for the
+                                // external firewall
                                 if (!createOrUpdateStatsEntry(create, accountId, zoneId, network.getId(), null, externalFirewall.getId(), firewallAnswer, false)) {
                                     throw new CloudRuntimeException(networkErrorMsg);
                                 }
                             }
                         }
 
-                        // If an external load balancer is added, manage one entry for each load balancing rule in this network
+                        // If an external load balancer is added, manage one
+                        // entry for each load balancing rule in this network
                         if (externalLoadBalancer != null && lbAnswer != null) {
                             boolean inline = _networkModel.isNetworkInlineMode(network);
                             List<LoadBalancerVO> loadBalancers = _loadBalancerDao.listByNetworkIdAndScheme(network.getId(), Scheme.Public);

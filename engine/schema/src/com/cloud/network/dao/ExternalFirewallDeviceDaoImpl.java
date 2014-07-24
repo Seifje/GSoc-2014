@@ -78,8 +78,7 @@ public class ExternalFirewallDeviceDaoImpl extends GenericDaoBase<ExternalFirewa
     }
 
     @Override
-    public List<ExternalFirewallDeviceVO> listByProviderAndDeviceAllocationState(long physicalNetworkId, String providerName,
-        FirewallDeviceAllocationState allocationState) {
+    public List<ExternalFirewallDeviceVO> listByProviderAndDeviceAllocationState(long physicalNetworkId, String providerName, FirewallDeviceAllocationState allocationState) {
         SearchCriteria<ExternalFirewallDeviceVO> sc = allocationStateSearch.create();
         sc.setParameters("physicalNetworkId", physicalNetworkId);
         sc.setParameters("providerName", providerName);

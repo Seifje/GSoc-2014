@@ -39,11 +39,9 @@ import com.cloud.network.OvsProvider;
 import com.cloud.network.element.VirtualRouterElementService;
 import com.cloud.user.Account;
 
-@APICommand(name = "configureOvsElement", responseObject = OvsProviderResponse.class, description = "Configures an ovs element.",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "configureOvsElement", responseObject = OvsProviderResponse.class, description = "Configures an ovs element.", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ConfigureOvsElementCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger
-        .getLogger(ConfigureOvsElementCmd.class.getName());
+    public static final Logger s_logger = Logger.getLogger(ConfigureOvsElementCmd.class.getName());
     private static final String s_name = "configureovselementresponse";
     @Inject
     private List<VirtualRouterElementService> _service;
@@ -116,18 +114,15 @@ public class ConfigureOvsElementCmd extends BaseAsyncCmd {
     }
 
     @Override
-    public void execute() throws ConcurrentOperationException,
-        ResourceUnavailableException, InsufficientCapacityException {
+    public void execute() throws ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException {
         CallContext.current().setEventDetails("Ovs element: " + id);
         OvsProvider result = _service.get(0).configure(this);
         if (result != null) {
-            OvsProviderResponse ovsResponse = _responseGenerator
-                .createOvsProviderResponse(result);
+            OvsProviderResponse ovsResponse = _responseGenerator.createOvsProviderResponse(result);
             ovsResponse.setResponseName(getCommandName());
             this.setResponseObject(ovsResponse);
         } else {
-            throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR,
-                "Failed to configure the ovs provider");
+            throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to configure the ovs provider");
         }
     }
 }

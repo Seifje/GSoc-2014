@@ -25,10 +25,12 @@ import com.cloud.server.ResourceTag.ResourceObjectType;
 public interface TaggedResourceService {
 
     /**
-     * @param resourceIds TODO
+     * @param resourceIds
+     *            TODO
      * @param resourceType
      * @param tags
-     * @param customer TODO
+     * @param customer
+     *            TODO
      * @return
      */
     List<ResourceTag> createTags(List<String> resourceIds, ResourceObjectType resourceType, Map<String, String> tags, String customer);
@@ -43,7 +45,8 @@ public interface TaggedResourceService {
 
     List<? extends ResourceTag> listByResourceTypeAndId(ResourceObjectType type, long resourceId);
 
-    //FIXME - the methods below should be extracted to its separate manager/service responsible just for retrieving object details
+    // FIXME - the methods below should be extracted to its separate
+    // manager/service responsible just for retrieving object details
     ResourceObjectType getResourceType(String resourceTypeStr);
 
     /**

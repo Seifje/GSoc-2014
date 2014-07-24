@@ -37,10 +37,11 @@ public class FirstFitRoutingAllocator extends FirstFitAllocator {
         try {
             NDC.push("FirstFitRoutingAllocator");
             if (type != Host.Type.Routing) {
-                // FirstFitRoutingAllocator is to find space on routing capable hosts only
+                // FirstFitRoutingAllocator is to find space on routing capable
+                // hosts only
                 return new ArrayList<Host>();
             }
-            //all hosts should be of type routing anyway.
+            // all hosts should be of type routing anyway.
             return super.allocateTo(vmProfile, plan, type, avoid, returnUpTo);
         } finally {
             NDC.pop();

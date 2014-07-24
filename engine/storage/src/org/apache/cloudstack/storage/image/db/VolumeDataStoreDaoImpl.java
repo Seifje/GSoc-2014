@@ -120,34 +120,12 @@ public class VolumeDataStoreDaoImpl extends GenericDaoBase<VolumeDataStoreVO, Lo
             VolumeDataStoreVO dbVol = findByIdIncludingRemoved(dataObj.getId());
             if (dbVol != null) {
                 StringBuilder str = new StringBuilder("Unable to update ").append(dataObj.toString());
-                str.append(": DB Data={id=")
-                    .append(dbVol.getId())
-                    .append("; state=")
-                    .append(dbVol.getState())
-                    .append("; updatecount=")
-                    .append(dbVol.getUpdatedCount())
-                    .append(";updatedTime=")
-                    .append(dbVol.getUpdated());
-                str.append(": New Data={id=")
-                    .append(dataObj.getId())
-                    .append("; state=")
-                    .append(nextState)
-                    .append("; event=")
-                    .append(event)
-                    .append("; updatecount=")
-                    .append(dataObj.getUpdatedCount())
-                    .append("; updatedTime=")
-                    .append(dataObj.getUpdated());
-                str.append(": stale Data={id=")
-                    .append(dataObj.getId())
-                    .append("; state=")
-                    .append(currentState)
-                    .append("; event=")
-                    .append(event)
-                    .append("; updatecount=")
-                    .append(oldUpdated)
-                    .append("; updatedTime=")
-                    .append(oldUpdatedTime);
+                str.append(": DB Data={id=").append(dbVol.getId()).append("; state=").append(dbVol.getState()).append("; updatecount=").append(dbVol.getUpdatedCount())
+                .append(";updatedTime=").append(dbVol.getUpdated());
+                str.append(": New Data={id=").append(dataObj.getId()).append("; state=").append(nextState).append("; event=").append(event).append("; updatecount=")
+                .append(dataObj.getUpdatedCount()).append("; updatedTime=").append(dataObj.getUpdated());
+                str.append(": stale Data={id=").append(dataObj.getId()).append("; state=").append(currentState).append("; event=").append(event).append("; updatecount=")
+                .append(oldUpdated).append("; updatedTime=").append(oldUpdatedTime);
             } else {
                 s_logger.debug("Unable to update objectIndatastore: id=" + dataObj.getId() + ", as there is no such object exists in the database anymore");
             }
@@ -232,7 +210,8 @@ public class VolumeDataStoreDaoImpl extends GenericDaoBase<VolumeDataStoreVO, Lo
             // check if the volume is stored there
             vols.addAll(listByStoreId(store.getId()));
         }
-        // create an entry for each record, but with empty install path since the content is not yet on region-wide store yet
+        // create an entry for each record, but with empty install path since
+        // the content is not yet on region-wide store yet
         if (vols != null) {
             s_logger.info("Duplicate " + vols.size() + " volume cache store records to region store");
             for (VolumeDataStoreVO vol : vols) {
@@ -253,7 +232,8 @@ public class VolumeDataStoreDaoImpl extends GenericDaoBase<VolumeDataStoreVO, Lo
                 vs.setErrorString(vol.getErrorString());
                 vs.setRefCnt(vol.getRefCnt());
                 persist(vs);
-                // increase ref_cnt so that this will not be recycled before the content is pushed to region-wide store
+                // increase ref_cnt so that this will not be recycled before the
+                // content is pushed to region-wide store
                 vol.incrRefCnt();
                 this.update(vol.getId(), vol);
             }

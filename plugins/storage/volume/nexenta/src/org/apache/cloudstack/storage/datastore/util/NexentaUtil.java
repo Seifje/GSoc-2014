@@ -51,18 +51,16 @@ public class NexentaUtil {
     /**
      * Parse NMS url into normalized parts like scheme, user, host and others.
      *
-     * Example NMS URL:
-     *    auto://admin:nexenta@192.168.1.1:2000/
+     * Example NMS URL: auto://admin:nexenta@192.168.1.1:2000/
      *
-     * NMS URL parts:
-     *    auto                true if url starts with auto://, protocol will be automatically switched to https if http not supported;
-     *    scheme (auto)       connection protocol (http or https);
-     *    user (admin)        NMS user;
-     *    password (nexenta)  NMS password;
-     *    host (192.168.1.1)  NMS host;
-     *    port (2000)         NMS port.
+     * NMS URL parts: auto true if url starts with auto://, protocol will be
+     * automatically switched to https if http not supported; scheme (auto)
+     * connection protocol (http or https); user (admin) NMS user; password
+     * (nexenta) NMS password; host (192.168.1.1) NMS host; port (2000) NMS
+     * port.
      *
-     * @param nmsUrl url string to parse
+     * @param nmsUrl
+     *            url string to parse
      * @return instance of NexentaConnection class
      */
     public static NexentaNmsUrl parseNmsUrl(String nmsUrl) {

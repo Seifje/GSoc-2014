@@ -40,7 +40,7 @@ public class Site2SiteVpnConnectionResponse extends BaseResponse implements Cont
 
     @SerializedName(ApiConstants.PUBLIC_IP)
     @Param(description = "the public IP address")
-    //from VpnGateway
+    // from VpnGateway
     private String ip;
 
     @SerializedName(ApiConstants.S2S_CUSTOMER_GATEWAY_ID)
@@ -49,42 +49,42 @@ public class Site2SiteVpnConnectionResponse extends BaseResponse implements Cont
 
     @SerializedName(ApiConstants.GATEWAY)
     @Param(description = "public ip address id of the customer gateway")
-    //from CustomerGateway
+    // from CustomerGateway
     private String gatewayIp;
 
     @SerializedName(ApiConstants.CIDR_LIST)
     @Param(description = "guest cidr list of the customer gateway")
-    //from CustomerGateway
+    // from CustomerGateway
     private String guestCidrList;
 
     @SerializedName(ApiConstants.IPSEC_PSK)
     @Param(description = "IPsec Preshared-Key of the customer gateway")
-    //from CustomerGateway
+    // from CustomerGateway
     private String ipsecPsk;
 
     @SerializedName(ApiConstants.IKE_POLICY)
     @Param(description = "IKE policy of the customer gateway")
-    //from CustomerGateway
+    // from CustomerGateway
     private String ikePolicy;
 
     @SerializedName(ApiConstants.ESP_POLICY)
     @Param(description = "ESP policy of the customer gateway")
-    //from CustomerGateway
+    // from CustomerGateway
     private String espPolicy;
 
     @SerializedName(ApiConstants.IKE_LIFETIME)
     @Param(description = "Lifetime of IKE SA of customer gateway")
-    //from CustomerGateway
+    // from CustomerGateway
     private Long ikeLifetime;
 
     @SerializedName(ApiConstants.ESP_LIFETIME)
     @Param(description = "Lifetime of ESP SA of customer gateway")
-    //from CustomerGateway
+    // from CustomerGateway
     private Long espLifetime;
 
     @SerializedName(ApiConstants.DPD)
     @Param(description = "if DPD is enabled for customer gateway")
-    //from CustomerGateway
+    // from CustomerGateway
     private Boolean dpd;
 
     @SerializedName(ApiConstants.STATE)

@@ -34,7 +34,8 @@ import com.cloud.vm.VirtualMachine.Type;
 public class SecurityManagerMBeanImpl extends StandardMBean implements SecurityGroupManagerMBean, RuleUpdateLog {
     SecurityGroupManagerImpl2 _sgMgr;
     boolean _monitoringEnabled = false;
-    //keep track of last scheduled, last update sent and last seqno sent per vm. Make it available over JMX
+    // keep track of last scheduled, last update sent and last seqno sent per
+    // vm. Make it available over JMX
     Map<Long, Date> _scheduleTimestamps = new ConcurrentHashMap<Long, Date>(4000, 100, 64);
     Map<Long, Date> _updateTimestamps = new ConcurrentHashMap<Long, Date>(4000, 100, 64);
 
@@ -127,7 +128,7 @@ public class SecurityManagerMBeanImpl extends StandardMBean implements SecurityG
 
     @Override
     public void simulateVmStart(Long vmId) {
-        //all we need is the vmId
+        // all we need is the vmId
         VMInstanceVO vm = new VMInstanceVO(vmId, 5, "foo", "foo", Type.User, null, HypervisorType.Any, 8, 1, 1, false, false, null);
         _sgMgr.handleVmStarted(vm);
     }

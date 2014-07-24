@@ -58,12 +58,12 @@ public class LibvirtComputingResourceTest {
     Random _random = new Random();
 
     /**
-        This test tests if the Agent can handle a vmSpec coming
-        from a <=4.1 management server.
-
-        The overcommit feature has not been merged in there and thus
-        only 'speed' is set.
-    */
+     * This test tests if the Agent can handle a vmSpec coming from a <=4.1
+     * management server.
+     *
+     * The overcommit feature has not been merged in there and thus only 'speed'
+     * is set.
+     */
     @Test
     public void testCreateVMFromSpecLegacy() {
         int id = _random.nextInt(65534);
@@ -123,9 +123,9 @@ public class LibvirtComputingResourceTest {
         vmStr += "<boot dev='cdrom'/>\n";
         vmStr += "<boot dev='hd'/>\n";
         vmStr += "</os>\n";
-        //vmStr += "<cputune>\n";
-        //vmStr += "<shares>" + (cpus * speed) + "</shares>\n";
-        //vmStr += "</cputune>\n";
+        // vmStr += "<cputune>\n";
+        // vmStr += "<shares>" + (cpus * speed) + "</shares>\n";
+        // vmStr += "</cputune>\n";
         vmStr += "<cpu></cpu>";
         vmStr += "<on_reboot>restart</on_reboot>\n";
         vmStr += "<on_poweroff>destroy</on_poweroff>\n";
@@ -135,8 +135,8 @@ public class LibvirtComputingResourceTest {
     }
 
     /**
-        This test verifies that CPU topology is properly set for hex-core
-    */
+     * This test verifies that CPU topology is properly set for hex-core
+     */
     @Test
     public void testCreateVMFromSpecWithTopology6() {
         int id = _random.nextInt(65534);
@@ -207,8 +207,8 @@ public class LibvirtComputingResourceTest {
     }
 
     /**
-        This test verifies that CPU topology is properly set for quad-core
-    */
+     * This test verifies that CPU topology is properly set for quad-core
+     */
     @Test
     public void testCreateVMFromSpecWithTopology4() {
         int id = _random.nextInt(65534);
@@ -279,12 +279,12 @@ public class LibvirtComputingResourceTest {
     }
 
     /**
-        This test tests if the Agent can handle a vmSpec coming
-        from a >4.1 management server.
-
-        It tests if the Agent can handle a vmSpec with overcommit
-        data like minSpeed and maxSpeed in there
-    */
+     * This test tests if the Agent can handle a vmSpec coming from a >4.1
+     * management server.
+     *
+     * It tests if the Agent can handle a vmSpec with overcommit data like
+     * minSpeed and maxSpeed in there
+     */
     @Test
     public void testCreateVMFromSpec() {
         int id = _random.nextInt(65534);
@@ -304,8 +304,7 @@ public class LibvirtComputingResourceTest {
         String vncPassword = "mySuperSecretPassword";
 
         LibvirtComputingResource lcr = new LibvirtComputingResource();
-        VirtualMachineTO to =
-            new VirtualMachineTO(id, name, VirtualMachine.Type.User, cpus, minSpeed, maxSpeed, minRam, maxRam, BootloaderType.HVM, os, false, false, vncPassword);
+        VirtualMachineTO to = new VirtualMachineTO(id, name, VirtualMachine.Type.User, cpus, minSpeed, maxSpeed, minRam, maxRam, BootloaderType.HVM, os, false, false, vncPassword);
         to.setVncAddr(vncAddr);
         to.setUuid("b0f0a72d-7efb-3cad-a8ff-70ebf30b3af9");
 
@@ -346,9 +345,9 @@ public class LibvirtComputingResourceTest {
         vmStr += "<boot dev='cdrom'/>\n";
         vmStr += "<boot dev='hd'/>\n";
         vmStr += "</os>\n";
-        //vmStr += "<cputune>\n";
-        //vmStr += "<shares>" + (cpus * minSpeed) + "</shares>\n";
-        //vmStr += "</cputune>\n";
+        // vmStr += "<cputune>\n";
+        // vmStr += "<shares>" + (cpus * minSpeed) + "</shares>\n";
+        // vmStr += "</cputune>\n";
         vmStr += "<cpu></cpu>";
         vmStr += "<on_reboot>restart</on_reboot>\n";
         vmStr += "<on_poweroff>destroy</on_poweroff>\n";
@@ -360,8 +359,9 @@ public class LibvirtComputingResourceTest {
 
     @Test
     public void testGetNicStats() {
-        //this test is only working on linux because of the loopback interface name
-        //also the tested code seems to work only on linux
+        // this test is only working on linux because of the loopback interface
+        // name
+        // also the tested code seems to work only on linux
         Assume.assumeTrue(SystemUtils.IS_OS_LINUX);
         Pair<Double, Double> stats = LibvirtComputingResource.getNicStats("lo");
         assertNotNull(stats);
@@ -396,9 +396,11 @@ public class LibvirtComputingResourceTest {
         nodeInfo.threads = 2;
         nodeInfo.model = "Foo processor";
         Mockito.when(connect.nodeInfo()).thenReturn(nodeInfo);
-        // this is testing the interface stats, returns an increasing number of sent and received bytes
+        // this is testing the interface stats, returns an increasing number of
+        // sent and received bytes
         Mockito.when(domain.interfaceStats(Matchers.anyString())).thenAnswer(new Answer<DomainInterfaceStats>() {
-            // increment with less than a KB, so this should be less than 1 KB
+            // increment with less than a KB, so this should be less
+            // than 1 KB
             final static int increment = 1000;
             int rxBytes = 1000;
             int txBytes = 1000;
@@ -448,7 +450,8 @@ public class LibvirtComputingResourceTest {
         };
         libvirtComputingResource.getVmStat(connect, VMNAME);
         VmStatsEntry vmStat = libvirtComputingResource.getVmStat(connect, VMNAME);
-        // network traffic as generated by the logic above, must be greater than zero
+        // network traffic as generated by the logic above, must be greater than
+        // zero
         Assert.assertTrue(vmStat.getNetworkReadKBs() > 0);
         Assert.assertTrue(vmStat.getNetworkWriteKBs() > 0);
         // IO traffic as generated by the logic above, must be greater than zero

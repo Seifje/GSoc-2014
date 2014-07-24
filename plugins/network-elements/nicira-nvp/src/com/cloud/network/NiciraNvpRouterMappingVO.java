@@ -31,7 +31,7 @@ import org.apache.cloudstack.api.InternalIdentity;
 @Entity
 @Table(name = "nicira_nvp_router_map")
 public class NiciraNvpRouterMappingVO implements InternalIdentity {
-    //FIXME the ddl for this table should be in one of the upgrade scripts
+    // FIXME the ddl for this table should be in one of the upgrade scripts
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

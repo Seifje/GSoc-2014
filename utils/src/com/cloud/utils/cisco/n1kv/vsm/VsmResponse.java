@@ -38,7 +38,8 @@ import org.xml.sax.SAXException;
 
 public abstract class VsmResponse {
 
-    // Following error tags, error types and severity have been taken from RFC 4741.
+    // Following error tags, error types and severity have been taken from RFC
+    // 4741.
     public enum ErrorTag {
         InUse, // in-use
         InvalidValue, // invalid-value

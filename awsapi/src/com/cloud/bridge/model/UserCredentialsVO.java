@@ -90,7 +90,7 @@ public class UserCredentialsVO {
         if (!(other instanceof UserCredentialsVO))
             return false;
 
-        // The cert id can be null.  The cert is unused in the REST API.
+        // The cert id can be null. The cert is unused in the REST API.
         if (getAccessKey().equals(((UserCredentialsVO)other).getAccessKey()) && getSecretKey().equals(((UserCredentialsVO)other).getSecretKey())) {
             String thisCertId = getCertUniqueId();
             String otherCertId = ((UserCredentialsVO)other).getCertUniqueId();
@@ -109,7 +109,7 @@ public class UserCredentialsVO {
         int hashCode = 0;
         String thisCertId = getCertUniqueId();
 
-        // The cert id can be null.  The cert is unused in the REST API.
+        // The cert id can be null. The cert is unused in the REST API.
         hashCode = hashCode * 17 + getAccessKey().hashCode();
         hashCode = hashCode * 17 + getSecretKey().hashCode();
         if (null != thisCertId)

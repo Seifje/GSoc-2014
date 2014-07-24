@@ -184,7 +184,7 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
 
     protected boolean canHandle(Network network) {
         if (network.getBroadcastDomainType() != BroadcastDomainType.Vlan) {
-            return false; //TODO: should handle VxLAN as well
+            return false; // TODO: should handle VxLAN as well
         }
 
         return true;
@@ -214,7 +214,7 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
 
         Map<Capability, String> sourceNatCapabilities = new HashMap<Capability, String>();
         sourceNatCapabilities.put(Capability.SupportedSourceNatTypes, "peraccount");
-        sourceNatCapabilities.put(Capability.RedundantRouter, "false"); //TODO:
+        sourceNatCapabilities.put(Capability.RedundantRouter, "false"); // TODO:
         capabilities.put(Service.SourceNat, sourceNatCapabilities);
         return capabilities;
     }
@@ -229,8 +229,7 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
         return Provider.CiscoVnmc;
     }
 
-    private boolean createLogicalEdgeFirewall(long vlanId, String gateway, String gatewayNetmask, String publicIp, String publicNetmask, List<String> publicGateways,
-        long hostId) {
+    private boolean createLogicalEdgeFirewall(long vlanId, String gateway, String gatewayNetmask, String publicIp, String publicNetmask, List<String> publicGateways, long hostId) {
         CreateLogicalEdgeFirewallCommand cmd = new CreateLogicalEdgeFirewallCommand(vlanId, publicIp, gateway, publicNetmask, gatewayNetmask);
         for (String publicGateway : publicGateways) {
             cmd.getPublicGateways().add(publicGateway);
@@ -247,8 +246,7 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
 
     private boolean configureSourceNat(long vlanId, String guestCidr, PublicIp sourceNatIp, long hostId) {
         boolean add = (sourceNatIp.getState() == IpAddress.State.Releasing ? false : true);
-        IpAddressTO ip =
-            new IpAddressTO(sourceNatIp.getAccountId(), sourceNatIp.getAddress().addr(), add, false, sourceNatIp.isSourceNat(), sourceNatIp.getVlanTag(),
+        IpAddressTO ip = new IpAddressTO(sourceNatIp.getAccountId(), sourceNatIp.getAddress().addr(), add, false, sourceNatIp.isSourceNat(), sourceNatIp.getVlanTag(),
                 sourceNatIp.getGateway(), sourceNatIp.getNetmask(), sourceNatIp.getMacAddress(), null, sourceNatIp.isOneToOneNat());
         boolean addSourceNat = false;
         if (sourceNatIp.isSourceNat()) {
@@ -270,7 +268,7 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
 
     @Override
     public boolean implement(final Network network, final NetworkOffering offering, final DeployDestination dest, final ReservationContext context)
-        throws ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException {
+            throws ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException {
         final DataCenter zone = _entityMgr.findById(DataCenter.class, network.getDataCenterId());
 
         if (zone.getNetworkType() == NetworkType.Basic) {
@@ -339,9 +337,12 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
                 publicGateways.add(vlanVO.getVlanGateway());
             }
 
-            // due to VNMC limitation of not allowing source NAT ip as the outside ip of firewall,
-            // an additional public ip needs to acquired for assigning as firewall outside ip.
-            // In case there are already additional ip addresses available (network restart) use one
+            // due to VNMC limitation of not allowing source NAT ip as the
+            // outside ip of firewall,
+            // an additional public ip needs to acquired for assigning as
+            // firewall outside ip.
+            // In case there are already additional ip addresses available
+            // (network restart) use one
             // of them such that it is not the source NAT ip
             IpAddress outsideIp = null;
             List<IPAddressVO> publicIps = _ipAddressDao.listByAssociatedNetwork(network.getId(), null);
@@ -364,26 +365,28 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
                 try {
                     outsideIp = _ipAddrMgr.associateIPToGuestNetwork(outsideIp.getId(), network.getId(), true);
                 } catch (ResourceAllocationException e) {
-                    s_logger.error("Unable to assign allocated additional public Ip " + outsideIp.getAddress().addr() + " to network with vlan " + vlanId +
-                        ". Exception details " + e);
-                    throw new CloudRuntimeException("Unable to assign allocated additional public Ip " + outsideIp.getAddress().addr() + " to network with vlan " +
-                        vlanId + ". Exception details " + e);
+                    s_logger.error("Unable to assign allocated additional public Ip " + outsideIp.getAddress().addr() + " to network with vlan " + vlanId + ". Exception details "
+                            + e);
+                    throw new CloudRuntimeException("Unable to assign allocated additional public Ip " + outsideIp.getAddress().addr() + " to network with vlan " + vlanId
+                            + ". Exception details " + e);
                 }
             }
 
             // create logical edge firewall in VNMC
             String gatewayNetmask = NetUtils.getCidrNetmask(network.getCidr());
-            // due to ASA limitation of allowing single subnet to be assigned to firewall interfaces,
-            // all public ip addresses must be from same subnet, this essentially means single public subnet in zone
+            // due to ASA limitation of allowing single subnet to be assigned to
+            // firewall interfaces,
+            // all public ip addresses must be from same subnet, this
+            // essentially means single public subnet in zone
             if (!createLogicalEdgeFirewall(vlanId, network.getGateway(), gatewayNetmask, outsideIp.getAddress().addr(), sourceNatIp.getNetmask(), publicGateways,
-                ciscoVnmcHost.getId())) {
+                    ciscoVnmcHost.getId())) {
                 s_logger.error("Failed to create logical edge firewall in Cisco VNMC device for network " + network.getName());
                 throw new CloudRuntimeException("Failed to create logical edge firewall in Cisco VNMC device for network " + network.getName());
             }
 
             // create stuff in VSM for ASA device
-            if (!configureNexusVsmForAsa(vlanId, network.getGateway(), vsmDevice.getUserName(), vsmDevice.getPassword(), vsmDevice.getipaddr(),
-                assignedAsa.getInPortProfile(), ciscoVnmcHost.getId())) {
+            if (!configureNexusVsmForAsa(vlanId, network.getGateway(), vsmDevice.getUserName(), vsmDevice.getPassword(), vsmDevice.getipaddr(), assignedAsa.getInPortProfile(),
+                    ciscoVnmcHost.getId())) {
                 s_logger.error("Failed to configure Cisco Nexus VSM " + vsmDevice.getipaddr() + " for ASA device for network " + network.getName());
                 throw new CloudRuntimeException("Failed to configure Cisco Nexus VSM " + vsmDevice.getipaddr() + " for ASA device for network " + network.getName());
             }
@@ -396,10 +399,9 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
 
             // associate Asa 1000v instance with logical edge firewall
             if (!associateAsaWithLogicalEdgeFirewall(vlanId, assignedAsa.getManagementIp(), ciscoVnmcHost.getId())) {
-                s_logger.error("Failed to associate Cisco ASA 1000v (" + assignedAsa.getManagementIp() + ") with logical edge firewall in VNMC for network " +
-                    network.getName());
-                throw new CloudRuntimeException("Failed to associate Cisco ASA 1000v (" + assignedAsa.getManagementIp() +
-                    ") with logical edge firewall in VNMC for network " + network.getName());
+                s_logger.error("Failed to associate Cisco ASA 1000v (" + assignedAsa.getManagementIp() + ") with logical edge firewall in VNMC for network " + network.getName());
+                throw new CloudRuntimeException("Failed to associate Cisco ASA 1000v (" + assignedAsa.getManagementIp() + ") with logical edge firewall in VNMC for network "
+                        + network.getName());
             }
         } catch (CloudRuntimeException e) {
             unassignAsa1000vFromNetwork(network);
@@ -417,8 +419,8 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
     }
 
     @Override
-    public boolean prepare(Network network, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
-        throws ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException {
+    public boolean prepare(Network network, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException,
+            ResourceUnavailableException, InsufficientCapacityException {
         if (vm.getType() != Type.User) {
             return false;
         }
@@ -433,8 +435,7 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
     }
 
     @Override
-    public boolean release(Network network, NicProfile nic, VirtualMachineProfile vm, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public boolean release(Network network, NicProfile nic, VirtualMachineProfile vm, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
         return true;
     }
 
@@ -466,8 +467,7 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
     }
 
     @Override
-    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
         return true;
     }
 
@@ -515,14 +515,14 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
         }
         long zoneId = physicalNetwork.getDataCenterId();
 
-        final PhysicalNetworkServiceProviderVO ntwkSvcProvider =
-            _physicalNetworkServiceProviderDao.findByServiceProvider(physicalNetwork.getId(), networkDevice.getNetworkServiceProvder());
+        final PhysicalNetworkServiceProviderVO ntwkSvcProvider = _physicalNetworkServiceProviderDao.findByServiceProvider(physicalNetwork.getId(),
+                networkDevice.getNetworkServiceProvder());
         if (ntwkSvcProvider == null) {
-            throw new CloudRuntimeException("Network Service Provider: " + networkDevice.getNetworkServiceProvder() + " is not enabled in the physical network: " +
-                physicalNetworkId + "to add this device");
+            throw new CloudRuntimeException("Network Service Provider: " + networkDevice.getNetworkServiceProvder() + " is not enabled in the physical network: "
+                    + physicalNetworkId + "to add this device");
         } else if (ntwkSvcProvider.getState() == PhysicalNetworkServiceProvider.State.Shutdown) {
-            throw new CloudRuntimeException("Network Service Provider: " + ntwkSvcProvider.getProviderName() + " is in shutdown state in the physical network: " +
-                physicalNetworkId + "to add this device");
+            throw new CloudRuntimeException("Network Service Provider: " + ntwkSvcProvider.getProviderName() + " is in shutdown state in the physical network: "
+                    + physicalNetworkId + "to add this device");
         }
 
         if (_ciscoVnmcDao.listByPhysicalNetwork(physicalNetworkId).size() != 0) {
@@ -663,8 +663,8 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
         }
 
         if (network.getState() == Network.State.Allocated) {
-            s_logger.debug("External firewall was asked to apply firewall rules for network with ID " + network.getId() +
-                "; this network is not implemented. Skipping backend commands.");
+            s_logger.debug("External firewall was asked to apply firewall rules for network with ID " + network.getId()
+                    + "; this network is not implemented. Skipping backend commands.");
             return true;
         }
 
@@ -721,8 +721,8 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
         }
 
         if (network.getState() == Network.State.Allocated) {
-            s_logger.debug("External firewall was asked to apply port forwarding rules for network with ID " + network.getId() +
-                "; this network is not implemented. Skipping backend commands.");
+            s_logger.debug("External firewall was asked to apply port forwarding rules for network with ID " + network.getId()
+                    + "; this network is not implemented. Skipping backend commands.");
             return true;
         }
 
@@ -775,8 +775,8 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
         }
 
         if (network.getState() == Network.State.Allocated) {
-            s_logger.debug("External firewall was asked to apply static NAT rules for network with ID " + network.getId() +
-                "; this network is not implemented. Skipping backend commands.");
+            s_logger.debug("External firewall was asked to apply static NAT rules for network with ID " + network.getId()
+                    + "; this network is not implemented. Skipping backend commands.");
             return true;
         }
 
@@ -786,9 +786,8 @@ public class CiscoVnmcElement extends AdapterBase implements SourceNatServicePro
         List<StaticNatRuleTO> rulesTO = new ArrayList<StaticNatRuleTO>();
         for (StaticNat rule : rules) {
             IpAddress sourceIp = _networkModel.getIp(rule.getSourceIpAddressId());
-            StaticNatRuleTO ruleTO =
-                new StaticNatRuleTO(rule.getSourceIpAddressId(), sourceIp.getAddress().addr(), null, null, rule.getDestIpAddress(), null, null, null, rule.isForRevoke(),
-                    false);
+            StaticNatRuleTO ruleTO = new StaticNatRuleTO(rule.getSourceIpAddressId(), sourceIp.getAddress().addr(), null, null, rule.getDestIpAddress(), null, null, null,
+                    rule.isForRevoke(), false);
             rulesTO.add(ruleTO);
         }
 

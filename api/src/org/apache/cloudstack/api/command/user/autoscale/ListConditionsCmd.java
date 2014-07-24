@@ -33,8 +33,7 @@ import org.apache.cloudstack.api.response.ListResponse;
 
 import com.cloud.network.as.Condition;
 
-@APICommand(name = "listConditions", description = "List Conditions for the specific user", responseObject = ConditionResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listConditions", description = "List Conditions for the specific user", responseObject = ConditionResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListConditionsCmd extends BaseListAccountResourcesCmd {
     public static final Logger s_logger = Logger.getLogger(ListConditionsCmd.class.getName());
     private static final String s_name = "listconditionsresponse";
@@ -46,11 +45,7 @@ public class ListConditionsCmd extends BaseListAccountResourcesCmd {
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = ConditionResponse.class, required = false, description = "ID of the Condition.")
     private Long id;
 
-    @Parameter(name = ApiConstants.COUNTER_ID,
-               type = CommandType.UUID,
-               entityType = CounterResponse.class,
-               required = false,
-               description = "Counter-id of the condition.")
+    @Parameter(name = ApiConstants.COUNTER_ID, type = CommandType.UUID, entityType = CounterResponse.class, required = false, description = "Counter-id of the condition.")
     private Long counterId;
 
     @Parameter(name = ApiConstants.POLICY_ID, type = CommandType.UUID, entityType = AutoScalePolicyResponse.class, description = "the ID of the policy")

@@ -38,8 +38,7 @@ import com.cloud.netapp.NetappManager;
 import com.cloud.netapp.PoolVO;
 import com.cloud.server.api.response.netapp.ListVolumePoolsCmdResponse;
 
-@APICommand(name = "listPools", description = "List Pool", responseObject = ListVolumePoolsCmdResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listPools", description = "List Pool", responseObject = ListVolumePoolsCmdResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListVolumePoolsCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(ListVolumePoolsCmd.class.getName());
     private static final String s_name = "listpoolresponse";
@@ -48,8 +47,7 @@ public class ListVolumePoolsCmd extends BaseCmd {
     NetappManager netappMgr;
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             List<PoolVO> poolList = netappMgr.listPools();
             ListResponse<ListVolumePoolsCmdResponse> listResponse = new ListResponse<ListVolumePoolsCmdResponse>();

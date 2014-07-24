@@ -24,7 +24,6 @@ import org.apache.cloudstack.api.InternalIdentity;
 
 public interface Account extends ControlledEntity, InternalIdentity, Identity {
 
-
     public enum State {
         disabled, enabled, locked
     }

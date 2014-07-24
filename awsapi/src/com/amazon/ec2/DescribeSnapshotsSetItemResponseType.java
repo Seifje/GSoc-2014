@@ -25,15 +25,15 @@
 package com.amazon.ec2;
 
 /**
-*  DescribeSnapshotsSetItemResponseType bean class
-*/
+ * DescribeSnapshotsSetItemResponseType bean class
+ */
 
 public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.databinding.ADBBean {
-    /* This type was generated from the piece of schema that had
-            name = DescribeSnapshotsSetItemResponseType
-            Namespace URI = http://ec2.amazonaws.com/doc/2012-08-15/
-            Namespace Prefix = ns1
-            */
+    /*
+     * This type was generated from the piece of schema that had name =
+     * DescribeSnapshotsSetItemResponseType Namespace URI =
+     * http://ec2.amazonaws.com/doc/2012-08-15/ Namespace Prefix = ns1
+     */
 
     private static java.lang.String generatePrefix(java.lang.String namespace) {
         if (namespace.equals("http://ec2.amazonaws.com/doc/2012-08-15/")) {
@@ -43,23 +43,26 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    * field for SnapshotId
-    */
+     * field for SnapshotId
+     */
 
     protected java.lang.String localSnapshotId;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getSnapshotId() {
         return localSnapshotId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param SnapshotId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            SnapshotId
+     */
     public void setSnapshotId(java.lang.String param) {
 
         this.localSnapshotId = param;
@@ -67,23 +70,26 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    * field for VolumeId
-    */
+     * field for VolumeId
+     */
 
     protected java.lang.String localVolumeId;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getVolumeId() {
         return localVolumeId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param VolumeId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            VolumeId
+     */
     public void setVolumeId(java.lang.String param) {
 
         this.localVolumeId = param;
@@ -91,23 +97,26 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    * field for Status
-    */
+     * field for Status
+     */
 
     protected java.lang.String localStatus;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getStatus() {
         return localStatus;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Status
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Status
+     */
     public void setStatus(java.lang.String param) {
 
         this.localStatus = param;
@@ -115,23 +124,26 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    * field for StartTime
-    */
+     * field for StartTime
+     */
 
     protected java.util.Calendar localStartTime;
 
     /**
-    * Auto generated getter method
-    * @return java.util.Calendar
-    */
+     * Auto generated getter method
+     * 
+     * @return java.util.Calendar
+     */
     public java.util.Calendar getStartTime() {
         return localStartTime;
     }
 
     /**
-       * Auto generated setter method
-       * @param param StartTime
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            StartTime
+     */
     public void setStartTime(java.util.Calendar param) {
 
         this.localStartTime = param;
@@ -139,23 +151,26 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    * field for Progress
-    */
+     * field for Progress
+     */
 
     protected java.lang.String localProgress;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getProgress() {
         return localProgress;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Progress
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Progress
+     */
     public void setProgress(java.lang.String param) {
 
         this.localProgress = param;
@@ -163,23 +178,26 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    * field for OwnerId
-    */
+     * field for OwnerId
+     */
 
     protected java.lang.String localOwnerId;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getOwnerId() {
         return localOwnerId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param OwnerId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            OwnerId
+     */
     public void setOwnerId(java.lang.String param) {
 
         this.localOwnerId = param;
@@ -187,23 +205,26 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    * field for VolumeSize
-    */
+     * field for VolumeSize
+     */
 
     protected java.lang.String localVolumeSize;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getVolumeSize() {
         return localVolumeSize;
     }
 
     /**
-       * Auto generated setter method
-       * @param param VolumeSize
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            VolumeSize
+     */
     public void setVolumeSize(java.lang.String param) {
 
         this.localVolumeSize = param;
@@ -211,33 +232,37 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    * field for Description
-    */
+     * field for Description
+     */
 
     protected java.lang.String localDescription;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localDescriptionTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getDescription() {
         return localDescription;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Description
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Description
+     */
     public void setDescription(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localDescriptionTracker = true;
         } else {
             localDescriptionTracker = false;
@@ -249,33 +274,37 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    * field for OwnerAlias
-    */
+     * field for OwnerAlias
+     */
 
     protected java.lang.String localOwnerAlias;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localOwnerAliasTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getOwnerAlias() {
         return localOwnerAlias;
     }
 
     /**
-       * Auto generated setter method
-       * @param param OwnerAlias
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            OwnerAlias
+     */
     public void setOwnerAlias(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localOwnerAliasTracker = true;
         } else {
             localOwnerAliasTracker = false;
@@ -287,33 +316,37 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    * field for TagSet
-    */
+     * field for TagSet
+     */
 
     protected com.amazon.ec2.ResourceTagSetType localTagSet;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localTagSetTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.ResourceTagSetType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.ResourceTagSetType
+     */
     public com.amazon.ec2.ResourceTagSetType getTagSet() {
         return localTagSet;
     }
 
     /**
-       * Auto generated setter method
-       * @param param TagSet
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            TagSet
+     */
     public void setTagSet(com.amazon.ec2.ResourceTagSetType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localTagSetTracker = true;
         } else {
             localTagSetTracker = false;
@@ -325,9 +358,10 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -340,13 +374,13 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, parentQName) {
 
@@ -359,14 +393,13 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
         java.lang.String prefix = null;
         java.lang.String namespace = null;
@@ -704,8 +737,8 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -717,10 +750,10 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -730,10 +763,10 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -756,7 +789,7 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -784,7 +817,8 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -818,8 +852,8 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -838,9 +872,9 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
         java.util.ArrayList elementList = new java.util.ArrayList();
@@ -933,17 +967,20 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static DescribeSnapshotsSetItemResponseType parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             DescribeSnapshotsSetItemResponseType object = new DescribeSnapshotsSetItemResponseType();
 
@@ -968,7 +1005,7 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
                         java.lang.String type = fullTypeName.substring(fullTypeName.indexOf(":") + 1);
 
                         if (!"DescribeSnapshotsSetItemResponseType".equals(type)) {
-                            //find namespace for the prefix
+                            // find namespace for the prefix
                             java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
                             return (DescribeSnapshotsSetItemResponseType)com.amazon.ec2.ExtensionMapper.getTypeObject(nsUri, type, reader);
                         }
@@ -977,7 +1014,8 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
 
                 }
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -994,10 +1032,11 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1012,10 +1051,11 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1030,10 +1070,11 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1048,10 +1089,11 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1066,10 +1108,11 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1084,10 +1127,11 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1102,10 +1146,11 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1120,7 +1165,7 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1137,7 +1182,7 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1152,7 +1197,7 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1162,7 +1207,8 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
                     reader.next();
 
                 if (reader.isStartElement())
-                    // A start element we are not expecting indicates a trailing invalid property
+                    // A start element we are not expecting indicates a trailing
+                    // invalid property
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
 
             } catch (javax.xml.stream.XMLStreamException e) {
@@ -1172,6 +1218,6 @@ public class DescribeSnapshotsSetItemResponseType implements org.apache.axis2.da
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

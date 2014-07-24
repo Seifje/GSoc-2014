@@ -129,7 +129,10 @@ public class DomainDaoImpl extends GenericDaoBase<DomainVO, Long> implements Dom
             domain.setPath(allocPath(parentDomain, domain.getName()));
             domain.setLevel(parentDomain.getLevel() + 1);
 
-            parentDomain.setNextChildSeq(parentDomain.getNextChildSeq() + 1); // FIXME:  remove sequence number?
+            parentDomain.setNextChildSeq(parentDomain.getNextChildSeq() + 1); // FIXME:
+            // remove
+            // sequence
+            // number?
             parentDomain.setChildCount(parentDomain.getChildCount() + 1);
             persist(domain);
             update(parentDomain.getId(), parentDomain);
@@ -146,7 +149,8 @@ public class DomainDaoImpl extends GenericDaoBase<DomainVO, Long> implements Dom
     @Override
     @DB
     public boolean remove(Long id) {
-        // check for any active users / domains assigned to the given domain id and don't remove the domain if there are any
+        // check for any active users / domains assigned to the given domain id
+        // and don't remove the domain if there are any
         if (id != null && id.longValue() == Domain.ROOT_DOMAIN) {
             s_logger.error("Can not remove domain " + id + " as it is ROOT domain");
             return false;
@@ -210,7 +214,11 @@ public class DomainDaoImpl extends GenericDaoBase<DomainVO, Long> implements Dom
     public DomainVO findImmediateChildForParent(Long parentId) {
         SearchCriteria<DomainVO> sc = ImmediateChildDomainSearch.create();
         sc.setParameters("parent", parentId);
-        return (listBy(sc).size() > 0 ? listBy(sc).get(0) : null);//may need to revisit for multiple children case
+        return (listBy(sc).size() > 0 ? listBy(sc).get(0) : null);// may need to
+        // revisit for
+        // multiple
+        // children
+        // case
     }
 
     @Override

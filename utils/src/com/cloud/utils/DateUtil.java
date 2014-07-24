@@ -115,15 +115,22 @@ public class DateUtil {
 
     /**
      * Return next run time
-     * @param intervalType  hourly/daily/weekly/monthly
-     * @param schedule MM[:HH][:DD] format. DD is day of week for weekly and day of month for monthly
-     * @param timezone The timezone in which the schedule string is specified
-     * @param startDate if specified, returns next run time after the specified startDate
+     *
+     * @param intervalType
+     *            hourly/daily/weekly/monthly
+     * @param schedule
+     *            MM[:HH][:DD] format. DD is day of week for weekly and day of
+     *            month for monthly
+     * @param timezone
+     *            The timezone in which the schedule string is specified
+     * @param startDate
+     *            if specified, returns next run time after the specified
+     *            startDate
      * @return
      */
     public static Date getNextRunTime(IntervalType type, String schedule, String timezone, Date startDate) {
 
-        String[] scheduleParts = schedule.split(":"); //MM:HH:DAY
+        String[] scheduleParts = schedule.split(":"); // MM:HH:DAY
 
         final Calendar scheduleTime = Calendar.getInstance();
         scheduleTime.setTimeZone(TimeZone.getTimeZone(timezone));
@@ -132,7 +139,8 @@ public class DateUtil {
             startDate = new Date();
         }
         scheduleTime.setTime(startDate);
-        // Throw an ArrayIndexOutOfBoundsException if schedule is badly formatted.
+        // Throw an ArrayIndexOutOfBoundsException if schedule is badly
+        // formatted.
         scheduleTime.setLenient(false);
         int minutes = 0;
         int hour = 0;
@@ -140,115 +148,119 @@ public class DateUtil {
         Date execDate = null;
 
         switch (type) {
-            case HOURLY:
-                if (scheduleParts.length < 1) {
-                    throw new CloudRuntimeException("Incorrect schedule format: " + schedule + " for interval type:" + type.toString());
-                }
-                minutes = Integer.parseInt(scheduleParts[0]);
-                scheduleTime.set(Calendar.MINUTE, minutes);
-                scheduleTime.set(Calendar.SECOND, 0);
-                scheduleTime.set(Calendar.MILLISECOND, 0);
-                try {
-                    execDate = scheduleTime.getTime();
-                } catch (IllegalArgumentException ex) {
-                    scheduleTime.setLenient(true);
-                    execDate = scheduleTime.getTime();
-                    scheduleTime.setLenient(false);
-                }
-                // XXX: !execDate.after(startDate) is strictly for testing.
-                // During testing we use a test clock which runs much faster than the real clock
-                // So startDate and execDate will always be ahead in the future
-                // and we will never increase the time here
-                if (execDate.before(new Date()) || !execDate.after(startDate)) {
-                    scheduleTime.add(Calendar.HOUR_OF_DAY, 1);
-                }
-                break;
-            case DAILY:
-                if (scheduleParts.length < 2) {
-                    throw new CloudRuntimeException("Incorrect schedule format: " + schedule + " for interval type:" + type.toString());
-                }
-                minutes = Integer.parseInt(scheduleParts[0]);
-                hour = Integer.parseInt(scheduleParts[1]);
+        case HOURLY:
+            if (scheduleParts.length < 1) {
+                throw new CloudRuntimeException("Incorrect schedule format: " + schedule + " for interval type:" + type.toString());
+            }
+            minutes = Integer.parseInt(scheduleParts[0]);
+            scheduleTime.set(Calendar.MINUTE, minutes);
+            scheduleTime.set(Calendar.SECOND, 0);
+            scheduleTime.set(Calendar.MILLISECOND, 0);
+            try {
+                execDate = scheduleTime.getTime();
+            } catch (IllegalArgumentException ex) {
+                scheduleTime.setLenient(true);
+                execDate = scheduleTime.getTime();
+                scheduleTime.setLenient(false);
+            }
+            // XXX: !execDate.after(startDate) is strictly for testing.
+            // During testing we use a test clock which runs much faster than
+            // the real clock
+            // So startDate and execDate will always be ahead in the future
+            // and we will never increase the time here
+            if (execDate.before(new Date()) || !execDate.after(startDate)) {
+                scheduleTime.add(Calendar.HOUR_OF_DAY, 1);
+            }
+            break;
+        case DAILY:
+            if (scheduleParts.length < 2) {
+                throw new CloudRuntimeException("Incorrect schedule format: " + schedule + " for interval type:" + type.toString());
+            }
+            minutes = Integer.parseInt(scheduleParts[0]);
+            hour = Integer.parseInt(scheduleParts[1]);
 
-                scheduleTime.set(Calendar.HOUR_OF_DAY, hour);
-                scheduleTime.set(Calendar.MINUTE, minutes);
-                scheduleTime.set(Calendar.SECOND, 0);
-                scheduleTime.set(Calendar.MILLISECOND, 0);
-                try {
-                    execDate = scheduleTime.getTime();
-                } catch (IllegalArgumentException ex) {
-                    scheduleTime.setLenient(true);
-                    execDate = scheduleTime.getTime();
-                    scheduleTime.setLenient(false);
-                }
-                // XXX: !execDate.after(startDate) is strictly for testing.
-                // During testing we use a test clock which runs much faster than the real clock
-                // So startDate and execDate will always be ahead in the future
-                // and we will never increase the time here
-                if (execDate.before(new Date()) || !execDate.after(startDate)) {
-                    scheduleTime.add(Calendar.DAY_OF_YEAR, 1);
-                }
-                break;
-            case WEEKLY:
-                if (scheduleParts.length < 3) {
-                    throw new CloudRuntimeException("Incorrect schedule format: " + schedule + " for interval type:" + type.toString());
-                }
-                minutes = Integer.parseInt(scheduleParts[0]);
-                hour = Integer.parseInt(scheduleParts[1]);
-                day = Integer.parseInt(scheduleParts[2]);
-                scheduleTime.set(Calendar.DAY_OF_WEEK, day);
-                scheduleTime.set(Calendar.HOUR_OF_DAY, hour);
-                scheduleTime.set(Calendar.MINUTE, minutes);
-                scheduleTime.set(Calendar.SECOND, 0);
-                scheduleTime.set(Calendar.MILLISECOND, 0);
-                try {
-                    execDate = scheduleTime.getTime();
-                } catch (IllegalArgumentException ex) {
-                    scheduleTime.setLenient(true);
-                    execDate = scheduleTime.getTime();
-                    scheduleTime.setLenient(false);
-                }
-                // XXX: !execDate.after(startDate) is strictly for testing.
-                // During testing we use a test clock which runs much faster than the real clock
-                // So startDate and execDate will always be ahead in the future
-                // and we will never increase the time here
-                if (execDate.before(new Date()) || !execDate.after(startDate)) {
-                    scheduleTime.add(Calendar.DAY_OF_WEEK, 7);
-                }
-                ;
-                break;
-            case MONTHLY:
-                if (scheduleParts.length < 3) {
-                    throw new CloudRuntimeException("Incorrect schedule format: " + schedule + " for interval type:" + type.toString());
-                }
-                minutes = Integer.parseInt(scheduleParts[0]);
-                hour = Integer.parseInt(scheduleParts[1]);
-                day = Integer.parseInt(scheduleParts[2]);
-                if (day > 28) {
-                    throw new CloudRuntimeException("Day cannot be greater than 28 for monthly schedule");
-                }
-                scheduleTime.set(Calendar.DAY_OF_MONTH, day);
-                scheduleTime.set(Calendar.HOUR_OF_DAY, hour);
-                scheduleTime.set(Calendar.MINUTE, minutes);
-                scheduleTime.set(Calendar.SECOND, 0);
-                scheduleTime.set(Calendar.MILLISECOND, 0);
-                try {
-                    execDate = scheduleTime.getTime();
-                } catch (IllegalArgumentException ex) {
-                    scheduleTime.setLenient(true);
-                    execDate = scheduleTime.getTime();
-                    scheduleTime.setLenient(false);
-                }
-                // XXX: !execDate.after(startDate) is strictly for testing.
-                // During testing we use a test clock which runs much faster than the real clock
-                // So startDate and execDate will always be ahead in the future
-                // and we will never increase the time here
-                if (execDate.before(new Date()) || !execDate.after(startDate)) {
-                    scheduleTime.add(Calendar.MONTH, 1);
-                }
-                break;
-            default:
-                throw new CloudRuntimeException("Incorrect interval: " + type.toString());
+            scheduleTime.set(Calendar.HOUR_OF_DAY, hour);
+            scheduleTime.set(Calendar.MINUTE, minutes);
+            scheduleTime.set(Calendar.SECOND, 0);
+            scheduleTime.set(Calendar.MILLISECOND, 0);
+            try {
+                execDate = scheduleTime.getTime();
+            } catch (IllegalArgumentException ex) {
+                scheduleTime.setLenient(true);
+                execDate = scheduleTime.getTime();
+                scheduleTime.setLenient(false);
+            }
+            // XXX: !execDate.after(startDate) is strictly for testing.
+            // During testing we use a test clock which runs much faster than
+            // the real clock
+            // So startDate and execDate will always be ahead in the future
+            // and we will never increase the time here
+            if (execDate.before(new Date()) || !execDate.after(startDate)) {
+                scheduleTime.add(Calendar.DAY_OF_YEAR, 1);
+            }
+            break;
+        case WEEKLY:
+            if (scheduleParts.length < 3) {
+                throw new CloudRuntimeException("Incorrect schedule format: " + schedule + " for interval type:" + type.toString());
+            }
+            minutes = Integer.parseInt(scheduleParts[0]);
+            hour = Integer.parseInt(scheduleParts[1]);
+            day = Integer.parseInt(scheduleParts[2]);
+            scheduleTime.set(Calendar.DAY_OF_WEEK, day);
+            scheduleTime.set(Calendar.HOUR_OF_DAY, hour);
+            scheduleTime.set(Calendar.MINUTE, minutes);
+            scheduleTime.set(Calendar.SECOND, 0);
+            scheduleTime.set(Calendar.MILLISECOND, 0);
+            try {
+                execDate = scheduleTime.getTime();
+            } catch (IllegalArgumentException ex) {
+                scheduleTime.setLenient(true);
+                execDate = scheduleTime.getTime();
+                scheduleTime.setLenient(false);
+            }
+            // XXX: !execDate.after(startDate) is strictly for testing.
+            // During testing we use a test clock which runs much faster than
+            // the real clock
+            // So startDate and execDate will always be ahead in the future
+            // and we will never increase the time here
+            if (execDate.before(new Date()) || !execDate.after(startDate)) {
+                scheduleTime.add(Calendar.DAY_OF_WEEK, 7);
+            }
+            ;
+            break;
+        case MONTHLY:
+            if (scheduleParts.length < 3) {
+                throw new CloudRuntimeException("Incorrect schedule format: " + schedule + " for interval type:" + type.toString());
+            }
+            minutes = Integer.parseInt(scheduleParts[0]);
+            hour = Integer.parseInt(scheduleParts[1]);
+            day = Integer.parseInt(scheduleParts[2]);
+            if (day > 28) {
+                throw new CloudRuntimeException("Day cannot be greater than 28 for monthly schedule");
+            }
+            scheduleTime.set(Calendar.DAY_OF_MONTH, day);
+            scheduleTime.set(Calendar.HOUR_OF_DAY, hour);
+            scheduleTime.set(Calendar.MINUTE, minutes);
+            scheduleTime.set(Calendar.SECOND, 0);
+            scheduleTime.set(Calendar.MILLISECOND, 0);
+            try {
+                execDate = scheduleTime.getTime();
+            } catch (IllegalArgumentException ex) {
+                scheduleTime.setLenient(true);
+                execDate = scheduleTime.getTime();
+                scheduleTime.setLenient(false);
+            }
+            // XXX: !execDate.after(startDate) is strictly for testing.
+            // During testing we use a test clock which runs much faster than
+            // the real clock
+            // So startDate and execDate will always be ahead in the future
+            // and we will never increase the time here
+            if (execDate.before(new Date()) || !execDate.after(startDate)) {
+                scheduleTime.add(Calendar.MONTH, 1);
+            }
+            break;
+        default:
+            throw new CloudRuntimeException("Incorrect interval: " + type.toString());
         }
 
         try {
@@ -261,14 +273,14 @@ public class DateUtil {
         }
     }
 
-    public static long getTimeDifference(Date date1, Date date2){
+    public static long getTimeDifference(Date date1, Date date2) {
 
         Calendar dateCalendar1 = Calendar.getInstance();
         dateCalendar1.setTime(date1);
         Calendar dateCalendar2 = Calendar.getInstance();
         dateCalendar2.setTime(date2);
 
-        return (dateCalendar1.getTimeInMillis() - dateCalendar2.getTimeInMillis() )/1000;
+        return (dateCalendar1.getTimeInMillis() - dateCalendar2.getTimeInMillis()) / 1000;
 
     }
 
@@ -282,7 +294,7 @@ public class DateUtil {
         System.out.println("local time :" + getDateDisplayString(localTimezone, time));
         System.out.println("GMT time   :" + getDateDisplayString(gmtTimezone, time));
         System.out.println("EST time   :" + getDateDisplayString(estTimezone, time));
-        //Test next run time. Expects interval and schedule as arguments
+        // Test next run time. Expects interval and schedule as arguments
         if (args.length == 2) {
             System.out.println("Next run time: " + getNextRunTime(IntervalType.getIntervalType(args[0]), args[1], "GMT", time).toString());
         }

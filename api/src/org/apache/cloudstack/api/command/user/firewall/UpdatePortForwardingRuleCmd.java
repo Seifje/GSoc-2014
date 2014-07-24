@@ -33,17 +33,14 @@ import com.cloud.network.rules.FirewallRule;
 import com.cloud.network.rules.PortForwardingRule;
 import com.cloud.user.Account;
 
-@APICommand(name = "updatePortForwardingRule",
-            responseObject = FirewallRuleResponse.class,
-        description = "Updates a port forwarding rule.  Only the private port and the virtual machine can be updated.", entityType = {PortForwardingRule.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "updatePortForwardingRule", responseObject = FirewallRuleResponse.class, description = "Updates a port forwarding rule.  Only the private port and the virtual machine can be updated.", entityType = {PortForwardingRule.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdatePortForwardingRuleCmd extends BaseAsyncCustomIdCmd {
     public static final Logger s_logger = Logger.getLogger(UpdatePortForwardingRuleCmd.class.getName());
     private static final String s_name = "updateportforwardingruleresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = FirewallRuleResponse.class, required = true, description = "the ID of the port forwarding rule", since = "4.4")
     private Long id;
 
@@ -53,32 +50,24 @@ public class UpdatePortForwardingRuleCmd extends BaseAsyncCustomIdCmd {
     @Parameter(name = ApiConstants.PRIVATE_PORT, type = CommandType.STRING, description = "the private port of the port forwarding rule")
     private String privatePort;
 
-    @Parameter(name = ApiConstants.PROTOCOL,
-               type = CommandType.STRING,
-               description = "the protocol for the port fowarding rule. Valid values are TCP or UDP.")
+    @Parameter(name = ApiConstants.PROTOCOL, type = CommandType.STRING, description = "the protocol for the port fowarding rule. Valid values are TCP or UDP.")
     private String protocol;
 
-    @Parameter(name = ApiConstants.IP_ADDRESS_ID,
-               type = CommandType.UUID,
-               entityType = IPAddressResponse.class,
-               description = "the IP address id of the port forwarding rule")
+    @Parameter(name = ApiConstants.IP_ADDRESS_ID, type = CommandType.UUID, entityType = IPAddressResponse.class, description = "the IP address id of the port forwarding rule")
     private Long publicIpId;
 
     @Parameter(name = ApiConstants.PUBLIC_PORT, type = CommandType.STRING, description = "the public port of the port forwarding rule")
     private String publicPort;
 
-    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID,
-               type = CommandType.UUID,
-               entityType = UserVmResponse.class,
-               description = "the ID of the virtual machine for the port forwarding rule")
+    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID, type = CommandType.UUID, entityType = UserVmResponse.class, description = "the ID of the virtual machine for the port forwarding rule")
     private Long virtualMachineId;
 
     @Parameter(name = ApiConstants.FOR_DISPLAY, type = CommandType.BOOLEAN, description = "an optional field, whether to the display the rule to the end user or not", since = "4.4", authorized = {RoleType.Admin})
     private Boolean display;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getPrivateIp() {
         return privateIp;
@@ -103,15 +92,14 @@ public class UpdatePortForwardingRuleCmd extends BaseAsyncCustomIdCmd {
     public Boolean getDisplay() {
         return display;
     }
+
     public Long getId() {
         return id;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
-
-
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -125,7 +113,8 @@ public class UpdatePortForwardingRuleCmd extends BaseAsyncCustomIdCmd {
             return rule.getAccountId();
         }
 
-        // bad address given, parent this command to SYSTEM so ERROR events are tracked
+        // bad address given, parent this command to SYSTEM so ERROR events are
+        // tracked
         return Account.ACCOUNT_ID_SYSTEM;
     }
 
@@ -155,14 +144,17 @@ public class UpdatePortForwardingRuleCmd extends BaseAsyncCustomIdCmd {
             setResponseObject(fwResponse);
         }
         fwResponse.setResponseName(getCommandName());
-//FIXME:        PortForwardingRule result = _mgr.updatePortForwardingRule(this);
-//        if (result != null) {
-//            FirewallRuleResponse response = _responseGenerator.createFirewallRuleResponse(result);
-//            response.setResponseName(getName());
-//            this.setResponseObject(response);
-//        } else {
-//            throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to update port forwarding rule");
-//        }
+        // FIXME: PortForwardingRule result =
+        // _mgr.updatePortForwardingRule(this);
+        // if (result != null) {
+        // FirewallRuleResponse response =
+        // _responseGenerator.createFirewallRuleResponse(result);
+        // response.setResponseName(getName());
+        // this.setResponseObject(response);
+        // } else {
+        // throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR,
+        // "Failed to update port forwarding rule");
+        // }
     }
 
     @Override

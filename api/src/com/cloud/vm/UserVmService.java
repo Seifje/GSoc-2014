@@ -100,7 +100,7 @@ public interface UserVmService {
     UserVm resetVMSSHKey(ResetVMSSHKeyCmd cmd) throws ResourceUnavailableException, InsufficientCapacityException;
 
     UserVm startVirtualMachine(StartVMCmd cmd) throws StorageUnavailableException, ExecutionException, ConcurrentOperationException, ResourceUnavailableException,
-        InsufficientCapacityException, ResourceAllocationException;
+    InsufficientCapacityException, ResourceAllocationException;
 
     UserVm rebootVirtualMachine(RebootVMCmd cmd) throws InsufficientCapacityException, ResourceUnavailableException;
 
@@ -108,21 +108,27 @@ public interface UserVmService {
 
     /**
      * Adds a NIC on the given network to the virtual machine
-     * @param cmd the command object that defines the vm and the given network
+     *
+     * @param cmd
+     *            the command object that defines the vm and the given network
      * @return the vm object if successful, null otherwise
      */
     UserVm addNicToVirtualMachine(AddNicToVMCmd cmd);
 
     /**
      * Removes a NIC on the given network from the virtual machine
-     * @param cmd the command object that defines the vm and the given network
+     *
+     * @param cmd
+     *            the command object that defines the vm and the given network
      * @return the vm object if successful, null otherwise
      */
     UserVm removeNicFromVirtualMachine(RemoveNicFromVMCmd cmd);
 
     /**
      * Updates default Nic to the given network for given virtual machine
-     * @param cmd the command object that defines the vm and the given network
+     *
+     * @param cmd
+     *            the command object that defines the vm and the given network
      * @return the vm object if successful, null otherwise
      */
     UserVm updateDefaultNicForVirtualMachine(UpdateDefaultNicForVMCmd cmd);
@@ -178,7 +184,8 @@ public interface UserVmService {
      * @param defaultIp
      *            TODO
      * @param displayVm
-     *            - Boolean flag whether to the display the vm to the end user or not
+     *            - Boolean flag whether to the display the vm to the end user
+     *            or not
      * @param affinityGroupIdList
      * @param cpuSpeed
      * @param memory
@@ -195,11 +202,11 @@ public interface UserVmService {
      *             if the resources required to deploy the VM is not currently
      *             available.
      */
-    UserVm createBasicSecurityGroupVirtualMachine(DataCenter zone, ServiceOffering serviceOffering, VirtualMachineTemplate template, List<Long> securityGroupIdList,
-        Account owner, String hostName, String displayName, Long diskOfferingId, Long diskSize, String group, HypervisorType hypervisor, HTTPMethod httpmethod,
-        String userData, String sshKeyPair, Map<Long, IpAddresses> requestedIps, IpAddresses defaultIp, Boolean displayVm, String keyboard,
-        List<Long> affinityGroupIdList, Map<String, String> customParameter, String customId) throws InsufficientCapacityException,
-        ConcurrentOperationException, ResourceUnavailableException, StorageUnavailableException, ResourceAllocationException;
+    UserVm createBasicSecurityGroupVirtualMachine(DataCenter zone, ServiceOffering serviceOffering, VirtualMachineTemplate template, List<Long> securityGroupIdList, Account owner,
+            String hostName, String displayName, Long diskOfferingId, Long diskSize, String group, HypervisorType hypervisor, HTTPMethod httpmethod, String userData,
+            String sshKeyPair, Map<Long, IpAddresses> requestedIps, IpAddresses defaultIp, Boolean displayVm, String keyboard, List<Long> affinityGroupIdList,
+            Map<String, String> customParameter, String customId) throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException,
+            StorageUnavailableException, ResourceAllocationException;
 
     /**
      * Creates a User VM in Advanced Zone (Security Group feature is enabled) in
@@ -252,7 +259,8 @@ public interface UserVmService {
      * @param defaultIps
      *            TODO
      * @param displayVm
-     *            - Boolean flag whether to the display the vm to the end user or not
+     *            - Boolean flag whether to the display the vm to the end user
+     *            or not
      * @param affinityGroupIdList
      * @param memory
      * @param cpuNumber
@@ -269,10 +277,10 @@ public interface UserVmService {
      *             available.
      */
     UserVm createAdvancedSecurityGroupVirtualMachine(DataCenter zone, ServiceOffering serviceOffering, VirtualMachineTemplate template, List<Long> networkIdList,
-        List<Long> securityGroupIdList, Account owner, String hostName, String displayName, Long diskOfferingId, Long diskSize, String group, HypervisorType hypervisor,
-        HTTPMethod httpmethod, String userData, String sshKeyPair, Map<Long, IpAddresses> requestedIps, IpAddresses defaultIps, Boolean displayVm, String keyboard,
-        List<Long> affinityGroupIdList, Map<String, String> customParameters, String customId) throws InsufficientCapacityException,
-        ConcurrentOperationException, ResourceUnavailableException, StorageUnavailableException, ResourceAllocationException;
+            List<Long> securityGroupIdList, Account owner, String hostName, String displayName, Long diskOfferingId, Long diskSize, String group, HypervisorType hypervisor,
+            HTTPMethod httpmethod, String userData, String sshKeyPair, Map<Long, IpAddresses> requestedIps, IpAddresses defaultIps, Boolean displayVm, String keyboard,
+            List<Long> affinityGroupIdList, Map<String, String> customParameters, String customId) throws InsufficientCapacityException, ConcurrentOperationException,
+            ResourceUnavailableException, StorageUnavailableException, ResourceAllocationException;
 
     /**
      * Creates a User VM in Advanced Zone (Security Group feature is disabled)
@@ -322,7 +330,8 @@ public interface UserVmService {
      * @param defaultIps
      *            TODO
      * @param displayVm
-     *            - Boolean flag whether to the display the vm to the end user or not
+     *            - Boolean flag whether to the display the vm to the end user
+     *            or not
      * @param affinityGroupIdList
      * @param cpuSpeed
      * @param memory
@@ -340,11 +349,11 @@ public interface UserVmService {
      *             available.
      */
     UserVm createAdvancedVirtualMachine(DataCenter zone, ServiceOffering serviceOffering, VirtualMachineTemplate template, List<Long> networkIdList, Account owner,
-        String hostName, String displayName, Long diskOfferingId, Long diskSize, String group, HypervisorType hypervisor, HTTPMethod httpmethod, String userData,
-        String sshKeyPair, Map<Long, IpAddresses> requestedIps, IpAddresses defaultIps, Boolean displayVm, String keyboard, List<Long> affinityGroupIdList,
-        Map<String, String> customParameters, String customId)
+            String hostName, String displayName, Long diskOfferingId, Long diskSize, String group, HypervisorType hypervisor, HTTPMethod httpmethod, String userData,
+            String sshKeyPair, Map<Long, IpAddresses> requestedIps, IpAddresses defaultIps, Boolean displayVm, String keyboard, List<Long> affinityGroupIdList,
+            Map<String, String> customParameters, String customId)
 
-        throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException, StorageUnavailableException, ResourceAllocationException;
+                    throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException, StorageUnavailableException, ResourceAllocationException;
 
     /**
      * Starts the virtual machine created from createVirtualMachine.
@@ -357,7 +366,8 @@ public interface UserVmService {
      * @throws ConcurrentOperationException
      *             if there are multiple users working on the same VM.
      * @throws ResourceUnavailableException
-     *             if the resources required the deploy the VM is not currently available.
+     *             if the resources required the deploy the VM is not currently
+     *             available.
      */
     UserVm startVirtualMachine(DeployVMCmd cmd) throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException;
 
@@ -389,40 +399,40 @@ public interface UserVmService {
 
     HypervisorType getHypervisorTypeOfUserVM(long vmid);
 
-    UserVm createVirtualMachine(DeployVMCmd cmd) throws InsufficientCapacityException, ResourceUnavailableException, ConcurrentOperationException,
-        StorageUnavailableException, ResourceAllocationException;
+    UserVm createVirtualMachine(DeployVMCmd cmd) throws InsufficientCapacityException, ResourceUnavailableException, ConcurrentOperationException, StorageUnavailableException,
+    ResourceAllocationException;
 
     UserVm getUserVm(long vmId);
 
     /**
-     * Migrate the given VM to the destination host provided. The API returns the migrated VM if migration succeeds.
-     * Only Root
-     * Admin can migrate a VM.
+     * Migrate the given VM to the destination host provided. The API returns
+     * the migrated VM if migration succeeds. Only Root Admin can migrate a VM.
      *
      * @param destinationStorage
      *            TODO
      * @param Long
-     *            vmId
-     *            vmId of The VM to migrate
+     *            vmId vmId of The VM to migrate
      * @param Host
      *            destinationHost to migrate the VM
      *
      * @return VirtualMachine migrated VM
      * @throws ManagementServerException
-     *             in case we get error finding the VM or host or access errors or other internal errors.
+     *             in case we get error finding the VM or host or access errors
+     *             or other internal errors.
      * @throws ConcurrentOperationException
      *             if there are multiple users working on the same VM.
      * @throws ResourceUnavailableException
-     *             if the destination host to migrate the VM is not currently available.
+     *             if the destination host to migrate the VM is not currently
+     *             available.
      * @throws VirtualMachineMigrationException
      *             if the VM to be migrated is not in Running state
      */
     VirtualMachine migrateVirtualMachine(Long vmId, Host destinationHost) throws ResourceUnavailableException, ConcurrentOperationException, ManagementServerException,
-        VirtualMachineMigrationException;
+    VirtualMachineMigrationException;
 
     /**
-     * Migrate the given VM with its volumes to the destination host. The API returns the migrated VM if it succeeds.
-     * Only root admin can migrate a VM.
+     * Migrate the given VM with its volumes to the destination host. The API
+     * returns the migrated VM if it succeeds. Only root admin can migrate a VM.
      *
      * @param destinationStorage
      *            TODO
@@ -435,40 +445,41 @@ public interface UserVmService {
      *
      * @return VirtualMachine migrated VM
      * @throws ManagementServerException
-     *             in case we get error finding the VM or host or access errors or other internal errors.
+     *             in case we get error finding the VM or host or access errors
+     *             or other internal errors.
      * @throws ConcurrentOperationException
      *             if there are multiple users working on the same VM.
      * @throws ResourceUnavailableException
-     *             if the destination host to migrate the VM is not currently available.
+     *             if the destination host to migrate the VM is not currently
+     *             available.
      * @throws VirtualMachineMigrationException
      *             if the VM to be migrated is not in Running state
      */
     VirtualMachine migrateVirtualMachineWithVolume(Long vmId, Host destinationHost, Map<String, String> volumeToPool) throws ResourceUnavailableException,
-        ConcurrentOperationException, ManagementServerException, VirtualMachineMigrationException;
+    ConcurrentOperationException, ManagementServerException, VirtualMachineMigrationException;
 
-    UserVm moveVMToUser(AssignVMCmd moveUserVMCmd) throws ResourceAllocationException, ConcurrentOperationException, ResourceUnavailableException,
-        InsufficientCapacityException;
+    UserVm moveVMToUser(AssignVMCmd moveUserVMCmd) throws ResourceAllocationException, ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException;
 
     VirtualMachine vmStorageMigration(Long vmId, StoragePool destPool);
 
     UserVm restoreVM(RestoreVMCmd cmd) throws InsufficientCapacityException, ResourceUnavailableException;
 
-    UserVm upgradeVirtualMachine(ScaleVMCmd cmd) throws ResourceUnavailableException, ConcurrentOperationException, ManagementServerException,
-        VirtualMachineMigrationException;
+    UserVm upgradeVirtualMachine(ScaleVMCmd cmd) throws ResourceUnavailableException, ConcurrentOperationException, ManagementServerException, VirtualMachineMigrationException;
 
     UserVm expungeVm(long vmId) throws ResourceUnavailableException, ConcurrentOperationException;
 
     /**
      * Finds and returns an encrypted password for a VM.
      *
-     * @param  userVmId
+     * @param userVmId
      * @return Base64 encoded userdata
      */
     String getVmUserData(long vmId);
 
     /**
      * determin whether the uservm should be visible to the end user
-     * @return  value of the display flag
+     *
+     * @return value of the display flag
      */
     public boolean isDisplayResourceEnabled(Long vmId);
 

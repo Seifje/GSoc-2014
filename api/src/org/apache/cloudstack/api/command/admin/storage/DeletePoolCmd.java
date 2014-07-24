@@ -31,8 +31,7 @@ import com.cloud.storage.StoragePool;
 import com.cloud.storage.StoragePoolStatus;
 import com.cloud.user.Account;
 
-@APICommand(name = "deleteStoragePool", description = "Deletes a storage pool.", responseObject = SuccessResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteStoragePool", description = "Deletes a storage pool.", responseObject = SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeletePoolCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(DeletePoolCmd.class.getName());
     private static final String s_name = "deletestoragepoolresponse";
@@ -45,7 +44,7 @@ public class DeletePoolCmd extends BaseCmd {
     private Long id;
 
     @Parameter(name = ApiConstants.FORCED, type = CommandType.BOOLEAN, required = false, description = "Force destroy storage pool "
-        + "(force expunge volumes in Destroyed state as a part of pool removal)")
+            + "(force expunge volumes in Destroyed state as a part of pool removal)")
     private Boolean forced;
 
     // ///////////////////////////////////////////////////
@@ -83,8 +82,7 @@ public class DeletePoolCmd extends BaseCmd {
         } else {
             StoragePool pool = _storageService.getStoragePool(id);
             if (pool != null && pool.getStatus() == StoragePoolStatus.Removed) {
-                throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR,
-                    "Failed to finish storage pool removal. The storage pool will not be used but cleanup is needed");
+                throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to finish storage pool removal. The storage pool will not be used but cleanup is needed");
             } else {
                 throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to delete storage pool");
             }

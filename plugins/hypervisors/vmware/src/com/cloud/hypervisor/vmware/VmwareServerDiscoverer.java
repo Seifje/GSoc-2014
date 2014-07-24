@@ -109,8 +109,8 @@ public class VmwareServerDiscoverer extends DiscovererBase implements Discoverer
     }
 
     @Override
-    public Map<? extends ServerResource, Map<String, String>>
-    find(long dcId, Long podId, Long clusterId, URI url, String username, String password, List<String> hostTags) throws DiscoveryException {
+    public Map<? extends ServerResource, Map<String, String>> find(long dcId, Long podId, Long clusterId, URI url, String username, String password, List<String> hostTags)
+            throws DiscoveryException {
 
         if (s_logger.isInfoEnabled())
             s_logger.info("Discover host. dc: " + dcId + ", pod: " + podId + ", cluster: " + clusterId + ", uri host: " + url.getHost());
@@ -133,12 +133,14 @@ public class VmwareServerDiscoverer extends DiscovererBase implements Discoverer
         boolean legacyZone = _vmwareMgr.isLegacyZone(dcId);
         boolean usernameNotProvided = (username == null || username.isEmpty());
         boolean passwordNotProvided = (password == null || password.isEmpty());
-        //Check if NOT a legacy zone.
+        // Check if NOT a legacy zone.
         if (!legacyZone) {
             // Retrieve VMware DC associated with specified zone
             VmwareDatacenterVO vmwareDc = fetchVmwareDatacenterByZone(dcId);
             // Ensure username & password provided.
-            // If either or both not provided, try to retrieve & use the credentials from database, which are provided earlier while adding VMware DC to zone.
+            // If either or both not provided, try to retrieve & use the
+            // credentials from database, which are provided earlier while
+            // adding VMware DC to zone.
             if (usernameNotProvided || passwordNotProvided) {
                 // Retrieve credentials associated with VMware DC
                 s_logger.info("Username and/or Password not provided while adding cluster to cloudstack zone. "
@@ -151,12 +153,14 @@ public class VmwareServerDiscoverer extends DiscovererBase implements Discoverer
             }
             String updatedInventoryPath = validateCluster(url, vmwareDc);
             if (!url.getPath().equals(updatedInventoryPath)) {
-                // If url from API doesn't specify DC then update url in database with DC associated with this zone.
+                // If url from API doesn't specify DC then update url in
+                // database with DC associated with this zone.
                 clusterDetails.put("url", url.getScheme() + "://" + url.getHost() + updatedInventoryPath);
                 _clusterDetailsDao.persist(clusterId, clusterDetails);
             }
         } else {
-            // For legacy zones insist on the old model of asking for credentials for each cluster being added.
+            // For legacy zones insist on the old model of asking for
+            // credentials for each cluster being added.
             if (usernameNotProvided) {
                 if (passwordNotProvided) {
                     throw new InvalidParameterValueException("Please provide username & password to add this cluster to zone");
@@ -199,7 +203,8 @@ public class VmwareServerDiscoverer extends DiscovererBase implements Discoverer
         // Set default physical network end points for public and guest traffic
         // Private traffic will be only on standard vSwitch for now.
         if (useDVS) {
-            // Parse url parameters for type of vswitch and name of vswitch specified at cluster level
+            // Parse url parameters for type of vswitch and name of vswitch
+            // specified at cluster level
             paramGuestVswitchType = _urlParams.get(ApiConstants.VSWITCH_TYPE_GUEST_TRAFFIC);
             paramGuestVswitchName = _urlParams.get(ApiConstants.VSWITCH_NAME_GUEST_TRAFFIC);
             paramPublicVswitchType = _urlParams.get(ApiConstants.VSWITCH_TYPE_PUBLIC_TRAFFIC);
@@ -209,9 +214,12 @@ public class VmwareServerDiscoverer extends DiscovererBase implements Discoverer
 
         // Zone level vSwitch Type depends on zone level traffic labels
         //
-        // User can override Zone wide vswitch type (for public and guest) by providing following optional parameters in addClusterCmd
-        // param "guestvswitchtype" with valid values vmwaredvs, vmwaresvs, nexusdvs
-        // param "publicvswitchtype" with valid values vmwaredvs, vmwaresvs, nexusdvs
+        // User can override Zone wide vswitch type (for public and guest) by
+        // providing following optional parameters in addClusterCmd
+        // param "guestvswitchtype" with valid values vmwaredvs, vmwaresvs,
+        // nexusdvs
+        // param "publicvswitchtype" with valid values vmwaredvs, vmwaresvs,
+        // nexusdvs
         //
         // Format of label is <VSWITCH>,<VLANID>,<VSWITCHTYPE>
         // If a field <VLANID> OR <VSWITCHTYPE> is not present leave it empty.
@@ -223,49 +231,55 @@ public class VmwareServerDiscoverer extends DiscovererBase implements Discoverer
         // default vswitchtype is 'vmwaresvs'.
         // <VSWITCHTYPE> 'vmwaresvs' is for vmware standard vswitch
         // <VSWITCHTYPE> 'vmwaredvs' is for vmware distributed virtual switch
-        // <VSWITCHTYPE> 'nexusdvs' is for cisco nexus distributed virtual switch
+        // <VSWITCHTYPE> 'nexusdvs' is for cisco nexus distributed virtual
+        // switch
         // Get zone wide traffic labels for Guest traffic and Public traffic
         guestTrafficLabel = _netmgr.getDefaultGuestTrafficLabel(dcId, HypervisorType.VMware);
 
-        // Process traffic label information provided at zone level and cluster level
+        // Process traffic label information provided at zone level and cluster
+        // level
         guestTrafficLabelObj = getTrafficInfo(TrafficType.Guest, guestTrafficLabel, defaultVirtualSwitchType, paramGuestVswitchType, paramGuestVswitchName, clusterId);
 
         if (zoneType == NetworkType.Advanced) {
             // Get zone wide traffic label for Public traffic
             publicTrafficLabel = _netmgr.getDefaultPublicTrafficLabel(dcId, HypervisorType.VMware);
 
-            // Process traffic label information provided at zone level and cluster level
-            publicTrafficLabelObj =
-                    getTrafficInfo(TrafficType.Public, publicTrafficLabel, defaultVirtualSwitchType, paramPublicVswitchType, paramPublicVswitchName, clusterId);
+            // Process traffic label information provided at zone level and
+            // cluster level
+            publicTrafficLabelObj = getTrafficInfo(TrafficType.Public, publicTrafficLabel, defaultVirtualSwitchType, paramPublicVswitchType, paramPublicVswitchName, clusterId);
 
-            // Configuration Check: A physical network cannot be shared by different types of virtual switches.
+            // Configuration Check: A physical network cannot be shared by
+            // different types of virtual switches.
             //
-            // Check if different vswitch types are chosen for same physical network
+            // Check if different vswitch types are chosen for same physical
+            // network
             // 1. Get physical network for guest traffic - multiple networks
             // 2. Get physical network for public traffic - single network
             // See if 2 is in 1
-            //  if no - pass
-            //  if yes - compare publicTrafficLabelObj.getVirtualSwitchType() == guestTrafficLabelObj.getVirtualSwitchType()
-            //      true  - pass
-            //      false - throw exception - fail cluster add operation
+            // if no - pass
+            // if yes - compare publicTrafficLabelObj.getVirtualSwitchType() ==
+            // guestTrafficLabelObj.getVirtualSwitchType()
+            // true - pass
+            // false - throw exception - fail cluster add operation
 
             List<? extends PhysicalNetwork> pNetworkListGuestTraffic = _netmgr.getPhysicalNtwksSupportingTrafficType(dcId, TrafficType.Guest);
             List<? extends PhysicalNetwork> pNetworkListPublicTraffic = _netmgr.getPhysicalNtwksSupportingTrafficType(dcId, TrafficType.Public);
-            // Public network would be on single physical network hence getting first object of the list would suffice.
+            // Public network would be on single physical network hence getting
+            // first object of the list would suffice.
             PhysicalNetwork pNetworkPublic = pNetworkListPublicTraffic.get(0);
             if (pNetworkListGuestTraffic.contains(pNetworkPublic)) {
                 if (publicTrafficLabelObj.getVirtualSwitchType() != guestTrafficLabelObj.getVirtualSwitchType()) {
-                    String msg =
-                            "Both public traffic and guest traffic is over same physical network " + pNetworkPublic +
-                            ". And virtual switch type chosen for each traffic is different" +
-                            ". A physical network cannot be shared by different types of virtual switches.";
+                    String msg = "Both public traffic and guest traffic is over same physical network " + pNetworkPublic
+                            + ". And virtual switch type chosen for each traffic is different" + ". A physical network cannot be shared by different types of virtual switches.";
                     s_logger.error(msg);
                     throw new InvalidParameterValueException(msg);
                 }
             }
         } else {
-            // Distributed virtual switch is not supported in Basic zone for now.
-            // Private / Management network traffic is not yet supported over distributed virtual switch.
+            // Distributed virtual switch is not supported in Basic zone for
+            // now.
+            // Private / Management network traffic is not yet supported over
+            // distributed virtual switch.
             if (guestTrafficLabelObj.getVirtualSwitchType() != VirtualSwitchType.StandardVirtualSwitch) {
                 String msg = "Detected that Guest traffic is over Distributed virtual switch in Basic zone. Only Standard vSwitch is supported in Basic zone.";
                 s_logger.error(msg);
@@ -278,11 +292,12 @@ public class VmwareServerDiscoverer extends DiscovererBase implements Discoverer
             s_logger.info("Detected private network label : " + privateTrafficLabel);
         }
         Pair<Boolean, Long> vsmInfo = new Pair<Boolean, Long>(false, 0L);
-        if (nexusDVS && (guestTrafficLabelObj.getVirtualSwitchType() == VirtualSwitchType.NexusDistributedVirtualSwitch) ||
-                ((zoneType == NetworkType.Advanced) && (publicTrafficLabelObj.getVirtualSwitchType() == VirtualSwitchType.NexusDistributedVirtualSwitch))) {
+        if (nexusDVS && (guestTrafficLabelObj.getVirtualSwitchType() == VirtualSwitchType.NexusDistributedVirtualSwitch)
+                || ((zoneType == NetworkType.Advanced) && (publicTrafficLabelObj.getVirtualSwitchType() == VirtualSwitchType.NexusDistributedVirtualSwitch))) {
             // Expect Cisco Nexus VSM details only if following 2 condition met
             // 1) The global config parameter vmware.use.nexus.vswitch
-            // 2) Atleast 1 traffic type uses Nexus distributed virtual switch as backend.
+            // 2) Atleast 1 traffic type uses Nexus distributed virtual switch
+            // as backend.
             if (zoneType != NetworkType.Basic) {
                 publicTrafficLabel = _netmgr.getDefaultPublicTrafficLabel(dcId, HypervisorType.VMware);
                 if (publicTrafficLabel != null) {
@@ -476,15 +491,13 @@ public class VmwareServerDiscoverer extends DiscovererBase implements Discoverer
         }
 
         if (!vCenterHost.equalsIgnoreCase(url.getHost())) {
-            msg =
-                    "This cluster " + clusterName + " belongs to vCenter " + url.getHost() + ". But this zone is associated with VMware DC from vCenter " + vCenterHost +
-                    ". Make sure the cluster being added belongs to vCenter " + vCenterHost + " and VMware DC " + vmwareDcNameFromDb;
+            msg = "This cluster " + clusterName + " belongs to vCenter " + url.getHost() + ". But this zone is associated with VMware DC from vCenter " + vCenterHost
+                    + ". Make sure the cluster being added belongs to vCenter " + vCenterHost + " and VMware DC " + vmwareDcNameFromDb;
             s_logger.error(msg);
             throw new DiscoveryException(msg);
         } else if (!vmwareDcNameFromDb.equalsIgnoreCase(vmwareDcNameFromApi)) {
-            msg =
-                    "This cluster " + clusterName + " belongs to VMware DC " + vmwareDcNameFromApi + " .But this zone is associated with VMware DC " + vmwareDcNameFromDb +
-                    ". Make sure the cluster being added belongs to VMware DC " + vmwareDcNameFromDb + " in vCenter " + vCenterHost;
+            msg = "This cluster " + clusterName + " belongs to VMware DC " + vmwareDcNameFromApi + " .But this zone is associated with VMware DC " + vmwareDcNameFromDb
+                    + ". Make sure the cluster being added belongs to VMware DC " + vmwareDcNameFromDb + " in vCenter " + vCenterHost;
             s_logger.error(msg);
             throw new DiscoveryException(msg);
         }
@@ -552,9 +565,8 @@ public class VmwareServerDiscoverer extends DiscovererBase implements Discoverer
         Long id;
         if (tmplt == null) {
             id = _tmpltDao.getNextInSequence(Long.class, "id");
-            VMTemplateVO template =
-                    VMTemplateVO.createPreHostIso(id, isoName, isoName, ImageFormat.ISO, true, true, TemplateType.PERHOST, null, null, true, 64, Account.ACCOUNT_ID_SYSTEM,
-                            null, "VMware Tools Installer ISO", false, 1, false, HypervisorType.VMware);
+            VMTemplateVO template = VMTemplateVO.createPreHostIso(id, isoName, isoName, ImageFormat.ISO, true, true, TemplateType.PERHOST, null, null, true, 64,
+                    Account.ACCOUNT_ID_SYSTEM, null, "VMware Tools Installer ISO", false, 1, false, HypervisorType.VMware);
             _tmpltDao.persist(template);
         } else {
             id = tmplt.getId();
@@ -649,8 +661,7 @@ public class VmwareServerDiscoverer extends DiscovererBase implements Discoverer
         return trafficLabelObj;
     }
 
-    private VmwareTrafficLabel getTrafficInfo(TrafficType trafficType, String zoneWideTrafficLabel, Map<String, String> clusterDetails,
-            VirtualSwitchType defVirtualSwitchType) {
+    private VmwareTrafficLabel getTrafficInfo(TrafficType trafficType, String zoneWideTrafficLabel, Map<String, String> clusterDetails, VirtualSwitchType defVirtualSwitchType) {
         VmwareTrafficLabel trafficLabelObj = null;
         try {
             trafficLabelObj = new VmwareTrafficLabel(zoneWideTrafficLabel, trafficType, defVirtualSwitchType);

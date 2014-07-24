@@ -67,8 +67,7 @@ public class PortProfileDaoImpl extends GenericDaoBase<PortProfileVO, Long> impl
     public boolean doesVlanRangeClash(int lowVlanId, int highVlanId) {
         String dbName = "cloud";
         String tableName = "port_profile";
-        String condition =
-            "(trunk_low_vlan_id BETWEEN " + lowVlanId + " AND " + highVlanId + ")" + " OR (trunk_high_vlan_id BETWEEN " + lowVlanId + " AND " + highVlanId + ")";
+        String condition = "(trunk_low_vlan_id BETWEEN " + lowVlanId + " AND " + highVlanId + ")" + " OR (trunk_high_vlan_id BETWEEN " + lowVlanId + " AND " + highVlanId + ")";
         String selectSql = "SELECT * FROM `" + dbName + "`.`" + tableName + "` WHERE " + condition;
 
         TransactionLegacy txn = TransactionLegacy.currentTxn();
@@ -76,7 +75,8 @@ public class PortProfileDaoImpl extends GenericDaoBase<PortProfileVO, Long> impl
             PreparedStatement stmt = txn.prepareAutoCloseStatement(selectSql);
             ResultSet rs = stmt.executeQuery();
             if (rs != null && rs.next()) {
-                // There are records that contain vlans in this range, so return true
+                // There are records that contain vlans in this range, so return
+                // true
                 return true;
             }
         } catch (SQLException ex) {

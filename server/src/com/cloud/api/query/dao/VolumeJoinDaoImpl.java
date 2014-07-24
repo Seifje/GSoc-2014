@@ -50,7 +50,7 @@ public class VolumeJoinDaoImpl extends GenericDaoBase<VolumeJoinVO, Long> implem
     public static final Logger s_logger = Logger.getLogger(VolumeJoinDaoImpl.class);
 
     @Inject
-    private ConfigurationDao  _configDao;
+    private ConfigurationDao _configDao;
     @Inject
     public AccountManager _accountMgr;
 
@@ -157,7 +157,8 @@ public class VolumeJoinDaoImpl extends GenericDaoBase<VolumeJoinVO, Long> implem
             if (volume.getVolumeType().equals(Volume.Type.ROOT)) {
                 isServiceOffering = true;
             } else {
-                // can't rely on the fact that the volume is the datadisk as it might have been created as a root, and
+                // can't rely on the fact that the volume is the datadisk as it
+                // might have been created as a root, and
                 // then detached later
                 long offeringId = volume.getDiskOfferingId();
                 if (ApiDBUtils.findDiskOfferingById(offeringId) == null) {
@@ -183,7 +184,8 @@ public class VolumeJoinDaoImpl extends GenericDaoBase<VolumeJoinVO, Long> implem
 
         }
 
-        // return hypervisor and storage pool info for ROOT and Resource domain only
+        // return hypervisor and storage pool info for ROOT and Resource domain
+        // only
         if (view == ResponseView.Full) {
             if (volume.getState() != Volume.State.UploadOp) {
                 if (volume.getHypervisorType() != null) {

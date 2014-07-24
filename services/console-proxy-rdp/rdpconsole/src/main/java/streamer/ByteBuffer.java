@@ -40,9 +40,9 @@ public class ByteBuffer {
     private Order order;
 
     /**
-     * Create buffer of size no less than length. Buffer can be a bit larger than
-     * length. Offset also can be set to non-zero value to leave some place for
-     * future headers.
+     * Create buffer of size no less than length. Buffer can be a bit larger
+     * than length. Offset also can be set to non-zero value to leave some place
+     * for future headers.
      */
     public ByteBuffer(int minLength) {
         // Get buffer of acceptable size from buffer pool
@@ -104,7 +104,7 @@ public class ByteBuffer {
      * Return string representation of this byte buffer.
      *
      * @param maxLength
-     *          number of bytes to show in string
+     *            number of bytes to show in string
      */
     public String toString(int maxLength) {
         return "ByteRange(){offset=" + offset + ", length=" + length + ", cursor=" + cursor + ", data=" + ((data == null) ? "null" : toHexString(maxLength))
@@ -116,7 +116,7 @@ public class ByteBuffer {
      * e.g. "[0x01, 0x02]".
      *
      * @param maxLength
-     *          number of bytes to show in string
+     *            number of bytes to show in string
      */
     public String toHexString(int maxLength) {
         StringBuilder builder = new StringBuilder(maxLength * 6);
@@ -136,7 +136,7 @@ public class ByteBuffer {
      * e.g. "01 02".
      *
      * @param maxLength
-     *          number of bytes to show in string
+     *            number of bytes to show in string
      */
     public String toPlainHexString(int maxLength) {
         StringBuilder builder = new StringBuilder(maxLength * 3);
@@ -151,10 +151,11 @@ public class ByteBuffer {
 
     /**
      * Return string representation of this byte buffer as dump, e.g.
-     * "0000  01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 .................".
+     * "0000  01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 ................."
+     * .
      *
      * @param maxLength
-     *          number of bytes to show in string
+     *            number of bytes to show in string
      */
     public String dump() {
         StringBuilder builder = new StringBuilder(length * 4);
@@ -269,7 +270,8 @@ public class ByteBuffer {
     }
 
     /**
-     * Create new buffer, which holds data from both buffers. Expensive operation.
+     * Create new buffer, which holds data from both buffers. Expensive
+     * operation.
      *
      * @TODO if only one reference to this ByteBuffer exists, then extend this
      *       buffer instead of creating new buffer
@@ -289,7 +291,8 @@ public class ByteBuffer {
 
         ByteBuffer newBuf = new ByteBuffer(newData);
 
-        // Copy our (older) metadata to new buffer, because handler might store some
+        // Copy our (older) metadata to new buffer, because handler might store
+        // some
         // metadata in buffer, which is pushed back.
         if (metadata != null)
             newBuf.metadata = new HashMap<String, Object>(metadata);
@@ -334,8 +337,8 @@ public class ByteBuffer {
     }
 
     /**
-     * Return array of int's in little endian order, but use only 3 bytes per int
-     * (3RGB).
+     * Return array of int's in little endian order, but use only 3 bytes per
+     * int (3RGB).
      */
     public int[] toInt3LEArray() {
         if (length % 3 != 0)
@@ -443,8 +446,8 @@ public class ByteBuffer {
      * Read unsigned int in network order in variable length format. Cursor is
      * advanced by 1 to 4 bytes.
      *
-     * Two most significant bits of first byte indicates length of field: 0x00 - 1
-     * byte, 0x40 - 2 bytes, 0x80 - 3 bytes, 0xc0 - 4 bytes.
+     * Two most significant bits of first byte indicates length of field: 0x00 -
+     * 1 byte, 0x40 - 2 bytes, 0x80 - 3 bytes, 0xc0 - 4 bytes.
      *
      * @see http://msdn.microsoft.com/en-us/library/cc241614.aspx
      */
@@ -551,8 +554,8 @@ public class ByteBuffer {
      * Read unsigned short in network order in variable length format. Cursor is
      * advanced by 1 or 2 bytes.
      *
-     * Most significant bit of first byte indicates length of field: 0 - 1 byte, 1
-     * - 2 bytes.
+     * Most significant bit of first byte indicates length of field: 0 - 1 byte,
+     * 1 - 2 bytes.
      */
     public int readVariableUnsignedShort() {
         int firstByte = readUnsignedByte();
@@ -571,14 +574,14 @@ public class ByteBuffer {
     /**
      * Read integer in BER format.
      *
-     * Most significant bit of first byte indicates type of date in first byte: if
-     * 0, then byte contains length (up to 7f), if 1, then byte contains number of
-     * following bytes with value in network order. Value 0x80 means unlimited
-     * length, which ends with two zero bytes (0x00 0x00) sequence.
+     * Most significant bit of first byte indicates type of date in first byte:
+     * if 0, then byte contains length (up to 7f), if 1, then byte contains
+     * number of following bytes with value in network order. Value 0x80 means
+     * unlimited length, which ends with two zero bytes (0x00 0x00) sequence.
      *
      * If -1 is returned by this method, then caller must seek two consecutive
-     * zeroes in buffer and consume all that data from buffer, including these two
-     * zeroes, but caller should not parse these two zeroes.
+     * zeroes in buffer and consume all that data from buffer, including these
+     * two zeroes, but caller should not parse these two zeroes.
      *
      * @return length or -1, for unlimited length
      */
@@ -602,9 +605,9 @@ public class ByteBuffer {
     /**
      * Read integer in BER format.
      *
-     * Most significant bit of first byte indicates type of date in first byte: if
-     * 0, then byte contains length (up to 7f), if 1, then byte contains number of
-     * following bytes with value in network order.
+     * Most significant bit of first byte indicates type of date in first byte:
+     * if 0, then byte contains length (up to 7f), if 1, then byte contains
+     * number of following bytes with value in network order.
      */
     public void writeBerLength(long length) {
         if (length < 0)
@@ -652,7 +655,7 @@ public class ByteBuffer {
      * Read signed variable length integers in network order.
      *
      * @param len
-     *          length of integer
+     *            length of integer
      */
     public long readSignedVarInt(int len) {
         long value = 0;
@@ -692,8 +695,8 @@ public class ByteBuffer {
     }
 
     /**
-     * Read unsigned variable length integers in network order. Values, which are
-     * larger than 0x7FffFFffFFffFFff cannot be parsed by this method.
+     * Read unsigned variable length integers in network order. Values, which
+     * are larger than 0x7FffFFffFFffFFff cannot be parsed by this method.
      */
     public long readUnsignedVarInt(int len) {
         long value = 0;
@@ -938,8 +941,8 @@ public class ByteBuffer {
     }
 
     /**
-     * Write int in variable length format. Cursor is advanced by number of bytes
-     * written (1-5).
+     * Write int in variable length format. Cursor is advanced by number of
+     * bytes written (1-5).
      *
      * Topmost bit of each byte is set to 1 to indicate that next byte has data.
      */
@@ -950,7 +953,8 @@ public class ByteBuffer {
             i >>= 7;
 
             if (i > 0)
-                // Set topmost bit of byte to indicate that next byte(s) contains
+                // Set topmost bit of byte to indicate that next byte(s)
+                // contains
                 // remainder bits
                 b |= 0x80;
 
@@ -962,7 +966,8 @@ public class ByteBuffer {
      * Write short in variable length format. Cursor is advanced by number of
      * bytes written (1-2).
      *
-     * Topmost bit of first byte is set to 1 to indicate that next byte has data.
+     * Topmost bit of first byte is set to 1 to indicate that next byte has
+     * data.
      */
     public void writeVariableShort(int length) {
         if (length > 0x7f | length < 0)
@@ -1008,8 +1013,8 @@ public class ByteBuffer {
     }
 
     /**
-     * Write byte representation of given string, without string terminators (zero
-     * or zeroes at end of string).
+     * Write byte representation of given string, without string terminators
+     * (zero or zeroes at end of string).
      */
     public void writeString(String str, Charset charset) {
         writeBytes(str.getBytes(charset));
@@ -1122,8 +1127,8 @@ public class ByteBuffer {
     }
 
     /**
-     * Return unsigned value of byte at given position relative to cursor. Cursor
-     * is not advanced.
+     * Return unsigned value of byte at given position relative to cursor.
+     * Cursor is not advanced.
      */
     public int peekUnsignedByte(int i) {
         return data[offset + cursor + i] & 0xff;

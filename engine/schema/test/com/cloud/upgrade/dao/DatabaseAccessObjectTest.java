@@ -187,7 +187,7 @@ public class DatabaseAccessObjectTest {
         PreparedStatement preparedStatement = null;
         String errorMessage = "some message";
 
-        dao.closePreparedStatement(preparedStatement, errorMessage);
+        DatabaseAccessObject.closePreparedStatement(preparedStatement, errorMessage);
 
         verify(loggerMock, times(0)).warn(anyString(), any(Throwable.class));
     }
@@ -198,7 +198,7 @@ public class DatabaseAccessObjectTest {
         PreparedStatement preparedStatement = preparedStatementMock;
         String errorMessage = "some message";
 
-        dao.closePreparedStatement(preparedStatement, errorMessage);
+        DatabaseAccessObject.closePreparedStatement(preparedStatement, errorMessage);
 
         verify(preparedStatement, times(1)).close();
         verify(loggerMock, times(0)).warn(anyString(), any(Throwable.class));
@@ -213,7 +213,7 @@ public class DatabaseAccessObjectTest {
         PreparedStatement preparedStatement = preparedStatementMock;
         String errorMessage = "some message";
 
-        dao.closePreparedStatement(preparedStatement, errorMessage);
+        DatabaseAccessObject.closePreparedStatement(preparedStatement, errorMessage);
 
         verify(preparedStatement, times(1)).close();
         verify(loggerMock, times(1)).warn(errorMessage, sqlException);

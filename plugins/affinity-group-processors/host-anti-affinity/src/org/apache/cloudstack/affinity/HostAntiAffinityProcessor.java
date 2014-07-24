@@ -92,8 +92,8 @@ public class HostAntiAffinityProcessor extends AffinityProcessorBase implements 
                             if (secondsSinceLastUpdate < _vmCapacityReleaseInterval) {
                                 avoid.addHost(groupVM.getLastHostId());
                                 if (s_logger.isDebugEnabled()) {
-                                    s_logger.debug("Added host " + groupVM.getLastHostId() + " to avoid set, since VM " + groupVM.getId() +
-                                        " is present on the host, in Stopped state but has reserved capacity");
+                                    s_logger.debug("Added host " + groupVM.getLastHostId() + " to avoid set, since VM " + groupVM.getId()
+                                            + " is present on the host, in Stopped state but has reserved capacity");
                                 }
                             }
                         }
@@ -133,8 +133,8 @@ public class HostAntiAffinityProcessor extends AffinityProcessorBase implements 
                 VMReservationVO vmReservation = _reservationDao.findByVmId(groupVMId);
                 if (vmReservation != null && vmReservation.getHostId() != null && vmReservation.getHostId().equals(plannedHostId)) {
                     if (s_logger.isDebugEnabled()) {
-                        s_logger.debug("Planned destination for VM " + vm.getId() + " conflicts with an existing VM " + vmReservation.getVmId() +
-                            " reserved on the same host " + plannedHostId);
+                        s_logger.debug("Planned destination for VM " + vm.getId() + " conflicts with an existing VM " + vmReservation.getVmId() + " reserved on the same host "
+                                + plannedHostId);
                     }
                     return false;
                 }

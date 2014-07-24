@@ -439,11 +439,12 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
         }
 
         // Check if the url already exists
-        if(tmpltStoreRef.getExtractUrl() != null){
+        if (tmpltStoreRef.getExtractUrl() != null) {
             return tmpltStoreRef.getExtractUrl();
         }
 
-        // Handle NFS to S3 object store migration case, we trigger template sync from NFS to S3 during extract template or copy template
+        // Handle NFS to S3 object store migration case, we trigger template
+        // sync from NFS to S3 during extract template or copy template
         _tmpltSvr.syncTemplateToRegionStore(templateId, tmpltStore);
 
         TemplateInfo templateObject = _tmplFactory.getTemplate(templateId, tmpltStore);
@@ -459,7 +460,7 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
         UserVmVO vm = _userVmDao.findById(profile.getId());
         if (vm.getIsoId() != null) {
             TemplateInfo template = prepareIso(vm.getIsoId(), vm.getDataCenterId());
-            if (template == null){
+            if (template == null) {
                 s_logger.error("Failed to prepare ISO on secondary or cache storage");
                 throw new CloudRuntimeException("Failed to prepare ISO on secondary or cache storage");
             }
@@ -508,8 +509,8 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
                     }
                 });
             } else {
-                s_logger.info("Skip loading template " + template.getId() + " into primary storage " + pool.getId() + " as pool zone " + pool.getDataCenterId() +
-                        " is different from the requested zone " + zoneId);
+                s_logger.info("Skip loading template " + template.getId() + " into primary storage " + pool.getId() + " as pool zone " + pool.getDataCenterId()
+                        + " is different from the requested zone " + zoneId);
             }
         }
     }
@@ -703,7 +704,9 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
         }
 
         if (template.isCrossZones()) {
-            // sync template from cache store to region store if it is not there, for cases where we are going to migrate existing NFS to S3.
+            // sync template from cache store to region store if it is not
+            // there, for cases where we are going to migrate existing NFS to
+            // S3.
             _tmpltSvr.syncTemplateToRegionStore(templateId, srcSecStore);
             s_logger.debug("Template " + templateId + " is cross-zone, don't need to copy");
             return template;
@@ -788,8 +791,10 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
     @Override
     @DB
     public void evictTemplateFromStoragePool(VMTemplateStoragePoolVO templatePoolVO) {
-        //Need to hold the lock, otherwise, another thread may create a volume from the template at the same time.
-        //Assumption here is that, we will hold the same lock during create volume from template
+        // Need to hold the lock, otherwise, another thread may create a volume
+        // from the template at the same time.
+        // Assumption here is that, we will hold the same lock during create
+        // volume from template
         VMTemplateStoragePoolVO templatePoolRef = _tmpltPoolDao.acquireInLockTable(templatePoolVO.getId());
         if (templatePoolRef == null) {
             s_logger.debug("can't aquire the lock for template pool ref:" + templatePoolVO.getId());
@@ -862,8 +867,7 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
         List<VMInstanceVO> nonExpungedVms = _vmInstanceDao.listNonExpungedByZoneAndTemplate(zoneId, templateId);
 
         if (!nonExpungedVms.isEmpty()) {
-            s_logger.debug("Template " + template.getName() + " in zone " + zone.getName() +
-                    " is not deleteable because there are non-expunged VMs deployed from this template.");
+            s_logger.debug("Template " + template.getName() + " in zone " + zone.getName() + " is not deleteable because there are non-expunged VMs deployed from this template.");
             return false;
         }
         List<UserVmVO> userVmUsingIso = _userVmDao.listByIsoId(templateId);
@@ -878,8 +882,7 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
         for (VolumeVO volume : volumes) {
             List<SnapshotVO> snapshots = _snapshotDao.listByVolumeIdVersion(volume.getId(), "2.1");
             if (!snapshots.isEmpty()) {
-                s_logger.debug("Template " + template.getName() + " in zone " + zone.getName() +
-                        " is not deleteable because there are 2.1 snapshots using this template.");
+                s_logger.debug("Template " + template.getName() + " in zone " + zone.getName() + " is not deleteable because there are 2.1 snapshots using this template.");
                 return false;
             }
         }
@@ -988,7 +991,9 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
         }
     }
 
-    // for ISO, we need to consider whether to copy to cache storage or not if it is not on NFS, since our hypervisor resource always assumes that they are in NFS
+    // for ISO, we need to consider whether to copy to cache storage or not if
+    // it is not on NFS, since our hypervisor resource always assumes that they
+    // are in NFS
     @Override
     public TemplateInfo prepareIso(long isoId, long dcId) {
         TemplateInfo tmplt = _tmplFactory.getTemplate(isoId, DataStoreRole.Image, dcId);
@@ -1216,8 +1221,16 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
             }
         }
 
-        //_accountMgr.checkAccess(caller, AccessType.ModifyEntry, true, template);
-        _accountMgr.checkAccess(caller, AccessType.OperateEntry, true, template); //TODO: should we replace all ModifyEntry as OperateEntry?
+        // _accountMgr.checkAccess(caller, AccessType.ModifyEntry, true,
+        // template);
+        _accountMgr.checkAccess(caller, AccessType.OperateEntry, true, template); // TODO:
+        // should
+        // we
+        // replace
+        // all
+        // ModifyEntry
+        // as
+        // OperateEntry?
 
         // If the template is removed throw an error.
         if (template.getRemoved() != null) {
@@ -1239,9 +1252,8 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
 
         if (accountNames != null) {
             if ((operation == null) || (!operation.equalsIgnoreCase("add") && !operation.equalsIgnoreCase("remove") && !operation.equalsIgnoreCase("reset"))) {
-                throw new InvalidParameterValueException(
-                    "Invalid operation on accounts, the operation must be either 'add' or 'remove' in order to modify launch permissions." + "  Given operation is: '" +
-                        operation + "'");
+                throw new InvalidParameterValueException("Invalid operation on accounts, the operation must be either 'add' or 'remove' in order to modify launch permissions."
+                        + "  Given operation is: '" + operation + "'");
             }
         }
 
@@ -1266,21 +1278,23 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
         if (isExtractable != null) {
             // Only Root admins allowed to change it for templates
             if (!template.getFormat().equals(ImageFormat.ISO) && _accountMgr.isRootAdmin(caller.getId())) {
-             throw new InvalidParameterValueException("Only ROOT admins are allowed to modify this attribute.");
+                throw new InvalidParameterValueException("Only ROOT admins are allowed to modify this attribute.");
             } else {
-                // For Isos normal user can change it, as their are no derivatives.
+                // For Isos normal user can change it, as their are no
+                // derivatives.
                 updatedTemplate.setExtractable(isExtractable.booleanValue());
             }
         }
 
         _tmpltDao.update(template.getId(), updatedTemplate);
 
-        //when operation is add/remove, accountNames can not be null
+        // when operation is add/remove, accountNames can not be null
         if (("add".equalsIgnoreCase(operation) || "remove".equalsIgnoreCase(operation)) && accountNames == null) {
             throw new InvalidParameterValueException("Operation " + operation + " requires accounts or projectIds to be passed in");
         }
 
-        //Derive the domain id from the template owner as updateTemplatePermissions is not cross domain operation
+        // Derive the domain id from the template owner as
+        // updateTemplatePermissions is not cross domain operation
         Account owner = _accountMgr.getAccount(ownerId);
         final Domain domain = _domainDao.findById(owner.getDomainId());
         if ("add".equalsIgnoreCase(operation)) {
@@ -1293,7 +1307,8 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
                         Account permittedAccount = _accountDao.findActiveAccount(accountName, domain.getId());
                         if (permittedAccount != null) {
                             if (permittedAccount.getId() == caller.getId()) {
-                                continue; // don't grant permission to the template
+                                continue; // don't grant permission to the
+                                // template
                                 // owner, they implicitly have permission
                             }
                             accountIds.add(permittedAccount.getId());
@@ -1303,10 +1318,10 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
                                 _launchPermissionDao.persist(launchPermission);
                             }
                         } else {
-                            throw new InvalidParameterValueException("Unable to grant a launch permission to account " + accountName + " in domain id=" +
-                                domain.getUuid() + ", account not found.  " + "No permissions updated, please verify the account names and retry.");
-                }
-            }
+                            throw new InvalidParameterValueException("Unable to grant a launch permission to account " + accountName + " in domain id=" + domain.getUuid()
+                                    + ", account not found.  " + "No permissions updated, please verify the account names and retry.");
+                        }
+                    }
                 }
             });
 
@@ -1383,7 +1398,8 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
                 SnapshotInfo snapInfo = _snapshotFactory.getSnapshot(snapshotId, DataStoreRole.Image);
                 DataStore snapStore = snapInfo.getDataStore();
                 if (snapStore != null) {
-                    store = snapStore; // pick snapshot image store to create template
+                    store = snapStore; // pick snapshot image store to create
+                    // template
                 }
                 future = _tmpltSvr.createTemplateFromSnapshotAsync(snapInfo, tmplInfo, store);
             } else if (volumeId != null) {
@@ -1413,7 +1429,7 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
 
                 privateTemplate = _tmpltDao.findById(templateId);
                 if (snapshotId != null) {
-                    //getting the prent volume
+                    // getting the prent volume
                     long parentVolumeId = _snapshotDao.findById(snapshotId).getVolumeId();
                     VolumeVO parentVolume = _volumeDao.findById(parentVolumeId);
 
@@ -1435,9 +1451,8 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
                     }
                 }
                 TemplateDataStoreVO srcTmpltStore = _tmplStoreDao.findByStoreTemplate(store.getId(), templateId);
-                UsageEventVO usageEvent =
-                        new UsageEventVO(EventTypes.EVENT_TEMPLATE_CREATE, privateTemplate.getAccountId(), zoneId, privateTemplate.getId(), privateTemplate.getName(), null,
-                                privateTemplate.getSourceTemplateId(), srcTmpltStore.getPhysicalSize(), privateTemplate.getSize());
+                UsageEventVO usageEvent = new UsageEventVO(EventTypes.EVENT_TEMPLATE_CREATE, privateTemplate.getAccountId(), zoneId, privateTemplate.getId(),
+                        privateTemplate.getName(), null, privateTemplate.getSourceTemplateId(), srcTmpltStore.getPhysicalSize(), privateTemplate.getSize());
                 _usageEventDao.persist(usageEvent);
             } catch (InterruptedException e) {
                 s_logger.debug("Failed to create template", e);
@@ -1448,22 +1463,26 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
             }
 
         } finally {
-            /*if (snapshot != null && snapshot.getSwiftId() != null
-                    && secondaryStorageURL != null && zoneId != null
-                    && accountId != null && volumeId != null) {
-                _snapshotMgr.deleteSnapshotsForVolume(secondaryStorageURL,
-                        zoneId, accountId, volumeId);
-            }*/
+            /*
+             * if (snapshot != null && snapshot.getSwiftId() != null &&
+             * secondaryStorageURL != null && zoneId != null && accountId !=
+             * null && volumeId != null) {
+             * _snapshotMgr.deleteSnapshotsForVolume(secondaryStorageURL,
+             * zoneId, accountId, volumeId); }
+             */
             if (privateTemplate == null) {
                 final VolumeVO volumeFinal = volume;
                 final SnapshotVO snapshotFinal = snapshot;
                 Transaction.execute(new TransactionCallbackNoReturn() {
                     @Override
                     public void doInTransactionWithoutResult(TransactionStatus status) {
-                        // template_store_ref entries should have been removed using our
-                        // DataObject.processEvent command in case of failure, but clean
+                        // template_store_ref entries should have been removed
+                        // using our
+                        // DataObject.processEvent command in case of failure,
+                        // but clean
                         // it up here to avoid
-                        // some leftovers which will cause removing template from
+                        // some leftovers which will cause removing template
+                        // from
                         // vm_template table fail.
                         _tmplStoreDao.deletePrimaryRecordsForTemplate(templateId);
                         // Remove the template_zone_ref record
@@ -1536,8 +1555,8 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
             throw new InvalidParameterValueException("Failed to create private template record, neither volume ID nor snapshot ID were specified.");
         }
         if ((volumeId != null) && (snapshotId != null)) {
-            throw new InvalidParameterValueException("Failed to create private template record, please specify only one of volume ID (" + volumeId +
-                    ") and snapshot ID (" + snapshotId + ")");
+            throw new InvalidParameterValueException("Failed to create private template record, please specify only one of volume ID (" + volumeId + ") and snapshot ID ("
+                    + snapshotId + ")");
         }
 
         HypervisorType hyperType;
@@ -1576,8 +1595,8 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
             _accountMgr.checkAccess(caller, null, true, snapshot);
 
             if (snapshot.getState() != Snapshot.State.BackedUp) {
-                throw new InvalidParameterValueException("Snapshot id=" + snapshotId + " is not in " + Snapshot.State.BackedUp +
-                        " state yet and can't be used for template creation");
+                throw new InvalidParameterValueException("Snapshot id=" + snapshotId + " is not in " + Snapshot.State.BackedUp
+                        + " state yet and can't be used for template creation");
             }
 
             /*
@@ -1629,9 +1648,8 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
                 s_logger.debug("Adding template tag: " + templateTag);
             }
         }
-        privateTemplate =
-                new VMTemplateVO(nextTemplateId, uniqueName, name, ImageFormat.RAW, isPublic, featured, isExtractable, TemplateType.USER, null, null, requiresHvmValue,
-                        bitsValue, templateOwner.getId(), null, description, passwordEnabledValue, guestOS.getId(), true, hyperType, templateTag, cmd.getDetails());
+        privateTemplate = new VMTemplateVO(nextTemplateId, uniqueName, name, ImageFormat.RAW, isPublic, featured, isExtractable, TemplateType.USER, null, null, requiresHvmValue,
+                bitsValue, templateOwner.getId(), null, description, passwordEnabledValue, guestOS.getId(), true, hyperType, templateTag, cmd.getDetails());
         privateTemplate.setDynamicallyScalable(isDynamicScalingEnabled);
 
         if (sourceTemplateId != null) {
@@ -1656,7 +1674,11 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
                 }
             }
             if (cmd.getDetails() != null) {
-                details.remove("Encrypted.Password"); // new password will be generated during vm deployment from password enabled template
+                details.remove("Encrypted.Password"); // new password will be
+                // generated during vm
+                // deployment from
+                // password enabled
+                // template
                 details.putAll(cmd.getDetails());
             }
             if (!details.isEmpty()) {
@@ -1665,8 +1687,7 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
             }
 
             _resourceLimitMgr.incrementResourceCount(templateOwner.getId(), ResourceType.template);
-            _resourceLimitMgr.incrementResourceCount(templateOwner.getId(), ResourceType.secondary_storage,
-                    new Long(volume != null ? volume.getSize() : snapshot.getSize()));
+            _resourceLimitMgr.incrementResourceCount(templateOwner.getId(), ResourceType.secondary_storage, new Long(volume != null ? volume.getSize() : snapshot.getSize()));
         }
 
         if (template != null) {
@@ -1727,8 +1748,7 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
         TemplateDataStoreVO templateStoreRef = _tmplStoreDao.findByTemplateZoneDownloadStatus(templateId, zoneId, VMTemplateStorageResourceAssoc.Status.DOWNLOADED);
         if (templateStoreRef == null) {
             // check if it is ready on image cache stores
-            templateStoreRef = _tmplStoreDao.findByTemplateZoneStagingDownloadStatus(templateId, zoneId,
-                    VMTemplateStorageResourceAssoc.Status.DOWNLOADED);
+            templateStoreRef = _tmplStoreDao.findByTemplateZoneStagingDownloadStatus(templateId, zoneId, VMTemplateStorageResourceAssoc.Status.DOWNLOADED);
             if (templateStoreRef == null) {
                 throw new CloudRuntimeException("Template " + templateId + " has not been completely downloaded to zone " + zoneId);
             }
@@ -1797,9 +1817,8 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
             }
         }
 
-        boolean updateNeeded =
-                !(name == null && displayText == null && format == null && guestOSId == null && passwordEnabled == null && bootable == null && sortKey == null &&
-                        isDynamicallyScalable == null && isRoutingTemplate == null);
+        boolean updateNeeded = !(name == null && displayText == null && format == null && guestOSId == null && passwordEnabled == null && bootable == null && sortKey == null
+                && isDynamicallyScalable == null && isRoutingTemplate == null);
         if (!updateNeeded) {
             return template;
         }

@@ -24,8 +24,8 @@ public class SyncLink implements Link {
 
     /**
      * When null packet is pulled from source element, then make slight delay to
-     * avoid consuming of 100% of CPU in main loop in cases when link is pauses or
-     * source element cannot produce data right now.
+     * avoid consuming of 100% of CPU in main loop in cases when link is pauses
+     * or source element cannot produce data right now.
      */
     public static final long STANDARD_DELAY_FOR_EMPTY_PACKET = 10; // Milliseconds
 
@@ -46,8 +46,8 @@ public class SyncLink implements Link {
     protected String id = null;
 
     /**
-     * Buffer with data to hold because link is paused, on hold, or data is pushed
-     * back from output element.
+     * Buffer with data to hold because link is paused, on hold, or data is
+     * pushed back from output element.
      */
     protected ByteBuffer cacheBuffer = null;
 
@@ -91,14 +91,14 @@ public class SyncLink implements Link {
     protected boolean paused = false;
 
     /**
-     * Used by pull() method to hold all data in this link to avoid recursion when
-     * source element is asked to push new data to it outputs.
+     * Used by pull() method to hold all data in this link to avoid recursion
+     * when source element is asked to push new data to it outputs.
      */
     protected boolean hold = false;
 
     /**
-     * Operate in pull mode instead of default push mode. In pull mode, link will
-     * ask it source element for new data.
+     * Operate in pull mode instead of default push mode. In pull mode, link
+     * will ask it source element for new data.
      */
     protected boolean pullMode = false;
 
@@ -303,8 +303,7 @@ public class SyncLink implements Link {
     @Override
     public Element setSink(Element sink) {
         if (sink != null && this.sink != null)
-            throw new RuntimeException("[" + this + "] ERROR: This link sink element is already set. Link: " + this + ", new sink: " + sink + ", existing sink: "
-                    + this.sink + ".");
+            throw new RuntimeException("[" + this + "] ERROR: This link sink element is already set. Link: " + this + ", new sink: " + sink + ", existing sink: " + this.sink + ".");
 
         if (sink == null && cacheBuffer != null)
             throw new RuntimeException("[" + this + "] ERROR: Cannot drop link: cache is not empty. Link: " + this + ", cache: " + cacheBuffer);
@@ -317,8 +316,8 @@ public class SyncLink implements Link {
     @Override
     public Element setSource(Element source) {
         if (this.source != null && source != null)
-            throw new RuntimeException("[" + this + "] ERROR: This link source element is already set. Link: " + this + ", new source: " + source
-                    + ", existing source: " + this.source + ".");
+            throw new RuntimeException("[" + this + "] ERROR: This link source element is already set. Link: " + this + ", new source: " + source + ", existing source: "
+                    + this.source + ".");
 
         this.source = source;
         return source;
@@ -352,9 +351,9 @@ public class SyncLink implements Link {
      * Run pull loop to actively pull data from source and push it to sink. It
      * must be only one pull loop per thread.
      *
-     * Pull loop will start after event STREAM_START. This link and source element
-     * incomming links will be switched to pull mode before pull loop will be
-     * started using event LINK_SWITCH_TO_PULL_MODE.
+     * Pull loop will start after event STREAM_START. This link and source
+     * element incomming links will be switched to pull mode before pull loop
+     * will be started using event LINK_SWITCH_TO_PULL_MODE.
      */
     @Override
     public void run() {

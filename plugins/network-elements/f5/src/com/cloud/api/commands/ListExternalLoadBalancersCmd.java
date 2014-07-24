@@ -36,32 +36,31 @@ import org.apache.cloudstack.api.response.ZoneResponse;
 import com.cloud.host.Host;
 import com.cloud.network.element.F5ExternalLoadBalancerElementService;
 
-@APICommand(name = "listExternalLoadBalancers", description = "Lists F5 external load balancer appliances added in a zone.", responseObject = HostResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listExternalLoadBalancers", description = "Lists F5 external load balancer appliances added in a zone.", responseObject = HostResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 @Deprecated
 // API supported for backward compatibility.
 public class ListExternalLoadBalancersCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListExternalLoadBalancersCmd.class.getName());
     private static final String s_name = "listexternalloadbalancersresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, description = "zone Id")
     private long zoneId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public long getZoneId() {
         return zoneId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Inject
     F5ExternalLoadBalancerElementService _f5DeviceManagerService;

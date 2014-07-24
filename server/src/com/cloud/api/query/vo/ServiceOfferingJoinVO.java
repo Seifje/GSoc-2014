@@ -161,7 +161,7 @@ public class ServiceOfferingJoinVO extends BaseViewVO implements InternalIdentit
         return displayText;
     }
 
-    public Storage.ProvisioningType getProvisioningType(){
+    public Storage.ProvisioningType getProvisioningType() {
         return provisioningType;
     }
 

@@ -33,15 +33,14 @@ import com.cloud.exception.InvalidParameterValueException;
 import com.cloud.netapp.NetappManager;
 import com.cloud.server.api.response.netapp.AssociateLunCmdResponse;
 
-@APICommand(name = "associateLun", description = "Associate a LUN with a guest IQN", responseObject = AssociateLunCmdResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "associateLun", description = "Associate a LUN with a guest IQN", responseObject = AssociateLunCmdResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class AssociateLunCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(AssociateLunCmd.class.getName());
     private static final String s_name = "associatelunresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "LUN name.")
     private String lunName;
@@ -49,9 +48,9 @@ public class AssociateLunCmd extends BaseCmd {
     @Parameter(name = ApiConstants.IQN, type = CommandType.STRING, required = true, description = "Guest IQN to which the LUN associate.")
     private String guestIqn;
 
-    ///////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getLunName() {
         return lunName;
@@ -61,9 +60,9 @@ public class AssociateLunCmd extends BaseCmd {
         return guestIqn;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

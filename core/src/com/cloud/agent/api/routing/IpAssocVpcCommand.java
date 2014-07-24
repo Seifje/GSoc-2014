@@ -29,7 +29,7 @@ public class IpAssocVpcCommand extends IpAssocCommand {
 
     @Override
     public int getAnswersCount() {
-        //Count private gateway to maximum value
+        // Count private gateway to maximum value
         return ipAddresses.length * 2;
     }
 }

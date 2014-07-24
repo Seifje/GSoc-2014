@@ -25,11 +25,8 @@ public class ConsoleProxyServletTest {
     public void escapeHTML() {
         Assert.assertNull(ConsoleProxyServlet.escapeHTML(null));
         Assert.assertEquals("", ConsoleProxyServlet.escapeHTML(""));
-        Assert.assertEquals("&lt;strangevmname&gt;",
-                ConsoleProxyServlet.escapeHTML("<strangevmname>"));
-        Assert.assertEquals("&quot;strange&nbsp;vm&quot;",
-                ConsoleProxyServlet.escapeHTML("\"strange vm\""));
-        Assert.assertEquals("Nothing-extraordinary-anyway.",
-                ConsoleProxyServlet.escapeHTML("Nothing-extraordinary-anyway."));
+        Assert.assertEquals("&lt;strangevmname&gt;", ConsoleProxyServlet.escapeHTML("<strangevmname>"));
+        Assert.assertEquals("&quot;strange&nbsp;vm&quot;", ConsoleProxyServlet.escapeHTML("\"strange vm\""));
+        Assert.assertEquals("Nothing-extraordinary-anyway.", ConsoleProxyServlet.escapeHTML("Nothing-extraordinary-anyway."));
     }
 }

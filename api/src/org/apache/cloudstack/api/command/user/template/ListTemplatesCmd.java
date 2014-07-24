@@ -33,16 +33,15 @@ import com.cloud.template.VirtualMachineTemplate;
 import com.cloud.template.VirtualMachineTemplate.TemplateFilter;
 import com.cloud.user.Account;
 
-@APICommand(name = "listTemplates", description = "List all public, private, and privileged templates.", responseObject = TemplateResponse.class, entityType = {VirtualMachineTemplate.class}, responseView = ResponseView.Restricted,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listTemplates", description = "List all public, private, and privileged templates.", responseObject = TemplateResponse.class, entityType = {VirtualMachineTemplate.class}, responseView = ResponseView.Restricted, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListTemplatesCmd extends BaseListTaggedResourcesCmd {
     public static final Logger s_logger = Logger.getLogger(ListTemplatesCmd.class.getName());
 
     private static final String s_name = "listtemplatesresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.HYPERVISOR, type = CommandType.STRING, description = "the hypervisor for which to restrict the search")
     private String hypervisor;
@@ -53,27 +52,24 @@ public class ListTemplatesCmd extends BaseListTaggedResourcesCmd {
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, description = "the template name")
     private String templateName;
 
-    @Parameter(name = ApiConstants.TEMPLATE_FILTER,
-               type = CommandType.STRING,
-               required = true,
-               description = "possible values are \"featured\", \"self\", \"selfexecutable\",\"sharedexecutable\",\"executable\", and \"community\". "
-                   + "* featured : templates that have been marked as featured and public. "
-                   + "* self : templates that have been registered or created by the calling user. "
-                   + "* selfexecutable : same as self, but only returns templates that can be used to deploy a new VM. "
-                   + "* sharedexecutable : templates ready to be deployed that have been granted to the calling user by another user. "
-                   + "* executable : templates that are owned by the calling user, or public templates, that can be used to deploy a VM. "
-                   + "* community : templates that have been marked as public but not featured. " + "* all : all templates (only usable by admins).")
+    @Parameter(name = ApiConstants.TEMPLATE_FILTER, type = CommandType.STRING, required = true, description = "possible values are \"featured\", \"self\", \"selfexecutable\",\"sharedexecutable\",\"executable\", and \"community\". "
+            + "* featured : templates that have been marked as featured and public. "
+            + "* self : templates that have been registered or created by the calling user. "
+            + "* selfexecutable : same as self, but only returns templates that can be used to deploy a new VM. "
+            + "* sharedexecutable : templates ready to be deployed that have been granted to the calling user by another user. "
+            + "* executable : templates that are owned by the calling user, or public templates, that can be used to deploy a VM. "
+            + "* community : templates that have been marked as public but not featured. " + "* all : all templates (only usable by admins).")
     private String templateFilter;
 
     @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, description = "list templates by zoneId")
     private Long zoneId;
 
-    @Parameter(name=ApiConstants.SHOW_REMOVED, type=CommandType.BOOLEAN, description="show removed templates as well")
+    @Parameter(name = ApiConstants.SHOW_REMOVED, type = CommandType.BOOLEAN, description = "show removed templates as well")
     private Boolean showRemoved;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getHypervisor() {
         return hypervisor;
@@ -102,19 +98,19 @@ public class ListTemplatesCmd extends BaseListTaggedResourcesCmd {
     public boolean listInReadyState() {
 
         Account account = CallContext.current().getCallingAccount();
-        // It is account specific if account is admin type and domainId and accountName are not null
+        // It is account specific if account is admin type and domainId and
+        // accountName are not null
         boolean isAccountSpecific = (account == null || _accountService.isAdmin(account.getId())) && (getAccountName() != null) && (getDomainId() != null);
         // Show only those that are downloaded.
         TemplateFilter templateFilter = TemplateFilter.valueOf(getTemplateFilter());
-        boolean onlyReady =
-            (templateFilter == TemplateFilter.featured) || (templateFilter == TemplateFilter.selfexecutable) || (templateFilter == TemplateFilter.sharedexecutable) ||
-                (templateFilter == TemplateFilter.executable && isAccountSpecific) || (templateFilter == TemplateFilter.community);
+        boolean onlyReady = (templateFilter == TemplateFilter.featured) || (templateFilter == TemplateFilter.selfexecutable) || (templateFilter == TemplateFilter.sharedexecutable)
+                || (templateFilter == TemplateFilter.executable && isAccountSpecific) || (templateFilter == TemplateFilter.community);
         return onlyReady;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

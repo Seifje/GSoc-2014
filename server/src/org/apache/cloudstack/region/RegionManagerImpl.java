@@ -101,11 +101,11 @@ public class RegionManagerImpl extends ManagerBase implements RegionManager, Man
      */
     @Override
     public Region addRegion(int id, String name, String endPoint) {
-        //Region Id should be unique
+        // Region Id should be unique
         if (_regionDao.findById(id) != null) {
             throw new InvalidParameterValueException("Region with id: " + id + " already exists");
         }
-        //Region Name should be unique
+        // Region Name should be unique
         if (_regionDao.findByName(name) != null) {
             throw new InvalidParameterValueException("Region with name: " + name + " already exists");
         }
@@ -124,7 +124,7 @@ public class RegionManagerImpl extends ManagerBase implements RegionManager, Man
             throw new InvalidParameterValueException("Region with id: " + id + " does not exist");
         }
 
-        //Ensure region name is unique
+        // Ensure region name is unique
         if (name != null) {
             RegionVO region1 = _regionDao.findByName(name);
             if (region1 != null && id != region1.getId()) {
@@ -199,8 +199,7 @@ public class RegionManagerImpl extends ManagerBase implements RegionManager, Man
      * {@inheritDoc}
      */
     @Override
-    public Account disableAccount(String accountName, Long domainId, Long accountId, Boolean lockRequested) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public Account disableAccount(String accountName, Long domainId, Long accountId, Boolean lockRequested) throws ConcurrentOperationException, ResourceUnavailableException {
         Account account = null;
         if (lockRequested) {
             account = _accountMgr.lockAccount(accountName, domainId, accountId);

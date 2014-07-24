@@ -201,14 +201,7 @@ public class SnapshotDataStoreVO implements StateObject<ObjectInDataStoreStateMa
 
     @Override
     public String toString() {
-        return new StringBuilder("SnapshotDataStore[").append(id)
-            .append("-")
-            .append(snapshotId)
-            .append("-")
-            .append(dataStoreId)
-            .append(installPath)
-            .append("]")
-            .toString();
+        return new StringBuilder("SnapshotDataStore[").append(id).append("-").append(snapshotId).append("-").append(dataStoreId).append(installPath).append("]").toString();
     }
 
     public long getUpdatedCount() {
@@ -278,8 +271,7 @@ public class SnapshotDataStoreVO implements StateObject<ObjectInDataStoreStateMa
     public void decrRefCnt() {
         if (refCnt > 0) {
             refCnt--;
-        }
-        else {
+        } else {
             s_logger.warn("We should not try to decrement a zero reference count even though our code has guarded");
         }
     }

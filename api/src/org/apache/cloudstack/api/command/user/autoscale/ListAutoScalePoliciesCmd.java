@@ -32,8 +32,7 @@ import org.apache.cloudstack.api.response.ListResponse;
 
 import com.cloud.network.as.AutoScalePolicy;
 
-@APICommand(name = "listAutoScalePolicies", description = "Lists autoscale policies.", responseObject = AutoScalePolicyResponse.class, entityType = {AutoScalePolicy.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listAutoScalePolicies", description = "Lists autoscale policies.", responseObject = AutoScalePolicyResponse.class, entityType = {AutoScalePolicy.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListAutoScalePoliciesCmd extends BaseListAccountResourcesCmd {
     public static final Logger s_logger = Logger.getLogger(ListAutoScalePoliciesCmd.class.getName());
 
@@ -49,9 +48,7 @@ public class ListAutoScalePoliciesCmd extends BaseListAccountResourcesCmd {
     @Parameter(name = ApiConstants.CONDITION_ID, type = CommandType.UUID, entityType = ConditionResponse.class, description = "the ID of the condition of the policy")
     private Long conditionId;
 
-    @Parameter(name = ApiConstants.ACTION,
-               type = CommandType.STRING,
-               description = "the action to be executed if all the conditions evaluate to true for the specified duration.")
+    @Parameter(name = ApiConstants.ACTION, type = CommandType.STRING, description = "the action to be executed if all the conditions evaluate to true for the specified duration.")
     private String action;
 
     @Parameter(name = ApiConstants.VMGROUP_ID, type = CommandType.UUID, entityType = AutoScaleVmGroupResponse.class, description = "the ID of the autoscale vm group")

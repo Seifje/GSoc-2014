@@ -136,7 +136,8 @@ public class DownloadListener implements Listener {
     @Inject
     private VolumeService _volumeSrv;
 
-    // TODO: this constructor should be the one used for template only, remove other template constructor later
+    // TODO: this constructor should be the one used for template only, remove
+    // other template constructor later
     public DownloadListener(EndPoint ssAgent, DataStore store, DataObject object, Timer timer, DownloadMonitorImpl downloadMonitor, DownloadCommand cmd,
             AsyncCompletionCallback<DownloadAnswer> callback) {
         _ssAgent = ssAgent;
@@ -226,7 +227,7 @@ public class DownloadListener implements Listener {
                 if (getJobId() == null) {
                     setJobId(answer.getJobId());
                 } else if (!getJobId().equalsIgnoreCase(answer.getJobId())) {
-                    return false;//TODO
+                    return false;// TODO
                 }
                 transition(DownloadEvent.DOWNLOAD_ANSWER, answer);
                 processed = true;
@@ -287,16 +288,18 @@ public class DownloadListener implements Listener {
             // update template_zone_ref for cross-zone templates
             _imageSrv.associateCrosszoneTemplatesToZone(agent.getDataCenterId());
         }
-        /* This can be removed
-        else if ( cmd instanceof StartupStorageCommand) {
-            StartupStorageCommand storage = (StartupStorageCommand)cmd;
-            if( storage.getResourceType() == Storage.StorageResourceType.SECONDARY_STORAGE ||
-                    storage.getResourceType() == Storage.StorageResourceType.LOCAL_SECONDARY_STORAGE  ) {
-                downloadMonitor.addSystemVMTemplatesToHost(agent, storage.getTemplateInfo());
-                downloadMonitor.handleTemplateSync(agent);
-                downloadMonitor.handleVolumeSync(agent);
-            }
-        }*/
+        /*
+         * This can be removed else if ( cmd instanceof StartupStorageCommand) {
+         * StartupStorageCommand storage = (StartupStorageCommand)cmd; if(
+         * storage.getResourceType() ==
+         * Storage.StorageResourceType.SECONDARY_STORAGE ||
+         * storage.getResourceType() ==
+         * Storage.StorageResourceType.LOCAL_SECONDARY_STORAGE ) {
+         * downloadMonitor.addSystemVMTemplatesToHost(agent,
+         * storage.getTemplateInfo());
+         * downloadMonitor.handleTemplateSync(agent);
+         * downloadMonitor.handleVolumeSync(agent); } }
+         */
         else if (cmd instanceof StartupSecondaryStorageCommand) {
             List<DataStore> imageStores = _storeMgr.getImageStoresByScope(new ZoneScope(agent.getDataCenterId()));
             for (DataStore store : imageStores) {

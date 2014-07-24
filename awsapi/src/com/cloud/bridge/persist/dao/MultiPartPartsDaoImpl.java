@@ -42,7 +42,9 @@ public class MultiPartPartsDaoImpl extends GenericDaoBase<MultiPartPartsVO, Long
         ByUploadID.and("partNumber", ByUploadID.entity().getPartNumber(), SearchCriteria.Op.LT);
         Filter filter = new Filter(MultiPartPartsVO.class, "partNumber", Boolean.TRUE, null, null);
 
-        TransactionLegacy txn = TransactionLegacy.currentTxn();  // Transaction.open("cloudbridge", Transaction.AWSAPI_DB, true);
+        TransactionLegacy txn = TransactionLegacy.currentTxn(); // Transaction.open("cloudbridge",
+                                                                // Transaction.AWSAPI_DB,
+                                                                // true);
         try {
             txn.start();
             SearchCriteria<MultiPartPartsVO> sc = ByUploadID.create();
@@ -61,7 +63,9 @@ public class MultiPartPartsDaoImpl extends GenericDaoBase<MultiPartPartsVO, Long
         SearchBuilder<MultiPartPartsVO> byUploadID = createSearchBuilder();
         byUploadID.and("UploadID", byUploadID.entity().getUploadid(), SearchCriteria.Op.EQ);
         byUploadID.and("partNumber", byUploadID.entity().getPartNumber(), SearchCriteria.Op.GT);
-        TransactionLegacy txn = TransactionLegacy.currentTxn();  // Transaction.open("cloudbridge", Transaction.AWSAPI_DB, true);
+        TransactionLegacy txn = TransactionLegacy.currentTxn(); // Transaction.open("cloudbridge",
+                                                                // Transaction.AWSAPI_DB,
+                                                                // true);
         try {
             txn.start();
             SearchCriteria<MultiPartPartsVO> sc = byUploadID.create();
@@ -81,7 +85,9 @@ public class MultiPartPartsDaoImpl extends GenericDaoBase<MultiPartPartsVO, Long
         SearchBuilder<MultiPartPartsVO> byUploadID = createSearchBuilder();
         byUploadID.and("UploadID", byUploadID.entity().getUploadid(), SearchCriteria.Op.EQ);
         byUploadID.and("partNumber", byUploadID.entity().getPartNumber(), SearchCriteria.Op.EQ);
-        TransactionLegacy txn = TransactionLegacy.currentTxn();  // Transaction.open("cloudbridge", Transaction.AWSAPI_DB, true);
+        TransactionLegacy txn = TransactionLegacy.currentTxn(); // Transaction.open("cloudbridge",
+                                                                // Transaction.AWSAPI_DB,
+                                                                // true);
         try {
             txn.start();
             SearchCriteria<MultiPartPartsVO> sc = byUploadID.create();
@@ -101,7 +107,9 @@ public class MultiPartPartsDaoImpl extends GenericDaoBase<MultiPartPartsVO, Long
         SearchBuilder<MultiPartPartsVO> byUploadID = createSearchBuilder();
         byUploadID.and("UploadID", byUploadID.entity().getUploadid(), SearchCriteria.Op.EQ);
         byUploadID.and("partNumber", byUploadID.entity().getPartNumber(), SearchCriteria.Op.EQ);
-        TransactionLegacy txn = TransactionLegacy.currentTxn();  // Transaction.open("cloudbridge", Transaction.AWSAPI_DB, true);
+        TransactionLegacy txn = TransactionLegacy.currentTxn(); // Transaction.open("cloudbridge",
+                                                                // Transaction.AWSAPI_DB,
+                                                                // true);
         try {
             txn.start();
             SearchCriteria<MultiPartPartsVO> sc = byUploadID.create();

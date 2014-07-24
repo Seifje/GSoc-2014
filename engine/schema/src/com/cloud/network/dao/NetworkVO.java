@@ -174,17 +174,20 @@ public class NetworkVO implements Network {
     }
 
     /**
-     * Constructor to be used for the adapters because it only initializes what's needed.
+     * Constructor to be used for the adapters because it only initializes
+     * what's needed.
+     *
      * @param trafficType
      * @param mode
      * @param broadcastDomainType
      * @param networkOfferingId
-     * @param state TODO
+     * @param state
+     *            TODO
      * @param dataCenterId
-     * @param physicalNetworkId TODO
+     * @param physicalNetworkId
+     *            TODO
      */
-    public NetworkVO(TrafficType trafficType, Mode mode, BroadcastDomainType broadcastDomainType, long networkOfferingId, State state, long dataCenterId,
-            Long physicalNetworkId) {
+    public NetworkVO(TrafficType trafficType, Mode mode, BroadcastDomainType broadcastDomainType, long networkOfferingId, State state, long dataCenterId, Long physicalNetworkId) {
         this.trafficType = trafficType;
         this.mode = mode;
         this.broadcastDomainType = broadcastDomainType;
@@ -200,25 +203,10 @@ public class NetworkVO implements Network {
         uuid = UUID.randomUUID().toString();
     }
 
-    public NetworkVO(long id, Network that, long offeringId, String guruName, long domainId, long accountId, long related, String name, String displayText,
-            String networkDomain, GuestType guestType, long dcId, Long physicalNetworkId, ACLType aclType, boolean specifyIpRanges, Long vpcId) {
-        this(id,
-            that.getTrafficType(),
-            that.getMode(),
-            that.getBroadcastDomainType(),
-            offeringId,
-            domainId,
-            accountId,
-            related,
-            name,
-            displayText,
-            networkDomain,
-            guestType,
-            dcId,
-            physicalNetworkId,
-            aclType,
-            specifyIpRanges,
-            vpcId);
+    public NetworkVO(long id, Network that, long offeringId, String guruName, long domainId, long accountId, long related, String name, String displayText, String networkDomain,
+            GuestType guestType, long dcId, Long physicalNetworkId, ACLType aclType, boolean specifyIpRanges, Long vpcId) {
+        this(id, that.getTrafficType(), that.getMode(), that.getBroadcastDomainType(), offeringId, domainId, accountId, related, name, displayText, networkDomain, guestType, dcId,
+                physicalNetworkId, aclType, specifyIpRanges, vpcId);
         gateway = that.getGateway();
         cidr = that.getCidr();
         networkCidr = that.getNetworkCidr();
@@ -236,6 +224,7 @@ public class NetworkVO implements Network {
 
     /**
      * Constructor for the actual DAO object.
+     *
      * @param trafficType
      * @param mode
      * @param broadcastDomainType
@@ -245,15 +234,18 @@ public class NetworkVO implements Network {
      * @param name
      * @param displayText
      * @param networkDomain
-     * @param guestType TODO
-     * @param aclType TODO
-     * @param specifyIpRanges TODO
-     * @param vpcId TODO
+     * @param guestType
+     *            TODO
+     * @param aclType
+     *            TODO
+     * @param specifyIpRanges
+     *            TODO
+     * @param vpcId
+     *            TODO
      * @param dataCenterId
      */
-    public NetworkVO(long id, TrafficType trafficType, Mode mode, BroadcastDomainType broadcastDomainType, long networkOfferingId, long domainId, long accountId,
-            long related, String name, String displayText, String networkDomain, GuestType guestType, long dcId, Long physicalNetworkId, ACLType aclType,
-            boolean specifyIpRanges, Long vpcId) {
+    public NetworkVO(long id, TrafficType trafficType, Mode mode, BroadcastDomainType broadcastDomainType, long networkOfferingId, long domainId, long accountId, long related,
+            String name, String displayText, String networkDomain, GuestType guestType, long dcId, Long physicalNetworkId, ACLType aclType, boolean specifyIpRanges, Long vpcId) {
         this(trafficType, mode, broadcastDomainType, networkOfferingId, State.Allocated, dcId, physicalNetworkId);
         this.domainId = domainId;
         this.accountId = accountId;
@@ -380,10 +372,13 @@ public class NetworkVO implements Network {
         this.gateway = gateway;
     }
 
-    // "cidr" is the Cloudstack managed address space, all CloudStack managed vms get IP address from "cidr"
+    // "cidr" is the Cloudstack managed address space, all CloudStack managed
+    // vms get IP address from "cidr"
     // In general "cidr" also serves as the network cidr
-    // But in case IP reservation feature is configured for a Guest network, "network_cidr" is the Effective network cidr for the network,
-    //  "cidr" will still continue to be the effective address space for CloudStack managed vms in that Guest network
+    // But in case IP reservation feature is configured for a Guest network,
+    // "network_cidr" is the Effective network cidr for the network,
+    // "cidr" will still continue to be the effective address space for
+    // CloudStack managed vms in that Guest network
     @Override
     public String getCidr() {
         return cidr;
@@ -393,9 +388,11 @@ public class NetworkVO implements Network {
         this.cidr = cidr;
     }
 
-    // "networkcidr" is the network CIDR of the guest network which is configured with IP reservation feature
-    // It is the summation of "cidr" and the reservedIPrange(the address space used for non cloudstack purposes.)
-    //  For networks not using IP reservation "networkcidr" is always null
+    // "networkcidr" is the network CIDR of the guest network which is
+    // configured with IP reservation feature
+    // It is the summation of "cidr" and the reservedIPrange(the address space
+    // used for non cloudstack purposes.)
+    // For networks not using IP reservation "networkcidr" is always null
     @Override
     public String getNetworkCidr() {
         return networkCidr;
@@ -578,7 +575,7 @@ public class NetworkVO implements Network {
     }
 
     @Override
-    public boolean isDisplay(){
+    public boolean isDisplay() {
         return displayNetwork;
     }
 

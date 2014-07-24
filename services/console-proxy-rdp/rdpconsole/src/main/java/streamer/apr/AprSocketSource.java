@@ -101,41 +101,42 @@ public class AprSocketSource extends BaseElement {
             if (verbose)
                 System.out.println("[" + this + "] INFO: Reading data from stream.");
 
-            // FIXME: If pull is destroyed or socket is closed, segfault will happen here
+            // FIXME: If pull is destroyed or socket is closed, segfault will
+            // happen here
             int actualLength = (block) ? // Blocking read
-                    Socket.recv(socket, buf.data, buf.offset, buf.data.length - buf.offset)
+            Socket.recv(socket, buf.data, buf.offset, buf.data.length - buf.offset)
                     : // Non-blocking read
-                        Socket.recvt(socket, buf.data, buf.offset, buf.data.length - buf.offset, 1);
+                    Socket.recvt(socket, buf.data, buf.offset, buf.data.length - buf.offset, 1);
 
-                    if (socketWrapper.shutdown) {
-                        socketWrapper.destroyPull();
-                        return;
-                    }
+            if (socketWrapper.shutdown) {
+                socketWrapper.destroyPull();
+                return;
+            }
 
-                    if (actualLength < 0) {
-                        if (verbose)
-                            System.out.println("[" + this + "] INFO: End of stream.");
+            if (actualLength < 0) {
+                if (verbose)
+                    System.out.println("[" + this + "] INFO: End of stream.");
 
-                        buf.unref();
-                        closeStream();
-                        sendEventToAllPads(Event.STREAM_CLOSE, Direction.OUT);
-                        return;
-                    }
+                buf.unref();
+                closeStream();
+                sendEventToAllPads(Event.STREAM_CLOSE, Direction.OUT);
+                return;
+            }
 
-                    if (actualLength == 0) {
-                        if (verbose)
-                            System.out.println("[" + this + "] INFO: Empty buffer is read from stream.");
+            if (actualLength == 0) {
+                if (verbose)
+                    System.out.println("[" + this + "] INFO: Empty buffer is read from stream.");
 
-                        buf.unref();
-                        return;
-                    }
+                buf.unref();
+                return;
+            }
 
-                    buf.length = actualLength;
+            buf.length = actualLength;
 
-                    if (verbose)
-                        System.out.println("[" + this + "] INFO: Data read from stream: " + buf + ".");
+            if (verbose)
+                System.out.println("[" + this + "] INFO: Data read from stream: " + buf + ".");
 
-                    pushDataToAllOuts(buf);
+            pushDataToAllOuts(buf);
 
         } catch (Exception e) {
             System.err.println("[" + this + "] ERROR: " + e.getMessage());

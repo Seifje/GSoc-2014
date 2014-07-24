@@ -31,8 +31,7 @@ import org.apache.cloudstack.context.CallContext;
 import com.cloud.event.EventTypes;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateProjectInvitation", description = "Accepts or declines project invitation", responseObject = SuccessResponse.class, since = "3.0.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "updateProjectInvitation", description = "Accepts or declines project invitation", responseObject = SuccessResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateProjectInvitationCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateProjectInvitationCmd.class.getName());
     private static final String s_name = "updateprojectinvitationresponse";
@@ -46,9 +45,7 @@ public class UpdateProjectInvitationCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "account that is joining the project")
     private String accountName;
 
-    @Parameter(name = ApiConstants.TOKEN,
-               type = CommandType.STRING,
-               description = "list invitations for specified account; this parameter has to be specified with domainId")
+    @Parameter(name = ApiConstants.TOKEN, type = CommandType.STRING, description = "list invitations for specified account; this parameter has to be specified with domainId")
     private String token;
 
     @Parameter(name = ApiConstants.ACCEPT, type = CommandType.BOOLEAN, description = "if true, accept the invitation, decline if false. True by default")
@@ -87,8 +84,10 @@ public class UpdateProjectInvitationCmd extends BaseAsyncCmd {
     @Override
     public long getEntityOwnerId() {
         // TODO - return project entity ownerId
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are
-// tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are
+        // tracked
     }
 
     @Override

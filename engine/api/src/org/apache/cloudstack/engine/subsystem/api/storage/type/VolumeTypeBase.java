@@ -36,7 +36,7 @@ public class VolumeTypeBase implements VolumeType {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        VolumeTypeBase other = (VolumeTypeBase) obj;
+        VolumeTypeBase other = (VolumeTypeBase)obj;
         if (type == null) {
             if (other.type != null)
                 return false;

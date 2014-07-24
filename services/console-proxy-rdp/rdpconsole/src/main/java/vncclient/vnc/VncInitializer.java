@@ -113,8 +113,8 @@ public class VncInitializer extends OneTimeSwitch {
         String desktopName = buf.readString(length, RfbConstants.US_ASCII_CHARSET);
         buf.unref();
         if (verbose)
-            System.out.println("[" + this + "] INFO: Desktop name: \"" + desktopName + "\", bpp: " + bitsPerPixel + ", depth: " + depth + ", screen size: "
-                    + framebufferWidth + "x" + framebufferHeight + ".");
+            System.out.println("[" + this + "] INFO: Desktop name: \"" + desktopName + "\", bpp: " + bitsPerPixel + ", depth: " + depth + ", screen size: " + framebufferWidth
+                    + "x" + framebufferHeight + ".");
 
         // Set screen properties
         screen.setFramebufferSize(framebufferWidth, framebufferHeight);
@@ -167,7 +167,7 @@ public class VncInitializer extends OneTimeSwitch {
         Element source = new MockSource("source") {
             {
                 bufs = ByteBuffer.convertByteArraysToByteBuffers(
-                        // Send screen description
+                // Send screen description
                         new byte[] {
                                 // Framebuffer width (short)
                                 0, (byte)200,

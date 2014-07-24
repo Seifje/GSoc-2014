@@ -30,18 +30,20 @@ import org.apache.cloudstack.context.CallContext;
 
 import com.cloud.template.VirtualMachineTemplate;
 
-@APICommand(name = "createTemplate", responseObject = TemplateResponse.class, description = "Creates a template of a virtual machine. " + "The virtual machine must be in a STOPPED state. "
+@APICommand(name = "createTemplate", responseObject = TemplateResponse.class, description = "Creates a template of a virtual machine. "
+        + "The virtual machine must be in a STOPPED state. "
         + "A template created from this command is automatically designated as a private template visible to the account that created it.", responseView = ResponseView.Full)
 public class CreateTemplateCmdByAdmin extends CreateTemplateCmd {
     public static final Logger s_logger = Logger.getLogger(CreateTemplateCmdByAdmin.class.getName());
 
     @Override
     public void execute() {
-        CallContext.current().setEventDetails("Template Id: "+getEntityId()+((getSnapshotId() == null) ? " from volume Id: " + getVolumeId() : " from snapshot Id: " + getSnapshotId()));
+        CallContext.current().setEventDetails(
+                "Template Id: " + getEntityId() + ((getSnapshotId() == null) ? " from volume Id: " + getVolumeId() : " from snapshot Id: " + getSnapshotId()));
         VirtualMachineTemplate template = null;
         template = _templateService.createPrivateTemplate(this);
 
-        if (template != null){
+        if (template != null) {
             List<TemplateResponse> templateResponses;
             if (isBareMetal()) {
                 templateResponses = _responseGenerator.createTemplateResponses(ResponseView.Full, template.getId(), vmId);

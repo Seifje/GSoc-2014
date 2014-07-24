@@ -24,9 +24,9 @@ public class DiskOffer {
 
     private String id;
     private String name;
-    private int diskSize;       // <- in gigs
+    private int diskSize; // <- in gigs
     private Calendar created;
-    private boolean isCustomized;   // <- true if disk offering uses custom size
+    private boolean isCustomized; // <- true if disk offering uses custom size
 
     public DiskOffer() {
         id = null;

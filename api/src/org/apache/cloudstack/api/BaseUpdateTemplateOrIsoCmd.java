@@ -25,9 +25,9 @@ import org.apache.cloudstack.api.response.TemplateResponse;
 public abstract class BaseUpdateTemplateOrIsoCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateIsoCmd.class.getName());
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.BOOTABLE, type = CommandType.BOOLEAN, description = "true if image is bootable, false otherwise")
     private Boolean bootable;
@@ -41,10 +41,7 @@ public abstract class BaseUpdateTemplateOrIsoCmd extends BaseCmd {
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, description = "the name of the image file")
     private String templateName;
 
-    @Parameter(name = ApiConstants.OS_TYPE_ID,
-               type = CommandType.UUID,
-               entityType = GuestOSResponse.class,
-               description = "the ID of the OS type that best represents the OS of this image.")
+    @Parameter(name = ApiConstants.OS_TYPE_ID, type = CommandType.UUID, entityType = GuestOSResponse.class, description = "the ID of the OS type that best represents the OS of this image.")
     private Long osTypeId;
 
     @Parameter(name = ApiConstants.FORMAT, type = CommandType.STRING, description = "the format for the image")
@@ -56,17 +53,15 @@ public abstract class BaseUpdateTemplateOrIsoCmd extends BaseCmd {
     @Parameter(name = ApiConstants.SORT_KEY, type = CommandType.INTEGER, description = "sort key of the template, integer")
     private Integer sortKey;
 
-    @Parameter(name = ApiConstants.IS_DYNAMICALLY_SCALABLE,
-               type = CommandType.BOOLEAN,
-               description = "true if template/ISO contains XS/VMWare tools inorder to support dynamic scaling of VM cpu/memory")
+    @Parameter(name = ApiConstants.IS_DYNAMICALLY_SCALABLE, type = CommandType.BOOLEAN, description = "true if template/ISO contains XS/VMWare tools inorder to support dynamic scaling of VM cpu/memory")
     private Boolean isDynamicallyScalable;
 
     @Parameter(name = ApiConstants.ROUTING, type = CommandType.BOOLEAN, description = "true if the template type is routing i.e., if template is used to deploy router")
     protected Boolean isRoutingType;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Boolean isBootable() {
         return bootable;

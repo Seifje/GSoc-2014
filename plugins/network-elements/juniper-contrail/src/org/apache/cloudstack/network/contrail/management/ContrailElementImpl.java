@@ -70,9 +70,7 @@ import com.cloud.server.ConfigurationServerImpl;
 
 @Component
 @Local(value = {ContrailElement.class, StaticNatServiceProvider.class, IpDeployer.class, SourceNatServiceProvider.class})
-
-public class ContrailElementImpl extends AdapterBase
-    implements ContrailElement, StaticNatServiceProvider, IpDeployer, SourceNatServiceProvider, DhcpServiceProvider {
+public class ContrailElementImpl extends AdapterBase implements ContrailElement, StaticNatServiceProvider, IpDeployer, SourceNatServiceProvider, DhcpServiceProvider {
     private final Map<Service, Map<Capability, String>> _capabilities = InitCapabilities();
 
     @Inject
@@ -123,7 +121,7 @@ public class ContrailElementImpl extends AdapterBase
      */
     @Override
     public boolean implement(Network network, NetworkOffering offering, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException, InsufficientCapacityException {
+            ResourceUnavailableException, InsufficientCapacityException {
         s_logger.debug("NetworkElement implement: " + network.getName() + ", traffic type: " + network.getTrafficType());
         if (network.getTrafficType() == TrafficType.Guest) {
             s_logger.debug("ignore network " + network.getName());
@@ -148,7 +146,7 @@ public class ContrailElementImpl extends AdapterBase
 
     @Override
     public boolean prepare(Network network, NicProfile nicProfile, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
-        throws ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException {
+            throws ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException {
 
         s_logger.debug("NetworkElement prepare: " + network.getName() + ", traffic type: " + network.getTrafficType());
 
@@ -162,7 +160,8 @@ public class ContrailElementImpl extends AdapterBase
         VirtualNetworkModel vnModel = _manager.getDatabase().lookupVirtualNetwork(network.getUuid(), _manager.getCanonicalName(network), network.getTrafficType());
 
         if (vnModel == null) {
-            // There is no notification after a physical network is associated with the VRouter NetworkOffering
+            // There is no notification after a physical network is associated
+            // with the VRouter NetworkOffering
             // this may be the first time we see this network.
             return false;
         }
@@ -211,7 +210,7 @@ public class ContrailElementImpl extends AdapterBase
 
     @Override
     public boolean release(Network network, NicProfile nicProfile, VirtualMachineProfile vm, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+            ResourceUnavailableException {
         if (network.getTrafficType() == TrafficType.Guest) {
             return true;
         } else if (!_manager.isManagedPhysicalNetwork(network)) {
@@ -269,38 +268,37 @@ public class ContrailElementImpl extends AdapterBase
 
     @Override
     public boolean isReady(PhysicalNetworkServiceProvider provider) {
-                Map<String, String> serviceMap = ((ConfigurationServerImpl)_configServer).getServicesAndProvidersForNetwork( _manager.getRouterOffering().getId());
-                List<TrafficType> types = new ArrayList<TrafficType>();
-                types.add(TrafficType.Control);
-                types.add(TrafficType.Management);
-                types.add(TrafficType.Storage);
-                List<NetworkVO> systemNets = _manager.findSystemNetworks(types);
-                if (systemNets != null && !systemNets.isEmpty()) {
-                    for (NetworkVO net: systemNets) {
-                        s_logger.debug("update system network service: " + net.getName() + "; service provider: " + serviceMap);
-                        _networksDao.update(net.getId(), net, serviceMap);
-                    }
-                } else {
-                    s_logger.debug("no system networks created yet");
-                }
-                serviceMap = ((ConfigurationServerImpl)_configServer).getServicesAndProvidersForNetwork( _manager.getPublicRouterOffering().getId());
-                types = new ArrayList<TrafficType>();
-                types.add(TrafficType.Public);
-                systemNets = _manager.findSystemNetworks(types);
-                if (systemNets != null && !systemNets.isEmpty()) {
-                    for (NetworkVO net: systemNets) {
-                        s_logger.debug("update system network service: " + net.getName() + "; service provider: " + serviceMap);
-                        _networksDao.update(net.getId(), net, serviceMap);
-                    }
-                } else {
-                    s_logger.debug("no system networks created yet");
-                }
-                return true;
-       }
+        Map<String, String> serviceMap = ((ConfigurationServerImpl)_configServer).getServicesAndProvidersForNetwork(_manager.getRouterOffering().getId());
+        List<TrafficType> types = new ArrayList<TrafficType>();
+        types.add(TrafficType.Control);
+        types.add(TrafficType.Management);
+        types.add(TrafficType.Storage);
+        List<NetworkVO> systemNets = _manager.findSystemNetworks(types);
+        if (systemNets != null && !systemNets.isEmpty()) {
+            for (NetworkVO net : systemNets) {
+                s_logger.debug("update system network service: " + net.getName() + "; service provider: " + serviceMap);
+                _networksDao.update(net.getId(), net, serviceMap);
+            }
+        } else {
+            s_logger.debug("no system networks created yet");
+        }
+        serviceMap = ((ConfigurationServerImpl)_configServer).getServicesAndProvidersForNetwork(_manager.getPublicRouterOffering().getId());
+        types = new ArrayList<TrafficType>();
+        types.add(TrafficType.Public);
+        systemNets = _manager.findSystemNetworks(types);
+        if (systemNets != null && !systemNets.isEmpty()) {
+            for (NetworkVO net : systemNets) {
+                s_logger.debug("update system network service: " + net.getName() + "; service provider: " + serviceMap);
+                _networksDao.update(net.getId(), net, serviceMap);
+            }
+        } else {
+            s_logger.debug("no system networks created yet");
+        }
+        return true;
+    }
 
     @Override
-    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
         s_logger.debug("NetworkElement shutdown ProviderInstances");
         return true;
     }
@@ -356,26 +354,19 @@ public class ContrailElementImpl extends AdapterBase
     }
 
     @Override
-    public boolean addDhcpEntry(Network network, NicProfile nic,
-               VirtualMachineProfile vm,
-               DeployDestination dest, ReservationContext context)
-                               throws ConcurrentOperationException, InsufficientCapacityException,
-                               ResourceUnavailableException {
-       return false;
+    public boolean addDhcpEntry(Network network, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException,
+            InsufficientCapacityException, ResourceUnavailableException {
+        return false;
     }
 
     @Override
-    public boolean configDhcpSupportForSubnet(Network network, NicProfile nic,
-               VirtualMachineProfile vm,
-               DeployDestination dest, ReservationContext context)
-                               throws ConcurrentOperationException, InsufficientCapacityException,
-                               ResourceUnavailableException {
-       return false;
+    public boolean configDhcpSupportForSubnet(Network network, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
+            throws ConcurrentOperationException, InsufficientCapacityException, ResourceUnavailableException {
+        return false;
     }
 
     @Override
-    public boolean removeDhcpSupportForSubnet(Network network)
-               throws ResourceUnavailableException {
-       return false;
+    public boolean removeDhcpSupportForSubnet(Network network) throws ResourceUnavailableException {
+        return false;
     }
 }

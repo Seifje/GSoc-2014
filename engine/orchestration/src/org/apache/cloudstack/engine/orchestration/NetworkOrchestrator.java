@@ -16,7 +16,6 @@
 // under the License.
 package org.apache.cloudstack.engine.orchestration;
 
-
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -418,7 +417,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             @Override
             public void doInTransactionWithoutResult(TransactionStatus status) {
                 NetworkOfferingVO offering = null;
-                //#1 - quick cloud network offering
+                // #1 - quick cloud network offering
                 if (_networkOfferingDao.findByUniqueName(NetworkOffering.QuickCloudNoServices) == null) {
                     offering = _configMgr.createNetworkOffering(NetworkOffering.QuickCloudNoServices, "Offering for QuickCloud with no services", TrafficType.Guest, null, true,
                             Availability.Optional, null, new HashMap<Network.Service, Set<Network.Provider>>(), true, Network.GuestType.Shared, false, null, true, null, true,
@@ -427,7 +426,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                     _networkOfferingDao.update(offering.getId(), offering);
                 }
 
-                //#2 - SG enabled network offering
+                // #2 - SG enabled network offering
                 if (_networkOfferingDao.findByUniqueName(NetworkOffering.DefaultSharedNetworkOfferingWithSGService) == null) {
                     offering = _configMgr.createNetworkOffering(NetworkOffering.DefaultSharedNetworkOfferingWithSGService, "Offering for Shared Security group enabled networks",
                             TrafficType.Guest, null, true, Availability.Optional, null, defaultSharedNetworkOfferingProviders, true, Network.GuestType.Shared, false, null, true,
@@ -436,7 +435,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                     _networkOfferingDao.update(offering.getId(), offering);
                 }
 
-                //#3 - shared network offering with no SG service
+                // #3 - shared network offering with no SG service
                 if (_networkOfferingDao.findByUniqueName(NetworkOffering.DefaultSharedNetworkOffering) == null) {
                     offering = _configMgr.createNetworkOffering(NetworkOffering.DefaultSharedNetworkOffering, "Offering for Shared networks", TrafficType.Guest, null, true,
                             Availability.Optional, null, defaultSharedNetworkOfferingProviders, true, Network.GuestType.Shared, false, null, true, null, true, false, null, false,
@@ -445,7 +444,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                     _networkOfferingDao.update(offering.getId(), offering);
                 }
 
-                //#4 - default isolated offering with Source nat service
+                // #4 - default isolated offering with Source nat service
                 if (_networkOfferingDao.findByUniqueName(NetworkOffering.DefaultIsolatedNetworkOfferingWithSourceNatService) == null) {
                     offering = _configMgr.createNetworkOffering(NetworkOffering.DefaultIsolatedNetworkOfferingWithSourceNatService,
                             "Offering for Isolated networks with Source Nat service enabled", TrafficType.Guest, null, false, Availability.Required, null,
@@ -456,7 +455,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                     _networkOfferingDao.update(offering.getId(), offering);
                 }
 
-                //#5 - default vpc offering with LB service
+                // #5 - default vpc offering with LB service
                 if (_networkOfferingDao.findByUniqueName(NetworkOffering.DefaultIsolatedNetworkOfferingForVpcNetworks) == null) {
                     offering = _configMgr.createNetworkOffering(NetworkOffering.DefaultIsolatedNetworkOfferingForVpcNetworks,
                             "Offering for Isolated VPC networks with Source Nat service enabled", TrafficType.Guest, null, false, Availability.Optional, null,
@@ -465,9 +464,9 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                     _networkOfferingDao.update(offering.getId(), offering);
                 }
 
-                //#6 - default vpc offering with no LB service
+                // #6 - default vpc offering with no LB service
                 if (_networkOfferingDao.findByUniqueName(NetworkOffering.DefaultIsolatedNetworkOfferingForVpcNetworksNoLB) == null) {
-                    //remove LB service
+                    // remove LB service
                     defaultVPCOffProviders.remove(Service.Lb);
                     offering = _configMgr.createNetworkOffering(NetworkOffering.DefaultIsolatedNetworkOfferingForVpcNetworksNoLB,
                             "Offering for Isolated VPC networks with Source Nat service enabled and LB service disabled", TrafficType.Guest, null, false, Availability.Optional,
@@ -476,7 +475,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                     _networkOfferingDao.update(offering.getId(), offering);
                 }
 
-                //#7 - isolated offering with source nat disabled
+                // #7 - isolated offering with source nat disabled
                 if (_networkOfferingDao.findByUniqueName(NetworkOffering.DefaultIsolatedNetworkOffering) == null) {
                     offering = _configMgr.createNetworkOffering(NetworkOffering.DefaultIsolatedNetworkOffering, "Offering for Isolated networks with no Source Nat service",
                             TrafficType.Guest, null, true, Availability.Optional, null, defaultIsolatedNetworkOfferingProviders, true, Network.GuestType.Isolated, false, null,
@@ -485,7 +484,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                     _networkOfferingDao.update(offering.getId(), offering);
                 }
 
-                //#8 - network offering with internal lb service
+                // #8 - network offering with internal lb service
                 Map<Network.Service, Set<Network.Provider>> internalLbOffProviders = new HashMap<Network.Service, Set<Network.Provider>>();
                 Set<Network.Provider> defaultVpcProvider = new HashSet<Network.Provider>();
                 defaultVpcProvider.add(Network.Provider.VPCVirtualRouter);
@@ -673,14 +672,14 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
 
                         if (domainId != null && aclType == ACLType.Domain) {
                             _networksDao.addDomainToNetwork(id, domainId, subdomainAccess == null ? true : subdomainAccess);
-                            //send event for storing the domain wide resource access
+                            // send event for storing the domain wide resource
+                            // access
                             Map<String, Object> params = new HashMap<String, Object>();
                             params.put(ApiConstants.ENTITY_TYPE, Network.class);
                             params.put(ApiConstants.ENTITY_ID, id);
                             params.put(ApiConstants.DOMAIN_ID, domainId);
                             params.put(ApiConstants.SUBDOMAIN_ACCESS, subdomainAccess == null ? true : subdomainAccess);
-                            _messageBus.publish(_name, EntityManager.MESSAGE_ADD_DOMAIN_WIDE_ENTITY_EVENT,
-                                    PublishScope.LOCAL, params);
+                            _messageBus.publish(_name, EntityManager.MESSAGE_ADD_DOMAIN_WIDE_ENTITY_EVENT, PublishScope.LOCAL, params);
                         }
                     }
                 });
@@ -736,44 +735,44 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                     }
 
                     for (NicProfile requested : requestedProfiles) {
-                    Boolean isDefaultNic = false;
-                    if (vm != null && (requested != null && requested.isDefaultNic())) {
-                        isDefaultNic = true;
-                    }
-
-                    while (deviceIds[deviceId] && deviceId < deviceIds.length) {
-                        deviceId++;
-                    }
-
-                    Pair<NicProfile, Integer> vmNicPair = allocateNic(requested, config, isDefaultNic, deviceId, vm);
-
-                    NicProfile vmNic = vmNicPair.first();
-                    if (vmNic == null) {
-                        continue;
-                    }
-
-                    deviceId = vmNicPair.second();
-
-                    int devId = vmNic.getDeviceId();
-                    if (devId > deviceIds.length) {
-                        throw new IllegalArgumentException("Device id for nic is too large: " + vmNic);
-                    }
-                    if (deviceIds[devId]) {
-                        throw new IllegalArgumentException("Conflicting device id for two different nics: " + vmNic);
-                    }
-
-                    deviceIds[devId] = true;
-
-                    if (vmNic.isDefaultNic()) {
-                        if (defaultNic != null) {
-                            throw new IllegalArgumentException("You cannot specify two nics as default nics: nic 1 = " + defaultNic + "; nic 2 = " + vmNic);
+                        Boolean isDefaultNic = false;
+                        if (vm != null && (requested != null && requested.isDefaultNic())) {
+                            isDefaultNic = true;
                         }
-                        defaultNic = vmNic;
-                    }
 
-                    nics.add(vmNic);
-                    vm.addNic(vmNic);
-                }
+                        while (deviceIds[deviceId] && deviceId < deviceIds.length) {
+                            deviceId++;
+                        }
+
+                        Pair<NicProfile, Integer> vmNicPair = allocateNic(requested, config, isDefaultNic, deviceId, vm);
+
+                        NicProfile vmNic = vmNicPair.first();
+                        if (vmNic == null) {
+                            continue;
+                        }
+
+                        deviceId = vmNicPair.second();
+
+                        int devId = vmNic.getDeviceId();
+                        if (devId > deviceIds.length) {
+                            throw new IllegalArgumentException("Device id for nic is too large: " + vmNic);
+                        }
+                        if (deviceIds[devId]) {
+                            throw new IllegalArgumentException("Conflicting device id for two different nics: " + vmNic);
+                        }
+
+                        deviceIds[devId] = true;
+
+                        if (vmNic.isDefaultNic()) {
+                            if (defaultNic != null) {
+                                throw new IllegalArgumentException("You cannot specify two nics as default nics: nic 1 = " + defaultNic + "; nic 2 = " + vmNic);
+                            }
+                            defaultNic = vmNic;
+                        }
+
+                        nics.add(vmNic);
+                        vm.addNic(vmNic);
+                    }
                 }
                 if (nics.size() != size) {
                     s_logger.warn("Number of nics " + nics.size() + " doesn't match number of requested nics " + size);
@@ -1035,10 +1034,11 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
     public void implementNetworkElementsAndResources(DeployDestination dest, ReservationContext context, Network network, NetworkOffering offering)
             throws ConcurrentOperationException, InsufficientAddressCapacityException, ResourceUnavailableException, InsufficientCapacityException {
 
-        // Associate a source NAT IP (if one isn't already associated with the network) if this is a
-        //     1) 'Isolated' or 'Shared' guest virtual network in the advance zone
-        //     2) network has sourceNat service
-        //     3) network offering does not support a shared source NAT rule
+        // Associate a source NAT IP (if one isn't already associated with the
+        // network) if this is a
+        // 1) 'Isolated' or 'Shared' guest virtual network in the advance zone
+        // 2) network has sourceNat service
+        // 3) network offering does not support a shared source NAT rule
 
         boolean sharedSourceNat = offering.getSharedSourceNat();
         DataCenter zone = _dcDao.findById(network.getDataCenterId());
@@ -1068,10 +1068,13 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
         for (NetworkElement element : networkElements) {
             if (providersToImplement.contains(element.getProvider())) {
                 if (!_networkModel.isProviderEnabledInPhysicalNetwork(_networkModel.getPhysicalNetworkId(network), element.getProvider().getName())) {
-                    // The physicalNetworkId will not get translated into a uuid by the reponse serializer,
-                    // because the serializer would look up the NetworkVO class's table and retrieve the
+                    // The physicalNetworkId will not get translated into a uuid
+                    // by the reponse serializer,
+                    // because the serializer would look up the NetworkVO
+                    // class's table and retrieve the
                     // network id instead of the physical network id.
-                    // So just throw this exception as is. We may need to TBD by changing the serializer.
+                    // So just throw this exception as is. We may need to TBD by
+                    // changing the serializer.
                     throw new CloudRuntimeException("Service provider " + element.getProvider().getName() + " either doesn't exist or is not enabled in physical network id: "
                             + network.getPhysicalNetworkId());
                 }
@@ -1095,23 +1098,23 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
         }
 
         try {
-        // reapply all the firewall/staticNat/lb rules
-        s_logger.debug("Reprogramming network " + network + " as a part of network implement");
-        if (!reprogramNetworkRules(network.getId(), CallContext.current().getCallingAccount(), network)) {
-            s_logger.warn("Failed to re-program the network as a part of network " + network + " implement");
-            // see DataCenterVO.java
-            ResourceUnavailableException ex = new ResourceUnavailableException("Unable to apply network rules as a part of network " + network + " implement", DataCenter.class,
-                    network.getDataCenterId());
-            ex.addProxyObject(_entityMgr.findById(DataCenter.class, network.getDataCenterId()).getUuid());
-            throw ex;
-        }
+            // reapply all the firewall/staticNat/lb rules
+            s_logger.debug("Reprogramming network " + network + " as a part of network implement");
+            if (!reprogramNetworkRules(network.getId(), CallContext.current().getCallingAccount(), network)) {
+                s_logger.warn("Failed to re-program the network as a part of network " + network + " implement");
+                // see DataCenterVO.java
+                ResourceUnavailableException ex = new ResourceUnavailableException("Unable to apply network rules as a part of network " + network + " implement",
+                        DataCenter.class, network.getDataCenterId());
+                ex.addProxyObject(_entityMgr.findById(DataCenter.class, network.getDataCenterId()).getUuid());
+                throw ex;
+            }
             for (NetworkElement element : networkElements) {
                 if ((element instanceof AggregatedCommandExecutor) && (providersToImplement.contains(element.getProvider()))) {
                     if (!((AggregatedCommandExecutor)element).completeAggregatedExecution(network, dest)) {
                         s_logger.warn("Failed to re-program the network as a part of network " + network + " implement due to aggregated commands execution failure!");
                         // see DataCenterVO.java
-                        ResourceUnavailableException ex = new ResourceUnavailableException("Unable to apply network rules as a part of network " + network + " implement", DataCenter.class,
-                                network.getDataCenterId());
+                        ResourceUnavailableException ex = new ResourceUnavailableException("Unable to apply network rules as a part of network " + network + " implement",
+                                DataCenter.class, network.getDataCenterId());
                         ex.addProxyObject(_entityMgr.findById(DataCenter.class, network.getDataCenterId()).getUuid());
                         throw ex;
                     }
@@ -1150,7 +1153,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
 
         List<FirewallRuleVO> firewallEgressRulesToApply = _firewallDao.listByNetworkPurposeTrafficType(networkId, Purpose.Firewall, FirewallRule.TrafficType.Egress);
         NetworkOfferingVO offering = _networkOfferingDao.findById(network.getNetworkOfferingId());
-        //there are no egress rules then apply the default egress rule
+        // there are no egress rules then apply the default egress rule
         DataCenter zone = _dcDao.findById(network.getDataCenterId());
         if (_networkModel.areServicesSupportedInNetwork(network.getId(), Service.Firewall) && _networkModel.areServicesSupportedInNetwork(network.getId(), Service.Firewall)
                 && (network.getGuestType() == Network.GuestType.Isolated || (network.getGuestType() == Network.GuestType.Shared && zone.getNetworkType() == NetworkType.Advanced))) {
@@ -1198,7 +1201,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             }
         }
 
-        //apply network ACLs
+        // apply network ACLs
         if (!_networkACLMgr.applyACLToNetwork(networkId)) {
             s_logger.warn("Failed to reapply network ACLs as a part of  of network id=" + networkId + " restart");
             success = false;
@@ -1257,8 +1260,9 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             ResourceUnavailableException {
         List<NicVO> nics = _nicDao.listByVmId(vmProfile.getId());
 
-        // we have to implement default nics first - to ensure that default network elements start up first in multiple
-        //nics case
+        // we have to implement default nics first - to ensure that default
+        // network elements start up first in multiple
+        // nics case
         // (need for setting DNS on Dhcp to domR's Ip4 address)
         Collections.sort(nics, new Comparator<NicVO>() {
 
@@ -1367,7 +1371,9 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                     _networkModel.getNetworkTag(vm.getHypervisorType(), network));
             if (guru instanceof NetworkMigrationResponder) {
                 if (!((NetworkMigrationResponder)guru).prepareMigration(profile, network, vm, dest, context)) {
-                    s_logger.error("NetworkGuru " + guru + " prepareForMigration failed."); // XXX: Transaction error
+                    s_logger.error("NetworkGuru " + guru + " prepareForMigration failed."); // XXX:
+                    // Transaction
+                    // error
                 }
             }
             List<Provider> providersToImplement = getNetworkProviders(network.getId());
@@ -1379,7 +1385,9 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                     }
                     if (element instanceof NetworkMigrationResponder) {
                         if (!((NetworkMigrationResponder)element).prepareMigration(profile, network, vm, dest, context)) {
-                            s_logger.error("NetworkElement " + element + " prepareForMigration failed."); // XXX: Transaction error
+                            s_logger.error("NetworkElement " + element + " prepareForMigration failed."); // XXX:
+                            // Transaction
+                            // error
                         }
                     }
                 }
@@ -1525,8 +1533,9 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                     if (s_logger.isDebugEnabled()) {
                         s_logger.debug("Asking " + element.getName() + " to release " + profile);
                     }
-                    //NOTE: Context appear to never be used in release method
-                    //implementations. Consider removing it from interface Element
+                    // NOTE: Context appear to never be used in release method
+                    // implementations. Consider removing it from interface
+                    // Element
                     element.release(network, profile, vmProfile, null);
                 }
             }
@@ -1553,8 +1562,10 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
     protected void removeNic(VirtualMachineProfile vm, NicVO nic) {
 
         if (nic.getReservationStrategy() == Nic.ReservationStrategy.Start && nic.getState() != Nic.State.Allocated) {
-            // Nics with reservation strategy 'Start' should go through release phase in the Nic life cycle.
-            // Ensure that release is performed before Nic is to be removed to avoid resource leaks.
+            // Nics with reservation strategy 'Start' should go through release
+            // phase in the Nic life cycle.
+            // Ensure that release is performed before Nic is to be removed to
+            // avoid resource leaks.
             try {
                 releaseNic(vm, nic.getId());
             } catch (Exception ex) {
@@ -1594,24 +1605,20 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             }
         }
 
-        if (vm.getType() == Type.User
-                && _networkModel.areServicesSupportedInNetwork(network.getId(), Service.Dhcp)
-                && network.getTrafficType() == TrafficType.Guest
-                && network.getGuestType() == GuestType.Shared
-                && isLastNicInSubnet(nic)) {
-        // remove the dhcpservice ip if this is the last nic in subnet.
-        DhcpServiceProvider dhcpServiceProvider = getDhcpServiceProvider(network);
-        if (dhcpServiceProvider != null
-                    && isDhcpAccrossMultipleSubnetsSupported(dhcpServiceProvider)) {
-            removeDhcpServiceInSubnet(nic);
-        }
+        if (vm.getType() == Type.User && _networkModel.areServicesSupportedInNetwork(network.getId(), Service.Dhcp) && network.getTrafficType() == TrafficType.Guest
+                && network.getGuestType() == GuestType.Shared && isLastNicInSubnet(nic)) {
+            // remove the dhcpservice ip if this is the last nic in subnet.
+            DhcpServiceProvider dhcpServiceProvider = getDhcpServiceProvider(network);
+            if (dhcpServiceProvider != null && isDhcpAccrossMultipleSubnetsSupported(dhcpServiceProvider)) {
+                removeDhcpServiceInSubnet(nic);
+            }
         }
 
         NetworkGuru guru = AdapterBase.getAdapterByName(networkGurus, network.getGuruName());
         guru.deallocate(network, profile, vm);
         _nicDao.remove(nic.getId());
         s_logger.debug("Removed nic id=" + nic.getId());
-        //remove the secondary ip addresses corresponding to to this nic
+        // remove the secondary ip addresses corresponding to to this nic
         if (!removeVmSecondaryIpsOfNic(nic.getId())) {
             s_logger.debug("Removing nic " + nic.getId() + " secondary ip addreses failed");
         }
@@ -1656,7 +1663,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                 }
             }
         } catch (ResourceUnavailableException e) {
-            //failed to remove the dhcpconfig on the router.
+            // failed to remove the dhcpconfig on the router.
             s_logger.info("Unable to delete the ip alias due to unable to contact the virtualrouter.");
         }
 
@@ -1685,7 +1692,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
         }
 
         final boolean updateResourceCount = resourceCountNeedsUpdate(ntwkOff, aclType);
-        //check resource limits
+        // check resource limits
         if (updateResourceCount) {
             _resourceLimitMgr.checkResourceLimit(owner, ResourceType.network, isDisplayNetworkEnabled);
         }
@@ -1718,7 +1725,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                 throw new InvalidParameterValueException("IPv6 is not supported in Basic zone");
             }
 
-            // In Basic zone the network should have aclType=Domain, domainId=1, subdomainAccess=true
+            // In Basic zone the network should have aclType=Domain, domainId=1,
+            // subdomainAccess=true
             if (aclType == null || aclType != ACLType.Domain) {
                 throw new InvalidParameterValueException("Only AclType=Domain can be specified for network creation in Basic zone");
             }
@@ -1729,7 +1737,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                 throw new InvalidParameterValueException("Can't have more than one Guest network in zone with network type " + NetworkType.Basic);
             }
 
-            // if zone is basic, only Shared network offerings w/o source nat service are allowed
+            // if zone is basic, only Shared network offerings w/o source nat
+            // service are allowed
             if (!(ntwkOff.getGuestType() == GuestType.Shared && !_networkModel.areServicesSupportedByNetworkOffering(ntwkOff.getId(), Service.SourceNat))) {
                 throw new InvalidParameterValueException("For zone of type " + NetworkType.Basic + " only offerings of " + "guestType " + GuestType.Shared + " with disabled "
                         + Service.SourceNat.getName() + " service are allowed");
@@ -1761,7 +1770,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                 if (isolatedPvlan != null) {
                     throw new InvalidParameterValueException("Isolated Private VLAN is not supported with security group!");
                 }
-                // Only Account specific Isolated network with sourceNat service disabled are allowed in security group
+                // Only Account specific Isolated network with sourceNat service
+                // disabled are allowed in security group
                 // enabled zone
                 if (ntwkOff.getGuestType() != GuestType.Shared) {
                     throw new InvalidParameterValueException("Only shared guest network can be created in security group enabled zone");
@@ -1774,13 +1784,13 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                 }
             }
 
-            //don't allow eip/elb networks in Advance zone
+            // don't allow eip/elb networks in Advance zone
             if (ntwkOff.getElasticIp() || ntwkOff.getElasticLb()) {
                 throw new InvalidParameterValueException("Elastic IP and Elastic LB services are supported in zone of type " + NetworkType.Basic);
             }
         }
 
-        //TODO(VXLAN): Support VNI specified
+        // TODO(VXLAN): Support VNI specified
         // VlanId can be specified only when network offering supports it
         boolean vlanSpecified = (vlanId != null);
         if (vlanSpecified != ntwkOff.getSpecifyVlan()) {
@@ -1792,30 +1802,37 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
         }
 
         if (vlanSpecified) {
-            //don't allow to specify vlan tag used by physical network for dynamic vlan allocation
+            // don't allow to specify vlan tag used by physical network for
+            // dynamic vlan allocation
             if (_dcDao.findVnet(zoneId, pNtwk.getId(), vlanId).size() > 0) {
                 throw new InvalidParameterValueException("The VLAN tag " + vlanId + " is already being used for dynamic vlan allocation for the guest network in zone "
                         + zone.getName());
             }
             String uri = BroadcastDomainType.fromString(vlanId).toString();
-            // For Isolated networks, don't allow to create network with vlan that already exists in the zone
+            // For Isolated networks, don't allow to create network with vlan
+            // that already exists in the zone
             if (ntwkOff.getGuestType() == GuestType.Isolated) {
                 if (_networksDao.countByZoneAndUri(zoneId, uri) > 0) {
                     throw new InvalidParameterValueException("Network with vlan " + vlanId + " already exists in zone " + zoneId);
                 } else {
                     List<DataCenterVnetVO> dcVnets = _datacenterVnetDao.findVnet(zoneId, vlanId.toString());
-                    //for the network that is created as part of private gateway,
-                    //the vnet is not coming from the data center vnet table, so the list can be empty
+                    // for the network that is created as part of private
+                    // gateway,
+                    // the vnet is not coming from the data center vnet table,
+                    // so the list can be empty
                     if (!dcVnets.isEmpty()) {
                         DataCenterVnetVO dcVnet = dcVnets.get(0);
-                        // Fail network creation if specified vlan is dedicated to a different account
+                        // Fail network creation if specified vlan is dedicated
+                        // to a different account
                         if (dcVnet.getAccountGuestVlanMapId() != null) {
                             Long accountGuestVlanMapId = dcVnet.getAccountGuestVlanMapId();
                             AccountGuestVlanMapVO map = _accountGuestVlanMapDao.findById(accountGuestVlanMapId);
                             if (map.getAccountId() != owner.getAccountId()) {
                                 throw new InvalidParameterValueException("Vlan " + vlanId + " is dedicated to a different account");
                             }
-                            // Fail network creation if owner has a dedicated range of vlans but the specified vlan belongs to the system pool
+                            // Fail network creation if owner has a dedicated
+                            // range of vlans but the specified vlan belongs to
+                            // the system pool
                         } else {
                             List<AccountGuestVlanMapVO> maps = _accountGuestVlanMapDao.listAccountGuestVlanMapsByAccount(owner.getAccountId());
                             if (maps != null && !maps.isEmpty()) {
@@ -1830,7 +1847,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                     }
                 }
             } else {
-                // don't allow to creating shared network with given Vlan ID, if there already exists a isolated network or
+                // don't allow to creating shared network with given Vlan ID, if
+                // there already exists a isolated network or
                 // shared network with same Vlan ID in the zone
                 if (_networksDao.countByZoneUriAndGuestType(zoneId, uri, GuestType.Isolated) > 0 || _networksDao.countByZoneUriAndGuestType(zoneId, uri, GuestType.Shared) > 0) {
                     throw new InvalidParameterValueException("There is a isolated/shared network with vlan id: " + vlanId + " already exists " + "in zone " + zoneId);
@@ -1839,7 +1857,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
 
         }
 
-        // If networkDomain is not specified, take it from the global configuration
+        // If networkDomain is not specified, take it from the global
+        // configuration
         if (_networkModel.areServicesSupportedByNetworkOffering(networkOfferingId, Service.Dns)) {
             Map<Network.Capability, String> dnsCapabilities = _networkModel.getNetworkOfferingServiceCapabilities(_entityMgr.findById(NetworkOffering.class, networkOfferingId),
                     Service.Dns);
@@ -1851,14 +1870,16 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                 }
             } else {
                 if (networkDomain == null) {
-                    // 1) Get networkDomain from the corresponding account/domain/zone
+                    // 1) Get networkDomain from the corresponding
+                    // account/domain/zone
                     if (aclType == ACLType.Domain) {
                         networkDomain = _networkModel.getDomainNetworkDomain(domainId, zoneId);
                     } else if (aclType == ACLType.Account) {
                         networkDomain = _networkModel.getAccountNetworkDomain(owner.getId(), zoneId);
                     }
 
-                    // 2) If null, generate networkDomain using domain suffix from the global config variables
+                    // 2) If null, generate networkDomain using domain suffix
+                    // from the global config variables
                     if (networkDomain == null) {
                         networkDomain = "cs" + Long.toHexString(owner.getId()) + GuestDomainSuffix.valueIn(zoneId);
                     }
@@ -1874,7 +1895,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             }
         }
 
-        // In Advance zone Cidr for Shared networks and Isolated networks w/o source nat service can't be NULL - 2.2.x
+        // In Advance zone Cidr for Shared networks and Isolated networks w/o
+        // source nat service can't be NULL - 2.2.x
         // limitation, remove after we introduce support for multiple ip ranges
         // with different Cidrs for the same Shared network
         boolean cidrRequired = zone.getNetworkType() == NetworkType.Advanced
@@ -1891,7 +1913,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             throw new InvalidParameterValueException("StartIp/endIp/gateway/netmask can't be specified for zone of type " + NetworkType.Basic);
         }
 
-        // Check if cidr is RFC1918 compliant if the network is Guest Isolated for IPv4
+        // Check if cidr is RFC1918 compliant if the network is Guest Isolated
+        // for IPv4
         if (cidr != null && ntwkOff.getGuestType() == Network.GuestType.Isolated && ntwkOff.getTrafficType() == TrafficType.Guest) {
             if (!NetUtils.validateGuestCidr(cidr)) {
                 throw new InvalidParameterValueException("Virtual Guest Cidr " + cidr + " is not RFC1918 compliant");
@@ -1988,7 +2011,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
         }
 
         try {
-            //do global lock for the network
+            // do global lock for the network
             network = _networksDao.acquireInLockTable(networkId, NetworkLockTimeout.value());
             if (network == null) {
                 s_logger.warn("Unable to acquire lock for the network " + network + " as a part of network shutdown");
@@ -2078,7 +2101,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
 
     @Override
     public boolean shutdownNetworkElementsAndResources(ReservationContext context, boolean cleanupElements, Network network) {
-        // 1) Cleanup all the rules for the network. If it fails, just log the failure and proceed with shutting down
+        // 1) Cleanup all the rules for the network. If it fails, just log the
+        // failure and proceed with shutting down
         // the elements
         boolean cleanupResult = true;
         try {
@@ -2086,7 +2110,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
         } catch (Exception ex) {
             s_logger.warn("shutdownNetworkRules failed during the network " + network + " shutdown due to ", ex);
         } finally {
-            // just warn the administrator that the network elements failed to shutdown
+            // just warn the administrator that the network elements failed to
+            // shutdown
             if (!cleanupResult) {
                 s_logger.warn("Failed to cleanup network id=" + network.getId() + " resources as a part of shutdownNetwork");
             }
@@ -2137,7 +2162,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             return false;
         }
 
-        // Make sure that there are no user vms in the network that are not Expunged/Error
+        // Make sure that there are no user vms in the network that are not
+        // Expunged/Error
         List<UserVmVO> userVms = _userVmDao.listByNetworkIdAndStates(networkId);
 
         for (UserVmVO vm : userVms) {
@@ -2147,16 +2173,20 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             }
         }
 
-        // Don't allow to delete network via api call when it has vms assigned to it
+        // Don't allow to delete network via api call when it has vms assigned
+        // to it
         int nicCount = getActiveNicsInNetwork(networkId);
         if (nicCount > 0) {
             s_logger.debug("The network id=" + networkId + " has active Nics, but shouldn't.");
-            // at this point we have already determined that there are no active user vms in network
-            // if the op_networks table shows active nics, it's a bug in releasing nics updating op_networks
+            // at this point we have already determined that there are no active
+            // user vms in network
+            // if the op_networks table shows active nics, it's a bug in
+            // releasing nics updating op_networks
             _networksDao.changeActiveNicsBy(networkId, (-1 * nicCount));
         }
 
-        //In Basic zone, make sure that there are no non-removed console proxies and SSVMs using the network
+        // In Basic zone, make sure that there are no non-removed console
+        // proxies and SSVMs using the network
         DataCenter zone = _entityMgr.findById(DataCenter.class, network.getDataCenterId());
         if (zone.getNetworkType() == NetworkType.Basic) {
             List<VMInstanceVO> systemVms = _vmDao.listNonRemovedVmsByTypeAndNetwork(network.getId(), Type.ConsoleProxy, Type.SecondaryStorageVm);
@@ -2232,7 +2262,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                             s_logger.warn("Failed to delete network " + networkFinal + "; was unable to cleanup corresponding ip ranges");
                             throw new CloudRuntimeException("Failed to delete network " + networkFinal + "; was unable to cleanup corresponding ip ranges");
                         } else {
-                            // commit transaction only when ips and vlans for the network are released successfully
+                            // commit transaction only when ips and vlans for
+                            // the network are released successfully
                             try {
                                 stateTransitTo(networkFinal, Event.DestroyNetwork);
                             } catch (NoTransitionException e) {
@@ -2272,14 +2303,15 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
 
     @Override
     public boolean resourceCountNeedsUpdate(NetworkOffering ntwkOff, ACLType aclType) {
-        //Update resource count only for Isolated account specific non-system networks
+        // Update resource count only for Isolated account specific non-system
+        // networks
         boolean updateResourceCount = (ntwkOff.getGuestType() == GuestType.Isolated && !ntwkOff.isSystemOnly() && aclType == ACLType.Account);
         return updateResourceCount;
     }
 
     protected boolean deleteVlansInNetwork(long networkId, long userId, Account callerAccount) {
 
-        //cleanup Public vlans
+        // cleanup Public vlans
         List<VlanVO> publicVlans = _vlanDao.listVlansByNetworkId(networkId);
         boolean result = true;
         for (VlanVO vlan : publicVlans) {
@@ -2289,7 +2321,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             }
         }
 
-        //cleanup private vlans
+        // cleanup private vlans
         int privateIpAllocCount = _privateIpDao.countAllocatedByNetworkId(networkId);
         if (privateIpAllocCount > 0) {
             s_logger.warn("Can't delete Private ip range for network " + networkId + " as it has allocated ip addresses");
@@ -2494,7 +2526,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
         }
 
         NetworkElement element = _networkModel.getElementImplementingProvider(DhcpProvider);
-        if ( element instanceof DhcpServiceProvider ) {
+        if (element instanceof DhcpServiceProvider) {
             return (DhcpServiceProvider)element;
         } else {
             return null;
@@ -2561,7 +2593,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
         boolean success = true;
         Network network = _networksDao.findById(networkId);
 
-        //remove all PF/Static Nat rules for the network
+        // remove all PF/Static Nat rules for the network
         try {
             if (_rulesMgr.revokeAllPFStaticNatRulesForNetwork(networkId, callerUserId, caller)) {
                 s_logger.debug("Successfully cleaned up portForwarding/staticNat rules for network id=" + networkId);
@@ -2571,20 +2603,22 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             }
         } catch (ResourceUnavailableException ex) {
             success = false;
-            // shouldn't even come here as network is being cleaned up after all network elements are shutdown
+            // shouldn't even come here as network is being cleaned up after all
+            // network elements are shutdown
             s_logger.warn("Failed to release portForwarding/StaticNat rules as a part of network id=" + networkId + " cleanup due to resourceUnavailable ", ex);
         }
 
-        //remove all LB rules for the network
+        // remove all LB rules for the network
         if (_lbMgr.removeAllLoadBalanacersForNetwork(networkId, caller, callerUserId)) {
             s_logger.debug("Successfully cleaned up load balancing rules for network id=" + networkId);
         } else {
-            // shouldn't even come here as network is being cleaned up after all network elements are shutdown
+            // shouldn't even come here as network is being cleaned up after all
+            // network elements are shutdown
             success = false;
             s_logger.warn("Failed to cleanup LB rules as a part of network id=" + networkId + " cleanup");
         }
 
-        //revoke all firewall rules for the network
+        // revoke all firewall rules for the network
         try {
             if (_firewallMgr.revokeAllFirewallRulesForNetwork(networkId, callerUserId, caller)) {
                 s_logger.debug("Successfully cleaned up firewallRules rules for network id=" + networkId);
@@ -2594,11 +2628,12 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             }
         } catch (ResourceUnavailableException ex) {
             success = false;
-            // shouldn't even come here as network is being cleaned up after all network elements are shutdown
+            // shouldn't even come here as network is being cleaned up after all
+            // network elements are shutdown
             s_logger.warn("Failed to cleanup Firewall rules as a part of network id=" + networkId + " cleanup due to resourceUnavailable ", ex);
         }
 
-        //revoke all network ACLs for network
+        // revoke all network ACLs for network
         try {
             if (_networkACLMgr.revokeACLItemsForNetwork(networkId)) {
                 s_logger.debug("Successfully cleaned up NetworkACLs for network id=" + networkId);
@@ -2611,7 +2646,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             s_logger.warn("Failed to cleanup Network ACLs as a part of network id=" + networkId + " cleanup due to resourceUnavailable ", ex);
         }
 
-        //release all ip addresses
+        // release all ip addresses
         List<IPAddressVO> ipsToRelease = _ipAddressDao.listByAssociatedNetwork(networkId, null);
         for (IPAddressVO ipToRelease : ipsToRelease) {
             if (ipToRelease.getVpcId() == null) {
@@ -2619,8 +2654,10 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                     IPAddressVO ip = _ipAddrMgr.markIpAsUnavailable(ipToRelease.getId());
                     assert (ip != null) : "Unable to mark the ip address id=" + ipToRelease.getId() + " as unavailable.";
                 } else {
-                    // portable IP address are associated with owner, until explicitly requested to be disassociated
-                    // so as part of network clean up just break IP association with guest network
+                    // portable IP address are associated with owner, until
+                    // explicitly requested to be disassociated
+                    // so as part of network clean up just break IP association
+                    // with guest network
                     ipToRelease.setAssociatedWithNetworkId(null);
                     _ipAddressDao.update(ipToRelease.getId(), ipToRelease);
                     s_logger.debug("Portable IP address " + ipToRelease + " is no longer associated with any network");
@@ -2643,11 +2680,13 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
     }
 
     private boolean shutdownNetworkResources(long networkId, Account caller, long callerUserId) {
-        // This method cleans up network rules on the backend w/o touching them in the DB
+        // This method cleans up network rules on the backend w/o touching them
+        // in the DB
         boolean success = true;
         Network network = _networksDao.findById(networkId);
 
-        // Mark all PF rules as revoked and apply them on the backend (not in the DB)
+        // Mark all PF rules as revoked and apply them on the backend (not in
+        // the DB)
         List<PortForwardingRuleVO> pfRules = _portForwardingRulesDao.listByNetwork(networkId);
         if (s_logger.isDebugEnabled()) {
             s_logger.debug("Releasing " + pfRules.size() + " port forwarding rules for network id=" + networkId + " as a part of shutdownNetworkRules");
@@ -2668,7 +2707,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             success = false;
         }
 
-        // Mark all static rules as revoked and apply them on the backend (not in the DB)
+        // Mark all static rules as revoked and apply them on the backend (not
+        // in the DB)
         List<FirewallRuleVO> firewallStaticNatRules = _firewallDao.listByNetworkAndPurpose(networkId, Purpose.StaticNat);
         List<StaticNatRule> staticNatRules = new ArrayList<StaticNatRule>();
         if (s_logger.isDebugEnabled()) {
@@ -2684,7 +2724,9 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
                 throw new InvalidParameterValueException("Source ip address of the rule id=" + firewallStaticNatRule.getId() + " is not static nat enabled");
             }
 
-            //String dstIp = _networkModel.getIpInNetwork(ip.getAssociatedWithVmId(), firewallStaticNatRule.getNetworkId());
+            // String dstIp =
+            // _networkModel.getIpInNetwork(ip.getAssociatedWithVmId(),
+            // firewallStaticNatRule.getNetworkId());
             ruleVO.setState(FirewallRule.State.Revoke);
             staticNatRules.add(new StaticNatRuleImpl(ruleVO, ip.getVmIp()));
         }
@@ -2780,7 +2822,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             }
 
             try {
-                //revoke all Network ACLs for the network w/o applying them in the DB
+                // revoke all Network ACLs for the network w/o applying them in
+                // the DB
                 if (!_networkACLMgr.revokeACLItemsForNetwork(networkId)) {
                     s_logger.warn("Failed to cleanup network ACLs as a part of shutdownNetworkRules");
                     success = false;
@@ -2792,13 +2835,14 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
 
         }
 
-        //release all static nats for the network
+        // release all static nats for the network
         if (!_rulesMgr.applyStaticNatForNetwork(networkId, false, caller, true)) {
             s_logger.warn("Failed to disable static nats as part of shutdownNetworkRules for network id " + networkId);
             success = false;
         }
 
-        // Get all ip addresses, mark as releasing and release them on the backend
+        // Get all ip addresses, mark as releasing and release them on the
+        // backend
         List<IPAddressVO> userIps = _ipAddressDao.listByAssociatedNetwork(networkId, null);
         List<PublicIp> publicIpsToRelease = new ArrayList<PublicIp>();
         if (userIps != null && !userIps.isEmpty()) {
@@ -2867,14 +2911,17 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
 
         List<PhysicalNetworkSetupInfo> networkInfoList = new ArrayList<PhysicalNetworkSetupInfo>();
 
-        // list all physicalnetworks in the zone & for each get the network names
+        // list all physicalnetworks in the zone & for each get the network
+        // names
         List<PhysicalNetworkVO> physicalNtwkList = _physicalNetworkDao.listByZone(dcId);
         for (PhysicalNetworkVO pNtwk : physicalNtwkList) {
             String publicName = _pNTrafficTypeDao.getNetworkTag(pNtwk.getId(), TrafficType.Public, hypervisorType);
             String privateName = _pNTrafficTypeDao.getNetworkTag(pNtwk.getId(), TrafficType.Management, hypervisorType);
             String guestName = _pNTrafficTypeDao.getNetworkTag(pNtwk.getId(), TrafficType.Guest, hypervisorType);
             String storageName = _pNTrafficTypeDao.getNetworkTag(pNtwk.getId(), TrafficType.Storage, hypervisorType);
-            // String controlName = _pNTrafficTypeDao._networkModel.getNetworkTag(pNtwk.getId(), TrafficType.Control, hypervisorType);
+            // String controlName =
+            // _pNTrafficTypeDao._networkModel.getNetworkTag(pNtwk.getId(),
+            // TrafficType.Control, hypervisorType);
             PhysicalNetworkSetupInfo info = new PhysicalNetworkSetupInfo();
             info.setPhysicalNetworkId(pNtwk.getId());
             info.setGuestNetworkName(guestName);
@@ -2948,7 +2995,8 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
 
         for (NetworkOfferingServiceMapVO serviceMap : servicesMap) {
             if (svcProviders.containsKey(serviceMap.getService())) {
-                // FIXME - right now we pick up the first provider from the list, need to add more logic based on
+                // FIXME - right now we pick up the first provider from the
+                // list, need to add more logic based on
                 // provider load, etc
                 continue;
             }
@@ -3030,7 +3078,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
 
         NicProfile nic = getNicProfileForVm(network, requested, vm);
 
-        //1) allocate nic (if needed) Always allocate if it is a user vm
+        // 1) allocate nic (if needed) Always allocate if it is a user vm
         if (nic == null || (vmProfile.getType() == VirtualMachine.Type.User)) {
             int deviceId = _nicDao.countNics(vm.getId());
 
@@ -3043,7 +3091,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
             s_logger.debug("Nic is allocated successfully for vm " + vm + " in network " + network);
         }
 
-        //2) prepare nic
+        // 2) prepare nic
         if (prepare) {
             Pair<NetworkGuru, NetworkVO> implemented = implementNetwork(nic.getNetworkId(), dest, context);
             nic = prepareNic(vmProfile, dest, context, nic.getId(), implemented.second());
@@ -3108,13 +3156,13 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
     protected List<NetworkElement> getElementForServiceInNetwork(Network network, Service service) {
         List<NetworkElement> elements = new ArrayList<NetworkElement>();
         List<Provider> providers = getProvidersForServiceInNetwork(network, service);
-        //Only support one provider now
+        // Only support one provider now
         if (providers == null) {
             s_logger.error("Cannot find " + service.getName() + " provider for network " + network.getId());
             return null;
         }
         if (providers.size() != 1 && service != Service.Lb) {
-            //support more than one LB providers only
+            // support more than one LB providers only
             s_logger.error("Found " + providers.size() + " " + service.getName() + " providers for network!" + network.getId());
             return null;
         }
@@ -3129,7 +3177,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
 
     @Override
     public StaticNatServiceProvider getStaticNatProviderForNetwork(Network network) {
-        //only one provider per Static nat service is supoprted
+        // only one provider per Static nat service is supoprted
         NetworkElement element = getElementForServiceInNetwork(network, Service.StaticNat).get(0);
         assert element instanceof StaticNatServiceProvider;
         return (StaticNatServiceProvider)element;
@@ -3141,7 +3189,7 @@ public class NetworkOrchestrator extends ManagerBase implements NetworkOrchestra
         NetworkElement lbElement = null;
         if (lbElements.size() > 1) {
             String providerName = null;
-            //get network offering details
+            // get network offering details
             NetworkOffering off = _entityMgr.findById(NetworkOffering.class, network.getNetworkOfferingId());
             if (lbScheme == Scheme.Public) {
                 providerName = _ntwkOffDetailsDao.getDetail(off.getId(), NetworkOffering.Detail.PublicLbProvider);

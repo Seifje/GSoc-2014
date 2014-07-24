@@ -26,7 +26,8 @@ public class CloudStackNetworkService {
     @SerializedName(ApiConstants.NAME)
     private String name;
 
-    // this is annoying, why is this stored as a list of objects with a name/value
+    // this is annoying, why is this stored as a list of objects with a
+    // name/value
     // the json looks like this
     // "capability" : [ { "name" : "val"},{ "name" : "val" }, ],
     // would be better if it were presented as:

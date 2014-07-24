@@ -35,8 +35,7 @@ import org.apache.cloudstack.context.CallContext;
 import com.cloud.network.lb.CertService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "listSslCerts", description = "Lists SSL certificates", responseObject = SslCertResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listSslCerts", description = "Lists SSL certificates", responseObject = SslCertResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListSslCertsCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(DeleteSslCertCmd.class.getName());
 
@@ -45,9 +44,9 @@ public class ListSslCertsCmd extends BaseCmd {
     @Inject
     CertService _certService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.CERTIFICATE_ID, type = CommandType.UUID, entityType = SslCertResponse.class, required = false, description = "Id of SSL certificate")
     private Long certId;
@@ -58,9 +57,9 @@ public class ListSslCertsCmd extends BaseCmd {
     @Parameter(name = ApiConstants.LBID, type = CommandType.UUID, entityType = FirewallRuleResponse.class, required = false, description = "Loadbalancer Rule Id")
     private Long lbId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getCertId() {
         return certId;
@@ -74,9 +73,9 @@ public class ListSslCertsCmd extends BaseCmd {
         return lbId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public void execute() {

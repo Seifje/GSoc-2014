@@ -16,7 +16,6 @@
 // under the License.
 package com.cloud.agent.api;
 
-
 import java.util.List;
 
 import com.cloud.agent.api.to.NicTO;
@@ -24,6 +23,7 @@ import com.cloud.agent.api.to.NicTO;
 public class GetVmConfigCommand extends Command {
     String vmName;
     List<NicTO> nics;
+
     protected GetVmConfigCommand() {
     }
 
@@ -35,7 +35,7 @@ public class GetVmConfigCommand extends Command {
         return vmName;
     }
 
-    public void setNics(List<NicTO> nics){
+    public void setNics(List<NicTO> nics) {
         this.nics = nics;
     }
 

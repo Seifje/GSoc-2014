@@ -32,16 +32,15 @@ import com.cloud.offering.DiskOffering;
 import com.cloud.offering.ServiceOffering;
 import com.cloud.user.Account;
 
-@APICommand(name = "createDiskOffering", description = "Creates a disk offering.", responseObject = DiskOfferingResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createDiskOffering", description = "Creates a disk offering.", responseObject = DiskOfferingResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateDiskOfferingCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(CreateDiskOfferingCmd.class.getName());
 
     private static final String s_name = "creatediskofferingresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.DISK_SIZE, type = CommandType.LONG, required = false, description = "size of the disk offering in GB")
     private Long diskSize;
@@ -58,23 +57,16 @@ public class CreateDiskOfferingCmd extends BaseCmd {
     @Parameter(name = ApiConstants.CUSTOMIZED, type = CommandType.BOOLEAN, description = "whether disk offering size is custom or not")
     private Boolean customized;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               entityType = DomainResponse.class,
-               description = "the ID of the containing domain, null for public offerings")
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "the ID of the containing domain, null for public offerings")
     private Long domainId;
 
     @Parameter(name = ApiConstants.STORAGE_TYPE, type = CommandType.STRING, description = "the storage type of the disk offering. Values are local and shared.")
     private String storageType = ServiceOffering.StorageType.shared.toString();
 
-    @Parameter(name = ApiConstants.PROVISIONINGTYPE,
-            type = CommandType.STRING,
-            description = "provisioning type used to create volumes. Valid values are thin, sparse, fat.")
+    @Parameter(name = ApiConstants.PROVISIONINGTYPE, type = CommandType.STRING, description = "provisioning type used to create volumes. Valid values are thin, sparse, fat.")
     private String provisioningType = ProvisioningType.THIN.toString();
 
-    @Parameter(name = ApiConstants.DISPLAY_OFFERING,
-            type = CommandType.BOOLEAN,
-            description = "an optional field, whether to display the offering to the end user or not.")
+    @Parameter(name = ApiConstants.DISPLAY_OFFERING, type = CommandType.BOOLEAN, description = "an optional field, whether to display the offering to the end user or not.")
     private Boolean displayOffering;
 
     @Parameter(name = ApiConstants.BYTES_READ_RATE, type = CommandType.LONG, required = false, description = "bytes read rate of the disk offering")
@@ -98,15 +90,12 @@ public class CreateDiskOfferingCmd extends BaseCmd {
     @Parameter(name = ApiConstants.MAX_IOPS, type = CommandType.LONG, required = false, description = "max iops of the disk offering")
     private Long maxIops;
 
-    @Parameter(name = ApiConstants.HYPERVISOR_SNAPSHOT_RESERVE,
-            type = CommandType.INTEGER,
-            required = false,
-            description = "Hypervisor snapshot reserve space as a percent of a volume (for managed storage using Xen or VMware)")
+    @Parameter(name = ApiConstants.HYPERVISOR_SNAPSHOT_RESERVE, type = CommandType.INTEGER, required = false, description = "Hypervisor snapshot reserve space as a percent of a volume (for managed storage using Xen or VMware)")
     private Integer hypervisorSnapshotReserve;
 
-/////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getDiskSize() {
         return diskSize;
@@ -164,7 +153,7 @@ public class CreateDiskOfferingCmd extends BaseCmd {
         return storageType;
     }
 
-    public String getProvisioningType(){
+    public String getProvisioningType() {
         return provisioningType;
     }
 
@@ -176,9 +165,9 @@ public class CreateDiskOfferingCmd extends BaseCmd {
         return hypervisorSnapshotReserve;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

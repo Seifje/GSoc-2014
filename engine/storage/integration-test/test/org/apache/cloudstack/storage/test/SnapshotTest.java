@@ -181,9 +181,8 @@ public class SnapshotTest extends CloudStackTestNGBase {
             imageStore = this.imageStoreDao.findByName(imageStoreName);
         } else {
             // create data center
-            DataCenterVO dc =
-                new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Basic, null, null, true,
-                    true, null, null);
+            DataCenterVO dc = new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Basic, null, null,
+                    true, true, null, null);
             dc = dcDao.persist(dc);
             dcId = dc.getId();
             // create pod
@@ -249,7 +248,7 @@ public class SnapshotTest extends CloudStackTestNGBase {
 
         /*
          * TemplateDataStoreVO templateStore = new TemplateDataStoreVO();
-         *
+         * 
          * templateStore.setDataStoreId(imageStore.getId());
          * templateStore.setDownloadPercent(100);
          * templateStore.setDownloadState(Status.DOWNLOADED);
@@ -308,7 +307,7 @@ public class SnapshotTest extends CloudStackTestNGBase {
              * this.podId); params.put("roles",
              * DataStoreRole.Primary.toString()); params.put("uuid", uuid);
              * params.put("providerName", String.valueOf(provider.getName()));
-             *
+             * 
              * DataStoreLifeCycle lifeCycle = provider.getDataStoreLifeCycle();
              * DataStore store = lifeCycle.initialize(params); ClusterScope
              * scope = new ClusterScope(clusterId, podId, dcId);
@@ -339,9 +338,8 @@ public class SnapshotTest extends CloudStackTestNGBase {
 
     private SnapshotVO createSnapshotInDb(VolumeInfo volume) {
         Snapshot.Type snapshotType = Snapshot.Type.MANUAL;
-        SnapshotVO snapshotVO =
-            new SnapshotVO(volume.getDataCenterId(), 2, 1, volume.getId(), 1L, UUID.randomUUID().toString(), (short)snapshotType.ordinal(), snapshotType.name(),
-                volume.getSize(), HypervisorType.XenServer);
+        SnapshotVO snapshotVO = new SnapshotVO(volume.getDataCenterId(), 2, 1, volume.getId(), 1L, UUID.randomUUID().toString(), (short)snapshotType.ordinal(),
+                snapshotType.name(), volume.getSize(), HypervisorType.XenServer);
         return this.snapshotDao.persist(snapshotVO);
     }
 
@@ -360,8 +358,8 @@ public class SnapshotTest extends CloudStackTestNGBase {
         primaryStore = this.dataStoreMgr.getPrimaryDataStore(primaryStoreId);
         VolumeVO volume = createVolume(image.getId(), primaryStore.getId());
         VolumeInfo volInfo = this.volFactory.getVolume(volume.getId());
-        AsyncCallFuture<VolumeApiResult> future =
-            this.volumeService.createVolumeFromTemplateAsync(volInfo, this.primaryStoreId, this.templateFactory.getTemplate(this.image.getId(), DataStoreRole.Image));
+        AsyncCallFuture<VolumeApiResult> future = this.volumeService.createVolumeFromTemplateAsync(volInfo, this.primaryStoreId,
+                this.templateFactory.getTemplate(this.image.getId(), DataStoreRole.Image));
 
         VolumeApiResult result;
         result = future.get();

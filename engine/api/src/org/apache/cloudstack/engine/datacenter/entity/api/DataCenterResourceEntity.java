@@ -28,8 +28,8 @@ import com.cloud.utils.fsm.StateMachine2;
 import com.cloud.utils.fsm.StateObject;
 
 /**
- * This interface specifies the states and operations all physical
- * and virtual resources in the data center must implement.
+ * This interface specifies the states and operations all physical and virtual
+ * resources in the data center must implement.
  */
 @Produces({"application/json", "application/xml"})
 public interface DataCenterResourceEntity extends CloudStackEntity, StateObject<DataCenterResourceEntity.State> {
@@ -69,7 +69,7 @@ public interface DataCenterResourceEntity extends CloudStackEntity, StateObject<
     boolean enable();
 
     /**
-     * Disables the resource.  Cleanup.  Prepare for the resource to be removed.
+     * Disables the resource. Cleanup. Prepare for the resource to be removed.
      */
     @POST
     boolean disable();

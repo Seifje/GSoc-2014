@@ -45,17 +45,17 @@ public abstract class DownloadState {
             getDownloadListener().log("handleEvent, event type=" + event + ", curr state=" + getName(), Level.TRACE);
         }
         switch (event) {
-            case DOWNLOAD_ANSWER:
-                DownloadAnswer answer = (DownloadAnswer)eventObj;
-                return handleAnswer(answer);
-            case ABANDON_DOWNLOAD:
-                return handleAbort();
-            case TIMEOUT_CHECK:
-                Date now = new Date();
-                long update = now.getTime() - dl.getLastUpdated().getTime();
-                return handleTimeout(update);
-            case DISCONNECT:
-                return handleDisconnect();
+        case DOWNLOAD_ANSWER:
+            DownloadAnswer answer = (DownloadAnswer)eventObj;
+            return handleAnswer(answer);
+        case ABANDON_DOWNLOAD:
+            return handleAbort();
+        case TIMEOUT_CHECK:
+            Date now = new Date();
+            long update = now.getTime() - dl.getLastUpdated().getTime();
+            return handleTimeout(update);
+        case DISCONNECT:
+            return handleDisconnect();
         }
         return null;
     }

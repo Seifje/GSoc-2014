@@ -163,10 +163,8 @@ public class DeploymentPlanningManagerImplTest {
 
     @Test
     public void dataCenterAvoidTest() throws InsufficientServerCapacityException, AffinityConflictException {
-        ServiceOfferingVO svcOffering =
-            new ServiceOfferingVO("testOffering", 1, 512, 500, 1, 1, false, false, false, "test dpm",
-                    ProvisioningType.THIN, false, false, null, false, VirtualMachine.Type.User, domainId,
-                null, "FirstFitPlanner");
+        ServiceOfferingVO svcOffering = new ServiceOfferingVO("testOffering", 1, 512, 500, 1, 1, false, false, false, "test dpm", ProvisioningType.THIN, false, false, null, false,
+                VirtualMachine.Type.User, domainId, null, "FirstFitPlanner");
         Mockito.when(vmProfile.getServiceOffering()).thenReturn(svcOffering);
 
         DataCenterDeployment plan = new DataCenterDeployment(dataCenterId);
@@ -178,10 +176,8 @@ public class DeploymentPlanningManagerImplTest {
 
     @Test
     public void plannerCannotHandleTest() throws InsufficientServerCapacityException, AffinityConflictException {
-        ServiceOfferingVO svcOffering =
-            new ServiceOfferingVO("testOffering", 1, 512, 500, 1, 1, false, false, false, "test dpm",
-                    ProvisioningType.THIN, false, false, null, false, VirtualMachine.Type.User, domainId,
-                null, "UserDispersingPlanner");
+        ServiceOfferingVO svcOffering = new ServiceOfferingVO("testOffering", 1, 512, 500, 1, 1, false, false, false, "test dpm", ProvisioningType.THIN, false, false, null, false,
+                VirtualMachine.Type.User, domainId, null, "UserDispersingPlanner");
         Mockito.when(vmProfile.getServiceOffering()).thenReturn(svcOffering);
 
         DataCenterDeployment plan = new DataCenterDeployment(dataCenterId);
@@ -194,10 +190,8 @@ public class DeploymentPlanningManagerImplTest {
 
     @Test
     public void emptyClusterListTest() throws InsufficientServerCapacityException, AffinityConflictException {
-        ServiceOfferingVO svcOffering =
-            new ServiceOfferingVO("testOffering", 1, 512, 500, 1, 1, false, false, false, "test dpm",
-                ProvisioningType.THIN, false, false, null, false, VirtualMachine.Type.User, domainId,
-                null, "FirstFitPlanner");
+        ServiceOfferingVO svcOffering = new ServiceOfferingVO("testOffering", 1, 512, 500, 1, 1, false, false, false, "test dpm", ProvisioningType.THIN, false, false, null, false,
+                VirtualMachine.Type.User, domainId, null, "FirstFitPlanner");
         Mockito.when(vmProfile.getServiceOffering()).thenReturn(svcOffering);
 
         DataCenterDeployment plan = new DataCenterDeployment(dataCenterId);
@@ -210,8 +204,7 @@ public class DeploymentPlanningManagerImplTest {
     }
 
     @Configuration
-    @ComponentScan(basePackageClasses = {DeploymentPlanningManagerImpl.class}, includeFilters = {@Filter(value = TestConfiguration.Library.class,
-                                                                                                         type = FilterType.CUSTOM)}, useDefaultFilters = false)
+    @ComponentScan(basePackageClasses = {DeploymentPlanningManagerImpl.class}, includeFilters = {@Filter(value = TestConfiguration.Library.class, type = FilterType.CUSTOM)}, useDefaultFilters = false)
     public static class TestConfiguration extends SpringUtils.CloudStackTestConfiguration {
 
         @Bean

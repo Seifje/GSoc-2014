@@ -33,12 +33,7 @@ import org.apache.cloudstack.discovery.ApiDiscoveryService;
 
 import com.cloud.user.User;
 
-@APICommand(name = "listApis",
-            responseObject = ApiDiscoveryResponse.class,
-            description = "lists all available apis on the server, provided by the Api Discovery plugin",
-            since = "4.1.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "listApis", responseObject = ApiDiscoveryResponse.class, description = "lists all available apis on the server, provided by the Api Discovery plugin", since = "4.1.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListApisCmd extends BaseCmd {
 
     public static final Logger s_logger = Logger.getLogger(ListApisCmd.class.getName());

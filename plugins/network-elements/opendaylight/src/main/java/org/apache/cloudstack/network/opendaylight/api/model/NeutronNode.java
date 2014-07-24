@@ -19,7 +19,6 @@
 
 package org.apache.cloudstack.network.opendaylight.api.model;
 
-
 public class NeutronNode {
 
     private String id;
@@ -66,7 +65,7 @@ public class NeutronNode {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        NeutronNode other = (NeutronNode) obj;
+        NeutronNode other = (NeutronNode)obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -87,7 +86,7 @@ public class NeutronNode {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        NeutronNode other = (NeutronNode) obj;
+        NeutronNode other = (NeutronNode)obj;
         if (type == null) {
             if (other.type != null)
                 return false;

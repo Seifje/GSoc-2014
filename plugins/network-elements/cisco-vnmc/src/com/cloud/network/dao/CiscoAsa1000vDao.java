@@ -24,7 +24,9 @@ import com.cloud.utils.db.GenericDao;
 public interface CiscoAsa1000vDao extends GenericDao<CiscoAsa1000vDeviceVO, Long> {
     /**
      * list all the Cisco Asa 1000v devices added in to this physical network
-     * @param physicalNetworkId physical Network Id
+     * 
+     * @param physicalNetworkId
+     *            physical Network Id
      * @return list of CiscoAsa1000vDeviceVO for this physical network.
      */
     List<CiscoAsa1000vDeviceVO> listByPhysicalNetwork(long physicalNetworkId);

@@ -68,9 +68,9 @@ public class VMInstanceVO implements VirtualMachine, FiniteStateObject<State, Vi
     protected Date proxyAssignTime;
 
     /**
-     * Note that state is intentionally missing the setter.  Any updates to
-     * the state machine needs to go through the DAO object because someone
-     * else could be updating it as well.
+     * Note that state is intentionally missing the setter. Any updates to the
+     * state machine needs to go through the DAO object because someone else
+     * could be updating it as well.
      */
     @Enumerated(value = EnumType.STRING)
     @StateMachine(state = State.class, event = Event.class)
@@ -118,7 +118,9 @@ public class VMInstanceVO implements VirtualMachine, FiniteStateObject<State, Vi
     private boolean limitCpuUse;
 
     @Column(name = "update_count", updatable = true, nullable = false)
-    protected long updated; // This field should be updated everytime the state is updated.  There's no set method in the vo object because it is done with in the dao code.
+    protected long updated; // This field should be updated everytime the state
+    // is updated. There's no set method in the vo
+    // object because it is done with in the dao code.
 
     @Column(name = GenericDao.CREATED_COLUMN)
     protected Date created;
@@ -150,9 +152,8 @@ public class VMInstanceVO implements VirtualMachine, FiniteStateObject<State, Vi
     protected boolean dynamicallyScalable;
 
     /*
-    @Column(name="tags")
-    protected String tags;
-    */
+     * @Column(name="tags") protected String tags;
+     */
 
     @Transient
     Map<String, String> details;
@@ -281,7 +282,8 @@ public class VMInstanceVO implements VirtualMachine, FiniteStateObject<State, Vi
         return instanceName;
     }
 
-    // Be very careful to use this. This has to be unique for the vm and if changed should be done by root admin only.
+    // Be very careful to use this. This has to be unique for the vm and if
+    // changed should be done by root admin only.
     public void setInstanceName(String instanceName) {
         this.instanceName = instanceName;
     }
@@ -291,7 +293,8 @@ public class VMInstanceVO implements VirtualMachine, FiniteStateObject<State, Vi
         return state;
     }
 
-    // don't use this directly, use VM state machine instead, this method is added for migration tool only
+    // don't use this directly, use VM state machine instead, this method is
+    // added for migration tool only
     @Override
     public void setState(State state) {
         this.state = state;
@@ -389,7 +392,7 @@ public class VMInstanceVO implements VirtualMachine, FiniteStateObject<State, Vi
         return haEnabled;
     }
 
-    //FIXME - Remove this and use isDisplay() instead
+    // FIXME - Remove this and use isDisplay() instead
     public boolean isDisplayVm() {
         return displayVm;
     }

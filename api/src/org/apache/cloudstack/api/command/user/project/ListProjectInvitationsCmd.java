@@ -26,12 +26,7 @@ import org.apache.cloudstack.api.response.ListResponse;
 import org.apache.cloudstack.api.response.ProjectInvitationResponse;
 import org.apache.cloudstack.api.response.ProjectResponse;
 
-@APICommand(name = "listProjectInvitations",
-            description = "Lists projects and provides detailed information for listed projects",
-            responseObject = ProjectInvitationResponse.class,
-            since = "3.0.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "listProjectInvitations", description = "Lists projects and provides detailed information for listed projects", responseObject = ProjectInvitationResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListProjectInvitationsCmd extends BaseListAccountResourcesCmd {
     public static final Logger s_logger = Logger.getLogger(ListProjectInvitationsCmd.class.getName());
     private static final String s_name = "listprojectinvitationsresponse";
@@ -42,9 +37,7 @@ public class ListProjectInvitationsCmd extends BaseListAccountResourcesCmd {
     @Parameter(name = ApiConstants.PROJECT_ID, type = CommandType.UUID, entityType = ProjectResponse.class, description = "list by project id")
     private Long projectId;
 
-    @Parameter(name = ApiConstants.ACTIVE_ONLY,
-               type = CommandType.BOOLEAN,
-               description = "if true, list only active invitations - having Pending state and ones that are not timed out yet")
+    @Parameter(name = ApiConstants.ACTIVE_ONLY, type = CommandType.BOOLEAN, description = "if true, list only active invitations - having Pending state and ones that are not timed out yet")
     private boolean activeOnly;
 
     @Parameter(name = ApiConstants.STATE, type = CommandType.STRING, description = "list invitations by state")

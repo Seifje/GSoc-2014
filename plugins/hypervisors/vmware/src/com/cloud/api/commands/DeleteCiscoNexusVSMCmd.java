@@ -38,8 +38,7 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.network.element.CiscoNexusVSMElementService;
 import com.cloud.user.Account;
 
-@APICommand(name = "deleteCiscoNexusVSM", responseObject = SuccessResponse.class, description = " delete a Cisco Nexus VSM device",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteCiscoNexusVSM", responseObject = SuccessResponse.class, description = " delete a Cisco Nexus VSM device", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteCiscoNexusVSMCmd extends BaseAsyncCmd {
 
     public static final Logger s_logger = Logger.getLogger(DeleteCiscoNexusVSMCmd.class.getName());
@@ -47,32 +46,27 @@ public class DeleteCiscoNexusVSMCmd extends BaseAsyncCmd {
     @Inject
     CiscoNexusVSMElementService _ciscoNexusVSMService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = CiscoNexusVSMResponse.class,
-               required = true,
-               description = "Id of the Cisco Nexus 1000v VSM device to be deleted")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = CiscoNexusVSMResponse.class, required = true, description = "Id of the Cisco Nexus 1000v VSM device to be deleted")
     private Long id;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getCiscoNexusVSMDeviceId() {
         return id;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         boolean result = _ciscoNexusVSMService.deleteCiscoNexusVSM(this);
         if (result) {
             SuccessResponse response = new SuccessResponse(getCommandName());

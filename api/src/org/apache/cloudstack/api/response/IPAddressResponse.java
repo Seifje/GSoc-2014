@@ -151,9 +151,10 @@ public class IPAddressResponse extends BaseResponse implements ControlledEntityR
     private Boolean forDisplay;
 
     /*
-        @SerializedName(ApiConstants.JOB_ID) @Param(description="shows the current pending asynchronous job ID. This tag is not returned if no current pending jobs are acting on the volume")
-        private IdentityProxy jobId = new IdentityProxy("async_job");
-    */
+     * @SerializedName(ApiConstants.JOB_ID) @Param(description=
+     * "shows the current pending asynchronous job ID. This tag is not returned if no current pending jobs are acting on the volume"
+     * ) private IdentityProxy jobId = new IdentityProxy("async_job");
+     */
 
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;

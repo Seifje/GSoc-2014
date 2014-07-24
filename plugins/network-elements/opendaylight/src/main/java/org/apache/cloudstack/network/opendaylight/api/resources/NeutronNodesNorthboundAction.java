@@ -51,7 +51,7 @@ public class NeutronNodesNorthboundAction extends Action {
         Type returnType = new TypeToken<NeutronNodesList<NeutronNodeWrapper>>() {
         }.getType();
 
-        T returnValue = (T) gsonNeutronNode.fromJson(bodystring, returnType);
+        T returnValue = (T)gsonNeutronNode.fromJson(bodystring, returnType);
 
         return returnValue;
     }
@@ -70,7 +70,7 @@ public class NeutronNodesNorthboundAction extends Action {
 
         String bodystring = executePut(uri);
 
-        T result = (T) gsonNeutronNode.fromJson(bodystring, TypeToken.get(NeutronNodeWrapper.class).getType());
+        T result = (T)gsonNeutronNode.fromJson(bodystring, TypeToken.get(NeutronNodeWrapper.class).getType());
 
         return result;
     }
@@ -82,7 +82,7 @@ public class NeutronNodesNorthboundAction extends Action {
 
         String bodystring = executePut(uri);
 
-        T result = (T) gsonNeutronNode.fromJson(bodystring, TypeToken.get(NeutronNodeWrapper.class).getType());
+        T result = (T)gsonNeutronNode.fromJson(bodystring, TypeToken.get(NeutronNodeWrapper.class).getType());
 
         return result;
     }

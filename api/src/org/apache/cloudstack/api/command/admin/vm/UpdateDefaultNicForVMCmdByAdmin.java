@@ -33,19 +33,17 @@ import org.apache.cloudstack.context.CallContext;
 import com.cloud.uservm.UserVm;
 
 @APICommand(name = "updateDefaultNicForVirtualMachine", description = "Changes the default NIC on a VM", responseObject = UserVmResponse.class, responseView = ResponseView.Full)
-
 public class UpdateDefaultNicForVMCmdByAdmin extends UpdateDefaultNicForVMCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateDefaultNicForVMCmdByAdmin.class);
 
-
     @Override
-    public void execute(){
-        CallContext.current().setEventDetails("Vm Id: "+getVmId() + " Nic Id: " + getNicId());
+    public void execute() {
+        CallContext.current().setEventDetails("Vm Id: " + getVmId() + " Nic Id: " + getNicId());
         UserVm result = _userVmService.updateDefaultNicForVirtualMachine(this);
         ArrayList<VMDetails> dc = new ArrayList<VMDetails>();
         dc.add(VMDetails.valueOf("nics"));
         EnumSet<VMDetails> details = EnumSet.copyOf(dc);
-        if (result != null){
+        if (result != null) {
             UserVmResponse response = _responseGenerator.createUserVmResponse(ResponseView.Full, "virtualmachine", details, result).get(0);
             response.setResponseName(getCommandName());
             setResponseObject(response);

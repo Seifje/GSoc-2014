@@ -35,12 +35,11 @@ public class AlertResponse extends BaseResponse {
     private String id;
 
     @SerializedName(ApiConstants.TYPE)
-    @Param(description = "One of the following alert types: "
-        + "MEMORY = 0, CPU = 1, STORAGE = 2, STORAGE_ALLOCATED = 3, PUBLIC_IP = 4, PRIVATE_IP = 5, HOST = 6, USERVM = 7, "
-        + "DOMAIN_ROUTER = 8, CONSOLE_PROXY = 9, ROUTING = 10: lost connection to default route (to the gateway), "
-        + "STORAGE_MISC = 11: lost connection to default route (to the gateway), " + "USAGE_SERVER = 12: lost connection to default route (to the gateway), "
-        + "MANAGMENT_NODE = 13: lost connection to default route (to the gateway), "
-        + "DOMAIN_ROUTER_MIGRATE = 14, CONSOLE_PROXY_MIGRATE = 15, USERVM_MIGRATE = 16, VLAN = 17, SSVM = 18, " + "USAGE_SERVER_RESULT = 19")
+    @Param(description = "One of the following alert types: " + "MEMORY = 0, CPU = 1, STORAGE = 2, STORAGE_ALLOCATED = 3, PUBLIC_IP = 4, PRIVATE_IP = 5, HOST = 6, USERVM = 7, "
+            + "DOMAIN_ROUTER = 8, CONSOLE_PROXY = 9, ROUTING = 10: lost connection to default route (to the gateway), "
+            + "STORAGE_MISC = 11: lost connection to default route (to the gateway), " + "USAGE_SERVER = 12: lost connection to default route (to the gateway), "
+            + "MANAGMENT_NODE = 13: lost connection to default route (to the gateway), "
+            + "DOMAIN_ROUTER_MIGRATE = 14, CONSOLE_PROXY_MIGRATE = 15, USERVM_MIGRATE = 16, VLAN = 17, SSVM = 18, " + "USAGE_SERVER_RESULT = 19")
     private Short alertType;
 
     @SerializedName(ApiConstants.NAME)

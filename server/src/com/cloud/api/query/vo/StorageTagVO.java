@@ -31,50 +31,37 @@ import org.apache.cloudstack.api.InternalIdentity;
 @Table(name = "storage_tags_view")
 public class StorageTagVO extends BaseViewVO implements InternalIdentity {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
+    @Id
     @Column(name = "id")
     private long id;
 
     @Column(name = "name")
     private String name;
 
-   
     @Column(name = "pool_id")
     long poolId;
 
+    @Override
+    public long getId() {
+        return id;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public String getName() {
+        return name;
+    }
 
+    public long getPoolId() {
+        return poolId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setPoolId(long poolId) {
+        this.poolId = poolId;
+    }
 
-
-	public long getPoolId() {
-		return poolId;
-	}
-
-
-	public void setPoolId(long poolId) {
-		this.poolId = poolId;
-	}
-
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-
-
-
-  
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
 }

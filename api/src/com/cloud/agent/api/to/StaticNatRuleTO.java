@@ -33,33 +33,14 @@ public class StaticNatRuleTO extends FirewallRuleTO {
     }
 
     public StaticNatRuleTO(StaticNatRule rule, String srcVlanTag, String srcIp, String dstIp) {
-        super(rule.getId(),
-            srcVlanTag,
-            srcIp,
-            rule.getProtocol(),
-            rule.getSourcePortStart(),
-            rule.getSourcePortEnd(),
-            rule.getState() == State.Revoke,
-            rule.getState() == State.Active,
-            rule.getPurpose(),
-            null,
-            0,
-            0);
+        super(rule.getId(), srcVlanTag, srcIp, rule.getProtocol(), rule.getSourcePortStart(), rule.getSourcePortEnd(), rule.getState() == State.Revoke,
+                rule.getState() == State.Active, rule.getPurpose(), null, 0, 0);
         this.dstIp = dstIp;
     }
 
     public StaticNatRuleTO(StaticNatRule rule, String scrIp, String dstIp) {
-        super(rule.getId(),
-            scrIp,
-            rule.getProtocol(),
-            rule.getSourcePortStart(),
-            rule.getSourcePortEnd(),
-            rule.getState() == State.Revoke,
-            rule.getState() == State.Active,
-            rule.getPurpose(),
-            null,
-            0,
-            0);
+        super(rule.getId(), scrIp, rule.getProtocol(), rule.getSourcePortStart(), rule.getSourcePortEnd(), rule.getState() == State.Revoke, rule.getState() == State.Active, rule
+                .getPurpose(), null, 0, 0);
         this.dstIp = dstIp;
     }
 

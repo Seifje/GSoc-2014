@@ -36,40 +36,33 @@ import com.cloud.network.IpAddress;
 import com.cloud.user.Account;
 import com.cloud.uservm.UserVm;
 
-@APICommand(name = "enableStaticNat", description = "Enables static nat for given ip address", responseObject = SuccessResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "enableStaticNat", description = "Enables static nat for given ip address", responseObject = SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class EnableStaticNatCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(CreateIpForwardingRuleCmd.class.getName());
 
     private static final String s_name = "enablestaticnatresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.IP_ADDRESS_ID, type = CommandType.UUID, entityType = IPAddressResponse.class, required = true, description = "the public IP "
-        + "address id for which static nat feature is being enabled")
+            + "address id for which static nat feature is being enabled")
     private Long ipAddressId;
 
     @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID, type = CommandType.UUID, entityType = UserVmResponse.class, required = true, description = "the ID of "
-        + "the virtual machine for enabling static nat feature")
+            + "the virtual machine for enabling static nat feature")
     private Long virtualMachineId;
 
-    @Parameter(name = ApiConstants.NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = NetworkResponse.class,
-               description = "The network of the vm the static nat will be enabled for."
-                   + " Required when public Ip address is not associated with any Guest network yet (VPC case)")
+    @Parameter(name = ApiConstants.NETWORK_ID, type = CommandType.UUID, entityType = NetworkResponse.class, description = "The network of the vm the static nat will be enabled for."
+            + " Required when public Ip address is not associated with any Guest network yet (VPC case)")
     private Long networkId;
-    @Parameter(name = ApiConstants.VM_GUEST_IP,
-               type = CommandType.STRING,
-               required = false,
-               description = "VM guest nic Secondary ip address for the port forwarding rule")
+    @Parameter(name = ApiConstants.VM_GUEST_IP, type = CommandType.STRING, required = false, description = "VM guest nic Secondary ip address for the port forwarding rule")
     private String vmSecondaryIp;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getIpAddressId() {
         return ipAddressId;
@@ -102,15 +95,15 @@ public class EnableStaticNatCmd extends BaseCmd {
         }
 
         if (ntwkId == null) {
-            throw new InvalidParameterValueException("Unable to enable static nat for the ipAddress id=" + ipAddressId +
-                " as ip is not associated with any network and no networkId is passed in");
+            throw new InvalidParameterValueException("Unable to enable static nat for the ipAddress id=" + ipAddressId
+                    + " as ip is not associated with any network and no networkId is passed in");
         }
         return ntwkId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -124,7 +117,9 @@ public class EnableStaticNatCmd extends BaseCmd {
             return userVm.getAccountId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
     @Override

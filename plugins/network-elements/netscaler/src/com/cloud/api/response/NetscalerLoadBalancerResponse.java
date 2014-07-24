@@ -89,8 +89,8 @@ public class NetscalerLoadBalancerResponse extends BaseResponse {
 
     @SerializedName(ApiConstants.POD_IDS)
     @Param(description = "Used when NetScaler device is provider of EIP service."
-        + " This parameter represents the list of pod's, for which there exists a policy based route on datacenter L3 router to "
-        + "route pod's subnet IP to a NetScaler device.")
+            + " This parameter represents the list of pod's, for which there exists a policy based route on datacenter L3 router to "
+            + "route pod's subnet IP to a NetScaler device.")
     private List<Long> podIds;
 
     public void setId(String lbDeviceId) {

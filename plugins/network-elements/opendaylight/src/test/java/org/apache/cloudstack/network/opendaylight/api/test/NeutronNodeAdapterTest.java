@@ -56,7 +56,7 @@ public class NeutronNodeAdapterTest {
 
     @Test
     public <T> void gsonNeutronPortUnmarshalingTest() throws NeutronRestApiException {
-        NeutronNodeWrapper returnValue = (NeutronNodeWrapper) gsonNeutronNode.fromJson(jsonString, TypeToken.get(NeutronNodeWrapper.class).getType());
+        NeutronNodeWrapper returnValue = (NeutronNodeWrapper)gsonNeutronNode.fromJson(jsonString, TypeToken.get(NeutronNodeWrapper.class).getType());
 
         Assert.assertNotNull(returnValue);
         Assert.assertEquals("node-test", returnValue.getNode().getId().toString());
@@ -65,7 +65,7 @@ public class NeutronNodeAdapterTest {
     @Test
     public <T> void gsonNeutronPortUnmarshalingNullTest() throws NeutronRestApiException {
         String json = null;
-        NeutronNodeWrapper returnValue = (NeutronNodeWrapper) gsonNeutronNode.fromJson(json, TypeToken.get(NeutronNodeWrapper.class).getType());
+        NeutronNodeWrapper returnValue = (NeutronNodeWrapper)gsonNeutronNode.fromJson(json, TypeToken.get(NeutronNodeWrapper.class).getType());
 
         Assert.assertNull(returnValue);
     }

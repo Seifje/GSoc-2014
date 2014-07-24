@@ -30,7 +30,9 @@ public class DeleteLogicalRouterCommand extends Command {
         this.logicalRouterUuid = logicalRouterUuid;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.cloud.agent.api.Command#executeInSequence()
      */
     @Override

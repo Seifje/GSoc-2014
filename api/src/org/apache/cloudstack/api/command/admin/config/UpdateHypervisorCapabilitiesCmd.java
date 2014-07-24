@@ -29,19 +29,14 @@ import org.apache.cloudstack.api.response.HypervisorCapabilitiesResponse;
 import com.cloud.hypervisor.HypervisorCapabilities;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateHypervisorCapabilities",
-            description = "Updates a hypervisor capabilities.",
-            responseObject = HypervisorCapabilitiesResponse.class,
-            since = "3.0.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "updateHypervisorCapabilities", description = "Updates a hypervisor capabilities.", responseObject = HypervisorCapabilitiesResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateHypervisorCapabilitiesCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateHypervisorCapabilitiesCmd.class.getName());
     private static final String s_name = "updatehypervisorcapabilitiesresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = HypervisorCapabilitiesResponse.class, description = "ID of the hypervisor capability")
     private Long id;
@@ -52,9 +47,9 @@ public class UpdateHypervisorCapabilitiesCmd extends BaseCmd {
     @Parameter(name = ApiConstants.MAX_GUESTS_LIMIT, type = CommandType.LONG, description = "the max number of Guest VMs per host for this hypervisor.")
     private Long maxGuestsLimit;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Boolean getSecurityGroupEnabled() {
         return securityGroupEnabled;
@@ -68,9 +63,9 @@ public class UpdateHypervisorCapabilitiesCmd extends BaseCmd {
         return maxGuestsLimit;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

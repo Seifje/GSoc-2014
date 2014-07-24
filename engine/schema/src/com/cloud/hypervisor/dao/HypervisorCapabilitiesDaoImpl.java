@@ -53,7 +53,8 @@ public class HypervisorCapabilitiesDaoImpl extends GenericDaoBase<HypervisorCapa
 
     HypervisorCapabilitiesVO getCapabilities(HypervisorType hypervisorType, String hypervisorVersion) {
         HypervisorCapabilitiesVO result = findByHypervisorTypeAndVersion(hypervisorType, hypervisorVersion);
-        if (result == null) { // if data is not available for a specific version then use 'default' as version
+        if (result == null) { // if data is not available for a specific version
+            // then use 'default' as version
             result = findByHypervisorTypeAndVersion(hypervisorType, DEFAULT_VERSION);
         }
         return result;

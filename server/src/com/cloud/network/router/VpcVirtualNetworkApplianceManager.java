@@ -49,7 +49,7 @@ public interface VpcVirtualNetworkApplianceManager extends VirtualNetworkApplian
      * @throws ResourceUnavailableException
      */
     List<DomainRouterVO> deployVirtualRouterInVpc(Vpc vpc, DeployDestination dest, Account owner, Map<Param, Object> params) throws InsufficientCapacityException,
-        ConcurrentOperationException, ResourceUnavailableException;
+            ConcurrentOperationException, ResourceUnavailableException;
 
     /**
      *
@@ -61,11 +61,12 @@ public interface VpcVirtualNetworkApplianceManager extends VirtualNetworkApplian
      * @throws ResourceUnavailableException
      */
     boolean applyNetworkACLs(Network network, List<? extends NetworkACLItem> rules, List<? extends VirtualRouter> routers, boolean privateGateway)
-        throws ResourceUnavailableException;
+            throws ResourceUnavailableException;
 
     /**
      * @param gateway
-     * @param router TODO
+     * @param router
+     *            TODO
      * @return
      * @throws ResourceUnavailableException
      * @throws ConcurrentOperationException

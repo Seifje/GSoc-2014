@@ -45,47 +45,33 @@ import com.cloud.user.Account;
 import com.cloud.uservm.UserVm;
 import com.cloud.vm.VirtualMachine;
 
-@APICommand(name = "updateVMAffinityGroup",
-            description = "Updates the affinity/anti-affinity group associations of a virtual machine. The VM has to be stopped and restarted for the "
-                + "new properties to take effect.",
-            responseObject = UserVmResponse.class,
-        responseView = ResponseView.Restricted,
-        entityType = {VirtualMachine.class},
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = true)
+@APICommand(name = "updateVMAffinityGroup", description = "Updates the affinity/anti-affinity group associations of a virtual machine. The VM has to be stopped and restarted for the "
+        + "new properties to take effect.", responseObject = UserVmResponse.class, responseView = ResponseView.Restricted, entityType = {VirtualMachine.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = true)
 public class UpdateVMAffinityGroupCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateVMAffinityGroupCmd.class.getName());
     private static final String s_name = "updatevirtualmachineresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @ACL(accessType = AccessType.OperateEntry)
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = UserVmResponse.class, required = true, description = "The ID of the virtual machine")
     private Long id;
 
     @ACL
-    @Parameter(name = ApiConstants.AFFINITY_GROUP_IDS,
-               type = CommandType.LIST,
-               collectionType = CommandType.UUID,
-               entityType = AffinityGroupResponse.class,
-               description = "comma separated list of affinity groups id that are going to be applied to the virtual machine. "
-                   + "Should be passed only when vm is created from a zone with Basic Network support." + " Mutually exclusive with securitygroupnames parameter")
+    @Parameter(name = ApiConstants.AFFINITY_GROUP_IDS, type = CommandType.LIST, collectionType = CommandType.UUID, entityType = AffinityGroupResponse.class, description = "comma separated list of affinity groups id that are going to be applied to the virtual machine. "
+            + "Should be passed only when vm is created from a zone with Basic Network support." + " Mutually exclusive with securitygroupnames parameter")
     private List<Long> affinityGroupIdList;
 
     @ACL
-    @Parameter(name = ApiConstants.AFFINITY_GROUP_NAMES,
-               type = CommandType.LIST,
-               collectionType = CommandType.STRING,
-               entityType = AffinityGroupResponse.class,
-               description = "comma separated list of affinity groups names that are going to be applied to the virtual machine."
-                   + " Should be passed only when vm is created from a zone with Basic Network support. " + "Mutually exclusive with securitygroupids parameter")
+    @Parameter(name = ApiConstants.AFFINITY_GROUP_NAMES, type = CommandType.LIST, collectionType = CommandType.STRING, entityType = AffinityGroupResponse.class, description = "comma separated list of affinity groups names that are going to be applied to the virtual machine."
+            + " Should be passed only when vm is created from a zone with Basic Network support. " + "Mutually exclusive with securitygroupids parameter")
     private List<String> affinityGroupNameList;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -113,9 +99,9 @@ public class UpdateVMAffinityGroupCmd extends BaseAsyncCmd {
         }
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -133,7 +119,9 @@ public class UpdateVMAffinityGroupCmd extends BaseAsyncCmd {
             return userVm.getAccountId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
     @Override
@@ -144,7 +132,7 @@ public class UpdateVMAffinityGroupCmd extends BaseAsyncCmd {
         dc.add(VMDetails.valueOf("affgrp"));
         EnumSet<VMDetails> details = EnumSet.copyOf(dc);
 
-        if (result != null){
+        if (result != null) {
             UserVmResponse response = _responseGenerator.createUserVmResponse(ResponseView.Restricted, "virtualmachine", details, result).get(0);
             response.setResponseName(getCommandName());
             setResponseObject(response);

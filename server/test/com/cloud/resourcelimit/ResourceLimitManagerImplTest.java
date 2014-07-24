@@ -47,7 +47,7 @@ public class ResourceLimitManagerImplTest extends TestCase {
         s_logger.info("Starting test for Resource Limit manager");
         updateResourceCount();
         updateResourceLimit();
-        //listResourceLimits();
+        // listResourceLimits();
         s_logger.info("Resource Limit Manager: TEST PASSED");
     }
 
@@ -71,22 +71,28 @@ public class ResourceLimitManagerImplTest extends TestCase {
         // update resource Limit for a domain for resource_type = 8 (CPU)
         resourceLimitServiceCall(null, (long)1, 8, (long)40);
 
-        // update resource Limit for an account for resource_type = 9 (Memory (in MiB))
+        // update resource Limit for an account for resource_type = 9 (Memory
+        // (in MiB))
         resourceLimitServiceCall((long)1, (long)1, 9, (long)4096);
 
-        // update resource Limit for a domain for resource_type = 9 (Memory (in MiB))
+        // update resource Limit for a domain for resource_type = 9 (Memory (in
+        // MiB))
         resourceLimitServiceCall(null, (long)1, 9, (long)10240);
 
-        // update resource Limit for an account for resource_type = 10 (Primary storage (in GiB))
+        // update resource Limit for an account for resource_type = 10 (Primary
+        // storage (in GiB))
         resourceLimitServiceCall((long)1, (long)1, 10, (long)200);
 
-        // update resource Limit for a domain for resource_type = 10 (Primary storage (in GiB))
+        // update resource Limit for a domain for resource_type = 10 (Primary
+        // storage (in GiB))
         resourceLimitServiceCall(null, (long)1, 10, (long)200);
 
-        // update resource Limit for an account for resource_type = 11 (Secondary storage (in GiB))
+        // update resource Limit for an account for resource_type = 11
+        // (Secondary storage (in GiB))
         resourceLimitServiceCall((long)1, (long)1, 10, (long)400);
 
-        // update resource Limit for a domain for resource_type = 11 (Secondary storage (in GiB))
+        // update resource Limit for a domain for resource_type = 11 (Secondary
+        // storage (in GiB))
         resourceLimitServiceCall(null, (long)1, 10, (long)400);
     }
 

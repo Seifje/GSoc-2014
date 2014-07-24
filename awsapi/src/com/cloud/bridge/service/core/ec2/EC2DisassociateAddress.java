@@ -35,7 +35,8 @@ public class EC2DisassociateAddress {
     }
 
     /**
-     * @param publicIp the publicIp to set
+     * @param publicIp
+     *            the publicIp to set
      */
     public void setPublicIp(String publicIp) {
         this.publicIp = publicIp;

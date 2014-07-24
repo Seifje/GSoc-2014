@@ -228,9 +228,8 @@ public class DbUtilTest {
 
     @Test
     @Ignore
-    //can not be performed since assertion embedded in this branch of execution
-        public
-        void releaseGlobalLockNotexisting() throws SQLException {
+    // can not be performed since assertion embedded in this branch of execution
+    public void releaseGlobalLockNotexisting() throws SQLException {
         Assert.assertFalse(DbUtil.releaseGlobalLock("notexisting"));
         Mockito.verify(dataSource, Mockito.never()).getConnection();
     }

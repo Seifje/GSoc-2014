@@ -32,6 +32,7 @@ public interface PaloAltoFirewallElementService extends PluggableService {
 
     /**
      * adds a Palo Alto firewall device in to a physical network
+     *
      * @param AddPaloAltoFirewallCmd
      * @return ExternalFirewallDeviceVO object for the firewall added
      */
@@ -39,6 +40,7 @@ public interface PaloAltoFirewallElementService extends PluggableService {
 
     /**
      * removes Palo Alto firewall device from a physical network
+     *
      * @param DeletePaloAltoFirewallCmd
      * @return true if firewall device successfully deleted
      */
@@ -46,6 +48,7 @@ public interface PaloAltoFirewallElementService extends PluggableService {
 
     /**
      * configures a Palo Alto firewal device added in a physical network
+     *
      * @param ConfigurePaloAltoFirewallCmd
      * @return ExternalFirewallDeviceVO for the device configured
      */
@@ -53,13 +56,16 @@ public interface PaloAltoFirewallElementService extends PluggableService {
 
     /**
      * lists all the Palo Alto firewall devices added in to a physical network
+     *
      * @param ListPaloAltoFirewallsCmd
-     * @return list of ExternalFirewallDeviceVO for the devices in the physical network.
+     * @return list of ExternalFirewallDeviceVO for the devices in the physical
+     *         network.
      */
     public List<ExternalFirewallDeviceVO> listPaloAltoFirewalls(ListPaloAltoFirewallsCmd cmd);
 
     /**
      * lists all the guest networks using a PaloAlto firewall device
+     *
      * @param ListPaloAltoFirewallNetworksCmd
      * @return list of the guest networks that are using this F5 load balancer
      */

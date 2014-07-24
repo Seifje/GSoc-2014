@@ -27,6 +27,7 @@ public class ScheduleHostScanTaskCommand extends Command {
 
     @Override
     public boolean executeInSequence() {
-        return false; // standalone command and can be executed independent of other commands
+        return false; // standalone command and can be executed independent of
+        // other commands
     }
 }

@@ -226,7 +226,8 @@ public class EngineHostDaoImpl extends GenericDaoBase<EngineHostVO, Long> implem
 
         SequenceSearch = createSearchBuilder();
         SequenceSearch.and("id", SequenceSearch.entity().getId(), SearchCriteria.Op.EQ);
-        // SequenceSearch.addRetrieve("sequence", SequenceSearch.entity().getSequence());
+        // SequenceSearch.addRetrieve("sequence",
+        // SequenceSearch.entity().getSequence());
         SequenceSearch.done();
 
         DirectlyConnectedSearch = createSearchBuilder();
@@ -242,10 +243,13 @@ public class EngineHostDaoImpl extends GenericDaoBase<EngineHostVO, Long> implem
         UnmanagedDirectConnectSearch.and("lastPinged", UnmanagedDirectConnectSearch.entity().getLastPinged(), SearchCriteria.Op.LTEQ);
         UnmanagedDirectConnectSearch.and("resourceStates", UnmanagedDirectConnectSearch.entity().getResourceState(), SearchCriteria.Op.NIN);
         /*
-         * UnmanagedDirectConnectSearch.op(SearchCriteria.Op.OR, "managementServerId",
-         * UnmanagedDirectConnectSearch.entity().getManagementServerId(), SearchCriteria.Op.EQ);
-         * UnmanagedDirectConnectSearch.and("lastPinged", UnmanagedDirectConnectSearch.entity().getLastPinged(),
-         * SearchCriteria.Op.LTEQ); UnmanagedDirectConnectSearch.cp(); UnmanagedDirectConnectSearch.cp();
+         * UnmanagedDirectConnectSearch.op(SearchCriteria.Op.OR,
+         * "managementServerId",
+         * UnmanagedDirectConnectSearch.entity().getManagementServerId(),
+         * SearchCriteria.Op.EQ); UnmanagedDirectConnectSearch.and("lastPinged",
+         * UnmanagedDirectConnectSearch.entity().getLastPinged(),
+         * SearchCriteria.Op.LTEQ); UnmanagedDirectConnectSearch.cp();
+         * UnmanagedDirectConnectSearch.cp();
          */
 
         DirectConnectSearch = createSearchBuilder();
@@ -342,7 +346,9 @@ public class EngineHostDaoImpl extends GenericDaoBase<EngineHostVO, Long> implem
         txn.start();
         SearchCriteria<EngineHostVO> sc = UnmanagedDirectConnectSearch.create();
         sc.setParameters("lastPinged", lastPingSecondsAfter);
-        //sc.setParameters("resourceStates", ResourceState.ErrorInMaintenance, ResourceState.Maintenance, ResourceState.PrepareForMaintenance, ResourceState.Disabled);
+        // sc.setParameters("resourceStates", ResourceState.ErrorInMaintenance,
+        // ResourceState.Maintenance, ResourceState.PrepareForMaintenance,
+        // ResourceState.Disabled);
         sc.setJoinParameters("ClusterManagedSearch", "managed", Managed.ManagedState.Managed);
         List<EngineHostVO> hosts = lockRows(sc, new Filter(EngineHostVO.class, "clusterId", true, 0L, limit), true);
 
@@ -502,13 +508,12 @@ public class EngineHostDaoImpl extends GenericDaoBase<EngineHostVO, Long> implem
         List<EngineHostVO> result = new ArrayList<EngineHostVO>();
         ResultSet rs = null;
         try {
-            String sql =
-                "select h.id from host h left join  cluster c on h.cluster_id=c.id where h.mgmt_server_id is not null and h.last_ping < ? and h.status in ('Up', 'Updating', 'Disconnected', 'Connecting') and h.type not in ('ExternalFirewall', 'ExternalLoadBalancer', 'TrafficMonitor', 'SecondaryStorage', 'LocalSecondaryStorage', 'L2Networking') and (h.cluster_id is null or c.managed_state = 'Managed') ;";
+            String sql = "select h.id from host h left join  cluster c on h.cluster_id=c.id where h.mgmt_server_id is not null and h.last_ping < ? and h.status in ('Up', 'Updating', 'Disconnected', 'Connecting') and h.type not in ('ExternalFirewall', 'ExternalLoadBalancer', 'TrafficMonitor', 'SecondaryStorage', 'LocalSecondaryStorage', 'L2Networking') and (h.cluster_id is null or c.managed_state = 'Managed') ;";
             pstmt = txn.prepareStatement(sql);
             pstmt.setLong(1, timeout);
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                long id = rs.getLong(1); //ID column
+                long id = rs.getLong(1); // ID column
                 result.add(findById(id));
             }
         } catch (Exception e) {
@@ -594,8 +599,7 @@ public class EngineHostDaoImpl extends GenericDaoBase<EngineHostVO, Long> implem
     @Override
     @DB
     public List<RunningHostCountInfo> getRunningHostCounts(Date cutTime) {
-        String sql =
-            "select * from (" + "select h.data_center_id, h.type, count(*) as count from host as h INNER JOIN mshost as m ON h.mgmt_server_id=m.msid "
+        String sql = "select * from (" + "select h.data_center_id, h.type, count(*) as count from host as h INNER JOIN mshost as m ON h.mgmt_server_id=m.msid "
                 + "where h.status='Up' and h.type='SecondaryStorage' and m.last_update > ? " + "group by h.data_center_id, h.type " + "UNION ALL "
                 + "select h.data_center_id, h.type, count(*) as count from host as h INNER JOIN mshost as m ON h.mgmt_server_id=m.msid "
                 + "where h.status='Up' and h.type='Routing' and m.last_update > ? " + "group by h.data_center_id, h.type) as t " + "ORDER by t.data_center_id, t.type";
@@ -638,7 +642,7 @@ public class EngineHostDaoImpl extends GenericDaoBase<EngineHostVO, Long> implem
         return s_seqFetcher.getNextSequence(Long.class, tg, hostId);
     }
 
-    /*TODO: this is used by mycloud, check if it needs resource state Enabled */
+    /* TODO: this is used by mycloud, check if it needs resource state Enabled */
     @Override
     public long countRoutingHostsByDataCenter(long dcId) {
         SearchCriteria<Long> sc = CountRoutingByDc.create();
@@ -668,22 +672,10 @@ public class EngineHostDaoImpl extends GenericDaoBase<EngineHostVO, Long> implem
             if (dbHost != null) {
                 StringBuilder str = new StringBuilder("Unable to update ").append(vo.toString());
                 str.append(": DB Data={id=").append(dbHost.getId()).append("; state=").append(dbHost.getState()).append(";updatedTime=").append(dbHost.getLastUpdated());
-                str.append(": New Data={id=")
-                    .append(vo.getId())
-                    .append("; state=")
-                    .append(nextState)
-                    .append("; event=")
-                    .append(event)
-                    .append("; updatedTime=")
-                    .append(vo.getLastUpdated());
-                str.append(": stale Data={id=")
-                    .append(vo.getId())
-                    .append("; state=")
-                    .append(currentState)
-                    .append("; event=")
-                    .append(event)
-                    .append("; updatedTime=")
-                    .append(oldUpdatedTime);
+                str.append(": New Data={id=").append(vo.getId()).append("; state=").append(nextState).append("; event=").append(event).append("; updatedTime=")
+                        .append(vo.getLastUpdated());
+                str.append(": stale Data={id=").append(vo.getId()).append("; state=").append(currentState).append("; event=").append(event).append("; updatedTime=")
+                        .append(oldUpdatedTime);
             } else {
                 s_logger.debug("Unable to update dataCenter: id=" + vo.getId() + ", as there is no such dataCenter exists in the database anymore");
             }
@@ -754,36 +746,36 @@ public class EngineHostDaoImpl extends GenericDaoBase<EngineHostVO, Long> implem
     }
 
     @Override
-    public List<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> lockRows(
-        SearchCriteria<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> sc, Filter filter, boolean exclusive) {
+    public List<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> lockRows(SearchCriteria<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> sc,
+            Filter filter, boolean exclusive) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO lockOneRandomRow(
-        SearchCriteria<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> sc, boolean exclusive) {
+            SearchCriteria<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> sc, boolean exclusive) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public List<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> search(
-        SearchCriteria<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> sc, Filter filter) {
+    public List<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> search(SearchCriteria<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> sc,
+            Filter filter) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public List<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> search(
-        SearchCriteria<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> sc, Filter filter, boolean enableQueryCache) {
+    public List<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> search(SearchCriteria<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> sc,
+            Filter filter, boolean enableQueryCache) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public List<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> searchIncludingRemoved(
-        SearchCriteria<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> sc, Filter filter, Boolean lock, boolean cache) {
+            SearchCriteria<org.apache.cloudstack.engine.datacenter.entity.api.db.EngineHostVO> sc, Filter filter, Boolean lock, boolean cache) {
         // TODO Auto-generated method stub
         return null;
     }

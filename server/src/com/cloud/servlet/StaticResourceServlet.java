@@ -45,9 +45,7 @@ public class StaticResourceServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(final HttpServletRequest req,
-            final HttpServletResponse resp) throws ServletException,
-            IOException {
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
         final File requestedFile = getRequestedFile(req);
         if (!requestedFile.exists() || !requestedFile.isFile()) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -68,11 +66,11 @@ public class StaticResourceServlet extends HttpServlet {
             if (isClientCompressionSupported(req) && compressedStatic.exists()) {
                 // gzip compressed
                 resp.setHeader("Content-Encoding", "gzip");
-                resp.setContentLength((int) compressedStatic.length());
+                resp.setContentLength((int)compressedStatic.length());
                 fileContent = new FileInputStream(compressedStatic);
             } else {
                 // uncompressed
-                resp.setContentLength((int) requestedFile.length());
+                resp.setContentLength((int)requestedFile.length());
                 fileContent = new FileInputStream(requestedFile);
             }
             IOUtils.copy(fileContent, resp.getOutputStream());
@@ -82,22 +80,20 @@ public class StaticResourceServlet extends HttpServlet {
     }
 
     @SuppressWarnings("serial")
-    static final Map<String, String> contentTypes = Collections
-            .unmodifiableMap(new HashMap<String, String>() {
-                {
-                    put("css", "text/css");
-                    put("svg", "image/svg+xml");
-                    put("js", "application/javascript");
-                    put("htm", "text/html");
-                    put("html", "text/html");
-                    put("txt", "text/plain");
-                    put("xml", "text/xml");
-                }
-            });
+    static final Map<String, String> contentTypes = Collections.unmodifiableMap(new HashMap<String, String>() {
+        {
+            put("css", "text/css");
+            put("svg", "image/svg+xml");
+            put("js", "application/javascript");
+            put("htm", "text/html");
+            put("html", "text/html");
+            put("txt", "text/plain");
+            put("xml", "text/xml");
+        }
+    });
 
     static String getContentType(final String fileName) {
-        return contentTypes.get(StringUtils.lowerCase(StringUtils
-                .substringAfterLast(fileName, ".")));
+        return contentTypes.get(StringUtils.lowerCase(StringUtils.substringAfterLast(fileName, ".")));
     }
 
     static File getCompressedVersion(final File requestedFile) {

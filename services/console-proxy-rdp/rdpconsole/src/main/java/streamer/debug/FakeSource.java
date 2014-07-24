@@ -59,8 +59,8 @@ public class FakeSource extends BaseElement {
     }
 
     /**
-     * Make slight delay. Should be used when blocking input is requested in pull
-     * mode, but null packed was returned by input.
+     * Make slight delay. Should be used when blocking input is requested in
+     * pull mode, but null packed was returned by input.
      */
     protected void delay() {
         try {

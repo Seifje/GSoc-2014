@@ -29,9 +29,10 @@ import javax.persistence.Table;
 import com.cloud.utils.db.Encrypt;
 
 /**
- * CiscoNexusVSMDeviceVO contains information on external Cisco Nexus 1000v VSM devices added into a deployment.
- * This should be probably made as a more generic class so that we can handle multiple versions of Nexus VSMs
- * in future.
+ * CiscoNexusVSMDeviceVO contains information on external Cisco Nexus 1000v VSM
+ * devices added into a deployment. This should be probably made as a more
+ * generic class so that we can handle multiple versions of Nexus VSMs in
+ * future.
  */
 
 @Entity

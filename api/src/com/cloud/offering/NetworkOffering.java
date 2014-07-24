@@ -69,12 +69,14 @@ public interface NetworkOffering extends InfrastructureEntity, InternalIdentity,
     String getDisplayText();
 
     /**
-     * @return the rate in megabits per sec to which a VM's network interface is throttled to
+     * @return the rate in megabits per sec to which a VM's network interface is
+     *         throttled to
      */
     Integer getRateMbps();
 
     /**
-     * @return the rate megabits per sec to which a VM's multicast&broadcast traffic is throttled to
+     * @return the rate megabits per sec to which a VM's multicast&broadcast
+     *         traffic is throttled to
      */
     Integer getMulticastRateMbps();
 

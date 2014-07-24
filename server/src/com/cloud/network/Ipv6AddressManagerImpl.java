@@ -88,7 +88,7 @@ public class Ipv6AddressManagerImpl extends ManagerBase implements Ipv6AddressMa
         if (requestedIp6 == null) {
             if (!_networkModel.isIP6AddressAvailableInNetwork(networkId)) {
                 throw new InsufficientAddressCapacityException("There is no more address available in the network " + network.getName(), DataCenter.class,
-                    network.getDataCenterId());
+                        network.getDataCenterId());
             }
             for (Vlan vlan : vlans) {
                 if (!_networkModel.isIP6AddressAvailableInVlan(vlan.getId())) {
@@ -110,8 +110,8 @@ public class Ipv6AddressManagerImpl extends ManagerBase implements Ipv6AddressMa
                 }
             }
             if (ip == null) {
-                throw new InsufficientAddressCapacityException("Cannot find a usable IP in the network " + network.getName() + " after " + _ipv6RetryMax +
-                    "(network.ipv6.search.retry.max) times retry!", DataCenter.class, network.getDataCenterId());
+                throw new InsufficientAddressCapacityException("Cannot find a usable IP in the network " + network.getName() + " after " + _ipv6RetryMax
+                        + "(network.ipv6.search.retry.max) times retry!", DataCenter.class, network.getDataCenterId());
             }
         } else {
             for (Vlan vlan : vlans) {

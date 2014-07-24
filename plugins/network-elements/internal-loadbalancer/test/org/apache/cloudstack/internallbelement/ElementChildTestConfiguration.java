@@ -46,9 +46,7 @@ import com.cloud.utils.net.NetUtils;
 import com.cloud.vm.dao.DomainRouterDao;
 
 @Configuration
-@ComponentScan(basePackageClasses = {NetUtils.class},
-               includeFilters = {@Filter(value = ElementChildTestConfiguration.Library.class, type = FilterType.CUSTOM)},
-               useDefaultFilters = false)
+@ComponentScan(basePackageClasses = {NetUtils.class}, includeFilters = {@Filter(value = ElementChildTestConfiguration.Library.class, type = FilterType.CUSTOM)}, useDefaultFilters = false)
 public class ElementChildTestConfiguration {
     public static class Library implements TypeFilter {
         @Bean

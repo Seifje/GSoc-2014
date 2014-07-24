@@ -31,8 +31,9 @@ import org.apache.cloudstack.api.Identity;
 import org.apache.cloudstack.api.InternalIdentity;
 
 /**
- * ExternalFirewallDeviceVO contains information of a external firewall device (Juniper SRX) added into a deployment
-  */
+ * ExternalFirewallDeviceVO contains information of a external firewall device
+ * (Juniper SRX) added into a deployment
+ */
 
 @Entity
 @Table(name = "external_firewall_devices")
@@ -71,7 +72,7 @@ public class ExternalFirewallDeviceVO implements InternalIdentity, Identity {
     @Enumerated(value = EnumType.STRING)
     private FirewallDeviceAllocationState allocationState;
 
-    //keeping it enum for future possible states Maintenance, Shutdown
+    // keeping it enum for future possible states Maintenance, Shutdown
     public enum FirewallDeviceState {
         Enabled, Disabled
     }

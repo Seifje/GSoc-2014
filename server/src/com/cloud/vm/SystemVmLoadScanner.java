@@ -39,7 +39,8 @@ public class SystemVmLoadScanner<T> {
 
     private static final Logger s_logger = Logger.getLogger(SystemVmLoadScanner.class);
 
-    private static final int ACQUIRE_GLOBAL_LOCK_TIMEOUT_FOR_COOPERATION = 3;   // 3 seconds
+    private static final int ACQUIRE_GLOBAL_LOCK_TIMEOUT_FOR_COOPERATION = 3; // 3
+    // seconds
 
     private final SystemVmLoadScanHandler<T> _scanHandler;
     private final ScheduledExecutorService _capacityScanScheduler;
@@ -75,8 +76,7 @@ public class SystemVmLoadScanner<T> {
                     CallContext callContext = CallContext.current();
                     assert (callContext != null);
 
-                    AsyncJobExecutionContext.registerPseudoExecutionContext(
-                        callContext.getCallingAccountId(), callContext.getCallingUserId());
+                    AsyncJobExecutionContext.registerPseudoExecutionContext(callContext.getCallingAccountId(), callContext.getCallingUserId());
 
                     reallyRun();
 
@@ -113,16 +113,16 @@ public class SystemVmLoadScanner<T> {
                     Pair<AfterScanAction, Object> actionInfo = _scanHandler.scanPool(p);
 
                     switch (actionInfo.first()) {
-                        case nop:
-                            break;
+                    case nop:
+                        break;
 
-                        case expand:
-                            _scanHandler.expandPool(p, actionInfo.second());
-                            break;
+                    case expand:
+                        _scanHandler.expandPool(p, actionInfo.second());
+                        break;
 
-                        case shrink:
-                            _scanHandler.shrinkPool(p, actionInfo.second());
-                            break;
+                    case shrink:
+                        _scanHandler.shrinkPool(p, actionInfo.second());
+                        break;
                     }
                 }
             }

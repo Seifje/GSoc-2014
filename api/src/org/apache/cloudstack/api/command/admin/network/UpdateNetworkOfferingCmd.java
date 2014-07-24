@@ -29,15 +29,14 @@ import org.apache.cloudstack.api.response.NetworkOfferingResponse;
 import com.cloud.offering.NetworkOffering;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateNetworkOffering", description = "Updates a network offering.", responseObject = NetworkOfferingResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "updateNetworkOffering", description = "Updates a network offering.", responseObject = NetworkOfferingResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateNetworkOfferingCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateNetworkOfferingCmd.class.getName());
     private static final String s_name = "updatenetworkofferingresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = NetworkOfferingResponse.class, description = "the id of the network offering")
     private Long id;
@@ -49,7 +48,7 @@ public class UpdateNetworkOfferingCmd extends BaseCmd {
     private String displayText;
 
     @Parameter(name = ApiConstants.AVAILABILITY, type = CommandType.STRING, description = "the availability of network offering."
-        + " Default value is Required for Guest Virtual network offering; Optional for Guest Direct network offering")
+            + " Default value is Required for Guest Virtual network offering; Optional for Guest Direct network offering")
     private String availability;
 
     @Parameter(name = ApiConstants.SORT_KEY, type = CommandType.INTEGER, description = "sort key of the network offering, integer")
@@ -58,20 +57,15 @@ public class UpdateNetworkOfferingCmd extends BaseCmd {
     @Parameter(name = ApiConstants.STATE, type = CommandType.STRING, description = "update state for the network offering")
     private String state;
 
-    @Parameter(name = ApiConstants.KEEPALIVE_ENABLED,
-               type = CommandType.BOOLEAN,
-               required = false,
-               description = "if true keepalive will be turned on in the loadbalancer. At the time of writing this has only an effect on haproxy; the mode http and httpclose options are unset in the haproxy conf file.")
+    @Parameter(name = ApiConstants.KEEPALIVE_ENABLED, type = CommandType.BOOLEAN, required = false, description = "if true keepalive will be turned on in the loadbalancer. At the time of writing this has only an effect on haproxy; the mode http and httpclose options are unset in the haproxy conf file.")
     private Boolean keepAliveEnabled;
 
-    @Parameter(name = ApiConstants.MAX_CONNECTIONS,
-               type = CommandType.INTEGER,
-               description = "maximum number of concurrent connections supported by the network offering")
+    @Parameter(name = ApiConstants.MAX_CONNECTIONS, type = CommandType.INTEGER, description = "maximum number of concurrent connections supported by the network offering")
     private Integer maxConnections;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getNetworkOfferingName() {
         return networkOfferingName;
@@ -105,9 +99,9 @@ public class UpdateNetworkOfferingCmd extends BaseCmd {
         return keepAliveEnabled;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
     @Override
     public String getCommandName() {
         return s_name;

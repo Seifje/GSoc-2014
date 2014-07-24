@@ -92,11 +92,10 @@ public class AssignLoadBalancerTest {
     @Spy
     RulesManagerImpl _rulesMgr = new RulesManagerImpl() {
         @Override
-        public void checkRuleAndUserVm (FirewallRule rule, UserVm userVm, Account caller) {
+        public void checkRuleAndUserVm(FirewallRule rule, UserVm userVm, Account caller) {
 
         }
     };
-
 
     @Spy
     NicVO nicvo = new NicVO() {
@@ -113,7 +112,6 @@ public class AssignLoadBalancerTest {
             return nic;
         }
     };
-
 
     LoadBalancingRulesManagerImpl _lbMgr = new LoadBalancingRulesManagerImpl();
 
@@ -149,7 +147,7 @@ public class AssignLoadBalancerTest {
         Map<Long, List<String>> emptyMap = new HashMap<Long, List<String>>();
 
         LoadBalancerDao lbdao = Mockito.mock(LoadBalancerDao.class);
-        _lbMgr._lbDao =  lbdao;
+        _lbMgr._lbDao = lbdao;
 
         when(lbdao.findById(anyLong())).thenReturn(Mockito.mock(LoadBalancerVO.class));
 
@@ -163,7 +161,7 @@ public class AssignLoadBalancerTest {
         Map<Long, List<String>> vmIdIpMap = new HashMap<Long, List<String>>();
         List<String> secIp = new ArrayList<String>();
         secIp.add("10.1.1.175");
-        vmIdIpMap.put(1L,secIp);
+        vmIdIpMap.put(1L, secIp);
 
         List<Long> vmIds = new ArrayList<Long>();
         vmIds.add(2L);
@@ -186,7 +184,6 @@ public class AssignLoadBalancerTest {
         _lbMgr.assignToLoadBalancer(1L, null, vmIdIpMap);
     }
 
-
     @Test(expected = InvalidParameterValueException.class)
     public void tesSecIpNotSetToVm() throws ResourceAllocationException, ResourceUnavailableException, InsufficientCapacityException {
 
@@ -195,7 +192,7 @@ public class AssignLoadBalancerTest {
         Map<Long, List<String>> vmIdIpMap = new HashMap<Long, List<String>>();
         List<String> secIp = new ArrayList<String>();
         secIp.add("10.1.1.175");
-        vmIdIpMap.put(1L,secIp);
+        vmIdIpMap.put(1L, secIp);
 
         List<Long> vmIds = new ArrayList<Long>();
         vmIds.add(2L);
@@ -205,7 +202,7 @@ public class AssignLoadBalancerTest {
         LoadBalancerDao lbDao = Mockito.mock(LoadBalancerDao.class);
         LoadBalancerVMMapDao lb2VmMapDao = Mockito.mock(LoadBalancerVMMapDao.class);
         UserVmDao userVmDao = Mockito.mock(UserVmDao.class);
-        NicSecondaryIpDao nicSecIpDao =  Mockito.mock(NicSecondaryIpDao.class);
+        NicSecondaryIpDao nicSecIpDao = Mockito.mock(NicSecondaryIpDao.class);
 
         _lbMgr._lbDao = lbDao;
         _lbMgr._lb2VmMapDao = lb2VmMapDao;
@@ -218,12 +215,10 @@ public class AssignLoadBalancerTest {
         when(lbDao.findById(anyLong())).thenReturn(lbVO);
         when(userVmDao.findById(anyLong())).thenReturn(Mockito.mock(UserVmVO.class));
         when(lb2VmMapDao.listByLoadBalancerId(anyLong(), anyBoolean())).thenReturn(_lbvmMapList);
-        when (nicSecIpDao.findByIp4AddressAndNicId(anyString(), anyLong())).thenReturn(null);
+        when(nicSecIpDao.findByIp4AddressAndNicId(anyString(), anyLong())).thenReturn(null);
 
         _lbMgr.assignToLoadBalancer(1L, null, vmIdIpMap);
     }
-
-
 
     @Test(expected = InvalidParameterValueException.class)
     public void testVmIdAlreadyExist() throws ResourceAllocationException, ResourceUnavailableException, InsufficientCapacityException {
@@ -233,7 +228,7 @@ public class AssignLoadBalancerTest {
         Map<Long, List<String>> vmIdIpMap = new HashMap<Long, List<String>>();
         List<String> secIp = new ArrayList<String>();
         secIp.add("10.1.1.175");
-        vmIdIpMap.put(1L,secIp);
+        vmIdIpMap.put(1L, secIp);
 
         List<Long> vmIds = new ArrayList<Long>();
         vmIds.add(2L);
@@ -243,7 +238,7 @@ public class AssignLoadBalancerTest {
         LoadBalancerDao lbDao = Mockito.mock(LoadBalancerDao.class);
         LoadBalancerVMMapDao lb2VmMapDao = Mockito.mock(LoadBalancerVMMapDao.class);
         UserVmDao userVmDao = Mockito.mock(UserVmDao.class);
-        NicSecondaryIpDao nicSecIpDao =  Mockito.mock(NicSecondaryIpDao.class);
+        NicSecondaryIpDao nicSecIpDao = Mockito.mock(NicSecondaryIpDao.class);
         LoadBalancerVMMapVO lbVmMapVO = new LoadBalancerVMMapVO(1L, 1L, "10.1.1.175", false);
 
         _lbMgr._lbDao = lbDao;
@@ -258,7 +253,7 @@ public class AssignLoadBalancerTest {
         when(lbDao.findById(anyLong())).thenReturn(lbVO);
         when(userVmDao.findById(anyLong())).thenReturn(Mockito.mock(UserVmVO.class));
         when(lb2VmMapDao.listByLoadBalancerId(anyLong(), anyBoolean())).thenReturn(_lbvmMapList);
-        when (nicSecIpDao.findByIp4AddressAndNicId(anyString(), anyLong())).thenReturn(null);
+        when(nicSecIpDao.findByIp4AddressAndNicId(anyString(), anyLong())).thenReturn(null);
 
         _lbMgr.assignToLoadBalancer(1L, null, vmIdIpMap);
     }

@@ -114,8 +114,8 @@ public abstract class LibvirtServerDiscoverer extends DiscovererBase implements 
     }
 
     @Override
-    public Map<? extends ServerResource, Map<String, String>>
-        find(long dcId, Long podId, Long clusterId, URI uri, String username, String password, List<String> hostTags) throws DiscoveryException {
+    public Map<? extends ServerResource, Map<String, String>> find(long dcId, Long podId, Long clusterId, URI uri, String username, String password, List<String> hostTags)
+            throws DiscoveryException {
 
         ClusterVO cluster = _clusterDao.findById(clusterId);
         if (cluster == null || cluster.getHypervisorType() != getHypervisorType()) {
@@ -140,11 +140,11 @@ public abstract class LibvirtServerDiscoverer extends DiscovererBase implements 
             agentIp = ia.getHostAddress();
             String guid = UUID.nameUUIDFromBytes(agentIp.getBytes()).toString();
             String guidWithTail = guid + "-LibvirtComputingResource";/*
-                                                                      * tail
-                                                                      * added by
-                                                                      * agent
-                                                                      * .java
-                                                                      */
+                                                                     * tail
+                                                                     * added by
+                                                                     * agent
+                                                                     * .java
+                                                                     */
             if (_resourceMgr.findHostByGuid(guidWithTail) != null) {
                 s_logger.debug("Skipping " + agentIp + " because " + guidWithTail + " is already in the database.");
                 return null;
@@ -345,8 +345,8 @@ public abstract class LibvirtServerDiscoverer extends DiscovererBase implements 
             String hostOsInCluster = oneHost.getDetail("Host.OS");
             String hostOs = ssCmd.getHostDetails().get("Host.OS");
             if (!hostOsInCluster.equalsIgnoreCase(hostOs)) {
-                throw new IllegalArgumentException("Can't add host: " + firstCmd.getPrivateIpAddress() + " with hostOS: " + hostOs + " into a cluster," +
-                    "in which there are " + hostOsInCluster + " hosts added");
+                throw new IllegalArgumentException("Can't add host: " + firstCmd.getPrivateIpAddress() + " with hostOS: " + hostOs + " into a cluster," + "in which there are "
+                        + hostOsInCluster + " hosts added");
             }
         }
 

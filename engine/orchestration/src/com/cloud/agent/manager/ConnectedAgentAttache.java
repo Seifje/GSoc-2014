@@ -26,7 +26,8 @@ import com.cloud.host.Status;
 import com.cloud.utils.nio.Link;
 
 /**
- * ConnectedAgentAttache implements an direct connection to this management server.
+ * ConnectedAgentAttache implements an direct connection to this management
+ * server.
  */
 public class ConnectedAgentAttache extends AgentAttache {
     private static final Logger s_logger = Logger.getLogger(ConnectedAgentAttache.class);
@@ -80,12 +81,15 @@ public class ConnectedAgentAttache extends AgentAttache {
         if (obj == null) {
             return false;
         }
-        // No need to handle a ClassCastException. If the classes are different, then equals can return false straight ahead.
+        // No need to handle a ClassCastException. If the classes are different,
+        // then equals can return false straight ahead.
         if (this.getClass() != obj.getClass()) {
             return false;
         }
-        // This should not be part of the equals() method, but I'm keeping it because it is expected behaviour based
-        // on the previous implementation. The link attribute of the other object should be checked here as well
+        // This should not be part of the equals() method, but I'm keeping it
+        // because it is expected behaviour based
+        // on the previous implementation. The link attribute of the other
+        // object should be checked here as well
         // to verify if it's not null whilst the this is null.
         if (_link == null) {
             return false;

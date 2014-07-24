@@ -44,12 +44,12 @@ public class VpcManagerImplTest {
     VpcManagerImpl manager;
 
     @Before
-    public void setup()
-    {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
         manager = new VpcManagerImpl();
         manager._vpcOffSvcMapDao = vpcOffSvcMapDao;
     }
+
     @Test
     public void getVpcOffSvcProvidersMapForEmptyServiceTest() {
         long vpcOffId = 1L;
@@ -60,7 +60,7 @@ public class VpcManagerImplTest {
         Map<Service, Set<Provider>> map = manager.getVpcOffSvcProvidersMap(vpcOffId);
 
         assertNotNull(map);
-        assertEquals(map.size(),1);
+        assertEquals(map.size(), 1);
     }
 
 }

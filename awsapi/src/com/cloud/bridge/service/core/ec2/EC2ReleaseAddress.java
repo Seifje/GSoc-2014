@@ -33,7 +33,8 @@ public class EC2ReleaseAddress {
     }
 
     /**
-     * @param publicIp the publicIp to set
+     * @param publicIp
+     *            the publicIp to set
      */
     public void setPublicIp(String publicIp) {
         this.publicIp = publicIp;

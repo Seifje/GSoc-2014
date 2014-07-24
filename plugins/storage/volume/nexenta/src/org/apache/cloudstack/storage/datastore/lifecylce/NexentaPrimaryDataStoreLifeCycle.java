@@ -43,10 +43,8 @@ import com.cloud.resource.ResourceManager;
 import com.cloud.storage.StorageManager;
 import com.cloud.storage.StoragePoolAutomation;
 
-public class NexentaPrimaryDataStoreLifeCycle
-        implements PrimaryDataStoreLifeCycle {
-    private static final Logger logger =
-            Logger.getLogger(NexentaPrimaryDataStoreLifeCycle.class);
+public class NexentaPrimaryDataStoreLifeCycle implements PrimaryDataStoreLifeCycle {
+    private static final Logger logger = Logger.getLogger(NexentaPrimaryDataStoreLifeCycle.class);
 
     @Inject
     private DataCenterDao zoneDao;
@@ -61,14 +59,14 @@ public class NexentaPrimaryDataStoreLifeCycle
 
     @Override
     public DataStore initialize(Map<String, Object> dsInfos) {
-        String url = (String) dsInfos.get("url");
-        Long zoneId = (Long) dsInfos.get("zoneId");
-        String storagePoolName = (String) dsInfos.get("name");
-        String providerName = (String) dsInfos.get("providerName");
+        String url = (String)dsInfos.get("url");
+        Long zoneId = (Long)dsInfos.get("zoneId");
+        String storagePoolName = (String)dsInfos.get("name");
+        String providerName = (String)dsInfos.get("providerName");
         Long capacityBytes = (Long)dsInfos.get("capacityBytes");
         Long capacityIops = (Long)dsInfos.get("capacityIops");
         String tags = (String)dsInfos.get("tags");
-        Map<String, String> details = (Map<String, String>) dsInfos.get("details");
+        Map<String, String> details = (Map<String, String>)dsInfos.get("details");
         NexentaUtil.NexentaPluginParameters params = NexentaUtil.parseNexentaPluginUrl(url);
         DataCenterVO zone = zoneDao.findById(zoneId);
         String uuid = String.format("%s_%s_%s", NexentaUtil.PROVIDER_NAME, zone.getUuid(), params.getNmsUrl().getHost());
@@ -110,7 +108,8 @@ public class NexentaPrimaryDataStoreLifeCycle
 
         parameters.setDetails(details);
 
-        // this adds a row in the cloud.storage_pool table for this SolidFire cluster
+        // this adds a row in the cloud.storage_pool table for this SolidFire
+        // cluster
         return dataStoreHelper.createPrimaryDataStore(parameters);
     }
 

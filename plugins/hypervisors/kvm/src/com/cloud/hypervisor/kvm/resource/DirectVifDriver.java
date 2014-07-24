@@ -31,8 +31,8 @@ public class DirectVifDriver extends VifDriverBase {
     private static final Logger s_logger = Logger.getLogger(DirectVifDriver.class);
 
     /**
-     * Experimental driver to configure direct networking in libvirt. This should only
-     * be used on an LXC cluster that does not run any system VMs.
+     * Experimental driver to configure direct networking in libvirt. This
+     * should only be used on an LXC cluster that does not run any system VMs.
      *
      * @param nic
      * @param guestOsType
@@ -47,12 +47,12 @@ public class DirectVifDriver extends VifDriverBase {
         if (nic.getType() == Networks.TrafficType.Guest) {
             Integer networkRateKBps = (nic.getNetworkRateMbps() != null && nic.getNetworkRateMbps().intValue() != -1) ? nic.getNetworkRateMbps().intValue() * 128 : 0;
             intf.defDirectNet(_libvirtComputingResource.getNetworkDirectDevice(), null, nic.getMac(), getGuestNicModel(guestOsType, nicAdapter),
-                _libvirtComputingResource.getNetworkDirectSourceMode(), networkRateKBps);
+                    _libvirtComputingResource.getNetworkDirectSourceMode(), networkRateKBps);
 
         } else if (nic.getType() == Networks.TrafficType.Public) {
             Integer networkRateKBps = (nic.getNetworkRateMbps() != null && nic.getNetworkRateMbps().intValue() != -1) ? nic.getNetworkRateMbps().intValue() * 128 : 0;
             intf.defDirectNet(_libvirtComputingResource.getNetworkDirectDevice(), null, nic.getMac(), getGuestNicModel(guestOsType, nicAdapter),
-                _libvirtComputingResource.getNetworkDirectSourceMode(), networkRateKBps);
+                    _libvirtComputingResource.getNetworkDirectSourceMode(), networkRateKBps);
         }
 
         return intf;

@@ -78,7 +78,7 @@ public class AccountJoinDaoImpl extends GenericDaoBase<AccountJoinVO, Long> impl
         boolean fullView = (view == ResponseView.Full);
         setResourceLimits(account, fullView, accountResponse);
 
-        //get resource limits for projects
+        // get resource limits for projects
         long projectLimit = ApiDBUtils.findCorrectResourceLimit(account.getProjectLimit(), account.getId(), ResourceType.project);
         String projectLimitDisplay = (fullView || projectLimit == -1) ? "Unlimited" : String.valueOf(projectLimit);
         long projectTotal = (account.getProjectTotal() == null) ? 0 : account.getProjectTotal();
@@ -124,7 +124,8 @@ public class AccountJoinDaoImpl extends GenericDaoBase<AccountJoinVO, Long> impl
         long ipTotal = (account.getIpTotal() == null) ? 0 : account.getIpTotal();
 
         Long ips = ipLimit - ipTotal;
-        // check how many free ips are left, and if it's less than max allowed number of ips from account - use this
+        // check how many free ips are left, and if it's less than max allowed
+        // number of ips from account - use this
         // value
         Long ipsLeft = account.getIpFree();
         boolean unlimited = true;
@@ -167,7 +168,7 @@ public class AccountJoinDaoImpl extends GenericDaoBase<AccountJoinVO, Long> impl
         response.setVmStopped(account.getVmStopped());
         response.setVmRunning(account.getVmRunning());
 
-        //get resource limits for networks
+        // get resource limits for networks
         long networkLimit = ApiDBUtils.findCorrectResourceLimit(account.getNetworkLimit(), account.getId(), ResourceType.network);
         String networkLimitDisplay = (fullView || networkLimit == -1) ? "Unlimited" : String.valueOf(networkLimit);
         long networkTotal = (account.getNetworkTotal() == null) ? 0 : account.getNetworkTotal();
@@ -176,7 +177,7 @@ public class AccountJoinDaoImpl extends GenericDaoBase<AccountJoinVO, Long> impl
         response.setNetworkTotal(networkTotal);
         response.setNetworkAvailable(networkAvail);
 
-        //get resource limits for vpcs
+        // get resource limits for vpcs
         long vpcLimit = ApiDBUtils.findCorrectResourceLimit(account.getVpcLimit(), account.getId(), ResourceType.vpc);
         String vpcLimitDisplay = (fullView || vpcLimit == -1) ? "Unlimited" : String.valueOf(vpcLimit);
         long vpcTotal = (account.getVpcTotal() == null) ? 0 : account.getVpcTotal();
@@ -185,7 +186,7 @@ public class AccountJoinDaoImpl extends GenericDaoBase<AccountJoinVO, Long> impl
         response.setVpcTotal(vpcTotal);
         response.setVpcAvailable(vpcAvail);
 
-        //get resource limits for cpu cores
+        // get resource limits for cpu cores
         long cpuLimit = ApiDBUtils.findCorrectResourceLimit(account.getCpuLimit(), account.getId(), ResourceType.cpu);
         String cpuLimitDisplay = (fullView || cpuLimit == -1) ? "Unlimited" : String.valueOf(cpuLimit);
         long cpuTotal = (account.getCpuTotal() == null) ? 0 : account.getCpuTotal();
@@ -194,7 +195,7 @@ public class AccountJoinDaoImpl extends GenericDaoBase<AccountJoinVO, Long> impl
         response.setCpuTotal(cpuTotal);
         response.setCpuAvailable(cpuAvail);
 
-        //get resource limits for memory
+        // get resource limits for memory
         long memoryLimit = ApiDBUtils.findCorrectResourceLimit(account.getMemoryLimit(), account.getId(), ResourceType.memory);
         String memoryLimitDisplay = (fullView || memoryLimit == -1) ? "Unlimited" : String.valueOf(memoryLimit);
         long memoryTotal = (account.getMemoryTotal() == null) ? 0 : account.getMemoryTotal();
@@ -203,7 +204,8 @@ public class AccountJoinDaoImpl extends GenericDaoBase<AccountJoinVO, Long> impl
         response.setMemoryTotal(memoryTotal);
         response.setMemoryAvailable(memoryAvail);
 
-      //get resource limits for primary storage space and convert it from Bytes to GiB
+        // get resource limits for primary storage space and convert it from
+        // Bytes to GiB
         long primaryStorageLimit = ApiDBUtils.findCorrectResourceLimit(account.getPrimaryStorageLimit(), account.getId(), ResourceType.primary_storage);
         String primaryStorageLimitDisplay = (fullView || primaryStorageLimit == -1) ? "Unlimited" : String.valueOf(primaryStorageLimit / ResourceType.bytesToGiB);
         long primaryStorageTotal = (account.getPrimaryStorageTotal() == null) ? 0 : (account.getPrimaryStorageTotal() / ResourceType.bytesToGiB);
@@ -213,7 +215,8 @@ public class AccountJoinDaoImpl extends GenericDaoBase<AccountJoinVO, Long> impl
         response.setPrimaryStorageTotal(primaryStorageTotal);
         response.setPrimaryStorageAvailable(primaryStorageAvail);
 
-        //get resource limits for secondary storage space and convert it from Bytes to GiB
+        // get resource limits for secondary storage space and convert it from
+        // Bytes to GiB
         long secondaryStorageLimit = ApiDBUtils.findCorrectResourceLimit(account.getSecondaryStorageLimit(), account.getId(), ResourceType.secondary_storage);
         String secondaryStorageLimitDisplay = (fullView || secondaryStorageLimit == -1) ? "Unlimited" : String.valueOf(secondaryStorageLimit / ResourceType.bytesToGiB);
         long secondaryStorageTotal = (account.getSecondaryStorageTotal() == null) ? 0 : (account.getSecondaryStorageTotal() / ResourceType.bytesToGiB);

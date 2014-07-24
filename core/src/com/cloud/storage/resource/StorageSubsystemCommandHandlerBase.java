@@ -70,18 +70,17 @@ public class StorageSubsystemCommandHandlerBase implements StorageSubsystemComma
         DataStoreTO srcDataStore = srcData.getDataStore();
         DataStoreTO destDataStore = destData.getDataStore();
 
-        if (srcData.getObjectType() == DataObjectType.TEMPLATE &&
-            (srcData.getDataStore().getRole() == DataStoreRole.Image || srcData.getDataStore().getRole() == DataStoreRole.ImageCache) &&
-            destData.getDataStore().getRole() == DataStoreRole.Primary) {
-            //copy template to primary storage
+        if (srcData.getObjectType() == DataObjectType.TEMPLATE
+                && (srcData.getDataStore().getRole() == DataStoreRole.Image || srcData.getDataStore().getRole() == DataStoreRole.ImageCache)
+                && destData.getDataStore().getRole() == DataStoreRole.Primary) {
+            // copy template to primary storage
             return processor.copyTemplateToPrimaryStorage(cmd);
-        } else if (srcData.getObjectType() == DataObjectType.TEMPLATE && srcDataStore.getRole() == DataStoreRole.Primary &&
-            destDataStore.getRole() == DataStoreRole.Primary) {
-            //clone template to a volume
+        } else if (srcData.getObjectType() == DataObjectType.TEMPLATE && srcDataStore.getRole() == DataStoreRole.Primary && destDataStore.getRole() == DataStoreRole.Primary) {
+            // clone template to a volume
             return processor.cloneVolumeFromBaseTemplate(cmd);
-        } else if (srcData.getObjectType() == DataObjectType.VOLUME &&
-            (srcData.getDataStore().getRole() == DataStoreRole.ImageCache || srcDataStore.getRole() == DataStoreRole.Image)) {
-            //copy volume from image cache to primary
+        } else if (srcData.getObjectType() == DataObjectType.VOLUME
+                && (srcData.getDataStore().getRole() == DataStoreRole.ImageCache || srcDataStore.getRole() == DataStoreRole.Image)) {
+            // copy volume from image cache to primary
             return processor.copyVolumeFromImageCacheToPrimary(cmd);
         } else if (srcData.getObjectType() == DataObjectType.VOLUME && srcData.getDataStore().getRole() == DataStoreRole.Primary) {
             if (destData.getObjectType() == DataObjectType.VOLUME) {
@@ -89,8 +88,8 @@ public class StorageSubsystemCommandHandlerBase implements StorageSubsystemComma
             } else if (destData.getObjectType() == DataObjectType.TEMPLATE) {
                 return processor.createTemplateFromVolume(cmd);
             }
-        } else if (srcData.getObjectType() == DataObjectType.SNAPSHOT && destData.getObjectType() == DataObjectType.SNAPSHOT &&
-            srcData.getDataStore().getRole() == DataStoreRole.Primary) {
+        } else if (srcData.getObjectType() == DataObjectType.SNAPSHOT && destData.getObjectType() == DataObjectType.SNAPSHOT
+                && srcData.getDataStore().getRole() == DataStoreRole.Primary) {
             return processor.backupSnapshot(cmd);
         } else if (srcData.getObjectType() == DataObjectType.SNAPSHOT && destData.getObjectType() == DataObjectType.VOLUME) {
             return processor.createVolumeFromSnapshot(cmd);

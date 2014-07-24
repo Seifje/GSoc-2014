@@ -50,7 +50,8 @@ public interface Snapshot extends ControlledEntity, Identity, InternalIdentity, 
 
     public enum State {
         Allocated, Creating, CreatedOnPrimary, BackingUp, BackedUp, Copying, Destroying, Destroyed,
-        //it's a state, user can't see the snapshot from ui, while the snapshot may still exist on the storage
+        // it's a state, user can't see the snapshot from ui, while the snapshot
+        // may still exist on the storage
         Error;
 
         @Override

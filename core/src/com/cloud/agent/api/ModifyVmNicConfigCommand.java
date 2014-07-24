@@ -16,7 +16,6 @@
 // under the License.
 package com.cloud.agent.api;
 
-
 public class ModifyVmNicConfigCommand extends Command {
     String vmName;
     int vlan;

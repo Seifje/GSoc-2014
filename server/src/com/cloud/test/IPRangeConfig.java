@@ -152,15 +152,20 @@ public class IPRangeConfig {
             return "Please specify a valid end IP";
         }
 
-        // Check that the IPs that are being added are compatible with either the zone's public netmask, or the pod's CIDR
+        // Check that the IPs that are being added are compatible with either
+        // the zone's public netmask, or the pod's CIDR
         if (type.equals("public")) {
             // String publicNetmask = getPublicNetmask(zone);
             // String publicGateway = getPublicGateway(zone);
 
-            // if (publicNetmask == null) return "Please ensure that your zone's public net mask is specified";
-            // if (!sameSubnet(startIP, endIP, publicNetmask)) return "Please ensure that your start IP and end IP are in the same subnet, as per the zone's netmask.";
-            // if (!sameSubnet(startIP, publicGateway, publicNetmask)) return "Please ensure that your start IP is in the same subnet as your zone's gateway, as per the zone's netmask.";
-            // if (!sameSubnet(endIP, publicGateway, publicNetmask)) return "Please ensure that your end IP is in the same subnet as your zone's gateway, as per the zone's netmask.";
+            // if (publicNetmask == null) return
+            // "Please ensure that your zone's public net mask is specified";
+            // if (!sameSubnet(startIP, endIP, publicNetmask)) return
+            // "Please ensure that your start IP and end IP are in the same subnet, as per the zone's netmask.";
+            // if (!sameSubnet(startIP, publicGateway, publicNetmask)) return
+            // "Please ensure that your start IP is in the same subnet as your zone's gateway, as per the zone's netmask.";
+            // if (!sameSubnet(endIP, publicGateway, publicNetmask)) return
+            // "Please ensure that your end IP is in the same subnet as your zone's gateway, as per the zone's netmask.";
         } else if (type.equals("private")) {
             String cidrAddress = getCidrAddress(pod, zone);
             long cidrSize = getCidrSize(pod, zone);
@@ -447,8 +452,7 @@ public class IPRangeConfig {
     }
 
     public Vector<String> savePublicIPRange(TransactionLegacy txn, long startIP, long endIP, long zoneId, long vlanDbId, Long sourceNetworkId, long physicalNetworkId) {
-        String insertSql =
-            "INSERT INTO `cloud`.`user_ip_address` (public_ip_address, data_center_id, vlan_db_id, mac_address, source_network_id, physical_network_id, uuid) VALUES (?, ?, ?, (select mac_address from `cloud`.`data_center` where id=?), ?, ?, ?)";
+        String insertSql = "INSERT INTO `cloud`.`user_ip_address` (public_ip_address, data_center_id, vlan_db_id, mac_address, source_network_id, physical_network_id, uuid) VALUES (?, ?, ?, (select mac_address from `cloud`.`data_center` where id=?), ?, ?, ?)";
         String updateSql = "UPDATE `cloud`.`data_center` set mac_address = mac_address+1 where id=?";
         Vector<String> problemIPs = new Vector<String>();
         PreparedStatement stmt = null;
@@ -486,8 +490,7 @@ public class IPRangeConfig {
     }
 
     public List<String> savePrivateIPRange(TransactionLegacy txn, long startIP, long endIP, long podId, long zoneId) {
-        String insertSql =
-            "INSERT INTO `cloud`.`op_dc_ip_address_alloc` (ip_address, data_center_id, pod_id, mac_address) VALUES (?, ?, ?, (select mac_address from `cloud`.`data_center` where id=?))";
+        String insertSql = "INSERT INTO `cloud`.`op_dc_ip_address_alloc` (ip_address, data_center_id, pod_id, mac_address) VALUES (?, ?, ?, (select mac_address from `cloud`.`data_center` where id=?))";
         String updateSql = "UPDATE `cloud`.`data_center` set mac_address = mac_address+1 where id=?";
         Vector<String> problemIPs = new Vector<String>();
 
@@ -556,17 +559,17 @@ public class IPRangeConfig {
 
     public static String getPublicNetmask(String zone) {
         return DatabaseConfig.getDatabaseValueString("SELECT * FROM `cloud`.`data_center` WHERE name = \"" + zone + "\"", "netmask",
-            "Unable to start DB connection to read public netmask. Please contact Cloud Support.");
+                "Unable to start DB connection to read public netmask. Please contact Cloud Support.");
     }
 
     public static String getPublicGateway(String zone) {
         return DatabaseConfig.getDatabaseValueString("SELECT * FROM `cloud`.`data_center` WHERE name = \"" + zone + "\"", "gateway",
-            "Unable to start DB connection to read public gateway. Please contact Cloud Support.");
+                "Unable to start DB connection to read public gateway. Please contact Cloud Support.");
     }
 
     public static String getGuestNetworkCidr(Long zoneId) {
         return DatabaseConfig.getDatabaseValueString("SELECT * FROM `cloud`.`data_center` WHERE id = \"" + zoneId + "\"", "guest_network_cidr",
-            "Unable to start DB connection to read guest cidr network. Please contact Cloud Support.");
+                "Unable to start DB connection to read guest cidr network. Please contact Cloud Support.");
     }
 
     public static boolean validCIDR(final String cidr) {

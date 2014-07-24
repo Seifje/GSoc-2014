@@ -54,11 +54,11 @@ public class VncClient extends PipelineImpl {
         canvas.addKeyListener(keyEventSource);
 
         add(
-                // Handshake
+        // Handshake
 
-                // RFB protocol version exchanger
-                new Vnc33Hello("hello"),
-                // Authenticator
+        // RFB protocol version exchanger
+        new Vnc33Hello("hello"),
+        // Authenticator
                 new Vnc33Authentication("auth", password),
                 // Initializer
                 new VncInitializer("init", true, screen),
@@ -88,7 +88,7 @@ public class VncClient extends PipelineImpl {
 
                 mouseEventSource, keyEventSource
 
-                );
+        );
 
         // Link handshake elements
         link("IN", "hello", "auth", "init", "message_handler");

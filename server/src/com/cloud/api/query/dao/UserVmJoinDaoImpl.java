@@ -63,7 +63,7 @@ public class UserVmJoinDaoImpl extends GenericDaoBase<UserVmJoinVO, Long> implem
     public static final Logger s_logger = Logger.getLogger(UserVmJoinDaoImpl.class);
 
     @Inject
-    private ConfigurationDao  _configDao;
+    private ConfigurationDao _configDao;
     @Inject
     public AccountManager _accountMgr;
     @Inject
@@ -107,7 +107,7 @@ public class UserVmJoinDaoImpl extends GenericDaoBase<UserVmJoinVO, Long> implem
         userVmResponse.setName(userVm.getName());
 
         if (userVm.getDisplayName() != null) {
-        userVmResponse.setDisplayName(userVm.getDisplayName());
+            userVmResponse.setDisplayName(userVm.getDisplayName());
         } else {
             userVmResponse.setDisplayName(userVm.getName());
         }
@@ -181,7 +181,7 @@ public class UserVmJoinDaoImpl extends GenericDaoBase<UserVmJoinVO, Long> implem
             userVmResponse.setJobId(userVm.getJobUuid());
             userVmResponse.setJobStatus(userVm.getJobStatus());
         }
-        //userVmResponse.setForVirtualNetwork(userVm.getForVirtualNetwork());
+        // userVmResponse.setForVirtualNetwork(userVm.getForVirtualNetwork());
 
         userVmResponse.setPublicIpId(userVm.getPublicIpUuid());
         userVmResponse.setPublicIp(userVm.getPublicIpAddress());
@@ -198,7 +198,12 @@ public class UserVmJoinDaoImpl extends GenericDaoBase<UserVmJoinVO, Long> implem
 
                 userVmResponse.setNetworkKbsWrite((long)vmStats.getNetworkWriteKBs());
 
-                if ((userVm.getHypervisorType() != null) && (userVm.getHypervisorType().equals(HypervisorType.KVM) || userVm.getHypervisorType().equals(HypervisorType.XenServer))) { // support KVM and XenServer only util 2013.06.25
+                if ((userVm.getHypervisorType() != null) && (userVm.getHypervisorType().equals(HypervisorType.KVM) || userVm.getHypervisorType().equals(HypervisorType.XenServer))) { // support
+                    // KVM and
+                    // XenServer
+                    // only
+                    // util
+                    // 2013.06.25
                     userVmResponse.setDiskKbsRead((long)vmStats.getDiskReadKBs());
 
                     userVmResponse.setDiskKbsWrite((long)vmStats.getDiskWriteKBs());

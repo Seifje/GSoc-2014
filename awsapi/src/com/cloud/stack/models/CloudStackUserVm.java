@@ -343,8 +343,8 @@ public class CloudStackUserVm {
     }
 
     /**
-      * @return the sshKeyPairName
-      */
+     * @return the sshKeyPairName
+     */
     public String getKeyPairName() {
         return keyPairName;
     }

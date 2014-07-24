@@ -326,8 +326,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     Map<VirtualMachine.Type, VirtualMachineGuru> _vmGurus = new HashMap<VirtualMachine.Type, VirtualMachineGuru>();
     protected StateMachine2<State, VirtualMachine.Event, VirtualMachine> _stateMachine;
 
-    static final ConfigKey<Integer> StartRetry = new ConfigKey<Integer>("Advanced", Integer.class, "start.retry", "10",
-            "Number of times to retry create and start commands", true);
+    static final ConfigKey<Integer> StartRetry = new ConfigKey<Integer>("Advanced", Integer.class, "start.retry", "10", "Number of times to retry create and start commands", true);
     static final ConfigKey<Integer> VmOpWaitInterval = new ConfigKey<Integer>("Advanced", Integer.class, "vm.op.wait.interval", "120",
             "Time (in seconds) to wait before checking if a previous operation has succeeded", true);
 
@@ -341,23 +340,18 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             "Time (in seconds) to wait before cancelling a operation", false);
     static final ConfigKey<Boolean> VmDestroyForcestop = new ConfigKey<Boolean>("Advanced", Boolean.class, "vm.destroy.forcestop", "false",
             "On destroy, force-stop takes this value ", true);
-    static final ConfigKey<Integer> ClusterDeltaSyncInterval = new ConfigKey<Integer>("Advanced", Integer.class, "sync.interval", "60",
-            "Cluster Delta sync interval in seconds",
+    static final ConfigKey<Integer> ClusterDeltaSyncInterval = new ConfigKey<Integer>("Advanced", Integer.class, "sync.interval", "60", "Cluster Delta sync interval in seconds",
             false);
-    static final ConfigKey<Integer> ClusterVMMetaDataSyncInterval = new ConfigKey<Integer>("Advanced", Integer.class, "vmmetadata.sync.interval", "180", "Cluster VM metadata sync interval in seconds",
-            false);
+    static final ConfigKey<Integer> ClusterVMMetaDataSyncInterval = new ConfigKey<Integer>("Advanced", Integer.class, "vmmetadata.sync.interval", "180",
+            "Cluster VM metadata sync interval in seconds", false);
 
-    static final ConfigKey<Boolean> VmJobEnabled = new ConfigKey<Boolean>("Advanced",
-            Boolean.class, "vm.job.enabled", "true",
+    static final ConfigKey<Boolean> VmJobEnabled = new ConfigKey<Boolean>("Advanced", Boolean.class, "vm.job.enabled", "true",
             "True to enable new VM sync model. false to use the old way", false);
-    static final ConfigKey<Long> VmJobCheckInterval = new ConfigKey<Long>("Advanced",
-            Long.class, "vm.job.check.interval", "3000",
+    static final ConfigKey<Long> VmJobCheckInterval = new ConfigKey<Long>("Advanced", Long.class, "vm.job.check.interval", "3000",
             "Interval in milliseconds to check if the job is complete", false);
-    static final ConfigKey<Long> VmJobTimeout = new ConfigKey<Long>("Advanced",
-            Long.class, "vm.job.timeout", "600000",
+    static final ConfigKey<Long> VmJobTimeout = new ConfigKey<Long>("Advanced", Long.class, "vm.job.timeout", "600000",
             "Time in milliseconds to wait before attempting to cancel a job", false);
-    static final ConfigKey<Integer> VmJobStateReportInterval = new ConfigKey<Integer>("Advanced",
-            Integer.class, "vm.job.report.interval", "60",
+    static final ConfigKey<Integer> VmJobStateReportInterval = new ConfigKey<Integer>("Advanced", Integer.class, "vm.job.report.interval", "60",
             "Interval to send application level pings to make sure the connection is still working", false);
 
     ScheduledExecutorService _executor = null;
@@ -373,10 +367,9 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
     @Override
     @DB
-    public void allocate(String vmInstanceName, final VirtualMachineTemplate template, ServiceOffering serviceOffering,
-            final DiskOfferingInfo rootDiskOfferingInfo, final List<DiskOfferingInfo> dataDiskOfferings,
-            final LinkedHashMap<? extends Network, List<? extends NicProfile>> auxiliaryNetworks, DeploymentPlan plan, HypervisorType hyperType)
-                    throws InsufficientCapacityException {
+    public void allocate(String vmInstanceName, final VirtualMachineTemplate template, ServiceOffering serviceOffering, final DiskOfferingInfo rootDiskOfferingInfo,
+            final List<DiskOfferingInfo> dataDiskOfferings, final LinkedHashMap<? extends Network, List<? extends NicProfile>> auxiliaryNetworks, DeploymentPlan plan,
+            HypervisorType hyperType) throws InsufficientCapacityException {
 
         VMInstanceVO vm = _vmDao.findVMByInstanceName(vmInstanceName);
         final Account owner = _entityMgr.findById(Account.class, vm.getAccountId());
@@ -392,47 +385,47 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         assert (plan.getClusterId() == null && plan.getPoolId() == null) : "We currently don't support cluster and pool preset yet";
         final VMInstanceVO vmFinal = _vmDao.persist(vm);
 
-                final VirtualMachineProfileImpl vmProfile = new VirtualMachineProfileImpl(vmFinal, template, serviceOffering, null, null);
+        final VirtualMachineProfileImpl vmProfile = new VirtualMachineProfileImpl(vmFinal, template, serviceOffering, null, null);
 
-                Transaction.execute(new TransactionCallbackWithExceptionNoReturn<InsufficientCapacityException>() {
-                    @Override
-                    public void doInTransactionWithoutResult(TransactionStatus status) throws InsufficientCapacityException {
-                        if (s_logger.isDebugEnabled()) {
-                            s_logger.debug("Allocating nics for " + vmFinal);
-                        }
+        Transaction.execute(new TransactionCallbackWithExceptionNoReturn<InsufficientCapacityException>() {
+            @Override
+            public void doInTransactionWithoutResult(TransactionStatus status) throws InsufficientCapacityException {
+                if (s_logger.isDebugEnabled()) {
+                    s_logger.debug("Allocating nics for " + vmFinal);
+                }
 
-                        try {
-                            _networkMgr.allocate(vmProfile, auxiliaryNetworks);
-                        } catch (ConcurrentOperationException e) {
-                            throw new CloudRuntimeException("Concurrent operation while trying to allocate resources for the VM", e);
-                        }
-
-                        if (s_logger.isDebugEnabled()) {
-                            s_logger.debug("Allocating disks for " + vmFinal);
-                        }
-
-                        if (template.getFormat() == ImageFormat.ISO) {
-                            volumeMgr.allocateRawVolume(Type.ROOT, "ROOT-" + vmFinal.getId(), rootDiskOfferingInfo.getDiskOffering(), rootDiskOfferingInfo.getSize(),
-                                    rootDiskOfferingInfo.getMinIops(), rootDiskOfferingInfo.getMaxIops(), vmFinal, template, owner);
-                        } else if (template.getFormat() == ImageFormat.BAREMETAL) {
-                            // Do nothing
-                        } else {
-                            volumeMgr.allocateTemplatedVolume(Type.ROOT, "ROOT-" + vmFinal.getId(), rootDiskOfferingInfo.getDiskOffering(), rootDiskOfferingInfo.getSize(),
-                                    rootDiskOfferingInfo.getMinIops(), rootDiskOfferingInfo.getMaxIops(), template, vmFinal, owner);
-                        }
-
-                        if (dataDiskOfferings != null) {
-                            for (DiskOfferingInfo dataDiskOfferingInfo : dataDiskOfferings) {
-                                volumeMgr.allocateRawVolume(Type.DATADISK, "DATA-" + vmFinal.getId(), dataDiskOfferingInfo.getDiskOffering(), dataDiskOfferingInfo.getSize(),
-                                        dataDiskOfferingInfo.getMinIops(), dataDiskOfferingInfo.getMaxIops(), vmFinal, template, owner);
-                            }
-                        }
-                    }
-                });
+                try {
+                    _networkMgr.allocate(vmProfile, auxiliaryNetworks);
+                } catch (ConcurrentOperationException e) {
+                    throw new CloudRuntimeException("Concurrent operation while trying to allocate resources for the VM", e);
+                }
 
                 if (s_logger.isDebugEnabled()) {
-                    s_logger.debug("Allocation completed for VM: " + vmFinal);
+                    s_logger.debug("Allocating disks for " + vmFinal);
                 }
+
+                if (template.getFormat() == ImageFormat.ISO) {
+                    volumeMgr.allocateRawVolume(Type.ROOT, "ROOT-" + vmFinal.getId(), rootDiskOfferingInfo.getDiskOffering(), rootDiskOfferingInfo.getSize(),
+                            rootDiskOfferingInfo.getMinIops(), rootDiskOfferingInfo.getMaxIops(), vmFinal, template, owner);
+                } else if (template.getFormat() == ImageFormat.BAREMETAL) {
+                    // Do nothing
+                } else {
+                    volumeMgr.allocateTemplatedVolume(Type.ROOT, "ROOT-" + vmFinal.getId(), rootDiskOfferingInfo.getDiskOffering(), rootDiskOfferingInfo.getSize(),
+                            rootDiskOfferingInfo.getMinIops(), rootDiskOfferingInfo.getMaxIops(), template, vmFinal, owner);
+                }
+
+                if (dataDiskOfferings != null) {
+                    for (DiskOfferingInfo dataDiskOfferingInfo : dataDiskOfferings) {
+                        volumeMgr.allocateRawVolume(Type.DATADISK, "DATA-" + vmFinal.getId(), dataDiskOfferingInfo.getDiskOffering(), dataDiskOfferingInfo.getSize(),
+                                dataDiskOfferingInfo.getMinIops(), dataDiskOfferingInfo.getMaxIops(), vmFinal, template, owner);
+                    }
+                }
+            }
+        });
+
+        if (s_logger.isDebugEnabled()) {
+            s_logger.debug("Allocation completed for VM: " + vmFinal);
+        }
     }
 
     @Override
@@ -531,7 +524,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
         VirtualMachineGuru guru = getVmGuru(vm);
         guru.finalizeExpunge(vm);
-        //remove the overcommit detials from the uservm details
+        // remove the overcommit detials from the uservm details
         _uservmDetailsDao.removeDetails(vm.getId());
 
         // send hypervisor-dependent commands before removing
@@ -569,7 +562,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     public boolean start() {
         // TODO, initial delay is hardcoded
         _executor.scheduleAtFixedRate(new CleanupTask(), 5, VmJobStateReportInterval.value(), TimeUnit.SECONDS);
-        _executor.scheduleAtFixedRate(new TransitionTask(),  VmOpCleanupInterval.value(), VmOpCleanupInterval.value(), TimeUnit.SECONDS);
+        _executor.scheduleAtFixedRate(new TransitionTask(), VmOpCleanupInterval.value(), VmOpCleanupInterval.value(), TimeUnit.SECONDS);
         cancelWorkItems(_nodeId);
 
         // cleanup left over place holder works
@@ -645,7 +638,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             }
 
             try {
-                Thread.sleep(VmOpWaitInterval.value()*1000);
+                Thread.sleep(VmOpWaitInterval.value() * 1000);
             } catch (InterruptedException e) {
                 s_logger.info("Waiting for " + vm + " but is interrupted");
                 throw new ConcurrentOperationException("Waiting for " + vm + " but is interrupted");
@@ -656,8 +649,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     @DB
-    protected Ternary<VMInstanceVO, ReservationContext, ItWorkVO> changeToStartState(VirtualMachineGuru vmGuru, final VMInstanceVO vm, final User caller,
-            final Account account) throws ConcurrentOperationException {
+    protected Ternary<VMInstanceVO, ReservationContext, ItWorkVO> changeToStartState(VirtualMachineGuru vmGuru, final VMInstanceVO vm, final User caller, final Account account)
+            throws ConcurrentOperationException {
         long vmId = vm.getId();
 
         ItWorkVO work = new ItWorkVO(UUID.randomUUID().toString(), _nodeId, State.Starting, vm.getType(), vm.getId());
@@ -665,8 +658,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         while (retry-- != 0) {
             try {
                 final ItWorkVO workFinal = work;
-                Ternary<VMInstanceVO, ReservationContext, ItWorkVO> result =
-                        Transaction.execute(new TransactionCallbackWithException<Ternary<VMInstanceVO, ReservationContext, ItWorkVO>, NoTransitionException>() {
+                Ternary<VMInstanceVO, ReservationContext, ItWorkVO> result = Transaction
+                        .execute(new TransactionCallbackWithException<Ternary<VMInstanceVO, ReservationContext, ItWorkVO>, NoTransitionException>() {
                             @Override
                             public Ternary<VMInstanceVO, ReservationContext, ItWorkVO> doInTransaction(TransactionStatus status) throws NoTransitionException {
                                 Journal journal = new Journal.LogJournal("Creating " + vm, s_logger);
@@ -753,8 +746,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     @Override
-    public void advanceStart(String vmUuid, Map<VirtualMachineProfile.Param, Object> params, DeploymentPlanner planner)
-            throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException {
+    public void advanceStart(String vmUuid, Map<VirtualMachineProfile.Param, Object> params, DeploymentPlanner planner) throws InsufficientCapacityException,
+            ConcurrentOperationException, ResourceUnavailableException {
         advanceStart(vmUuid, params, null, planner);
     }
 
@@ -804,7 +797,6 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         }
     }
 
-
     @Override
     public void orchestrateStart(String vmUuid, Map<VirtualMachineProfile.Param, Object> params, DeploymentPlan planToDeploy, DeploymentPlanner planner)
             throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException {
@@ -836,12 +828,11 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         DataCenterDeployment plan = new DataCenterDeployment(vm.getDataCenterId(), vm.getPodIdToDeployIn(), null, null, null, null, ctx);
         if (planToDeploy != null && planToDeploy.getDataCenterId() != 0) {
             if (s_logger.isDebugEnabled()) {
-                s_logger.debug("advanceStart: DeploymentPlan is provided, using dcId:" + planToDeploy.getDataCenterId() + ", podId: " + planToDeploy.getPodId() +
-                        ", clusterId: " + planToDeploy.getClusterId() + ", hostId: " + planToDeploy.getHostId() + ", poolId: " + planToDeploy.getPoolId());
+                s_logger.debug("advanceStart: DeploymentPlan is provided, using dcId:" + planToDeploy.getDataCenterId() + ", podId: " + planToDeploy.getPodId() + ", clusterId: "
+                        + planToDeploy.getClusterId() + ", hostId: " + planToDeploy.getHostId() + ", poolId: " + planToDeploy.getPoolId());
             }
-            plan =
-                    new DataCenterDeployment(planToDeploy.getDataCenterId(), planToDeploy.getPodId(), planToDeploy.getClusterId(), planToDeploy.getHostId(),
-                            planToDeploy.getPoolId(), planToDeploy.getPhysicalNetworkId(), ctx);
+            plan = new DataCenterDeployment(planToDeploy.getDataCenterId(), planToDeploy.getPodId(), planToDeploy.getClusterId(), planToDeploy.getHostId(),
+                    planToDeploy.getPoolId(), planToDeploy.getPhysicalNetworkId(), ctx);
         }
 
         HypervisorGuru hvGuru = _hvGuruMgr.getGuru(vm.getHypervisorType());
@@ -869,10 +860,12 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             while (retry-- != 0) { // It's != so that it can match -1.
 
                 if (reuseVolume) {
-                    // edit plan if this vm's ROOT volume is in READY state already
+                    // edit plan if this vm's ROOT volume is in READY state
+                    // already
                     List<VolumeVO> vols = _volsDao.findReadyRootVolumesByInstance(vm.getId());
                     for (VolumeVO vol : vols) {
-                        // make sure if the templateId is unchanged. If it is changed,
+                        // make sure if the templateId is unchanged. If it is
+                        // changed,
                         // let planner
                         // reassign pool for the volume even if it ready.
                         Long volTemplateId = vol.getTemplateId();
@@ -895,25 +888,25 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                                 Long clusterIdSpecified = planToDeploy.getClusterId();
                                 if (clusterIdSpecified != null && rootVolClusterId != null) {
                                     if (rootVolClusterId.longValue() != clusterIdSpecified.longValue()) {
-                                        // cannot satisfy the plan passed in to the
+                                        // cannot satisfy the plan passed in to
+                                        // the
                                         // planner
                                         if (s_logger.isDebugEnabled()) {
-                                            s_logger.debug("Cannot satisfy the deployment plan passed in since the ready Root volume is in different cluster. volume's cluster: " +
-                                                    rootVolClusterId + ", cluster specified: " + clusterIdSpecified);
+                                            s_logger.debug("Cannot satisfy the deployment plan passed in since the ready Root volume is in different cluster. volume's cluster: "
+                                                    + rootVolClusterId + ", cluster specified: " + clusterIdSpecified);
                                         }
                                         throw new ResourceUnavailableException(
-                                                "Root volume is ready in different cluster, Deployment plan provided cannot be satisfied, unable to create a deployment for " +
-                                                        vm, Cluster.class, clusterIdSpecified);
+                                                "Root volume is ready in different cluster, Deployment plan provided cannot be satisfied, unable to create a deployment for " + vm,
+                                                Cluster.class, clusterIdSpecified);
                                     }
                                 }
-                                plan =
-                                        new DataCenterDeployment(planToDeploy.getDataCenterId(), planToDeploy.getPodId(), planToDeploy.getClusterId(),
-                                                planToDeploy.getHostId(), vol.getPoolId(), null, ctx);
+                                plan = new DataCenterDeployment(planToDeploy.getDataCenterId(), planToDeploy.getPodId(), planToDeploy.getClusterId(), planToDeploy.getHostId(),
+                                        vol.getPoolId(), null, ctx);
                             } else {
                                 plan = new DataCenterDeployment(rootVolDcId, rootVolPodId, rootVolClusterId, null, vol.getPoolId(), null, ctx);
                                 if (s_logger.isDebugEnabled()) {
-                                    s_logger.debug(vol + " is READY, changing deployment plan to use this pool's dcId: " + rootVolDcId + " , podId: " + rootVolPodId +
-                                            " , and clusterId: " + rootVolClusterId);
+                                    s_logger.debug(vol + " is READY, changing deployment plan to use this pool's dcId: " + rootVolDcId + " , podId: " + rootVolPodId
+                                            + " , and clusterId: " + rootVolClusterId);
                                 }
                                 planChangedByVolume = true;
                             }
@@ -936,7 +929,9 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                     if (planChangedByVolume) {
                         plan = originalPlan;
                         planChangedByVolume = false;
-                        //do not enter volume reuse for next retry, since we want to look for resorces outside the volume's cluster
+                        // do not enter volume reuse for next retry, since we
+                        // want to look for resorces outside the volume's
+                        // cluster
                         reuseVolume = false;
                         continue;
                     }
@@ -954,9 +949,11 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                 Long cluster_id = dest.getCluster().getId();
                 ClusterDetailsVO cluster_detail_cpu = _clusterDetailsDao.findDetail(cluster_id, "cpuOvercommitRatio");
                 ClusterDetailsVO cluster_detail_ram = _clusterDetailsDao.findDetail(cluster_id, "memoryOvercommitRatio");
-                //storing the value of overcommit in the vm_details table for doing a capacity check in case the cluster overcommit ratio is changed.
-                if (_uservmDetailsDao.findDetail(vm.getId(), "cpuOvercommitRatio") == null &&
-                        ((Float.parseFloat(cluster_detail_cpu.getValue()) > 1f || Float.parseFloat(cluster_detail_ram.getValue()) > 1f))) {
+                // storing the value of overcommit in the vm_details table for
+                // doing a capacity check in case the cluster overcommit ratio
+                // is changed.
+                if (_uservmDetailsDao.findDetail(vm.getId(), "cpuOvercommitRatio") == null
+                        && ((Float.parseFloat(cluster_detail_cpu.getValue()) > 1f || Float.parseFloat(cluster_detail_ram.getValue()) > 1f))) {
                     _uservmDetailsDao.addDetail(vm.getId(), "cpuOvercommitRatio", cluster_detail_cpu.getValue(), true);
                     _uservmDetailsDao.addDetail(vm.getId(), "memoryOvercommitRatio", cluster_detail_ram.getValue(), true);
                 } else if (_uservmDetailsDao.findDetail(vm.getId(), "cpuOvercommitRatio") != null) {
@@ -983,7 +980,9 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                     if (vm.getHypervisorType() != HypervisorType.BareMetal) {
                         volumeMgr.prepare(vmProfile, dest);
                     }
-                    //since StorageMgr succeeded in volume creation, reuse Volume for further tries until current cluster has capacity
+                    // since StorageMgr succeeded in volume creation, reuse
+                    // Volume for further tries until current cluster has
+                    // capacity
                     if (!reuseVolume) {
                         reuseVolume = true;
                     }
@@ -998,7 +997,6 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                     cmds = new Commands(Command.OnError.Stop);
 
                     cmds.addCommand(new StartCommand(vmTO, dest.getHost(), getExecuteInSequence(vm.getHypervisorType())));
-
 
                     vmGuru.finalizeDeployment(cmds, vmProfile, dest, ctx);
 
@@ -1048,13 +1046,13 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                             }
 
                             StopCommand cmd = new StopCommand(vm, getExecuteInSequence(vm.getHypervisorType()), false);
-                            StopAnswer answer = (StopAnswer) _agentMgr.easySend(destHostId, cmd);
-                            if ( answer != null ) {
+                            StopAnswer answer = (StopAnswer)_agentMgr.easySend(destHostId, cmd);
+                            if (answer != null) {
 
                                 if (vm.getType() == VirtualMachine.Type.User) {
                                     String platform = answer.getPlatform();
                                     if (platform != null) {
-                                        Map<String,String> vmmetadata = new HashMap<String,String>();
+                                        Map<String, String> vmmetadata = new HashMap<String, String>();
                                         vmmetadata.put(vm.getInstanceName(), platform);
                                         syncVMMetaData(vmmetadata);
                                     }
@@ -1104,11 +1102,16 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                     if (startedVm == null && canRetry) {
                         Step prevStep = work.getStep();
                         _workDao.updateStep(work, Step.Release);
-                        // If previous step was started/ing && we got a valid answer
-                        if ((prevStep == Step.Started || prevStep == Step.Starting) && (startAnswer != null && startAnswer.getResult())) {  //TODO check the response of cleanup and record it in DB for retry
+                        // If previous step was started/ing && we got a valid
+                        // answer
+                        if ((prevStep == Step.Started || prevStep == Step.Starting) && (startAnswer != null && startAnswer.getResult())) { // TODO check the
+                            // response of cleanup
+                            // and record it in DB
+                            // for retry
                             cleanup(vmGuru, vmProfile, work, Event.OperationFailed, false);
                         } else {
-                            //if step is not starting/started, send cleanup command with force=true
+                            // if step is not starting/started, send cleanup
+                            // command with force=true
                             cleanup(vmGuru, vmProfile, work, Event.OperationFailed, true);
                         }
                     }
@@ -1135,7 +1138,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         }
     }
 
-    // for managed storage on KVM, need to make sure the path field of the volume in question is populated with the IQN
+    // for managed storage on KVM, need to make sure the path field of the
+    // volume in question is populated with the IQN
     private void handlePath(DiskTO[] disks, HypervisorType hypervisorType) {
         if (hypervisorType != HypervisorType.KVM) {
             return;
@@ -1166,7 +1170,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         }
     }
 
-    // for managed storage on XenServer and VMware, need to update the DB with a path if the VDI/VMDK file was newly created
+    // for managed storage on XenServer and VMware, need to update the DB with a
+    // path if the VDI/VMDK file was newly created
     private void handlePath(DiskTO[] disks, Map<String, String> iqnToPath) {
         if (disks != null && iqnToPath != null) {
             for (DiskTO disk : disks) {
@@ -1197,9 +1202,12 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                 VolumeObjectTO vol = (VolumeObjectTO)disk.getData();
                 VolumeVO volume = _volsDao.findById(vol.getId());
 
-                // Use getPath() from VolumeVO to get a fresh copy of what's in the DB.
-                // Before doing this, in a certain situation, getPath() from VolumeObjectTO
-                // returned null instead of an actual path (because it was out of date with the DB).
+                // Use getPath() from VolumeVO to get a fresh copy of what's in
+                // the DB.
+                // Before doing this, in a certain situation, getPath() from
+                // VolumeObjectTO
+                // returned null instead of an actual path (because it was out
+                // of date with the DB).
                 volumeMgr.updateVolumeDiskChain(vol.getId(), volume.getPath(), vol.getChainInfo());
             }
         }
@@ -1215,7 +1223,6 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             throw new CloudRuntimeException("Unable to stop vm because of a concurrent operation", e);
         }
     }
-
 
     protected boolean getExecuteInSequence(HypervisorType hypervisorType) {
         if (HypervisorType.KVM == hypervisorType) {
@@ -1336,8 +1343,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     @Override
-    public void advanceStop(String vmUuid, boolean cleanUpEvenIfUnableToStop)
-            throws AgentUnavailableException, OperationTimedoutException, ConcurrentOperationException {
+    public void advanceStop(String vmUuid, boolean cleanUpEvenIfUnableToStop) throws AgentUnavailableException, OperationTimedoutException, ConcurrentOperationException {
 
         AsyncJobExecutionContext jobContext = AsyncJobExecutionContext.getCurrentExecutionContext();
         if (!VmJobEnabled.value() || jobContext.isJobDispatchedBy(VmWorkConstants.VM_WORK_JOB_DISPATCHER)) {
@@ -1389,8 +1395,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         advanceStop(vm, cleanUpEvenIfUnableToStop);
     }
 
-    private void advanceStop(VMInstanceVO vm, boolean cleanUpEvenIfUnableToStop) throws AgentUnavailableException, OperationTimedoutException,
-    ConcurrentOperationException {
+    private void advanceStop(VMInstanceVO vm, boolean cleanUpEvenIfUnableToStop) throws AgentUnavailableException, OperationTimedoutException, ConcurrentOperationException {
         State state = vm.getState();
         if (state == State.Stopped) {
             if (s_logger.isDebugEnabled()) {
@@ -1585,14 +1590,15 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     protected boolean stateTransitTo(VMInstanceVO vm, VirtualMachine.Event e, Long hostId, String reservationId) throws NoTransitionException {
         // if there are active vm snapshots task, state change is not allowed
 
-        // Disable this hacking thing, VM snapshot task need to be managed by its orchestartion flow istelf instead of
+        // Disable this hacking thing, VM snapshot task need to be managed by
+        // its orchestartion flow istelf instead of
         // hacking it here at general VM manager
         /*
-                if (_vmSnapshotMgr.hasActiveVMSnapshotTasks(vm.getId())) {
-                    s_logger.error("State transit with event: " + e + " failed due to: " + vm.getInstanceName() + " has active VM snapshots tasks");
-                    return false;
-                }
-        */
+         * if (_vmSnapshotMgr.hasActiveVMSnapshotTasks(vm.getId())) {
+         * s_logger.error("State transit with event: " + e + " failed due to: "
+         * + vm.getInstanceName() + " has active VM snapshots tasks"); return
+         * false; }
+         */
         vm.setReservationId(reservationId);
         return _stateMachine.transitTo(vm, e, new Pair<Long, Long>(vm.getHostId(), hostId), _vmDao);
     }
@@ -1602,13 +1608,13 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         VMInstanceVO vm = (VMInstanceVO)vm1;
 
         /*
-         *  Remove the hacking logic here.
-                // if there are active vm snapshots task, state change is not allowed
-                if (_vmSnapshotMgr.hasActiveVMSnapshotTasks(vm.getId())) {
-                    s_logger.error("State transit with event: " + e + " failed due to: " + vm.getInstanceName() + " has active VM snapshots tasks");
-                    return false;
-                }
-        */
+         * Remove the hacking logic here. // if there are active vm snapshots
+         * task, state change is not allowed if
+         * (_vmSnapshotMgr.hasActiveVMSnapshotTasks(vm.getId())) {
+         * s_logger.error("State transit with event: " + e + " failed due to: "
+         * + vm.getInstanceName() + " has active VM snapshots tasks"); return
+         * false; }
+         */
 
         State oldState = vm.getState();
         if (oldState == State.Starting) {
@@ -1720,7 +1726,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             migrationResult = volumeMgr.storageMigration(profile, destPool);
 
             if (migrationResult) {
-                //if the vm is migrated to different pod in basic mode, need to reallocate ip
+                // if the vm is migrated to different pod in basic mode, need to
+                // reallocate ip
 
                 if (!vm.getPodIdToDeployIn().equals(destPool.getPodId())) {
                     DataCenterDeployment plan = new DataCenterDeployment(vm.getDataCenterId(), destPool.getPodId(), null, null, null, null);
@@ -1728,7 +1735,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                     _networkMgr.reallocate(vmProfile, plan);
                 }
 
-                //when start the vm next time, don;'t look at last_host_id, only choose the host based on volume/storage pool
+                // when start the vm next time, don;'t look at last_host_id,
+                // only choose the host based on volume/storage pool
                 vm.setLastHostId(null);
                 vm.setPodIdToDeployIn(destPool.getPodId());
             } else {
@@ -1760,8 +1768,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     @Override
-    public void migrate(String vmUuid, long srcHostId, DeployDestination dest)
-            throws ResourceUnavailableException, ConcurrentOperationException {
+    public void migrate(String vmUuid, long srcHostId, DeployDestination dest) throws ResourceUnavailableException, ConcurrentOperationException {
 
         AsyncJobExecutionContext jobContext = AsyncJobExecutionContext.getCurrentExecutionContext();
         if (!VmJobEnabled.value() || jobContext.isJobDispatchedBy(VmWorkConstants.VM_WORK_JOB_DISPATCHER)) {
@@ -1943,9 +1950,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                 s_logger.info("Migration was unsuccessful.  Cleaning up: " + vm);
                 _networkMgr.rollbackNicForMigration(vmSrc, profile);
 
-                _alertMgr.sendAlert(alertType, fromHost.getDataCenterId(), fromHost.getPodId(),
-                        "Unable to migrate vm " + vm.getInstanceName() + " from host " + fromHost.getName() + " in zone " + dest.getDataCenter().getName() + " and pod " +
-                                dest.getPod().getName(), "Migrate Command failed.  Please check logs.");
+                _alertMgr.sendAlert(alertType, fromHost.getDataCenterId(), fromHost.getPodId(), "Unable to migrate vm " + vm.getInstanceName() + " from host " + fromHost.getName()
+                        + " in zone " + dest.getDataCenter().getName() + " and pod " + dest.getPod().getName(), "Migrate Command failed.  Please check logs.");
                 try {
                     _agentMgr.send(dstHostId, new Commands(cleanup(vm)), null);
                 } catch (AgentUnavailableException ae) {
@@ -1968,27 +1974,30 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
     private Map<Volume, StoragePool> getPoolListForVolumesForMigration(VirtualMachineProfile profile, Host host, Map<Long, Long> volumeToPool) {
         List<VolumeVO> allVolumes = _volsDao.findUsableVolumesForInstance(profile.getId());
-        Map<Volume, StoragePool> volumeToPoolObjectMap = new HashMap<Volume, StoragePool> ();
+        Map<Volume, StoragePool> volumeToPoolObjectMap = new HashMap<Volume, StoragePool>();
         for (VolumeVO volume : allVolumes) {
             Long poolId = volumeToPool.get(Long.valueOf(volume.getId()));
             StoragePoolVO pool = _storagePoolDao.findById(poolId);
             StoragePoolVO currentPool = _storagePoolDao.findById(volume.getPoolId());
             DiskOfferingVO diskOffering = _diskOfferingDao.findById(volume.getDiskOfferingId());
             if (pool != null) {
-                // Check if pool is accessible from the destination host and disk offering with which the volume was
+                // Check if pool is accessible from the destination host and
+                // disk offering with which the volume was
                 // created is compliant with the pool type.
                 if (_poolHostDao.findByPoolHost(pool.getId(), host.getId()) == null || pool.isLocal() != diskOffering.getUseLocalStorage()) {
                     // Cannot find a pool for the volume. Throw an exception.
-                    throw new CloudRuntimeException("Cannot migrate volume " + volume + " to storage pool " + pool + " while migrating vm to host " + host +
-                            ". Either the pool is not accessible from the host or because of the offering with which the volume is created it cannot be placed on " +
-                            "the given pool.");
+                    throw new CloudRuntimeException("Cannot migrate volume " + volume + " to storage pool " + pool + " while migrating vm to host " + host
+                            + ". Either the pool is not accessible from the host or because of the offering with which the volume is created it cannot be placed on "
+                            + "the given pool.");
                 } else if (pool.getId() == currentPool.getId()) {
-                    // If the pool to migrate too is the same as current pool, the volume doesn't need to be migrated.
+                    // If the pool to migrate too is the same as current pool,
+                    // the volume doesn't need to be migrated.
                 } else {
                     volumeToPoolObjectMap.put(volume, pool);
                 }
             } else {
-                // Find a suitable pool for the volume. Call the storage pool allocator to find the list of pools.
+                // Find a suitable pool for the volume. Call the storage pool
+                // allocator to find the list of pools.
                 DiskProfile diskProfile = new DiskProfile(volume, diskOffering, profile.getHypervisorType());
                 DataCenterDeployment plan = new DataCenterDeployment(host.getDataCenterId(), host.getPodId(), host.getClusterId(), host.getId(), null, null);
                 ExcludeList avoid = new ExcludeList();
@@ -2003,8 +2012,10 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                 }
 
                 if (poolList != null && !poolList.isEmpty()) {
-                    // Volume needs to be migrated. Pick the first pool from the list. Add a mapping to migrate the
-                    // volume to a pool only if it is required; that is the current pool on which the volume resides
+                    // Volume needs to be migrated. Pick the first pool from the
+                    // list. Add a mapping to migrate the
+                    // volume to a pool only if it is required; that is the
+                    // current pool on which the volume resides
                     // is not available on the destination host.
                     Iterator<StoragePool> iter = poolList.iterator();
                     while (iter.hasNext()) {
@@ -2019,11 +2030,10 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                     }
                 }
 
-
                 if (!currentPoolAvailable && !volumeToPoolObjectMap.containsKey(volume)) {
                     // Cannot find a pool for the volume. Throw an exception.
-                    throw new CloudRuntimeException("Cannot find a storage pool which is available for volume " + volume + " while migrating virtual machine " +
-                            profile.getVirtualMachine() + " to host " + host);
+                    throw new CloudRuntimeException("Cannot find a storage pool which is available for volume " + volume + " while migrating virtual machine "
+                            + profile.getVirtualMachine() + " to host " + host);
                 }
             }
         }
@@ -2058,8 +2068,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     @Override
-    public void migrateWithStorage(String vmUuid, long srcHostId, long destHostId, Map<Long, Long> volumeToPool)
-            throws ResourceUnavailableException, ConcurrentOperationException {
+    public void migrateWithStorage(String vmUuid, long srcHostId, long destHostId, Map<Long, Long> volumeToPool) throws ResourceUnavailableException, ConcurrentOperationException {
 
         AsyncJobExecutionContext jobContext = AsyncJobExecutionContext.getCurrentExecutionContext();
         if (!VmJobEnabled.value() || jobContext.isJobDispatchedBy(VmWorkConstants.VM_WORK_JOB_DISPATCHER)) {
@@ -2099,12 +2108,12 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                     throw (RuntimeException)jobException;
                 else if (jobException instanceof Throwable)
                     throw new RuntimeException("Unexpected exception", (Throwable)jobException);
-           }
+            }
         }
     }
 
     private void orchestrateMigrateWithStorage(String vmUuid, long srcHostId, long destHostId, Map<Long, Long> volumeToPool) throws ResourceUnavailableException,
-    ConcurrentOperationException {
+            ConcurrentOperationException {
 
         VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
 
@@ -2121,11 +2130,12 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         VirtualMachineProfile profile = new VirtualMachineProfileImpl(vm);
         Map<Volume, StoragePool> volumeToPoolMap = getPoolListForVolumesForMigration(profile, destHost, volumeToPool);
 
-        // If none of the volumes have to be migrated, fail the call. Administrator needs to make a call for migrating
+        // If none of the volumes have to be migrated, fail the call.
+        // Administrator needs to make a call for migrating
         // a vm and not migrating a vm with storage.
         if (volumeToPoolMap == null || volumeToPoolMap.isEmpty()) {
-            throw new InvalidParameterValueException("Migration of the vm " + vm + "from host " + srcHost + " to destination host " + destHost +
-                    " doesn't involve migrating the volumes.");
+            throw new InvalidParameterValueException("Migration of the vm " + vm + "from host " + srcHost + " to destination host " + destHost
+                    + " doesn't involve migrating the volumes.");
         }
 
         AlertManager.AlertType alertType = AlertManager.AlertType.ALERT_TYPE_USERVM_MIGRATE;
@@ -2177,9 +2187,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         } finally {
             if (!migrated) {
                 s_logger.info("Migration was unsuccessful.  Cleaning up: " + vm);
-                _alertMgr.sendAlert(alertType, srcHost.getDataCenterId(), srcHost.getPodId(),
-                        "Unable to migrate vm " + vm.getInstanceName() + " from host " + srcHost.getName() + " in zone " + dc.getName() + " and pod " + dc.getName(),
-                        "Migrate Command failed.  Please check logs.");
+                _alertMgr.sendAlert(alertType, srcHost.getDataCenterId(), srcHost.getPodId(), "Unable to migrate vm " + vm.getInstanceName() + " from host " + srcHost.getName()
+                        + " in zone " + dc.getName() + " and pod " + dc.getName(), "Migrate Command failed.  Please check logs.");
                 try {
                     _agentMgr.send(destHostId, new Commands(cleanup(vm.getInstanceName())), null);
                     stateTransitTo(vm, Event.OperationFailed, srcHostId);
@@ -2406,8 +2415,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     @Override
-    public void advanceReboot(String vmUuid, Map<VirtualMachineProfile.Param, Object> params)
-            throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException {
+    public void advanceReboot(String vmUuid, Map<VirtualMachineProfile.Param, Object> params) throws InsufficientCapacityException, ConcurrentOperationException,
+            ResourceUnavailableException {
 
         AsyncJobExecutionContext jobContext = AsyncJobExecutionContext.getCurrentExecutionContext();
         if (!VmJobEnabled.value() || jobContext.isJobDispatchedBy(VmWorkConstants.VM_WORK_JOB_DISPATCHER)) {
@@ -2452,7 +2461,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     private void orchestrateReboot(String vmUuid, Map<VirtualMachineProfile.Param, Object> params) throws InsufficientCapacityException, ConcurrentOperationException,
-    ResourceUnavailableException {
+            ResourceUnavailableException {
         VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
 
         DataCenter dc = _entityMgr.findById(DataCenter.class, vm.getDataCenterId());
@@ -2502,8 +2511,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             AgentVmInfo info = infos.remove(vm.getId());
 
             // sync VM Snapshots related transient states
-            List<VMSnapshotVO> vmSnapshotsInTrasientStates =
-                    _vmSnapshotDao.listByInstanceId(vm.getId(), VMSnapshot.State.Expunging, VMSnapshot.State.Reverting, VMSnapshot.State.Creating);
+            List<VMSnapshotVO> vmSnapshotsInTrasientStates = _vmSnapshotDao.listByInstanceId(vm.getId(), VMSnapshot.State.Expunging, VMSnapshot.State.Reverting,
+                    VMSnapshot.State.Creating);
             if (vmSnapshotsInTrasientStates.size() > 1) {
                 s_logger.info("Found vm " + vm.getInstanceName() + " with VM snapshots in transient states, needs to sync VM snapshot state");
                 if (!_vmSnapshotMgr.syncVMSnapshot(vm, hostId)) {
@@ -2594,23 +2603,23 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                 boolean changed = false;
                 UserVmVO userVm = _userVmDao.findById(vm.getId());
                 _userVmDao.loadDetails(userVm);
-                if ( userVm.details.containsKey("timeoffset")) {
+                if (userVm.details.containsKey("timeoffset")) {
                     userVm.details.remove("timeoffset");
                     changed = true;
                 }
                 if (!userVm.details.containsKey("platform") || !userVm.details.get("platform").equals(platform)) {
-                    userVm.setDetail("platform",  platform);
+                    userVm.setDetail("platform", platform);
                     changed = true;
                 }
                 String pvdriver = "xenserver56";
-                if ( platform.contains("device_id")) {
+                if (platform.contains("device_id")) {
                     pvdriver = "xenserver61";
                 }
                 if (!userVm.details.containsKey("hypervisortoolsversion") || !userVm.details.get("hypervisortoolsversion").equals(pvdriver)) {
                     userVm.setDetail("hypervisortoolsversion", pvdriver);
                     changed = true;
                 }
-                if ( changed ) {
+                if (changed) {
                     _userVmDao.saveDetails(userVm);
                 }
             }
@@ -2629,8 +2638,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             AgentVmInfo info = infos.remove(vm.getId());
 
             // sync VM Snapshots related transient states
-            List<VMSnapshotVO> vmSnapshotsInExpungingStates =
-                    _vmSnapshotDao.listByInstanceId(vm.getId(), VMSnapshot.State.Expunging, VMSnapshot.State.Creating, VMSnapshot.State.Reverting);
+            List<VMSnapshotVO> vmSnapshotsInExpungingStates = _vmSnapshotDao.listByInstanceId(vm.getId(), VMSnapshot.State.Expunging, VMSnapshot.State.Creating,
+                    VMSnapshot.State.Reverting);
             if (vmSnapshotsInExpungingStates.size() > 0) {
                 s_logger.info("Found vm " + vm.getInstanceName() + " in state. " + vm.getState() + ", needs to sync VM snapshot state");
                 Long hostId = null;
@@ -2647,20 +2656,23 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                 }
             }
 
-            if ((info == null && (vm.getState() == State.Running || vm.getState() == State.Starting)) ||
-                    (info != null && (info.state == State.Running && vm.getState() == State.Starting))) {
-                s_logger.info("Found vm " + vm.getInstanceName() + " in inconsistent state. " + vm.getState() + " on CS while " + (info == null ? "Stopped" : "Running") +
-                        " on agent");
+            if ((info == null && (vm.getState() == State.Running || vm.getState() == State.Starting))
+                    || (info != null && (info.state == State.Running && vm.getState() == State.Starting))) {
+                s_logger.info("Found vm " + vm.getInstanceName() + " in inconsistent state. " + vm.getState() + " on CS while " + (info == null ? "Stopped" : "Running")
+                        + " on agent");
                 info = new AgentVmInfo(vm.getInstanceName(), vm, State.Stopped);
 
-                // Bug 13850- grab outstanding work item if any for this VM state so that we mark it as DONE after we change VM state, else it will remain pending
+                // Bug 13850- grab outstanding work item if any for this VM
+                // state so that we mark it as DONE after we change VM state,
+                // else it will remain pending
                 ItWorkVO work = _workDao.findByOutstandingWork(vm.getId(), vm.getState());
                 if (work != null) {
                     if (s_logger.isDebugEnabled()) {
                         s_logger.debug("Found an outstanding work item for this vm " + vm + " in state:" + vm.getState() + ", work id:" + work.getId());
                     }
                 }
-                vm.setState(State.Running); // set it as running and let HA take care of it
+                vm.setState(State.Running); // set it as running and let HA take
+                // care of it
                 _vmDao.persist(vm);
 
                 if (work != null) {
@@ -2686,13 +2698,14 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                     s_logger.warn("Unable to update state of the VM due to exception " + e.getMessage());
                     e.printStackTrace();
                 }
-            } else if (info != null &&
-                    (vm.getState() == State.Stopped || vm.getState() == State.Stopping || vm.isRemoved() || vm.getState() == State.Destroyed || vm.getState() == State.Expunging)) {
+            } else if (info != null
+                    && (vm.getState() == State.Stopped || vm.getState() == State.Stopping || vm.isRemoved() || vm.getState() == State.Destroyed || vm.getState() == State.Expunging)) {
                 Host host = _hostDao.findByGuid(info.getHostUuid());
                 if (host != null) {
                     s_logger.warn("Stopping a VM which is stopped/stopping/destroyed/expunging " + info.name);
                     if (vm.getState() == State.Stopped || vm.getState() == State.Stopping) {
-                        vm.setState(State.Stopped); // set it as stop and clear it from host
+                        vm.setState(State.Stopped); // set it as stop and clear
+                        // it from host
                         vm.setHostId(null);
                         _vmDao.persist(vm);
                     }
@@ -2706,31 +2719,34 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                     }
                 }
             } else
-                // host id can change
-                if (info != null && vm.getState() == State.Running) {
-                    // check for host id changes
-                    Host host = _hostDao.findByGuid(info.getHostUuid());
-                    if (host != null && (vm.getHostId() == null || host.getId() != vm.getHostId())) {
-                        s_logger.info("Found vm " + vm.getInstanceName() + " with inconsistent host in db, new host is " + host.getId());
-                        try {
-                            stateTransitTo(vm, VirtualMachine.Event.AgentReportMigrated, host.getId());
-                        } catch (NoTransitionException e) {
-                            s_logger.warn(e.getMessage());
-                        }
+            // host id can change
+            if (info != null && vm.getState() == State.Running) {
+                // check for host id changes
+                Host host = _hostDao.findByGuid(info.getHostUuid());
+                if (host != null && (vm.getHostId() == null || host.getId() != vm.getHostId())) {
+                    s_logger.info("Found vm " + vm.getInstanceName() + " with inconsistent host in db, new host is " + host.getId());
+                    try {
+                        stateTransitTo(vm, VirtualMachine.Event.AgentReportMigrated, host.getId());
+                    } catch (NoTransitionException e) {
+                        s_logger.warn(e.getMessage());
                     }
                 }
-            /* else if(info == null && vm.getState() == State.Stopping) { //Handling CS-13376
-                        s_logger.warn("Marking the VM as Stopped as it was still stopping on the CS" +vm.getName());
-                        vm.setState(State.Stopped); // Setting the VM as stopped on the DB and clearing it from the host
-                        vm.setLastHostId(vm.getHostId());
-                        vm.setHostId(null);
-                        _vmDao.persist(vm);
-                 }*/
+            }
+            /*
+             * else if(info == null && vm.getState() == State.Stopping) {
+             * //Handling CS-13376 s_logger.warn(
+             * "Marking the VM as Stopped as it was still stopping on the CS"
+             * +vm.getName()); vm.setState(State.Stopped); // Setting the VM as
+             * stopped on the DB and clearing it from the host
+             * vm.setLastHostId(vm.getHostId()); vm.setHostId(null);
+             * _vmDao.persist(vm); }
+             */
         }
 
         for (final AgentVmInfo left : infos.values()) {
             if (!VirtualMachineName.isValidVmName(left.name))
-                continue;  // if the vm doesn't follow CS naming ignore it for stopping
+                continue; // if the vm doesn't follow CS naming ignore it for
+            // stopping
             try {
                 Host host = _hostDao.findByGuid(left.getHostUuid());
                 if (host != null) {
@@ -2841,16 +2857,16 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             HostVO hostVO = _hostDao.findById(vm.getHostId());
 
             String hostDesc = "name: " + hostVO.getName() + " (id:" + hostVO.getId() + "), availability zone: " + dcVO.getName() + ", pod: " + podVO.getName();
-            _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "VM (name: " + vm.getInstanceName() + ", id: " + vm.getId() +
-                    ") stopped on host " + hostDesc + " due to storage failure", "Virtual Machine " + vm.getInstanceName() + " (id: " + vm.getId() + ") running on host [" +
-                            vm.getHostId() + "] stopped due to storage failure.");
+            _alertMgr.sendAlert(alertType, vm.getDataCenterId(), vm.getPodIdToDeployIn(), "VM (name: " + vm.getInstanceName() + ", id: " + vm.getId() + ") stopped on host "
+                    + hostDesc + " due to storage failure", "Virtual Machine " + vm.getInstanceName() + " (id: " + vm.getId() + ") running on host [" + vm.getHostId()
+                    + "] stopped due to storage failure.");
         }
 
         if (trackExternalChange) {
             if (serverState == State.Starting) {
                 if (vm.getHostId() != null && vm.getHostId() != hostId) {
-                    s_logger.info("CloudStack is starting VM on host " + vm.getHostId() + ", but status report comes from a different host " + hostId +
-                            ", skip status sync for vm: " + vm.getInstanceName());
+                    s_logger.info("CloudStack is starting VM on host " + vm.getHostId() + ", but status report comes from a different host " + hostId
+                            + ", skip status sync for vm: " + vm.getInstanceName());
                     return null;
                 }
             }
@@ -2874,8 +2890,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         if (trackExternalChange) {
             if (serverState == State.Starting) {
                 if (vm.getHostId() != null && vm.getHostId() != hostId) {
-                    s_logger.info("CloudStack is starting VM on host " + vm.getHostId() + ", but status report comes from a different host " + hostId +
-                            ", skip status sync for vm: " + vm.getInstanceName());
+                    s_logger.info("CloudStack is starting VM on host " + vm.getHostId() + ", but status report comes from a different host " + hostId
+                            + ", skip status sync for vm: " + vm.getInstanceName());
                     return null;
                 }
             }
@@ -2890,8 +2906,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                     //
                     if (vm.getHostId() == null || hostId != vm.getHostId()) {
                         if (s_logger.isDebugEnabled()) {
-                            s_logger.debug("detected host change when VM " + vm + " is at running state, VM could be live-migrated externally from host " +
-                                    vm.getHostId() + " to host " + hostId);
+                            s_logger.debug("detected host change when VM " + vm + " is at running state, VM could be live-migrated externally from host " + vm.getHostId()
+                                    + " to host " + hostId);
                         }
 
                         stateTransitTo(vm, VirtualMachine.Event.AgentReportMigrated, hostId);
@@ -2988,8 +3004,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         return command;
     }
 
-    private void ensureVmRunningContext(long hostId, VMInstanceVO vm, Event cause) throws OperationTimedoutException, ResourceUnavailableException,
-    NoTransitionException, InsufficientAddressCapacityException {
+    private void ensureVmRunningContext(long hostId, VMInstanceVO vm, Event cause) throws OperationTimedoutException, ResourceUnavailableException, NoTransitionException,
+            InsufficientAddressCapacityException {
         VirtualMachineGuru vmGuru = getVmGuru(vm);
 
         s_logger.debug("VM state is starting on full sync so updating it to running");
@@ -3017,9 +3033,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         List<NicVO> nics = _nicsDao.listByVmId(profile.getId());
         for (NicVO nic : nics) {
             Network network = _networkModel.getNetwork(nic.getNetworkId());
-            NicProfile nicProfile =
-                    new NicProfile(nic, network, nic.getBroadcastUri(), nic.getIsolationUri(), null, _networkModel.isSecurityGroupSupportedInNetwork(network),
-                            _networkModel.getNetworkTag(profile.getHypervisorType(), network));
+            NicProfile nicProfile = new NicProfile(nic, network, nic.getBroadcastUri(), nic.getIsolationUri(), null, _networkModel.isSecurityGroupSupportedInNetwork(network),
+                    _networkModel.getNetworkTag(profile.getHypervisorType(), network));
             profile.addNic(nicProfile);
         }
 
@@ -3057,7 +3072,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     @Override
     public boolean processAnswers(long agentId, long seq, Answer[] answers) {
         for (final Answer answer : answers) {
-            if ( answer instanceof ClusterVMMetaDataSyncAnswer) {
+            if (answer instanceof ClusterVMMetaDataSyncAnswer) {
                 ClusterVMMetaDataSyncAnswer cvms = (ClusterVMMetaDataSyncAnswer)answer;
                 if (!cvms.isExecuted()) {
                     syncVMMetaData(cvms.getVMMetaDatum());
@@ -3096,13 +3111,14 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                         }
                     }
                 }
-                if(VmJobEnabled.value()) {
+                if (VmJobEnabled.value()) {
                     if (ping.getHostVmStateReport() != null) {
                         _syncMgr.processHostVmStatePingReport(agentId, ping.getHostVmStateReport());
                     }
                 }
 
-                // take the chance to scan VMs that are stuck in transitional states
+                // take the chance to scan VMs that are stuck in transitional
+                // states
                 // and are missing from the report
                 scanStalledVMInTransitionStateOnUpHost(agentId);
                 processed = true;
@@ -3127,10 +3143,10 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             return;
         }
 
-        if(s_logger.isDebugEnabled())
+        if (s_logger.isDebugEnabled())
             s_logger.debug("Received startup command from hypervisor host. host id: " + agent.getId());
 
-        if(VmJobEnabled.value()) {
+        if (VmJobEnabled.value()) {
             _syncMgr.resetHostSyncState(agent.getId());
         }
 
@@ -3147,7 +3163,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         Long clusterId = agent.getClusterId();
         long agentId = agent.getId();
 
-        if (agent.getHypervisorType() == HypervisorType.XenServer) { // only for Xen
+        if (agent.getHypervisorType() == HypervisorType.XenServer) { // only for
+            // Xen
             if (!VmJobEnabled.value()) {
                 StartupRoutingCommand startup = (StartupRoutingCommand)cmd;
                 HashMap<String, Pair<String, State>> allStates = startup.getClusterVMStateChanges();
@@ -3264,57 +3281,66 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         // Check that the VM is stopped / running
         if (!(vmInstance.getState().equals(State.Stopped) || vmInstance.getState().equals(State.Running))) {
             s_logger.warn("Unable to upgrade virtual machine " + vmInstance.toString() + " in state " + vmInstance.getState());
-            throw new InvalidParameterValueException("Unable to upgrade virtual machine " + vmInstance.toString() + " " + " in state " + vmInstance.getState() +
-                    "; make sure the virtual machine is stopped/running");
+            throw new InvalidParameterValueException("Unable to upgrade virtual machine " + vmInstance.toString() + " " + " in state " + vmInstance.getState()
+                    + "; make sure the virtual machine is stopped/running");
         }
 
-        // Check if the service offering being upgraded to is what the VM is already running with
+        // Check if the service offering being upgraded to is what the VM is
+        // already running with
         if (!newServiceOffering.isDynamic() && vmInstance.getServiceOfferingId() == newServiceOffering.getId()) {
             if (s_logger.isInfoEnabled()) {
-                s_logger.info("Not upgrading vm " + vmInstance.toString() + " since it already has the requested " + "service offering (" + newServiceOffering.getName() +
-                        ")");
+                s_logger.info("Not upgrading vm " + vmInstance.toString() + " since it already has the requested " + "service offering (" + newServiceOffering.getName() + ")");
             }
 
-            throw new InvalidParameterValueException("Not upgrading vm " + vmInstance.toString() + " since it already " + "has the requested service offering (" +
-                    newServiceOffering.getName() + ")");
+            throw new InvalidParameterValueException("Not upgrading vm " + vmInstance.toString() + " since it already " + "has the requested service offering ("
+                    + newServiceOffering.getName() + ")");
         }
 
         ServiceOfferingVO currentServiceOffering = _offeringDao.findByIdIncludingRemoved(vmInstance.getId(), vmInstance.getServiceOfferingId());
 
-        // Check that the service offering being upgraded to has the same Guest IP type as the VM's current service offering
-        // NOTE: With the new network refactoring in 2.2, we shouldn't need the check for same guest IP type anymore.
+        // Check that the service offering being upgraded to has the same Guest
+        // IP type as the VM's current service offering
+        // NOTE: With the new network refactoring in 2.2, we shouldn't need the
+        // check for same guest IP type anymore.
         /*
-         * if (!currentServiceOffering.getGuestIpType().equals(newServiceOffering.getGuestIpType())) { String errorMsg =
-         * "The service offering being upgraded to has a guest IP type: " + newServiceOffering.getGuestIpType(); errorMsg +=
-         * ". Please select a service offering with the same guest IP type as the VM's current service offering (" +
-         * currentServiceOffering.getGuestIpType() + ")."; throw new InvalidParameterValueException(errorMsg); }
+         * if
+         * (!currentServiceOffering.getGuestIpType().equals(newServiceOffering
+         * .getGuestIpType())) { String errorMsg =
+         * "The service offering being upgraded to has a guest IP type: " +
+         * newServiceOffering.getGuestIpType(); errorMsg +=
+         * ". Please select a service offering with the same guest IP type as the VM's current service offering ("
+         * + currentServiceOffering.getGuestIpType() + ")."; throw new
+         * InvalidParameterValueException(errorMsg); }
          */
 
-        // Check that the service offering being upgraded to has the same storage pool preference as the VM's current service
+        // Check that the service offering being upgraded to has the same
+        // storage pool preference as the VM's current service
         // offering
         if (currentServiceOffering.getUseLocalStorage() != newServiceOffering.getUseLocalStorage()) {
-            throw new InvalidParameterValueException("Unable to upgrade virtual machine " + vmInstance.toString() +
-                    ", cannot switch between local storage and shared storage service offerings.  Current offering " + "useLocalStorage=" +
-                    currentServiceOffering.getUseLocalStorage() + ", target offering useLocalStorage=" + newServiceOffering.getUseLocalStorage());
+            throw new InvalidParameterValueException("Unable to upgrade virtual machine " + vmInstance.toString()
+                    + ", cannot switch between local storage and shared storage service offerings.  Current offering " + "useLocalStorage="
+                    + currentServiceOffering.getUseLocalStorage() + ", target offering useLocalStorage=" + newServiceOffering.getUseLocalStorage());
         }
 
-        // if vm is a system vm, check if it is a system service offering, if yes return with error as it cannot be used for user vms
+        // if vm is a system vm, check if it is a system service offering, if
+        // yes return with error as it cannot be used for user vms
         if (currentServiceOffering.getSystemUse() != newServiceOffering.getSystemUse()) {
             throw new InvalidParameterValueException("isSystem property is different for current service offering and new service offering");
         }
 
         // Check that there are enough resources to upgrade the service offering
         if (!isVirtualMachineUpgradable(vmInstance, newServiceOffering)) {
-            throw new InvalidParameterValueException("Unable to upgrade virtual machine, not enough resources available " + "for an offering of " +
-                    newServiceOffering.getCpu() + " cpu(s) at " + newServiceOffering.getSpeed() + " Mhz, and " + newServiceOffering.getRamSize() + " MB of memory");
+            throw new InvalidParameterValueException("Unable to upgrade virtual machine, not enough resources available " + "for an offering of " + newServiceOffering.getCpu()
+                    + " cpu(s) at " + newServiceOffering.getSpeed() + " Mhz, and " + newServiceOffering.getRamSize() + " MB of memory");
         }
 
-        // Check that the service offering being upgraded to has all the tags of the current service offering
+        // Check that the service offering being upgraded to has all the tags of
+        // the current service offering
         List<String> currentTags = StringUtils.csvTagsToList(currentServiceOffering.getTags());
         List<String> newTags = StringUtils.csvTagsToList(newServiceOffering.getTags());
         if (!newTags.containsAll(currentTags)) {
-            throw new InvalidParameterValueException("Unable to upgrade virtual machine; the new service offering " + "does not have all the tags of the " +
-                    "current service offering. Current service offering tags: " + currentTags + "; " + "new service " + "offering tags: " + newTags);
+            throw new InvalidParameterValueException("Unable to upgrade virtual machine; the new service offering " + "does not have all the tags of the "
+                    + "current service offering. Current service offering tags: " + currentTags + "; " + "new service " + "offering tags: " + newTags);
         }
     }
 
@@ -3330,8 +3356,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     @Override
-    public NicProfile addVmToNetwork(VirtualMachine vm, Network network, NicProfile requested)
-            throws ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException {
+    public NicProfile addVmToNetwork(VirtualMachine vm, Network network, NicProfile requested) throws ConcurrentOperationException, ResourceUnavailableException,
+            InsufficientCapacityException {
 
         AsyncJobExecutionContext jobContext = AsyncJobExecutionContext.getCurrentExecutionContext();
         if (!VmJobEnabled.value() || jobContext.isJobDispatchedBy(VmWorkConstants.VM_WORK_JOB_DISPATCHER)) {
@@ -3379,7 +3405,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     private NicProfile orchestrateAddVmToNetwork(VirtualMachine vm, Network network, NicProfile requested) throws ConcurrentOperationException, ResourceUnavailableException,
-    InsufficientCapacityException {
+            InsufficientCapacityException {
         CallContext cctx = CallContext.current();
 
         s_logger.debug("Adding vm " + vm + " to network " + network + "; requested nic profile " + requested);
@@ -3392,19 +3418,19 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         Host host = _hostDao.findById(vm.getHostId());
         DeployDestination dest = new DeployDestination(dc, null, null, host);
 
-        //check vm state
+        // check vm state
         if (vm.getState() == State.Running) {
-            //1) allocate and prepare nic
+            // 1) allocate and prepare nic
             NicProfile nic = _networkMgr.createNicForVm(network, requested, context, vmProfile, true);
 
-            //2) Convert vmProfile to vmTO
+            // 2) Convert vmProfile to vmTO
             HypervisorGuru hvGuru = _hvGuruMgr.getGuru(vmProfile.getVirtualMachine().getHypervisorType());
             VirtualMachineTO vmTO = hvGuru.implement(vmProfile);
 
-            //3) Convert nicProfile to NicTO
+            // 3) Convert nicProfile to NicTO
             NicTO nicTO = toNicTO(nic, vmProfile.getVirtualMachine().getHypervisorType());
 
-            //4) plug the nic to the vm
+            // 4) plug the nic to the vm
             s_logger.debug("Plugging nic for vm " + vm + " in network " + network);
 
             boolean result = false;
@@ -3428,7 +3454,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                 }
             }
         } else if (vm.getState() == State.Stopped) {
-            //1) allocate nic
+            // 1) allocate nic
             return _networkMgr.createNicForVm(network, requested, context, vmProfile, false);
         } else {
             s_logger.warn("Unable to add vm " + vm + " to network  " + network);
@@ -3445,8 +3471,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     @Override
-    public boolean removeNicFromVm(VirtualMachine vm, Nic nic)
-            throws ConcurrentOperationException, ResourceUnavailableException {
+    public boolean removeNicFromVm(VirtualMachine vm, Nic nic) throws ConcurrentOperationException, ResourceUnavailableException {
 
         AsyncJobExecutionContext jobContext = AsyncJobExecutionContext.getCurrentExecutionContext();
         if (!VmJobEnabled.value() || jobContext.isJobDispatchedBy(VmWorkConstants.VM_WORK_JOB_DISPATCHER)) {
@@ -3514,15 +3539,13 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
         // if specified nic is associated with PF/LB/Static NAT
         if (rulesMgr.listAssociatedRulesForGuestNic(nic).size() > 0) {
-            throw new CloudRuntimeException("Failed to remove nic from " + vm + " in " + network +
-                    ", nic has associated Port forwarding or Load balancer or Static NAT rules.");
+            throw new CloudRuntimeException("Failed to remove nic from " + vm + " in " + network + ", nic has associated Port forwarding or Load balancer or Static NAT rules.");
         }
 
-        NicProfile nicProfile =
-                new NicProfile(nic, network, nic.getBroadcastUri(), nic.getIsolationUri(), _networkModel.getNetworkRate(network.getId(), vm.getId()),
-                        _networkModel.isSecurityGroupSupportedInNetwork(network), _networkModel.getNetworkTag(vmProfile.getVirtualMachine().getHypervisorType(), network));
+        NicProfile nicProfile = new NicProfile(nic, network, nic.getBroadcastUri(), nic.getIsolationUri(), _networkModel.getNetworkRate(network.getId(), vm.getId()),
+                _networkModel.isSecurityGroupSupportedInNetwork(network), _networkModel.getNetworkTag(vmProfile.getVirtualMachine().getHypervisorType(), network));
 
-        //1) Unplug the nic
+        // 1) Unplug the nic
         if (vm.getState() == State.Running) {
             NicTO nicTO = toNicTO(nicProfile, vmProfile.getVirtualMachine().getHypervisorType());
             s_logger.debug("Un-plugging nic " + nic + " for vm " + vm + " from network " + network);
@@ -3530,8 +3553,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             if (result) {
                 s_logger.debug("Nic is unplugged successfully for vm " + vm + " in network " + network);
                 long isDefault = (nic.isDefaultNic()) ? 1 : 0;
-                UsageEventUtils.publishUsageEvent(EventTypes.EVENT_NETWORK_OFFERING_REMOVE, vm.getAccountId(), vm.getDataCenterId(), vm.getId(),
-                        Long.toString(nic.getId()), network.getNetworkOfferingId(), null, isDefault, VirtualMachine.class.getName(), vm.getUuid(), vm.isDisplay());
+                UsageEventUtils.publishUsageEvent(EventTypes.EVENT_NETWORK_OFFERING_REMOVE, vm.getAccountId(), vm.getDataCenterId(), vm.getId(), Long.toString(nic.getId()),
+                        network.getNetworkOfferingId(), null, isDefault, VirtualMachine.class.getName(), vm.getUuid(), vm.isDisplay());
             } else {
                 s_logger.warn("Failed to unplug nic for the vm " + vm + " from network " + network);
                 return false;
@@ -3541,11 +3564,11 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             throw new ResourceUnavailableException("Unable to remove vm " + vm + " from network, is not in the right state", DataCenter.class, vm.getDataCenterId());
         }
 
-        //2) Release the nic
+        // 2) Release the nic
         _networkMgr.releaseNic(vmProfile, nic);
         s_logger.debug("Successfully released nic " + nic + "for vm " + vm);
 
-        //3) Remove the nic
+        // 3) Remove the nic
         _networkMgr.removeNic(vmProfile, nic);
         _nicsDao.expunge(nic.getId());
         return true;
@@ -3554,7 +3577,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     @Override
     @DB
     public boolean removeVmFromNetwork(VirtualMachine vm, Network network, URI broadcastUri) throws ConcurrentOperationException, ResourceUnavailableException {
-        // TODO will serialize on the VM object later to resolve operation conflicts
+        // TODO will serialize on the VM object later to resolve operation
+        // conflicts
         return orchestrateRemoveVmFromNetwork(vm, network, broadcastUri);
     }
 
@@ -3590,10 +3614,10 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             throw new CloudRuntimeException("Failed to remove nic from " + vm + " in " + network + ", nic is default.");
         }
 
-        //Lock on nic is needed here
+        // Lock on nic is needed here
         Nic lock = _nicsDao.acquireInLockTable(nic.getId());
         if (lock == null) {
-            //check if nic is still there. Return if it was released already
+            // check if nic is still there. Return if it was released already
             if (_nicsDao.findById(nic.getId()) == null) {
                 if (s_logger.isDebugEnabled()) {
                     s_logger.debug("Not need to remove the vm " + vm + " from network " + network + " as the vm doesn't have nic in this network");
@@ -3608,11 +3632,10 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         }
 
         try {
-            NicProfile nicProfile =
-                    new NicProfile(nic, network, nic.getBroadcastUri(), nic.getIsolationUri(), _networkModel.getNetworkRate(network.getId(), vm.getId()),
-                            _networkModel.isSecurityGroupSupportedInNetwork(network), _networkModel.getNetworkTag(vmProfile.getVirtualMachine().getHypervisorType(), network));
+            NicProfile nicProfile = new NicProfile(nic, network, nic.getBroadcastUri(), nic.getIsolationUri(), _networkModel.getNetworkRate(network.getId(), vm.getId()),
+                    _networkModel.isSecurityGroupSupportedInNetwork(network), _networkModel.getNetworkTag(vmProfile.getVirtualMachine().getHypervisorType(), network));
 
-            //1) Unplug the nic
+            // 1) Unplug the nic
             if (vm.getState() == State.Running) {
                 NicTO nicTO = toNicTO(nicProfile, vmProfile.getVirtualMachine().getHypervisorType());
                 s_logger.debug("Un-plugging nic for vm " + vm + " from network " + network);
@@ -3628,11 +3651,11 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                 throw new ResourceUnavailableException("Unable to remove vm " + vm + " from network, is not in the right state", DataCenter.class, vm.getDataCenterId());
             }
 
-            //2) Release the nic
+            // 2) Release the nic
             _networkMgr.releaseNic(vmProfile, nic);
             s_logger.debug("Successfully released nic " + nic + "for vm " + vm);
 
-            //3) Remove the nic
+            // 3) Remove the nic
             _networkMgr.removeNic(vmProfile, nic);
             return true;
         } finally {
@@ -3647,7 +3670,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
     @Override
     public void findHostAndMigrate(String vmUuid, Long newSvcOfferingId, ExcludeList excludes) throws InsufficientCapacityException, ConcurrentOperationException,
-    ResourceUnavailableException {
+            ResourceUnavailableException {
 
         VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
         if (vm == null) {
@@ -3664,7 +3687,9 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         Host host = _hostDao.findById(srcHostId);
         DataCenterDeployment plan = new DataCenterDeployment(host.getDataCenterId(), host.getPodId(), host.getClusterId(), null, null, null);
         excludes.addHost(vm.getHostId());
-        vm.setServiceOfferingId(newSvcOfferingId); // Need to find the destination host based on new svc offering
+        vm.setServiceOfferingId(newSvcOfferingId); // Need to find the
+        // destination host based on
+        // new svc offering
 
         DeployDestination dest = null;
 
@@ -3698,8 +3723,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     @Override
-    public void migrateForScale(String vmUuid, long srcHostId, DeployDestination dest, Long oldSvcOfferingId)
-            throws ResourceUnavailableException, ConcurrentOperationException {
+    public void migrateForScale(String vmUuid, long srcHostId, DeployDestination dest, Long oldSvcOfferingId) throws ResourceUnavailableException, ConcurrentOperationException {
         AsyncJobExecutionContext jobContext = AsyncJobExecutionContext.getCurrentExecutionContext();
         if (!VmJobEnabled.value() || jobContext.isJobDispatchedBy(VmWorkConstants.VM_WORK_JOB_DISPATCHER)) {
             // avoid re-entrance
@@ -3740,8 +3764,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         }
     }
 
-    private void orchestrateMigrateForScale(String vmUuid, long srcHostId, DeployDestination dest, Long oldSvcOfferingId)
-            throws ResourceUnavailableException, ConcurrentOperationException {
+    private void orchestrateMigrateForScale(String vmUuid, long srcHostId, DeployDestination dest, Long oldSvcOfferingId) throws ResourceUnavailableException,
+            ConcurrentOperationException {
 
         VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
         s_logger.info("Migrating " + vm + " to " + dest);
@@ -3847,7 +3871,10 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
             try {
                 long newServiceOfferingId = vm.getServiceOfferingId();
-                vm.setServiceOfferingId(oldSvcOfferingId); // release capacity for the old service offering only
+                vm.setServiceOfferingId(oldSvcOfferingId); // release capacity
+                // for the old
+                // service offering
+                // only
                 if (!changeState(vm, VirtualMachine.Event.OperationSucceeded, dstHostId, work, Step.Started)) {
                     throw new ConcurrentOperationException("Unable to change the state for " + vm);
                 }
@@ -3876,9 +3903,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             if (!migrated) {
                 s_logger.info("Migration was unsuccessful.  Cleaning up: " + vm);
 
-                _alertMgr.sendAlert(alertType, fromHost.getDataCenterId(), fromHost.getPodId(),
-                        "Unable to migrate vm " + vm.getInstanceName() + " from host " + fromHost.getName() + " in zone " + dest.getDataCenter().getName() + " and pod " +
-                                dest.getPod().getName(), "Migrate Command failed.  Please check logs.");
+                _alertMgr.sendAlert(alertType, fromHost.getDataCenterId(), fromHost.getPodId(), "Unable to migrate vm " + vm.getInstanceName() + " from host " + fromHost.getName()
+                        + " in zone " + dest.getDataCenter().getName() + " and pod " + dest.getPod().getName(), "Migrate Command failed.  Please check logs.");
                 try {
                     _agentMgr.send(dstHostId, new Commands(cleanup(vm.getInstanceName())), null);
                 } catch (AgentUnavailableException ae) {
@@ -3898,7 +3924,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     public boolean plugNic(Network network, NicTO nic, VirtualMachineTO vm, ReservationContext context, DeployDestination dest) throws ConcurrentOperationException,
-    ResourceUnavailableException, InsufficientCapacityException {
+            ResourceUnavailableException, InsufficientCapacityException {
         boolean result = true;
 
         VMInstanceVO router = _vmDao.findById(vm.getId());
@@ -3961,9 +3987,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     @Override
-    public VMInstanceVO reConfigureVm(String vmUuid, ServiceOffering oldServiceOffering,
-            boolean reconfiguringOnExistingHost)
-            throws ResourceUnavailableException, InsufficientServerCapacityException, ConcurrentOperationException {
+    public VMInstanceVO reConfigureVm(String vmUuid, ServiceOffering oldServiceOffering, boolean reconfiguringOnExistingHost) throws ResourceUnavailableException,
+            InsufficientServerCapacityException, ConcurrentOperationException {
 
         AsyncJobExecutionContext jobContext = AsyncJobExecutionContext.getCurrentExecutionContext();
         if (!VmJobEnabled.value() || jobContext.isJobDispatchedBy(VmWorkConstants.VM_WORK_JOB_DISPATCHER)) {
@@ -4011,7 +4036,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     private VMInstanceVO orchestrateReConfigureVm(String vmUuid, ServiceOffering oldServiceOffering, boolean reconfiguringOnExistingHost) throws ResourceUnavailableException,
-    ConcurrentOperationException {
+            ConcurrentOperationException {
         VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
 
         long newServiceofferingId = vm.getServiceOfferingId();
@@ -4021,9 +4046,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         Float memoryOvercommitRatio = CapacityManager.MemOverprovisioningFactor.valueIn(hostVo.getClusterId());
         Float cpuOvercommitRatio = CapacityManager.CpuOverprovisioningFactor.valueIn(hostVo.getClusterId());
         long minMemory = (long)(newServiceOffering.getRamSize() / memoryOvercommitRatio);
-        ScaleVmCommand reconfigureCmd =
-                new ScaleVmCommand(vm.getInstanceName(), newServiceOffering.getCpu(), (int)(newServiceOffering.getSpeed() / cpuOvercommitRatio),
-                        newServiceOffering.getSpeed(), minMemory * 1024L * 1024L, newServiceOffering.getRamSize() * 1024L * 1024L, newServiceOffering.getLimitCpuUse());
+        ScaleVmCommand reconfigureCmd = new ScaleVmCommand(vm.getInstanceName(), newServiceOffering.getCpu(), (int)(newServiceOffering.getSpeed() / cpuOvercommitRatio),
+                newServiceOffering.getSpeed(), minMemory * 1024L * 1024L, newServiceOffering.getRamSize() * 1024L * 1024L, newServiceOffering.getLimitCpuUse());
 
         Long dstHostId = vm.getHostId();
         ItWorkVO work = new ItWorkVO(UUID.randomUUID().toString(), _nodeId, State.Running, vm.getType(), vm.getId());
@@ -4035,9 +4059,13 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         try {
             if (reconfiguringOnExistingHost) {
                 vm.setServiceOfferingId(oldServiceOffering.getId());
-                _capacityMgr.releaseVmCapacity(vm, false, false, vm.getHostId()); //release the old capacity
+                _capacityMgr.releaseVmCapacity(vm, false, false, vm.getHostId()); // release
+                // the
+                // old
+                // capacity
                 vm.setServiceOfferingId(newServiceofferingId);
-                _capacityMgr.allocateVmCapacity(vm, false); // lock the new capacity
+                _capacityMgr.allocateVmCapacity(vm, false); // lock the new
+                // capacity
             }
 
             Answer reconfigureAnswer = _agentMgr.send(vm.getHostId(), reconfigureCmd);
@@ -4053,9 +4081,13 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             throw e;
         } finally {
             if (!success) {
-                _capacityMgr.releaseVmCapacity(vm, false, false, vm.getHostId()); // release the new capacity
+                _capacityMgr.releaseVmCapacity(vm, false, false, vm.getHostId()); // release
+                // the
+                // new
+                // capacity
                 vm.setServiceOfferingId(oldServiceOffering.getId());
-                _capacityMgr.allocateVmCapacity(vm, false); // allocate the old capacity
+                _capacityMgr.allocateVmCapacity(vm, false); // allocate the old
+                // capacity
             }
         }
 
@@ -4070,8 +4102,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
     @Override
     public ConfigKey<?>[] getConfigKeys() {
-        return new ConfigKey<?>[] {ClusterDeltaSyncInterval, StartRetry, VmDestroyForcestop, VmOpCancelInterval, VmOpCleanupInterval, VmOpCleanupWait,
-                VmOpLockStateRetry,
+        return new ConfigKey<?>[] {ClusterDeltaSyncInterval, StartRetry, VmDestroyForcestop, VmOpCancelInterval, VmOpCleanupInterval, VmOpCleanupWait, VmOpLockStateRetry,
                 VmOpWaitInterval, ExecuteInSequence, VmJobCheckInterval, VmJobTimeout, VmJobStateReportInterval};
     }
 
@@ -4085,7 +4116,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     //
-    // PowerState report handling for out-of-band changes and handling of left-over transitional VM states
+    // PowerState report handling for out-of-band changes and handling of
+    // left-over transitional VM states
     //
 
     @MessageHandler(topic = Topics.VM_POWER_STATE)
@@ -4093,8 +4125,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         assert (args != null);
         Long vmId = (Long)args;
 
-        List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(
-                VirtualMachine.Type.Instance, vmId);
+        List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(VirtualMachine.Type.Instance, vmId);
         if (pendingWorkJobs.size() == 0 && !_haMgr.hasPendingHaWork(vmId)) {
             // there is no pending operation job
             VMInstanceVO vm = _vmDao.findById(vmId);
@@ -4122,7 +4153,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         } else {
             s_logger.info("There is pending job or HA tasks working on the VM. vm id: " + vmId + ", postpone power-change report by resetting power-change counters");
 
-            // reset VM power state tracking so that we won't lost signal when VM has
+            // reset VM power state tracking so that we won't lost signal when
+            // VM has
             // been translated to
             _vmDao.resetVmPowerStateTracking(vmId);
         }
@@ -4130,10 +4162,11 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
     private void handlePowerOnReportWithNoPendingJobsOnVM(VMInstanceVO vm) {
         //
-        //    1) handle left-over transitional VM states
-        //    2) handle out of band VM live migration
-        //    3) handle out of sync stationary states, marking VM from Stopped to Running with
-        //       alert messages
+        // 1) handle left-over transitional VM states
+        // 2) handle out of band VM live migration
+        // 3) handle out of sync stationary states, marking VM from Stopped to
+        // Running with
+        // alert messages
         //
         switch (vm.getState()) {
         case Starting:
@@ -4148,8 +4181,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             s_logger.info("VM " + vm.getInstanceName() + " is sync-ed to at Running state according to power-on report from hypervisor");
 
             // we need to alert admin or user about this risky state transition
-            _alertMgr.sendAlert(AlertManager.AlertType.ALERT_TYPE_SYNC, vm.getDataCenterId(), vm.getPodIdToDeployIn(),
-                    VM_SYNC_ALERT_SUBJECT, "VM " + vm.getHostName() + "(" + vm.getInstanceName()
+            _alertMgr.sendAlert(AlertManager.AlertType.ALERT_TYPE_SYNC, vm.getDataCenterId(), vm.getPodIdToDeployIn(), VM_SYNC_ALERT_SUBJECT,
+                    "VM " + vm.getHostName() + "(" + vm.getInstanceName()
                             + ") state is sync-ed (Starting -> Running) from out-of-context transition. VM network environment may need to be reset");
             break;
 
@@ -4173,8 +4206,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             } catch (NoTransitionException e) {
                 s_logger.warn("Unexpected VM state transition exception, race-condition?", e);
             }
-            _alertMgr.sendAlert(AlertManager.AlertType.ALERT_TYPE_SYNC, vm.getDataCenterId(), vm.getPodIdToDeployIn(),
-                    VM_SYNC_ALERT_SUBJECT, "VM " + vm.getHostName() + "(" + vm.getInstanceName() + ") state is sync-ed (" + vm.getState()
+            _alertMgr.sendAlert(AlertManager.AlertType.ALERT_TYPE_SYNC, vm.getDataCenterId(), vm.getPodIdToDeployIn(), VM_SYNC_ALERT_SUBJECT,
+                    "VM " + vm.getHostName() + "(" + vm.getInstanceName() + ") state is sync-ed (" + vm.getState()
                             + " -> Running) from out-of-context transition. VM network environment may need to be reset");
 
             s_logger.info("VM " + vm.getInstanceName() + " is sync-ed to at Running state according to power-on report from hypervisor");
@@ -4182,8 +4215,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
         case Destroyed:
         case Expunging:
-            s_logger.info("Receive power on report when VM is in destroyed or expunging state. vm: "
-                    + vm.getId() + ", state: " + vm.getState());
+            s_logger.info("Receive power on report when VM is in destroyed or expunging state. vm: " + vm.getId() + ", state: " + vm.getState());
             break;
 
         case Migrating:
@@ -4198,16 +4230,16 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
         case Error:
         default:
-            s_logger.info("Receive power on report when VM is in error or unexpected state. vm: "
-                    + vm.getId() + ", state: " + vm.getState());
+            s_logger.info("Receive power on report when VM is in error or unexpected state. vm: " + vm.getId() + ", state: " + vm.getState());
             break;
         }
     }
 
     private void handlePowerOffReportWithNoPendingJobsOnVM(VMInstanceVO vm) {
 
-        //    1) handle left-over transitional VM states
-        //    2) handle out of sync stationary states, schedule force-stop to release resources
+        // 1) handle left-over transitional VM states
+        // 2) handle out of sync stationary states, schedule force-stop to
+        // release resources
         //
         switch (vm.getState()) {
         case Starting:
@@ -4216,9 +4248,9 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         case Stopped:
         case Migrating:
             s_logger.info("VM " + vm.getInstanceName() + " is at " + vm.getState() + " and we received a power-off report while there is no pending jobs on it");
-            if(vm.isHaEnabled() && vm.getState() == State.Running && vm.getHypervisorType() != HypervisorType.VMware && vm.getHypervisorType() != HypervisorType.Hyperv) {
+            if (vm.isHaEnabled() && vm.getState() == State.Running && vm.getHypervisorType() != HypervisorType.VMware && vm.getHypervisorType() != HypervisorType.Hyperv) {
                 s_logger.info("Detected out-of-band stop of a HA enabled VM " + vm.getInstanceName() + ", will schedule restart");
-                if(!_haMgr.hasPendingHaWork(vm.getId()))
+                if (!_haMgr.hasPendingHaWork(vm.getId()))
                     _haMgr.scheduleRestart(vm, true);
                 else
                     s_logger.info("VM " + vm.getInstanceName() + " already has an pending HA task working on it");
@@ -4235,9 +4267,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                 s_logger.warn("Unexpected VM state transition exception, race-condition?", e);
             }
 
-            _alertMgr.sendAlert(AlertManager.AlertType.ALERT_TYPE_SYNC, vm.getDataCenterId(), vm.getPodIdToDeployIn(),
-                    VM_SYNC_ALERT_SUBJECT, "VM " + vm.getHostName() + "(" + vm.getInstanceName() + ") state is sync-ed (" + vm.getState()
-                            + " -> Stopped) from out-of-context transition.");
+            _alertMgr.sendAlert(AlertManager.AlertType.ALERT_TYPE_SYNC, vm.getDataCenterId(), vm.getPodIdToDeployIn(), VM_SYNC_ALERT_SUBJECT,
+                    "VM " + vm.getHostName() + "(" + vm.getInstanceName() + ") state is sync-ed (" + vm.getState() + " -> Stopped) from out-of-context transition.");
 
             s_logger.info("VM " + vm.getInstanceName() + " is sync-ed to at Stopped state according to power-off report from hypervisor");
 
@@ -4255,19 +4286,25 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
     private void scanStalledVMInTransitionStateOnUpHost(long hostId) {
         //
-        // Check VM that is stuck in Starting, Stopping, Migrating states, we won't check
+        // Check VM that is stuck in Starting, Stopping, Migrating states, we
+        // won't check
         // VMs in expunging state (this need to be handled specially)
         //
         // checking condition
-        //    1) no pending VmWork job
-        //    2) on hostId host and host is UP
+        // 1) no pending VmWork job
+        // 2) on hostId host and host is UP
         //
-        // When host is UP, soon or later we will get a report from the host about the VM,
-        // however, if VM is missing from the host report (it may happen in out of band changes
-        // or from designed behave of XS/KVM), the VM may not get a chance to run the state-sync logic
+        // When host is UP, soon or later we will get a report from the host
+        // about the VM,
+        // however, if VM is missing from the host report (it may happen in out
+        // of band changes
+        // or from designed behave of XS/KVM), the VM may not get a chance to
+        // run the state-sync logic
         //
-        // Therefore, we will scan thoses VMs on UP host based on last update timestamp, if the host is UP
-        // and a VM stalls for status update, we will consider them to be powered off
+        // Therefore, we will scan thoses VMs on UP host based on last update
+        // timestamp, if the host is UP
+        // and a VM stalls for status update, we will consider them to be
+        // powered off
         // (which is relatively safe to do so)
 
         long stallThresholdInMs = VmJobStateReportInterval.value() + (VmJobStateReportInterval.value() >> 1);
@@ -4297,18 +4334,16 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             VMInstanceVO vm = _vmDao.findById(vmId);
 
             // We now only alert administrator about this situation
-            _alertMgr.sendAlert(AlertManager.AlertType.ALERT_TYPE_SYNC, vm.getDataCenterId(), vm.getPodIdToDeployIn(),
-                    VM_SYNC_ALERT_SUBJECT, "VM " + vm.getHostName() + "(" + vm.getInstanceName() + ") is stuck in " + vm.getState()
-                            + " state and its host is unreachable for too long");
+            _alertMgr.sendAlert(AlertManager.AlertType.ALERT_TYPE_SYNC, vm.getDataCenterId(), vm.getPodIdToDeployIn(), VM_SYNC_ALERT_SUBJECT,
+                    "VM " + vm.getHostName() + "(" + vm.getInstanceName() + ") is stuck in " + vm.getState() + " state and its host is unreachable for too long");
         }
     }
 
     // VMs that in transitional state without recent power state report
     private List<Long> listStalledVMInTransitionStateOnUpHost(long hostId, Date cutTime) {
-        String sql = "SELECT i.* FROM vm_instance as i, host as h WHERE h.status = 'UP' " +
-                "AND h.id = ? AND i.power_state_update_time < ? AND i.host_id = h.id " +
-                "AND (i.state ='Starting' OR i.state='Stopping' OR i.state='Migrating') " +
-                "AND i.id NOT IN (SELECT w.vm_instance_id FROM vm_work_job AS w JOIN async_job AS j ON w.id = j.id WHERE j.job_status = ?)";
+        String sql = "SELECT i.* FROM vm_instance as i, host as h WHERE h.status = 'UP' " + "AND h.id = ? AND i.power_state_update_time < ? AND i.host_id = h.id "
+                + "AND (i.state ='Starting' OR i.state='Stopping' OR i.state='Migrating') "
+                + "AND i.id NOT IN (SELECT w.vm_instance_id FROM vm_work_job AS w JOIN async_job AS j ON w.id = j.id WHERE j.job_status = ?)";
 
         List<Long> l = new ArrayList<Long>();
         TransactionLegacy txn = null;
@@ -4339,10 +4374,9 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
     // VMs that in transitional state and recently have power state update
     private List<Long> listVMInTransitionStateWithRecentReportOnUpHost(long hostId, Date cutTime) {
-        String sql = "SELECT i.* FROM vm_instance as i, host as h WHERE h.status = 'UP' " +
-                "AND h.id = ? AND i.power_state_update_time > ? AND i.host_id = h.id " +
-                "AND (i.state ='Starting' OR i.state='Stopping' OR i.state='Migrating') " +
-                "AND i.id NOT IN (SELECT w.vm_instance_id FROM vm_work_job AS w JOIN async_job AS j ON w.id = j.id WHERE j.job_status = ?)";
+        String sql = "SELECT i.* FROM vm_instance as i, host as h WHERE h.status = 'UP' " + "AND h.id = ? AND i.power_state_update_time > ? AND i.host_id = h.id "
+                + "AND (i.state ='Starting' OR i.state='Stopping' OR i.state='Migrating') "
+                + "AND i.id NOT IN (SELECT w.vm_instance_id FROM vm_work_job AS w JOIN async_job AS j ON w.id = j.id WHERE j.job_status = ?)";
 
         List<Long> l = new ArrayList<Long>();
         TransactionLegacy txn = null;
@@ -4370,10 +4404,9 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     private List<Long> listStalledVMInTransitionStateOnDisconnectedHosts(Date cutTime) {
-        String sql = "SELECT i.* FROM vm_instance as i, host as h WHERE h.status != 'UP' " +
-                "AND i.power_state_update_time < ? AND i.host_id = h.id " +
-                "AND (i.state ='Starting' OR i.state='Stopping' OR i.state='Migrating') " +
-                "AND i.id NOT IN (SELECT w.vm_instance_id FROM vm_work_job AS w JOIN async_job AS j ON w.id = j.id WHERE j.job_status = ?)";
+        String sql = "SELECT i.* FROM vm_instance as i, host as h WHERE h.status != 'UP' " + "AND i.power_state_update_time < ? AND i.host_id = h.id "
+                + "AND (i.state ='Starting' OR i.state='Stopping' OR i.state='Migrating') "
+                + "AND i.id NOT IN (SELECT w.vm_instance_id FROM vm_work_job AS w JOIN async_job AS j ON w.id = j.id WHERE j.job_status = ?)";
 
         List<Long> l = new ArrayList<Long>();
         TransactionLegacy txn = null;
@@ -4451,12 +4484,12 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
     }
 
     //
-    // TODO build a common pattern to reduce code duplication in following methods
+    // TODO build a common pattern to reduce code duplication in following
+    // methods
     // no time for this at current iteration
     //
-    public Outcome<VirtualMachine> startVmThroughJobQueue(final String vmUuid,
-            final Map<VirtualMachineProfile.Param, Object> params,
-            final DeploymentPlan planToDeploy, final DeploymentPlanner planner) {
+    public Outcome<VirtualMachine> startVmThroughJobQueue(final String vmUuid, final Map<VirtualMachineProfile.Param, Object> params, final DeploymentPlan planToDeploy,
+            final DeploymentPlanner planner) {
 
         final CallContext context = CallContext.current();
         final User callingUser = context.getCallingUser();
@@ -4471,8 +4504,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
                 _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
                 try {
-                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(VirtualMachine.Type.Instance,
-                            vm.getId(), VmWorkStart.class.getName());
+                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(VirtualMachine.Type.Instance, vm.getId(), VmWorkStart.class.getName());
 
                     if (pendingWorkJobs.size() > 0) {
                         assert (pendingWorkJobs.size() == 1);
@@ -4490,7 +4522,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                         workJob.setVmInstanceId(vm.getId());
                         workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
 
-                        // save work context info (there are some duplications)
+                        // save work context info (there are some
+                        // duplications)
                         VmWorkStart workInfo = new VmWorkStart(callingUser.getId(), callingAccount.getId(), vm.getId(), VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER);
                         workInfo.setPlan(planToDeploy);
                         if (planner != null) {
@@ -4512,8 +4545,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         final long jobId = (Long)result[1];
         AsyncJobExecutionContext.getCurrentExecutionContext().joinJob(jobId);
 
-        return new VmStateSyncOutcome((VmWorkJobVO)result[0],
-                VirtualMachine.PowerState.PowerOn, vm.getId(), null);
+        return new VmStateSyncOutcome((VmWorkJobVO)result[0], VirtualMachine.PowerState.PowerOn, vm.getId(), null);
     }
 
     public Outcome<VirtualMachine> stopVmThroughJobQueue(final String vmUuid, final boolean cleanup) {
@@ -4529,9 +4561,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                 _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
 
                 try {
-                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(
-                            vm.getType(), vm.getId(),
-                            VmWorkStop.class.getName());
+                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(vm.getType(), vm.getId(), VmWorkStop.class.getName());
 
                     VmWorkJobVO workJob = null;
                     if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
@@ -4550,7 +4580,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                         workJob.setVmInstanceId(vm.getId());
                         workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
 
-                        // save work context info (there are some duplications)
+                        // save work context info (there are some
+                        // duplications)
                         VmWorkStop workInfo = new VmWorkStop(user.getId(), account.getId(), vm.getId(), VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, cleanup);
                         workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
 
@@ -4567,12 +4598,10 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         final long jobId = (Long)result[1];
         AsyncJobExecutionContext.getCurrentExecutionContext().joinJob(jobId);
 
-        return new VmStateSyncOutcome((VmWorkJobVO)result[0],
-                VirtualMachine.PowerState.PowerOff, vm.getId(), null);
+        return new VmStateSyncOutcome((VmWorkJobVO)result[0], VirtualMachine.PowerState.PowerOff, vm.getId(), null);
     }
 
-    public Outcome<VirtualMachine> rebootVmThroughJobQueue(final String vmUuid,
-            final Map<VirtualMachineProfile.Param, Object> params) {
+    public Outcome<VirtualMachine> rebootVmThroughJobQueue(final String vmUuid, final Map<VirtualMachineProfile.Param, Object> params) {
 
         final CallContext context = CallContext.current();
         final Account account = context.getCallingAccount();
@@ -4585,9 +4614,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             public Object[] doInTransaction(TransactionStatus status) {
                 _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
                 try {
-                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(
-                            VirtualMachine.Type.Instance, vm.getId(),
-                            VmWorkReboot.class.getName());
+                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(VirtualMachine.Type.Instance, vm.getId(), VmWorkReboot.class.getName());
 
                     VmWorkJobVO workJob = null;
                     if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
@@ -4606,230 +4633,9 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                         workJob.setVmInstanceId(vm.getId());
                         workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
 
-                        // save work context info (there are some duplications)
+                        // save work context info (there are some
+                        // duplications)
                         VmWorkReboot workInfo = new VmWorkReboot(user.getId(), account.getId(), vm.getId(), VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, params);
-                        workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
-
-                        _jobMgr.submitAsyncJob(workJob, VmWorkConstants.VM_WORK_QUEUE, vm.getId());
-                    }
-
-                    return new Object[] {workJob, new Long(workJob.getId())};
-                } finally {
-                    _vmDao.unlockFromLockTable(String.valueOf(vm.getId()));
-                }
-            }
-        });
-
-        final long jobId = (Long)result[1];
-        AsyncJobExecutionContext.getCurrentExecutionContext().joinJob(jobId);
-
-        return new VmJobVirtualMachineOutcome((VmWorkJobVO)result[0],
-                vm.getId());
-    }
-
-    public Outcome<VirtualMachine> migrateVmThroughJobQueue(final String vmUuid, final long srcHostId, final DeployDestination dest) {
-        final CallContext context = CallContext.current();
-        final User user = context.getCallingUser();
-        final Account account = context.getCallingAccount();
-
-        final VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
-
-        Object[] result = Transaction.execute(new TransactionCallback<Object[]>() {
-            @Override
-            public Object[] doInTransaction(TransactionStatus status) {
-
-                _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
-                try {
-                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(
-                            VirtualMachine.Type.Instance, vm.getId(),
-                            VmWorkMigrate.class.getName());
-
-                    VmWorkJobVO workJob = null;
-                    if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
-                        assert (pendingWorkJobs.size() == 1);
-                        workJob = pendingWorkJobs.get(0);
-                    } else {
-
-                        workJob = new VmWorkJobVO(context.getContextId());
-
-                        workJob.setDispatcher(VmWorkConstants.VM_WORK_JOB_DISPATCHER);
-                        workJob.setCmd(VmWorkMigrate.class.getName());
-
-                        workJob.setAccountId(account.getId());
-                        workJob.setUserId(user.getId());
-                        workJob.setVmType(VirtualMachine.Type.Instance);
-                        workJob.setVmInstanceId(vm.getId());
-                        workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
-
-                        // save work context info (there are some duplications)
-                        VmWorkMigrate workInfo = new VmWorkMigrate(user.getId(), account.getId(), vm.getId(), VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, srcHostId, dest);
-                        workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
-
-                        _jobMgr.submitAsyncJob(workJob, VmWorkConstants.VM_WORK_QUEUE, vm.getId());
-                    }
-                    return new Object[] {workJob, new Long(workJob.getId())};
-                } finally {
-                    _vmDao.unlockFromLockTable(String.valueOf(vm.getId()));
-                }
-            }
-        });
-
-        final long jobId = (Long)result[1];
-        AsyncJobExecutionContext.getCurrentExecutionContext().joinJob(jobId);
-
-        return new VmStateSyncOutcome((VmWorkJobVO)result[0],
-                VirtualMachine.PowerState.PowerOn, vm.getId(), vm.getPowerHostId());
-    }
-
-    public Outcome<VirtualMachine> migrateVmAwayThroughJobQueue(final String vmUuid, final long srcHostId) {
-        final CallContext context = CallContext.current();
-        final User user = context.getCallingUser();
-        final Account account = context.getCallingAccount();
-
-        final VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
-
-        Object[] result = Transaction.execute(new TransactionCallback<Object[]>() {
-            @Override
-            public Object[] doInTransaction(TransactionStatus status) {
-                _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
-                try {
-                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(
-                            VirtualMachine.Type.Instance, vm.getId(),
-                            VmWorkMigrateAway.class.getName());
-
-                    VmWorkJobVO workJob = null;
-                    if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
-                        assert (pendingWorkJobs.size() == 1);
-                        workJob = pendingWorkJobs.get(0);
-                    } else {
-                        workJob = new VmWorkJobVO(context.getContextId());
-
-                        workJob.setDispatcher(VmWorkConstants.VM_WORK_JOB_DISPATCHER);
-                        workJob.setCmd(VmWorkMigrateAway.class.getName());
-
-                        workJob.setAccountId(account.getId());
-                        workJob.setUserId(user.getId());
-                        workJob.setVmType(VirtualMachine.Type.Instance);
-                        workJob.setVmInstanceId(vm.getId());
-                        workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
-
-                        // save work context info (there are some duplications)
-                        VmWorkMigrateAway workInfo = new VmWorkMigrateAway(user.getId(), account.getId(), vm.getId(), VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, srcHostId);
-                        workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
-
-                        _jobMgr.submitAsyncJob(workJob, VmWorkConstants.VM_WORK_QUEUE, vm.getId());
-                    }
-                    return new Object[] {workJob, new Long(workJob.getId())};
-                } finally {
-                    _vmDao.unlockFromLockTable(String.valueOf(vm.getId()));
-                }
-            }
-        });
-
-        final long jobId = (Long)result[1];
-        AsyncJobExecutionContext.getCurrentExecutionContext().joinJob(jobId);
-
-        return new VmStateSyncOutcome((VmWorkJobVO)result[0],
-                VirtualMachine.PowerState.PowerOn, vm.getId(), vm.getPowerHostId());
-    }
-
-    public Outcome<VirtualMachine> migrateVmWithStorageThroughJobQueue(
-            final String vmUuid, final long srcHostId, final long destHostId,
-            final Map<Long, Long> volumeToPool) {
-
-        final CallContext context = CallContext.current();
-        final User user = context.getCallingUser();
-        final Account account = context.getCallingAccount();
-
-        final VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
-
-        Object[] result = Transaction.execute(new TransactionCallback<Object[]>() {
-            @Override
-            public Object[] doInTransaction(TransactionStatus status) {
-
-                _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
-                try {
-                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(
-                            VirtualMachine.Type.Instance, vm.getId(),
-                            VmWorkMigrateWithStorage.class.getName());
-
-                    VmWorkJobVO workJob = null;
-                    if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
-                        assert (pendingWorkJobs.size() == 1);
-                        workJob = pendingWorkJobs.get(0);
-                    } else {
-
-                        workJob = new VmWorkJobVO(context.getContextId());
-
-                        workJob.setDispatcher(VmWorkConstants.VM_WORK_JOB_DISPATCHER);
-                        workJob.setCmd(VmWorkMigrate.class.getName());
-
-                        workJob.setAccountId(account.getId());
-                        workJob.setUserId(user.getId());
-                        workJob.setVmType(VirtualMachine.Type.Instance);
-                        workJob.setVmInstanceId(vm.getId());
-                        workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
-
-                        // save work context info (there are some duplications)
-                        VmWorkMigrateWithStorage workInfo = new VmWorkMigrateWithStorage(user.getId(), account.getId(), vm.getId(),
-                                VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, srcHostId, destHostId, volumeToPool);
-                        workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
-
-                        _jobMgr.submitAsyncJob(workJob, VmWorkConstants.VM_WORK_QUEUE, vm.getId());
-                    }
-                    return new Object[] {workJob, new Long(workJob.getId())};
-                } finally {
-                    _vmDao.unlockFromLockTable(String.valueOf(vm.getId()));
-                }
-            }
-        });
-
-        final long jobId = (Long)result[1];
-        AsyncJobExecutionContext.getCurrentExecutionContext().joinJob(jobId);
-
-        return new VmStateSyncOutcome((VmWorkJobVO)result[0],
-                VirtualMachine.PowerState.PowerOn, vm.getId(), destHostId);
-    }
-
-    public Outcome<VirtualMachine> migrateVmForScaleThroughJobQueue(
-            final String vmUuid, final long srcHostId, final DeployDestination dest, final Long newSvcOfferingId) {
-
-        final CallContext context = CallContext.current();
-        final User user = context.getCallingUser();
-        final Account account = context.getCallingAccount();
-
-        final VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
-
-        Object[] result = Transaction.execute(new TransactionCallback<Object[]>() {
-            @Override
-            public Object[] doInTransaction(TransactionStatus status) {
-
-                _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
-                try {
-                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(
-                            VirtualMachine.Type.Instance, vm.getId(),
-                            VmWorkMigrateForScale.class.getName());
-
-                    VmWorkJobVO workJob = null;
-                    if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
-                        assert (pendingWorkJobs.size() == 1);
-                        workJob = pendingWorkJobs.get(0);
-                    } else {
-
-                        workJob = new VmWorkJobVO(context.getContextId());
-
-                        workJob.setDispatcher(VmWorkConstants.VM_WORK_JOB_DISPATCHER);
-                        workJob.setCmd(VmWorkMigrate.class.getName());
-
-                        workJob.setAccountId(account.getId());
-                        workJob.setUserId(user.getId());
-                        workJob.setVmType(VirtualMachine.Type.Instance);
-                        workJob.setVmInstanceId(vm.getId());
-                        workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
-
-                        // save work context info (there are some duplications)
-                        VmWorkMigrateForScale workInfo = new VmWorkMigrateForScale(user.getId(), account.getId(), vm.getId(),
-                                VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, srcHostId, dest, newSvcOfferingId);
                         workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
 
                         _jobMgr.submitAsyncJob(workJob, VmWorkConstants.VM_WORK_QUEUE, vm.getId());
@@ -4848,8 +4654,109 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         return new VmJobVirtualMachineOutcome((VmWorkJobVO)result[0], vm.getId());
     }
 
-    public Outcome<VirtualMachine> migrateVmStorageThroughJobQueue(
-            final String vmUuid, final StoragePool destPool) {
+    public Outcome<VirtualMachine> migrateVmThroughJobQueue(final String vmUuid, final long srcHostId, final DeployDestination dest) {
+        final CallContext context = CallContext.current();
+        final User user = context.getCallingUser();
+        final Account account = context.getCallingAccount();
+
+        final VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
+
+        Object[] result = Transaction.execute(new TransactionCallback<Object[]>() {
+            @Override
+            public Object[] doInTransaction(TransactionStatus status) {
+
+                _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
+                try {
+                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(VirtualMachine.Type.Instance, vm.getId(), VmWorkMigrate.class.getName());
+
+                    VmWorkJobVO workJob = null;
+                    if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
+                        assert (pendingWorkJobs.size() == 1);
+                        workJob = pendingWorkJobs.get(0);
+                    } else {
+
+                        workJob = new VmWorkJobVO(context.getContextId());
+
+                        workJob.setDispatcher(VmWorkConstants.VM_WORK_JOB_DISPATCHER);
+                        workJob.setCmd(VmWorkMigrate.class.getName());
+
+                        workJob.setAccountId(account.getId());
+                        workJob.setUserId(user.getId());
+                        workJob.setVmType(VirtualMachine.Type.Instance);
+                        workJob.setVmInstanceId(vm.getId());
+                        workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
+
+                        // save work context info (there are some
+                        // duplications)
+                        VmWorkMigrate workInfo = new VmWorkMigrate(user.getId(), account.getId(), vm.getId(), VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, srcHostId, dest);
+                        workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
+
+                        _jobMgr.submitAsyncJob(workJob, VmWorkConstants.VM_WORK_QUEUE, vm.getId());
+                    }
+                    return new Object[] {workJob, new Long(workJob.getId())};
+                } finally {
+                    _vmDao.unlockFromLockTable(String.valueOf(vm.getId()));
+                }
+            }
+        });
+
+        final long jobId = (Long)result[1];
+        AsyncJobExecutionContext.getCurrentExecutionContext().joinJob(jobId);
+
+        return new VmStateSyncOutcome((VmWorkJobVO)result[0], VirtualMachine.PowerState.PowerOn, vm.getId(), vm.getPowerHostId());
+    }
+
+    public Outcome<VirtualMachine> migrateVmAwayThroughJobQueue(final String vmUuid, final long srcHostId) {
+        final CallContext context = CallContext.current();
+        final User user = context.getCallingUser();
+        final Account account = context.getCallingAccount();
+
+        final VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
+
+        Object[] result = Transaction.execute(new TransactionCallback<Object[]>() {
+            @Override
+            public Object[] doInTransaction(TransactionStatus status) {
+                _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
+                try {
+                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(VirtualMachine.Type.Instance, vm.getId(), VmWorkMigrateAway.class.getName());
+
+                    VmWorkJobVO workJob = null;
+                    if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
+                        assert (pendingWorkJobs.size() == 1);
+                        workJob = pendingWorkJobs.get(0);
+                    } else {
+                        workJob = new VmWorkJobVO(context.getContextId());
+
+                        workJob.setDispatcher(VmWorkConstants.VM_WORK_JOB_DISPATCHER);
+                        workJob.setCmd(VmWorkMigrateAway.class.getName());
+
+                        workJob.setAccountId(account.getId());
+                        workJob.setUserId(user.getId());
+                        workJob.setVmType(VirtualMachine.Type.Instance);
+                        workJob.setVmInstanceId(vm.getId());
+                        workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
+
+                        // save work context info (there are some
+                        // duplications)
+                        VmWorkMigrateAway workInfo = new VmWorkMigrateAway(user.getId(), account.getId(), vm.getId(), VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, srcHostId);
+                        workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
+
+                        _jobMgr.submitAsyncJob(workJob, VmWorkConstants.VM_WORK_QUEUE, vm.getId());
+                    }
+                    return new Object[] {workJob, new Long(workJob.getId())};
+                } finally {
+                    _vmDao.unlockFromLockTable(String.valueOf(vm.getId()));
+                }
+            }
+        });
+
+        final long jobId = (Long)result[1];
+        AsyncJobExecutionContext.getCurrentExecutionContext().joinJob(jobId);
+
+        return new VmStateSyncOutcome((VmWorkJobVO)result[0], VirtualMachine.PowerState.PowerOn, vm.getId(), vm.getPowerHostId());
+    }
+
+    public Outcome<VirtualMachine> migrateVmWithStorageThroughJobQueue(final String vmUuid, final long srcHostId, final long destHostId, final Map<Long, Long> volumeToPool) {
 
         final CallContext context = CallContext.current();
         final User user = context.getCallingUser();
@@ -4863,9 +4770,116 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
                 _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
                 try {
-                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(
-                            VirtualMachine.Type.Instance, vm.getId(),
-                            VmWorkStorageMigration.class.getName());
+                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(VirtualMachine.Type.Instance, vm.getId(), VmWorkMigrateWithStorage.class.getName());
+
+                    VmWorkJobVO workJob = null;
+                    if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
+                        assert (pendingWorkJobs.size() == 1);
+                        workJob = pendingWorkJobs.get(0);
+                    } else {
+
+                        workJob = new VmWorkJobVO(context.getContextId());
+
+                        workJob.setDispatcher(VmWorkConstants.VM_WORK_JOB_DISPATCHER);
+                        workJob.setCmd(VmWorkMigrate.class.getName());
+
+                        workJob.setAccountId(account.getId());
+                        workJob.setUserId(user.getId());
+                        workJob.setVmType(VirtualMachine.Type.Instance);
+                        workJob.setVmInstanceId(vm.getId());
+                        workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
+
+                        // save work context info (there are some
+                        // duplications)
+                        VmWorkMigrateWithStorage workInfo = new VmWorkMigrateWithStorage(user.getId(), account.getId(), vm.getId(), VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER,
+                                srcHostId, destHostId, volumeToPool);
+                        workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
+
+                        _jobMgr.submitAsyncJob(workJob, VmWorkConstants.VM_WORK_QUEUE, vm.getId());
+                    }
+                    return new Object[] {workJob, new Long(workJob.getId())};
+                } finally {
+                    _vmDao.unlockFromLockTable(String.valueOf(vm.getId()));
+                }
+            }
+        });
+
+        final long jobId = (Long)result[1];
+        AsyncJobExecutionContext.getCurrentExecutionContext().joinJob(jobId);
+
+        return new VmStateSyncOutcome((VmWorkJobVO)result[0], VirtualMachine.PowerState.PowerOn, vm.getId(), destHostId);
+    }
+
+    public Outcome<VirtualMachine> migrateVmForScaleThroughJobQueue(final String vmUuid, final long srcHostId, final DeployDestination dest, final Long newSvcOfferingId) {
+
+        final CallContext context = CallContext.current();
+        final User user = context.getCallingUser();
+        final Account account = context.getCallingAccount();
+
+        final VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
+
+        Object[] result = Transaction.execute(new TransactionCallback<Object[]>() {
+            @Override
+            public Object[] doInTransaction(TransactionStatus status) {
+
+                _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
+                try {
+                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(VirtualMachine.Type.Instance, vm.getId(), VmWorkMigrateForScale.class.getName());
+
+                    VmWorkJobVO workJob = null;
+                    if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
+                        assert (pendingWorkJobs.size() == 1);
+                        workJob = pendingWorkJobs.get(0);
+                    } else {
+
+                        workJob = new VmWorkJobVO(context.getContextId());
+
+                        workJob.setDispatcher(VmWorkConstants.VM_WORK_JOB_DISPATCHER);
+                        workJob.setCmd(VmWorkMigrate.class.getName());
+
+                        workJob.setAccountId(account.getId());
+                        workJob.setUserId(user.getId());
+                        workJob.setVmType(VirtualMachine.Type.Instance);
+                        workJob.setVmInstanceId(vm.getId());
+                        workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
+
+                        // save work context info (there are some
+                        // duplications)
+                        VmWorkMigrateForScale workInfo = new VmWorkMigrateForScale(user.getId(), account.getId(), vm.getId(), VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER,
+                                srcHostId, dest, newSvcOfferingId);
+                        workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
+
+                        _jobMgr.submitAsyncJob(workJob, VmWorkConstants.VM_WORK_QUEUE, vm.getId());
+                    }
+
+                    return new Object[] {workJob, new Long(workJob.getId())};
+                } finally {
+                    _vmDao.unlockFromLockTable(String.valueOf(vm.getId()));
+                }
+            }
+        });
+
+        final long jobId = (Long)result[1];
+        AsyncJobExecutionContext.getCurrentExecutionContext().joinJob(jobId);
+
+        return new VmJobVirtualMachineOutcome((VmWorkJobVO)result[0], vm.getId());
+    }
+
+    public Outcome<VirtualMachine> migrateVmStorageThroughJobQueue(final String vmUuid, final StoragePool destPool) {
+
+        final CallContext context = CallContext.current();
+        final User user = context.getCallingUser();
+        final Account account = context.getCallingAccount();
+
+        final VMInstanceVO vm = _vmDao.findByUuid(vmUuid);
+
+        Object[] result = Transaction.execute(new TransactionCallback<Object[]>() {
+            @Override
+            public Object[] doInTransaction(TransactionStatus status) {
+
+                _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
+                try {
+                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(VirtualMachine.Type.Instance, vm.getId(), VmWorkStorageMigration.class.getName());
 
                     VmWorkJobVO workJob = null;
                     if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
@@ -4884,9 +4898,10 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                         workJob.setVmInstanceId(vm.getId());
                         workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
 
-                        // save work context info (there are some duplications)
-                        VmWorkStorageMigration workInfo = new VmWorkStorageMigration(user.getId(), account.getId(), vm.getId(),
-                                VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, destPool.getId());
+                        // save work context info (there are some
+                        // duplications)
+                        VmWorkStorageMigration workInfo = new VmWorkStorageMigration(user.getId(), account.getId(), vm.getId(), VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER,
+                                destPool.getId());
                         workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
 
                         _jobMgr.submitAsyncJob(workJob, VmWorkConstants.VM_WORK_QUEUE, vm.getId());
@@ -4905,8 +4920,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         return new VmJobVirtualMachineOutcome((VmWorkJobVO)result[0], vm.getId());
     }
 
-    public Outcome<VirtualMachine> addVmToNetworkThroughJobQueue(
-            final VirtualMachine vm, final Network network, final NicProfile requested) {
+    public Outcome<VirtualMachine> addVmToNetworkThroughJobQueue(final VirtualMachine vm, final Network network, final NicProfile requested) {
 
         final CallContext context = CallContext.current();
         final User user = context.getCallingUser();
@@ -4919,9 +4933,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                 _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
 
                 try {
-                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(
-                            VirtualMachine.Type.Instance, vm.getId(),
-                            VmWorkAddVmToNetwork.class.getName());
+                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(VirtualMachine.Type.Instance, vm.getId(), VmWorkAddVmToNetwork.class.getName());
 
                     VmWorkJobVO workJob = null;
                     if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
@@ -4940,9 +4952,10 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                         workJob.setVmInstanceId(vm.getId());
                         workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
 
-                        // save work context info (there are some duplications)
-                        VmWorkAddVmToNetwork workInfo = new VmWorkAddVmToNetwork(user.getId(), account.getId(), vm.getId(),
-                                VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, network.getId(), requested);
+                        // save work context info (there are some
+                        // duplications)
+                        VmWorkAddVmToNetwork workInfo = new VmWorkAddVmToNetwork(user.getId(), account.getId(), vm.getId(), VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, network
+                                .getId(), requested);
                         workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
 
                         _jobMgr.submitAsyncJob(workJob, VmWorkConstants.VM_WORK_QUEUE, vm.getId());
@@ -4960,8 +4973,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         return new VmJobVirtualMachineOutcome((VmWorkJobVO)result[0], vm.getId());
     }
 
-    public Outcome<VirtualMachine> removeNicFromVmThroughJobQueue(
-            final VirtualMachine vm, final Nic nic) {
+    public Outcome<VirtualMachine> removeNicFromVmThroughJobQueue(final VirtualMachine vm, final Nic nic) {
 
         final CallContext context = CallContext.current();
         final User user = context.getCallingUser();
@@ -4973,9 +4985,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
                 _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
                 try {
-                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(
-                            VirtualMachine.Type.Instance, vm.getId(),
-                            VmWorkRemoveNicFromVm.class.getName());
+                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(VirtualMachine.Type.Instance, vm.getId(), VmWorkRemoveNicFromVm.class.getName());
 
                     VmWorkJobVO workJob = null;
                     if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
@@ -4994,9 +5004,10 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                         workJob.setVmInstanceId(vm.getId());
                         workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
 
-                        // save work context info (there are some duplications)
-                        VmWorkRemoveNicFromVm workInfo = new VmWorkRemoveNicFromVm(user.getId(), account.getId(), vm.getId(),
-                                VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, nic.getId());
+                        // save work context info (there are some
+                        // duplications)
+                        VmWorkRemoveNicFromVm workInfo = new VmWorkRemoveNicFromVm(user.getId(), account.getId(), vm.getId(), VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, nic
+                                .getId());
                         workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
 
                         _jobMgr.submitAsyncJob(workJob, VmWorkConstants.VM_WORK_QUEUE, vm.getId());
@@ -5014,8 +5025,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         return new VmJobVirtualMachineOutcome((VmWorkJobVO)result[0], vm.getId());
     }
 
-    public Outcome<VirtualMachine> removeVmFromNetworkThroughJobQueue(
-            final VirtualMachine vm, final Network network, final URI broadcastUri) {
+    public Outcome<VirtualMachine> removeVmFromNetworkThroughJobQueue(final VirtualMachine vm, final Network network, final URI broadcastUri) {
 
         final CallContext context = CallContext.current();
         final User user = context.getCallingUser();
@@ -5027,9 +5037,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
                 _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
                 try {
-                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(
-                            VirtualMachine.Type.Instance, vm.getId(),
-                            VmWorkRemoveVmFromNetwork.class.getName());
+                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(VirtualMachine.Type.Instance, vm.getId(), VmWorkRemoveVmFromNetwork.class.getName());
 
                     VmWorkJobVO workJob = null;
                     if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
@@ -5048,7 +5056,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                         workJob.setVmInstanceId(vm.getId());
                         workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
 
-                        // save work context info (there are some duplications)
+                        // save work context info (there are some
+                        // duplications)
                         VmWorkRemoveVmFromNetwork workInfo = new VmWorkRemoveVmFromNetwork(user.getId(), account.getId(), vm.getId(),
                                 VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, network, broadcastUri);
                         workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
@@ -5068,8 +5077,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         return new VmJobVirtualMachineOutcome((VmWorkJobVO)result[0], vm.getId());
     }
 
-    public Outcome<VirtualMachine> reconfigureVmThroughJobQueue(
-            final String vmUuid, final ServiceOffering newServiceOffering, final boolean reconfiguringOnExistingHost) {
+    public Outcome<VirtualMachine> reconfigureVmThroughJobQueue(final String vmUuid, final ServiceOffering newServiceOffering, final boolean reconfiguringOnExistingHost) {
 
         final CallContext context = CallContext.current();
         final User user = context.getCallingUser();
@@ -5083,9 +5091,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
                 _vmDao.lockInLockTable(String.valueOf(vm.getId()), Integer.MAX_VALUE);
                 try {
-                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(
-                            VirtualMachine.Type.Instance, vm.getId(),
-                            VmWorkReconfigure.class.getName());
+                    List<VmWorkJobVO> pendingWorkJobs = _workJobDao.listPendingWorkJobs(VirtualMachine.Type.Instance, vm.getId(), VmWorkReconfigure.class.getName());
 
                     VmWorkJobVO workJob = null;
                     if (pendingWorkJobs != null && pendingWorkJobs.size() > 0) {
@@ -5104,9 +5110,10 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
                         workJob.setVmInstanceId(vm.getId());
                         workJob.setRelated(AsyncJobExecutionContext.getOriginJobId());
 
-                        // save work context info (there are some duplications)
-                        VmWorkReconfigure workInfo = new VmWorkReconfigure(user.getId(), account.getId(), vm.getId(),
-                                VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER, newServiceOffering.getId(), reconfiguringOnExistingHost);
+                        // save work context info (there are some
+                        // duplications)
+                        VmWorkReconfigure workInfo = new VmWorkReconfigure(user.getId(), account.getId(), vm.getId(), VirtualMachineManagerImpl.VM_WORK_JOB_HANDLER,
+                                newServiceOffering.getId(), reconfiguringOnExistingHost);
                         workJob.setCmdInfo(VmWorkSerializer.serialize(workInfo));
 
                         _jobMgr.submitAsyncJob(workJob, VmWorkConstants.VM_WORK_QUEUE, vm.getId());
@@ -5180,10 +5187,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             s_logger.info("Unable to find vm " + work.getVmId());
         }
         assert (vm != null);
-        orchestrateMigrateWithStorage(vm.getUuid(),
-                work.getSrcHostId(),
-                work.getDestHostId(),
-                work.getVolumeToPool());
+        orchestrateMigrateWithStorage(vm.getUuid(), work.getSrcHostId(), work.getDestHostId(), work.getVolumeToPool());
         return new Pair<JobInfo.Status, String>(JobInfo.Status.SUCCEEDED, null);
     }
 
@@ -5193,10 +5197,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             s_logger.info("Unable to find vm " + work.getVmId());
         }
         assert (vm != null);
-        orchestrateMigrateForScale(vm.getUuid(),
-                work.getSrcHostId(),
-                work.getDeployDestination(),
-                work.getNewServiceOfferringId());
+        orchestrateMigrateForScale(vm.getUuid(), work.getSrcHostId(), work.getDeployDestination(), work.getNewServiceOfferringId());
         return new Pair<JobInfo.Status, String>(JobInfo.Status.SUCCEEDED, null);
     }
 
@@ -5218,8 +5219,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         assert (vm != null);
 
         Network network = _networkDao.findById(work.getNetworkId());
-        NicProfile nic = orchestrateAddVmToNetwork(vm, network,
-                work.getRequestedNicProfile());
+        NicProfile nic = orchestrateAddVmToNetwork(vm, network, work.getRequestedNicProfile());
 
         return new Pair<JobInfo.Status, String>(JobInfo.Status.SUCCEEDED, _jobMgr.marshallResultObject(nic));
     }
@@ -5232,8 +5232,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
         assert (vm != null);
         NicVO nic = _entityMgr.findById(NicVO.class, work.getNicId());
         boolean result = orchestrateRemoveNicFromVm(vm, nic);
-        return new Pair<JobInfo.Status, String>(JobInfo.Status.SUCCEEDED,
-                _jobMgr.marshallResultObject(result));
+        return new Pair<JobInfo.Status, String>(JobInfo.Status.SUCCEEDED, _jobMgr.marshallResultObject(result));
     }
 
     private Pair<JobInfo.Status, String> orchestrateRemoveVmFromNetwork(VmWorkRemoveVmFromNetwork work) throws Exception {
@@ -5242,10 +5241,8 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
             s_logger.info("Unable to find vm " + work.getVmId());
         }
         assert (vm != null);
-        boolean result = orchestrateRemoveVmFromNetwork(vm,
-                work.getNetwork(), work.getBroadcastUri());
-        return new Pair<JobInfo.Status, String>(JobInfo.Status.SUCCEEDED,
-                _jobMgr.marshallResultObject(result));
+        boolean result = orchestrateRemoveVmFromNetwork(vm, work.getNetwork(), work.getBroadcastUri());
+        return new Pair<JobInfo.Status, String>(JobInfo.Status.SUCCEEDED, _jobMgr.marshallResultObject(result));
     }
 
     private Pair<JobInfo.Status, String> orchestrateReconfigure(VmWorkReconfigure work) throws Exception {
@@ -5257,8 +5254,7 @@ public class VirtualMachineManagerImpl extends ManagerBase implements VirtualMac
 
         ServiceOffering newServiceOffering = _offeringDao.findById(vm.getId(), work.getNewServiceOfferingId());
 
-        reConfigureVm(vm.getUuid(), newServiceOffering,
-                work.isSameHost());
+        reConfigureVm(vm.getUuid(), newServiceOffering, work.isSameHost());
         return new Pair<JobInfo.Status, String>(JobInfo.Status.SUCCEEDED, null);
     }
 

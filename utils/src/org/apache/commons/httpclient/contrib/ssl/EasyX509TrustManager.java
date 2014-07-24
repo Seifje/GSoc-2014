@@ -38,20 +38,19 @@ import org.apache.commons.logging.LogFactory;
  * self-signed certificates.
  * </p>
  * <p>
- * This trust manager SHOULD NOT be used for productive systems
- * due to security reasons, unless it is a concious decision and
- * you are perfectly aware of security implications of accepting
- * self-signed certificates
+ * This trust manager SHOULD NOT be used for productive systems due to security
+ * reasons, unless it is a concious decision and you are perfectly aware of
+ * security implications of accepting self-signed certificates
  * </p>
  *
  * @author <a href="mailto:adrian.sutton@ephox.com">Adrian Sutton</a>
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  *
- * <p>
- * DISCLAIMER: HttpClient developers DO NOT actively support this component.
- * The component is provided as a reference material, which may be inappropriate
- * for use without additional customization.
- * </p>
+ *         <p>
+ *         DISCLAIMER: HttpClient developers DO NOT actively support this
+ *         component. The component is provided as a reference material, which
+ *         may be inappropriate for use without additional customization.
+ *         </p>
  */
 
 public class EasyX509TrustManager implements X509TrustManager {
@@ -75,7 +74,8 @@ public class EasyX509TrustManager implements X509TrustManager {
     }
 
     /**
-     * @see javax.net.ssl.X509TrustManager#checkClientTrusted(X509Certificate[],String authType)
+     * @see javax.net.ssl.X509TrustManager#checkClientTrusted(X509Certificate[],
+     *      String authType)
      */
     @Override
     public void checkClientTrusted(X509Certificate[] certificates, String authType) throws CertificateException {
@@ -83,7 +83,8 @@ public class EasyX509TrustManager implements X509TrustManager {
     }
 
     /**
-     * @see javax.net.ssl.X509TrustManager#checkServerTrusted(X509Certificate[],String authType)
+     * @see javax.net.ssl.X509TrustManager#checkServerTrusted(X509Certificate[],
+     *      String authType)
      */
     @Override
     public void checkServerTrusted(X509Certificate[] certificates, String authType) throws CertificateException {

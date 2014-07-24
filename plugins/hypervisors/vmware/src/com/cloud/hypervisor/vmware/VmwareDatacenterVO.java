@@ -30,7 +30,8 @@ import com.cloud.utils.NumbersUtil;
 import com.cloud.utils.db.Encrypt;
 
 /**
- * VmwareDatacenterVO contains information of Vmware Datacenter associated with a CloudStack zone.
+ * VmwareDatacenterVO contains information of Vmware Datacenter associated with
+ * a CloudStack zone.
  */
 
 @Entity

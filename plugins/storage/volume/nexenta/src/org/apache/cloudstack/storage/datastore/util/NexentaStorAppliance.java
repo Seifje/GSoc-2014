@@ -95,7 +95,8 @@ public class NexentaStorAppliance {
     static final class ListOfIscsiTargetsNmsResponse extends NmsResponse {
         protected HashMap<String, IscsiTarget> result;
 
-        ListOfIscsiTargetsNmsResponse() {}
+        ListOfIscsiTargetsNmsResponse() {
+        }
 
         ListOfIscsiTargetsNmsResponse(HashMap<String, IscsiTarget> result) {
             this.result = result;
@@ -108,11 +109,13 @@ public class NexentaStorAppliance {
 
     /**
      * Checks if iSCSI target exists.
-     * @param targetName iSCSI target name
+     *
+     * @param targetName
+     *            iSCSI target name
      * @return true if iSCSI target exists, else false
      */
     boolean isIscsiTargetExists(String targetName) {
-        ListOfIscsiTargetsNmsResponse response = (ListOfIscsiTargetsNmsResponse) client.execute(ListOfIscsiTargetsNmsResponse.class, "stmf", "list_targets");
+        ListOfIscsiTargetsNmsResponse response = (ListOfIscsiTargetsNmsResponse)client.execute(ListOfIscsiTargetsNmsResponse.class, "stmf", "list_targets");
         if (response == null) {
             return false;
         }
@@ -122,7 +125,8 @@ public class NexentaStorAppliance {
 
     @SuppressWarnings("unused")
     static final class CreateIscsiTargetRequestParams {
-        @SerializedName("target_name") String targetName;
+        @SerializedName("target_name")
+        String targetName;
 
         CreateIscsiTargetRequestParams(String targetName) {
             this.targetName = targetName;
@@ -130,13 +134,15 @@ public class NexentaStorAppliance {
 
         @Override
         public boolean equals(Object other) {
-            return other instanceof CreateIscsiTargetRequestParams && targetName.equals(((CreateIscsiTargetRequestParams) other).targetName);
+            return other instanceof CreateIscsiTargetRequestParams && targetName.equals(((CreateIscsiTargetRequestParams)other).targetName);
         }
     }
 
     /**
      * Creates iSCSI target on NexentaStor Appliance.
-     * @param targetName iSCSI target name
+     *
+     * @param targetName
+     *            iSCSI target name
      */
     void createIscsiTarget(String targetName) {
         try {
@@ -153,7 +159,8 @@ public class NexentaStorAppliance {
     static final class ListOfStringsNmsResponse extends NmsResponse {
         LinkedList<String> result;
 
-        ListOfStringsNmsResponse() {}
+        ListOfStringsNmsResponse() {
+        }
 
         ListOfStringsNmsResponse(LinkedList<String> result) {
             this.result = result;
@@ -166,11 +173,13 @@ public class NexentaStorAppliance {
 
     /**
      * Checks if iSCSI target group already exists on NexentaStor Appliance.
-     * @param targetGroupName iSCSI target group name
+     *
+     * @param targetGroupName
+     *            iSCSI target group name
      * @return true if iSCSI target group already exists, else false
      */
     boolean isIscsiTargetGroupExists(String targetGroupName) {
-        ListOfStringsNmsResponse response = (ListOfStringsNmsResponse) client.execute(ListOfStringsNmsResponse.class, "stmf", "list_targetgroups");
+        ListOfStringsNmsResponse response = (ListOfStringsNmsResponse)client.execute(ListOfStringsNmsResponse.class, "stmf", "list_targetgroups");
         if (response == null) {
             return false;
         }
@@ -180,7 +189,9 @@ public class NexentaStorAppliance {
 
     /**
      * Creates iSCSI target group on NexentaStor Appliance.
-     * @param targetGroupName iSCSI target group name
+     *
+     * @param targetGroupName
+     *            iSCSI target group name
      */
     void createIscsiTargetGroup(String targetGroupName) {
         try {
@@ -195,12 +206,15 @@ public class NexentaStorAppliance {
 
     /**
      * Checks if iSCSI target is member of target group.
-     * @param targetGroupName iSCSI target group name
-     * @param targetName iSCSI target name
+     *
+     * @param targetGroupName
+     *            iSCSI target group name
+     * @param targetName
+     *            iSCSI target name
      * @return true if target is member of iSCSI target group, else false
      */
     boolean isTargetMemberOfTargetGroup(String targetGroupName, String targetName) {
-        ListOfStringsNmsResponse response = (ListOfStringsNmsResponse) client.execute(ListOfStringsNmsResponse.class, "stmf", "list_targetgroup_members", targetGroupName);
+        ListOfStringsNmsResponse response = (ListOfStringsNmsResponse)client.execute(ListOfStringsNmsResponse.class, "stmf", "list_targetgroup_members", targetGroupName);
         if (response == null) {
             return false;
         }
@@ -210,8 +224,11 @@ public class NexentaStorAppliance {
 
     /**
      * Adds iSCSI target to target group.
-     * @param targetGroupName iSCSI target group name
-     * @param targetName iSCSI target name
+     *
+     * @param targetGroupName
+     *            iSCSI target group name
+     * @param targetName
+     *            iSCSI target name
      */
     void addTargetGroupMember(String targetGroupName, String targetName) {
         try {
@@ -226,20 +243,22 @@ public class NexentaStorAppliance {
 
     /**
      * Checks if LU already exists on NexentaStor appliance.
-     * @param luName LU name
+     *
+     * @param luName
+     *            LU name
      * @return true if LU already exists, else false
      */
     boolean isLuExists(String luName) {
         IntegerNmsResponse response;
         try {
-            response = (IntegerNmsResponse) client.execute(IntegerNmsResponse.class, "scsidisk", "lu_exists", luName);
+            response = (IntegerNmsResponse)client.execute(IntegerNmsResponse.class, "scsidisk", "lu_exists", luName);
         } catch (CloudRuntimeException ex) {
             if (ex.getMessage().contains("does not exist")) {
                 return false;
             }
             throw ex;
         }
-        return response!= null && response.getResult() > 0;
+        return response != null && response.getResult() > 0;
     }
 
     @SuppressWarnings("unused")
@@ -252,7 +271,9 @@ public class NexentaStorAppliance {
 
     /**
      * Creates LU for volume.
-     * @param volumeName volume name
+     *
+     * @param volumeName
+     *            volume name
      */
     void createLu(String volumeName) {
         try {
@@ -267,13 +288,15 @@ public class NexentaStorAppliance {
 
     /**
      * Checks if LU shared on NexentaStor appliance.
-     * @param luName LU name
+     *
+     * @param luName
+     *            LU name
      * @return true if LU was already shared, else false
      */
     boolean isLuShared(String luName) {
         IntegerNmsResponse response;
         try {
-            response = (IntegerNmsResponse) client.execute(IntegerNmsResponse.class, "scsidisk", "lu_shared", luName);
+            response = (IntegerNmsResponse)client.execute(IntegerNmsResponse.class, "scsidisk", "lu_shared", luName);
         } catch (CloudRuntimeException ex) {
             if (ex.getMessage().contains("does not exist")) {
                 return false;
@@ -285,11 +308,14 @@ public class NexentaStorAppliance {
 
     @SuppressWarnings("unused")
     static final class MappingEntry {
-        @SerializedName("target_group") String targetGroup;
+        @SerializedName("target_group")
+        String targetGroup;
         String lun;
         String zvol;
-        @SerializedName("host_group") String hostGroup;
-        @SerializedName("entry_number") String entryNumber;
+        @SerializedName("host_group")
+        String hostGroup;
+        @SerializedName("entry_number")
+        String entryNumber;
 
         MappingEntry(String targetGroup, String lun) {
             this.targetGroup = targetGroup;
@@ -303,9 +329,9 @@ public class NexentaStorAppliance {
         @Override
         public boolean equals(Object other) {
             if (other instanceof MappingEntry) {
-                MappingEntry o = (MappingEntry) other;
-                return isEquals(targetGroup, o.targetGroup) && isEquals(lun, o.lun) && isEquals(zvol, o.zvol) &&
-                        isEquals(hostGroup, o.hostGroup) && isEquals(entryNumber, o.entryNumber);
+                MappingEntry o = (MappingEntry)other;
+                return isEquals(targetGroup, o.targetGroup) && isEquals(lun, o.lun) && isEquals(zvol, o.zvol) && isEquals(hostGroup, o.hostGroup)
+                        && isEquals(entryNumber, o.entryNumber);
             }
             return false;
         }
@@ -318,8 +344,11 @@ public class NexentaStorAppliance {
 
     /**
      * Adds LU mapping entry to iSCSI target group.
-     * @param luName LU name
-     * @param targetGroupName iSCSI target group name
+     *
+     * @param luName
+     *            LU name
+     * @param targetGroupName
+     *            iSCSI target group name
      */
     void addLuMappingEntry(String luName, String targetGroupName) {
         MappingEntry mappingEntry = new MappingEntry(targetGroupName, "0");
@@ -402,9 +431,7 @@ public class NexentaStorAppliance {
             if (!ex.getMessage().contains("does not exist")) {
                 throw ex;
             }
-            logger.debug(String.format(
-                    "Volume %s does not exist, it seems it was already " +
-                            "deleted.", volumeName));
+            logger.debug(String.format("Volume %s does not exist, it seems it was already " + "deleted.", volumeName));
         }
     }
 

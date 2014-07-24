@@ -29,13 +29,11 @@ import com.cloud.user.Account;
 public interface FirewallManager extends FirewallService {
     /**
      * detectRulesConflict finds conflicts in networking rules. It checks for
-     * conflicts between the following types of netowrking rules;
-     * 1. one to one nat ip forwarding
-     * 2. port forwarding
-     * 3. load balancing
+     * conflicts between the following types of netowrking rules; 1. one to one
+     * nat ip forwarding 2. port forwarding 3. load balancing
      *
-     * and conflicts are detected between those two rules. In this case, it
-     * is possible for both rules to be rolled back when, technically, we should
+     * and conflicts are detected between those two rules. In this case, it is
+     * possible for both rules to be rolled back when, technically, we should
      * and the user can simply re-add one of the rules themselves.
      *
      * @param newRule
@@ -44,8 +42,8 @@ public interface FirewallManager extends FirewallService {
      */
     void detectRulesConflict(FirewallRule newRule) throws NetworkRuleConflictException;
 
-    void validateFirewallRule(Account caller, IPAddressVO ipAddress, Integer portStart, Integer portEnd, String proto, Purpose purpose, FirewallRuleType type,
-        Long networkid, FirewallRule.TrafficType trafficType);
+    void validateFirewallRule(Account caller, IPAddressVO ipAddress, Integer portStart, Integer portEnd, String proto, Purpose purpose, FirewallRuleType type, Long networkid,
+            FirewallRule.TrafficType trafficType);
 
     boolean applyRules(List<? extends FirewallRule> rules, boolean continueOnError, boolean updateRulesInDB) throws ResourceUnavailableException;
 
@@ -55,25 +53,29 @@ public interface FirewallManager extends FirewallService {
 
     boolean revokeFirewallRulesForIp(long ipId, long userId, Account caller) throws ResourceUnavailableException;
 
-//    /**
-//     * Revokes a firewall rule
-//     *
-//     * @param ruleId
-//     *            the id of the rule to revoke.
-//     * @param caller
-//     *            TODO
-//     * @param userId
-//     *            TODO
-//     * @return
-//     */
-//    boolean revokeFirewallRule(long ruleId, boolean apply, Account caller, long userId);
+    // /**
+    // * Revokes a firewall rule
+    // *
+    // * @param ruleId
+    // * the id of the rule to revoke.
+    // * @param caller
+    // * TODO
+    // * @param userId
+    // * TODO
+    // * @return
+    // */
+    // boolean revokeFirewallRule(long ruleId, boolean apply, Account caller,
+    // long userId);
 
-//    FirewallRule createFirewallRule(Long ipAddrId, Account caller, String xId, Integer portStart, Integer portEnd, String protocol, List<String> sourceCidrList, Integer icmpCode, Integer icmpType, Long relatedRuleId,
-//            FirewallRule.FirewallRuleType type, Long networkId, FirewallRule.TrafficType traffictype)
-//            throws NetworkRuleConflictException;
+    // FirewallRule createFirewallRule(Long ipAddrId, Account caller, String
+    // xId, Integer portStart, Integer portEnd, String protocol, List<String>
+    // sourceCidrList, Integer icmpCode, Integer icmpType, Long relatedRuleId,
+    // FirewallRule.FirewallRuleType type, Long networkId,
+    // FirewallRule.TrafficType traffictype)
+    // throws NetworkRuleConflictException;
 
-    FirewallRule createRuleForAllCidrs(long ipAddrId, Account caller, Integer startPort, Integer endPort, String protocol, Integer icmpCode, Integer icmpType,
-        Long relatedRuleId, long networkId) throws NetworkRuleConflictException;
+    FirewallRule createRuleForAllCidrs(long ipAddrId, Account caller, Integer startPort, Integer endPort, String protocol, Integer icmpCode, Integer icmpType, Long relatedRuleId,
+            long networkId) throws NetworkRuleConflictException;
 
     boolean revokeAllFirewallRulesForNetwork(long networkId, long userId, Account caller) throws ResourceUnavailableException;
 

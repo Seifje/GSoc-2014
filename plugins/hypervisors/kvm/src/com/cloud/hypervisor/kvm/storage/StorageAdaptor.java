@@ -28,7 +28,8 @@ public interface StorageAdaptor {
 
     public KVMStoragePool getStoragePool(String uuid);
 
-    // given disk path (per database) and pool, create new KVMPhysicalDisk, populate
+    // given disk path (per database) and pool, create new KVMPhysicalDisk,
+    // populate
     // it with info from local disk, and return it
     public KVMPhysicalDisk getPhysicalDisk(String volumeUuid, KVMStoragePool pool);
 
@@ -36,8 +37,7 @@ public interface StorageAdaptor {
 
     public boolean deleteStoragePool(String uuid);
 
-    public KVMPhysicalDisk createPhysicalDisk(String name, KVMStoragePool pool,
-            PhysicalDiskFormat format, Storage.ProvisioningType provisioningType, long size);
+    public KVMPhysicalDisk createPhysicalDisk(String name, KVMStoragePool pool, PhysicalDiskFormat format, Storage.ProvisioningType provisioningType, long size);
 
     // given disk path (per database) and pool, prepare disk on host
     public boolean connectPhysicalDisk(String volumePath, KVMStoragePool pool, Map<String, String> details);
@@ -45,14 +45,15 @@ public interface StorageAdaptor {
     // given disk path (per database) and pool, clean up disk on host
     public boolean disconnectPhysicalDisk(String volumePath, KVMStoragePool pool);
 
-    // given local path to file/device (per Libvirt XML), 1) check that device is
-    // handled by your adaptor, return false if not. 2) clean up device, return true
+    // given local path to file/device (per Libvirt XML), 1) check that device
+    // is
+    // handled by your adaptor, return false if not. 2) clean up device, return
+    // true
     public boolean disconnectPhysicalDiskByPath(String localPath);
 
     public boolean deletePhysicalDisk(String uuid, KVMStoragePool pool);
 
-    public KVMPhysicalDisk createDiskFromTemplate(KVMPhysicalDisk template,
-            String name, PhysicalDiskFormat format, Storage.ProvisioningType provisioningType, long size,
+    public KVMPhysicalDisk createDiskFromTemplate(KVMPhysicalDisk template, String name, PhysicalDiskFormat format, Storage.ProvisioningType provisioningType, long size,
             KVMStoragePool destPool, int timeout);
 
     public KVMPhysicalDisk createTemplateFromDisk(KVMPhysicalDisk disk, String name, PhysicalDiskFormat format, long size, KVMStoragePool destPool);

@@ -35,7 +35,7 @@ public class ListNetworksCmdByAdmin extends ListNetworksCmd {
     public static final Logger s_logger = Logger.getLogger(ListNetworksCmdByAdmin.class.getName());
 
     @Override
-    public void execute(){
+    public void execute() {
         Pair<List<? extends Network>, Integer> networks = _networkService.searchForNetworks(this);
         ListResponse<NetworkResponse> response = new ListResponse<NetworkResponse>();
         List<NetworkResponse> networkResponses = new ArrayList<NetworkResponse>();

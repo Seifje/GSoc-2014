@@ -57,19 +57,17 @@ public class VmWorkStart extends VmWork {
     public DeploymentPlan getPlan() {
 
         if (podId != null || clusterId != null || hostId != null || poolId != null || physicalNetworkId != null) {
-            // this is ugly, to work with legacy code, we need to re-construct the DeploymentPlan hard-codely
-            // this has to be refactored together with migrating legacy code into the new way
+            // this is ugly, to work with legacy code, we need to re-construct
+            // the DeploymentPlan hard-codely
+            // this has to be refactored together with migrating legacy code
+            // into the new way
             ReservationContext context = null;
             if (reservationId != null) {
                 Journal journal = new Journal.LogJournal("VmWorkStart", s_logger);
-                context = new ReservationContextImpl(reservationId, journal,
-                        CallContext.current().getCallingUser(),
-                        CallContext.current().getCallingAccount());
+                context = new ReservationContextImpl(reservationId, journal, CallContext.current().getCallingUser(), CallContext.current().getCallingAccount());
             }
 
-            DeploymentPlan plan = new DataCenterDeployment(
-                    dcId, podId, clusterId, hostId, poolId, physicalNetworkId,
-                    context);
+            DeploymentPlan plan = new DataCenterDeployment(dcId, podId, clusterId, hostId, poolId, physicalNetworkId, context);
             return plan;
         }
 
@@ -125,8 +123,8 @@ public class VmWorkStart extends VmWork {
         if (params != null) {
             rawParams = new HashMap<String, String>();
             for (Map.Entry<VirtualMachineProfile.Param, Object> entry : params.entrySet()) {
-                rawParams.put(entry.getKey().getName(), JobSerializerHelper.toObjectSerializedString(
-                        entry.getValue() instanceof Serializable ? (Serializable)entry.getValue() : entry.getValue().toString()));
+                rawParams.put(entry.getKey().getName(),
+                        JobSerializerHelper.toObjectSerializedString(entry.getValue() instanceof Serializable ? (Serializable)entry.getValue() : entry.getValue().toString()));
             }
         }
     }

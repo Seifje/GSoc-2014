@@ -72,7 +72,8 @@ public class ClusteredAgentAttache extends ConnectedAgentAttache implements Rout
     protected void checkAvailability(final Command[] cmds) throws AgentUnavailableException {
 
         if (_transferMode) {
-            // need to throw some other exception while agent is in rebalancing mode
+            // need to throw some other exception while agent is in rebalancing
+            // mode
             for (final Command cmd : cmds) {
                 if (!cmd.allowCaching()) {
                     throw new AgentUnavailableException("Unable to send " + cmd.getClass().toString() + " because agent is in Rebalancing mode", _id);
@@ -130,7 +131,8 @@ public class ClusteredAgentAttache extends ConnectedAgentAttache implements Rout
             if (s_logger.isDebugEnabled()) {
                 s_logger.debug(log(Request.getSequence(data), "Link is closed"));
             }
-            // Note: since this block is not in synchronized.  It is possible for _link to become null.
+            // Note: since this block is not in synchronized. It is possible for
+            // _link to become null.
             throw new AgentUnavailableException("Channel to agent is null", _id);
         }
     }

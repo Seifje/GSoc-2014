@@ -43,17 +43,16 @@ import com.cloud.network.cisco.CiscoAsa1000vDeviceVO;
 import com.cloud.network.element.CiscoAsa1000vService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "listCiscoAsa1000vResources", responseObject = CiscoAsa1000vResourceResponse.class, description = "Lists Cisco ASA 1000v appliances",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listCiscoAsa1000vResources", responseObject = CiscoAsa1000vResourceResponse.class, description = "Lists Cisco ASA 1000v appliances", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListCiscoAsa1000vResourcesCmd extends BaseListCmd {
     private static final Logger s_logger = Logger.getLogger(ListCiscoAsa1000vResourcesCmd.class.getName());
     private static final String s_name = "listCiscoAsa1000vResources";
     @Inject
     CiscoAsa1000vService _ciscoAsa1000vService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, description = "the Physical Network ID")
     private Long physicalNetworkId;
@@ -64,9 +63,9 @@ public class ListCiscoAsa1000vResourcesCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.HOST_NAME, type = CommandType.STRING, description = "Hostname or ip address of the Cisco ASA 1000v appliance.")
     private String host;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getCiscoAsa1000vResourceId() {
         return ciscoAsa1000vResourceId;
@@ -80,13 +79,12 @@ public class ListCiscoAsa1000vResourcesCmd extends BaseListCmd {
         return host;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             List<CiscoAsa1000vDeviceVO> ciscoAsa1000vDevices = _ciscoAsa1000vService.listCiscoAsa1000vResources(this);
             ListResponse<CiscoAsa1000vResourceResponse> response = new ListResponse<CiscoAsa1000vResourceResponse>();

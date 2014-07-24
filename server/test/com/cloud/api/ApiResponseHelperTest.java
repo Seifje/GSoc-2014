@@ -41,10 +41,8 @@ public class ApiResponseHelperTest {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss ZZZ");
 
     @Before
-    public void injectMocks() throws SecurityException, NoSuchFieldException,
-            IllegalArgumentException, IllegalAccessException {
-        Field usageSvcField = ApiResponseHelper.class
-                .getDeclaredField("_usageSvc");
+    public void injectMocks() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        Field usageSvcField = ApiResponseHelper.class.getDeclaredField("_usageSvc");
         usageSvcField.setAccessible(true);
         helper = new ApiResponseHelper();
         usageSvcField.set(helper, usageService);
@@ -52,17 +50,11 @@ public class ApiResponseHelperTest {
 
     @Test
     public void getDateStringInternal() throws ParseException {
-        Mockito.when(usageService.getUsageTimezone()).thenReturn(
-                TimeZone.getTimeZone("UTC"));
-        Assert.assertEquals("2014-06-29'T'23:45:00+00:00", helper
-                .getDateStringInternal(dateFormat.parse("2014-06-29 23:45:00 UTC")));
-        Assert.assertEquals("2014-06-29'T'23:45:01+00:00", helper
-                .getDateStringInternal(dateFormat.parse("2014-06-29 23:45:01 UTC")));
-        Assert.assertEquals("2014-06-29'T'23:45:11+00:00", helper
-                .getDateStringInternal(dateFormat.parse("2014-06-29 23:45:11 UTC")));
-        Assert.assertEquals("2014-06-29'T'23:05:11+00:00", helper
-                .getDateStringInternal(dateFormat.parse("2014-06-29 23:05:11 UTC")));
-        Assert.assertEquals("2014-05-29'T'08:45:11+00:00", helper
-                .getDateStringInternal(dateFormat.parse("2014-05-29 08:45:11 UTC")));
+        Mockito.when(usageService.getUsageTimezone()).thenReturn(TimeZone.getTimeZone("UTC"));
+        Assert.assertEquals("2014-06-29'T'23:45:00+00:00", helper.getDateStringInternal(dateFormat.parse("2014-06-29 23:45:00 UTC")));
+        Assert.assertEquals("2014-06-29'T'23:45:01+00:00", helper.getDateStringInternal(dateFormat.parse("2014-06-29 23:45:01 UTC")));
+        Assert.assertEquals("2014-06-29'T'23:45:11+00:00", helper.getDateStringInternal(dateFormat.parse("2014-06-29 23:45:11 UTC")));
+        Assert.assertEquals("2014-06-29'T'23:05:11+00:00", helper.getDateStringInternal(dateFormat.parse("2014-06-29 23:05:11 UTC")));
+        Assert.assertEquals("2014-05-29'T'08:45:11+00:00", helper.getDateStringInternal(dateFormat.parse("2014-05-29 08:45:11 UTC")));
     }
 }

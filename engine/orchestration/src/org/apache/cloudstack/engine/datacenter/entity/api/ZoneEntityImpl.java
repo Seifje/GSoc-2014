@@ -171,7 +171,7 @@ public class ZoneEntityImpl implements ZoneEntity, FiniteStateObject<DataCenterR
 
     @Override
     public void setState(State state) {
-        //use FSM to set state.
+        // use FSM to set state.
     }
 
     @Override

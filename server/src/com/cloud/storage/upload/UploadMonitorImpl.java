@@ -144,17 +144,16 @@ public class UploadMonitorImpl extends ManagerBase implements UploadMonitor {
     }
 
     @Override
-    public void extractVolume(UploadVO uploadVolumeObj, DataStore secStore, VolumeVO volume, String url, Long dataCenterId, String installPath, long eventId,
-        long asyncJobId, AsyncJobManager asyncMgr) {
+    public void extractVolume(UploadVO uploadVolumeObj, DataStore secStore, VolumeVO volume, String url, Long dataCenterId, String installPath, long eventId, long asyncJobId,
+            AsyncJobManager asyncMgr) {
 
         uploadVolumeObj.setUploadState(Upload.Status.NOT_UPLOADED);
         _uploadDao.update(uploadVolumeObj.getId(), uploadVolumeObj);
 
         start();
         UploadCommand ucmd = new UploadCommand(url, volume.getId(), volume.getSize(), installPath, Type.VOLUME);
-        UploadListener ul =
-            new UploadListener(secStore, _timer, _uploadDao, uploadVolumeObj, this, ucmd, volume.getAccountId(), volume.getName(), Type.VOLUME, eventId, asyncJobId,
-                asyncMgr);
+        UploadListener ul = new UploadListener(secStore, _timer, _uploadDao, uploadVolumeObj, this, ucmd, volume.getAccountId(), volume.getName(), Type.VOLUME, eventId,
+                asyncJobId, asyncMgr);
         _listenerMap.put(uploadVolumeObj, ul);
 
         try {
@@ -173,8 +172,7 @@ public class UploadMonitorImpl extends ManagerBase implements UploadMonitor {
     }
 
     @Override
-    public Long extractTemplate(VMTemplateVO template, String url, TemplateDataStoreVO vmTemplateHost, Long dataCenterId, long eventId, long asyncJobId,
-        AsyncJobManager asyncMgr) {
+    public Long extractTemplate(VMTemplateVO template, String url, TemplateDataStoreVO vmTemplateHost, Long dataCenterId, long eventId, long asyncJobId, AsyncJobManager asyncMgr) {
 
         Type type = (template.getFormat() == ImageFormat.ISO) ? Type.ISO : Type.TEMPLATE;
 
@@ -186,9 +184,8 @@ public class UploadMonitorImpl extends ManagerBase implements UploadMonitor {
         if (vmTemplateHost != null) {
             start();
             UploadCommand ucmd = new UploadCommand(template, url, vmTemplateHost.getInstallPath(), vmTemplateHost.getSize());
-            UploadListener ul =
-                new UploadListener(secStore, _timer, _uploadDao, uploadTemplateObj, this, ucmd, template.getAccountId(), template.getName(), type, eventId, asyncJobId,
-                    asyncMgr);
+            UploadListener ul = new UploadListener(secStore, _timer, _uploadDao, uploadTemplateObj, this, ucmd, template.getAccountId(), template.getName(), type, eventId,
+                    asyncJobId, asyncMgr);
             _listenerMap.put(uploadTemplateObj, ul);
             try {
                 EndPoint ep = _epSelector.select(secStore);
@@ -224,19 +221,28 @@ public class UploadMonitorImpl extends ManagerBase implements UploadMonitor {
             return null;
         }
 
-        //Check if it already exists.
+        // Check if it already exists.
         List<UploadVO> extractURLList = _uploadDao.listByTypeUploadStatus(template.getId(), type, UploadVO.Status.DOWNLOAD_URL_CREATED);
         if (extractURLList.size() > 0) {
             // do some check here
             UploadVO upload = extractURLList.get(0);
             String uploadUrl = extractURLList.get(0).getUploadUrl();
             String[] token = uploadUrl.split("/");
-            // example: uploadUrl = https://10-11-101-112.realhostip.com/userdata/2fdd9a70-9c4a-4a04-b1d5-1e41c221a1f9.iso
-            // then token[2] = 10-11-101-112.realhostip.com, token[4] = 2fdd9a70-9c4a-4a04-b1d5-1e41c221a1f9.iso
+            // example: uploadUrl =
+            // https://10-11-101-112.realhostip.com/userdata/2fdd9a70-9c4a-4a04-b1d5-1e41c221a1f9.iso
+            // then token[2] = 10-11-101-112.realhostip.com, token[4] =
+            // 2fdd9a70-9c4a-4a04-b1d5-1e41c221a1f9.iso
             String hostname = ep.getPublicAddr().replace(".", "-") + ".";
-            if ((token != null) && (token.length == 5) && (token[2].equals(hostname + _ssvmUrlDomain))) // ssvm publicip and domain suffix not changed
+            if ((token != null) && (token.length == 5) && (token[2].equals(hostname + _ssvmUrlDomain))) // ssvm
+                // publicip
+                // and
+                // domain
+                // suffix
+                // not
+                // changed
                 return extractURLList.get(0);
-            else if ((token != null) && (token.length == 5) && (token[2].startsWith(hostname))) { // domain suffix changed
+            else if ((token != null) && (token.length == 5) && (token[2].startsWith(hostname))) { // domain suffix
+                // changed
                 String uuid = token[4];
                 uploadUrl = generateCopyUrl(ep.getPublicAddr(), uuid);
                 UploadVO vo = _uploadDao.createForUpdate();
@@ -250,15 +256,16 @@ public class UploadMonitorImpl extends ManagerBase implements UploadMonitor {
         }
 
         // It doesn't exist so create a DB entry.
-        UploadVO uploadTemplateObj =
-            new UploadVO(vmTemplateHost.getDataStoreId(), template.getId(), new Date(), Status.DOWNLOAD_URL_NOT_CREATED, 0, type, Mode.HTTP_DOWNLOAD);
+        UploadVO uploadTemplateObj = new UploadVO(vmTemplateHost.getDataStoreId(), template.getId(), new Date(), Status.DOWNLOAD_URL_NOT_CREATED, 0, type, Mode.HTTP_DOWNLOAD);
         uploadTemplateObj.setInstallPath(vmTemplateHost.getInstallPath());
         _uploadDao.persist(uploadTemplateObj);
 
         try {
             // Create Symlink at ssvm
             String path = vmTemplateHost.getInstallPath();
-            String uuid = UUID.randomUUID().toString() + "." + template.getFormat().getFileExtension(); // adding "." + vhd/ova... etc.
+            String uuid = UUID.randomUUID().toString() + "." + template.getFormat().getFileExtension(); // adding "." +
+            // vhd/ova...
+            // etc.
             CreateEntityDownloadURLCommand cmd = new CreateEntityDownloadURLCommand(((ImageStoreEntity)store).getMountPoint(), path, uuid, null);
             Answer ans = ep.sendMessage(cmd);
             if (ans == null || !ans.getResult()) {
@@ -267,7 +274,7 @@ public class UploadMonitorImpl extends ManagerBase implements UploadMonitor {
                 throw new CloudRuntimeException(errorString);
             }
 
-            //Construct actual URL locally now that the symlink exists at SSVM
+            // Construct actual URL locally now that the symlink exists at SSVM
             String extractURL = generateCopyUrl(ep.getPublicAddr(), uuid);
             UploadVO vo = _uploadDao.createForUpdate();
             vo.setLastUpdated(new Date());
@@ -331,7 +338,8 @@ public class UploadMonitorImpl extends ManagerBase implements UploadMonitor {
                     s_logger.error(errorString);
                     throw new CloudRuntimeException(errorString);
                 }
-                //Construct actual URL locally now that the symlink exists at SSVM
+                // Construct actual URL locally now that the symlink exists at
+                // SSVM
                 String extractURL = generateCopyUrl(ssVm.getPublicIpAddress(), uuid);
                 UploadVO vo = _uploadDao.createForUpdate();
                 vo.setLastUpdated(new Date());
@@ -489,13 +497,13 @@ public class UploadMonitorImpl extends ManagerBase implements UploadMonitor {
                 String path = extractJob.getInstallPath();
                 DataStore secStore = storeMgr.getDataStore(extractJob.getDataStoreId(), DataStoreRole.Image);
 
-                // Would delete the symlink for the Type and if Type == VOLUME then also the volume
-                DeleteEntityDownloadURLCommand cmd =
-                    new DeleteEntityDownloadURLCommand(path, extractJob.getType(), extractJob.getUploadUrl(), ((ImageStoreVO)secStore).getParent());
+                // Would delete the symlink for the Type and if Type == VOLUME
+                // then also the volume
+                DeleteEntityDownloadURLCommand cmd = new DeleteEntityDownloadURLCommand(path, extractJob.getType(), extractJob.getUploadUrl(), ((ImageStoreVO)secStore).getParent());
                 EndPoint ep = _epSelector.select(secStore);
                 if (ep == null) {
                     s_logger.warn("UploadMonitor cleanup: There is no secondary storage VM for secondary storage host " + extractJob.getDataStoreId());
-                    continue; //TODO: why continue? why not break?
+                    continue; // TODO: why continue? why not break?
                 }
                 if (s_logger.isDebugEnabled()) {
                     s_logger.debug("UploadMonitor cleanup: Sending deletion of extract URL " + extractJob.getUploadUrl() + " to ssvm " + ep.getHostAddr());
@@ -504,8 +512,8 @@ public class UploadMonitorImpl extends ManagerBase implements UploadMonitor {
                 if (ans != null && ans.getResult()) {
                     _uploadDao.remove(extractJob.getId());
                 } else {
-                    s_logger.warn("UploadMonitor cleanup: Unable to delete the link for " + extractJob.getType() + " id=" + extractJob.getTypeId() + " url=" +
-                        extractJob.getUploadUrl() + " on ssvm " + ep.getHostAddr());
+                    s_logger.warn("UploadMonitor cleanup: Unable to delete the link for " + extractJob.getType() + " id=" + extractJob.getTypeId() + " url="
+                            + extractJob.getUploadUrl() + " on ssvm " + ep.getHostAddr());
                 }
             }
         }

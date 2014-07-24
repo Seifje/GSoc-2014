@@ -29,7 +29,8 @@ public class S3CopyObjectRequest extends S3Request {
     protected MetadataDirective directive;
     protected S3MetaDataEntry[] metaEntries;
     protected S3AccessControlList acl;
-    protected String cannedAccessPolicy;    // -> REST only sets an acl with a simple keyword
+    protected String cannedAccessPolicy; // -> REST only sets an acl with a
+                                         // simple keyword
     protected S3ConditionalHeaders conds;
 
     public S3CopyObjectRequest() {

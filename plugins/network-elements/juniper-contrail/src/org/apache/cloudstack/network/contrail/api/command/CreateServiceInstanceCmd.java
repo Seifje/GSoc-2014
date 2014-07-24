@@ -49,68 +49,40 @@ import com.cloud.offering.ServiceOffering;
 import com.cloud.template.VirtualMachineTemplate;
 import com.cloud.user.Account;
 
-@APICommand(name = "createServiceInstance",
-            description = "Creates a system virtual-machine that implements network services",
-            responseObject = ServiceInstanceResponse.class,
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "createServiceInstance", description = "Creates a system virtual-machine that implements network services", responseObject = ServiceInstanceResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateServiceInstanceCmd extends BaseAsyncCreateCmd {
     private static final String s_name = "createserviceinstanceresponse";
 
-    /// API parameters
-    @Parameter(name = ApiConstants.ZONE_ID,
-               type = CommandType.UUID,
-               entityType = ZoneResponse.class,
-               required = true,
-               description = "Availability zone for the service instance")
+    // / API parameters
+    @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, required = true, description = "Availability zone for the service instance")
     private Long zoneId;
 
-    //Owner information
+    // Owner information
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "An optional account for the virtual machine. Must be used with domainId.")
     private String accountName;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               entityType = DomainResponse.class,
-               description = "An optional domainId for the virtual machine. If the account parameter is used, domainId must also be used.")
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "An optional domainId for the virtual machine. If the account parameter is used, domainId must also be used.")
     private Long domainId;
 
     @Parameter(name = ApiConstants.PROJECT_ID, type = CommandType.UUID, entityType = ProjectResponse.class, description = "Project ID for the service instance")
     private Long projectId;
 
-    @Parameter(name = "leftnetworkid",
-               type = CommandType.UUID,
-               entityType = NetworkResponse.class,
-               required = true,
-               description = "The left (inside) network for service instance")
+    @Parameter(name = "leftnetworkid", type = CommandType.UUID, entityType = NetworkResponse.class, required = true, description = "The left (inside) network for service instance")
     private Long leftNetworkId;
 
-    @Parameter(name = "rightnetworkid",
-               type = CommandType.UUID,
-               entityType = NetworkResponse.class,
-               required = true,
-               description = "The right (outside) network ID for the service instance")
+    @Parameter(name = "rightnetworkid", type = CommandType.UUID, entityType = NetworkResponse.class, required = true, description = "The right (outside) network ID for the service instance")
     private Long rightNetworkId;
 
-    @Parameter(name = ApiConstants.TEMPLATE_ID,
-               type = CommandType.UUID,
-               entityType = TemplateResponse.class,
-               required = true,
-               description = "The template ID that specifies the image for the service appliance")
+    @Parameter(name = ApiConstants.TEMPLATE_ID, type = CommandType.UUID, entityType = TemplateResponse.class, required = true, description = "The template ID that specifies the image for the service appliance")
     private Long templateId;
 
-    @Parameter(name = ApiConstants.SERVICE_OFFERING_ID,
-               type = CommandType.UUID,
-               entityType = ServiceOfferingResponse.class,
-               required = true,
-               description = "The service offering ID that defines the resources consumed by the service appliance")
+    @Parameter(name = ApiConstants.SERVICE_OFFERING_ID, type = CommandType.UUID, entityType = ServiceOfferingResponse.class, required = true, description = "The service offering ID that defines the resources consumed by the service appliance")
     private Long serviceOfferingId;
 
-    @Parameter(name = ApiConstants.NAME, type = CommandType.STRING,
-               required = true, description = "The name of the service instance")
+    @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "The name of the service instance")
     private String name;
 
-    /// Implementation
+    // / Implementation
     @Inject
     ServiceManager _vrouterService;
 
@@ -171,8 +143,8 @@ public class CreateServiceInstanceCmd extends BaseAsyncCreateCmd {
     }
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException, NetworkRuleConflictException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
+            NetworkRuleConflictException {
         try {
             _vrouterService.startServiceInstance(getEntityId());
             ServiceInstanceResponse response = _vrouterService.createServiceInstanceResponse(getEntityId());

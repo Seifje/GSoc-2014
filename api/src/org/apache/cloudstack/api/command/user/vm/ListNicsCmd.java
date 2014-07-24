@@ -41,15 +41,14 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.user.Account;
 import com.cloud.vm.Nic;
 
-@APICommand(name = "listNics", description = "list the vm nics  IP to NIC", responseObject = NicResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listNics", description = "list the vm nics  IP to NIC", responseObject = NicResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListNicsCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListNicsCmd.class.getName());
     private static final String s_name = "listnicsresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.NIC_ID, type = CommandType.UUID, entityType = NicResponse.class, required = false, description = "the ID of the nic to to list IPs")
     private Long nicId;
@@ -63,9 +62,9 @@ public class ListNicsCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.FOR_DISPLAY, type = CommandType.BOOLEAN, description = "list resources by display flag; only ROOT admin is eligible to pass this parameter", since = "4.4", authorized = {RoleType.Admin})
     private Boolean display;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getEntityTable() {
         return "nics";
@@ -97,7 +96,6 @@ public class ListNicsCmd extends BaseListCmd {
         return caller.getAccountId();
     }
 
-
     public Boolean getDisplay() {
         if (display != null) {
             return display;
@@ -105,9 +103,9 @@ public class ListNicsCmd extends BaseListCmd {
         return true;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

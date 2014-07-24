@@ -80,8 +80,8 @@ public class Upgrade2212to2213 implements DbUpgrade {
         }
 
         try {
-            PreparedStatement pstmt =
-                conn.prepareStatement("ALTER TABLE `cloud`.`networks` ADD CONSTRAINT `fk_networks__data_center_id` FOREIGN KEY (`data_center_id`) REFERENCES `data_center`(`id`) ON DELETE CASCADE");
+            PreparedStatement pstmt = conn
+                    .prepareStatement("ALTER TABLE `cloud`.`networks` ADD CONSTRAINT `fk_networks__data_center_id` FOREIGN KEY (`data_center_id`) REFERENCES `data_center`(`id`) ON DELETE CASCADE");
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new CloudRuntimeException("Unable to reinsert data center key for the network", e);
@@ -91,13 +91,14 @@ public class Upgrade2212to2213 implements DbUpgrade {
         DbUpgradeUtils.dropPrimaryKeyIfExists(conn, "cloud_usage.usage_load_balancer_policy");
         DbUpgradeUtils.dropPrimaryKeyIfExists(conn, "cloud_usage.usage_port_forwarding");
 
-        //Drop usage_network_offering unique key
+        // Drop usage_network_offering unique key
         try {
             PreparedStatement pstmt = conn.prepareStatement("drop index network_offering_id on cloud_usage.usage_network_offering");
             pstmt.executeUpdate();
             s_logger.debug("Dropped usage_network_offering unique key");
         } catch (Exception e) {
-            // Ignore error if the usage_network_offering table or the unique key doesn't exist
+            // Ignore error if the usage_network_offering table or the unique
+            // key doesn't exist
         }
     }
 }

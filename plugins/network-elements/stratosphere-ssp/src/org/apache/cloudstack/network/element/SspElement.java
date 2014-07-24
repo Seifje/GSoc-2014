@@ -81,8 +81,8 @@ import com.cloud.vm.dao.NicDao;
 /**
  * Stratosphere sdn platform network element
  *
- * This class will be called per network setup operations.
- * This class also have ssp specific methods.
+ * This class will be called per network setup operations. This class also have
+ * ssp specific methods.
  *
  * Current implementation use HostVO for storage of api endpoint information,
  * but note this is not necessary. The other way is create our own database
@@ -129,7 +129,8 @@ public class SspElement extends AdapterBase implements ConnectivityProvider, Ssp
     @Override
     public Map<Service, Map<Capability, String>> getCapabilities() {
         Map<Service, Map<Capability, String>> capabilities = new HashMap<Service, Map<Capability, String>>();
-        capabilities.put(Service.Connectivity, new HashMap<Capability, String>()); // XXX: We might need some more category here.
+        capabilities.put(Service.Connectivity, new HashMap<Capability, String>()); // XXX: We might need some
+        // more category here.
         return capabilities;
     }
 
@@ -173,8 +174,12 @@ public class SspElement extends AdapterBase implements ConnectivityProvider, Ssp
         return clients;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.cloudstack.network.element.NetworkElement#isReady(com.cloud.network.PhysicalNetworkServiceProvider)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.apache.cloudstack.network.element.NetworkElement#isReady(com.cloud
+     * .network.PhysicalNetworkServiceProvider)
      */
     @Override
     public boolean isReady(PhysicalNetworkServiceProvider provider) {
@@ -187,9 +192,12 @@ public class SspElement extends AdapterBase implements ConnectivityProvider, Ssp
         return false;
     }
 
-    /* (non-Javadoc)
-     * If this element is ready, then it can be enabled.
-     * @see org.apache.cloudstack.network.element.SspManager#isEnabled(com.cloud.network.PhysicalNetwork)
+    /*
+     * (non-Javadoc) If this element is ready, then it can be enabled.
+     *
+     * @see
+     * org.apache.cloudstack.network.element.SspManager#isEnabled(com.cloud.
+     * network.PhysicalNetwork)
      */
     @Override
     public boolean canHandle(PhysicalNetwork physicalNetwork) {
@@ -278,9 +286,10 @@ public class SspElement extends AdapterBase implements ConnectivityProvider, Ssp
         HostVO host = new HostVO(UUID.randomUUID().toString());
         host.setDataCenterId(zoneId);
         host.setType(Host.Type.L2Networking);
-        host.setPrivateIpAddress(hostname); // db schema not null. It may be a name, not IP address.
-        //        host.setPrivateMacAddress(""); // db schema nullable
-        //        host.setPrivateNetmask(""); // db schema nullable
+        host.setPrivateIpAddress(hostname); // db schema not null. It may be a
+        // name, not IP address.
+        // host.setPrivateMacAddress(""); // db schema nullable
+        // host.setPrivateNetmask(""); // db schema nullable
         host.setVersion("1"); // strange db schema not null
         host.setName(cmd.getName());
 
@@ -460,26 +469,34 @@ public class SspElement extends AdapterBase implements ConnectivityProvider, Ssp
         return true;
     }
 
-    /* (non-Javadoc)
-     * Implements a network using ssp element.
+    /*
+     * (non-Javadoc) Implements a network using ssp element.
      *
-     * This method will be called right after NetworkGuru#implement().
-     * see also {@link #shutdown(Network, ReservationContext, boolean)}
-     * @see org.apache.cloudstack.network.element.NetworkElement#implement(com.cloud.network.Network, com.cloud.offering.NetworkOffering, com.cloud.deploy.DeployDestination, com.cloud.vm.ReservationContext)
+     * This method will be called right after NetworkGuru#implement(). see also
+     * {@link #shutdown(Network, ReservationContext, boolean)}
+     *
+     * @see
+     * org.apache.cloudstack.network.element.NetworkElement#implement(com.cloud
+     * .network.Network, com.cloud.offering.NetworkOffering,
+     * com.cloud.deploy.DeployDestination, com.cloud.vm.ReservationContext)
      */
     @Override
     public boolean implement(Network network, NetworkOffering offering, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException, InsufficientCapacityException {
+            ResourceUnavailableException, InsufficientCapacityException {
         s_logger.info("implement");
         return createNetwork(network, offering, dest, context);
     }
 
-    /* (non-Javadoc)
-     * Shutdown the network implementation
+    /*
+     * (non-Javadoc) Shutdown the network implementation
      *
-     * This method will be called right BEFORE NetworkGuru#shutdown().
-     * The entities was acquired by {@link #implement(Network, NetworkOffering, DeployDestination, ReservationContext)}
-     * @see org.apache.cloudstack.network.element.NetworkElement#shutdown(com.cloud.network.Network, com.cloud.vm.ReservationContext, boolean)
+     * This method will be called right BEFORE NetworkGuru#shutdown(). The
+     * entities was acquired by {@link #implement(Network, NetworkOffering,
+     * DeployDestination, ReservationContext)}
+     *
+     * @see
+     * org.apache.cloudstack.network.element.NetworkElement#shutdown(com.cloud
+     * .network.Network, com.cloud.vm.ReservationContext, boolean)
      */
     @Override
     public boolean shutdown(Network network, ReservationContext context, boolean cleanup) throws ConcurrentOperationException, ResourceUnavailableException {
@@ -487,39 +504,54 @@ public class SspElement extends AdapterBase implements ConnectivityProvider, Ssp
         return deleteNetwork(network);
     }
 
-    /* (non-Javadoc)
-     * Prepares a network environment for a VM nic.
+    /*
+     * (non-Javadoc) Prepares a network environment for a VM nic.
      *
-     * This method will be called right after NetworkGuru#reserve().
-     * The entities will be released by {@link #release(Network, NicProfile, VirtualMachineProfile, ReservationContext)}
-     * @see org.apache.cloudstack.network.element.NetworkElement#prepare(com.cloud.network.Network, com.cloud.vm.NicProfile, com.cloud.vm.VirtualMachineProfile, com.cloud.deploy.DeployDestination, com.cloud.vm.ReservationContext)
+     * This method will be called right after NetworkGuru#reserve(). The
+     * entities will be released by {@link #release(Network, NicProfile,
+     * VirtualMachineProfile, ReservationContext)}
+     *
+     * @see
+     * org.apache.cloudstack.network.element.NetworkElement#prepare(com.cloud
+     * .network.Network, com.cloud.vm.NicProfile,
+     * com.cloud.vm.VirtualMachineProfile, com.cloud.deploy.DeployDestination,
+     * com.cloud.vm.ReservationContext)
      */
     @Override
-    public boolean prepare(Network network, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
-        throws ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException {
+    public boolean prepare(Network network, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException,
+            ResourceUnavailableException, InsufficientCapacityException {
         s_logger.trace("prepare");
         return createNicEnv(network, nic, dest, context);
     }
 
-    /* (non-Javadoc)
-     * Release the network environment that was prepared for a VM nic.
+    /*
+     * (non-Javadoc) Release the network environment that was prepared for a VM
+     * nic.
      *
-     * This method will be called right AFTER NetworkGuru#release().
-     * The entities was acquired in {@link #prepare(Network, NicProfile, VirtualMachineProfile, DeployDestination, ReservationContext)}
-     * @see org.apache.cloudstack.network.element.NetworkElement#release(com.cloud.network.Network, com.cloud.vm.NicProfile, com.cloud.vm.VirtualMachineProfile, com.cloud.vm.ReservationContext)
+     * This method will be called right AFTER NetworkGuru#release(). The
+     * entities was acquired in {@link #prepare(Network, NicProfile,
+     * VirtualMachineProfile, DeployDestination, ReservationContext)}
+     *
+     * @see
+     * org.apache.cloudstack.network.element.NetworkElement#release(com.cloud
+     * .network.Network, com.cloud.vm.NicProfile,
+     * com.cloud.vm.VirtualMachineProfile, com.cloud.vm.ReservationContext)
      */
     @Override
-    public boolean release(Network network, NicProfile nic, VirtualMachineProfile vm, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public boolean release(Network network, NicProfile nic, VirtualMachineProfile vm, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
         s_logger.trace("release");
         return deleteNicEnv(network, nic, context);
     }
 
-    /* (non-Javadoc)
-     * Destroy a network implementation.
+    /*
+     * (non-Javadoc) Destroy a network implementation.
      *
-     * This method will be called right BEFORE NetworkGuru#trash() in "Expunge" phase.
-     * @see org.apache.cloudstack.network.element.NetworkElement#destroy(com.cloud.network.Network)
+     * This method will be called right BEFORE NetworkGuru#trash() in "Expunge"
+     * phase.
+     *
+     * @see
+     * org.apache.cloudstack.network.element.NetworkElement#destroy(com.cloud
+     * .network.Network)
      */
     @Override
     public boolean destroy(Network network, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
@@ -529,8 +561,7 @@ public class SspElement extends AdapterBase implements ConnectivityProvider, Ssp
     }
 
     @Override
-    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
         s_logger.trace("shutdownProviderInstances");
         return true;
     }

@@ -83,7 +83,7 @@ public interface TemplateApiService {
      *
      * @param cmd
      *            - the command specifying the mode and id of the template
-     * @return extractUrl  extract url
+     * @return extractUrl extract url
      */
     String extract(ExtractTemplateCmd cmd) throws InternalErrorException;
 

@@ -37,6 +37,7 @@ public interface UserDao extends GenericDao<UserVO, Long> {
 
     /**
      * Finds a user based on the secret key provided.
+     *
      * @param secretKey
      * @return
      */
@@ -44,6 +45,7 @@ public interface UserDao extends GenericDao<UserVO, Long> {
 
     /**
      * Finds a user based on the registration token provided.
+     *
      * @param registrationToken
      * @return
      */

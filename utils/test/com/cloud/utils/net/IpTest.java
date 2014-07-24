@@ -27,9 +27,10 @@ public class IpTest {
 
     @Test
     public void testUltimate() {
-        Ip max = new Ip(2L * Integer.MAX_VALUE +1 );
+        Ip max = new Ip(2L * Integer.MAX_VALUE + 1);
         assertEquals("Maximal address not created", "255.255.255.255", max.addr());
     }
+
     @Test
     public void testTurningOfTheCentury() {
         Ip eve = new Ip(Integer.MAX_VALUE);
@@ -37,6 +38,7 @@ public class IpTest {
         Ip dawn = new Ip(Integer.MAX_VALUE + 1L);
         assertEquals("Minimal address not created", "128.0.0.0", dawn.addr());
     }
+
     @Test
     public void testStart() {
         Ip min = new Ip(0);

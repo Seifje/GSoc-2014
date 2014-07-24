@@ -40,19 +40,19 @@ public class SshHelper {
     }
 
     public static void scpTo(String host, int port, String user, File pemKeyFile, String password, String remoteTargetDirectory, String localFile, String fileMode)
-        throws Exception {
+            throws Exception {
 
         scpTo(host, port, user, pemKeyFile, password, remoteTargetDirectory, localFile, fileMode, DEFAULT_CONNECT_TIMEOUT, DEFAULT_KEX_TIMEOUT);
     }
 
-    public static void scpTo(String host, int port, String user, File pemKeyFile, String password, String remoteTargetDirectory, byte[] data, String remoteFileName,
-        String fileMode) throws Exception {
+    public static void scpTo(String host, int port, String user, File pemKeyFile, String password, String remoteTargetDirectory, byte[] data, String remoteFileName, String fileMode)
+            throws Exception {
 
         scpTo(host, port, user, pemKeyFile, password, remoteTargetDirectory, data, remoteFileName, fileMode, DEFAULT_CONNECT_TIMEOUT, DEFAULT_KEX_TIMEOUT);
     }
 
     public static void scpTo(String host, int port, String user, File pemKeyFile, String password, String remoteTargetDirectory, String localFile, String fileMode,
-        int connectTimeoutInMs, int kexTimeoutInMs) throws Exception {
+            int connectTimeoutInMs, int kexTimeoutInMs) throws Exception {
 
         com.trilead.ssh2.Connection conn = null;
         com.trilead.ssh2.SCPClient scpClient = null;
@@ -88,7 +88,7 @@ public class SshHelper {
     }
 
     public static void scpTo(String host, int port, String user, File pemKeyFile, String password, String remoteTargetDirectory, byte[] data, String remoteFileName,
-        String fileMode, int connectTimeoutInMs, int kexTimeoutInMs) throws Exception {
+            String fileMode, int connectTimeoutInMs, int kexTimeoutInMs) throws Exception {
 
         com.trilead.ssh2.Connection conn = null;
         com.trilead.ssh2.SCPClient scpClient = null;
@@ -123,7 +123,7 @@ public class SshHelper {
     }
 
     public static Pair<Boolean, String> sshExecute(String host, int port, String user, File pemKeyFile, String password, String command, int connectTimeoutInMs,
-        int kexTimeoutInMs, int waitResultTimeoutInMs) throws Exception {
+            int kexTimeoutInMs, int waitResultTimeoutInMs) throws Exception {
 
         com.trilead.ssh2.Connection conn = null;
         com.trilead.ssh2.Session sess = null;
@@ -157,8 +157,7 @@ public class SshHelper {
             int currentReadBytes = 0;
             while (true) {
                 if ((stdout.available() == 0) && (stderr.available() == 0)) {
-                    int conditions =
-                        sess.waitForCondition(ChannelCondition.STDOUT_DATA | ChannelCondition.STDERR_DATA | ChannelCondition.EOF | ChannelCondition.EXIT_STATUS,
+                    int conditions = sess.waitForCondition(ChannelCondition.STDOUT_DATA | ChannelCondition.STDERR_DATA | ChannelCondition.EOF | ChannelCondition.EXIT_STATUS,
                             waitResultTimeoutInMs);
 
                     if ((conditions & ChannelCondition.TIMEOUT) != 0) {
@@ -188,7 +187,7 @@ public class SshHelper {
             String result = sbResult.toString();
 
             if (sess.getExitStatus() == null) {
-                //Exit status is NOT available. Returning failure result.
+                // Exit status is NOT available. Returning failure result.
                 return new Pair<Boolean, String>(false, result);
             }
 

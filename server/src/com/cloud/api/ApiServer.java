@@ -215,8 +215,7 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
     private static final DateFormat DateFormatToUse = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
     private static Map<String, List<Class<?>>> s_apiNameCmdClassMap = new HashMap<String, List<Class<?>>>();
 
-    private static ExecutorService s_executor = new ThreadPoolExecutor(10, 150, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), new NamedThreadFactory(
-            "ApiServer"));
+    private static ExecutorService s_executor = new ThreadPoolExecutor(10, 150, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), new NamedThreadFactory("ApiServer"));
     @Inject
     MessageBus _messageBus;
 
@@ -245,7 +244,8 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
         try {
             eventBus = ComponentContext.getComponent(EventBus.class);
         } catch (NoSuchBeanDefinitionException nbe) {
-            return; // no provider is configured to provide events bus, so just return
+            return; // no provider is configured to provide events bus, so just
+            // return
         }
 
         if (!job.getDispatcher().equalsIgnoreCase("ApiAsyncJobDispatcher")) {
@@ -266,12 +266,10 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
             cmdEventType = info.substring(begin + marker.length() + 2, info.indexOf(",", begin) - 1);
         }
 
-        // For some reason, the instanceType / instanceId are not abstract, which means we may get null values.
-        org.apache.cloudstack.framework.events.Event event = new org.apache.cloudstack.framework.events.Event(
-                "management-server",
-                EventCategory.ASYNC_JOB_CHANGE_EVENT.getName(),
-                jobEvent,
-                (job.getInstanceType() != null ? job.getInstanceType().toString() : "unknown"), null);
+        // For some reason, the instanceType / instanceId are not abstract,
+        // which means we may get null values.
+        org.apache.cloudstack.framework.events.Event event = new org.apache.cloudstack.framework.events.Event("management-server", EventCategory.ASYNC_JOB_CHANGE_EVENT.getName(),
+                jobEvent, (job.getInstanceType() != null ? job.getInstanceType().toString() : "unknown"), null);
 
         Map<String, String> eventDescription = new HashMap<String, String>();
         eventDescription.put("command", job.getCmd());
@@ -279,14 +277,15 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
         eventDescription.put("account", jobOwner.getUuid());
         eventDescription.put("processStatus", "" + job.getProcessStatus());
         eventDescription.put("resultCode", "" + job.getResultCode());
-        eventDescription.put("instanceUuid", (job.getInstanceId() != null ? ApiDBUtils.findJobInstanceUuid(job) : "" ) );
+        eventDescription.put("instanceUuid", (job.getInstanceId() != null ? ApiDBUtils.findJobInstanceUuid(job) : ""));
         eventDescription.put("instanceType", (job.getInstanceType() != null ? job.getInstanceType().toString() : "unknown"));
         eventDescription.put("commandEventType", cmdEventType);
         eventDescription.put("jobId", job.getUuid());
         eventDescription.put("jobResult", job.getResult());
         eventDescription.put("cmdInfo", job.getCmdInfo());
-        eventDescription.put("status", "" + job.getStatus() );
-        // If the event.accountinfo boolean value is set, get the human readable value for the username / domainname
+        eventDescription.put("status", "" + job.getStatus());
+        // If the event.accountinfo boolean value is set, get the human readable
+        // value for the username / domainname
         Map<String, String> configs = _configDao.getConfiguration("management-server", new HashMap<String, String>());
         if (Boolean.valueOf(configs.get("event.accountinfo"))) {
             DomainVO domain = _domainDao.findById(jobOwner.getDomainId());
@@ -299,9 +298,7 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
         try {
             eventBus.publish(event);
         } catch (EventBusException evx) {
-            String errMsg = "F" +
-                    "" +
-                    "ailed to publish async job event on the the event bus.";
+            String errMsg = "F" + "" + "ailed to publish async job event on the the event bus.";
             s_logger.warn(errMsg, evx);
             throw new CloudRuntimeException(errMsg);
         }
@@ -369,8 +366,10 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
         return true;
     }
 
-    // NOTE: handle() only handles over the wire (OTW) requests from integration.api.port 8096
-    // If integration api port is not configured, actual OTW requests will be received by ApiServlet
+    // NOTE: handle() only handles over the wire (OTW) requests from
+    // integration.api.port 8096
+    // If integration api port is not configured, actual OTW requests will be
+    // received by ApiServlet
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public void handle(final HttpRequest request, final HttpResponse response, final HttpContext context) throws HttpException, IOException {
@@ -392,11 +391,14 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
                 s_logger.error("Error parsing url request", e);
             }
 
-            // Use Multimap as the parameter map should be in the form (name=String, value=String[])
+            // Use Multimap as the parameter map should be in the form
+            // (name=String, value=String[])
             // So parameter values are stored in a list for the same name key
             // APITODO: Use Guava's (import com.google.common.collect.Multimap;)
-            // (Immutable)Multimap<String, String> paramMultiMap = HashMultimap.create();
-            // Map<String, Collection<String>> parameterMap = paramMultiMap.asMap();
+            // (Immutable)Multimap<String, String> paramMultiMap =
+            // HashMultimap.create();
+            // Map<String, Collection<String>> parameterMap =
+            // paramMultiMap.asMap();
             final Map parameterMap = new HashMap<String, String[]>();
             String responseType = BaseCmd.RESPONSE_TYPE_XML;
             for (final NameValuePair param : paramList) {
@@ -416,7 +418,8 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
             }
 
             try {
-                // always trust commands from API port, user context will always be UID_SYSTEM/ACCOUNT_ID_SYSTEM
+                // always trust commands from API port, user context will always
+                // be UID_SYSTEM/ACCOUNT_ID_SYSTEM
                 CallContext.register(_accountMgr.getSystemUser(), _accountMgr.getSystemAccount());
                 sb.insert(0, "(userId=" + User.UID_SYSTEM + " accountId=" + Account.ACCOUNT_ID_SYSTEM + " sessionId=" + null + ") ");
                 final String responseText = handleRequest(parameterMap, responseType, sb);
@@ -428,7 +431,8 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
                 writeResponse(response, responseText, se.getErrorCode().getHttpCode(), responseType, se.getDescription());
                 sb.append(" " + se.getErrorCode() + " " + se.getDescription());
             } catch (final RuntimeException e) {
-                // log runtime exception like NullPointerException to help identify the source easier
+                // log runtime exception like NullPointerException to help
+                // identify the source easier
                 s_logger.error("Unhandled exception, ", e);
                 throw e;
             }
@@ -446,13 +450,14 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
         while (keysIter.hasNext()) {
             final String key = (String)keysIter.next();
             final String[] value = (String[])params.get(key);
-            // fail if parameter value contains ASCII control (non-printable) characters
+            // fail if parameter value contains ASCII control (non-printable)
+            // characters
             if (value[0] != null) {
                 final Pattern pattern = Pattern.compile(CONTROL_CHARACTERS);
                 final Matcher matcher = pattern.matcher(value[0]);
                 if (matcher.find()) {
-                    throw new ServerApiException(ApiErrorCode.PARAM_ERROR, "Received value " + value[0] + " for parameter " + key +
-                            " is invalid, contains illegal ASCII non-printable characters");
+                    throw new ServerApiException(ApiErrorCode.PARAM_ERROR, "Received value " + value[0] + " for parameter " + key
+                            + " is invalid, contains illegal ASCII non-printable characters");
                 }
             }
             stringMap.put(key, value[0]);
@@ -508,14 +513,12 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
                     cmdObj.setResponseType(responseType);
                     cmdObj.setHttpMethod(paramMap.get(ApiConstants.HTTPMETHOD).toString());
 
-                    // This is where the command is either serialized, or directly dispatched
+                    // This is where the command is either serialized, or
+                    // directly dispatched
                     response = queueCommand(cmdObj, paramMap);
-                    if (annotation.responseHasSensitiveInfo())
-                    {
-                        buildAuditTrail(auditTrailSb, command[0],
-                                StringUtils.cleanString(response));
-                    }
-                    else
+                    if (annotation.responseHasSensitiveInfo()) {
+                        buildAuditTrail(auditTrailSb, command[0], StringUtils.cleanString(response));
+                    } else
                         buildAuditTrail(auditTrailSb, command[0], response);
                 } else {
                     if (!command[0].equalsIgnoreCase("login") && !command[0].equalsIgnoreCase("logout")) {
@@ -609,9 +612,12 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
         final Account caller = ctx.getCallingAccount();
 
         // Queue command based on Cmd super class:
-        // BaseCmd: cmd is dispatched to ApiDispatcher, executed, serialized and returned.
-        // BaseAsyncCreateCmd: cmd params are processed and create() is called, then same workflow as BaseAsyncCmd.
-        // BaseAsyncCmd: cmd is processed and submitted as an AsyncJob, job related info is serialized and returned.
+        // BaseCmd: cmd is dispatched to ApiDispatcher, executed, serialized and
+        // returned.
+        // BaseAsyncCreateCmd: cmd params are processed and create() is called,
+        // then same workflow as BaseAsyncCmd.
+        // BaseAsyncCmd: cmd is processed and submitted as an AsyncJob, job
+        // related info is serialized and returned.
         if (cmdObj instanceof BaseAsyncCmd) {
             Long objectId = null;
             String objectUuid = null;
@@ -625,7 +631,8 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
                 if (entityClass != null)
                     ctx.putContextParameter(entityClass.getName(), objectUuid);
             } else {
-                // Extract the uuid before params are processed and id reflects internal db id
+                // Extract the uuid before params are processed and id reflects
+                // internal db id
                 objectUuid = params.get(ApiConstants.ID);
                 dispatchChainFactory.getStandardDispatchChain().dispatch(new DispatchTask(cmdObj, params));
             }
@@ -646,11 +653,11 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
             asyncCmd.setStartEventId(startEventId);
 
             // save the scheduled event
-            final Long eventId =
-                    ActionEventUtils.onScheduledActionEvent((callerUserId == null) ? User.UID_SYSTEM : callerUserId, asyncCmd.getEntityOwnerId(), asyncCmd.getEventType(),
-                            asyncCmd.getEventDescription(), asyncCmd.isDisplay(), startEventId);
+            final Long eventId = ActionEventUtils.onScheduledActionEvent((callerUserId == null) ? User.UID_SYSTEM : callerUserId, asyncCmd.getEntityOwnerId(),
+                    asyncCmd.getEventType(), asyncCmd.getEventDescription(), asyncCmd.isDisplay(), startEventId);
             if (startEventId == 0) {
-                // There was no create event before, set current event id as start eventId
+                // There was no create event before, set current event id as
+                // start eventId
                 startEventId = eventId;
             }
 
@@ -660,14 +667,13 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
 
             Long instanceId = (objectId == null) ? asyncCmd.getInstanceId() : objectId;
 
-            // users can provide the job id they want to use, so log as it is a uuid and is unique
+            // users can provide the job id they want to use, so log as it is a
+            // uuid and is unique
             String injectedJobId = asyncCmd.getInjectedJobId();
             _uuidMgr.checkUuidSimple(injectedJobId, AsyncJob.class);
 
-            AsyncJobVO job = new AsyncJobVO("", callerUserId, caller.getId(), cmdObj.getClass().getName(),
-                    ApiGsonHelper.getBuilder().create().toJson(params), instanceId,
-                    asyncCmd.getInstanceType() != null ? asyncCmd.getInstanceType().toString() : null,
-                    injectedJobId);
+            AsyncJobVO job = new AsyncJobVO("", callerUserId, caller.getId(), cmdObj.getClass().getName(), ApiGsonHelper.getBuilder().create().toJson(params), instanceId,
+                    asyncCmd.getInstanceType() != null ? asyncCmd.getInstanceType().toString() : null, injectedJobId);
             job.setDispatcher(_asyncDispatcher.getName());
 
             final long jobId = _asyncMgr.submitAsyncJob(job);
@@ -688,17 +694,19 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
         } else {
             _dispatcher.dispatch(cmdObj, params, false);
 
-            // if the command is of the listXXXCommand, we will need to also return the
+            // if the command is of the listXXXCommand, we will need to also
+            // return the
             // the job id and status if possible
-            // For those listXXXCommand which we have already created DB views, this step is not needed since async job is joined in their db views.
+            // For those listXXXCommand which we have already created DB views,
+            // this step is not needed since async job is joined in their db
+            // views.
             if (cmdObj instanceof BaseListCmd && !(cmdObj instanceof ListVMsCmd) && !(cmdObj instanceof ListVMsCmdByAdmin) && !(cmdObj instanceof ListRoutersCmd)
-                    && !(cmdObj instanceof ListSecurityGroupsCmd) &&
-                    !(cmdObj instanceof ListTagsCmd) && !(cmdObj instanceof ListEventsCmd) && !(cmdObj instanceof ListVMGroupsCmd) && !(cmdObj instanceof ListProjectsCmd) &&
-                    !(cmdObj instanceof ListProjectAccountsCmd) && !(cmdObj instanceof ListProjectInvitationsCmd) && !(cmdObj instanceof ListHostsCmd) &&
-                    !(cmdObj instanceof ListVolumesCmd) && !(cmdObj instanceof ListVolumesCmdByAdmin) && !(cmdObj instanceof ListUsersCmd) && !(cmdObj instanceof ListAccountsCmd)
-                    && !(cmdObj instanceof ListAccountsCmdByAdmin) &&
-                    !(cmdObj instanceof ListStoragePoolsCmd) && !(cmdObj instanceof ListDiskOfferingsCmd) && !(cmdObj instanceof ListServiceOfferingsCmd) &&
-                    !(cmdObj instanceof ListZonesCmd) && !(cmdObj instanceof ListZonesCmdByAdmin)) {
+                    && !(cmdObj instanceof ListSecurityGroupsCmd) && !(cmdObj instanceof ListTagsCmd) && !(cmdObj instanceof ListEventsCmd) && !(cmdObj instanceof ListVMGroupsCmd)
+                    && !(cmdObj instanceof ListProjectsCmd) && !(cmdObj instanceof ListProjectAccountsCmd) && !(cmdObj instanceof ListProjectInvitationsCmd)
+                    && !(cmdObj instanceof ListHostsCmd) && !(cmdObj instanceof ListVolumesCmd) && !(cmdObj instanceof ListVolumesCmdByAdmin) && !(cmdObj instanceof ListUsersCmd)
+                    && !(cmdObj instanceof ListAccountsCmd) && !(cmdObj instanceof ListAccountsCmdByAdmin) && !(cmdObj instanceof ListStoragePoolsCmd)
+                    && !(cmdObj instanceof ListDiskOfferingsCmd) && !(cmdObj instanceof ListServiceOfferingsCmd) && !(cmdObj instanceof ListZonesCmd)
+                    && !(cmdObj instanceof ListZonesCmdByAdmin)) {
                 buildAsyncListResponse((BaseListCmd)cmdObj, caller);
             }
 
@@ -786,19 +794,23 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
                 }
                 return true;
             } else {
-                // check against every available command to see if the command exists or not
+                // check against every available command to see if the command
+                // exists or not
                 if (!s_apiNameCmdClassMap.containsKey(commandName) && !commandName.equals("login") && !commandName.equals("logout")) {
                     s_logger.debug("The given command:" + commandName + " does not exist or it is not available for user with id:" + userId);
                     throw new ServerApiException(ApiErrorCode.UNSUPPORTED_ACTION_ERROR, "The given command does not exist or it is not available for user");
                 }
             }
 
-            // - build a request string with sorted params, make sure it's all lowercase
+            // - build a request string with sorted params, make sure it's all
+            // lowercase
             // - sign the request, verify the signature is the same
             final List<String> parameterNames = new ArrayList<String>();
 
             for (final Object paramNameObj : requestParameters.keySet()) {
-                parameterNames.add((String)paramNameObj); // put the name in a list that we'll sort later
+                parameterNames.add((String)paramNameObj); // put the name in a
+                // list that we'll
+                // sort later
             }
 
             Collections.sort(parameterNames);
@@ -807,7 +819,8 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
             String expires = null;
 
             for (final String paramName : parameterNames) {
-                // parameters come as name/value pairs in the form String/String[]
+                // parameters come as name/value pairs in the form
+                // String/String[]
                 final String paramValue = ((String[])requestParameters.get(paramName))[0];
 
                 if (ApiConstants.SIGNATURE.equalsIgnoreCase(paramName)) {
@@ -838,7 +851,8 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
             Date expiresTS = null;
             // FIXME: Hard coded signature, why not have an enum
             if ("3".equals(signatureVersion)) {
-                // New signature authentication. Check for expire parameter and its validity
+                // New signature authentication. Check for expire parameter and
+                // its validity
                 if (expires == null) {
                     s_logger.debug("Missing Expires parameter -- ignoring request. Signature: " + signature + ", apiKey: " + apiKey);
                     return false;
@@ -872,8 +886,8 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
             final Account account = userAcctPair.second();
 
             if (user.getState() != Account.State.enabled || !account.getState().equals(Account.State.enabled)) {
-                s_logger.info("disabled or locked user accessing the api, userid = " + user.getId() + "; name = " + user.getUsername() + "; state: " + user.getState() +
-                        "; accountState: " + account.getState());
+                s_logger.info("disabled or locked user accessing the api, userid = " + user.getId() + "; name = " + user.getUsername() + "; state: " + user.getState()
+                        + "; accountState: " + account.getState());
                 return false;
             }
 
@@ -930,7 +944,8 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
     @Override
     public void loginUser(final HttpSession session, final String username, final String password, Long domainId, final String domainPath, final String loginIpAddress,
             final Map<String, Object[]> requestParameters) throws CloudAuthenticationException {
-        // We will always use domainId first. If that does not exist, we will use domain name. If THAT doesn't exist
+        // We will always use domainId first. If that does not exist, we will
+        // use domain name. If THAT doesn't exist
         // we will default to ROOT
         if (domainId == null) {
             if (domainPath == null || domainPath.trim().length() == 0) {
@@ -990,8 +1005,10 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
                 session.setAttribute("timezoneoffset", Float.valueOf(offsetInHrs).toString());
             }
 
-            // (bug 5483) generate a session key that the user must submit on every request to prevent CSRF, add that
-            // to the login response so that session-based authenticators know to send the key back
+            // (bug 5483) generate a session key that the user must submit on
+            // every request to prevent CSRF, add that
+            // to the login response so that session-based authenticators know
+            // to send the key back
             final SecureRandom sesssionKeyRandom = new SecureRandom();
             final byte sessionKeyBytes[] = new byte[20];
             sesssionKeyRandom.nextBytes(sessionKeyBytes);
@@ -1017,8 +1034,8 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
             account = _accountMgr.getAccount(user.getAccountId());
         }
 
-        if ((user == null) || (user.getRemoved() != null) || !user.getState().equals(Account.State.enabled) || (account == null) ||
-                !account.getState().equals(Account.State.enabled)) {
+        if ((user == null) || (user.getRemoved() != null) || !user.getState().equals(Account.State.enabled) || (account == null)
+                || !account.getState().equals(Account.State.enabled)) {
             s_logger.warn("Deleted/Disabled/Locked user with id=" + userId + " attempting to access public API");
             return false;
         }
@@ -1045,8 +1062,7 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
         else {
             // determine the cmd class based on calling context
             ResponseView view = ResponseView.Restricted;
-            if (CallContext.current() != null
-                    && _accountMgr.isRootAdmin(CallContext.current().getCallingAccount().getId())) {
+            if (CallContext.current() != null && _accountMgr.isRootAdmin(CallContext.current().getCallingAccount().getId())) {
                 view = ResponseView.Full;
             }
             for (Class<?> cmdClass : cmdList) {
@@ -1065,7 +1081,8 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
         }
     }
 
-    // FIXME: rather than isError, we might was to pass in the status code to give more flexibility
+    // FIXME: rather than isError, we might was to pass in the status code to
+    // give more flexibility
     private void writeResponse(final HttpResponse resp, final String responseText, final int statusCode, final String responseType, final String reasonPhrase) {
         try {
             resp.setStatusCode(statusCode);
@@ -1096,7 +1113,8 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
 
     // FIXME: the following two threads are copied from
     // http://svn.apache.org/repos/asf/httpcomponents/httpcore/trunk/httpcore/src/examples/org/apache/http/examples/ElementalHttpServer.java
-    // we have to cite a license if we are using this code directly, so we need to add the appropriate citation or
+    // we have to cite a license if we are using this code directly, so we need
+    // to add the appropriate citation or
     // modify the
     // code to be very specific to our needs
     static class ListenerThread extends Thread {
@@ -1113,10 +1131,8 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
             }
 
             _params = new BasicHttpParams();
-            _params.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 30000)
-                    .setIntParameter(CoreConnectionPNames.SOCKET_BUFFER_SIZE, 8 * 1024)
-                    .setBooleanParameter(CoreConnectionPNames.STALE_CONNECTION_CHECK, false)
-                    .setBooleanParameter(CoreConnectionPNames.TCP_NODELAY, true)
+            _params.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 30000).setIntParameter(CoreConnectionPNames.SOCKET_BUFFER_SIZE, 8 * 1024)
+                    .setBooleanParameter(CoreConnectionPNames.STALE_CONNECTION_CHECK, false).setBooleanParameter(CoreConnectionPNames.TCP_NODELAY, true)
                     .setParameter(CoreProtocolPNames.ORIGIN_SERVER, "HttpComponents/1.1");
 
             // Set up the HTTP protocol processor
@@ -1205,7 +1221,8 @@ public class ApiServer extends ManagerBase implements HttpRequestHandler, ApiSer
                 responseName = "errorresponse";
             } else {
                 final Object cmdObj = apiCommandParams.get(ApiConstants.COMMAND);
-                // cmd name can be null when "command" parameter is missing in the request
+                // cmd name can be null when "command" parameter is missing in
+                // the request
                 if (cmdObj != null) {
                     final String cmdName = ((String[])cmdObj)[0];
                     cmdClass = getCmdClass(cmdName);

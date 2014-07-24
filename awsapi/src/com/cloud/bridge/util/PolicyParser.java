@@ -40,9 +40,9 @@ import com.cloud.bridge.service.exception.PermissionDeniedException;
  * This class uses the JSON simple parser to convert the JSON of a Bucket Policy
  * into internal objects.
  *
- * Another way to implement this by use of a stack to keep track of where the current
- * parsing is being done.   However, since we are only handling a limited JSON sequence
- * here simple counts and flags will do the same as a stack.
+ * Another way to implement this by use of a stack to keep track of where the
+ * current parsing is being done. However, since we are only handling a limited
+ * JSON sequence here simple counts and flags will do the same as a stack.
  */
 public class PolicyParser {
     protected final static Logger logger = Logger.getLogger(PolicyParser.class);
@@ -60,16 +60,18 @@ public class PolicyParser {
     private String sid = null;
     private String effect = null;
     private String resource = null;
-    private String condKey = null;   // -> the next key in a condition
-    private String toUser = null;    // -> text to user of a problem
+    private String condKey = null; // -> the next key in a condition
+    private String toUser = null; // -> text to user of a problem
     private List<String> valueList = new ArrayList<String>();
 
     private JSONParser jparser = null;
-    private int entryNesting = 0;    // -> startObjectEntry() .. nesting count
-    private int condNested = 0;      // -> at what level of nesting is the condition defined
-    private int keyNested = 0;       // -> at what level of nesting is the condition key defined
+    private int entryNesting = 0; // -> startObjectEntry() .. nesting count
+    private int condNested = 0; // -> at what level of nesting is the condition
+                                // defined
+    private int keyNested = 0; // -> at what level of nesting is the condition
+                               // key defined
 
-    private boolean inId = false;   // -> currently in an "Id" element
+    private boolean inId = false; // -> currently in an "Id" element
     private boolean inSid = false;
     private boolean inAWS = false;
     private boolean inEffect = false;
@@ -93,7 +95,7 @@ public class PolicyParser {
             logger.debug("endJSON()");
 
             if (null != statement) {
-                //System.out.println( "endJSON() - statement");
+                // System.out.println( "endJSON() - statement");
                 if (null != block) {
                     block.verify();
                     statement.setConditionBlock(block);
@@ -111,7 +113,7 @@ public class PolicyParser {
             logger.debug("endObject(), nesting: " + entryNesting);
 
             if (null != statement && 1 >= entryNesting) {
-                //System.out.println( "endObject() - statement");
+                // System.out.println( "endObject() - statement");
                 if (null != block) {
                     block.verify();
                     statement.setConditionBlock(block);
@@ -172,7 +174,8 @@ public class PolicyParser {
                     statement.setPrincipals(principals);
                 principals = null;
             } else if (null != condition) {
-                //System.out.println( "in condition: " + condNested + " " + entryNesting + " " + keyNested );
+                // System.out.println( "in condition: " + condNested + " " +
+                // entryNesting + " " + keyNested );
                 // -> is it just the current key that is done?
                 try {
                     if (keyNested == entryNesting) {
@@ -268,7 +271,8 @@ public class PolicyParser {
         }
 
         /**
-         * Note: A statement does not have to have a condition block to be valid.
+         * Note: A statement does not have to have a condition block to be
+         * valid.
          */
         public boolean startObjectEntry(String key) throws ParseException {
             entryNesting++;
@@ -329,9 +333,9 @@ public class PolicyParser {
     }
 
     /**
-     * From Amazon on S3 Policies:
-     * "Each policy must cover only a single bucket and resources within that bucket (when writing a
-     * policy, don't include statements that refer to other buckets or resources in other buckets)"
+     * From Amazon on S3 Policies: "Each policy must cover only a single bucket
+     * and resources within that bucket (when writing a policy, don't include
+     * statements that refer to other buckets or resources in other buckets)"
      *
      * @param resourcePath
      */
@@ -345,8 +349,8 @@ public class PolicyParser {
             testBucketName = testBucketName.substring(0, offset);
 
         if (!testBucketName.equals(bucketName))
-            throw new PermissionDeniedException("The S3 Bucket Policy must only refer to the single bucket: \"" + bucketName +
-                "\", but it referres to the following resource: \"" + resourcePath + "\"");
+            throw new PermissionDeniedException("The S3 Bucket Policy must only refer to the single bucket: \"" + bucketName + "\", but it referres to the following resource: \""
+                    + resourcePath + "\"");
     }
 
     public static void badPolicy(String place, String badValue) throws ParseException {

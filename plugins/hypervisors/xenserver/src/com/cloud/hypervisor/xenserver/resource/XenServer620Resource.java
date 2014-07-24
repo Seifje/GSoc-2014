@@ -15,6 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 package com.cloud.hypervisor.xenserver.resource;
+
 import com.xensource.xenapi.Connection;
 import com.xensource.xenapi.Host;
 import com.xensource.xenapi.HostPatch;
@@ -50,10 +51,14 @@ public class XenServer620Resource extends XenServer610Resource {
             s_logger.warn("No recommended value found for dynamic max, setting static max and dynamic max equal");
             return dynamicMaxRam;
         }
-        long staticMax = Math.min(recommendedValue, 4l * dynamicMinRam);  // XS constraint for stability
-        if (dynamicMaxRam > staticMax) { // XS contraint that dynamic max <= static max
-            s_logger.warn("dynamixMax " + dynamicMaxRam + " cant be greater than static max " + staticMax +
-                ", can lead to stability issues. Setting static max as much as dynamic max ");
+        long staticMax = Math.min(recommendedValue, 4l * dynamicMinRam); // XS
+        // constraint
+        // for
+        // stability
+        if (dynamicMaxRam > staticMax) { // XS contraint that dynamic max <=
+            // static max
+            s_logger.warn("dynamixMax " + dynamicMaxRam + " cant be greater than static max " + staticMax
+                    + ", can lead to stability issues. Setting static max as much as dynamic max ");
             return dynamicMaxRam;
         }
         return staticMax;
@@ -67,7 +72,8 @@ public class XenServer620Resource extends XenServer610Resource {
             return dynamicMinRam;
         }
 
-        if (dynamicMinRam < recommendedValue) {   // XS contraint that dynamic min > static min
+        if (dynamicMinRam < recommendedValue) { // XS contraint that dynamic min
+            // > static min
             s_logger.warn("Vm is set to dynamixMin " + dynamicMinRam + " less than the recommended static min " + recommendedValue + ", could lead to stability issues");
         }
         return dynamicMinRam;
@@ -79,28 +85,29 @@ public class XenServer620Resource extends XenServer610Resource {
             Host.Record re = host.getRecord(conn);
             Set<HostPatch> patches = re.patches;
             PoolPatch poolPatch = PoolPatch.getByUuid(conn, hotFixUuid);
-            for(HostPatch patch : patches) {
+            for (HostPatch patch : patches) {
                 PoolPatch pp = patch.getPoolPatch(conn);
                 if (pp.equals(poolPatch) && patch.getApplied(conn)) {
                     return true;
                 }
             }
-         } catch (Exception e) {
+        } catch (Exception e) {
             s_logger.debug("can't get patches information for hotFix: " + hotFixUuid);
         }
         return false;
     }
 
+    @Override
     protected void fillHostInfo(Connection conn, StartupRoutingCommand cmd) {
         super.fillHostInfo(conn, cmd);
         Map<String, String> details = cmd.getHostDetails();
         Boolean hotFix62ESP1004 = hostHasHotFix(conn, XenserverConfigs.XSHotFix62ESP1004);
-        if( hotFix62ESP1004 != null && hotFix62ESP1004 ) {
-            details.put(XenserverConfigs.XS620HotFix , XenserverConfigs.XSHotFix62ESP1004);
+        if (hotFix62ESP1004 != null && hotFix62ESP1004) {
+            details.put(XenserverConfigs.XS620HotFix, XenserverConfigs.XSHotFix62ESP1004);
         } else {
             Boolean hotFix62ESP1 = hostHasHotFix(conn, XenserverConfigs.XSHotFix62ESP1);
-            if( hotFix62ESP1 != null && hotFix62ESP1 ) {
-                details.put(XenserverConfigs.XS620HotFix , XenserverConfigs.XSHotFix62ESP1);
+            if (hotFix62ESP1 != null && hotFix62ESP1) {
+                details.put(XenserverConfigs.XS620HotFix, XenserverConfigs.XSHotFix62ESP1);
             }
         }
         cmd.setHostDetails(details);

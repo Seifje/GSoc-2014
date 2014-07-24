@@ -74,7 +74,7 @@ public abstract class Action {
         NeutronRestFactory factory = NeutronRestFactory.getInstance();
 
         NeutronRestApi neutronRestApi = factory.getNeutronApi(GetMethod.class);
-        GetMethod getMethod = (GetMethod) neutronRestApi.createMethod(url, uri);
+        GetMethod getMethod = (GetMethod)neutronRestApi.createMethod(url, uri);
 
         try {
             getMethod.setRequestHeader(CONTENT_TYPE, JSON_CONTENT_TYPE);
@@ -121,7 +121,7 @@ public abstract class Action {
         NeutronRestFactory factory = NeutronRestFactory.getInstance();
 
         NeutronRestApi neutronRestApi = factory.getNeutronApi(PostMethod.class);
-        PostMethod postMethod = (PostMethod) neutronRestApi.createMethod(url, uri);
+        PostMethod postMethod = (PostMethod)neutronRestApi.createMethod(url, uri);
 
         try {
             postMethod.setRequestHeader(CONTENT_TYPE, JSON_CONTENT_TYPE);
@@ -160,7 +160,7 @@ public abstract class Action {
         NeutronRestFactory factory = NeutronRestFactory.getInstance();
 
         NeutronRestApi neutronRestApi = factory.getNeutronApi(PutMethod.class);
-        PutMethod putMethod = (PutMethod) neutronRestApi.createMethod(url, uri);
+        PutMethod putMethod = (PutMethod)neutronRestApi.createMethod(url, uri);
 
         try {
             putMethod.setRequestHeader(CONTENT_TYPE, JSON_CONTENT_TYPE);
@@ -195,7 +195,7 @@ public abstract class Action {
         NeutronRestFactory factory = NeutronRestFactory.getInstance();
 
         NeutronRestApi neutronRestApi = factory.getNeutronApi(PutMethod.class);
-        PutMethod putMethod = (PutMethod) neutronRestApi.createMethod(url, uri);
+        PutMethod putMethod = (PutMethod)neutronRestApi.createMethod(url, uri);
 
         try {
             String encodedCredentials = encodeCredentials();
@@ -231,7 +231,7 @@ public abstract class Action {
         NeutronRestFactory factory = NeutronRestFactory.getInstance();
 
         NeutronRestApi neutronRestApi = factory.getNeutronApi(DeleteMethod.class);
-        DeleteMethod deleteMethod = (DeleteMethod) neutronRestApi.createMethod(url, uri);
+        DeleteMethod deleteMethod = (DeleteMethod)neutronRestApi.createMethod(url, uri);
 
         try {
             deleteMethod.setRequestHeader(CONTENT_TYPE, JSON_CONTENT_TYPE);

@@ -43,8 +43,7 @@ import com.cloud.network.Network;
 import com.cloud.network.element.PaloAltoFirewallElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "listPaloAltoFirewallNetworks", responseObject = NetworkResponse.class, description = "lists network that are using Palo Alto firewall device",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listPaloAltoFirewallNetworks", responseObject = NetworkResponse.class, description = "lists network that are using Palo Alto firewall device", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListPaloAltoFirewallNetworksCmd extends BaseListCmd {
 
     public static final Logger s_logger = Logger.getLogger(ListPaloAltoFirewallNetworksCmd.class.getName());
@@ -52,32 +51,27 @@ public class ListPaloAltoFirewallNetworksCmd extends BaseListCmd {
     @Inject
     PaloAltoFirewallElementService _paFwService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_ID,
-               type = CommandType.UUID,
-               entityType = PaloAltoFirewallResponse.class,
-               required = true,
-               description = "palo alto balancer device ID")
+    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_ID, type = CommandType.UUID, entityType = PaloAltoFirewallResponse.class, required = true, description = "palo alto balancer device ID")
     private Long fwDeviceId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getFirewallDeviceId() {
         return fwDeviceId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             List<? extends Network> networks = _paFwService.listNetworks(this);
             ListResponse<NetworkResponse> response = new ListResponse<NetworkResponse>();

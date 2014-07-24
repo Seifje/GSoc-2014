@@ -37,30 +37,24 @@ import com.cloud.network.Network;
 import com.cloud.user.Account;
 import com.cloud.vm.NicSecondaryIp;
 
-
-@APICommand(name = "removeIpFromNic", description = "Removes secondary IP from the NIC.", responseObject = SuccessResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "removeIpFromNic", description = "Removes secondary IP from the NIC.", responseObject = SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class RemoveIpFromVmNicCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(RemoveIpFromVmNicCmd.class.getName());
     private static final String s_name = "removeipfromnicresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
-    @Parameter(name = ApiConstants.ID,
-            type = CommandType.UUID,
-            required = true,
-            entityType = NicSecondaryIpResponse.class,
-            description = "the ID of the secondary ip address to nic")
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, required = true, entityType = NicSecondaryIpResponse.class, description = "the ID of the secondary ip address to nic")
     private Long id;
 
     // unexposed parameter needed for events logging
     @Parameter(name = ApiConstants.ACCOUNT_ID, type = CommandType.UUID, expose = false)
     private Long ownerId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getEntityTable() {
         return "nic_secondary_ips";
@@ -96,12 +90,12 @@ public class RemoveIpFromVmNicCmd extends BaseAsyncCmd {
 
     @Override
     public String getEventDescription() {
-        return  ("Disassociating ip address with id=" + id);
+        return ("Disassociating ip address with id=" + id);
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -131,7 +125,6 @@ public class RemoveIpFromVmNicCmd extends BaseAsyncCmd {
         return null;
     }
 
-
     private boolean isZoneSGEnabled() {
         Network ntwk = _entityMgr.findById(Network.class, getNetworkId());
         DataCenter dc = _entityMgr.findById(DataCenter.class, ntwk.getDataCenterId());
@@ -148,7 +141,7 @@ public class RemoveIpFromVmNicCmd extends BaseAsyncCmd {
         }
 
         if (isZoneSGEnabled()) {
-            //remove the security group rules for this secondary ip
+            // remove the security group rules for this secondary ip
             boolean success = false;
             success = _securityGroupService.securityGroupRulesForVmSecIp(nicSecIp.getNicId(), nicSecIp.getIp4Address(), false);
             if (success == false) {

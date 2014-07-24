@@ -40,8 +40,7 @@ import com.cloud.network.VirtualRouterProvider.Type;
 import com.cloud.network.element.VirtualRouterElementService;
 import com.cloud.user.Account;
 
-@APICommand(name = "createVirtualRouterElement", responseObject = VirtualRouterProviderResponse.class, description = "Create a virtual router element.",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createVirtualRouterElement", responseObject = VirtualRouterProviderResponse.class, description = "Create a virtual router element.", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateVirtualRouterElementCmd extends BaseAsyncCreateCmd {
     public static final Logger s_logger = Logger.getLogger(CreateVirtualRouterElementCmd.class.getName());
     private static final String s_name = "createvirtualrouterelementresponse";
@@ -49,26 +48,19 @@ public class CreateVirtualRouterElementCmd extends BaseAsyncCreateCmd {
     @Inject
     private List<VirtualRouterElementService> _service;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.NETWORK_SERVICE_PROVIDER_ID,
-               type = CommandType.UUID,
-               entityType = ProviderResponse.class,
-               required = true,
-               description = "the network service provider ID of the virtual router element")
+    @Parameter(name = ApiConstants.NETWORK_SERVICE_PROVIDER_ID, type = CommandType.UUID, entityType = ProviderResponse.class, required = true, description = "the network service provider ID of the virtual router element")
     private Long nspId;
 
-    @Parameter(name = ApiConstants.PROVIDER_TYPE,
-               type = CommandType.UUID,
-               entityType = ProviderResponse.class,
-               description = "The provider type. Supported types are VirtualRouter (default) and VPCVirtualRouter")
+    @Parameter(name = ApiConstants.PROVIDER_TYPE, type = CommandType.UUID, entityType = ProviderResponse.class, description = "The provider type. Supported types are VirtualRouter (default) and VPCVirtualRouter")
     private String providerType;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public void setNspId(Long nspId) {
         this.nspId = nspId;
@@ -90,9 +82,9 @@ public class CreateVirtualRouterElementCmd extends BaseAsyncCreateCmd {
         return Type.VirtualRouter;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

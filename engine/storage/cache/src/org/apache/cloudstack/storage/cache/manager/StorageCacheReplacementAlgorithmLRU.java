@@ -59,10 +59,14 @@ public class StorageCacheReplacementAlgorithmLRU implements StorageCacheReplacem
 
     @PostConstruct
     public void initialize() {
-        /* Avoid using configDao at this time, we can't be sure that the database is already upgraded
-         * and there might be fatal errors when using a dao.
+        /*
+         * Avoid using configDao at this time, we can't be sure that the
+         * database is already upgraded and there might be fatal errors when
+         * using a dao.
          */
-        //unusedTimeInterval = NumbersUtil.parseInt(configDao.getValue(Config.StorageCacheReplacementLRUTimeInterval.key()), 30);
+        // unusedTimeInterval =
+        // NumbersUtil.parseInt(configDao.getValue(Config.StorageCacheReplacementLRUTimeInterval.key()),
+        // 30);
     }
 
     public void setUnusedTimeInterval(Integer interval) {

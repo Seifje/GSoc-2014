@@ -25,15 +25,15 @@
 package com.amazon.ec2;
 
 /**
-*  NetworkInterfaceAssociationType bean class
-*/
+ * NetworkInterfaceAssociationType bean class
+ */
 
 public class NetworkInterfaceAssociationType implements org.apache.axis2.databinding.ADBBean {
-    /* This type was generated from the piece of schema that had
-            name = NetworkInterfaceAssociationType
-            Namespace URI = http://ec2.amazonaws.com/doc/2012-08-15/
-            Namespace Prefix = ns1
-            */
+    /*
+     * This type was generated from the piece of schema that had name =
+     * NetworkInterfaceAssociationType Namespace URI =
+     * http://ec2.amazonaws.com/doc/2012-08-15/ Namespace Prefix = ns1
+     */
 
     private static java.lang.String generatePrefix(java.lang.String namespace) {
         if (namespace.equals("http://ec2.amazonaws.com/doc/2012-08-15/")) {
@@ -43,23 +43,26 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     }
 
     /**
-    * field for PublicIp
-    */
+     * field for PublicIp
+     */
 
     protected java.lang.String localPublicIp;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getPublicIp() {
         return localPublicIp;
     }
 
     /**
-       * Auto generated setter method
-       * @param param PublicIp
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            PublicIp
+     */
     public void setPublicIp(java.lang.String param) {
 
         this.localPublicIp = param;
@@ -67,33 +70,37 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     }
 
     /**
-    * field for IpOwnerId
-    */
+     * field for IpOwnerId
+     */
 
     protected java.lang.String localIpOwnerId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localIpOwnerIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getIpOwnerId() {
         return localIpOwnerId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param IpOwnerId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            IpOwnerId
+     */
     public void setIpOwnerId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localIpOwnerIdTracker = true;
         } else {
             localIpOwnerIdTracker = false;
@@ -105,33 +112,37 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     }
 
     /**
-    * field for AllocationId
-    */
+     * field for AllocationId
+     */
 
     protected java.lang.String localAllocationId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localAllocationIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getAllocationId() {
         return localAllocationId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param AllocationId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            AllocationId
+     */
     public void setAllocationId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localAllocationIdTracker = true;
         } else {
             localAllocationIdTracker = false;
@@ -143,33 +154,37 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     }
 
     /**
-    * field for AssociationId
-    */
+     * field for AssociationId
+     */
 
     protected java.lang.String localAssociationId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localAssociationIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getAssociationId() {
         return localAssociationId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param AssociationId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            AssociationId
+     */
     public void setAssociationId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localAssociationIdTracker = true;
         } else {
             localAssociationIdTracker = false;
@@ -181,9 +196,10 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -196,13 +212,13 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, parentQName) {
 
@@ -215,14 +231,13 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
         java.lang.String prefix = null;
         java.lang.String namespace = null;
@@ -395,8 +410,8 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -408,10 +423,10 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -421,10 +436,10 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -447,7 +462,7 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -475,7 +490,8 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -509,8 +525,8 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -529,9 +545,9 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
         java.util.ArrayList elementList = new java.util.ArrayList();
@@ -577,17 +593,20 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static NetworkInterfaceAssociationType parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             NetworkInterfaceAssociationType object = new NetworkInterfaceAssociationType();
 
@@ -612,7 +631,7 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
                         java.lang.String type = fullTypeName.substring(fullTypeName.indexOf(":") + 1);
 
                         if (!"NetworkInterfaceAssociationType".equals(type)) {
-                            //find namespace for the prefix
+                            // find namespace for the prefix
                             java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
                             return (NetworkInterfaceAssociationType)com.amazon.ec2.ExtensionMapper.getTypeObject(nsUri, type, reader);
                         }
@@ -621,7 +640,8 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
 
                 }
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -638,10 +658,11 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -656,7 +677,7 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -673,7 +694,7 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -690,7 +711,7 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -700,7 +721,8 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
                     reader.next();
 
                 if (reader.isStartElement())
-                    // A start element we are not expecting indicates a trailing invalid property
+                    // A start element we are not expecting indicates a trailing
+                    // invalid property
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
 
             } catch (javax.xml.stream.XMLStreamException e) {
@@ -710,6 +732,6 @@ public class NetworkInterfaceAssociationType implements org.apache.axis2.databin
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

@@ -32,11 +32,11 @@ import com.cloud.hypervisor.Hypervisor.HypervisorType;
 import com.cloud.resource.ServerResource;
 
 /**
- * AgentManager manages hosts. It directly coordinates between the DAOs and the connections it manages.
+ * AgentManager manages hosts. It directly coordinates between the DAOs and the
+ * connections it manages.
  */
 public interface AgentManager {
-    static final ConfigKey<Integer> Wait = new ConfigKey<Integer>("Advanced", Integer.class, "wait", "1800", "Time in seconds to wait for control commands to return",
-        true);
+    static final ConfigKey<Integer> Wait = new ConfigKey<Integer>("Advanced", Integer.class, "wait", "1800", "Time in seconds to wait for control commands to return", true);
 
     public enum TapAgentsAction {
         Add, Del, Contains,
@@ -45,7 +45,8 @@ public interface AgentManager {
     boolean handleDirectConnectAgent(Host host, StartupCommand[] cmds, ServerResource resource, boolean forRebalance) throws ConnectionException;
 
     /**
-     * easy send method that returns null if there's any errors. It handles all exceptions.
+     * easy send method that returns null if there's any errors. It handles all
+     * exceptions.
      *
      * @param hostId
      *            host id
@@ -100,7 +101,8 @@ public interface AgentManager {
     long send(Long hostId, Commands cmds, Listener listener) throws AgentUnavailableException;
 
     /**
-     * Register to listen for host events. These are mostly connection and disconnection events.
+     * Register to listen for host events. These are mostly connection and
+     * disconnection events.
      *
      * @param listener
      * @param connections
@@ -115,8 +117,10 @@ public interface AgentManager {
 
     /**
      * Register to listen for initial agent connections.
+     *
      * @param creator
-     * @param priority in listening for events.
+     * @param priority
+     *            in listening for events.
      * @return id to unregister if needed.
      */
     int registerForInitialConnects(StartupCommandProcessor creator, boolean priority);
@@ -131,7 +135,9 @@ public interface AgentManager {
 
     Answer sendTo(Long dcId, HypervisorType type, Command cmd);
 
-//    public AgentAttache handleDirectConnectAgent(HostVO host, StartupCommand[] cmds, ServerResource resource, boolean forRebalance) throws ConnectionException;
+    // public AgentAttache handleDirectConnectAgent(HostVO host,
+    // StartupCommand[] cmds, ServerResource resource, boolean forRebalance)
+    // throws ConnectionException;
 
     public boolean agentStatusTransitTo(HostVO host, Status.Event e, long msId);
 

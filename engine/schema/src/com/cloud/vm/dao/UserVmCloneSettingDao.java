@@ -29,8 +29,7 @@ public interface UserVmCloneSettingDao extends GenericDao<UserVmCloneSettingVO, 
     UserVmCloneSettingVO findByVmId(long id);
 
     /*
-     * Returns a list of VMs by clone type.
-     * cloneType can be full/linked.
+     * Returns a list of VMs by clone type. cloneType can be full/linked.
      */
     List<UserVmCloneSettingVO> listByCloneType(String cloneType);
 

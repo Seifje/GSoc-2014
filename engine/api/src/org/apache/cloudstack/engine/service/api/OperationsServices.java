@@ -24,15 +24,15 @@ import java.util.List;
 import com.cloud.alert.Alert;
 
 public interface OperationsServices {
-//    List<AsyncJob> listJobs();
-//
-//    List<AsyncJob> listJobsInProgress();
-//
-//    List<AsyncJob> listJobsCompleted();
-//
-//    List<AsyncJob> listJobsCompleted(Long from);
-//
-//    List<AsyncJob> listJobsInWaiting();
+    // List<AsyncJob> listJobs();
+    //
+    // List<AsyncJob> listJobsInProgress();
+    //
+    // List<AsyncJob> listJobsCompleted();
+    //
+    // List<AsyncJob> listJobsCompleted(Long from);
+    //
+    // List<AsyncJob> listJobsInWaiting();
 
     void cancelJob(String job);
 

@@ -75,14 +75,11 @@ public class SolidFireUtil {
     public static final String CHAP_TARGET_USERNAME = "chapTargetUsername";
     public static final String CHAP_TARGET_SECRET = "chapTargetSecret";
 
-    public static long createSolidFireVolume(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword,
-            String strSfVolumeName, long lSfAccountId, long lTotalSize, boolean bEnable512e, final String strCloudStackVolumeSize,
-            long lMinIops, long lMaxIops, long lBurstIops)
-    {
+    public static long createSolidFireVolume(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, String strSfVolumeName, long lSfAccountId, long lTotalSize,
+            boolean bEnable512e, final String strCloudStackVolumeSize, long lMinIops, long lMaxIops, long lBurstIops) {
         final Gson gson = new GsonBuilder().create();
 
-        VolumeToCreate volumeToCreate =
-            new VolumeToCreate(strSfVolumeName, lSfAccountId, lTotalSize, bEnable512e, strCloudStackVolumeSize, lMinIops, lMaxIops, lBurstIops);
+        VolumeToCreate volumeToCreate = new VolumeToCreate(strSfVolumeName, lSfAccountId, lTotalSize, bEnable512e, strCloudStackVolumeSize, lMinIops, lMaxIops, lBurstIops);
 
         String strVolumeToCreateJson = gson.toJson(volumeToCreate);
 
@@ -95,8 +92,7 @@ public class SolidFireUtil {
         return volumeCreateResult.result.volumeID;
     }
 
-    public static SolidFireVolume getSolidFireVolume(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lVolumeId)
-    {
+    public static SolidFireVolume getSolidFireVolume(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lVolumeId) {
         final Gson gson = new GsonBuilder().create();
 
         VolumeToGet volumeToGet = new VolumeToGet(lVolumeId);
@@ -140,22 +136,20 @@ public class SolidFireUtil {
         return sfVolumes;
     }
 
-    public static List<SolidFireVolume> getDeletedVolumes(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword)
-    {
+    public static List<SolidFireVolume> getDeletedVolumes(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword) {
         final Gson gson = new GsonBuilder().create();
 
         ListDeletedVolumes listDeletedVolumes = new ListDeletedVolumes();
 
         String strListDeletedVolumesJson = gson.toJson(listDeletedVolumes);
 
-        String strListDeletedVolumesResultJson = executeJsonRpc(strListDeletedVolumesJson, strSfMvip, iSfPort,
-                strSfAdmin, strSfPassword);
+        String strListDeletedVolumesResultJson = executeJsonRpc(strListDeletedVolumesJson, strSfMvip, iSfPort, strSfAdmin, strSfPassword);
 
         VolumeGetResult volumeGetResult = gson.fromJson(strListDeletedVolumesResultJson, VolumeGetResult.class);
 
         verifyResult(volumeGetResult.result, strListDeletedVolumesResultJson, gson);
 
-        List<SolidFireVolume> deletedVolumes = new ArrayList<SolidFireVolume> ();
+        List<SolidFireVolume> deletedVolumes = new ArrayList<SolidFireVolume>();
 
         for (VolumeGetResult.Result.Volume volume : volumeGetResult.result.volumes) {
             deletedVolumes.add(new SolidFireVolume(volume.volumeID, volume.name, volume.iqn, volume.accountID, volume.status, volume.totalSize));
@@ -164,8 +158,7 @@ public class SolidFireUtil {
         return deletedVolumes;
     }
 
-    public static SolidFireVolume deleteSolidFireVolume(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lVolumeId)
-    {
+    public static SolidFireVolume deleteSolidFireVolume(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lVolumeId) {
         SolidFireVolume sfVolume = getSolidFireVolume(strSfMvip, iSfPort, strSfAdmin, strSfPassword, lVolumeId);
 
         final Gson gson = new GsonBuilder().create();
@@ -179,8 +172,7 @@ public class SolidFireUtil {
         return sfVolume;
     }
 
-   public static void purgeSolidFireVolume(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lVolumeId)
-    {
+    public static void purgeSolidFireVolume(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lVolumeId) {
         final Gson gson = new GsonBuilder().create();
 
         VolumeToPurge volumeToPurge = new VolumeToPurge(lVolumeId);
@@ -200,9 +192,7 @@ public class SolidFireUtil {
         private final String _status;
         private final long _totalSize;
 
-        public SolidFireVolume(long id, String name, String iqn,
-                long accountId, String status, long totalSize)
-        {
+        public SolidFireVolume(long id, String name, String iqn, long accountId, String status, long totalSize) {
             _id = id;
             _name = name;
             _iqn = "/" + iqn + "/0";
@@ -257,9 +247,8 @@ public class SolidFireUtil {
 
             SolidFireVolume sfv = (SolidFireVolume)obj;
 
-            if (_id == sfv._id && _name.equals(sfv._name) &&
-                _iqn.equals(sfv._iqn) && _accountId == sfv._accountId &&
-                isActive() == sfv.isActive() && getTotalSize() == sfv.getTotalSize()) {
+            if (_id == sfv._id && _name.equals(sfv._name) && _iqn.equals(sfv._iqn) && _accountId == sfv._accountId && isActive() == sfv.isActive()
+                    && getTotalSize() == sfv.getTotalSize()) {
                 return true;
             }
 
@@ -267,8 +256,7 @@ public class SolidFireUtil {
         }
     }
 
-    public static long createSolidFireAccount(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, String strAccountName)
-    {
+    public static long createSolidFireAccount(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, String strAccountName) {
         final Gson gson = new GsonBuilder().create();
 
         AccountToAdd accountToAdd = new AccountToAdd(strAccountName);
@@ -284,8 +272,7 @@ public class SolidFireUtil {
         return accountAddResult.result.accountID;
     }
 
-    public static SolidFireAccount getSolidFireAccountById(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lSfAccountId)
-    {
+    public static SolidFireAccount getSolidFireAccountById(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lSfAccountId) {
         final Gson gson = new GsonBuilder().create();
 
         AccountToGetById accountToGetById = new AccountToGetById(lSfAccountId);
@@ -305,8 +292,7 @@ public class SolidFireUtil {
         return new SolidFireAccount(lSfAccountId, strSfAccountName, strSfAccountInitiatorSecret, strSfAccountTargetSecret);
     }
 
-    public static SolidFireAccount getSolidFireAccountByName(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, String strSfAccountName)
-    {
+    public static SolidFireAccount getSolidFireAccountByName(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, String strSfAccountName) {
         final Gson gson = new GsonBuilder().create();
 
         AccountToGetByName accountToGetByName = new AccountToGetByName(strSfAccountName);
@@ -326,8 +312,7 @@ public class SolidFireUtil {
         return new SolidFireAccount(lSfAccountId, strSfAccountName, strSfAccountInitiatorSecret, strSfAccountTargetSecret);
     }
 
-    public static void deleteSolidFireAccount(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lAccountId)
-    {
+    public static void deleteSolidFireAccount(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lAccountId) {
         final Gson gson = new GsonBuilder().create();
 
         AccountToRemove accountToRemove = new AccountToRemove(lAccountId);
@@ -337,8 +322,7 @@ public class SolidFireUtil {
         executeJsonRpc(strAccountToRemoveJson, strSfMvip, iSfPort, strSfAdmin, strSfPassword);
     }
 
-    public static class SolidFireAccount
-    {
+    public static class SolidFireAccount {
         private final long _id;
         private final String _name;
         private final String _initiatorSecret;
@@ -389,9 +373,7 @@ public class SolidFireUtil {
 
             SolidFireAccount sfa = (SolidFireAccount)obj;
 
-            if (_id == sfa._id && _name.equals(sfa._name) &&
-                _initiatorSecret.equals(sfa._initiatorSecret) &&
-                _targetSecret.equals(sfa._targetSecret)) {
+            if (_id == sfa._id && _name.equals(sfa._name) && _initiatorSecret.equals(sfa._initiatorSecret) && _targetSecret.equals(sfa._targetSecret)) {
                 return true;
             }
 
@@ -399,9 +381,7 @@ public class SolidFireUtil {
         }
     }
 
-    public static long createSolidFireVag(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, String strVagName,
-            String[] iqns, long[] volumeIds)
-    {
+    public static long createSolidFireVag(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, String strVagName, String[] iqns, long[] volumeIds) {
         final Gson gson = new GsonBuilder().create();
 
         VagToCreate vagToCreate = new VagToCreate(strVagName, iqns, volumeIds);
@@ -417,9 +397,7 @@ public class SolidFireUtil {
         return vagCreateResult.result.volumeAccessGroupID;
     }
 
-    public static void modifySolidFireVag(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lVagId,
-            String[] iqns, long[] volumeIds)
-    {
+    public static void modifySolidFireVag(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lVagId, String[] iqns, long[] volumeIds) {
         final Gson gson = new GsonBuilder().create();
 
         VagToModify vagToModify = new VagToModify(lVagId, iqns, volumeIds);
@@ -429,8 +407,7 @@ public class SolidFireUtil {
         executeJsonRpc(strVagModifyJson, strSfMvip, iSfPort, strSfAdmin, strSfPassword);
     }
 
-    public static SolidFireVag getSolidFireVag(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lVagId)
-    {
+    public static SolidFireVag getSolidFireVag(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lVagId) {
         final Gson gson = new GsonBuilder().create();
 
         VagToGet vagToGet = new VagToGet(lVagId);
@@ -449,8 +426,7 @@ public class SolidFireUtil {
         return new SolidFireVag(lVagId, vagIqns, vagVolumeIds);
     }
 
-    public static List<SolidFireVag> getAllSolidFireVags(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword)
-    {
+    public static List<SolidFireVag> getAllSolidFireVags(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword) {
         final Gson gson = new GsonBuilder().create();
 
         AllVags allVags = new AllVags();
@@ -465,7 +441,7 @@ public class SolidFireUtil {
 
         List<SolidFireVag> lstSolidFireVags = new ArrayList<SolidFireVag>();
 
-        if (allVagsGetResult.result.volumeAccessGroups != null ) {
+        if (allVagsGetResult.result.volumeAccessGroups != null) {
             for (VagGetResult.Result.Vag vag : allVagsGetResult.result.volumeAccessGroups) {
                 SolidFireVag sfVag = new SolidFireVag(vag.volumeAccessGroupID, vag.initiators, vag.volumes);
 
@@ -476,8 +452,7 @@ public class SolidFireUtil {
         return lstSolidFireVags;
     }
 
-    public static void deleteSolidFireVag(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lVagId)
-    {
+    public static void deleteSolidFireVag(String strSfMvip, int iSfPort, String strSfAdmin, String strSfPassword, long lVagId) {
         final Gson gson = new GsonBuilder().create();
 
         VagToDelete vagToDelete = new VagToDelete(lVagId);
@@ -487,31 +462,26 @@ public class SolidFireUtil {
         executeJsonRpc(strVagToDeleteJson, strSfMvip, iSfPort, strSfAdmin, strSfPassword);
     }
 
-    public static class SolidFireVag
-    {
+    public static class SolidFireVag {
         private final long _id;
         private final String[] _initiators;
         private final long[] _volumeIds;
 
-        public SolidFireVag(long id, String[] initiators, long[] volumeIds)
-        {
+        public SolidFireVag(long id, String[] initiators, long[] volumeIds) {
             _id = id;
             _initiators = initiators;
             _volumeIds = volumeIds;
         }
 
-        public long getId()
-        {
+        public long getId() {
             return _id;
         }
 
-        public String[] getInitiators()
-        {
+        public String[] getInitiators() {
             return _initiators;
         }
 
-        public long[] getVolumeIds()
-        {
+        public long[] getVolumeIds() {
             return _volumeIds;
         }
 
@@ -563,8 +533,8 @@ public class SolidFireUtil {
             private final VolumeToCreateParamsQoS qos;
             private final VolumeToCreateParamsAttributes attributes;
 
-            private VolumeToCreateParams(final String strVolumeName, final long lAccountId, final long lTotalSize, final boolean bEnable512e,
-                    final String strCloudStackVolumeSize, final long lMinIOPS, final long lMaxIOPS, final long lBurstIOPS) {
+            private VolumeToCreateParams(final String strVolumeName, final long lAccountId, final long lTotalSize, final boolean bEnable512e, final String strCloudStackVolumeSize,
+                    final long lMinIOPS, final long lMaxIOPS, final long lBurstIOPS) {
                 name = strVolumeName;
                 accountID = lAccountId;
                 totalSize = lTotalSize;
@@ -597,59 +567,49 @@ public class SolidFireUtil {
     }
 
     @SuppressWarnings("unused")
-    private static final class VolumeToGet
-    {
+    private static final class VolumeToGet {
         private final String method = "ListActiveVolumes";
         private final VolumeToGetParams params;
 
-        private VolumeToGet(final long lVolumeId)
-        {
+        private VolumeToGet(final long lVolumeId) {
             params = new VolumeToGetParams(lVolumeId);
         }
 
-        private static final class VolumeToGetParams
-        {
+        private static final class VolumeToGetParams {
             private final long startVolumeID;
             private final long limit = 1;
 
-            private VolumeToGetParams(final long lVolumeId)
-            {
+            private VolumeToGetParams(final long lVolumeId) {
                 startVolumeID = lVolumeId;
             }
         }
     }
 
     @SuppressWarnings("unused")
-    private static final class VolumesToGetForAccount
-    {
+    private static final class VolumesToGetForAccount {
         private final String method = "ListVolumesForAccount";
         private final VolumesToGetForAccountParams params;
 
-        private VolumesToGetForAccount(final long lAccountId)
-        {
+        private VolumesToGetForAccount(final long lAccountId) {
             params = new VolumesToGetForAccountParams(lAccountId);
         }
 
-        private static final class VolumesToGetForAccountParams
-        {
+        private static final class VolumesToGetForAccountParams {
             private final long accountID;
 
-            private VolumesToGetForAccountParams(final long lAccountId)
-            {
+            private VolumesToGetForAccountParams(final long lAccountId) {
                 accountID = lAccountId;
             }
         }
     }
 
     @SuppressWarnings("unused")
-    private static final class ListDeletedVolumes
-    {
+    private static final class ListDeletedVolumes {
         private final String method = "ListDeletedVolumes";
     }
 
     @SuppressWarnings("unused")
-    private static final class VolumeToDelete
-    {
+    private static final class VolumeToDelete {
         private final String method = "DeleteVolume";
         private final VolumeToDeleteParams params;
 
@@ -667,8 +627,7 @@ public class SolidFireUtil {
     }
 
     @SuppressWarnings("unused")
-    private static final class VolumeToPurge
-    {
+    private static final class VolumeToPurge {
         private final String method = "PurgeDeletedVolume";
         private final VolumeToPurgeParams params;
 
@@ -686,66 +645,54 @@ public class SolidFireUtil {
     }
 
     @SuppressWarnings("unused")
-    private static final class AccountToAdd
-    {
+    private static final class AccountToAdd {
         private final String method = "AddAccount";
         private final AccountToAddParams params;
 
-        private AccountToAdd(final String strAccountName)
-        {
+        private AccountToAdd(final String strAccountName) {
             params = new AccountToAddParams(strAccountName);
         }
 
-        private static final class AccountToAddParams
-        {
+        private static final class AccountToAddParams {
             private final String username;
 
-            private AccountToAddParams(final String strAccountName)
-            {
+            private AccountToAddParams(final String strAccountName) {
                 username = strAccountName;
             }
         }
     }
 
     @SuppressWarnings("unused")
-    private static final class AccountToGetById
-    {
+    private static final class AccountToGetById {
         private final String method = "GetAccountByID";
         private final AccountToGetByIdParams params;
 
-        private AccountToGetById(final long lAccountId)
-        {
+        private AccountToGetById(final long lAccountId) {
             params = new AccountToGetByIdParams(lAccountId);
         }
 
-        private static final class AccountToGetByIdParams
-        {
+        private static final class AccountToGetByIdParams {
             private final long accountID;
 
-            private AccountToGetByIdParams(final long lAccountId)
-            {
+            private AccountToGetByIdParams(final long lAccountId) {
                 accountID = lAccountId;
             }
         }
     }
 
     @SuppressWarnings("unused")
-    private static final class AccountToGetByName
-    {
+    private static final class AccountToGetByName {
         private final String method = "GetAccountByName";
         private final AccountToGetByNameParams params;
 
-        private AccountToGetByName(final String strUsername)
-        {
+        private AccountToGetByName(final String strUsername) {
             params = new AccountToGetByNameParams(strUsername);
         }
 
-        private static final class AccountToGetByNameParams
-        {
+        private static final class AccountToGetByNameParams {
             private final String username;
 
-            private AccountToGetByNameParams(final String strUsername)
-            {
+            private AccountToGetByNameParams(final String strUsername) {
                 username = strUsername;
             }
         }
@@ -770,24 +717,20 @@ public class SolidFireUtil {
     }
 
     @SuppressWarnings("unused")
-    private static final class VagToCreate
-    {
+    private static final class VagToCreate {
         private final String method = "CreateVolumeAccessGroup";
         private final VagToCreateParams params;
 
-        private VagToCreate(final String strVagName, final String[] iqns, final long[] volumeIds)
-        {
+        private VagToCreate(final String strVagName, final String[] iqns, final long[] volumeIds) {
             params = new VagToCreateParams(strVagName, iqns, volumeIds);
         }
 
-        private static final class VagToCreateParams
-        {
+        private static final class VagToCreateParams {
             private final String name;
             private final String[] initiators;
             private final long[] volumes;
 
-            private VagToCreateParams(final String strVagName, final String[] iqns, final long[] volumeIds)
-            {
+            private VagToCreateParams(final String strVagName, final String[] iqns, final long[] volumeIds) {
                 name = strVagName;
                 initiators = iqns;
                 volumes = volumeIds;
@@ -796,24 +739,20 @@ public class SolidFireUtil {
     }
 
     @SuppressWarnings("unused")
-    private static final class VagToModify
-    {
+    private static final class VagToModify {
         private final String method = "ModifyVolumeAccessGroup";
         private final VagToModifyParams params;
 
-        private VagToModify(final long lVagName, final String[] iqns, final long[] volumeIds)
-        {
+        private VagToModify(final long lVagName, final String[] iqns, final long[] volumeIds) {
             params = new VagToModifyParams(lVagName, iqns, volumeIds);
         }
 
-        private static final class VagToModifyParams
-        {
+        private static final class VagToModifyParams {
             private final long volumeAccessGroupID;
             private final String[] initiators;
             private final long[] volumes;
 
-            private VagToModifyParams(final long lVagName, final String[] iqns, final long[] volumeIds)
-            {
+            private VagToModifyParams(final long lVagName, final String[] iqns, final long[] volumeIds) {
                 volumeAccessGroupID = lVagName;
                 initiators = iqns;
                 volumes = volumeIds;
@@ -822,46 +761,39 @@ public class SolidFireUtil {
     }
 
     @SuppressWarnings("unused")
-    private static final class VagToGet
-    {
+    private static final class VagToGet {
         private final String method = "ListVolumeAccessGroups";
         private final VagToGetParams params;
 
-        private VagToGet(final long lVagId)
-        {
+        private VagToGet(final long lVagId) {
             params = new VagToGetParams(lVagId);
         }
 
-        private static final class VagToGetParams
-        {
+        private static final class VagToGetParams {
             private final long startVolumeAccessGroupID;
             private final long limit = 1;
 
-            private VagToGetParams(final long lVagId)
-            {
+            private VagToGetParams(final long lVagId) {
                 startVolumeAccessGroupID = lVagId;
             }
         }
     }
 
     @SuppressWarnings("unused")
-    private static final class AllVags
-    {
+    private static final class AllVags {
         private final String method = "ListVolumeAccessGroups";
         private final VagToGetParams params;
 
-        private AllVags()
-        {
+        private AllVags() {
             params = new VagToGetParams();
         }
 
-        private static final class VagToGetParams
-        {}
+        private static final class VagToGetParams {
+        }
     }
 
     @SuppressWarnings("unused")
-    private static final class VagToDelete
-    {
+    private static final class VagToDelete {
         private final String method = "DeleteVolumeAccessGroup";
         private final VagToDeleteParams params;
 
@@ -934,16 +866,13 @@ public class SolidFireUtil {
         }
     }
 
-    private static final class VagGetResult
-    {
+    private static final class VagGetResult {
         private Result result;
 
-        private static final class Result
-        {
+        private static final class Result {
             private Vag[] volumeAccessGroups;
 
-            private static final class Vag
-            {
+            private static final class Vag {
                 private long volumeAccessGroupID;
                 private String[] initiators;
                 private long[] volumes;
@@ -951,8 +880,7 @@ public class SolidFireUtil {
         }
     }
 
-    private static final class JsonError
-    {
+    private static final class JsonError {
         private Error error;
 
         private static final class Error {
@@ -1100,33 +1028,26 @@ public class SolidFireUtil {
         throw new CloudRuntimeException("Could not determine the status of the volume for volume ID of " + lVolumeId + ".");
     }
 
-    private static long getVolumeTotalSize(VolumeGetResult volumeGetResult, long lVolumeId)
-    {
-        if (volumeGetResult.result.volumes != null && volumeGetResult.result.volumes.length == 1 &&
-            volumeGetResult.result.volumes[0].volumeID == lVolumeId)
-        {
+    private static long getVolumeTotalSize(VolumeGetResult volumeGetResult, long lVolumeId) {
+        if (volumeGetResult.result.volumes != null && volumeGetResult.result.volumes.length == 1 && volumeGetResult.result.volumes[0].volumeID == lVolumeId) {
             return volumeGetResult.result.volumes[0].totalSize;
         }
 
         throw new CloudRuntimeException("Could not determine the total size of the volume for volume ID of " + lVolumeId + ".");
     }
 
-    private static String[] getVagIqns(VagGetResult vagGetResult, long lVagId)
-    {
-        if (vagGetResult.result.volumeAccessGroups != null && vagGetResult.result.volumeAccessGroups.length == 1 &&
-            vagGetResult.result.volumeAccessGroups[0].volumeAccessGroupID == lVagId)
-        {
+    private static String[] getVagIqns(VagGetResult vagGetResult, long lVagId) {
+        if (vagGetResult.result.volumeAccessGroups != null && vagGetResult.result.volumeAccessGroups.length == 1
+                && vagGetResult.result.volumeAccessGroups[0].volumeAccessGroupID == lVagId) {
             return vagGetResult.result.volumeAccessGroups[0].initiators;
         }
 
         throw new CloudRuntimeException("Could not determine the IQNs of the volume access group for volume access group ID of " + lVagId + ".");
     }
 
-    private static long[] getVagVolumeIds(VagGetResult vagGetResult, long lVagId)
-    {
-        if (vagGetResult.result.volumeAccessGroups != null && vagGetResult.result.volumeAccessGroups.length == 1 &&
-            vagGetResult.result.volumeAccessGroups[0].volumeAccessGroupID == lVagId)
-        {
+    private static long[] getVagVolumeIds(VagGetResult vagGetResult, long lVagId) {
+        if (vagGetResult.result.volumeAccessGroups != null && vagGetResult.result.volumeAccessGroups.length == 1
+                && vagGetResult.result.volumeAccessGroups[0].volumeAccessGroupID == lVagId) {
             return vagGetResult.result.volumeAccessGroups[0].volumes;
         }
 

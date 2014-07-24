@@ -63,9 +63,8 @@ import com.cloud.vm.VirtualMachineManager;
 import com.cloud.vm.dao.UserVmDetailsDao;
 
 /**
- * Thumbnail access : /console?cmd=thumbnail&vm=xxx&w=xxx&h=xxx
- * Console access : /conosole?cmd=access&vm=xxx
- * Authentication : /console?cmd=auth&vm=xxx&sid=xxx
+ * Thumbnail access : /console?cmd=thumbnail&vm=xxx&w=xxx&h=xxx Console access :
+ * /conosole?cmd=access&vm=xxx Authentication : /console?cmd=auth&vm=xxx&sid=xxx
  */
 @Component("consoleServlet")
 public class ConsoleProxyServlet extends HttpServlet {
@@ -150,7 +149,8 @@ public class ConsoleProxyServlet extends HttpServlet {
                 }
             }
 
-            // Do a sanity check here to make sure the user hasn't already been deleted
+            // Do a sanity check here to make sure the user hasn't already been
+            // deleted
             if ((userId == null) || (account == null) || (accountObj == null) || !verifyUser(Long.valueOf(userId))) {
                 s_logger.debug("Invalid user/account, reject console/thumbnail access");
                 sendResponse(resp, "Access denied. Invalid or inconsistent account is found");
@@ -286,8 +286,10 @@ public class ConsoleProxyServlet extends HttpServlet {
 
     private void handleAuthRequest(HttpServletRequest req, HttpServletResponse resp, long vmId) {
 
-        // TODO authentication channel between console proxy VM and management server needs to be secured,
-        // the data is now being sent through private network, but this is apparently not enough
+        // TODO authentication channel between console proxy VM and management
+        // server needs to be secured,
+        // the data is now being sent through private network, but this is
+        // apparently not enough
         VirtualMachine vm = _vmMgr.findById(vmId);
         if (vm == null) {
             s_logger.warn("VM " + vmId + " does not exist, sending failed response for authentication request from console proxy");
@@ -328,15 +330,15 @@ public class ConsoleProxyServlet extends HttpServlet {
 
         if (hostInfo != null) {
             if (hostInfo.startsWith("consoleurl")) {
-            String tokens[] = hostInfo.split("&");
+                String tokens[] = hostInfo.split("&");
 
-            if (hostInfo.length() > 19 && hostInfo.indexOf('/', 19) > 19) {
-                host = hostInfo.substring(19, hostInfo.indexOf('/', 19)).trim();
-                tunnelUrl = tokens[0].substring("consoleurl=".length());
-                tunnelSession = tokens[1].split("=")[1];
-            } else {
-                host = "";
-            }
+                if (hostInfo.length() > 19 && hostInfo.indexOf('/', 19) > 19) {
+                    host = hostInfo.substring(19, hostInfo.indexOf('/', 19)).trim();
+                    tunnelUrl = tokens[0].substring("consoleurl=".length());
+                    tunnelSession = tokens[1].split("=")[1];
+                } else {
+                    host = "";
+                }
             } else if (hostInfo.startsWith("instanceId")) {
                 host = hostInfo.substring(hostInfo.indexOf('=') + 1);
             } else {
@@ -370,7 +372,7 @@ public class ConsoleProxyServlet extends HttpServlet {
 
         int port = -1;
         if (portInfo.second() == -9) {
-            //for hyperv
+            // for hyperv
             port = Integer.parseInt(_ms.findDetail(hostVo.getId(), "rdp.server.port").getValue());
         } else {
             port = portInfo.second();
@@ -386,7 +388,7 @@ public class ConsoleProxyServlet extends HttpServlet {
         param.setClientTag(tag);
         param.setTicket(ticket);
         if (portInfo.second() == -9) {
-            //For Hyperv Clinet Host Address will send Instance id
+            // For Hyperv Clinet Host Address will send Instance id
             param.setHypervHost(host);
             param.setUsername(_ms.findDetail(hostVo.getId(), "username").getValue());
             param.setPassword(_ms.findDetail(hostVo.getId(), "password").getValue());
@@ -417,7 +419,7 @@ public class ConsoleProxyServlet extends HttpServlet {
 
         int port = -1;
         if (portInfo.second() == -9) {
-            //for hyperv
+            // for hyperv
             port = Integer.parseInt(_ms.findDetail(hostVo.getId(), "rdp.server.port").getValue());
         } else {
             port = portInfo.second();
@@ -442,12 +444,12 @@ public class ConsoleProxyServlet extends HttpServlet {
         }
 
         if (portInfo.second() == -9) {
-            //For Hyperv Clinet Host Address will send Instance id
+            // For Hyperv Clinet Host Address will send Instance id
             param.setHypervHost(host);
             param.setUsername(_ms.findDetail(hostVo.getId(), "username").getValue());
             param.setPassword(_ms.findDetail(hostVo.getId(), "password").getValue());
         }
-        if (parsedHostInfo.second() != null  && parsedHostInfo.third() != null) {
+        if (parsedHostInfo.second() != null && parsedHostInfo.third() != null) {
             param.setClientTunnelUrl(parsedHostInfo.second());
             param.setClientTunnelSession(parsedHostInfo.third());
         }
@@ -477,7 +479,7 @@ public class ConsoleProxyServlet extends HttpServlet {
             Mac mac = Mac.getInstance("HmacSHA1");
 
             long ts = normalizedHashTime.getTime();
-            ts = ts / 60000;        // round up to 1 minute
+            ts = ts / 60000; // round up to 1 minute
             String secretKey = s_keysMgr.getHashKey();
 
             SecretKeySpec keySpec = new SecretKeySpec(secretKey.getBytes(), "HmacSHA1");
@@ -516,20 +518,19 @@ public class ConsoleProxyServlet extends HttpServlet {
             return true;
 
         switch (vm.getType()) {
-            case User:
+        case User:
             try {
                 _accountMgr.checkAccess(accountObj, null, true, vm);
             } catch (PermissionDeniedException ex) {
                 if (_accountMgr.isNormalUser(accountObj.getId())) {
                     if (s_logger.isDebugEnabled()) {
-                            s_logger.debug("VM access is denied. VM owner account " + vm.getAccountId() + " does not match the account id in session " +
-                                accountObj.getId() + " and caller is a normal user");
+                        s_logger.debug("VM access is denied. VM owner account " + vm.getAccountId() + " does not match the account id in session " + accountObj.getId()
+                                + " and caller is a normal user");
                     }
-                } else if (_accountMgr.isDomainAdmin(accountObj.getId())
-                        || accountObj.getType() == Account.ACCOUNT_TYPE_READ_ONLY_ADMIN) {
-                    if(s_logger.isDebugEnabled()) {
-                        s_logger.debug("VM access is denied. VM owner account " + vm.getAccountId()
-                                + " does not match the account id in session " + accountObj.getId() + " and the domain-admin caller does not manage the target domain");
+                } else if (_accountMgr.isDomainAdmin(accountObj.getId()) || accountObj.getType() == Account.ACCOUNT_TYPE_READ_ONLY_ADMIN) {
+                    if (s_logger.isDebugEnabled()) {
+                        s_logger.debug("VM access is denied. VM owner account " + vm.getAccountId() + " does not match the account id in session " + accountObj.getId()
+                                + " and the domain-admin caller does not manage the target domain");
                     }
                 }
                 return false;
@@ -537,11 +538,11 @@ public class ConsoleProxyServlet extends HttpServlet {
             break;
 
         case DomainRouter:
-            case ConsoleProxy:
+        case ConsoleProxy:
         case SecondaryStorageVm:
             return false;
 
-            default:
+        default:
             s_logger.warn("Unrecoginized virtual machine type, deny access by default. type: " + vm.getType());
             return false;
         }
@@ -565,8 +566,8 @@ public class ConsoleProxyServlet extends HttpServlet {
             account = _accountMgr.getAccount(user.getAccountId());
         }
 
-        if ((user == null) || (user.getRemoved() != null) || !user.getState().equals(Account.State.enabled) || (account == null) ||
-            !account.getState().equals(Account.State.enabled)) {
+        if ((user == null) || (user.getRemoved() != null) || !user.getState().equals(Account.State.enabled) || (account == null)
+                || !account.getState().equals(Account.State.enabled)) {
             s_logger.warn("Deleted/Disabled/Locked user with id=" + userId + " attempting to access public API");
             return false;
         }
@@ -582,18 +583,22 @@ public class ConsoleProxyServlet extends HttpServlet {
             String signature = null;
             String unsignedRequest = null;
 
-            // - build a request string with sorted params, make sure it's all lowercase
+            // - build a request string with sorted params, make sure it's all
+            // lowercase
             // - sign the request, verify the signature is the same
             List<String> parameterNames = new ArrayList<String>();
 
             for (Object paramNameObj : requestParameters.keySet()) {
-                parameterNames.add((String)paramNameObj); // put the name in a list that we'll sort later
+                parameterNames.add((String)paramNameObj); // put the name in a
+                // list that we'll
+                // sort later
             }
 
             Collections.sort(parameterNames);
 
             for (String paramName : parameterNames) {
-                // parameters come as name/value pairs in the form String/String[]
+                // parameters come as name/value pairs in the form
+                // String/String[]
                 String paramValue = ((String[])requestParameters.get(paramName))[0];
 
                 if ("signature".equalsIgnoreCase(paramName)) {
@@ -633,8 +638,8 @@ public class ConsoleProxyServlet extends HttpServlet {
             Account account = userAcctPair.second();
 
             if (!user.getState().equals(Account.State.enabled) || !account.getState().equals(Account.State.enabled)) {
-                s_logger.debug("disabled or locked user accessing the api, userid = " + user.getId() + "; name = " + user.getUsername() + "; state: " + user.getState() +
-                    "; accountState: " + account.getState());
+                s_logger.debug("disabled or locked user accessing the api, userid = " + user.getId() + "; name = " + user.getUsername() + "; state: " + user.getState()
+                        + "; accountState: " + account.getState());
                 return false;
             }
 
@@ -678,24 +683,24 @@ public class ConsoleProxyServlet extends HttpServlet {
         for (int i = 0; i < content.length(); i++) {
             char c = content.charAt(i);
             switch (c) {
-                case '<':
-                    sb.append("&lt;");
-                    break;
-                case '>':
-                    sb.append("&gt;");
-                    break;
-                case '&':
-                    sb.append("&amp;");
-                    break;
-                case '"':
-                    sb.append("&quot;");
-                    break;
-                case ' ':
-                    sb.append("&nbsp;");
-                    break;
-                default:
-                    sb.append(c);
-                    break;
+            case '<':
+                sb.append("&lt;");
+                break;
+            case '>':
+                sb.append("&gt;");
+                break;
+            case '&':
+                sb.append("&amp;");
+                break;
+            case '"':
+                sb.append("&quot;");
+                break;
+            case ' ':
+                sb.append("&nbsp;");
+                break;
+            default:
+                sb.append(c);
+                break;
             }
         }
         return sb.toString();

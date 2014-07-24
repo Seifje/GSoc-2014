@@ -60,11 +60,12 @@ public class EventUtils {
         try {
             s_messageBus = ComponentContext.getComponent(MessageBusBase.class);
         } catch (NoSuchBeanDefinitionException nbe) {
-            return; // no provider is configured to provide events bus, so just return
+            return; // no provider is configured to provide events bus, so just
+            // return
         }
 
-        org.apache.cloudstack.framework.events.Event event =
-            new org.apache.cloudstack.framework.events.Event(ManagementService.Name, eventCategory, eventType, EventTypes.getEntityForEvent(eventType), null);
+        org.apache.cloudstack.framework.events.Event event = new org.apache.cloudstack.framework.events.Event(ManagementService.Name, eventCategory, eventType,
+                EventTypes.getEntityForEvent(eventType), null);
 
         Map<String, String> eventDescription = new HashMap<String, String>();
         eventDescription.put("event", eventType);
@@ -92,7 +93,7 @@ public class EventUtils {
             Method m = invocation.getMethod();
             Object target = invocation.getThis();
 
-            if ( getActionEvents(m).size() == 0 ) {
+            if (getActionEvents(m).size() == 0) {
                 /* Look for annotation on impl class */
                 m = target.getClass().getMethod(m.getName(), m.getParameterTypes());
             }
@@ -108,7 +109,7 @@ public class EventUtils {
 
                 return result;
             } finally {
-                if ( success ) {
+                if (success) {
                     interceptComplete(m, target, interceptorData);
                 } else {
                     interceptException(m, target, interceptorData);
@@ -121,15 +122,15 @@ public class EventUtils {
 
             ActionEvents events = m.getAnnotation(ActionEvents.class);
 
-            if ( events != null ) {
-                for ( ActionEvent e : events.value() ) {
+            if (events != null) {
+                for (ActionEvent e : events.value()) {
                     result.add(e);
                 }
             }
 
             ActionEvent e = m.getAnnotation(ActionEvent.class);
 
-            if ( e != null ) {
+            if (e != null) {
                 result.add(e);
             }
 

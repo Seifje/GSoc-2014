@@ -54,8 +54,10 @@ public class StartupRoutingCommand extends StartupCommand {
     long dom0MinMemory;
     boolean poolSync;
 
-    // VM power state report is added in a side-by-side way as old VM state report
-    // this is to allow a graceful migration from the old VM state sync model to the new model
+    // VM power state report is added in a side-by-side way as old VM state
+    // report
+    // this is to allow a graceful migration from the old VM state sync model to
+    // the new model
     //
     // side-by-side addition of power state sync
     Map<String, HostVmStateReportEntry> _hostVmStateReport;
@@ -68,7 +70,7 @@ public class StartupRoutingCommand extends StartupCommand {
     String caps;
     String pool;
     HypervisorType hypervisorType;
-    Map<String, String> hostDetails; //stuff like host os, cpu capabilities
+    Map<String, String> hostDetails; // stuff like host os, cpu capabilities
     String hypervisorVersion;
     HashMap<String, HashMap<String, VgpuTypesInfo>> groupDetails = new HashMap<String, HashMap<String, VgpuTypesInfo>>();
 
@@ -79,22 +81,14 @@ public class StartupRoutingCommand extends StartupCommand {
 
     }
 
-    public StartupRoutingCommand(int cpus, long speed, long memory, long dom0MinMemory, String caps, HypervisorType hypervisorType,
-            RouterPrivateIpStrategy privIpStrategy, Map<String, VmState> vms, Map<String, HostVmStateReportEntry> hostVmStateReport) {
+    public StartupRoutingCommand(int cpus, long speed, long memory, long dom0MinMemory, String caps, HypervisorType hypervisorType, RouterPrivateIpStrategy privIpStrategy,
+            Map<String, VmState> vms, Map<String, HostVmStateReportEntry> hostVmStateReport) {
         this(cpus, speed, memory, dom0MinMemory, caps, hypervisorType, vms, hostVmStateReport);
         getHostDetails().put(RouterPrivateIpStrategy.class.getCanonicalName(), privIpStrategy.toString());
     }
 
     public StartupRoutingCommand(int cpus, long speed, long memory, long dom0MinMemory, String caps, HypervisorType hypervisorType, RouterPrivateIpStrategy privIpStrategy) {
-        this(cpus,
-            speed,
-            memory,
-            dom0MinMemory,
-            caps,
-            hypervisorType,
-            new HashMap<String, String>(),
-            new HashMap<String, VmState>(),
-            new HashMap<String, HostVmStateReportEntry>());
+        this(cpus, speed, memory, dom0MinMemory, caps, hypervisorType, new HashMap<String, String>(), new HashMap<String, VmState>(), new HashMap<String, HostVmStateReportEntry>());
 
         getHostDetails().put(RouterPrivateIpStrategy.class.getCanonicalName(), privIpStrategy.toString());
     }
@@ -246,7 +240,7 @@ public class StartupRoutingCommand extends StartupCommand {
         this._hostVmStateReport = hostVmStateReport;
     }
 
-    public  HashMap<String, HashMap<String, VgpuTypesInfo>> getGpuGroupDetails() {
+    public HashMap<String, HashMap<String, VgpuTypesInfo>> getGpuGroupDetails() {
         return groupDetails;
     }
 

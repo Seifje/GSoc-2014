@@ -55,7 +55,7 @@ public class RandomAllocator extends AdapterBase implements HostAllocator {
 
     @Override
     public List<Host> allocateTo(VirtualMachineProfile vmProfile, DeploymentPlan plan, Type type, ExcludeList avoid, List<? extends Host> hosts, int returnUpTo,
-        boolean considerReservedCapacity) {
+            boolean considerReservedCapacity) {
         long dcId = plan.getDataCenterId();
         Long podId = plan.getPodId();
         Long clusterId = plan.getClusterId();
@@ -73,7 +73,8 @@ public class RandomAllocator extends AdapterBase implements HostAllocator {
             s_logger.debug("Looking for hosts in dc: " + dcId + "  pod:" + podId + "  cluster:" + clusterId);
         }
 
-        // list all computing hosts, regardless of whether they support routing...it's random after all
+        // list all computing hosts, regardless of whether they support
+        // routing...it's random after all
         if (hostTag != null) {
             hosts.retainAll(_hostDao.listByHostTag(type, clusterId, podId, dcId, hostTag));
         } else {
@@ -128,7 +129,8 @@ public class RandomAllocator extends AdapterBase implements HostAllocator {
             s_logger.debug("Looking for hosts in dc: " + dcId + "  pod:" + podId + "  cluster:" + clusterId);
         }
 
-        // list all computing hosts, regardless of whether they support routing...it's random after all
+        // list all computing hosts, regardless of whether they support
+        // routing...it's random after all
         List<? extends Host> hosts = new ArrayList<HostVO>();
         if (hostTag != null) {
             hosts = _hostDao.listByHostTag(type, clusterId, podId, dcId, hostTag);
@@ -164,7 +166,8 @@ public class RandomAllocator extends AdapterBase implements HostAllocator {
 
     @Override
     public boolean isVirtualMachineUpgradable(VirtualMachine vm, ServiceOffering offering) {
-        // currently we do no special checks to rule out a VM being upgradable to an offering, so
+        // currently we do no special checks to rule out a VM being upgradable
+        // to an offering, so
         // return true
         return true;
     }

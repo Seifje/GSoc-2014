@@ -29,8 +29,7 @@ import org.apache.cloudstack.api.response.SuccessResponse;
 
 import com.cloud.user.Account;
 
-@APICommand(name = "deleteImageStore", description = "Deletes an image store .", responseObject = SuccessResponse.class, since = "4.2.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteImageStore", description = "Deletes an image store .", responseObject = SuccessResponse.class, since = "4.2.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteImageStoreCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(DeleteImageStoreCmd.class.getName());
 

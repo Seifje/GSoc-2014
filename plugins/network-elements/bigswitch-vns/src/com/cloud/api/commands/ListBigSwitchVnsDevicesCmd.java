@@ -42,30 +42,26 @@ import com.cloud.network.BigSwitchVnsDeviceVO;
 import com.cloud.network.element.BigSwitchVnsElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "listBigSwitchVnsDevices", responseObject = BigSwitchVnsDeviceResponse.class, description = "Lists BigSwitch Vns devices", since = "4.1.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listBigSwitchVnsDevices", responseObject = BigSwitchVnsDeviceResponse.class, description = "Lists BigSwitch Vns devices", since = "4.1.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListBigSwitchVnsDevicesCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListBigSwitchVnsDevicesCmd.class.getName());
     private static final String s_name = "listbigswitchvnsdeviceresponse";
     @Inject
     BigSwitchVnsElementService _bigswitchVnsElementService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, description = "the Physical Network ID")
     private Long physicalNetworkId;
 
-    @Parameter(name = VnsConstants.BIGSWITCH_VNS_DEVICE_ID,
-               type = CommandType.UUID,
-               entityType = BigSwitchVnsDeviceResponse.class,
-               description = "bigswitch vns device ID")
+    @Parameter(name = VnsConstants.BIGSWITCH_VNS_DEVICE_ID, type = CommandType.UUID, entityType = BigSwitchVnsDeviceResponse.class, description = "bigswitch vns device ID")
     private Long bigswitchVnsDeviceId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getBigSwitchVnsDeviceId() {
         return bigswitchVnsDeviceId;
@@ -75,13 +71,12 @@ public class ListBigSwitchVnsDevicesCmd extends BaseListCmd {
         return physicalNetworkId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             List<BigSwitchVnsDeviceVO> bigswitchDevices = _bigswitchVnsElementService.listBigSwitchVnsDevices(this);
             ListResponse<BigSwitchVnsDeviceResponse> response = new ListResponse<BigSwitchVnsDeviceResponse>();

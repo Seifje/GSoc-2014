@@ -41,12 +41,13 @@ public interface Pipeline extends Element {
     /**
      * Link elements in given order using SyncLink. Element name can have prefix
      * "PADNAME< " or/and suffix " >PADNAME" to use given named pads instead of
-     * "stdin" and "stdout". I.e. <code>link("foo", "bar", "baz");</code> is equal
-     * to <code>link("foo >stdin", "stdout< bar >stdin", "stdout< baz");</code> .
+     * "stdin" and "stdout". I.e. <code>link("foo", "bar", "baz");</code> is
+     * equal to
+     * <code>link("foo >stdin", "stdout< bar >stdin", "stdout< baz");</code> .
      *
-     * Special elements "IN" and "OUT" are pointing to pipeline outer interfaces,
-     * so when pipeline will be connected with other elements, outside of this
-     * pipeline, they will be connected to IN and OUT elements.
+     * Special elements "IN" and "OUT" are pointing to pipeline outer
+     * interfaces, so when pipeline will be connected with other elements,
+     * outside of this pipeline, they will be connected to IN and OUT elements.
      *
      * Empty names are skipped.
      *
@@ -59,7 +60,7 @@ public interface Pipeline extends Element {
      * </pre>
      *
      * @param elements
-     *          elements to link
+     *            elements to link
      */
     void link(String... elements);
 
@@ -84,9 +85,11 @@ public interface Pipeline extends Element {
 
     /**
      * Get link connected to given pad in given element and run it main loop.
+     *
      * @param separateThread
-     *          set to true to start main loop in separate thread.
-     * @param waitForStartEvent TODO
+     *            set to true to start main loop in separate thread.
+     * @param waitForStartEvent
+     *            TODO
      */
     void runMainLoop(String element, String padName, boolean separateThread, boolean waitForStartEvent);
 

@@ -31,21 +31,16 @@ import com.cloud.utils.db.SearchCriteria;
 @Component
 @Local(value = OvsProviderDao.class)
 @DB()
-public class OvsProviderDaoImpl extends GenericDaoBase<OvsProviderVO, Long>
-        implements OvsProviderDao {
+public class OvsProviderDaoImpl extends GenericDaoBase<OvsProviderVO, Long> implements OvsProviderDao {
     final SearchBuilder<OvsProviderVO> AllFieldsSearch;
 
     public OvsProviderDaoImpl() {
         super();
         AllFieldsSearch = createSearchBuilder();
-        AllFieldsSearch.and("id", AllFieldsSearch.entity().getId(),
-            SearchCriteria.Op.EQ);
-        AllFieldsSearch.and("nsp_id", AllFieldsSearch.entity().getNspId(),
-            SearchCriteria.Op.EQ);
-        AllFieldsSearch.and("uuid", AllFieldsSearch.entity().getUuid(),
-            SearchCriteria.Op.EQ);
-        AllFieldsSearch.and("enabled", AllFieldsSearch.entity().isEnabled(),
-            SearchCriteria.Op.EQ);
+        AllFieldsSearch.and("id", AllFieldsSearch.entity().getId(), SearchCriteria.Op.EQ);
+        AllFieldsSearch.and("nsp_id", AllFieldsSearch.entity().getNspId(), SearchCriteria.Op.EQ);
+        AllFieldsSearch.and("uuid", AllFieldsSearch.entity().getUuid(), SearchCriteria.Op.EQ);
+        AllFieldsSearch.and("enabled", AllFieldsSearch.entity().isEnabled(), SearchCriteria.Op.EQ);
         AllFieldsSearch.done();
     }
 

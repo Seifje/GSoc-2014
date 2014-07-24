@@ -26,12 +26,7 @@ import org.apache.cloudstack.api.response.ListResponse;
 
 import com.cloud.network.Networks;
 
-@APICommand(name = "listNetworkIsolationMethods",
-            description = "Lists supported methods of network isolation",
-            responseObject = IsolationMethodResponse.class,
-            since = "4.2.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "listNetworkIsolationMethods", description = "Lists supported methods of network isolation", responseObject = IsolationMethodResponse.class, since = "4.2.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListNetworkIsolationMethodsCmd extends BaseListCmd {
 
     private static final String s_name = "listnetworkisolationmethodsresponse";

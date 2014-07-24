@@ -50,9 +50,7 @@ import com.cloud.utils.Pair;
  * @deprecated as of 4.3 use the new api {@link LdapAddConfigurationCmd}
  */
 @Deprecated
-@APICommand(name = "ldapConfig", description = "Configure the LDAP context for this site.", responseObject = LDAPConfigResponse.class, since = "3.0.0",
-        requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
-
+@APICommand(name = "ldapConfig", description = "Configure the LDAP context for this site.", responseObject = LDAPConfigResponse.class, since = "3.0.0", requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
 public class LDAPConfigCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(LDAPConfigCmd.class.getName());
 
@@ -67,9 +65,9 @@ public class LDAPConfigCmd extends BaseCmd {
     @Inject
     private LdapConfiguration _ldapConfiguration;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
     @Parameter(name = ApiConstants.LIST_ALL, type = CommandType.BOOLEAN, description = "If true return current LDAP configuration")
     private Boolean listAll;
 
@@ -82,19 +80,13 @@ public class LDAPConfigCmd extends BaseCmd {
     @Parameter(name = ApiConstants.USE_SSL, type = CommandType.BOOLEAN, description = "Check Use SSL if the external LDAP server is configured for LDAP over SSL.")
     private Boolean useSSL;
 
-    @Parameter(name = ApiConstants.SEARCH_BASE,
-               type = CommandType.STRING,
-               description = "The search base defines the starting point for the search in the directory tree Example:  dc=cloud,dc=com.")
+    @Parameter(name = ApiConstants.SEARCH_BASE, type = CommandType.STRING, description = "The search base defines the starting point for the search in the directory tree Example:  dc=cloud,dc=com.")
     private String searchBase;
 
-    @Parameter(name = ApiConstants.QUERY_FILTER,
-               type = CommandType.STRING,
-               description = "You specify a query filter here, which narrows down the users, who can be part of this domain.")
+    @Parameter(name = ApiConstants.QUERY_FILTER, type = CommandType.STRING, description = "You specify a query filter here, which narrows down the users, who can be part of this domain.")
     private String queryFilter;
 
-    @Parameter(name = ApiConstants.BIND_DN,
-               type = CommandType.STRING,
-               description = "Specify the distinguished name of a user with the search permission on the directory.")
+    @Parameter(name = ApiConstants.BIND_DN, type = CommandType.STRING, description = "Specify the distinguished name of a user with the search permission on the directory.")
     private String bindDN;
 
     @Parameter(name = ApiConstants.BIND_PASSWORD, type = CommandType.STRING, description = "Enter the password.")
@@ -174,13 +166,12 @@ public class LDAPConfigCmd extends BaseCmd {
         return trustStorePassword;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         if (getListAll()) {
             // return the existing conf
 
@@ -194,8 +185,7 @@ public class LDAPConfigCmd extends BaseCmd {
                 String searchBaseConfig = _ldapConfiguration.getBaseDn();
                 String bindDnConfig = _ldapConfiguration.getBindPrincipal();
                 for (LdapConfigurationVO ldapConfigurationVO : result.first()) {
-                    responses.add(createLDAPConfigResponse(ldapConfigurationVO.getHostname(), ldapConfigurationVO.getPort(), useSSlConfig, null, searchBaseConfig,
-                        bindDnConfig));
+                    responses.add(createLDAPConfigResponse(ldapConfigurationVO.getHostname(), ldapConfigurationVO.getPort(), useSSlConfig, null, searchBaseConfig, bindDnConfig));
                 }
             }
             response.setResponses(responses);
@@ -230,19 +220,22 @@ public class LDAPConfigCmd extends BaseCmd {
         LdapConfigurationResponse response = _ldapManager.addConfiguration(hostname, port);
 
         /**
-         * There is no query filter now. It is derived from ldap.user.object and ldap.search.group.principle
+         * There is no query filter now. It is derived from ldap.user.object and
+         * ldap.search.group.principle
          */
-//        ConfigurationVO cvo = _configDao.findByName(LDAPParams.queryfilter.toString());
-//        _configDao.update(cvo.getName(),cvo.getCategory(),getQueryFilter());
+        // ConfigurationVO cvo =
+        // _configDao.findByName(LDAPParams.queryfilter.toString());
+        // _configDao.update(cvo.getName(),cvo.getCategory(),getQueryFilter());
 
         ConfigurationVO cvo = _configDao.findByName("ldap.basedn");
         _configDao.update(cvo.getName(), cvo.getCategory(), getSearchBase());
 
         /**
-         * There is no ssl now. it is derived from the presence of trust store and password
+         * There is no ssl now. it is derived from the presence of trust store
+         * and password
          */
-//        cvo = _configDao.findByName(LDAPParams.usessl.toString());
-//        _configDao.update(cvo.getName(),cvo.getCategory(),getUseSSL().toString());
+        // cvo = _configDao.findByName(LDAPParams.usessl.toString());
+        // _configDao.update(cvo.getName(),cvo.getCategory(),getUseSSL().toString());
 
         cvo = _configDao.findByName("ldap.bind.principal");
         _configDao.update(cvo.getName(), cvo.getCategory(), getBindDN());

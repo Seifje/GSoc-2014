@@ -74,11 +74,11 @@ public class XenServer56FP1Resource extends XenServer56Resource {
         Connection conn = getConnection();
         try {
             Boolean alive = check_heartbeat(cmd.getHostGuid());
-            if ( alive == null ) {
+            if (alive == null) {
                 s_logger.debug("Failed to check heartbeat,  so unable to fence");
                 return new FenceAnswer(cmd, false, "Failed to check heartbeat, so unable to fence");
             }
-            if ( alive ) {
+            if (alive) {
                 s_logger.debug("Heart beat is still going so unable to fence");
                 return new FenceAnswer(cmd, false, "Heartbeat is still going on unable to fence");
             }
@@ -126,10 +126,14 @@ public class XenServer56FP1Resource extends XenServer56Resource {
             return dynamicMaxRam;
         }
 
-        long staticMax = Math.min(recommendedValue, 4l * dynamicMinRam);  // XS constraint for stability
-        if (dynamicMaxRam > staticMax) { // XS contraint that dynamic max <= static max
-            s_logger.warn("dynamixMax " + dynamicMaxRam + " cant be greater than static max " + staticMax +
-                ", can lead to stability issues. Setting static max as much as dynamic max ");
+        long staticMax = Math.min(recommendedValue, 4l * dynamicMinRam); // XS
+        // constraint
+        // for
+        // stability
+        if (dynamicMaxRam > staticMax) { // XS contraint that dynamic max <=
+            // static max
+            s_logger.warn("dynamixMax " + dynamicMaxRam + " cant be greater than static max " + staticMax
+                    + ", can lead to stability issues. Setting static max as much as dynamic max ");
             return dynamicMaxRam;
         }
         return staticMax;
@@ -143,18 +147,19 @@ public class XenServer56FP1Resource extends XenServer56Resource {
             return dynamicMinRam;
         }
 
-        if (dynamicMinRam < recommendedValue) {   // XS contraint that dynamic min > static min
+        if (dynamicMinRam < recommendedValue) { // XS contraint that dynamic min
+            // > static min
             s_logger.warn("Vm is set to dynamixMin " + dynamicMinRam + " less than the recommended static min " + recommendedValue + ", could lead to stability issues.");
         }
         return dynamicMinRam;
     }
 
     /**
-     * When Dynamic Memory Control (DMC) is enabled -
-     * xenserver allows scaling the guest memory while the guest is running
+     * When Dynamic Memory Control (DMC) is enabled - xenserver allows scaling
+     * the guest memory while the guest is running
      *
-     * This is determined by the 'restrict_dmc' option on the host.
-     * When false, scaling is allowed hence DMC is enabled
+     * This is determined by the 'restrict_dmc' option on the host. When false,
+     * scaling is allowed hence DMC is enabled
      */
     @Override
     protected boolean isDmcEnabled(Connection conn, Host host) throws XenAPIException, XmlRpcException {

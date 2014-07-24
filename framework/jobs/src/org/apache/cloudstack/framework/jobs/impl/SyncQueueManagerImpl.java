@@ -84,7 +84,7 @@ public class SyncQueueManagerImpl extends ManagerBase implements SyncQueueManage
                 @Override
                 public SyncQueueItemVO doInTransaction(TransactionStatus status) {
                     SyncQueueVO queueVO = _syncQueueDao.findById(queueId);
-                    if(queueVO == null) {
+                    if (queueVO == null) {
                         s_logger.error("Sync queue(id: " + queueId + ") does not exist");
                         return null;
                     }
@@ -139,11 +139,11 @@ public class SyncQueueManagerImpl extends ManagerBase implements SyncQueueManage
                 @Override
                 public void doInTransactionWithoutResult(TransactionStatus status) {
                     List<SyncQueueItemVO> l = _syncQueueItemDao.getNextQueueItems(maxItems);
-                    if(l != null && l.size() > 0) {
-                        for(SyncQueueItemVO item : l) {
+                    if (l != null && l.size() > 0) {
+                        for (SyncQueueItemVO item : l) {
                             SyncQueueVO queueVO = _syncQueueDao.findById(item.getQueueId());
                             SyncQueueItemVO itemVO = _syncQueueItemDao.findById(item.getId());
-                            if(queueReadyToProcess(queueVO) && itemVO.getLastProcessNumber() == null) {
+                            if (queueReadyToProcess(queueVO) && itemVO.getLastProcessNumber() == null) {
                                 Long processNumber = queueVO.getLastProcessNumber();
                                 if (processNumber == null)
                                     processNumber = new Long(1);
@@ -184,7 +184,7 @@ public class SyncQueueManagerImpl extends ManagerBase implements SyncQueueManage
                 @Override
                 public void doInTransactionWithoutResult(TransactionStatus status) {
                     SyncQueueItemVO itemVO = _syncQueueItemDao.findById(queueItemId);
-                    if(itemVO != null) {
+                    if (itemVO != null) {
                         SyncQueueVO queueVO = _syncQueueDao.findById(itemVO.getQueueId());
 
                         _syncQueueItemDao.expunge(itemVO.getId());
@@ -213,7 +213,7 @@ public class SyncQueueManagerImpl extends ManagerBase implements SyncQueueManage
                 @Override
                 public void doInTransactionWithoutResult(TransactionStatus status) {
                     SyncQueueItemVO itemVO = _syncQueueItemDao.findById(queueItemId);
-                    if(itemVO != null) {
+                    if (itemVO != null) {
                         SyncQueueVO queueVO = _syncQueueDao.findById(itemVO.getQueueId());
 
                         itemVO.setLastProcessMsid(null);
@@ -247,8 +247,7 @@ public class SyncQueueManagerImpl extends ManagerBase implements SyncQueueManage
             return true;
 
         if (s_logger.isDebugEnabled())
-            s_logger.debug("Queue (queue id, sync type, sync id) - (" + queueVO.getId()
-                    + "," + queueVO.getSyncObjType() + ", " + queueVO.getSyncObjId()
+            s_logger.debug("Queue (queue id, sync type, sync id) - (" + queueVO.getId() + "," + queueVO.getSyncObjType() + ", " + queueVO.getSyncObjId()
                     + ") is reaching concurrency limit " + queueVO.getQueueSizeLimit());
         return false;
     }

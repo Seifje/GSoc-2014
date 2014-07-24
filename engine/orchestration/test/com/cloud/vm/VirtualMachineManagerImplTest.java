@@ -241,8 +241,8 @@ public class VirtualMachineManagerImplTest {
         when(_work.getId()).thenReturn("1");
         doNothing().when(_work).setStep(ItWorkVO.Step.Done);
         when(_vmInstanceDao.findByUuid(any(String.class))).thenReturn(_vmMock);
-        //doNothing().when(_volsDao).detachVolume(anyLong());
-        //when(_work.setStep(ItWorkVO.Step.Done)).thenReturn("1");
+        // doNothing().when(_volsDao).detachVolume(anyLong());
+        // when(_work.setStep(ItWorkVO.Step.Done)).thenReturn("1");
 
     }
 
@@ -269,9 +269,8 @@ public class VirtualMachineManagerImplTest {
         doReturn(1L).when(_vmInstance).getDataCenterId();
         doReturn(1L).when(hostVO).getClusterId();
         when(CapacityManager.CpuOverprovisioningFactor.valueIn(1L)).thenReturn(1.0f);
-        ScaleVmCommand reconfigureCmd =
-                new ScaleVmCommand("myVmName", newServiceOffering.getCpu(), newServiceOffering.getSpeed(), newServiceOffering.getSpeed(), newServiceOffering.getRamSize(),
-                        newServiceOffering.getRamSize(), newServiceOffering.getLimitCpuUse());
+        ScaleVmCommand reconfigureCmd = new ScaleVmCommand("myVmName", newServiceOffering.getCpu(), newServiceOffering.getSpeed(), newServiceOffering.getSpeed(),
+                newServiceOffering.getRamSize(), newServiceOffering.getRamSize(), newServiceOffering.getLimitCpuUse());
         new ScaleVmAnswer(reconfigureCmd, true, "details");
         when(_agentMgr.send(2l, reconfigureCmd)).thenReturn(null);
         _vmMgr.reConfigureVm(_vmInstance.getUuid(), getSvcoffering(256), false);
@@ -281,13 +280,14 @@ public class VirtualMachineManagerImplTest {
     @Test(expected = CloudRuntimeException.class)
     public void testScaleVM3() throws Exception {
 
-        /*VirtualMachineProfile profile = new VirtualMachineProfileImpl(vm);
-
-        Long srcHostId = vm.getHostId();
-        Long oldSvcOfferingId = vm.getServiceOfferingId();
-        if (srcHostId == null) {
-            throw new CloudRuntimeException("Unable to scale the vm because it doesn't have a host id");
-        }*/
+        /*
+         * VirtualMachineProfile profile = new VirtualMachineProfileImpl(vm);
+         *
+         * Long srcHostId = vm.getHostId(); Long oldSvcOfferingId =
+         * vm.getServiceOfferingId(); if (srcHostId == null) { throw new
+         * CloudRuntimeException
+         * ("Unable to scale the vm because it doesn't have a host id"); }
+         */
 
         when(_vmInstance.getHostId()).thenReturn(null);
         when(_vmInstanceDao.findById(anyLong())).thenReturn(_vmInstance);
@@ -302,14 +302,14 @@ public class VirtualMachineManagerImplTest {
         String name = "name";
         String displayText = "displayText";
         int cpu = 1;
-        //int ramSize = 256;
+        // int ramSize = 256;
         int speed = 128;
 
         boolean ha = false;
         boolean useLocalStorage = false;
 
-        ServiceOfferingVO serviceOffering =
-                new ServiceOfferingVO(name, cpu, ramSize, speed, null, null, ha, displayText, ProvisioningType.THIN, useLocalStorage, false, null, false, null, false);
+        ServiceOfferingVO serviceOffering = new ServiceOfferingVO(name, cpu, ramSize, speed, null, null, ha, displayText, ProvisioningType.THIN, useLocalStorage, false, null,
+                false, null, false);
         return serviceOffering;
     }
 
@@ -341,8 +341,8 @@ public class VirtualMachineManagerImplTest {
 
         // Mock the vm guru and the user vm object that gets returned.
         _vmMgr._vmGurus = new HashMap<VirtualMachine.Type, VirtualMachineGuru>();
-//        UserVmManagerImpl userVmManager = mock(UserVmManagerImpl.class);
-//        _vmMgr.registerGuru(VirtualMachine.Type.User, userVmManager);
+        // UserVmManagerImpl userVmManager = mock(UserVmManagerImpl.class);
+        // _vmMgr.registerGuru(VirtualMachine.Type.User, userVmManager);
 
         // Mock the iteration over all the volumes of an instance.
         Iterator<VolumeVO> volumeIterator = mock(Iterator.class);
@@ -410,7 +410,7 @@ public class VirtualMachineManagerImplTest {
     // Check migration of a vm with its volumes within a cluster.
     @Test
     public void testMigrateWithVolumeWithinCluster() throws ResourceUnavailableException, ConcurrentOperationException, ManagementServerException,
-    VirtualMachineMigrationException, OperationTimedoutException {
+            VirtualMachineMigrationException, OperationTimedoutException {
 
         initializeMockConfigForMigratingVmWithVolumes();
         when(_srcHostMock.getClusterId()).thenReturn(3L);
@@ -422,7 +422,7 @@ public class VirtualMachineManagerImplTest {
     // Check migration of a vm with its volumes across a cluster.
     @Test
     public void testMigrateWithVolumeAcrossCluster() throws ResourceUnavailableException, ConcurrentOperationException, ManagementServerException,
-    VirtualMachineMigrationException, OperationTimedoutException {
+            VirtualMachineMigrationException, OperationTimedoutException {
 
         initializeMockConfigForMigratingVmWithVolumes();
         when(_srcHostMock.getClusterId()).thenReturn(3L);
@@ -431,11 +431,12 @@ public class VirtualMachineManagerImplTest {
         _vmMgr.migrateWithStorage(_vmInstance.getUuid(), _srcHostMock.getId(), _destHostMock.getId(), _volumeToPoolMock);
     }
 
-    // Check migration of a vm fails when src and destination pool are not of same type; that is, one is shared and
+    // Check migration of a vm fails when src and destination pool are not of
+    // same type; that is, one is shared and
     // other is local.
     @Test(expected = CloudRuntimeException.class)
-    public void testMigrateWithVolumeFail1() throws ResourceUnavailableException, ConcurrentOperationException, ManagementServerException,
-    VirtualMachineMigrationException, OperationTimedoutException {
+    public void testMigrateWithVolumeFail1() throws ResourceUnavailableException, ConcurrentOperationException, ManagementServerException, VirtualMachineMigrationException,
+            OperationTimedoutException {
 
         initializeMockConfigForMigratingVmWithVolumes();
         when(_srcHostMock.getClusterId()).thenReturn(3L);
@@ -449,8 +450,8 @@ public class VirtualMachineManagerImplTest {
 
     // Check migration of a vm fails when vm is not in Running state.
     @Test(expected = ConcurrentOperationException.class)
-    public void testMigrateWithVolumeFail2() throws ResourceUnavailableException, ConcurrentOperationException, ManagementServerException,
-    VirtualMachineMigrationException, OperationTimedoutException {
+    public void testMigrateWithVolumeFail2() throws ResourceUnavailableException, ConcurrentOperationException, ManagementServerException, VirtualMachineMigrationException,
+            OperationTimedoutException {
 
         initializeMockConfigForMigratingVmWithVolumes();
         when(_srcHostMock.getClusterId()).thenReturn(3L);

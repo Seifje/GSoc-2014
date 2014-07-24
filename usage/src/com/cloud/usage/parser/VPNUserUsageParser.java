@@ -89,12 +89,15 @@ public class VPNUserUsageParser {
                 vuDeleteDate = endDate;
             }
 
-            // clip the start date to the beginning of our aggregation range if the vm has been running for a while
+            // clip the start date to the beginning of our aggregation range if
+            // the vm has been running for a while
             if (vuCreateDate.before(startDate)) {
                 vuCreateDate = startDate;
             }
 
-            long currentDuration = (vuDeleteDate.getTime() - vuCreateDate.getTime()) + 1; // make sure this is an inclusive check for milliseconds (i.e. use n - m + 1 to find total number of millis to charge)
+            long currentDuration = (vuDeleteDate.getTime() - vuCreateDate.getTime()) + 1; // make sure this is an inclusive check for
+            // milliseconds (i.e. use n - m + 1 to find
+            // total number of millis to charge)
 
             updateVUUsageData(usageMap, key, usageVU.getUserId(), currentDuration);
         }
@@ -103,7 +106,8 @@ public class VPNUserUsageParser {
             Pair<Long, Long> vutimeInfo = usageMap.get(vuIdKey);
             long useTime = vutimeInfo.second().longValue();
 
-            // Only create a usage record if we have a runningTime of bigger than zero.
+            // Only create a usage record if we have a runningTime of bigger
+            // than zero.
             if (useTime > 0L) {
                 VUInfo info = vuMap.get(vuIdKey);
                 createUsageRecord(UsageTypes.VPN_USERS, useTime, startDate, endDate, account, info.getUserId(), info.getUserName(), info.getZoneId());
@@ -137,16 +141,15 @@ public class VPNUserUsageParser {
         String usageDisplay = dFormat.format(usage);
 
         if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Creating VPN user:" + userId + " usage record, usage: " + usageDisplay + ", startDate: " + startDate + ", endDate: " + endDate +
-                ", for account: " + account.getId());
+            s_logger.debug("Creating VPN user:" + userId + " usage record, usage: " + usageDisplay + ", startDate: " + startDate + ", endDate: " + endDate + ", for account: "
+                    + account.getId());
         }
 
         // Create the usage record
         String usageDesc = "VPN User: " + userName + ", Id: " + userId + " usage time";
 
-        UsageVO usageRecord =
-            new UsageVO(zoneId, account.getId(), account.getDomainId(), usageDesc, usageDisplay + " Hrs", type, new Double(usage), null, null, null, null, userId, null,
-                startDate, endDate);
+        UsageVO usageRecord = new UsageVO(zoneId, account.getId(), account.getDomainId(), usageDesc, usageDisplay + " Hrs", type, new Double(usage), null, null, null, null,
+                userId, null, startDate, endDate);
         s_usageDao.persist(usageRecord);
     }
 

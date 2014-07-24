@@ -42,7 +42,7 @@ public interface VMSnapshotService {
     boolean deleteVMSnapshot(Long vmSnapshotId);
 
     UserVm revertToSnapshot(Long vmSnapshotId) throws InsufficientServerCapacityException, InsufficientCapacityException, ResourceUnavailableException,
-        ConcurrentOperationException;
+    ConcurrentOperationException;
 
     VirtualMachine getVMBySnapshotId(Long id);
 }

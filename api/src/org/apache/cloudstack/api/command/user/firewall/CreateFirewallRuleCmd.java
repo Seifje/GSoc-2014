@@ -43,8 +43,7 @@ import com.cloud.network.rules.FirewallRule;
 import com.cloud.user.Account;
 import com.cloud.utils.net.NetUtils;
 
-@APICommand(name = "createFirewallRule", description = "Creates a firewall rule for a given ip address", responseObject = FirewallResponse.class, entityType = {FirewallRule.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createFirewallRule", description = "Creates a firewall rule for a given ip address", responseObject = FirewallResponse.class, entityType = {FirewallRule.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateFirewallRuleCmd extends BaseAsyncCreateCmd implements FirewallRule {
     public static final Logger s_logger = Logger.getLogger(CreateFirewallRuleCmd.class.getName());
 
@@ -54,17 +53,10 @@ public class CreateFirewallRuleCmd extends BaseAsyncCreateCmd implements Firewal
     // ////////////// API parameters /////////////////////
     // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.IP_ADDRESS_ID,
-               type = CommandType.UUID,
-               entityType = IPAddressResponse.class,
-               required = true,
-               description = "the IP address id of the port forwarding rule")
+    @Parameter(name = ApiConstants.IP_ADDRESS_ID, type = CommandType.UUID, entityType = IPAddressResponse.class, required = true, description = "the IP address id of the port forwarding rule")
     private Long ipAddressId;
 
-    @Parameter(name = ApiConstants.PROTOCOL,
-               type = CommandType.STRING,
-               required = true,
-               description = "the protocol for the firewall rule. Valid values are TCP/UDP/ICMP.")
+    @Parameter(name = ApiConstants.PROTOCOL, type = CommandType.STRING, required = true, description = "the protocol for the firewall rule. Valid values are TCP/UDP/ICMP.")
     private String protocol;
 
     @Parameter(name = ApiConstants.START_PORT, type = CommandType.INTEGER, description = "the starting port of firewall rule")
@@ -91,7 +83,6 @@ public class CreateFirewallRuleCmd extends BaseAsyncCreateCmd implements Firewal
     // ///////////////////////////////////////////////////
     // ///////////////// Accessors ///////////////////////
     // ///////////////////////////////////////////////////
-
 
     public Long getIpAddressId() {
         return ipAddressId;
@@ -136,7 +127,8 @@ public class CreateFirewallRuleCmd extends BaseAsyncCreateCmd implements Firewal
             CallContext.current().setEventDetails("Rule Id: " + getEntityId());
             success = _firewallService.applyIngressFirewallRules(rule.getSourceIpAddressId(), callerContext.getCallingAccount());
 
-            // State is different after the rule is applied, so get new object here
+            // State is different after the rule is applied, so get new object
+            // here
             rule = _entityMgr.findById(FirewallRule.class, getEntityId());
             FirewallResponse fwResponse = new FirewallResponse();
             if (rule != null) {
@@ -215,8 +207,8 @@ public class CreateFirewallRuleCmd extends BaseAsyncCreateCmd implements Firewal
         }
 
         if (ntwkId == null) {
-            throw new InvalidParameterValueException("Unable to create firewall rule for the ipAddress id=" + ipAddressId +
-                    " as ip is not associated with any network and no networkId is passed in");
+            throw new InvalidParameterValueException("Unable to create firewall rule for the ipAddress id=" + ipAddressId
+                    + " as ip is not associated with any network and no networkId is passed in");
         }
         return ntwkId;
     }
@@ -229,7 +221,9 @@ public class CreateFirewallRuleCmd extends BaseAsyncCreateCmd implements Firewal
             return account.getId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
     @Override
@@ -309,7 +303,7 @@ public class CreateFirewallRuleCmd extends BaseAsyncCreateCmd implements Firewal
         if (icmpType != null) {
             return icmpType;
         } else if (protocol.equalsIgnoreCase(NetUtils.ICMP_PROTO)) {
-                return -1;
+            return -1;
 
         }
         return null;

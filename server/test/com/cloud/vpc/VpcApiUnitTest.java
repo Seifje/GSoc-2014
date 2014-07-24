@@ -37,7 +37,7 @@ import com.cloud.user.AccountVO;
 import com.cloud.utils.component.ComponentContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations = "classpath:/VpcTestContext.xml")
+// @ContextConfiguration(locations = "classpath:/VpcTestContext.xml")
 public class VpcApiUnitTest extends TestCase {
     @Inject
     VpcManagerImpl _vpcService = null;
@@ -50,7 +50,7 @@ public class VpcApiUnitTest extends TestCase {
 
     @Test
     public void getActiveVpc() {
-        //test for active vpc
+        // test for active vpc
         boolean result = false;
         Vpc vpc = null;
         try {
@@ -65,7 +65,7 @@ public class VpcApiUnitTest extends TestCase {
             assertTrue("Get active Vpc: TEST FAILED, active vpc is not returned", result);
         }
 
-        //test for inactive vpc
+        // test for inactive vpc
         result = false;
         vpc = null;
         try {
@@ -83,8 +83,8 @@ public class VpcApiUnitTest extends TestCase {
 
     @Test
     public void validateNtwkOffForVpc() {
-        //validate network offering
-        //1) correct network offering
+        // validate network offering
+        // 1) correct network offering
         VpcVO vo = new VpcVO(1, "new vpc", "new vpc", 1, 1, 1, "0.0.0.0/0", "vpc domain", false, false);
         boolean result = false;
         try {
@@ -95,7 +95,7 @@ public class VpcApiUnitTest extends TestCase {
             assertTrue("Validate network offering: Test passed: the offering is valid for vpc creation", result);
         }
 
-        //2) invalid offering - source nat is not included
+        // 2) invalid offering - source nat is not included
         result = false;
         try {
             _vpcService.validateNtwkOffForNtwkInVpc(2L, 2, "0.0.0.0", "111-", vo, "10.1.1.1", new AccountVO(), null);
@@ -105,7 +105,7 @@ public class VpcApiUnitTest extends TestCase {
             assertFalse("Validate network offering: TEST FAILED, can't use network offering without SourceNat service", result);
         }
 
-        //3) invalid offering - conserve mode is off
+        // 3) invalid offering - conserve mode is off
         result = false;
         try {
             _vpcService.validateNtwkOffForNtwkInVpc(2L, 3, "0.0.0.0", "111-", vo, "10.1.1.1", new AccountVO(), null);
@@ -115,7 +115,7 @@ public class VpcApiUnitTest extends TestCase {
             assertFalse("Validate network offering: TEST FAILED, can't use network offering without conserve mode = true", result);
         }
 
-        //4) invalid offering - guest type shared
+        // 4) invalid offering - guest type shared
         result = false;
         try {
             _vpcService.validateNtwkOffForNtwkInVpc(2L, 4, "0.0.0.0", "111-", vo, "10.1.1.1", new AccountVO(), null);
@@ -125,7 +125,7 @@ public class VpcApiUnitTest extends TestCase {
             assertFalse("Validate network offering: TEST FAILED, can't use network offering with guest type = Shared", result);
         }
 
-        //5) Invalid offering - no redundant router support
+        // 5) Invalid offering - no redundant router support
         result = false;
         try {
             _vpcService.validateNtwkOffForNtwkInVpc(2L, 5, "0.0.0.0", "111-", vo, "10.1.1.1", new AccountVO(), null);
@@ -136,38 +136,40 @@ public class VpcApiUnitTest extends TestCase {
         }
     }
 
-//    public void destroyVpc() {
-//        boolean result = false;
-//        try {
-//            result = _vpcService.destroyVpc(vo, new AccountVO(), 1L);
-//        } catch (Exception ex) {
-//            s_logger.debug(ex);
-//        } finally {
-//            assertTrue("Failed to destroy VPC", result);
-//        }
-//    }
-//
-//    public void deleteVpc() {
-//        //delete existing offering
-//        boolean result = false;
-//        try {
-//            List<String> svcs = new ArrayList<String>();
-//            svcs.add(Service.SourceNat.getName());
-//            result = _vpcService.deleteVpc(1);
-//        }  catch (Exception ex) {
-//        } finally {
-//            assertTrue("Delete vpc: TEST FAILED, vpc failed to delete" + result, result);
-//        }
-//
-//        //delete non-existing offering
-//        result = false;
-//        try {
-//            List<String> svcs = new ArrayList<String>();
-//            svcs.add(Service.SourceNat.getName());
-//            result = _vpcService.deleteVpc(100);
-//        }  catch (Exception ex) {
-//        } finally {
-//            assertFalse("Delete vpc: TEST FAILED, true is returned when try to delete non existing vpc" + result, result);
-//        }
-//    }
+    // public void destroyVpc() {
+    // boolean result = false;
+    // try {
+    // result = _vpcService.destroyVpc(vo, new AccountVO(), 1L);
+    // } catch (Exception ex) {
+    // s_logger.debug(ex);
+    // } finally {
+    // assertTrue("Failed to destroy VPC", result);
+    // }
+    // }
+    //
+    // public void deleteVpc() {
+    // //delete existing offering
+    // boolean result = false;
+    // try {
+    // List<String> svcs = new ArrayList<String>();
+    // svcs.add(Service.SourceNat.getName());
+    // result = _vpcService.deleteVpc(1);
+    // } catch (Exception ex) {
+    // } finally {
+    // assertTrue("Delete vpc: TEST FAILED, vpc failed to delete" + result,
+    // result);
+    // }
+    //
+    // //delete non-existing offering
+    // result = false;
+    // try {
+    // List<String> svcs = new ArrayList<String>();
+    // svcs.add(Service.SourceNat.getName());
+    // result = _vpcService.deleteVpc(100);
+    // } catch (Exception ex) {
+    // } finally {
+    // assertFalse("Delete vpc: TEST FAILED, true is returned when try to delete non existing vpc"
+    // + result, result);
+    // }
+    // }
 }

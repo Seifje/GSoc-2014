@@ -37,35 +37,27 @@ import com.cloud.network.Networks.TrafficType;
 import com.cloud.user.Account;
 import com.cloud.utils.Pair;
 
-@APICommand(name = "listTrafficTypeImplementors",
-            description = "Lists implementors of implementor of a network traffic type or implementors of all network traffic types",
-            responseObject = TrafficTypeImplementorResponse.class,
-            since = "3.0.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "listTrafficTypeImplementors", description = "Lists implementors of implementor of a network traffic type or implementors of all network traffic types", responseObject = TrafficTypeImplementorResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListTrafficTypeImplementorsCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListTrafficTypeImplementorsCmd.class);
     private static final String s_name = "listtraffictypeimplementorsresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
-    @Parameter(name = ApiConstants.TRAFFIC_TYPE,
-               type = CommandType.STRING,
-               description = "Optional. The network traffic type, if specified, return its implementor. Otherwise, return all traffic types with their implementor")
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
+    @Parameter(name = ApiConstants.TRAFFIC_TYPE, type = CommandType.STRING, description = "Optional. The network traffic type, if specified, return its implementor. Otherwise, return all traffic types with their implementor")
     private String trafficType;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getTrafficType() {
         return trafficType;
     }
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         List<Pair<TrafficType, String>> results = _networkService.listTrafficTypeImplementor(this);
         ListResponse<TrafficTypeImplementorResponse> response = new ListResponse<TrafficTypeImplementorResponse>();
         List<TrafficTypeImplementorResponse> responses = new ArrayList<TrafficTypeImplementorResponse>();

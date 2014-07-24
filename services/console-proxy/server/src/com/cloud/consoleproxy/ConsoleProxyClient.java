@@ -20,10 +20,11 @@ import java.awt.Image;
 import java.util.List;
 
 /**
- * ConsoleProxyClient defines an standard interface that a console client should implement,
+ * ConsoleProxyClient defines an standard interface that a console client should
+ * implement,
  *
- * ConsoleProxyClient maintains a session towards the target host, it glues the session
- * to a AJAX front-end viewer
+ * ConsoleProxyClient maintains a session towards the target host, it glues the
+ * session to a AJAX front-end viewer
  */
 public interface ConsoleProxyClient {
     int getClientId();
@@ -42,7 +43,8 @@ public interface ConsoleProxyClient {
 
     AjaxFIFOImageCache getAjaxImageCache();
 
-    Image getClientScaledImage(int width, int height);                  // client thumbnail support
+    Image getClientScaledImage(int width, int height); // client thumbnail
+                                                       // support
 
     String onAjaxClientStart(String title, List<String> languages, String guest);
 

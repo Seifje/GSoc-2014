@@ -32,26 +32,33 @@ public interface HypervisorGuru extends Adapter {
     HypervisorType getHypervisorType();
 
     /**
-     * Convert from a virtual machine to the
-     * virtual machine that the hypervisor expects.
+     * Convert from a virtual machine to the virtual machine that the hypervisor
+     * expects.
+     *
      * @param vm
      * @return
      */
     VirtualMachineTO implement(VirtualMachineProfile vm);
 
     /**
-     * Give hypervisor guru opportunity to decide if certain command needs to be delegated to other host, mainly to secondary storage VM host
+     * Give hypervisor guru opportunity to decide if certain command needs to be
+     * delegated to other host, mainly to secondary storage VM host
      *
-     * @param hostId original hypervisor host
-     * @param cmd command that is going to be sent, hypervisor guru usually needs to register various context objects into the command object
+     * @param hostId
+     *            original hypervisor host
+     * @param cmd
+     *            command that is going to be sent, hypervisor guru usually
+     *            needs to register various context objects into the command
+     *            object
      *
      * @return delegated host id if the command will be delegated
      */
     Pair<Boolean, Long> getCommandHostDelegation(long hostId, Command cmd);
 
     /**
-     *  @return true if VM can be migrated independently with CloudStack, and therefore CloudStack needs to track and reflect host change
-     *  into CloudStack database, false if CloudStack enforces VM sync logic
+     * @return true if VM can be migrated independently with CloudStack, and
+     *         therefore CloudStack needs to track and reflect host change into
+     *         CloudStack database, false if CloudStack enforces VM sync logic
      *
      */
     boolean trackVmHostChange();
@@ -63,7 +70,9 @@ public interface HypervisorGuru extends Adapter {
     NicTO toNicTO(NicProfile profile);
 
     /**
-     * Give hypervisor guru opportunity to decide if certain command needs to be done after expunge VM from DB
+     * Give hypervisor guru opportunity to decide if certain command needs to be
+     * done after expunge VM from DB
+     *
      * @param vm
      * @return a list of Commands
      */

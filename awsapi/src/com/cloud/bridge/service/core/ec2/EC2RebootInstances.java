@@ -21,7 +21,10 @@ import java.util.List;
 
 public class EC2RebootInstances {
 
-    private List<String> instancesSet = new ArrayList<String>();    // a list of strings identifying instances
+    private List<String> instancesSet = new ArrayList<String>(); // a list of
+                                                                 // strings
+                                                                 // identifying
+                                                                 // instances
 
     public EC2RebootInstances() {
     }

@@ -32,12 +32,19 @@ public class UpdateTemplateCmdByAdmin extends UpdateTemplateCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateTemplateCmdByAdmin.class.getName());
 
     @Override
-    public void execute(){
+    public void execute() {
         VirtualMachineTemplate result = _templateService.updateTemplate(this);
         if (result != null) {
             TemplateResponse response = _responseGenerator.createTemplateUpdateResponse(ResponseView.Full, result);
             response.setObjectName("template");
-            response.setTemplateType(result.getTemplateType().toString());//Template can be either USER or ROUTING type
+            response.setTemplateType(result.getTemplateType().toString());// Template
+            // can
+            // be
+            // either
+            // USER
+            // or
+            // ROUTING
+            // type
             response.setResponseName(getCommandName());
             setResponseObject(response);
         } else {

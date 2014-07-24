@@ -25,8 +25,8 @@
 package com.amazon.s3;
 
 /**
-*  Permission bean class
-*/
+ * Permission bean class
+ */
 
 public class Permission implements org.apache.axis2.databinding.ADBBean {
 
@@ -40,8 +40,8 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for Permission
-    */
+     * field for Permission
+     */
 
     protected java.lang.String localPermission;
 
@@ -98,9 +98,10 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -113,13 +114,13 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, MY_QNAME) {
 
@@ -132,16 +133,15 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
-        //We can safely assume an element has only one type associated with it
+        // We can safely assume an element has only one type associated with it
 
         java.lang.String namespace = parentQName.getNamespaceURI();
         java.lang.String localName = parentQName.getLocalPart();
@@ -191,8 +191,8 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -204,10 +204,10 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -217,10 +217,10 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -243,7 +243,7 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -271,7 +271,8 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -305,8 +306,8 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -325,27 +326,26 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
-        //We can safely assume an element has only one type associated with it
-        return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(MY_QNAME,
-            new java.lang.Object[] {org.apache.axis2.databinding.utils.reader.ADBXMLStreamReader.ELEMENT_TEXT,
-                org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localPermission)}, null);
+        // We can safely assume an element has only one type associated with it
+        return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(MY_QNAME, new java.lang.Object[] {
+                org.apache.axis2.databinding.utils.reader.ADBXMLStreamReader.ELEMENT_TEXT, org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localPermission)}, null);
 
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         public static Permission fromValue(java.lang.String value) throws java.lang.IllegalArgumentException {
             Permission enumeration = (Permission)
 
-                _table_.get(value);
+            _table_.get(value);
 
             if (enumeration == null)
                 throw new java.lang.IllegalArgumentException();
@@ -373,12 +373,15 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
         }
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static Permission parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             Permission object = null;
             // initialize a hash map to keep values
@@ -394,7 +397,8 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
                 while (!reader.isStartElement() && !reader.isEndElement())
                     reader.next();
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -404,12 +408,14 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
                         java.lang.String content = reader.getElementText();
 
                         if (content.indexOf(":") > 0) {
-                            // this seems to be a Qname so find the namespace and send
+                            // this seems to be a Qname so find the namespace
+                            // and send
                             prefix = content.substring(0, content.indexOf(":"));
                             namespaceuri = reader.getNamespaceURI(prefix);
                             object = Permission.Factory.fromString(content, namespaceuri);
                         } else {
-                            // this seems to be not a qname send and empty namespace incase of it is
+                            // this seems to be not a qname send and empty
+                            // namespace incase of it is
                             // check is done in fromString method
                             object = Permission.Factory.fromString(content, "");
                         }
@@ -417,7 +423,7 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
                     } else {
                         reader.next();
                     }
-                }  // end of while loop
+                } // end of while loop
 
             } catch (javax.xml.stream.XMLStreamException e) {
                 throw new java.lang.Exception(e);
@@ -426,6 +432,6 @@ public class Permission implements org.apache.axis2.databinding.ADBBean {
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

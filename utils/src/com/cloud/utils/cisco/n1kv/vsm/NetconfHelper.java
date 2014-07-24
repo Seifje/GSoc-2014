@@ -70,17 +70,15 @@ public class NetconfHelper {
 
     public void queryStatus() throws CloudRuntimeException {
         // This command is used to query the server status.
-        String status =
-            "<?xml version=\"1.0\"?>" + "<nc:rpc message-id=\"1\" xmlns:nc=\"urn:ietf:params:xml:ns:netconf:base:1.0" + "\"xmlns=\"http://www.cisco.com/nxos:1.0:xml\">" +
-                "  <nc:get>" + "    <nc:filter type=\"subtree\">" + "      <show>" + "        <xml>" + "          <server>" + "            <status/>" +
-                "          </server>" + "        </xml>" + "      </show>" + "    </nc:filter>" + "  </nc:get>" + "</nc:rpc>" + SSH_NETCONF_TERMINATOR;
+        String status = "<?xml version=\"1.0\"?>" + "<nc:rpc message-id=\"1\" xmlns:nc=\"urn:ietf:params:xml:ns:netconf:base:1.0"
+                + "\"xmlns=\"http://www.cisco.com/nxos:1.0:xml\">" + "  <nc:get>" + "    <nc:filter type=\"subtree\">" + "      <show>" + "        <xml>" + "          <server>"
+                + "            <status/>" + "          </server>" + "        </xml>" + "      </show>" + "    </nc:filter>" + "  </nc:get>" + "</nc:rpc>" + SSH_NETCONF_TERMINATOR;
         send(status);
         // parse the rpc reply.
         parseOkReply(receive());
     }
 
-    public void addPortProfile(String name, PortProfileType type, BindingType binding, SwitchPortMode mode, int vlanid, String vdc, String espName)
-        throws CloudRuntimeException {
+    public void addPortProfile(String name, PortProfileType type, BindingType binding, SwitchPortMode mode, int vlanid, String vdc, String espName) throws CloudRuntimeException {
         String command = VsmCommand.getAddPortProfile(name, type, binding, mode, vlanid, vdc, espName);
         if (command != null) {
             command = command.concat(SSH_NETCONF_TERMINATOR);
@@ -301,45 +299,46 @@ public class NetconfHelper {
 
             // Check if end sequence matched.
             switch (_offset) {
-                case 0:
-                    if (input == ']') {
-                        collect = true;
-                    }
-                    break;
-                case 1:
-                    if (input == ']') {
-                        collect = true;
-                    }
-                    break;
-                case 2:
-                    if (input == '>') {
-                        collect = true;
-                    }
-                    break;
-                case 3:
-                    if (input == ']') {
-                        collect = true;
-                    }
-                    break;
-                case 4:
-                    if (input == ']') {
-                        collect = true;
-                    }
-                    break;
-                case 5:
-                    if (input == '>') {
-                        collect = true;
-                        _endReached = true;
-                    }
-                    break;
-                default:
-                    throw new RuntimeException("Invalid index value: " + _offset);
+            case 0:
+                if (input == ']') {
+                    collect = true;
+                }
+                break;
+            case 1:
+                if (input == ']') {
+                    collect = true;
+                }
+                break;
+            case 2:
+                if (input == '>') {
+                    collect = true;
+                }
+                break;
+            case 3:
+                if (input == ']') {
+                    collect = true;
+                }
+                break;
+            case 4:
+                if (input == ']') {
+                    collect = true;
+                }
+                break;
+            case 5:
+                if (input == '>') {
+                    collect = true;
+                    _endReached = true;
+                }
+                break;
+            default:
+                throw new RuntimeException("Invalid index value: " + _offset);
             }
 
             if (collect) {
                 _gatherResponse[_offset++] = (byte)input;
             } else {
-                // End sequence not yet reached. Return the stream of bytes collected so far.
+                // End sequence not yet reached. Return the stream of bytes
+                // collected so far.
                 streamRead = new byte[_offset + 1];
                 for (int index = 0; index < _offset; ++index) {
                     streamRead[index] = _gatherResponse[index];

@@ -42,16 +42,15 @@ import com.cloud.hypervisor.Hypervisor.HypervisorType;
 import com.cloud.utils.Pair;
 import com.cloud.utils.Ternary;
 
-@APICommand(name = "listHosts", description = "Lists hosts.", responseObject = HostResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listHosts", description = "Lists hosts.", responseObject = HostResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListHostsCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListHostsCmd.class.getName());
 
     private static final String s_name = "listhostsresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.CLUSTER_ID, type = CommandType.UUID, entityType = ClusterResponse.class, description = "lists hosts existing in particular cluster")
     private Long clusterId;
@@ -74,22 +73,13 @@ public class ListHostsCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, description = "the Zone ID for the host")
     private Long zoneId;
 
-    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID,
-               type = CommandType.UUID,
-               entityType = UserVmResponse.class,
-               required = false,
-               description = "lists hosts in the same cluster as this VM and flag hosts with enough CPU/RAm to host this VM")
+    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID, type = CommandType.UUID, entityType = UserVmResponse.class, required = false, description = "lists hosts in the same cluster as this VM and flag hosts with enough CPU/RAm to host this VM")
     private Long virtualMachineId;
 
-    @Parameter(name = ApiConstants.RESOURCE_STATE,
-               type = CommandType.STRING,
-               description = "list hosts by resource state. Resource state represents current state determined by admin of host, valule can be one of [Enabled, Disabled, Unmanaged, PrepareForMaintenance, ErrorInMaintenance, Maintenance, Error]")
+    @Parameter(name = ApiConstants.RESOURCE_STATE, type = CommandType.STRING, description = "list hosts by resource state. Resource state represents current state determined by admin of host, valule can be one of [Enabled, Disabled, Unmanaged, PrepareForMaintenance, ErrorInMaintenance, Maintenance, Error]")
     private String resourceState;
 
-    @Parameter(name = ApiConstants.DETAILS,
-               type = CommandType.LIST,
-               collectionType = CommandType.STRING,
-               description = "comma separated list of host details requested, value can be a list of [ min, all, capacity, events, stats]")
+    @Parameter(name = ApiConstants.DETAILS, type = CommandType.LIST, collectionType = CommandType.STRING, description = "comma separated list of host details requested, value can be a list of [ min, all, capacity, events, stats]")
     private List<String> viewDetails;
 
     @Parameter(name = ApiConstants.HA_HOST, type = CommandType.BOOLEAN, description = "if true, list only hosts dedicated to HA")
@@ -98,9 +88,9 @@ public class ListHostsCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.HYPERVISOR, type = CommandType.STRING, description = "hypervisor type of host: XenServer,KVM,VMware,Hyperv,BareMetal,Simulator")
     private String hypervisor;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getClusterId() {
         return clusterId;
@@ -154,8 +144,7 @@ public class ListHostsCmd extends BaseListCmd {
                 }
                 dv = EnumSet.copyOf(dc);
             } catch (IllegalArgumentException e) {
-                throw new InvalidParameterValueException("The details parameter contains a non permitted value. The allowed values are " +
-                    EnumSet.allOf(HostDetails.class));
+                throw new InvalidParameterValueException("The details parameter contains a non permitted value. The allowed values are " + EnumSet.allOf(HostDetails.class));
             }
         }
         return dv;
@@ -165,9 +154,9 @@ public class ListHostsCmd extends BaseListCmd {
         return resourceState;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -186,8 +175,8 @@ public class ListHostsCmd extends BaseListCmd {
             response = _queryService.searchForServers(this);
         } else {
             Pair<List<? extends Host>, Integer> result;
-            Ternary<Pair<List<? extends Host>, Integer>, List<? extends Host>, Map<Host, Boolean>> hostsForMigration =
-                _mgr.listHostsForMigrationOfVM(getVirtualMachineId(), this.getStartIndex(), this.getPageSizeVal());
+            Ternary<Pair<List<? extends Host>, Integer>, List<? extends Host>, Map<Host, Boolean>> hostsForMigration = _mgr.listHostsForMigrationOfVM(getVirtualMachineId(),
+                    this.getStartIndex(), this.getPageSizeVal());
             result = hostsForMigration.first();
             List<? extends Host> hostsWithCapacity = hostsForMigration.second();
 

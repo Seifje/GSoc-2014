@@ -34,7 +34,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "sobject")
 public class SObjectVO {
-    //private static final long serialVersionUID = 8566744941395660486L;
+    // private static final long serialVersionUID = 8566744941395660486L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,7 +54,8 @@ public class SObjectVO {
     private int nextSequence;
 
     @Column(name = "DeletionMark")
-    private String deletionMark;    // This must also a unique ID to give to the REST client
+    private String deletionMark; // This must also a unique ID to give to the
+                                 // REST client
 
     @Column(name = "CreateTime")
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -164,9 +165,12 @@ public class SObjectVO {
         while (it.hasNext()) {
             SObjectItemVO item = it.next();
 
-            //    If versioning is off then return the item with the null version string (if exists)
-            //    For example, the bucket could have allowed versioning and then it was suspended
-            //    If an application wants a specific version it will need to explicitly ask for it
+            // If versioning is off then return the item with the null version
+            // string (if exists)
+            // For example, the bucket could have allowed versioning and then it
+            // was suspended
+            // If an application wants a specific version it will need to
+            // explicitly ask for it
             try {
                 String version = item.getVersion();
                 if (versioningOff && null == version) {
@@ -187,8 +191,8 @@ public class SObjectVO {
     }
 
     /**
-     * S3 versioning allows the client to request the return of a specific version,
-     * not just the last version.
+     * S3 versioning allows the client to request the return of a specific
+     * version, not just the last version.
      *
      * @param wantVersion
      * @return

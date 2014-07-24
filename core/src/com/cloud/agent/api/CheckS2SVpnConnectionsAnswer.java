@@ -44,7 +44,7 @@ public class CheckS2SVpnConnectionsAnswer extends Answer {
         for (String line : lines) {
             String[] words = line.split(":");
             if (words.length != 3) {
-                //Not something we can parse
+                // Not something we can parse
                 return;
             }
             String ip = words[0];

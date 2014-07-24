@@ -16,7 +16,6 @@
 // under the License.
 package com.cloud.agent.api;
 
-
 public class OvsCreateGreTunnelAnswer extends Answer {
     String hostIp;
     String remoteIp;
@@ -30,8 +29,7 @@ public class OvsCreateGreTunnelAnswer extends Answer {
         super(cmd, success, details);
     }
 
-    public OvsCreateGreTunnelAnswer(Command cmd, boolean success,
-            String details, String hostIp, String bridge) {
+    public OvsCreateGreTunnelAnswer(Command cmd, boolean success, String details, String hostIp, String bridge) {
         super(cmd, success, details);
         OvsCreateGreTunnelCommand c = (OvsCreateGreTunnelCommand)cmd;
         this.hostIp = hostIp;
@@ -43,8 +41,7 @@ public class OvsCreateGreTunnelAnswer extends Answer {
         this.to = c.getTo();
     }
 
-    public OvsCreateGreTunnelAnswer(Command cmd, boolean success,
-            String details, String hostIp, String bridge, int port) {
+    public OvsCreateGreTunnelAnswer(Command cmd, boolean success, String details, String hostIp, String bridge, int port) {
         this(cmd, success, details, hostIp, bridge);
         this.port = port;
     }

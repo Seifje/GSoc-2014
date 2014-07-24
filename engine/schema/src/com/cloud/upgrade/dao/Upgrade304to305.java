@@ -67,7 +67,7 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
         addVpcProvider(conn);
         updateRouterNetworkRef(conn);
         fixZoneUsingExternalDevices(conn);
-//        updateSystemVms(conn);
+        // updateSystemVms(conn);
         fixForeignKeys(conn);
         encryptClusterDetails(conn);
     }
@@ -97,10 +97,11 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
         } catch (SQLException e) {
             throw new CloudRuntimeException("Error while iterating through list of hypervisors in use", e);
         }
-        // Just update the VMware system template. Other hypervisor templates are unchanged from previous 3.0.x versions.
+        // Just update the VMware system template. Other hypervisor templates
+        // are unchanged from previous 3.0.x versions.
         s_logger.debug("Updating VMware System Vms");
         try {
-            //Get 3.0.5 VMware system Vm template Id
+            // Get 3.0.5 VMware system Vm template Id
             pstmt = conn.prepareStatement("select id from `cloud`.`vm_template` where name = 'systemvm-vmware-3.0.5' and removed is null");
             rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -131,7 +132,7 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
     }
 
     private void addVpcProvider(Connection conn) {
-        //Encrypt config params and change category to Hidden
+        // Encrypt config params and change category to Hidden
         s_logger.debug("Adding vpc provider to all physical networks in the system");
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -141,28 +142,24 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
             while (rs.next()) {
                 Long pNtwkId = rs.getLong(1);
 
-                //insert provider
-                pstmt =
-                    conn.prepareStatement("INSERT INTO `cloud`.`physical_network_service_providers` "
+                // insert provider
+                pstmt = conn.prepareStatement("INSERT INTO `cloud`.`physical_network_service_providers` "
                         + "(`physical_network_id`, `provider_name`, `state`, `vpn_service_provided`, `dhcp_service_provided`, "
                         + "`dns_service_provided`, `gateway_service_provided`, `firewall_service_provided`, `source_nat_service_provided`,"
                         + " `load_balance_service_provided`, `static_nat_service_provided`, `port_forwarding_service_provided`,"
-                        + " `user_data_service_provided`, `security_group_service_provided`) "
-                        + "VALUES (?, 'VpcVirtualRouter', 'Enabled', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)");
+                        + " `user_data_service_provided`, `security_group_service_provided`) " + "VALUES (?, 'VpcVirtualRouter', 'Enabled', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)");
 
                 pstmt.setLong(1, pNtwkId);
                 pstmt.executeUpdate();
 
-                //get provider id
-                pstmt =
-                    conn.prepareStatement("SELECT id FROM `cloud`.`physical_network_service_providers` "
-                        + "WHERE physical_network_id=? and provider_name='VpcVirtualRouter'");
+                // get provider id
+                pstmt = conn.prepareStatement("SELECT id FROM `cloud`.`physical_network_service_providers` " + "WHERE physical_network_id=? and provider_name='VpcVirtualRouter'");
                 pstmt.setLong(1, pNtwkId);
                 ResultSet rs1 = pstmt.executeQuery();
                 rs1.next();
                 long providerId = rs1.getLong(1);
 
-                //insert VR element
+                // insert VR element
                 pstmt = conn.prepareStatement("INSERT INTO `cloud`.`virtual_router_providers` (`nsp_id`, `type`, `enabled`) " + "VALUES (?, 'VPCVirtualRouter', 1)");
                 pstmt.setLong(1, providerId);
                 pstmt.executeUpdate();
@@ -188,7 +185,7 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
     }
 
     private void updateRouterNetworkRef(Connection conn) {
-        //Encrypt config params and change category to Hidden
+        // Encrypt config params and change category to Hidden
         s_logger.debug("Updating router network ref");
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -199,14 +196,14 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
                 Long routerId = rs.getLong(1);
                 Long networkId = rs.getLong(2);
 
-                //get the network type
+                // get the network type
                 pstmt = conn.prepareStatement("SELECT guest_type from `cloud`.`networks` where id=?");
                 pstmt.setLong(1, networkId);
                 ResultSet rs1 = pstmt.executeQuery();
                 rs1.next();
                 String networkType = rs1.getString(1);
 
-                //insert the reference
+                // insert the reference
                 pstmt = conn.prepareStatement("INSERT INTO `cloud`.`router_network_ref` (router_id, network_id, guest_type) " + "VALUES (?, ?, ?)");
 
                 pstmt.setLong(1, routerId);
@@ -244,9 +241,8 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
             if (rs.next()) {
                 s_logger.debug("Unique key already exists on host_details - not adding new one");
             } else {
-                //add the key
-                PreparedStatement pstmtUpdate =
-                    conn.prepareStatement("ALTER IGNORE TABLE `cloud`.`host_details` ADD CONSTRAINT UNIQUE KEY `uk_host_id_name` (`host_id`, `name`)");
+                // add the key
+                PreparedStatement pstmtUpdate = conn.prepareStatement("ALTER IGNORE TABLE `cloud`.`host_details` ADD CONSTRAINT UNIQUE KEY `uk_host_id_name` (`host_id`, `name`)");
                 pstmtUpdate.executeUpdate();
                 s_logger.debug("Unique key did not exist on host_details -  added new one");
                 pstmtUpdate.close();
@@ -269,13 +265,17 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
 
     // This fix does two things
     //
-    // 1) ensure that networks using external load balancer/firewall in 2.2.14 or prior releases deployments
-    //    has entry in network_external_lb_device_map and network_external_firewall_device_map
+    // 1) ensure that networks using external load balancer/firewall in 2.2.14
+    // or prior releases deployments
+    // has entry in network_external_lb_device_map and
+    // network_external_firewall_device_map
     //
-    // 2) Some keys of host details for F5 and SRX devices were stored in Camel Case in 2.x releases. From 3.0
-    //    they are made in lowercase. On upgrade change the host details name to lower case
+    // 2) Some keys of host details for F5 and SRX devices were stored in Camel
+    // Case in 2.x releases. From 3.0
+    // they are made in lowercase. On upgrade change the host details name to
+    // lower case
     private void fixZoneUsingExternalDevices(Connection conn) {
-        //Get zones to upgrade
+        // Get zones to upgrade
         List<Long> zoneIds = new ArrayList<Long>();
         PreparedStatement pstmt = null;
         PreparedStatement pstmtUpdate = null;
@@ -285,8 +285,7 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
         long srxDevivceId, srxHostId;
 
         try {
-            pstmt =
-                conn.prepareStatement("select id from `cloud`.`data_center` where lb_provider='F5BigIp' or firewall_provider='JuniperSRX' or gateway_provider='JuniperSRX'");
+            pstmt = conn.prepareStatement("select id from `cloud`.`data_center` where lb_provider='F5BigIp' or firewall_provider='JuniperSRX' or gateway_provider='JuniperSRX'");
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 zoneIds.add(rs.getLong(1));
@@ -299,7 +298,8 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
             return; // no zones using F5 and SRX devices so return
         }
 
-        // find the default network offering created for external devices during upgrade from 2.2.14
+        // find the default network offering created for external devices during
+        // upgrade from 2.2.14
         try {
             pstmt = conn.prepareStatement("select id from `cloud`.`network_offerings` where unique_name='Isolated with external providers' ");
             rs = pstmt.executeQuery();
@@ -314,7 +314,7 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
 
         for (Long zoneId : zoneIds) {
             try {
-                // find the F5 device id  in the zone
+                // find the F5 device id in the zone
                 pstmt = conn.prepareStatement("SELECT id FROM host WHERE data_center_id=? AND type = 'ExternalLoadBalancer' AND removed IS NULL");
                 pstmt.setLong(1, zoneId);
                 rs = pstmt.executeQuery();
@@ -329,11 +329,10 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
                 if (rs.first()) {
                     f5DeviceId = rs.getLong(1);
                 } else {
-                    throw new CloudRuntimeException("Cannot upgrade as there is no F5 load balancer device with host ID " + f5HostId +
-                        " found in external_load_balancer_device");
+                    throw new CloudRuntimeException("Cannot upgrade as there is no F5 load balancer device with host ID " + f5HostId + " found in external_load_balancer_device");
                 }
 
-                // find the SRX device id  in the zone
+                // find the SRX device id in the zone
                 pstmt = conn.prepareStatement("SELECT id FROM host WHERE data_center_id=? AND type = 'ExternalFirewall' AND removed IS NULL");
                 pstmt.setLong(1, zoneId);
                 rs = pstmt.executeQuery();
@@ -348,13 +347,11 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
                 if (rs.first()) {
                     srxDevivceId = rs.getLong(1);
                 } else {
-                    throw new CloudRuntimeException("Cannot upgrade as there is no SRX firewall device found with host ID " + srxHostId +
-                        " found in external_firewall_devices");
+                    throw new CloudRuntimeException("Cannot upgrade as there is no SRX firewall device found with host ID " + srxHostId + " found in external_firewall_devices");
                 }
 
-                // check if network any uses F5 or SRX devices  in the zone
-                pstmt =
-                    conn.prepareStatement("select id from `cloud`.`networks` where guest_type='Virtual' and data_center_id=? and network_offering_id=? and removed IS NULL");
+                // check if network any uses F5 or SRX devices in the zone
+                pstmt = conn.prepareStatement("select id from `cloud`.`networks` where guest_type='Virtual' and data_center_id=? and network_offering_id=? and removed IS NULL");
                 pstmt.setLong(1, zoneId);
                 pstmt.setLong(2, networkOfferingId);
                 rs = pstmt.executeQuery();
@@ -362,9 +359,9 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
                     // get the network Id
                     networkId = rs.getLong(1);
 
-                    // add mapping for the network in network_external_lb_device_map
-                    String insertLbMapping =
-                        "INSERT INTO `cloud`.`network_external_lb_device_map` (uuid, network_id, external_load_balancer_device_id, created) VALUES ( ?, ?, ?, now())";
+                    // add mapping for the network in
+                    // network_external_lb_device_map
+                    String insertLbMapping = "INSERT INTO `cloud`.`network_external_lb_device_map` (uuid, network_id, external_load_balancer_device_id, created) VALUES ( ?, ?, ?, now())";
                     pstmtUpdate = conn.prepareStatement(insertLbMapping);
                     pstmtUpdate.setString(1, UUID.randomUUID().toString());
                     pstmtUpdate.setLong(2, networkId);
@@ -372,9 +369,9 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
                     pstmtUpdate.executeUpdate();
                     s_logger.debug("Successfully added entry in network_external_lb_device_map for network " + networkId + " and F5 device ID " + f5DeviceId);
 
-                    // add mapping for the network in network_external_firewall_device_map
-                    String insertFwMapping =
-                        "INSERT INTO `cloud`.`network_external_firewall_device_map` (uuid, network_id, external_firewall_device_id, created) VALUES ( ?, ?, ?, now())";
+                    // add mapping for the network in
+                    // network_external_firewall_device_map
+                    String insertFwMapping = "INSERT INTO `cloud`.`network_external_firewall_device_map` (uuid, network_id, external_firewall_device_id, created) VALUES ( ?, ?, ?, now())";
                     pstmtUpdate = conn.prepareStatement(insertFwMapping);
                     pstmtUpdate.setString(1, UUID.randomUUID().toString());
                     pstmtUpdate.setLong(2, networkId);
@@ -392,8 +389,9 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
                 while (rs.next()) {
                     long hostId = rs.getLong(1);
                     String camlCaseName = rs.getString(2);
-                    if (!(camlCaseName.equalsIgnoreCase("numRetries") || camlCaseName.equalsIgnoreCase("publicZone") || camlCaseName.equalsIgnoreCase("privateZone") ||
-                        camlCaseName.equalsIgnoreCase("publicInterface") || camlCaseName.equalsIgnoreCase("privateInterface") || camlCaseName.equalsIgnoreCase("usageInterface"))) {
+                    if (!(camlCaseName.equalsIgnoreCase("numRetries") || camlCaseName.equalsIgnoreCase("publicZone") || camlCaseName.equalsIgnoreCase("privateZone")
+                            || camlCaseName.equalsIgnoreCase("publicInterface") || camlCaseName.equalsIgnoreCase("privateInterface") || camlCaseName
+                            .equalsIgnoreCase("usageInterface"))) {
                         continue;
                     }
                     String lowerCaseName = camlCaseName.toLowerCase();
@@ -423,7 +421,7 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
 
     private void fixForeignKeys(Connection conn) {
         s_logger.debug("Fixing foreign keys' names in ssh_keypairs table");
-        //Drop the keys (if exist)
+        // Drop the keys (if exist)
         List<String> keys = new ArrayList<String>();
         keys.add("fk_ssh_keypair__account_id");
         keys.add("fk_ssh_keypair__domain_id");
@@ -438,13 +436,11 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
         keys.add("fk_ssh_keypairs__domain_id");
         DbUpgradeUtils.dropKeysIfExist(conn, "ssh_keypairs", keys, false);
 
-        //insert the keys anew
+        // insert the keys anew
         try {
             PreparedStatement pstmt;
-            pstmt =
-                conn.prepareStatement("ALTER TABLE `cloud`.`ssh_keypairs` ADD "
-                    + "CONSTRAINT `fk_ssh_keypairs__account_id` FOREIGN KEY `fk_ssh_keypairs__account_id` (`account_id`)"
-                    + " REFERENCES `account` (`id`) ON DELETE CASCADE");
+            pstmt = conn.prepareStatement("ALTER TABLE `cloud`.`ssh_keypairs` ADD "
+                    + "CONSTRAINT `fk_ssh_keypairs__account_id` FOREIGN KEY `fk_ssh_keypairs__account_id` (`account_id`)" + " REFERENCES `account` (`id`) ON DELETE CASCADE");
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException e) {
@@ -453,8 +449,7 @@ public class Upgrade304to305 extends Upgrade30xBase implements DbUpgrade {
 
         try {
             PreparedStatement pstmt;
-            pstmt =
-                conn.prepareStatement("ALTER TABLE `cloud`.`ssh_keypairs` ADD CONSTRAINT"
+            pstmt = conn.prepareStatement("ALTER TABLE `cloud`.`ssh_keypairs` ADD CONSTRAINT"
                     + " `fk_ssh_keypairs__domain_id` FOREIGN KEY `fk_ssh_keypairs__domain_id` (`domain_id`) " + "REFERENCES `domain` (`id`) ON DELETE CASCADE");
             pstmt.executeUpdate();
             pstmt.close();

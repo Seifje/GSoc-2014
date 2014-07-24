@@ -24,9 +24,10 @@ import javax.persistence.Table;
 import org.apache.cloudstack.api.InternalIdentity;
 
 /**
- * NetScalerPodVO contains information about a EIP deployment where on datacenter L3 router a PBR (policy
- * based routing) is setup between a POD's subnet IP range to a NetScaler device. This VO object
- * represents a mapping between a POD and NetScaler device where PBR is setup.
+ * NetScalerPodVO contains information about a EIP deployment where on
+ * datacenter L3 router a PBR (policy based routing) is setup between a POD's
+ * subnet IP range to a NetScaler device. This VO object represents a mapping
+ * between a POD and NetScaler device where PBR is setup.
  *
  */
 @Entity

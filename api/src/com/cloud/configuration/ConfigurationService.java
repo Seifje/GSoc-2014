@@ -74,8 +74,8 @@ public interface ConfigurationService {
      * Create a service offering through the API
      *
      * @param cmd
-     *            the command object that specifies the name, number of cpu cores, amount of RAM, etc. for the service
-     *            offering
+     *            the command object that specifies the name, number of cpu
+     *            cores, amount of RAM, etc. for the service offering
      * @return the newly created service offering if successful, null otherwise
      */
     ServiceOffering createServiceOffering(CreateServiceOfferingCmd cmd);
@@ -106,7 +106,8 @@ public interface ConfigurationService {
      * Updates a disk offering
      *
      * @param cmd
-     *            - the command specifying diskOfferingId, name, description, tags
+     *            - the command specifying diskOfferingId, name, description,
+     *            tags
      * @return updated disk offering
      * @throws
      */
@@ -159,7 +160,8 @@ public interface ConfigurationService {
     Pod createPod(long zoneId, String name, String startIp, String endIp, String gateway, String netmask, String allocationState);
 
     /**
-     * Edits a pod in the database. Will not allow you to edit pods that are being used anywhere in the system.
+     * Edits a pod in the database. Will not allow you to edit pods that are
+     * being used anywhere in the system.
      *
      * @param UpdatePodCmd
      *            api command
@@ -167,7 +169,8 @@ public interface ConfigurationService {
     Pod editPod(UpdatePodCmd cmd);
 
     /**
-     * Deletes a pod from the database. Will not allow you to delete pods that are being used anywhere in the system.
+     * Deletes a pod from the database. Will not allow you to delete pods that
+     * are being used anywhere in the system.
      *
      * @param cmd
      *            - the command containing podId
@@ -187,7 +190,8 @@ public interface ConfigurationService {
     DataCenter createZone(CreateZoneCmd cmd);
 
     /**
-     * Edits a zone in the database. Will not allow you to edit DNS values if there are VMs in the specified zone.
+     * Edits a zone in the database. Will not allow you to edit DNS values if
+     * there are VMs in the specified zone.
      *
      * @param UpdateZoneCmd
      * @return Updated zone
@@ -195,7 +199,8 @@ public interface ConfigurationService {
     DataCenter editZone(UpdateZoneCmd cmd);
 
     /**
-     * Deletes a zone from the database. Will not allow you to delete zones that are being used anywhere in the system.
+     * Deletes a zone from the database. Will not allow you to delete zones that
+     * are being used anywhere in the system.
      *
      * @param userId
      * @param zoneId
@@ -203,15 +208,16 @@ public interface ConfigurationService {
     boolean deleteZone(DeleteZoneCmd cmd);
 
     /**
-     * Adds a VLAN to the database, along with an IP address range. Can add three types of VLANs: (1) zone-wide VLANs on
-     * the
-     * virtual public network (2) pod-wide direct attached VLANs (3) account-specific direct attached VLANs
+     * Adds a VLAN to the database, along with an IP address range. Can add
+     * three types of VLANs: (1) zone-wide VLANs on the virtual public network
+     * (2) pod-wide direct attached VLANs (3) account-specific direct attached
+     * VLANs
      *
      * @param userId
      * @param vlanType
-     *            - either "DomR" (VLAN for a virtual public network) or "DirectAttached" (VLAN for IPs that will be
-     *            directly
-     *            attached to UserVMs)
+     *            - either "DomR" (VLAN for a virtual public network) or
+     *            "DirectAttached" (VLAN for IPs that will be directly attached
+     *            to UserVMs)
      * @param zoneId
      * @param accountId
      * @param podId
@@ -220,12 +226,13 @@ public interface ConfigurationService {
      * @param gateway
      * @param startIP
      * @param endIP
-     * @throws ResourceAllocationException TODO
+     * @throws ResourceAllocationException
+     *             TODO
      * @throws
      * @return The new Vlan object
      */
     Vlan createVlanAndPublicIpRange(CreateVlanIpRangeCmd cmd) throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException,
-        ResourceAllocationException;
+    ResourceAllocationException;
 
     /**
      * Marks the the account with the default zone-id.

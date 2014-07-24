@@ -58,7 +58,8 @@ import com.vmware.vim25.VimService;
 /**
  * A wrapper class to handle Vmware vsphere connection and disconnection.
  *
- * DISCLAIMER: This code is partly copied from sample codes that come along with Vmware web service 5.1 SDK.
+ * DISCLAIMER: This code is partly copied from sample codes that come along with
+ * Vmware web service 5.1 SDK.
  *
  */
 public class VmwareClient {
@@ -143,7 +144,8 @@ public class VmwareClient {
 
         ServiceContent serviceContent = vimPort.retrieveServiceContent(svcInstRef);
 
-        // Extract a cookie. See vmware sample program com.vmware.httpfileaccess.GetVMFiles
+        // Extract a cookie. See vmware sample program
+        // com.vmware.httpfileaccess.GetVMFiles
         @SuppressWarnings("unchecked")
         Map<String, List<String>> headers = (Map<String, List<String>>)((BindingProvider)vimPort).getResponseContext().get(MessageContext.HTTP_RESPONSE_HEADERS);
         List<String> cookies = headers.get("Set-cookie");
@@ -211,10 +213,12 @@ public class VmwareClient {
 
     public boolean validate() {
         //
-        // There is no official API to validate an open vCenter API session. This is hacking way to tell if
+        // There is no official API to validate an open vCenter API session.
+        // This is hacking way to tell if
         // an open vCenter API session is still valid for making calls.
         //
-        // It will give false result if there really does not exist data-center in the inventory, however, I consider
+        // It will give false result if there really does not exist data-center
+        // in the inventory, however, I consider
         // this really is not possible in production deployment
         //
 
@@ -271,8 +275,7 @@ public class VmwareClient {
                 propertyValue = dp.getVal();
                 /*
                  * If object is ArrayOfXXX object, then get the XXX[] by
-                 * invoking getXXX() on the object.
-                 * For Ex:
+                 * invoking getXXX() on the object. For Ex:
                  * ArrayOfManagedObjectReference.getManagedObjectReference()
                  * returns ManagedObjectReference[] array.
                  */
@@ -325,16 +328,16 @@ public class VmwareClient {
 
         try {
             // info has a property - state for state of the task
-            Object[] result = waitForValues(task, new String[] { "info.state", "info.error" }, new String[] { "state" }, new Object[][] { new Object[] {
-                    TaskInfoState.SUCCESS, TaskInfoState.ERROR } });
+            Object[] result = waitForValues(task, new String[] {"info.state", "info.error"}, new String[] {"state"}, new Object[][] {new Object[] {TaskInfoState.SUCCESS,
+                    TaskInfoState.ERROR}});
 
             if (result[0].equals(TaskInfoState.SUCCESS)) {
                 retVal = true;
             }
             if (result[1] instanceof LocalizedMethodFault) {
-                throw new RuntimeException(((LocalizedMethodFault) result[1]).getLocalizedMessage());
+                throw new RuntimeException(((LocalizedMethodFault)result[1]).getLocalizedMessage());
             }
-        } catch(WebServiceException we) {
+        } catch (WebServiceException we) {
             s_logger.debug("Cancelling vCenter task because task failed with " + we.getLocalizedMessage());
             getService().cancelTask(task);
             throw new RuntimeException("vCenter task failed due to " + we.getLocalizedMessage());
@@ -361,7 +364,7 @@ public class VmwareClient {
      * @throws InvalidCollectorVersionFaultMsg
      */
     private Object[] waitForValues(ManagedObjectReference objmor, String[] filterProps, String[] endWaitProps, Object[][] expectedVals) throws InvalidPropertyFaultMsg,
-    RuntimeFaultFaultMsg, InvalidCollectorVersionFaultMsg {
+            RuntimeFaultFaultMsg, InvalidCollectorVersionFaultMsg {
         // version string is initially null
         String version = "";
         Object[] endVals = new Object[endWaitProps.length];
@@ -558,12 +561,15 @@ public class VmwareClient {
     }
 
     /**
-     * Get the ManagedObjectReference for an item under the
-     * specified root folder that has the type and name specified.
+     * Get the ManagedObjectReference for an item under the specified root
+     * folder that has the type and name specified.
      *
-     * @param root a root folder if available, or null for default
-     * @param type type of the managed object
-     * @param name name to match
+     * @param root
+     *            a root folder if available, or null for default
+     * @param type
+     *            type of the managed object
+     * @param name
+     *            name to match
      *
      * @return First ManagedObjectReference of the type / name pair found
      */
@@ -613,8 +619,10 @@ public class VmwareClient {
     /**
      * Get a MORef from the property returned.
      *
-     * @param objMor Object to get a reference property from
-     * @param propName name of the property that is the MORef
+     * @param objMor
+     *            Object to get a reference property from
+     * @param propName
+     *            name of the property that is the MORef
      * @return the ManagedObjectReference for that property.
      */
     public ManagedObjectReference getMoRefProp(ManagedObjectReference objMor, String propName) throws Exception {

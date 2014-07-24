@@ -25,8 +25,9 @@ import com.cloud.bridge.service.core.s3.S3PolicyAction.PolicyActions;
 import com.cloud.bridge.service.core.s3.S3PolicyCondition.ConditionKeys;
 
 /**
- * The purpose of this class is to pass into the heart of the Bucket Policy evaluation logic
- * all the context (strings from the request) needed for each defined condition.
+ * The purpose of this class is to pass into the heart of the Bucket Policy
+ * evaluation logic all the context (strings from the request) needed for each
+ * defined condition.
  */
 public class S3PolicyContext {
 

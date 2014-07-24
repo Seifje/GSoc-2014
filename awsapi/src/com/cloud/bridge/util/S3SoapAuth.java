@@ -24,8 +24,8 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
 /**
- * Both the SOAP code and the DIME implementation in the REST servlet need
- * this authentication functionality.
+ * Both the SOAP code and the DIME implementation in the REST servlet need this
+ * authentication functionality.
  */
 public class S3SoapAuth {
     protected final static Logger logger = Logger.getLogger(S3SoapAuth.class);
@@ -45,12 +45,14 @@ public class S3SoapAuth {
     }
 
     /**
-     * Create a signature by the following method:
-     *     new String( Base64( SHA1( key, byte array )))
+     * Create a signature by the following method: new String( Base64( SHA1(
+     * key, byte array )))
      *
-     * @param signIt    - the data to generate a keyed HMAC over
-     * @param secretKey - the user's unique key for the HMAC operation
-     * @return String   - the recalculated string
+     * @param signIt
+     *            - the data to generate a keyed HMAC over
+     * @param secretKey
+     *            - the user's unique key for the HMAC operation
+     * @return String - the recalculated string
      */
     private static String calculateRFC2104HMAC(String signIt, String secretKey) {
         String result = null;

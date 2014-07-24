@@ -31,8 +31,8 @@ import org.apache.cloudstack.api.InternalIdentity;
 import com.cloud.exception.InvalidParameterValueException;
 
 /**
- * PortProfileVO contains information on portprofiles that are created on a Cisco Nexus 1000v VSM associated
- * with a VMWare cluster.
+ * PortProfileVO contains information on portprofiles that are created on a
+ * Cisco Nexus 1000v VSM associated with a VMWare cluster.
  */
 
 @Entity
@@ -167,7 +167,8 @@ public class PortProfileVO implements InternalIdentity {
 
     public PortProfileVO(String portProfName, long vsmId, int vlanId, PortType pType, BindingType bType) {
         // Set the relevant portprofile properties here.
-        // When supplied with a single vlanId, we set this portprofile as an access port profile.
+        // When supplied with a single vlanId, we set this portprofile as an
+        // access port profile.
 
         this.setPortMode(PortMode.Access);
 
@@ -181,7 +182,8 @@ public class PortProfileVO implements InternalIdentity {
 
     public PortProfileVO(String portProfName, long vsmId, int lowVlanId, int highVlanId, PortType pType, BindingType bType) {
         // Set the relevant portprofile properties here.
-        // When supplied with a vlan range, we set this portprofile as a trunk port profile.
+        // When supplied with a vlan range, we set this portprofile as a trunk
+        // port profile.
 
         if (lowVlanId >= highVlanId) {
             throw new InvalidParameterValueException("Low Vlan Id cannot be greater than or equal to high Vlan Id");

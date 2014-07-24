@@ -21,7 +21,10 @@ import java.util.List;
 
 public class EC2DescribeVolumes {
 
-    private List<String> volumeSet = new ArrayList<String>();    // a list of strings identifying volume ids
+    private List<String> volumeSet = new ArrayList<String>(); // a list of
+                                                              // strings
+                                                              // identifying
+                                                              // volume ids
     private EC2VolumeFilterSet vfs = null;
     private List<EC2TagKeyValue> resourceTagSet = new ArrayList<EC2TagKeyValue>();
 

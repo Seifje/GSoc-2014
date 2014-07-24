@@ -94,10 +94,11 @@ public class InMemoryEventBus extends ManagerBase implements EventBus {
         }
 
         for (UUID subscriberId : subscribers.keySet()) {
-            Pair<EventTopic, EventSubscriber>  subscriberDetails =  subscribers.get(subscriberId);
-            // if the event matches subscribers interested event topic then call back the subscriber with the event
+            Pair<EventTopic, EventSubscriber> subscriberDetails = subscribers.get(subscriberId);
+            // if the event matches subscribers interested event topic then call
+            // back the subscriber with the event
             if (isEventMatchesTopic(event, subscriberDetails.first())) {
-                EventSubscriber subscriber =  subscriberDetails.second();
+                EventSubscriber subscriber = subscriberDetails.second();
                 subscriber.onEvent(event);
             }
         }

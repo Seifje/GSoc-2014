@@ -48,7 +48,7 @@ public class AlertsSyslogAppender extends AppenderSkeleton {
     public static final int LENGTH_OF_STRING_MESSAGE_AND_KEY_VALUE_DELIMITER = 9;
     public static final int LENGTH_OF_STRING_MESSAGE = 8;
     public static final String MESSAGE_DELIMITER_STRING = "   ";
-    //add the alertType in this array it its level needs to be set to critical
+    // add the alertType in this array it its level needs to be set to critical
     private static final int[] criticalAlerts = {7, 8, 9, 10, 11, 12, 13, 15, 16, 19, 20};
     private static final Map<Integer, String> alertsMap;
 

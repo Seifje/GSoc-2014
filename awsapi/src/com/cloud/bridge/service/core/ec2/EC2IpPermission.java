@@ -28,8 +28,15 @@ public class EC2IpPermission {
     private String icmpType;
     private Integer fromPort;
     private Integer toPort;
-    private List<EC2SecurityGroup> userSet = new ArrayList<EC2SecurityGroup>();    // a list of groups identifying users
-    private List<String> rangeSet = new ArrayList<String>();              // a list of strings identifying CIDR
+    private List<EC2SecurityGroup> userSet = new ArrayList<EC2SecurityGroup>(); // a
+                                                                                // list
+                                                                                // of
+                                                                                // groups
+                                                                                // identifying
+                                                                                // users
+    private List<String> rangeSet = new ArrayList<String>(); // a list of
+                                                             // strings
+                                                             // identifying CIDR
 
     public EC2IpPermission() {
         protocol = null;

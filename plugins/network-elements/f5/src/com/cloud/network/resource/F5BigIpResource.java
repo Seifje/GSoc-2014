@@ -292,15 +292,19 @@ public class F5BigIpResource implements ServerResource {
         try {
             IpAddressTO[] ips = cmd.getIpAddresses();
             for (IpAddressTO ip : ips) {
-                // is it saver to use Long.valueOf(BroadcastDomain.getValue(ip.getBroadcastUri())) ???
+                // is it saver to use
+                // Long.valueOf(BroadcastDomain.getValue(ip.getBroadcastUri()))
+                // ???
                 // i.o.w. can this contain vlan:// then change !!!
                 long guestVlanTag = Long.valueOf(ip.getBroadcastUri());
-                // It's a hack, using isOneToOneNat field for indicate if it's inline or not
+                // It's a hack, using isOneToOneNat field for indicate if it's
+                // inline or not
                 boolean inline = ip.isOneToOneNat();
                 String vlanSelfIp = inline ? tagAddressWithRouteDomain(ip.getVlanGateway(), guestVlanTag) : ip.getVlanGateway();
                 String vlanNetmask = ip.getVlanNetmask();
 
-                // Delete any existing guest VLAN with this tag, self IP, and netmask
+                // Delete any existing guest VLAN with this tag, self IP, and
+                // netmask
                 deleteGuestVlan(guestVlanTag, vlanSelfIp, vlanNetmask, inline);
 
                 if (ip.isAdd()) {
@@ -363,7 +367,8 @@ public class F5BigIpResource implements ServerResource {
                     }
                 }
 
-                // Delete the virtual server with this protocol, source IP, and source port, along with its default pool and all pool members
+                // Delete the virtual server with this protocol, source IP, and
+                // source port, along with its default pool and all pool members
                 deleteVirtualServerAndDefaultPool(virtualServerName);
                 if (!loadBalancer.isRevoked() && destinationsToAdd) {
                     // Add the pool
@@ -524,7 +529,8 @@ public class F5BigIpResource implements ServerResource {
 
         List<String> allVirtualServers = getVirtualServers();
         for (String virtualServerName : allVirtualServers) {
-            // Check if the virtual server's default pool has members in this guest VLAN
+            // Check if the virtual server's default pool has members in this
+            // guest VLAN
             List<String> poolMembers = getMembers(virtualServerName);
             for (String poolMemberName : poolMembers) {
                 String poolMemberIp = stripRouteDomainFromAddress(getIpAndPort(poolMemberName)[0]);
@@ -536,8 +542,8 @@ public class F5BigIpResource implements ServerResource {
         }
 
         for (String virtualServerName : virtualServersToDelete) {
-            s_logger.debug("Found a virtual server (" + virtualServerName + ") for guest network with self IP " + vlanSelfIp +
-                " that is active when the guest network is being destroyed.");
+            s_logger.debug("Found a virtual server (" + virtualServerName + ") for guest network with self IP " + vlanSelfIp
+                    + " that is active when the guest network is being destroyed.");
             deleteVirtualServerAndDefaultPool(virtualServerName);
         }
     }
@@ -601,7 +607,8 @@ public class F5BigIpResource implements ServerResource {
                 throw new ExecutionException("Failed to log in to BigIp appliance");
             }
 
-            // iControl.Interfaces.initialize always return true so make a call to force connect to F5 to validate credentials
+            // iControl.Interfaces.initialize always return true so make a call
+            // to force connect to F5 to validate credentials
             _interfaces.getSystemSystemInfo().get_system_information();
 
             _virtualServerApi = _interfaces.getLocalLBVirtualServer();
@@ -619,13 +626,12 @@ public class F5BigIpResource implements ServerResource {
 
     // Virtual server methods
 
-    private void addVirtualServer(String virtualServerName, LbProtocol protocol, String srcIp, int srcPort, StickinessPolicyTO[] stickyPolicies)
-        throws ExecutionException {
+    private void addVirtualServer(String virtualServerName, LbProtocol protocol, String srcIp, int srcPort, StickinessPolicyTO[] stickyPolicies) throws ExecutionException {
         try {
             if (!virtualServerExists(virtualServerName)) {
                 s_logger.debug("Adding virtual server " + virtualServerName);
                 _virtualServerApi.create(genVirtualServerDefinition(virtualServerName, protocol, srcIp, srcPort), new String[] {"255.255.255.255"},
-                    genVirtualServerResource(virtualServerName), genVirtualServerProfile(protocol));
+                        genVirtualServerResource(virtualServerName), genVirtualServerProfile(protocol));
                 _virtualServerApi.set_snat_automap(genStringArray(virtualServerName));
                 if (!virtualServerExists(virtualServerName)) {
                     throw new ExecutionException("Failed to add virtual server " + virtualServerName);
@@ -647,7 +653,7 @@ public class F5BigIpResource implements ServerResource {
                     List<Pair<String, String>> paramsList = stickinessPolicy.getParams();
                     for (Pair<String, String> param : paramsList) {
                         if ("holdtime".equalsIgnoreCase(param.first())) {
-                            long timeout = 180; //F5 default
+                            long timeout = 180; // F5 default
                             if (param.second() != null) {
                                 timeout = Long.parseLong(param.second());
                             }
@@ -1015,7 +1021,8 @@ public class F5BigIpResource implements ServerResource {
             // shift left 32 bits and mask off new bits to 0's
             full = new Double((high << 32 & 0xffff0000));
         } else {
-            // mask off sign bits + shift left by 32 bits then add the sign bit back
+            // mask off sign bits + shift left by 32 bits then add the sign bit
+            // back
             full = new Double(((high & 0x7fffffff) << 32) + (0x80000000 << 32));
         }
 
@@ -1023,7 +1030,8 @@ public class F5BigIpResource implements ServerResource {
             // add low to full and we're good
             full = new Double(full.doubleValue() + low);
         } else {
-            // add full to low after masking off sign bits and adding 1 to the masked off low order value
+            // add full to low after masking off sign bits and adding 1 to the
+            // masked off low order value
             full = new Double(full.doubleValue() + ((low & 0x7fffffff)) + rollOver.doubleValue());
         }
 

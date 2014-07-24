@@ -34,16 +34,15 @@ import com.cloud.user.Account;
 import com.cloud.user.User;
 import com.cloud.user.UserAccount;
 
-@APICommand(name = "updateUser", description = "Updates a user account", responseObject = UserResponse.class,
-        requestHasSensitiveInfo = true, responseHasSensitiveInfo = true)
+@APICommand(name = "updateUser", description = "Updates a user account", responseObject = UserResponse.class, requestHasSensitiveInfo = true, responseHasSensitiveInfo = true)
 public class UpdateUserCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateUserCmd.class.getName());
 
     private static final String s_name = "updateuserresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.USER_API_KEY, type = CommandType.STRING, description = "The API key for the user. Must be specified with userSecretKey")
     private String apiKey;
@@ -60,17 +59,13 @@ public class UpdateUserCmd extends BaseCmd {
     @Parameter(name = ApiConstants.LASTNAME, type = CommandType.STRING, description = "last name")
     private String lastname;
 
-    @Parameter(name = ApiConstants.PASSWORD,
-               type = CommandType.STRING,
-               description = "Clear text password (default hashed to SHA256SALT). If you wish to use any other hasing algorithm, you would need to write a custom authentication adapter")
+    @Parameter(name = ApiConstants.PASSWORD, type = CommandType.STRING, description = "Clear text password (default hashed to SHA256SALT). If you wish to use any other hasing algorithm, you would need to write a custom authentication adapter")
     private String password;
 
     @Parameter(name = ApiConstants.SECRET_KEY, type = CommandType.STRING, description = "The secret key for the user. Must be specified with userSecretKey")
     private String secretKey;
 
-    @Parameter(name = ApiConstants.TIMEZONE,
-               type = CommandType.STRING,
-               description = "Specifies a timezone for this command. For more information on the timezone parameter, see Time Zone Format.")
+    @Parameter(name = ApiConstants.TIMEZONE, type = CommandType.STRING, description = "Specifies a timezone for this command. For more information on the timezone parameter, see Time Zone Format.")
     private String timezone;
 
     @Parameter(name = ApiConstants.USERNAME, type = CommandType.STRING, description = "Unique username")
@@ -79,9 +74,9 @@ public class UpdateUserCmd extends BaseCmd {
     @Inject
     RegionService _regionService;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getApiKey() {
         return apiKey;
@@ -119,9 +114,9 @@ public class UpdateUserCmd extends BaseCmd {
         return username;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -135,7 +130,9 @@ public class UpdateUserCmd extends BaseCmd {
             return user.getAccountId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
     @Override

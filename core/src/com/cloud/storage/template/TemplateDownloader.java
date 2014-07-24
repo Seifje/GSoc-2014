@@ -35,8 +35,11 @@ public interface TemplateDownloader extends Runnable {
 
     /**
      * Initiate download, resuming a previous one if required
-     * @param resume resume if necessary
-     * @param callback completion callback to be called after download is complete
+     *
+     * @param resume
+     *            resume if necessary
+     * @param callback
+     *            completion callback to be called after download is complete
      * @return bytes downloaded
      */
     public long download(boolean resume, DownloadCompleteCallback callback);
@@ -53,29 +56,35 @@ public interface TemplateDownloader extends Runnable {
 
     /**
      * Get the status of the download
+     *
      * @return status of download
      */
     public TemplateDownloader.Status getStatus();
 
     /**
      * Get time taken to download so far
+     *
      * @return time in seconds taken to download
      */
     public long getDownloadTime();
 
     /**
      * Get bytes downloaded
+     *
      * @return bytes downloaded so far
      */
     public long getDownloadedBytes();
 
     /**
      * Get the error if any
+     *
      * @return error string if any
      */
     public String getDownloadError();
 
-    /** Get local path of the downloaded file
+    /**
+     * Get local path of the downloaded file
+     *
      * @return local path of the file downloaded
      */
     public String getDownloadLocalPath();

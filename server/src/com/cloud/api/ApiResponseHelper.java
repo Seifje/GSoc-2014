@@ -469,7 +469,7 @@ public class ApiResponseHelper implements ResponseGenerator {
             s_logger.debug("Unable to find info for image store snapshot with uuid " + snapshot.getUuid());
             snapshotResponse.setRevertable(false);
         } else {
-        snapshotResponse.setRevertable(snapshotInfo.isRevertable());
+            snapshotResponse.setRevertable(snapshotInfo.isRevertable());
         }
 
         // set tag information
@@ -723,7 +723,7 @@ public class ApiResponseHelper implements ResponseGenerator {
 
         ipResponse.setPortable(ipAddr.isPortable());
 
-        //set tag information
+        // set tag information
         List<? extends ResourceTag> tags = ApiDBUtils.listByResourceTypeAndId(ResourceObjectType.PublicIpAddress, ipAddr.getId());
         List<ResourceTagResponse> tagResponses = new ArrayList<ResourceTagResponse>();
         for (ResourceTag tag : tags) {
@@ -765,7 +765,7 @@ public class ApiResponseHelper implements ResponseGenerator {
             lbResponse.setZoneId(zone.getUuid());
         }
 
-        //set tag information
+        // set tag information
         List<? extends ResourceTag> tags = ApiDBUtils.listByResourceTypeAndId(ResourceObjectType.LoadBalancer, loadBalancer.getId());
         List<ResourceTagResponse> tagResponses = new ArrayList<ResourceTagResponse>();
         for (ResourceTag tag : tags) {
@@ -1023,7 +1023,6 @@ public class ApiResponseHelper implements ResponseGenerator {
         Network guestNtwk = ApiDBUtils.findNetworkById(fwRule.getNetworkId());
         response.setNetworkId(guestNtwk.getUuid());
 
-
         IpAddress ip = ApiDBUtils.findIpAddressById(fwRule.getSourceIpAddressId());
         response.setPublicIpAddressId(ip.getUuid());
         response.setPublicIpAddress(ip.getAddress().addr());
@@ -1100,16 +1099,14 @@ public class ApiResponseHelper implements ResponseGenerator {
     }
 
     /*
-    @Override
-    public List<UserVmResponse> createUserVmResponse(String objectName, UserVm... userVms) {
-        return createUserVmResponse(null, objectName, userVms);
-    }
-
-    @Override
-    public List<UserVmResponse> createUserVmResponse(String objectName, EnumSet<VMDetails> details, UserVm... userVms) {
-        return createUserVmResponse(null, objectName, userVms);
-    }
-    */
+     * @Override public List<UserVmResponse> createUserVmResponse(String
+     * objectName, UserVm... userVms) { return createUserVmResponse(null,
+     * objectName, userVms); }
+     *
+     * @Override public List<UserVmResponse> createUserVmResponse(String
+     * objectName, EnumSet<VMDetails> details, UserVm... userVms) { return
+     * createUserVmResponse(null, objectName, userVms); }
+     */
 
     @Override
     public List<UserVmResponse> createUserVmResponse(ResponseView view, String objectName, EnumSet<VMDetails> details, UserVm... userVms) {
@@ -1202,10 +1199,12 @@ public class ApiResponseHelper implements ResponseGenerator {
                         vmResponse.setGateway(singleNicProfile.getGateway());
                     } else if (network.getTrafficType() == TrafficType.Guest) {
                         /*
-                          * In basic zone, public ip has TrafficType.Guest in case EIP service is not enabled.
-                          * When EIP service is enabled in the basic zone, system VM by default get the public
-                          * IP allocated for EIP. So return the guest/public IP accordingly.
-                          * */
+                         * In basic zone, public ip has TrafficType.Guest in
+                         * case EIP service is not enabled. When EIP service is
+                         * enabled in the basic zone, system VM by default get
+                         * the public IP allocated for EIP. So return the
+                         * guest/public IP accordingly.
+                         */
                         NetworkOffering networkOffering = ApiDBUtils.findNetworkOfferingById(network.getNetworkOfferingId());
                         if (networkOffering.getElasticIp()) {
                             IpAddress ip = ApiDBUtils.findIpByAssociatedVmId(vm.getId());
@@ -1338,7 +1337,8 @@ public class ApiResponseHelper implements ResponseGenerator {
         return listSgs.get(0);
     }
 
-    //TODO: we need to deprecate uploadVO, since extract is done in a synchronous fashion
+    // TODO: we need to deprecate uploadVO, since extract is done in a
+    // synchronous fashion
     @Override
     public ExtractResponse createExtractResponse(Long id, Long zoneId, Long accountId, String mode, String url) {
 
@@ -1580,9 +1580,9 @@ public class ApiResponseHelper implements ResponseGenerator {
         User userJobOwner = _accountMgr.getUserIncludingRemoved(job.getUserId());
         Account jobOwner = _accountMgr.getAccount(userJobOwner.getAccountId());
 
-        //check permissions
+        // check permissions
         if (_accountMgr.isNormalUser(caller.getId())) {
-            //regular user can see only jobs he owns
+            // regular user can see only jobs he owns
             if (caller.getId() != jobOwner.getId()) {
                 throw new PermissionDeniedException("Account " + caller + " is not authorized to see job id=" + job.getId());
             }
@@ -1770,7 +1770,7 @@ public class ApiResponseHelper implements ResponseGenerator {
 
         response.setServices(serviceResponses);
 
-        //set network offering details
+        // set network offering details
         Map<Detail, String> details = _ntwkModel.getNtwkOffDetails(offering.getId());
         if (details != null && !details.isEmpty()) {
             response.setDetails(details);
@@ -1983,7 +1983,7 @@ public class ApiResponseHelper implements ResponseGenerator {
 
         response.setStrechedL2Subnet(network.isStrechedL2Network());
         if (network.isStrechedL2Network()) {
-            Set<String> networkSpannedZones = new  HashSet<String>();
+            Set<String> networkSpannedZones = new HashSet<String>();
             List<VMInstanceVO> vmInstances = new ArrayList<VMInstanceVO>();
             vmInstances.addAll(ApiDBUtils.listUserVMsByNetworkId(network.getId()));
             vmInstances.addAll(ApiDBUtils.listDomainRoutersByNetworkId(network.getId()));
@@ -2038,8 +2038,8 @@ public class ApiResponseHelper implements ResponseGenerator {
             response.setPublicIpAddress(ip.getAddress().addr());
         }
 
-            Network network = ApiDBUtils.findNetworkById(fwRule.getNetworkId());
-            response.setNetworkId(network.getUuid());
+        Network network = ApiDBUtils.findNetworkById(fwRule.getNetworkId());
+        response.setNetworkId(network.getUuid());
 
         FirewallRule.State state = fwRule.getState();
         String stateToSet = state.toString();
@@ -2102,7 +2102,7 @@ public class ApiResponseHelper implements ResponseGenerator {
             response.setAclId(acl.getUuid());
         }
 
-        //set tag information
+        // set tag information
         List<? extends ResourceTag> tags = ApiDBUtils.listByResourceTypeAndId(ResourceObjectType.NetworkACL, aclItem.getId());
         List<ResourceTagResponse> tagResponses = new ArrayList<ResourceTagResponse>();
         for (ResourceTag tag : tags) {
@@ -2298,7 +2298,8 @@ public class ApiResponseHelper implements ResponseGenerator {
         List<? extends Network.Provider> serviceProviders = ApiDBUtils.getProvidersForService(service);
         List<ProviderResponse> serviceProvidersResponses = new ArrayList<ProviderResponse>();
         for (Network.Provider serviceProvider : serviceProviders) {
-            // return only Virtual Router/JuniperSRX/CiscoVnmc as a provider for the firewall
+            // return only Virtual Router/JuniperSRX/CiscoVnmc as a provider for
+            // the firewall
             if (service == Service.Firewall
                     && !(serviceProvider == Provider.VirtualRouter || serviceProvider == Provider.JuniperSRX || serviceProvider == Provider.CiscoVnmc || serviceProvider == Provider.PaloAlto)) {
                 continue;
@@ -2375,7 +2376,7 @@ public class ApiResponseHelper implements ResponseGenerator {
 
     @Override
     public VirtualRouterProviderResponse createVirtualRouterProviderResponse(VirtualRouterProvider result) {
-        //generate only response of the VR/VPCVR provider type
+        // generate only response of the VR/VPCVR provider type
         if (!(result.getType() == VirtualRouterProvider.Type.VirtualRouter || result.getType() == VirtualRouterProvider.Type.VPCVirtualRouter)) {
             return null;
         }
@@ -2680,7 +2681,7 @@ public class ApiResponseHelper implements ResponseGenerator {
         response.setState(result.getState().toString());
         response.setSourceNat(result.getSourceNat());
 
-        NetworkACL acl =  ApiDBUtils.findByNetworkACLId(result.getNetworkACLId());
+        NetworkACL acl = ApiDBUtils.findByNetworkACLId(result.getNetworkACLId());
         if (acl != null) {
             response.setAclId(acl.getUuid());
         }
@@ -2990,7 +2991,7 @@ public class ApiResponseHelper implements ResponseGenerator {
 
         Account account = ApiDBUtils.findAccountById(usageRecord.getAccountId());
         if (account.getType() == Account.ACCOUNT_TYPE_PROJECT) {
-            //find the project
+            // find the project
             Project project = ApiDBUtils.findProjectByProjectAccountId(account.getId());
             usageRecResponse.setProjectId(project.getUuid());
             usageRecResponse.setProjectName(project.getName());
@@ -3029,48 +3030,48 @@ public class ApiResponseHelper implements ResponseGenerator {
 
         if (usageRecord.getUsageType() == UsageTypes.RUNNING_VM || usageRecord.getUsageType() == UsageTypes.ALLOCATED_VM) {
             ServiceOfferingVO svcOffering = _entityMgr.findByIdIncludingRemoved(ServiceOfferingVO.class, usageRecord.getOfferingId().toString());
-            //Service Offering Id
+            // Service Offering Id
             usageRecResponse.setOfferingId(svcOffering.getUuid());
-            //VM Instance ID
+            // VM Instance ID
             VMInstanceVO vm = _entityMgr.findByIdIncludingRemoved(VMInstanceVO.class, usageRecord.getUsageId().toString());
             if (vm != null) {
                 usageRecResponse.setUsageId(vm.getUuid());
             }
-            //Hypervisor Type
+            // Hypervisor Type
             usageRecResponse.setType(usageRecord.getType());
-            //Dynamic compute offerings details
+            // Dynamic compute offerings details
             usageRecResponse.setCpuNumber(usageRecord.getCpuCores());
             usageRecResponse.setCpuSpeed(usageRecord.getCpuSpeed());
             usageRecResponse.setMemory(usageRecord.getMemory());
 
         } else if (usageRecord.getUsageType() == UsageTypes.IP_ADDRESS) {
-            //isSourceNAT
+            // isSourceNAT
             usageRecResponse.setSourceNat((usageRecord.getType().equals("SourceNat")) ? true : false);
-            //isSystem
+            // isSystem
             usageRecResponse.setSystem((usageRecord.getSize() == 1) ? true : false);
-            //IP Address ID
+            // IP Address ID
             IPAddressVO ip = _entityMgr.findByIdIncludingRemoved(IPAddressVO.class, usageRecord.getUsageId().toString());
             if (ip != null) {
                 usageRecResponse.setUsageId(ip.getUuid());
             }
 
         } else if (usageRecord.getUsageType() == UsageTypes.NETWORK_BYTES_SENT || usageRecord.getUsageType() == UsageTypes.NETWORK_BYTES_RECEIVED) {
-            //Device Type
+            // Device Type
             usageRecResponse.setType(usageRecord.getType());
             if (usageRecord.getType().equals("DomainRouter")) {
-                //Domain Router Id
+                // Domain Router Id
                 VMInstanceVO vm = _entityMgr.findByIdIncludingRemoved(VMInstanceVO.class, usageRecord.getUsageId().toString());
                 if (vm != null) {
                     usageRecResponse.setUsageId(vm.getUuid());
                 }
             } else {
-                //External Device Host Id
+                // External Device Host Id
                 HostVO host = _entityMgr.findByIdIncludingRemoved(HostVO.class, usageRecord.getUsageId().toString());
                 if (host != null) {
                     usageRecResponse.setUsageId(host.getUuid());
                 }
             }
-            //Network ID
+            // Network ID
             NetworkVO network = _entityMgr.findByIdIncludingRemoved(NetworkVO.class, usageRecord.getNetworkId().toString());
             if (network != null) {
                 usageRecResponse.setNetworkId(network.getUuid());
@@ -3078,41 +3079,41 @@ public class ApiResponseHelper implements ResponseGenerator {
 
         } else if (usageRecord.getUsageType() == UsageTypes.VM_DISK_IO_READ || usageRecord.getUsageType() == UsageTypes.VM_DISK_IO_WRITE
                 || usageRecord.getUsageType() == UsageTypes.VM_DISK_BYTES_READ || usageRecord.getUsageType() == UsageTypes.VM_DISK_BYTES_WRITE) {
-            //Device Type
+            // Device Type
             usageRecResponse.setType(usageRecord.getType());
-            //VM Instance Id
+            // VM Instance Id
             VMInstanceVO vm = _entityMgr.findByIdIncludingRemoved(VMInstanceVO.class, usageRecord.getVmInstanceId().toString());
             if (vm != null) {
                 usageRecResponse.setVirtualMachineId(vm.getUuid());
             }
-            //Volume ID
+            // Volume ID
             VolumeVO volume = _entityMgr.findByIdIncludingRemoved(VolumeVO.class, usageRecord.getUsageId().toString());
             if (volume != null) {
                 usageRecResponse.setUsageId(volume.getUuid());
             }
 
         } else if (usageRecord.getUsageType() == UsageTypes.VOLUME) {
-            //Volume ID
+            // Volume ID
             VolumeVO volume = _entityMgr.findByIdIncludingRemoved(VolumeVO.class, usageRecord.getUsageId().toString());
             if (volume != null) {
                 usageRecResponse.setUsageId(volume.getUuid());
             }
-            //Volume Size
+            // Volume Size
             usageRecResponse.setSize(usageRecord.getSize());
-            //Disk Offering Id
+            // Disk Offering Id
             if (usageRecord.getOfferingId() != null) {
                 DiskOfferingVO diskOff = _entityMgr.findByIdIncludingRemoved(DiskOfferingVO.class, usageRecord.getOfferingId().toString());
                 usageRecResponse.setOfferingId(diskOff.getUuid());
             }
 
         } else if (usageRecord.getUsageType() == UsageTypes.TEMPLATE || usageRecord.getUsageType() == UsageTypes.ISO) {
-            //Template/ISO ID
+            // Template/ISO ID
             VMTemplateVO tmpl = _entityMgr.findByIdIncludingRemoved(VMTemplateVO.class, usageRecord.getUsageId().toString());
             usageRecResponse.setUsageId(tmpl.getUuid());
             if (tmpl != null) {
                 usageRecResponse.setUsageId(tmpl.getUuid());
             }
-            //Template/ISO Size
+            // Template/ISO Size
             usageRecResponse.setSize(usageRecord.getSize());
             if (usageRecord.getUsageType() == UsageTypes.ISO) {
                 usageRecResponse.setVirtualSize(usageRecord.getSize());
@@ -3121,43 +3122,43 @@ public class ApiResponseHelper implements ResponseGenerator {
             }
 
         } else if (usageRecord.getUsageType() == UsageTypes.SNAPSHOT) {
-            //Snapshot ID
+            // Snapshot ID
             SnapshotVO snap = _entityMgr.findByIdIncludingRemoved(SnapshotVO.class, usageRecord.getUsageId().toString());
             if (snap != null) {
                 usageRecResponse.setUsageId(snap.getUuid());
             }
-            //Snapshot Size
+            // Snapshot Size
             usageRecResponse.setSize(usageRecord.getSize());
 
         } else if (usageRecord.getUsageType() == UsageTypes.LOAD_BALANCER_POLICY) {
-            //Load Balancer Policy ID
+            // Load Balancer Policy ID
             LoadBalancerVO lb = _entityMgr.findByIdIncludingRemoved(LoadBalancerVO.class, usageRecord.getUsageId().toString());
             if (lb != null) {
                 usageRecResponse.setUsageId(lb.getUuid());
             }
         } else if (usageRecord.getUsageType() == UsageTypes.PORT_FORWARDING_RULE) {
-            //Port Forwarding Rule ID
+            // Port Forwarding Rule ID
             PortForwardingRuleVO pf = _entityMgr.findByIdIncludingRemoved(PortForwardingRuleVO.class, usageRecord.getUsageId().toString());
             if (pf != null) {
                 usageRecResponse.setUsageId(pf.getUuid());
             }
 
         } else if (usageRecord.getUsageType() == UsageTypes.NETWORK_OFFERING) {
-            //Network Offering Id
+            // Network Offering Id
             NetworkOfferingVO netOff = _entityMgr.findByIdIncludingRemoved(NetworkOfferingVO.class, usageRecord.getOfferingId().toString());
             usageRecResponse.setOfferingId(netOff.getUuid());
-            //is Default
+            // is Default
             usageRecResponse.setDefault((usageRecord.getUsageId() == 1) ? true : false);
 
         } else if (usageRecord.getUsageType() == UsageTypes.VPN_USERS) {
-            //VPN User ID
+            // VPN User ID
             VpnUserVO vpnUser = _entityMgr.findByIdIncludingRemoved(VpnUserVO.class, usageRecord.getUsageId().toString());
             if (vpnUser != null) {
                 usageRecResponse.setUsageId(vpnUser.getUuid());
             }
 
         } else if (usageRecord.getUsageType() == UsageTypes.SECURITY_GROUP) {
-            //Security Group Id
+            // Security Group Id
             SecurityGroupVO sg = _entityMgr.findByIdIncludingRemoved(SecurityGroupVO.class, usageRecord.getUsageId().toString());
             if (sg != null) {
                 usageRecResponse.setUsageId(sg.getUuid());
@@ -3356,18 +3357,20 @@ public class ApiResponseHelper implements ResponseGenerator {
 
         if (lb.getScheme() == Scheme.Internal) {
             lbResponse.setSourceIp(lb.getSourceIp().addr());
-            //TODO - create the view for the load balancer rule to reflect the network uuid
+            // TODO - create the view for the load balancer rule to reflect the
+            // network uuid
             Network network = ApiDBUtils.findNetworkById(lb.getNetworkId());
             lbResponse.setSourceIpNetworkId(network.getUuid());
         } else {
-            //for public, populate the ip information from the ip address
+            // for public, populate the ip information from the ip address
             IpAddress publicIp = ApiDBUtils.findIpAddressById(lb.getSourceIpAddressId());
             lbResponse.setSourceIp(publicIp.getAddress().addr());
             Network ntwk = ApiDBUtils.findNetworkById(publicIp.getNetworkId());
             lbResponse.setSourceIpNetworkId(ntwk.getUuid());
         }
 
-        //set load balancer rules information (only one rule per load balancer in this release)
+        // set load balancer rules information (only one rule per load balancer
+        // in this release)
         List<ApplicationLoadBalancerRuleResponse> ruleResponses = new ArrayList<ApplicationLoadBalancerRuleResponse>();
         ApplicationLoadBalancerRuleResponse ruleResponse = new ApplicationLoadBalancerRuleResponse();
         ruleResponse.setInstancePort(lb.getDefaultPortStart());
@@ -3381,7 +3384,7 @@ public class ApiResponseHelper implements ResponseGenerator {
         ruleResponses.add(ruleResponse);
         lbResponse.setLbRules(ruleResponses);
 
-        //set Lb instances information
+        // set Lb instances information
         List<ApplicationLoadBalancerInstanceResponse> instanceResponses = new ArrayList<ApplicationLoadBalancerInstanceResponse>();
         for (Ip ip : lbInstances.keySet()) {
             ApplicationLoadBalancerInstanceResponse instanceResponse = new ApplicationLoadBalancerInstanceResponse();
@@ -3395,7 +3398,7 @@ public class ApiResponseHelper implements ResponseGenerator {
 
         lbResponse.setLbInstances(instanceResponses);
 
-        //set tag information
+        // set tag information
         List<? extends ResourceTag> tags = ApiDBUtils.listByResourceTypeAndId(ResourceObjectType.LoadBalancer, lb.getId());
         List<ResourceTagResponse> tagResponses = new ArrayList<ResourceTagResponse>();
         for (ResourceTag tag : tags) {
@@ -3439,7 +3442,6 @@ public class ApiResponseHelper implements ResponseGenerator {
         }
     }
 
-
     @Override
     public PortableIpRangeResponse createPortableIPRangeResponse(PortableIpRange ipRange) {
         PortableIpRangeResponse response = new PortableIpRangeResponse();
@@ -3462,7 +3464,7 @@ public class ApiResponseHelper implements ResponseGenerator {
     public PortableIpResponse createPortableIPResponse(PortableIp portableIp) {
         PortableIpResponse response = new PortableIpResponse();
         response.setAddress(portableIp.getAddress());
-        Long accountId =  portableIp.getAllocatedInDomainId();
+        Long accountId = portableIp.getAllocatedInDomainId();
         if (accountId != null) {
             Account account = ApiDBUtils.findAccountById(accountId);
             response.setAllocatedToAccountId(account.getAccountName());

@@ -32,7 +32,8 @@ public class EC2GroupFilterSet {
     private Map<String, String> filterTypes = new HashMap<String, String>();
 
     public EC2GroupFilterSet() {
-        // -> use these values to check that the proper filter is passed to this type of filter set
+        // -> use these values to check that the proper filter is passed to this
+        // type of filter set
         filterTypes.put("description", "string");
         filterTypes.put("group-id", "string");
         filterTypes.put("group-name", "string");
@@ -55,7 +56,8 @@ public class EC2GroupFilterSet {
             throw new EC2ServiceException(ClientError.InvalidFilter, "Filter '" + filterName + "' is invalid");
         }
 
-        // ToDo we could add checks to make sure the type of a filters value is correct (e.g., an integer)
+        // ToDo we could add checks to make sure the type of a filters value is
+        // correct (e.g., an integer)
         filterSet.add(param);
     }
 
@@ -64,10 +66,12 @@ public class EC2GroupFilterSet {
     }
 
     /**
-     * For a filter to match a snapshot just one of its values has to match the volume.
-     * For a snapshot to be included in the instance response it must pass all the defined filters.
+     * For a filter to match a snapshot just one of its values has to match the
+     * volume. For a snapshot to be included in the instance response it must
+     * pass all the defined filters.
      *
-     * @param sampleList - list of snapshots to test against the defined filters
+     * @param sampleList
+     *            - list of snapshots to test against the defined filters
      * @return EC2DescribeSnapshotsResponse
      * @throws ParseException
      */
@@ -201,7 +205,8 @@ public class EC2GroupFilterSet {
             return false;
 
         for (String s : set) {
-            //System.out.println( "contsinsString: " + lookingFor + " " + set[i] );
+            // System.out.println( "contsinsString: " + lookingFor + " " +
+            // set[i] );
             if (lookingFor.matches(s))
                 return true;
         }

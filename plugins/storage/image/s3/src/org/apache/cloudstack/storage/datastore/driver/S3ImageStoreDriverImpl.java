@@ -55,12 +55,12 @@ public class S3ImageStoreDriverImpl extends BaseImageStoreDriverImpl {
         ImageStoreImpl imgStore = (ImageStoreImpl)store;
         Map<String, String> details = _imageStoreDetailsDao.getDetails(imgStore.getId());
         return new S3TO(imgStore.getId(), imgStore.getUuid(), details.get(ApiConstants.S3_ACCESS_KEY), details.get(ApiConstants.S3_SECRET_KEY),
-            details.get(ApiConstants.S3_END_POINT), details.get(ApiConstants.S3_BUCKET_NAME), details.get(ApiConstants.S3_HTTPS_FLAG) == null ? false
-                : Boolean.parseBoolean(details.get(ApiConstants.S3_HTTPS_FLAG)), details.get(ApiConstants.S3_CONNECTION_TIMEOUT) == null ? null
-                : Integer.valueOf(details.get(ApiConstants.S3_CONNECTION_TIMEOUT)), details.get(ApiConstants.S3_MAX_ERROR_RETRY) == null ? null
-                : Integer.valueOf(details.get(ApiConstants.S3_MAX_ERROR_RETRY)), details.get(ApiConstants.S3_SOCKET_TIMEOUT) == null ? null
-                : Integer.valueOf(details.get(ApiConstants.S3_SOCKET_TIMEOUT)), imgStore.getCreated(), _configDao.getValue(Config.S3EnableRRS.toString()) == null ? false
-                : Boolean.parseBoolean(_configDao.getValue(Config.S3EnableRRS.toString())), getMaxSingleUploadSizeInBytes());
+                details.get(ApiConstants.S3_END_POINT), details.get(ApiConstants.S3_BUCKET_NAME), details.get(ApiConstants.S3_HTTPS_FLAG) == null ? false
+                        : Boolean.parseBoolean(details.get(ApiConstants.S3_HTTPS_FLAG)), details.get(ApiConstants.S3_CONNECTION_TIMEOUT) == null ? null : Integer.valueOf(details
+                        .get(ApiConstants.S3_CONNECTION_TIMEOUT)), details.get(ApiConstants.S3_MAX_ERROR_RETRY) == null ? null : Integer.valueOf(details
+                        .get(ApiConstants.S3_MAX_ERROR_RETRY)), details.get(ApiConstants.S3_SOCKET_TIMEOUT) == null ? null : Integer.valueOf(details
+                        .get(ApiConstants.S3_SOCKET_TIMEOUT)), imgStore.getCreated(), _configDao.getValue(Config.S3EnableRRS.toString()) == null ? false
+                        : Boolean.parseBoolean(_configDao.getValue(Config.S3EnableRRS.toString())), getMaxSingleUploadSizeInBytes());
 
     }
 
@@ -85,10 +85,12 @@ public class S3ImageStoreDriverImpl extends BaseImageStoreDriverImpl {
         Date expiration = new Date();
         long milliSeconds = expiration.getTime();
 
-        // get extract url expiration interval set in global configuration (in seconds)
+        // get extract url expiration interval set in global configuration (in
+        // seconds)
         String urlExpirationInterval = _configDao.getValue(Config.ExtractURLExpirationInterval.toString());
         int expirationInterval = NumbersUtil.parseInt(urlExpirationInterval, 14400);
-        milliSeconds += 1000 * expirationInterval; // expired after configured interval (in milliseconds)
+        milliSeconds += 1000 * expirationInterval; // expired after configured
+        // interval (in milliseconds)
         expiration.setTime(milliSeconds);
 
         URL s3url = S3Utils.generatePresignedUrl(s3, s3.getBucketName(), key, expiration);

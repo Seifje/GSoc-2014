@@ -56,7 +56,8 @@ public class Networks {
                     if (value.toString().contains("://"))
                         return new URI(value.toString());
                     else
-                        // strange requirement but this is how the code expects it
+                        // strange requirement but this is how the code expects
+                        // it
                         return new URI("vlan://" + value.toString());
                 } catch (URISyntaxException e) {
                     throw new CloudRuntimeException("Unable to convert to broadcast URI: " + value);
@@ -94,8 +95,7 @@ public class Networks {
                 return uri.getSchemeSpecificPart();
             }
         },
-        Mido("mido", String.class), Pvlan("pvlan", String.class),
-        Vxlan("vxlan", Long.class) {
+        Mido("mido", String.class), Pvlan("pvlan", String.class), Vxlan("vxlan", Long.class) {
             @Override
             public <T> URI toUri(T value) {
                 try {
@@ -104,8 +104,7 @@ public class Networks {
                     else
                         return new URI("vxlan://" + value.toString());
                 } catch (URISyntaxException e) {
-                    throw new CloudRuntimeException(
-                            "Unable to convert to broadcast URI: " + value);
+                    throw new CloudRuntimeException("Unable to convert to broadcast URI: " + value);
                 }
             }
         },
@@ -136,9 +135,11 @@ public class Networks {
         }
 
         /**
-         * The default implementation of toUri returns an uri with the scheme and value as host
+         * The default implementation of toUri returns an uri with the scheme
+         * and value as host
          *
-         * @param value will be put in the host field
+         * @param value
+         *            will be put in the host field
          * @return the resulting URI
          */
         public <T> URI toUri(T value) {
@@ -152,7 +153,8 @@ public class Networks {
         /**
          * get the enum value from this uri
          *
-         * @param uri to get the scheme value from
+         * @param uri
+         *            to get the scheme value from
          * @return the scheme as BroadcastDomainType
          */
         public static BroadcastDomainType getSchemeValue(URI uri) {
@@ -162,9 +164,11 @@ public class Networks {
         /**
          * gets the type from a string encoded uri
          *
-         * @param str the uri string
+         * @param str
+         *            the uri string
          * @return the scheme as BroadcastDomainType
-         * @throws URISyntaxException when the string can not be converted to URI
+         * @throws URISyntaxException
+         *             when the string can not be converted to URI
          */
         public static BroadcastDomainType getTypeOf(String str) throws URISyntaxException {
             if (com.cloud.dc.Vlan.UNTAGGED.equalsIgnoreCase(str)) {
@@ -176,11 +180,13 @@ public class Networks {
         /**
          * converts a String to a BroadcastDomainType
          *
-         * @param scheme convert a string representation to a BroacastDomainType
+         * @param scheme
+         *            convert a string representation to a BroacastDomainType
          * @return the value of this
          */
         public static BroadcastDomainType toEnumValue(String scheme) {
-            // scheme might be null and some of the enumvalue.scheme are as well, so
+            // scheme might be null and some of the enumvalue.scheme are as
+            // well, so
             if (scheme == null) {
                 return UnDecided;
             }
@@ -193,9 +199,11 @@ public class Networks {
         }
 
         /**
-         * The default implementation of getValueFrom returns the host part of the uri
+         * The default implementation of getValueFrom returns the host part of
+         * the uri
          *
-         * @param uri to get the value from
+         * @param uri
+         *            to get the value from
          * @return the host part as String
          */
         public String getValueFrom(URI uri) {
@@ -203,10 +211,11 @@ public class Networks {
         }
 
         /**
-         * get the BroadcastDomain value from an arbitrary URI
-         * TODO what when the uri is useless
+         * get the BroadcastDomain value from an arbitrary URI TODO what when
+         * the uri is useless
          *
-         * @param uri the uri
+         * @param uri
+         *            the uri
          * @return depending on the scheme/BroadcastDomainType
          */
         public static String getValue(URI uri) {
@@ -214,12 +223,14 @@ public class Networks {
         }
 
         /**
-         * get the BroadcastDomain value from an arbitrary String
-         * TODO what when the uriString is useless
+         * get the BroadcastDomain value from an arbitrary String TODO what when
+         * the uriString is useless
          *
-         * @param uriString the string encoded uri
+         * @param uriString
+         *            the string encoded uri
          * @return depending on the scheme/BroadcastDomainType
-         * @throws URISyntaxException the string is not even an uri
+         * @throws URISyntaxException
+         *             the string is not even an uri
          */
         public static String getValue(String uriString) throws URISyntaxException {
             return getValue(new URI(uriString));
@@ -227,8 +238,11 @@ public class Networks {
 
         /**
          * encode a string into a BroadcastUri
-         * @param candidate the input string
-         * @return an URI containing an appropriate (possibly given) scheme and the value
+         *
+         * @param candidate
+         *            the input string
+         * @return an URI containing an appropriate (possibly given) scheme and
+         *         the value
          */
         public static URI fromString(String candidate) {
             try {

@@ -33,15 +33,14 @@ import com.cloud.exception.DiscoveryException;
 import com.cloud.storage.ImageStore;
 import com.cloud.user.Account;
 
-@APICommand(name = "addSwift", description = "Adds Swift.", responseObject = ImageStoreResponse.class, since = "3.0.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "addSwift", description = "Adds Swift.", responseObject = ImageStoreResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class AddSwiftCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(AddSwiftCmd.class.getName());
     private static final String s_name = "addswiftresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.URL, type = CommandType.STRING, required = true, description = "the URL for swift")
     private String url;
@@ -55,17 +54,17 @@ public class AddSwiftCmd extends BaseCmd {
     @Parameter(name = ApiConstants.KEY, type = CommandType.STRING, description = " key for the user for swift")
     private String key;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getUrl() {
         return url;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     public String getAccount() {
         return account;
@@ -96,7 +95,7 @@ public class AddSwiftCmd extends BaseCmd {
         dm.put(ApiConstants.USERNAME, getUsername());
         dm.put(ApiConstants.KEY, getKey());
 
-        try{
+        try {
             ImageStore result = _storageService.discoverImageStore(null, getUrl(), "Swift", null, dm);
             ImageStoreResponse storeResponse = null;
             if (result != null) {

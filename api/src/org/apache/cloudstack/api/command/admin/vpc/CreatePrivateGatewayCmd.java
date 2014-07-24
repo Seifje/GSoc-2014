@@ -43,21 +43,17 @@ import com.cloud.network.vpc.Vpc;
 import com.cloud.network.vpc.VpcGateway;
 import com.cloud.user.Account;
 
-@APICommand(name = "createPrivateGateway", description = "Creates a private gateway", responseObject = PrivateGatewayResponse.class, entityType = {VpcGateway.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createPrivateGateway", description = "Creates a private gateway", responseObject = PrivateGatewayResponse.class, entityType = {VpcGateway.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreatePrivateGatewayCmd extends BaseAsyncCreateCmd {
     public static final Logger s_logger = Logger.getLogger(CreatePrivateGatewayCmd.class.getName());
 
     private static final String s_name = "createprivategatewayresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = PhysicalNetworkResponse.class,
-               description = "the Physical Network ID the network belongs to")
+    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, description = "the Physical Network ID the network belongs to")
     private Long physicalNetworkId;
 
     @Parameter(name = ApiConstants.GATEWAY, type = CommandType.STRING, required = true, description = "the gateway of the Private gateway")
@@ -72,29 +68,22 @@ public class CreatePrivateGatewayCmd extends BaseAsyncCreateCmd {
     @Parameter(name = ApiConstants.VLAN, type = CommandType.STRING, required = true, description = "the network implementation uri for the private gateway")
     private String broadcastUri;
 
-    @Parameter(name = ApiConstants.NETWORK_OFFERING_ID,
-               type = CommandType.UUID,
-               required = false,
-               entityType = NetworkOfferingResponse.class,
-               description = "the uuid of the network offering to use for the private gateways network connection")
+    @Parameter(name = ApiConstants.NETWORK_OFFERING_ID, type = CommandType.UUID, required = false, entityType = NetworkOfferingResponse.class, description = "the uuid of the network offering to use for the private gateways network connection")
     private Long networkOfferingId;
 
     @Parameter(name = ApiConstants.VPC_ID, type = CommandType.UUID, entityType = VpcResponse.class, required = true, description = "the VPC network belongs to")
     private Long vpcId;
 
-    @Parameter(name = ApiConstants.SOURCE_NAT_SUPPORTED,
-               type = CommandType.BOOLEAN,
-               required = false,
-               description = "source NAT supported value. Default value false. If 'true' source NAT is enabled on the private gateway"
-                   + " 'false': sourcenat is not supported")
+    @Parameter(name = ApiConstants.SOURCE_NAT_SUPPORTED, type = CommandType.BOOLEAN, required = false, description = "source NAT supported value. Default value false. If 'true' source NAT is enabled on the private gateway"
+            + " 'false': sourcenat is not supported")
     private Boolean isSourceNat;
 
     @Parameter(name = ApiConstants.ACL_ID, type = CommandType.UUID, entityType = NetworkACLResponse.class, required = false, description = "the ID of the network ACL")
     private Long aclId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getGateway() {
         return gateway;
@@ -135,9 +124,9 @@ public class CreatePrivateGatewayCmd extends BaseAsyncCreateCmd {
         return aclId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
     @Override
     public String getCommandName() {
         return s_name;
@@ -147,8 +136,7 @@ public class CreatePrivateGatewayCmd extends BaseAsyncCreateCmd {
     public void create() throws ResourceAllocationException {
         PrivateGateway result = null;
         try {
-            result =
-                _vpcService.createVpcPrivateGateway(getVpcId(), getPhysicalNetworkId(), getBroadcastUri(), getStartIp(), getGateway(), getNetmask(), getEntityOwnerId(),
+            result = _vpcService.createVpcPrivateGateway(getVpcId(), getPhysicalNetworkId(), getBroadcastUri(), getStartIp(), getGateway(), getNetmask(), getEntityOwnerId(),
                     getNetworkOfferingId(), getIsSourceNat(), getAclId());
         } catch (InsufficientCapacityException ex) {
             s_logger.info(ex);

@@ -27,6 +27,7 @@ import com.cloud.vm.ReservationContext;
 public interface SspManager extends Manager {
     /**
      * Checks Ssp is activated or not
+     *
      * @param physicalNetwork
      * @return true if physicalNetworkProvider is configured
      */
@@ -34,6 +35,7 @@ public interface SspManager extends Manager {
 
     /**
      * Tell ssp to create a network
+     *
      * @param network
      * @param offering
      * @param dest
@@ -44,6 +46,7 @@ public interface SspManager extends Manager {
 
     /**
      * Tell ssp to delete a network
+     *
      * @param network
      * @return
      */
@@ -51,6 +54,7 @@ public interface SspManager extends Manager {
 
     /**
      * Create a nic entry in ssp
+     *
      * @param network
      * @param nic
      * @param dest
@@ -61,6 +65,7 @@ public interface SspManager extends Manager {
 
     /**
      * Delete a nic entry from ssp
+     *
      * @param network
      * @param nic
      * @param context

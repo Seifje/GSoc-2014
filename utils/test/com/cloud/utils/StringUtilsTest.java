@@ -32,8 +32,8 @@ public class StringUtilsTest {
     @Test
     public void testCleanPasswordFromJsonObjectAtEnd() {
         String input = "{\"foo\":\"bar\",\"password\":\"test\"}";
-        //TODO: It would be nice to clean up the regex in question to not
-        //have to return the trailing comma in the expected string below
+        // TODO: It would be nice to clean up the regex in question to not
+        // have to return the trailing comma in the expected string below
         String expected = "{\"foo\":\"bar\",}";
         String result = StringUtils.cleanString(input);
         assertEquals(result, expected);
@@ -227,7 +227,7 @@ public class StringUtilsTest {
 
     @Test
     public void listToCsvTags() {
-        Assert.assertEquals("a,b,c", StringUtils.listToCsvTags(Arrays.asList("a","b", "c")));
+        Assert.assertEquals("a,b,c", StringUtils.listToCsvTags(Arrays.asList("a", "b", "c")));
         Assert.assertEquals("", StringUtils.listToCsvTags(new ArrayList<String>()));
     }
 }

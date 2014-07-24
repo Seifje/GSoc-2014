@@ -168,7 +168,7 @@ public class CloudStackPrimaryDataStoreDriverImpl implements PrimaryDataStoreDri
         CreateCmdResult result = new CreateCmdResult(null, null);
         if (data.getType() == DataObjectType.VOLUME) {
             try {
-                answer = createVolume((VolumeInfo) data);
+                answer = createVolume((VolumeInfo)data);
                 if ((answer == null) || (!answer.getResult())) {
                     result.setSuccess(false);
                     if (answer != null) {
@@ -221,7 +221,8 @@ public class CloudStackPrimaryDataStoreDriverImpl implements PrimaryDataStoreDri
         DataStore store = destData.getDataStore();
         if (store.getRole() == DataStoreRole.Primary) {
             if ((srcdata.getType() == DataObjectType.TEMPLATE && destData.getType() == DataObjectType.TEMPLATE)) {
-                //For CLVM, we need to copy template to primary storage at all, just fake the copy result.
+                // For CLVM, we need to copy template to primary storage at all,
+                // just fake the copy result.
                 TemplateObjectTO templateObjectTO = new TemplateObjectTO();
                 templateObjectTO.setPath(UUID.randomUUID().toString());
                 templateObjectTO.setSize(srcdata.getSize());
@@ -231,7 +232,8 @@ public class CloudStackPrimaryDataStoreDriverImpl implements PrimaryDataStoreDri
                 CopyCommandResult result = new CopyCommandResult("", answer);
                 callback.complete(result);
             } else if (srcdata.getType() == DataObjectType.TEMPLATE && destData.getType() == DataObjectType.VOLUME) {
-                //For CLVM, we need to pass template on secondary storage to hypervisor
+                // For CLVM, we need to pass template on secondary storage to
+                // hypervisor
                 String value = configDao.getValue(Config.PrimaryStorageDownloadWait.toString());
                 int _primaryStorageDownloadWait = NumbersUtil.parseInt(value, Integer.parseInt(Config.PrimaryStorageDownloadWait.getDefaultValue()));
                 StoragePoolVO storagePoolVO = primaryStoreDao.findById(store.getId());
@@ -256,11 +258,11 @@ public class CloudStackPrimaryDataStoreDriverImpl implements PrimaryDataStoreDri
 
     @Override
     public boolean canCopy(DataObject srcData, DataObject destData) {
-        //BUG fix for CLOUDSTACK-4618
+        // BUG fix for CLOUDSTACK-4618
         DataStore store = destData.getDataStore();
         if (store.getRole() == DataStoreRole.Primary) {
-            if ((srcData.getType() == DataObjectType.TEMPLATE && destData.getType() == DataObjectType.TEMPLATE) ||
-                    (srcData.getType() == DataObjectType.TEMPLATE && destData.getType() == DataObjectType.VOLUME)) {
+            if ((srcData.getType() == DataObjectType.TEMPLATE && destData.getType() == DataObjectType.TEMPLATE)
+                    || (srcData.getType() == DataObjectType.TEMPLATE && destData.getType() == DataObjectType.VOLUME)) {
                 StoragePoolVO storagePoolVO = primaryStoreDao.findById(store.getId());
                 if (storagePoolVO != null && storagePoolVO.getPoolType() == Storage.StoragePoolType.CLVM) {
                     return true;
@@ -274,10 +276,10 @@ public class CloudStackPrimaryDataStoreDriverImpl implements PrimaryDataStoreDri
     public void takeSnapshot(SnapshotInfo snapshot, AsyncCompletionCallback<CreateCmdResult> callback) {
         CreateCmdResult result = null;
         try {
-            SnapshotObjectTO snapshotTO = (SnapshotObjectTO) snapshot.getTO();
+            SnapshotObjectTO snapshotTO = (SnapshotObjectTO)snapshot.getTO();
             Object payload = snapshot.getPayload();
             if (payload != null && payload instanceof CreateSnapshotPayload) {
-                CreateSnapshotPayload snapshotPayload = (CreateSnapshotPayload) payload;
+                CreateSnapshotPayload snapshotPayload = (CreateSnapshotPayload)payload;
                 snapshotTO.setQuiescevm(snapshotPayload.getQuiescevm());
             }
 
@@ -314,16 +316,15 @@ public class CloudStackPrimaryDataStoreDriverImpl implements PrimaryDataStoreDri
 
     @Override
     public void resize(DataObject data, AsyncCompletionCallback<CreateCmdResult> callback) {
-        VolumeObject vol = (VolumeObject) data;
-        StoragePool pool = (StoragePool) data.getDataStore();
-        ResizeVolumePayload resizeParameter = (ResizeVolumePayload) vol.getpayload();
+        VolumeObject vol = (VolumeObject)data;
+        StoragePool pool = (StoragePool)data.getDataStore();
+        ResizeVolumePayload resizeParameter = (ResizeVolumePayload)vol.getpayload();
 
-        ResizeVolumeCommand resizeCmd =
-                new ResizeVolumeCommand(vol.getPath(), new StorageFilerTO(pool), vol.getSize(), resizeParameter.newSize, resizeParameter.shrinkOk,
-                        resizeParameter.instanceName);
+        ResizeVolumeCommand resizeCmd = new ResizeVolumeCommand(vol.getPath(), new StorageFilerTO(pool), vol.getSize(), resizeParameter.newSize, resizeParameter.shrinkOk,
+                resizeParameter.instanceName);
         CreateCmdResult result = new CreateCmdResult(null, null);
         try {
-            ResizeVolumeAnswer answer = (ResizeVolumeAnswer) storageMgr.sendToPool(pool, resizeParameter.hosts, resizeCmd);
+            ResizeVolumeAnswer answer = (ResizeVolumeAnswer)storageMgr.sendToPool(pool, resizeParameter.hosts, resizeCmd);
             if (answer != null && answer.getResult()) {
                 long finalSize = answer.getNewSize();
                 s_logger.debug("Resize: volume started at size " + vol.getSize() + " and ended at size " + finalSize);

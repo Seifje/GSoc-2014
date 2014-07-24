@@ -38,8 +38,7 @@ public class SnapshotObjectTO implements DataTO {
     private long id;
     private boolean quiescevm;
     private String[] parents;
-    private Long physicalSize = (long) 0;
-
+    private Long physicalSize = (long)0;
 
     public SnapshotObjectTO() {
 
@@ -58,11 +57,11 @@ public class SnapshotObjectTO implements DataTO {
         ArrayList<String> parentsArry = new ArrayList<String>();
         if (parentSnapshot != null) {
             this.parentSnapshotPath = parentSnapshot.getPath();
-            while(parentSnapshot != null) {
+            while (parentSnapshot != null) {
                 parentsArry.add(parentSnapshot.getPath());
                 parentSnapshot = parentSnapshot.getParent();
             }
-            parents =  parentsArry.toArray(new String[parentsArry.size()]);
+            parents = parentsArry.toArray(new String[parentsArry.size()]);
             ArrayUtils.reverse(parents);
         }
 
@@ -99,7 +98,7 @@ public class SnapshotObjectTO implements DataTO {
         return this.physicalSize;
     }
 
-    public void setPhysicalSize(Long physicalSize ) {
+    public void setPhysicalSize(Long physicalSize) {
         this.physicalSize = physicalSize;
     }
 

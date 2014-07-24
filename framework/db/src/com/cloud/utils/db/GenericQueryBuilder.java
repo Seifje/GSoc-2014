@@ -24,17 +24,17 @@ import java.util.UUID;
 import com.cloud.utils.db.SearchCriteria.Op;
 
 /**
- * GenericQueryBuilder builds a search query during runtime.  It allows the
+ * GenericQueryBuilder builds a search query during runtime. It allows the
  * search query to be built completely in Java rather than part SQL fragments
- * and part entity field like HQL or JPQL.  This class is different from
+ * and part entity field like HQL or JPQL. This class is different from
  * GenericSearchBuilder in that it is used for building queries during runtime
- * where GenericSearchBuilder expects the query to be built during load time
- * and parameterized values to be set during runtime.
+ * where GenericSearchBuilder expects the query to be built during load time and
+ * parameterized values to be set during runtime.
  *
- * GenericQueryBuilder allows results to be a native type, the entity bean,
- * and a composite type.  If you are just retrieving the entity bean, there
- * is a simpler class called QueryBuilder that you can use.  The usage
- * is approximately the same.
+ * GenericQueryBuilder allows results to be a native type, the entity bean, and
+ * a composite type. If you are just retrieving the entity bean, there is a
+ * simpler class called QueryBuilder that you can use. The usage is
+ * approximately the same.
  *
  * <code>
  * // Note that in the following search, it selects a func COUNT to be the
@@ -53,8 +53,10 @@ import com.cloud.utils.db.SearchCriteria.Op;
  * @see GenericSearchBuilder
  * @see QueryBuilder
  *
- * @param <T> Entity object to perform the search on
- * @param <K> Result object
+ * @param <T>
+ *            Entity object to perform the search on
+ * @param <K>
+ *            Result object
  */
 public class GenericQueryBuilder<T, K> extends SearchBase<GenericQueryBuilder<T, K>, T, K> {
     final HashMap<String, Object[]> _params = new HashMap<String, Object[]>();
@@ -65,8 +67,11 @@ public class GenericQueryBuilder<T, K> extends SearchBase<GenericQueryBuilder<T,
 
     /**
      * Creator method for GenericQueryBuilder.
-     * @param entityType Entity to search on
-     * @param resultType Result to return
+     *
+     * @param entityType
+     *            Entity to search on
+     * @param resultType
+     *            Result to return
      * @return GenericQueryBuilder
      */
     @SuppressWarnings("unchecked")
@@ -79,9 +84,12 @@ public class GenericQueryBuilder<T, K> extends SearchBase<GenericQueryBuilder<T,
     /**
      * Adds AND search condition
      *
-     * @param field the field of the entity to perform the search on.
-     * @param op operator
-     * @param values parameterized values
+     * @param field
+     *            the field of the entity to perform the search on.
+     * @param op
+     *            operator
+     * @param values
+     *            parameterized values
      * @return this
      */
     public GenericQueryBuilder<T, K> and(Object field, Op op, Object... values) {
@@ -94,9 +102,12 @@ public class GenericQueryBuilder<T, K> extends SearchBase<GenericQueryBuilder<T,
     /**
      * Adds OR search condition
      *
-     * @param field the field of the entity to perform the search on.
-     * @param op operator
-     * @param values parameterized values
+     * @param field
+     *            the field of the entity to perform the search on.
+     * @param op
+     *            operator
+     * @param values
+     *            parameterized values
      * @return this
      */
     public GenericQueryBuilder<T, K> or(Object field, Op op, Object... values) {
@@ -114,12 +125,15 @@ public class GenericQueryBuilder<T, K> extends SearchBase<GenericQueryBuilder<T,
     }
 
     /**
-     * Adds search condition that starts with an open parenthesis.  Call cp()
-     * to close the parenthesis.
+     * Adds search condition that starts with an open parenthesis. Call cp() to
+     * close the parenthesis.
      *
-     * @param field the field of the entity to perform the search on.
-     * @param op operator
-     * @param values parameterized values
+     * @param field
+     *            the field of the entity to perform the search on.
+     * @param op
+     *            operator
+     * @param values
+     *            parameterized values
      * @return this
      */
     public GenericQueryBuilder<T, K> op(Object field, Op op, Object... values) {
@@ -128,6 +142,7 @@ public class GenericQueryBuilder<T, K> extends SearchBase<GenericQueryBuilder<T,
 
     /**
      * If the query is supposed to return a list, use this.
+     *
      * @return List of result objects
      */
     @SuppressWarnings("unchecked")
@@ -159,6 +174,7 @@ public class GenericQueryBuilder<T, K> extends SearchBase<GenericQueryBuilder<T,
 
     /**
      * Convenience method to find the result so the result won't be a list.
+     *
      * @return result as specified.
      */
     @SuppressWarnings("unchecked")

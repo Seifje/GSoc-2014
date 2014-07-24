@@ -86,24 +86,31 @@ public interface VirtualMachineEntity extends CloudStackEntity {
 
     /**
      * Start the virtual machine with a given deployment plan
-     * @param plannerToUse the Deployment Planner that should be used
-     * @param plan plan to which to deploy the machine
-     * @param exclude list of areas to exclude
+     *
+     * @param plannerToUse
+     *            the Deployment Planner that should be used
+     * @param plan
+     *            plan to which to deploy the machine
+     * @param exclude
+     *            list of areas to exclude
      * @return a reservation id
      */
     String reserve(DeploymentPlanner plannerToUse, @BeanParam DeploymentPlan plan, ExcludeList exclude, String caller) throws InsufficientCapacityException,
-        ResourceUnavailableException;
+    ResourceUnavailableException;
 
     /**
      * Migrate this VM to a certain destination.
      *
-     * @param reservationId reservation id from reserve call.
+     * @param reservationId
+     *            reservation id from reserve call.
      */
     void migrateTo(String reservationId, String caller);
 
     /**
      * Deploy this virtual machine according to the reservation from before.
-     * @param reservationId reservation id from reserve call.
+     *
+     * @param reservationId
+     *            reservation id from reserve call.
      *
      */
     void deploy(String reservationId, String caller, Map<VirtualMachineProfile.Param, Object> params) throws InsufficientCapacityException, ResourceUnavailableException;
@@ -115,9 +122,9 @@ public interface VirtualMachineEntity extends CloudStackEntity {
     boolean stop(String caller) throws ResourceUnavailableException, CloudException;
 
     /**
-     * Cleans up after any botched starts.  CloudStack Orchestration Platform
-     * will attempt a best effort to actually shutdown any resource but
-     * even if it cannot, it releases the resource from its database.
+     * Cleans up after any botched starts. CloudStack Orchestration Platform
+     * will attempt a best effort to actually shutdown any resource but even if
+     * it cannot, it releases the resource from its database.
      */
     void cleanup();
 
@@ -128,6 +135,7 @@ public interface VirtualMachineEntity extends CloudStackEntity {
 
     /**
      * Duplicate this VM in the database so that it will start new
+     *
      * @param externalId
      * @return a new VirtualMachineEntity
      */
@@ -140,27 +148,37 @@ public interface VirtualMachineEntity extends CloudStackEntity {
 
     /**
      * Attach volume to this VM
-     * @param volume volume to attach
-     * @param deviceId deviceId to use
+     *
+     * @param volume
+     *            volume to attach
+     * @param deviceId
+     *            deviceId to use
      */
     void attach(VolumeEntity volume, short deviceId);
 
     /**
      * Detach the volume from this VM
-     * @param volume volume to detach
+     *
+     * @param volume
+     *            volume to detach
      */
     void detach(VolumeEntity volume);
 
     /**
      * Connect the VM to a network
-     * @param network network to attach
-     * @param deviceId device id to use when a nic is created
+     *
+     * @param network
+     *            network to attach
+     * @param deviceId
+     *            device id to use when a nic is created
      */
     void connectTo(NetworkEntity network, short nicId);
 
     /**
      * Disconnect the VM from this network
-     * @param netowrk network to disconnect from
+     *
+     * @param netowrk
+     *            network to disconnect from
      */
     void disconnectFrom(NetworkEntity netowrk, short nicId);
 }

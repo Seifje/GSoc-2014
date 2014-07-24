@@ -34,40 +34,28 @@ import org.apache.cloudstack.api.response.UserVmResponse;
 import com.cloud.uservm.UserVm;
 import com.cloud.utils.Pair;
 
-@APICommand(name = "listLoadBalancerRuleInstances", description = "List all virtual machine instances that are assigned to a load balancer rule.", responseObject = LoadBalancerRuleVmMapResponse.class, responseView = ResponseView.Restricted,
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = true)
+@APICommand(name = "listLoadBalancerRuleInstances", description = "List all virtual machine instances that are assigned to a load balancer rule.", responseObject = LoadBalancerRuleVmMapResponse.class, responseView = ResponseView.Restricted, requestHasSensitiveInfo = false, responseHasSensitiveInfo = true)
 public class ListLoadBalancerRuleInstancesCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListLoadBalancerRuleInstancesCmd.class.getName());
 
     private static final String s_name = "listloadbalancerruleinstancesresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.APPLIED,
-               type = CommandType.BOOLEAN,
-               description = "true if listing all virtual machines currently applied to the load balancer rule; default is true")
+    @Parameter(name = ApiConstants.APPLIED, type = CommandType.BOOLEAN, description = "true if listing all virtual machines currently applied to the load balancer rule; default is true")
     private Boolean applied;
 
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = FirewallRuleResponse.class,
-               required = true,
-               description = "the ID of the load balancer rule")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = FirewallRuleResponse.class, required = true, description = "the ID of the load balancer rule")
     private Long id;
 
-
-    @Parameter(name = ApiConstants.LIST_LB_VMIPS,
-            type = CommandType.BOOLEAN,
-            description = "true if lb rule vm ip information to be included; default is false")
+    @Parameter(name = ApiConstants.LIST_LB_VMIPS, type = CommandType.BOOLEAN, description = "true if lb rule vm ip information to be included; default is false")
     private boolean isListLbVmip;
 
-
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Boolean isApplied() {
         return applied;
@@ -81,9 +69,9 @@ public class ListLoadBalancerRuleInstancesCmd extends BaseListCmd {
         return isListLbVmip;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -92,9 +80,9 @@ public class ListLoadBalancerRuleInstancesCmd extends BaseListCmd {
 
     @Override
     public void execute() {
-        Pair<List<? extends UserVm>, List<String>> vmServiceMap =  _lbService.listLoadBalancerInstances(this);
+        Pair<List<? extends UserVm>, List<String>> vmServiceMap = _lbService.listLoadBalancerInstances(this);
         List<? extends UserVm> result = vmServiceMap.first();
-        List<String> serviceStates  = vmServiceMap.second();
+        List<String> serviceStates = vmServiceMap.second();
 
         if (!isListLbVmip()) {
             // list lb instances
@@ -103,7 +91,6 @@ public class ListLoadBalancerRuleInstancesCmd extends BaseListCmd {
             if (result != null) {
                 vmResponses = _responseGenerator.createUserVmResponse(ResponseView.Restricted, "loadbalancerruleinstance", result.toArray(new UserVm[result.size()]));
 
-
                 for (int i = 0; i < result.size(); i++) {
                     vmResponses.get(i).setServiceState(serviceStates.get(i));
                 }
@@ -111,7 +98,6 @@ public class ListLoadBalancerRuleInstancesCmd extends BaseListCmd {
             response.setResponses(vmResponses);
             response.setResponseName(getCommandName());
             setResponseObject(response);
-
 
         } else {
             ListResponse<LoadBalancerRuleVmMapResponse> lbRes = new ListResponse<LoadBalancerRuleVmMapResponse>();
@@ -122,10 +108,9 @@ public class ListLoadBalancerRuleInstancesCmd extends BaseListCmd {
             if (result != null) {
                 vmResponses = _responseGenerator.createUserVmResponse(ResponseView.Full, "loadbalancerruleinstance", result.toArray(new UserVm[result.size()]));
 
-
                 List<String> ipaddr = null;
 
-                for (int i=0;i<result.size(); i++) {
+                for (int i = 0; i < result.size(); i++) {
                     LoadBalancerRuleVmMapResponse lbRuleVmIpResponse = new LoadBalancerRuleVmMapResponse();
                     vmResponses.get(i).setServiceState(serviceStates.get(i));
                     lbRuleVmIpResponse.setUserVmResponse(vmResponses.get(i));

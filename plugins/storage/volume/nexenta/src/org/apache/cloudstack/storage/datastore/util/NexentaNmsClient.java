@@ -132,12 +132,13 @@ public class NexentaNmsClient {
             this.params = params;
         }
 
+        @Override
         public String toString() {
             StringBuffer b = new StringBuffer();
             b.append("Request to ").append(object).append(" method ").append(method);
             if (params != null) {
                 b.append(" params:");
-                for (Object param:params) {
+                for (Object param : params) {
                     b.append(" ").append(param).append(",");
                 }
             }
@@ -156,11 +157,13 @@ public class NexentaNmsClient {
 
     @SuppressWarnings("unused")
     static class NmsResponse {
-        @SerializedName("tg_flash") protected String tgFlash;
+        @SerializedName("tg_flash")
+        protected String tgFlash;
 
         protected NmsError error;
 
-        NmsResponse() {}
+        NmsResponse() {
+        }
 
         NmsResponse(String tgFlash, NmsError error) {
             this.tgFlash = tgFlash;
@@ -219,7 +222,7 @@ public class NexentaNmsClient {
             logger.debug("NexentaStor Appliance response: " + responseString);
         }
 
-        NmsResponse nmsResponse = (NmsResponse) gson.fromJson(responseString, responseClass);
+        NmsResponse nmsResponse = (NmsResponse)gson.fromJson(responseString, responseClass);
         if (nmsResponse.getError() != null) {
             throw new CloudRuntimeException(nmsResponse.getError().getMesssage());
         }

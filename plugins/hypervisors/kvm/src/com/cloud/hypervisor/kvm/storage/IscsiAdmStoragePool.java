@@ -83,8 +83,10 @@ public class IscsiAdmStoragePool implements KVMStoragePool {
         return PhysicalDiskFormat.RAW;
     }
 
-    // called from LibvirtComputingResource.copyPhysicalDisk(KVMPhysicalDisk, String, KVMStoragePool) and
-    // from LibvirtComputingResource.createDiskFromTemplate(KVMPhysicalDisk, String, PhysicalDiskFormat, long, KVMStoragePool)
+    // called from LibvirtComputingResource.copyPhysicalDisk(KVMPhysicalDisk,
+    // String, KVMStoragePool) and
+    // from LibvirtComputingResource.createDiskFromTemplate(KVMPhysicalDisk,
+    // String, PhysicalDiskFormat, long, KVMStoragePool)
     // does not apply for iScsiAdmStoragePool
     @Override
     public KVMPhysicalDisk createPhysicalDisk(String name, PhysicalDiskFormat format, Storage.ProvisioningType provisioningType, long size) {

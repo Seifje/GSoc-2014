@@ -48,14 +48,15 @@ public class LoadBalancerTO {
     DestinationTO[] destinations;
     private StickinessPolicyTO[] stickinessPolicies;
     private HealthCheckPolicyTO[] healthCheckPolicies;
-    private LbSslCert sslCert; /* XXX: Should this be SslCertTO?  */
+    private LbSslCert sslCert; /* XXX: Should this be SslCertTO? */
     private AutoScaleVmGroupTO autoScaleVmGroupTO;
     final static int MAX_STICKINESS_POLICIES = 1;
     final static int MAX_HEALTHCHECK_POLICIES = 1;
 
     public LoadBalancerTO(String uuid, String srcIp, int srcPort, String protocol, String algorithm, boolean revoked, boolean alreadyAdded, boolean inline,
             List<LbDestination> destinations) {
-        if (destinations == null) { // for autoscaleconfig destinations will be null;
+        if (destinations == null) { // for autoscaleconfig destinations will be
+            // null;
             destinations = new ArrayList<LbDestination>();
         }
         this.uuid = uuid;
@@ -83,8 +84,7 @@ public class LoadBalancerTO {
     }
 
     public LoadBalancerTO(String id, String srcIp, int srcPort, String protocol, String algorithm, boolean revoked, boolean alreadyAdded, boolean inline,
-            List<LbDestination> argDestinations, List<LbStickinessPolicy> stickinessPolicies, List<LbHealthCheckPolicy> healthCheckPolicies, LbSslCert sslCert,
-            String lbProtocol) {
+            List<LbDestination> argDestinations, List<LbStickinessPolicy> stickinessPolicies, List<LbHealthCheckPolicy> healthCheckPolicies, LbSslCert sslCert, String lbProtocol) {
         this(id, srcIp, srcPort, protocol, algorithm, revoked, alreadyAdded, inline, argDestinations);
         this.stickinessPolicies = null;
         this.healthCheckPolicies = null;
@@ -107,9 +107,8 @@ public class LoadBalancerTO {
             this.healthCheckPolicies = new HealthCheckPolicyTO[MAX_HEALTHCHECK_POLICIES];
             int index = 0;
             for (LbHealthCheckPolicy hcp : healthCheckPolicies) {
-                this.healthCheckPolicies[0] =
-                    new HealthCheckPolicyTO(hcp.getpingpath(), hcp.getDescription(), hcp.getResponseTime(), hcp.getHealthcheckInterval(), hcp.getHealthcheckThresshold(),
-                        hcp.getUnhealthThresshold(), hcp.isRevoked());
+                this.healthCheckPolicies[0] = new HealthCheckPolicyTO(hcp.getpingpath(), hcp.getDescription(), hcp.getResponseTime(), hcp.getHealthcheckInterval(),
+                        hcp.getHealthcheckThresshold(), hcp.getUnhealthThresshold(), hcp.isRevoked());
                 index++;
                 if (index == MAX_HEALTHCHECK_POLICIES)
                     break;
@@ -217,8 +216,7 @@ public class LoadBalancerTO {
         private int unhealthThresshold;
         private boolean revoke = false;
 
-        public HealthCheckPolicyTO(String pingPath, String description, int responseTime, int healthcheckInterval, int healthcheckThresshold, int unhealthThresshold,
-                boolean revoke) {
+        public HealthCheckPolicyTO(String pingPath, String description, int responseTime, int healthcheckInterval, int healthcheckThresshold, int unhealthThresshold, boolean revoke) {
 
             this.description = description;
             this.pingPath = pingPath;
@@ -414,9 +412,8 @@ public class LoadBalancerTO {
         private final String vmName;
         private final String networkId;
 
-        public AutoScaleVmProfileTO(String zoneId, String domainId, String cloudStackApiUrl, String autoScaleUserApiKey, String autoScaleUserSecretKey,
-                String serviceOfferingId, String templateId, String vmName, String networkId, String otherDeployParams, List<Pair<String, String>> counterParamList,
-                Integer destroyVmGraceperiod) {
+        public AutoScaleVmProfileTO(String zoneId, String domainId, String cloudStackApiUrl, String autoScaleUserApiKey, String autoScaleUserSecretKey, String serviceOfferingId,
+                String templateId, String vmName, String networkId, String otherDeployParams, List<Pair<String, String>> counterParamList, Integer destroyVmGraceperiod) {
             this.zoneId = zoneId;
             this.domainId = domainId;
             this.serviceOfferingId = serviceOfferingId;
@@ -491,8 +488,8 @@ public class LoadBalancerTO {
         private final String state;
         private final String currentState;
 
-        AutoScaleVmGroupTO(String uuid, int minMembers, int maxMembers, int memberPort, int interval, List<AutoScalePolicyTO> policies, AutoScaleVmProfileTO profile,
-                String state, String currentState) {
+        AutoScaleVmGroupTO(String uuid, int minMembers, int maxMembers, int memberPort, int interval, List<AutoScalePolicyTO> policies, AutoScaleVmProfileTO profile, String state,
+                String currentState) {
             this.uuid = uuid;
             this.minMembers = minMembers;
             this.maxMembers = maxMembers;
@@ -555,21 +552,20 @@ public class LoadBalancerTO {
                 conditionTOs.add(conditionTO);
             }
             AutoScalePolicy autoScalePolicy = lbAutoScalePolicy.getPolicy();
-            autoScalePolicyTOs.add(new AutoScalePolicyTO(autoScalePolicy.getId(), autoScalePolicy.getDuration(), autoScalePolicy.getQuietTime(),
-                autoScalePolicy.getAction(), conditionTOs, lbAutoScalePolicy.isRevoked()));
+            autoScalePolicyTOs.add(new AutoScalePolicyTO(autoScalePolicy.getId(), autoScalePolicy.getDuration(), autoScalePolicy.getQuietTime(), autoScalePolicy.getAction(),
+                    conditionTOs, lbAutoScalePolicy.isRevoked()));
         }
         LbAutoScaleVmProfile lbAutoScaleVmProfile = lbAutoScaleVmGroup.getProfile();
         AutoScaleVmProfile autoScaleVmProfile = lbAutoScaleVmProfile.getProfile();
 
-        AutoScaleVmProfileTO autoScaleVmProfileTO =
-            new AutoScaleVmProfileTO(lbAutoScaleVmProfile.getZoneId(), lbAutoScaleVmProfile.getDomainId(), lbAutoScaleVmProfile.getCsUrl(),
+        AutoScaleVmProfileTO autoScaleVmProfileTO = new AutoScaleVmProfileTO(lbAutoScaleVmProfile.getZoneId(), lbAutoScaleVmProfile.getDomainId(), lbAutoScaleVmProfile.getCsUrl(),
                 lbAutoScaleVmProfile.getAutoScaleUserApiKey(), lbAutoScaleVmProfile.getAutoScaleUserSecretKey(), lbAutoScaleVmProfile.getServiceOfferingId(),
                 lbAutoScaleVmProfile.getTemplateId(), lbAutoScaleVmProfile.getVmName(), lbAutoScaleVmProfile.getNetworkId(), autoScaleVmProfile.getOtherDeployParams(),
                 autoScaleVmProfile.getCounterParams(), autoScaleVmProfile.getDestroyVmGraceperiod());
 
         AutoScaleVmGroup autoScaleVmGroup = lbAutoScaleVmGroup.getVmGroup();
-        autoScaleVmGroupTO =
-            new AutoScaleVmGroupTO(autoScaleVmGroup.getUuid(), autoScaleVmGroup.getMinMembers(), autoScaleVmGroup.getMaxMembers(), autoScaleVmGroup.getMemberPort(),
-                autoScaleVmGroup.getInterval(), autoScalePolicyTOs, autoScaleVmProfileTO, autoScaleVmGroup.getState(), lbAutoScaleVmGroup.getCurrentState());
+        autoScaleVmGroupTO = new AutoScaleVmGroupTO(autoScaleVmGroup.getUuid(), autoScaleVmGroup.getMinMembers(), autoScaleVmGroup.getMaxMembers(),
+                autoScaleVmGroup.getMemberPort(), autoScaleVmGroup.getInterval(), autoScalePolicyTOs, autoScaleVmProfileTO, autoScaleVmGroup.getState(),
+                lbAutoScaleVmGroup.getCurrentState());
     }
 }

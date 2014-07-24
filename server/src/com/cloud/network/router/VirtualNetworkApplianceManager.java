@@ -54,15 +54,15 @@ public interface VirtualNetworkApplianceManager extends Manager, VirtualNetworkA
     static final String RouterAlertsCheckIntervalCK = "router.alerts.check.interval";
 
     static final ConfigKey<String> RouterTemplateXen = new ConfigKey<String>(String.class, RouterTemplateXenCK, "Advanced", "SystemVM Template (XenServer)",
-        "Name of the default router template on Xenserver.", true, ConfigKey.Scope.Zone, null);
+            "Name of the default router template on Xenserver.", true, ConfigKey.Scope.Zone, null);
     static final ConfigKey<String> RouterTemplateKvm = new ConfigKey<String>(String.class, RouterTemplateKvmCK, "Advanced", "SystemVM Template (KVM)",
-        "Name of the default router template on KVM.", true, ConfigKey.Scope.Zone, null);
+            "Name of the default router template on KVM.", true, ConfigKey.Scope.Zone, null);
     static final ConfigKey<String> RouterTemplateVmware = new ConfigKey<String>(String.class, RouterTemplateVmwareCK, "Advanced", "SystemVM Template (vSphere)",
-        "Name of the default router template on Vmware.", true, ConfigKey.Scope.Zone, null);
+            "Name of the default router template on Vmware.", true, ConfigKey.Scope.Zone, null);
     static final ConfigKey<String> RouterTemplateHyperV = new ConfigKey<String>(String.class, RouterTemplateHyperVCK, "Advanced", "SystemVM Template (HyperV)",
-        "Name of the default router template on Hyperv.", true, ConfigKey.Scope.Zone, null);
+            "Name of the default router template on Hyperv.", true, ConfigKey.Scope.Zone, null);
     static final ConfigKey<String> RouterTemplateLxc = new ConfigKey<String>(String.class, RouterTemplateLxcCK, "Advanced", "SystemVM Template (LXC)",
-        "Name of the default router template on LXC.", true, ConfigKey.Scope.Zone, null);
+            "Name of the default router template on LXC.", true, ConfigKey.Scope.Zone, null);
 
     static final ConfigKey<String> SetServiceMonitor = new ConfigKey<String>(String.class, SetServiceMonitorCK, "Advanced", "true",
             "service monitoring in router enable/disable option, default true", true, ConfigKey.Scope.Zone, null);
@@ -70,13 +70,13 @@ public interface VirtualNetworkApplianceManager extends Manager, VirtualNetworkA
     static final ConfigKey<Integer> RouterAlertsCheckInterval = new ConfigKey<Integer>(Integer.class, RouterAlertsCheckIntervalCK, "Advanced", "1800",
             "Interval (in seconds) to check for alerts in Virtual Router.", false, ConfigKey.Scope.Global, null);
 
-    public static final int DEFAULT_ROUTER_VM_RAMSIZE = 128;            // 128M
-    public static final int DEFAULT_ROUTER_CPU_MHZ = 500;                // 500 MHz
+    public static final int DEFAULT_ROUTER_VM_RAMSIZE = 128; // 128M
+    public static final int DEFAULT_ROUTER_CPU_MHZ = 500; // 500 MHz
     public static final boolean USE_POD_VLAN = false;
 
     /**
-    /*
-     * Send ssh public/private key pair to specified host
+     * /* Send ssh public/private key pair to specified host
+     *
      * @param hostId
      * @param pubKey
      * @param prvKey
@@ -85,27 +85,26 @@ public interface VirtualNetworkApplianceManager extends Manager, VirtualNetworkA
 
     /**
      * save a vm password on the router.
-     * @param routers TODO
+     *
+     * @param routers
+     *            TODO
      *
      */
-    boolean savePasswordToRouter(Network network, NicProfile nic, VirtualMachineProfile profile, List<? extends VirtualRouter> routers)
-        throws ResourceUnavailableException;
+    boolean savePasswordToRouter(Network network, NicProfile nic, VirtualMachineProfile profile, List<? extends VirtualRouter> routers) throws ResourceUnavailableException;
 
     boolean saveSSHPublicKeyToRouter(Network network, NicProfile nic, VirtualMachineProfile profile, List<? extends VirtualRouter> routers, String sshPublicKey)
-        throws ResourceUnavailableException;
+            throws ResourceUnavailableException;
 
-    boolean saveUserDataToRouter(Network network, NicProfile nic, VirtualMachineProfile profile, List<? extends VirtualRouter> routers)
-        throws ResourceUnavailableException;
+    boolean saveUserDataToRouter(Network network, NicProfile nic, VirtualMachineProfile profile, List<? extends VirtualRouter> routers) throws ResourceUnavailableException;
 
     List<DomainRouterVO> deployVirtualRouterInGuestNetwork(Network guestNetwork, DeployDestination dest, Account owner, Map<VirtualMachineProfile.Param, Object> params,
-        boolean isRedundant) throws InsufficientCapacityException, ResourceUnavailableException, ConcurrentOperationException;
+            boolean isRedundant) throws InsufficientCapacityException, ResourceUnavailableException, ConcurrentOperationException;
 
     boolean startRemoteAccessVpn(Network network, RemoteAccessVpn vpn, List<? extends VirtualRouter> routers) throws ResourceUnavailableException;
 
     boolean deleteRemoteAccessVpn(Network network, RemoteAccessVpn vpn, List<? extends VirtualRouter> routers) throws ResourceUnavailableException;
 
-    boolean associatePublicIP(Network network, final List<? extends PublicIpAddress> ipAddress, List<? extends VirtualRouter> routers)
-        throws ResourceUnavailableException;
+    boolean associatePublicIP(Network network, final List<? extends PublicIpAddress> ipAddress, List<? extends VirtualRouter> routers) throws ResourceUnavailableException;
 
     boolean applyFirewallRules(Network network, final List<? extends FirewallRule> rules, List<? extends VirtualRouter> routers) throws ResourceUnavailableException;
 
@@ -119,16 +118,14 @@ public interface VirtualNetworkApplianceManager extends Manager, VirtualNetworkA
 
     boolean applyStaticNats(Network network, final List<? extends StaticNat> rules, List<? extends VirtualRouter> routers) throws ResourceUnavailableException;
 
-    boolean applyDhcpEntry(Network config, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, List<DomainRouterVO> routers)
-        throws ResourceUnavailableException;
+    boolean applyDhcpEntry(Network config, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, List<DomainRouterVO> routers) throws ResourceUnavailableException;
 
-    boolean applyUserData(Network config, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, List<DomainRouterVO> routers)
-        throws ResourceUnavailableException;
+    boolean applyUserData(Network config, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, List<DomainRouterVO> routers) throws ResourceUnavailableException;
 
     boolean applyLoadBalancingRules(Network network, List<? extends LoadBalancingRule> rules, List<? extends VirtualRouter> routers) throws ResourceUnavailableException;
 
     boolean configDhcpForSubnet(Network network, NicProfile nic, VirtualMachineProfile uservm, DeployDestination dest, List<DomainRouterVO> routers)
-        throws ResourceUnavailableException;
+            throws ResourceUnavailableException;
 
     boolean removeDhcpSupportForSubnet(Network network, List<DomainRouterVO> routers) throws ResourceUnavailableException;
 

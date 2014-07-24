@@ -206,8 +206,8 @@ public class VolumeDataStoreVO implements StateObject<ObjectInDataStoreStateMach
         refCnt = 0L;
     }
 
-    public VolumeDataStoreVO(long hostId, long volumeId, Date lastUpdated, int downloadPercent, Status downloadState, String localDownloadPath, String errorString,
-            String jobId, String installPath, String downloadUrl, String checksum) {
+    public VolumeDataStoreVO(long hostId, long volumeId, Date lastUpdated, int downloadPercent, Status downloadState, String localDownloadPath, String errorString, String jobId,
+            String installPath, String downloadUrl, String checksum) {
         // super();
         dataStoreId = hostId;
         this.volumeId = volumeId;
@@ -352,8 +352,7 @@ public class VolumeDataStoreVO implements StateObject<ObjectInDataStoreStateMach
     public void setRefCnt(Long refCnt) {
         if (refCnt > 0) {
             refCnt--;
-        }
-        else {
+        } else {
             s_logger.warn("We should not try to decrement a zero reference count even though our code has guarded");
         }
     }

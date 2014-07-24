@@ -78,22 +78,26 @@ public interface ServiceOffering extends DiskOffering, InfrastructureEntity, Int
     boolean getOfferHA();
 
     /**
-     * @return Does this service plan offer VM to use CPU resources beyond the service offering limits?
+     * @return Does this service plan offer VM to use CPU resources beyond the
+     *         service offering limits?
      */
     boolean getLimitCpuUse();
 
     /**
-     * @return Does this service plan support Volatile VM that is, discard VM's root disk and create a new one on reboot?
+     * @return Does this service plan support Volatile VM that is, discard VM's
+     *         root disk and create a new one on reboot?
      */
     boolean getVolatileVm();
 
     /**
-     * @return the rate in megabits per sec to which a VM's network interface is throttled to
+     * @return the rate in megabits per sec to which a VM's network interface is
+     *         throttled to
      */
     Integer getRateMbps();
 
     /**
-     * @return the rate megabits per sec to which a VM's multicast&broadcast traffic is throttled to
+     * @return the rate megabits per sec to which a VM's multicast&broadcast
+     *         traffic is throttled to
      */
     Integer getMulticastRateMbps();
 

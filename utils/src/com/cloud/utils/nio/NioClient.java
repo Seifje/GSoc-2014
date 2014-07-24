@@ -95,7 +95,8 @@ public class NioClient extends NioConnection {
             SelectionKey key = sch.register(_selector, SelectionKey.OP_READ);
             link.setKey(key);
             key.attach(link);
-            // Notice we've already connected due to the handshake, so let's get the
+            // Notice we've already connected due to the handshake, so let's get
+            // the
             // remaining task done
             task = _factory.create(Task.Type.CONNECT, link, null);
         } catch (Exception e) {

@@ -34,8 +34,8 @@ import com.google.gson.JsonParser;
 import com.cloud.bridge.util.JsonAccessor;
 
 /**
- * CloudStackClient implements a simple CloudStack client object, it can be used to execute CloudStack commands
- * with JSON response
+ * CloudStackClient implements a simple CloudStack client object, it can be used
+ * to execute CloudStack commands with JSON response
  *
  */
 public class CloudStackClient {
@@ -43,8 +43,8 @@ public class CloudStackClient {
 
     private String _serviceUrl;
 
-    private long _pollIntervalMs = 2000;            // 1 second polling interval
-    private long _pollTimeoutMs = 600000;            // 10 minutes polling timeout
+    private long _pollIntervalMs = 2000; // 1 second polling interval
+    private long _pollTimeoutMs = 600000; // 10 minutes polling timeout
 
     public CloudStackClient(String serviceRootUrl) {
         assert (serviceRootUrl != null);
@@ -68,7 +68,8 @@ public class CloudStackClient {
         }
 
         //
-        // If the CloudStack root context path has been from /client to some other name
+        // If the CloudStack root context path has been from /client to some
+        // other name
         // use the first constructor instead
         //
         sb.append("/client/api");
@@ -86,8 +87,8 @@ public class CloudStackClient {
         return this;
     }
 
-    public <T> T call(CloudStackCommand cmd, String apiKey, String secretKey, boolean followToAsyncResult, String responseName, String responseObjName,
-        Class<T> responseClz) throws Exception {
+    public <T> T call(CloudStackCommand cmd, String apiKey, String secretKey, boolean followToAsyncResult, String responseName, String responseObjName, Class<T> responseClz)
+            throws Exception {
 
         assert (responseName != null);
 
@@ -103,26 +104,26 @@ public class CloudStackClient {
                 if (queryAsyncJobResponse.tryEval("queryasyncjobresultresponse") != null) {
                     int jobStatus = queryAsyncJobResponse.getAsInt("queryasyncjobresultresponse.jobstatus");
                     switch (jobStatus) {
-                        case 2:
-                            throw new Exception(queryAsyncJobResponse.getAsString("queryasyncjobresultresponse.jobresult.errortext") + " Error Code - " +
-                                queryAsyncJobResponse.getAsString("queryasyncjobresultresponse.jobresult.errorcode"));
+                    case 2:
+                        throw new Exception(queryAsyncJobResponse.getAsString("queryasyncjobresultresponse.jobresult.errortext") + " Error Code - "
+                                + queryAsyncJobResponse.getAsString("queryasyncjobresultresponse.jobresult.errorcode"));
 
-                        case 0:
-                            try {
-                                Thread.sleep(_pollIntervalMs);
-                            } catch (Exception e) {
-                            }
-                            break;
+                    case 0:
+                        try {
+                            Thread.sleep(_pollIntervalMs);
+                        } catch (Exception e) {
+                        }
+                        break;
 
-                        case 1:
-                            if (responseObjName != null)
-                                return (T)(new Gson()).fromJson(queryAsyncJobResponse.eval("queryasyncjobresultresponse.jobresult." + responseObjName), responseClz);
-                            else
-                                return (T)(new Gson()).fromJson(queryAsyncJobResponse.eval("queryasyncjobresultresponse.jobresult"), responseClz);
+                    case 1:
+                        if (responseObjName != null)
+                            return (T)(new Gson()).fromJson(queryAsyncJobResponse.eval("queryasyncjobresultresponse.jobresult." + responseObjName), responseClz);
+                        else
+                            return (T)(new Gson()).fromJson(queryAsyncJobResponse.eval("queryasyncjobresultresponse.jobresult"), responseClz);
 
-                        default:
-                            assert (false);
-                            throw new Exception("Operation failed - invalid job status response");
+                    default:
+                        assert (false);
+                        throw new Exception("Operation failed - invalid job status response");
                     }
                 } else {
                     throw new Exception("Operation failed - invalid JSON response");
@@ -138,9 +139,8 @@ public class CloudStackClient {
         }
     }
 
-    // collectionType example :  new TypeToken<List<String>>() {}.getType();
-    public <T> List<T> listCall(CloudStackCommand cmd, String apiKey, String secretKey, String responseName, String responseObjName, Type collectionType)
-        throws Exception {
+    // collectionType example : new TypeToken<List<String>>() {}.getType();
+    public <T> List<T> listCall(CloudStackCommand cmd, String apiKey, String secretKey, String responseName, String responseObjName, Type collectionType) throws Exception {
 
         assert (responseName != null);
 
@@ -150,7 +150,8 @@ public class CloudStackClient {
             try {
                 return (new Gson()).fromJson(json.eval(responseName + "." + responseObjName), collectionType);
             } catch (Exception e) {
-                // this happens because responseObjName won't exist if there are no objects in the list.
+                // this happens because responseObjName won't exist if there are
+                // no objects in the list.
                 logger.debug("CloudSatck API response doesn't contain responseObjName:" + responseObjName + " because response is empty");
                 return null;
             }

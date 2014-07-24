@@ -81,36 +81,29 @@ import com.cloud.utils.net.Ip;
 import com.cloud.utils.net.NetUtils;
 
 /**
- *  GenericDaoBase is a simple way to implement DAOs.  It DOES NOT
- *  support the full EJB3 spec.  It borrows some of the annotations from
- *  the EJB3 spec to produce a set of SQLs so developers don't have to
- *  copy and paste the same code over and over again.  Of course,
- *  GenericDaoBase is completely at the mercy of the annotations you add
- *  to your entity bean.  If GenericDaoBase does not fit your needs, then
- *  don't extend from it.
+ * GenericDaoBase is a simple way to implement DAOs. It DOES NOT support the
+ * full EJB3 spec. It borrows some of the annotations from the EJB3 spec to
+ * produce a set of SQLs so developers don't have to copy and paste the same
+ * code over and over again. Of course, GenericDaoBase is completely at the
+ * mercy of the annotations you add to your entity bean. If GenericDaoBase does
+ * not fit your needs, then don't extend from it.
  *
- *  GenericDaoBase attempts to achieve the following:
- *    1. If you use _allFieldsStr in your SQL statement and use to() to convert
- *       the result to the entity bean, you don't ever have to worry about
- *       missing fields because its automatically taken from the entity bean's
- *       annotations.
- *    2. You don't have to rewrite the same insert and select query strings
- *       in all of your DAOs.
- *    3. You don't have to match the '?' (you know what I'm talking about) to
- *       the fields in the insert statement as that's taken care of for you.
+ * GenericDaoBase attempts to achieve the following: 1. If you use _allFieldsStr
+ * in your SQL statement and use to() to convert the result to the entity bean,
+ * you don't ever have to worry about missing fields because its automatically
+ * taken from the entity bean's annotations. 2. You don't have to rewrite the
+ * same insert and select query strings in all of your DAOs. 3. You don't have
+ * to match the '?' (you know what I'm talking about) to the fields in the
+ * insert statement as that's taken care of for you.
  *
- *  GenericDaoBase looks at the following annotations:
- *    1. Table - just name
- *    2. Column - just name
- *    3. GeneratedValue - any field with this annotation is not inserted.
- *    4. SequenceGenerator - sequence generator
- *    5. Id
- *    6. SecondaryTable
+ * GenericDaoBase looks at the following annotations: 1. Table - just name 2.
+ * Column - just name 3. GeneratedValue - any field with this annotation is not
+ * inserted. 4. SequenceGenerator - sequence generator 5. Id 6. SecondaryTable
  *
- *  Sometime later, I might look into injecting the SQLs as needed but right
- *  now we have to construct them at construction time.  The good thing is that
- *  the DAOs are suppose to be one per jvm so the time is all during the
- *  initial load.
+ * Sometime later, I might look into injecting the SQLs as needed but right now
+ * we have to construct them at construction time. The good thing is that the
+ * DAOs are suppose to be one per jvm so the time is all during the initial
+ * load.
  *
  **/
 @DB
@@ -128,7 +121,7 @@ public abstract class GenericDaoBase<T, ID extends Serializable> extends Compone
 
     protected Field[] _embeddedFields;
 
-    // This is private on purpose.  Everyone should use createPartialSelectSql()
+    // This is private on purpose. Everyone should use createPartialSelectSql()
     private final Pair<StringBuilder, Attribute[]> _partialSelectSql;
     private final Pair<StringBuilder, Attribute[]> _partialQueryCacheSelectSql;
     protected StringBuilder _discriminatorClause;
@@ -553,8 +546,7 @@ public abstract class GenericDaoBase<T, ID extends Serializable> extends Compone
 
                 final Enum<?>[] enums = (Enum<?>[])field.getType().getEnumConstants();
                 for (final Enum<?> e : enums) {
-                    if ((enumType == EnumType.STRING && e.name().equalsIgnoreCase(rs.getString(index))) ||
-                            (enumType == EnumType.ORDINAL && e.ordinal() == rs.getInt(index))) {
+                    if ((enumType == EnumType.STRING && e.name().equalsIgnoreCase(rs.getString(index))) || (enumType == EnumType.ORDINAL && e.ordinal() == rs.getInt(index))) {
                         field.set(entity, e);
                         return;
                     }
@@ -686,20 +678,20 @@ public abstract class GenericDaoBase<T, ID extends Serializable> extends Compone
                 return null;
             }
         } else if (type == int.class) {
-            return (M) (Integer) rs.getInt(index);
+            return (M)(Integer)rs.getInt(index);
         } else if (type == Integer.class) {
             if (rs.getObject(index) == null) {
                 return null;
             } else {
-                return (M) (Integer) rs.getInt(index);
+                return (M)(Integer)rs.getInt(index);
             }
         } else if (type == long.class) {
-            return (M) (Long) rs.getLong(index);
+            return (M)(Long)rs.getLong(index);
         } else if (type == Long.class) {
             if (rs.getObject(index) == null) {
                 return null;
             } else {
-                return (M) (Long) rs.getLong(index);
+                return (M)(Long)rs.getLong(index);
             }
         } else if (type == Date.class) {
             final Object data = rs.getDate(index);
@@ -709,44 +701,44 @@ public abstract class GenericDaoBase<T, ID extends Serializable> extends Compone
                 return (M)DateUtil.parseDateString(s_gmtTimeZone, rs.getString(index));
             }
         } else if (type == short.class) {
-            return (M) (Short) rs.getShort(index);
+            return (M)(Short)rs.getShort(index);
         } else if (type == Short.class) {
             if (rs.getObject(index) == null) {
                 return null;
             } else {
-                return (M) (Short) rs.getShort(index);
+                return (M)(Short)rs.getShort(index);
             }
         } else if (type == boolean.class) {
-            return (M) (Boolean) rs.getBoolean(index);
+            return (M)(Boolean)rs.getBoolean(index);
         } else if (type == Boolean.class) {
             if (rs.getObject(index) == null) {
                 return null;
             } else {
-                return (M) (Boolean) rs.getBoolean(index);
+                return (M)(Boolean)rs.getBoolean(index);
             }
         } else if (type == float.class) {
-            return (M) (Float) rs.getFloat(index);
+            return (M)(Float)rs.getFloat(index);
         } else if (type == Float.class) {
             if (rs.getObject(index) == null) {
                 return null;
             } else {
-                return (M) (Float) rs.getFloat(index);
+                return (M)(Float)rs.getFloat(index);
             }
         } else if (type == double.class) {
-            return (M) (Double) rs.getDouble(index);
+            return (M)(Double)rs.getDouble(index);
         } else if (type == Double.class) {
             if (rs.getObject(index) == null) {
                 return null;
             } else {
-                return (M) (Double) rs.getDouble(index);
+                return (M)(Double)rs.getDouble(index);
             }
         } else if (type == byte.class) {
-            return (M) (Byte) rs.getByte(index);
+            return (M)(Byte)rs.getByte(index);
         } else if (type == Byte.class) {
             if (rs.getObject(index) == null) {
                 return null;
             } else {
-                return (M) (Byte) rs.getByte(index);
+                return (M)(Byte)rs.getByte(index);
             }
         } else if (type == Calendar.class) {
             final Object data = rs.getDate(index);
@@ -1254,19 +1246,9 @@ public abstract class GenericDaoBase<T, ID extends Serializable> extends Compone
 
         for (JoinBuilder<SearchCriteria<?>> join : joins) {
             StringBuilder onClause = new StringBuilder();
-            onClause.append(" ")
-            .append(join.getType().getName())
-            .append(" ")
-            .append(join.getSecondAttribute().table)
-            .append(" ON ")
-            .append(join.getFirstAttribute().table)
-            .append(".")
-            .append(join.getFirstAttribute().columnName)
-            .append("=")
-            .append(join.getSecondAttribute().table)
-            .append(".")
-            .append(join.getSecondAttribute().columnName)
-            .append(" ");
+            onClause.append(" ").append(join.getType().getName()).append(" ").append(join.getSecondAttribute().table).append(" ON ").append(join.getFirstAttribute().table)
+                    .append(".").append(join.getFirstAttribute().columnName).append("=").append(join.getSecondAttribute().table).append(".")
+                    .append(join.getSecondAttribute().columnName).append(" ");
             str.insert(fromIndex, onClause);
             String whereClause = join.getT().getWhereClause();
             if ((whereClause != null) && !"".equals(whereClause)) {
@@ -1743,7 +1725,8 @@ public abstract class GenericDaoBase<T, ID extends Serializable> extends Compone
     protected void setField(final Object entity, final ResultSet rs, ResultSetMetaData meta, final int index) throws SQLException {
         Attribute attr = _allColumns.get(new Pair<String, String>(meta.getTableName(index), meta.getColumnName(index)));
         if (attr == null) {
-            // work around for mysql bug to return original table name instead of view name in db view case
+            // work around for mysql bug to return original table name instead
+            // of view name in db view case
             Table tbl = entity.getClass().getSuperclass().getAnnotation(Table.class);
             if (tbl != null) {
                 attr = _allColumns.get(new Pair<String, String>(tbl.name(), meta.getColumnLabel(index)));
@@ -1870,8 +1853,9 @@ public abstract class GenericDaoBase<T, ID extends Serializable> extends Compone
             }
         }
 
-        // we have to disable group by in getting count, since count for groupBy clause will be different.
-        //List<Object> groupByValues = addGroupBy(str, sc);
+        // we have to disable group by in getting count, since count for groupBy
+        // clause will be different.
+        // List<Object> groupByValues = addGroupBy(str, sc);
         final TransactionLegacy txn = TransactionLegacy.currentTxn();
         final String sql = str.toString();
 
@@ -1890,11 +1874,8 @@ public abstract class GenericDaoBase<T, ID extends Serializable> extends Compone
             }
 
             /*
-            if (groupByValues != null) {
-                for (Object value : groupByValues) {
-                    pstmt.setObject(i++, value);
-                }
-            }
+             * if (groupByValues != null) { for (Object value : groupByValues) {
+             * pstmt.setObject(i++, value); } }
              */
 
             final ResultSet rs = pstmt.executeQuery();

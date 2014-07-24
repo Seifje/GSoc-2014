@@ -427,6 +427,7 @@ public class UserVmResponse extends BaseResponse implements ControlledEntityResp
     public String getVgpu() {
         return vgpu;
     }
+
     public String getCpuUsed() {
         return cpuUsed;
     }
@@ -653,6 +654,7 @@ public class UserVmResponse extends BaseResponse implements ControlledEntityResp
     public void setVgpu(String vgpu) {
         this.vgpu = vgpu;
     }
+
     public void setCpuUsed(String cpuUsed) {
         this.cpuUsed = cpuUsed;
     }

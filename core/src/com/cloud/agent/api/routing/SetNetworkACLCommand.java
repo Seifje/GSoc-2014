@@ -53,13 +53,19 @@ public class SetNetworkACLCommand extends NetworkElementCommand {
         String[][] result = new String[2][aclList.size()];
         int i = 0;
         for (NetworkACLTO aclTO : aclList) {
-            /*  example  :  Ingress:tcp:80:80:0.0.0.0/0:ACCEPT:,Egress:tcp:220:220:0.0.0.0/0:DROP:,
-             *  each entry format      Ingress/Egress:protocol:start port: end port:scidrs:action:
-             *  reverted entry format  Ingress/Egress:reverted:0:0:0:
+            /*
+             * example :
+             * Ingress:tcp:80:80:0.0.0.0/0:ACCEPT:,Egress:tcp:220:220:0.0
+             * .0.0/0:DROP:, each entry format Ingress/Egress:protocol:start
+             * port: end port:scidrs:action: reverted entry format
+             * Ingress/Egress:reverted:0:0:0:
              */
             if (aclTO.revoked() == true) {
                 StringBuilder sb = new StringBuilder();
-                /* This entry is added just to make sure atleast there will one entry in the list to get the ipaddress */
+                /*
+                 * This entry is added just to make sure atleast there will one
+                 * entry in the list to get the ipaddress
+                 */
                 sb.append(aclTO.getTrafficType().toString()).append(":reverted:0:0:0:");
                 String aclRuleEntry = sb.toString();
                 result[0][i++] = aclRuleEntry;

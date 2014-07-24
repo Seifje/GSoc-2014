@@ -75,7 +75,8 @@ public class LocalNfsSecondaryStorageResource extends NfsSecondaryStorageResourc
 
         attemptMount(localRootPath, remoteDevice, uri);
 
-        // Change permissions for the mountpoint - seems to bypass authentication
+        // Change permissions for the mountpoint - seems to bypass
+        // authentication
         Script script = new Script(true, "chmod", _timeout, s_logger);
         script.add("777", localRootPath);
         String result = script.execute();

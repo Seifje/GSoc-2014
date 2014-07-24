@@ -49,7 +49,8 @@ public class BitmapRectangle {
     public int colorDepth;
 
     /**
-     * Variable-length array of bytes describing a raw uncompressed bitmap image.
+     * Variable-length array of bytes describing a raw uncompressed bitmap
+     * image.
      */
     public ByteBuffer bitmapDataStream;
 
@@ -65,10 +66,7 @@ public class BitmapRectangle {
 
     @Override
     public String toString() {
-        return String
-                .format(
-                        "BitmapUpdateRectangle [x=%s, y=%s, width=%s, height=%s, bitsPerPixel=%s, bitmapDataStream=%s]",
-                        x, y, width, height, colorDepth, bitmapDataStream);
+        return String.format("BitmapUpdateRectangle [x=%s, y=%s, width=%s, height=%s, bitsPerPixel=%s, bitmapDataStream=%s]", x, y, width, height, colorDepth, bitmapDataStream);
     }
 
 }

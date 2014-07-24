@@ -23,8 +23,7 @@ public class VmWorkMigrateAway extends VmWork {
 
     private long srcHostId;
 
-    public VmWorkMigrateAway(long userId, long accountId, long vmId, String handlerName,
-            long srcHostId) {
+    public VmWorkMigrateAway(long userId, long accountId, long vmId, String handlerName, long srcHostId) {
         super(userId, accountId, vmId, handlerName);
 
         this.srcHostId = srcHostId;

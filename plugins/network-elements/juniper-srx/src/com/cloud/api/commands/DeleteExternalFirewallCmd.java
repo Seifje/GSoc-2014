@@ -33,30 +33,29 @@ import com.cloud.exception.InvalidParameterValueException;
 import com.cloud.network.element.JuniperSRXFirewallElementService;
 import com.cloud.user.Account;
 
-@APICommand(name = "deleteExternalFirewall", description = "Deletes an external firewall appliance.", responseObject = SuccessResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteExternalFirewall", description = "Deletes an external firewall appliance.", responseObject = SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteExternalFirewallCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(DeleteExternalFirewallCmd.class.getName());
     private static final String s_name = "deleteexternalfirewallresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = HostResponse.class, required = true, description = "Id of the external firewall appliance.")
     private Long id;
 
-    ///////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Inject
     JuniperSRXFirewallElementService _srxElementService;

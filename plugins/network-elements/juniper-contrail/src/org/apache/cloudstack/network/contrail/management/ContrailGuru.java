@@ -97,20 +97,19 @@ public class ContrailGuru extends AdapterBase implements NetworkGuru {
 
     private boolean canHandle(NetworkOffering offering, NetworkType networkType, PhysicalNetwork physicalNetwork) {
         if (physicalNetwork == null) {
-            // Physical network can be false for system network during initial setup of CloudStack
+            // Physical network can be false for system network during initial
+            // setup of CloudStack
             return false;
         }
 
         if (_manager.getRouterOffering() == null || _manager.getVpcRouterOffering() == null) {
-            // FIXME The resource is apparently not configured, we need another way to check this.
+            // FIXME The resource is apparently not configured, we need another
+            // way to check this.
             return false;
         }
 
-        if (networkType == NetworkType.Advanced
-                && (offering.getId() == _manager.getRouterOffering().getId() || offering.getId() == _manager.getVpcRouterOffering().getId())
-                && isMyTrafficType(offering.getTrafficType())
-                && offering.getGuestType() == Network.GuestType.Isolated
-                && physicalNetwork.getIsolationMethods().contains("L3VPN"))
+        if (networkType == NetworkType.Advanced && (offering.getId() == _manager.getRouterOffering().getId() || offering.getId() == _manager.getVpcRouterOffering().getId())
+                && isMyTrafficType(offering.getTrafficType()) && offering.getGuestType() == Network.GuestType.Isolated && physicalNetwork.getIsolationMethods().contains("L3VPN"))
             return true;
 
         return false;
@@ -126,13 +125,12 @@ public class ContrailGuru extends AdapterBase implements NetworkGuru {
         // Check of the isolation type of the related physical network is L3VPN
         PhysicalNetworkVO physnet = _physicalNetworkDao.findById(plan.getPhysicalNetworkId());
         DataCenter dc = _dcDao.findById(plan.getDataCenterId());
-        if (!canHandle(offering, dc.getNetworkType(),physnet)) {
+        if (!canHandle(offering, dc.getNetworkType(), physnet)) {
             s_logger.debug("Refusing to design this network");
             return null;
         }
-        NetworkVO network =
-                new NetworkVO(offering.getTrafficType(), Mode.Dhcp, BroadcastDomainType.Lswitch, offering.getId(), State.Allocated, plan.getDataCenterId(),
-                        plan.getPhysicalNetworkId());
+        NetworkVO network = new NetworkVO(offering.getTrafficType(), Mode.Dhcp, BroadcastDomainType.Lswitch, offering.getId(), State.Allocated, plan.getDataCenterId(),
+                plan.getPhysicalNetworkId());
         if (userSpecified.getCidr() != null) {
             network.setCidr(userSpecified.getCidr());
             network.setGateway(userSpecified.getGateway());
@@ -184,13 +182,13 @@ public class ContrailGuru extends AdapterBase implements NetworkGuru {
     }
 
     /**
-     * Allocate the NicProfile object.
-     * At this point the UUID of the nic is not yet known. We defer allocating the VMI and instance-ip objects
-     * until the reserve API is called because of this reason.
+     * Allocate the NicProfile object. At this point the UUID of the nic is not
+     * yet known. We defer allocating the VMI and instance-ip objects until the
+     * reserve API is called because of this reason.
      */
     @Override
     public NicProfile allocate(Network network, NicProfile profile, VirtualMachineProfile vm) throws InsufficientVirtualNetworkCapcityException,
-    InsufficientAddressCapacityException, ConcurrentOperationException {
+            InsufficientAddressCapacityException, ConcurrentOperationException {
         s_logger.debug("allocate NicProfile on " + network.getName());
 
         if (profile != null && profile.getRequestedIpv4() != null) {

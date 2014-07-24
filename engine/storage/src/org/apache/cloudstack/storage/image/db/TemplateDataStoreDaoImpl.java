@@ -165,34 +165,12 @@ public class TemplateDataStoreDaoImpl extends GenericDaoBase<TemplateDataStoreVO
             TemplateDataStoreVO dbVol = findByIdIncludingRemoved(dataObj.getId());
             if (dbVol != null) {
                 StringBuilder str = new StringBuilder("Unable to update ").append(dataObj.toString());
-                str.append(": DB Data={id=")
-                    .append(dbVol.getId())
-                    .append("; state=")
-                    .append(dbVol.getState())
-                    .append("; updatecount=")
-                    .append(dbVol.getUpdatedCount())
-                    .append(";updatedTime=")
-                    .append(dbVol.getUpdated());
-                str.append(": New Data={id=")
-                    .append(dataObj.getId())
-                    .append("; state=")
-                    .append(nextState)
-                    .append("; event=")
-                    .append(event)
-                    .append("; updatecount=")
-                    .append(dataObj.getUpdatedCount())
-                    .append("; updatedTime=")
-                    .append(dataObj.getUpdated());
-                str.append(": stale Data={id=")
-                    .append(dataObj.getId())
-                    .append("; state=")
-                    .append(currentState)
-                    .append("; event=")
-                    .append(event)
-                    .append("; updatecount=")
-                    .append(oldUpdated)
-                    .append("; updatedTime=")
-                    .append(oldUpdatedTime);
+                str.append(": DB Data={id=").append(dbVol.getId()).append("; state=").append(dbVol.getState()).append("; updatecount=").append(dbVol.getUpdatedCount())
+                .append(";updatedTime=").append(dbVol.getUpdated());
+                str.append(": New Data={id=").append(dataObj.getId()).append("; state=").append(nextState).append("; event=").append(event).append("; updatecount=")
+                .append(dataObj.getUpdatedCount()).append("; updatedTime=").append(dataObj.getUpdated());
+                str.append(": stale Data={id=").append(dataObj.getId()).append("; state=").append(currentState).append("; event=").append(event).append("; updatecount=")
+                .append(oldUpdated).append("; updatedTime=").append(oldUpdatedTime);
             } else {
                 s_logger.debug("Unable to update objectIndatastore: id=" + dataObj.getId() + ", as there is no such object exists in the database anymore");
             }
@@ -313,8 +291,7 @@ public class TemplateDataStoreDaoImpl extends GenericDaoBase<TemplateDataStoreVO
         List<DataStore> cacheStores = _storeMgr.getImageCacheStores(new ZoneScope(zoneId));
         if (cacheStores != null) {
             for (DataStore store : cacheStores) {
-                List<TemplateDataStoreVO> sRes = listByTemplateStoreDownloadStatus(templateId, store.getId(),
-                        status);
+                List<TemplateDataStoreVO> sRes = listByTemplateStoreDownloadStatus(templateId, store.getId(), status);
                 if (sRes != null && sRes.size() > 0) {
                     Collections.shuffle(sRes);
                     return sRes.get(0);
@@ -432,7 +409,8 @@ public class TemplateDataStoreDaoImpl extends GenericDaoBase<TemplateDataStoreVO
         sc.setParameters("store_role", DataStoreRole.ImageCache);
         sc.setParameters("destroyed", false);
         List<TemplateDataStoreVO> tmpls = listBy(sc);
-        // create an entry for each template record, but with empty install path since the content is not yet on region-wide store yet
+        // create an entry for each template record, but with empty install path
+        // since the content is not yet on region-wide store yet
         if (tmpls != null) {
             s_logger.info("Duplicate " + tmpls.size() + " template cache store records to region store");
             for (TemplateDataStoreVO tmpl : tmpls) {
@@ -464,14 +442,16 @@ public class TemplateDataStoreDaoImpl extends GenericDaoBase<TemplateDataStoreVO
                 ts.setDownloadUrl(tmpl.getDownloadUrl());
                 ts.setRefCnt(tmpl.getRefCnt());
                 persist(ts);
-                // increase ref_cnt of cache store entry so that this will not be recycled before the content is pushed to region-wide store
+                // increase ref_cnt of cache store entry so that this will not
+                // be recycled before the content is pushed to region-wide store
                 tmpl.incrRefCnt();
                 this.update(tmpl.getId(), tmpl);
 
                 // mark the template as cross-zones
                 template.setCrossZones(true);
                 _tmpltDao.update(templateId, template);
-                // add template_zone_ref association for these cross-zone templates
+                // add template_zone_ref association for these cross-zone
+                // templates
                 _tmplSrv.associateTemplateToZone(templateId, null);
             }
 

@@ -94,19 +94,18 @@ public class CiscoNexusVSMElement extends CiscoNexusVSMDeviceManagerImpl impleme
 
     @Override
     public boolean implement(Network network, NetworkOffering offering, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException, InsufficientCapacityException {
+            ResourceUnavailableException, InsufficientCapacityException {
         return true;
     }
 
     @Override
-    public boolean prepare(Network network, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
-        throws ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException {
+    public boolean prepare(Network network, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException,
+            ResourceUnavailableException, InsufficientCapacityException {
         return true;
     }
 
     @Override
-    public boolean release(Network network, NicProfile nic, VirtualMachineProfile vm, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public boolean release(Network network, NicProfile nic, VirtualMachineProfile vm, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
         return true;
     }
 
@@ -126,8 +125,7 @@ public class CiscoNexusVSMElement extends CiscoNexusVSMDeviceManagerImpl impleme
     }
 
     @Override
-    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
         return true;
     }
 
@@ -189,8 +187,10 @@ public class CiscoNexusVSMElement extends CiscoNexusVSMDeviceManagerImpl impleme
             result.add(vsm);
             return result;
         }
-        // Else if there is only a zoneId defined, get a list of all vmware clusters
-        // in the zone, and then for each cluster, pull the VSM and prepare a list.
+        // Else if there is only a zoneId defined, get a list of all vmware
+        // clusters
+        // in the zone, and then for each cluster, pull the VSM and prepare a
+        // list.
         if (zoneId != null && zoneId.longValue() != 0) {
             ManagementService ref = _mgr;
             ;
@@ -199,7 +199,8 @@ public class CiscoNexusVSMElement extends CiscoNexusVSMDeviceManagerImpl impleme
             if (clusterList.size() == 0) {
                 throw new CloudRuntimeException("No VMWare clusters found in the specified zone!");
             }
-            // Else, iterate through each vmware cluster, pull its VSM if it has one, and add to the list.
+            // Else, iterate through each vmware cluster, pull its VSM if it has
+            // one, and add to the list.
             for (Cluster clus : clusterList) {
                 CiscoNexusVSMDeviceVO vsm = getCiscoVSMbyClusId(clus.getId());
                 if (vsm != null)
@@ -210,7 +211,8 @@ public class CiscoNexusVSMElement extends CiscoNexusVSMDeviceManagerImpl impleme
 
         // If neither is defined, we will simply return the entire list of VSMs
         // configured in the management server.
-        // TODO: Is this a safe thing to do? Only ROOT admin can invoke this call.
+        // TODO: Is this a safe thing to do? Only ROOT admin can invoke this
+        // call.
         result = _vsmDao.listAllVSMs();
         return result;
     }
@@ -256,7 +258,7 @@ public class CiscoNexusVSMElement extends CiscoNexusVSMDeviceManagerImpl impleme
     @Override
     @DB
     public Pair<Boolean, Long> validateAndAddVsm(final String vsmIp, final String vsmUser, final String vsmPassword, final long clusterId, String clusterName)
-        throws ResourceInUseException {
+            throws ResourceInUseException {
         CiscoNexusVSMDeviceVO vsm = null;
         boolean vsmAdded = false;
         Long vsmId = 0L;
@@ -272,14 +274,15 @@ public class CiscoNexusVSMElement extends CiscoNexusVSMDeviceManagerImpl impleme
                 throw new CloudRuntimeException(msg);
             }
 
-            // If VSM already exists and is mapped to a cluster, fail this operation.
+            // If VSM already exists and is mapped to a cluster, fail this
+            // operation.
             vsm = _vsmDao.getVSMbyIpaddress(vsmIp);
             if (vsm != null) {
                 List<ClusterVSMMapVO> clusterList = _clusterVSMDao.listByVSMId(vsm.getId());
                 if (clusterList != null && !clusterList.isEmpty()) {
                     s_logger.error("Failed to add cluster: specified Nexus VSM is already associated with another cluster");
-                    ResourceInUseException ex =
-                        new ResourceInUseException("Failed to add cluster: specified Nexus VSM is already associated with another cluster with specified Id");
+                    ResourceInUseException ex = new ResourceInUseException(
+                            "Failed to add cluster: specified Nexus VSM is already associated with another cluster with specified Id");
                     // get clusterUuid to report error
                     ClusterVO cluster = _clusterDao.findById(clusterList.get(0).getClusterId());
                     ex.addProxyObject(cluster.getUuid());
@@ -287,7 +290,8 @@ public class CiscoNexusVSMElement extends CiscoNexusVSMDeviceManagerImpl impleme
                     throw ex;
                 }
             }
-            // persist credentials to database if the VSM entry is not already in the db.
+            // persist credentials to database if the VSM entry is not already
+            // in the db.
             vsm = Transaction.execute(new TransactionCallback<CiscoNexusVSMDeviceVO>() {
                 @Override
                 public CiscoNexusVSMDeviceVO doInTransaction(TransactionStatus status) {
@@ -323,7 +327,8 @@ public class CiscoNexusVSMElement extends CiscoNexusVSMDeviceManagerImpl impleme
                 }
             }
             s_logger.error(msg);
-            // Cleaning up the cluster record as addCluster operation failed because of invalid credentials of Nexus dvSwitch.
+            // Cleaning up the cluster record as addCluster operation failed
+            // because of invalid credentials of Nexus dvSwitch.
             _clusterDao.remove(clusterId);
             throw new CloudRuntimeException(msg);
         }

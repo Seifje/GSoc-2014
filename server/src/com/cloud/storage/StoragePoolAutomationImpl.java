@@ -110,7 +110,8 @@ public class StoragePoolAutomationImpl implements StoragePoolAutomation {
         try {
             List<StoragePoolVO> spes = null;
             // Handling Zone and Cluster wide storage scopes.
-            // if the storage is ZONE wide then we pass podid and cluster id as null as they will be empty for ZWPS
+            // if the storage is ZONE wide then we pass podid and cluster id as
+            // null as they will be empty for ZWPS
             if (pool.getScope() == ScopeType.ZONE) {
                 spes = primaryDataStoreDao.listBy(pool.getDataCenterId(), null, null, ScopeType.ZONE);
             } else {
@@ -118,16 +119,18 @@ public class StoragePoolAutomationImpl implements StoragePoolAutomation {
             }
             for (StoragePoolVO sp : spes) {
                 if (sp.getStatus() == StoragePoolStatus.PrepareForMaintenance) {
-                    throw new CloudRuntimeException("Only one storage pool in a cluster can be in PrepareForMaintenance mode, " + sp.getId() +
-                        " is already in  PrepareForMaintenance mode ");
+                    throw new CloudRuntimeException("Only one storage pool in a cluster can be in PrepareForMaintenance mode, " + sp.getId()
+                            + " is already in  PrepareForMaintenance mode ");
                 }
             }
             StoragePool storagePool = (StoragePool)store;
 
-            //Handeling the Zone wide and cluster wide primay storage
+            // Handeling the Zone wide and cluster wide primay storage
             List<HostVO> hosts = new ArrayList<HostVO>();
-            // if the storage scope is ZONE wide, then get all the hosts for which hypervisor ZWSP created to send Modifystoragepoolcommand
-            //TODO: if it's zone wide, this code will list a lot of hosts in the zone, which may cause performance/OOM issue.
+            // if the storage scope is ZONE wide, then get all the hosts for
+            // which hypervisor ZWSP created to send Modifystoragepoolcommand
+            // TODO: if it's zone wide, this code will list a lot of hosts in
+            // the zone, which may cause performance/OOM issue.
             if (pool.getScope().equals(ScopeType.ZONE)) {
                 hosts = _resourceMgr.listAllUpAndEnabledHostsInOneZoneByHypervisor(pool.getHypervisor(), pool.getDataCenterId());
             } else {
@@ -287,9 +290,10 @@ public class StoragePoolAutomationImpl implements StoragePoolAutomation {
         StoragePoolVO poolVO = primaryDataStoreDao.findById(store.getId());
         StoragePool pool = (StoragePool)store;
 
-        //Handeling the Zone wide and cluster wide primay storage
+        // Handeling the Zone wide and cluster wide primay storage
         List<HostVO> hosts = new ArrayList<HostVO>();
-        // if the storage scope is ZONE wide, then get all the hosts for which hypervisor ZWSP created to send Modifystoragepoolcommand
+        // if the storage scope is ZONE wide, then get all the hosts for which
+        // hypervisor ZWSP created to send Modifystoragepoolcommand
         if (poolVO.getScope().equals(ScopeType.ZONE)) {
             hosts = _resourceMgr.listAllUpAndEnabledHostsInOneZoneByHypervisor(poolVO.getHypervisor(), pool.getDataCenterId());
         } else {
@@ -330,8 +334,7 @@ public class StoragePoolAutomationImpl implements StoragePoolAutomation {
                 // proxy
                 if (vmInstance.getType().equals(VirtualMachine.Type.ConsoleProxy)) {
 
-                    ConsoleProxyVO consoleProxy = _consoleProxyDao
-                            .findById(vmInstance.getId());
+                    ConsoleProxyVO consoleProxy = _consoleProxyDao.findById(vmInstance.getId());
                     vmMgr.advanceStart(consoleProxy.getUuid(), null, null);
                     // update work queue
                     work.setStartedAfterMaintenance(true);
@@ -339,10 +342,8 @@ public class StoragePoolAutomationImpl implements StoragePoolAutomation {
                 }
 
                 // if the instance is of type ssvm, call the ssvm manager
-                if (vmInstance.getType().equals(
-                        VirtualMachine.Type.SecondaryStorageVm)) {
-                    SecondaryStorageVmVO ssVm = _secStrgDao.findById(vmInstance
-                            .getId());
+                if (vmInstance.getType().equals(VirtualMachine.Type.SecondaryStorageVm)) {
+                    SecondaryStorageVmVO ssVm = _secStrgDao.findById(vmInstance.getId());
                     vmMgr.advanceStart(ssVm.getUuid(), null, null);
 
                     // update work queue
@@ -363,7 +364,9 @@ public class StoragePoolAutomationImpl implements StoragePoolAutomation {
                 if (vmInstance.getType().equals(VirtualMachine.Type.User)) {
                     UserVmVO userVm = userVmDao.findById(vmInstance.getId());
 
-                    vmMgr.advanceStart(userVm.getUuid(), null, null);                        // update work queue
+                    vmMgr.advanceStart(userVm.getUuid(), null, null); // update
+                    // work
+                    // queue
                     work.setStartedAfterMaintenance(true);
                     _storagePoolWorkDao.update(work.getId(), work);
                 }

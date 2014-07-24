@@ -82,12 +82,13 @@ public class SimulatorDiscoverer extends DiscovererBase implements Discoverer, L
      *      java.lang.Long, java.net.URI, java.lang.String, java.lang.String)
      */
     @Override
-    public Map<? extends ServerResource, Map<String, String>>
-        find(long dcId, Long podId, Long clusterId, URI uri, String username, String password, List<String> hostTags) throws DiscoveryException {
+    public Map<? extends ServerResource, Map<String, String>> find(long dcId, Long podId, Long clusterId, URI uri, String username, String password, List<String> hostTags)
+            throws DiscoveryException {
         Map<AgentResourceBase, Map<String, String>> resources;
 
         try {
-            //http://sim/count=$count, it will add $count number of hosts into the cluster
+            // http://sim/count=$count, it will add $count number of hosts into
+            // the cluster
             String scheme = uri.getScheme();
             String host = uri.getAuthority();
             String commands = URLDecoder.decode(uri.getPath());
@@ -255,23 +256,23 @@ public class SimulatorDiscoverer extends DiscovererBase implements Discoverer, L
     @Override
     public void processConnect(Host host, StartupCommand cmd, boolean forRebalance) throws ConnectionException {
 
-        /*if(forRebalance)
-        return;
-        if ( Host.Type.SecondaryStorage == host.getType() ) {
-            List<VMTemplateVO> tmplts = _vmTemplateDao.listAll();
-            for( VMTemplateVO tmplt : tmplts ) {
-                VMTemplateHostVO vmTemplateHost = _vmTemplateHostDao.findByHostTemplate(host.getId(), tmplt.getId());
-                if (vmTemplateHost == null) {
-                    vmTemplateHost = new VMTemplateHostVO(host.getId(), tmplt.getId(), new Date(), 100,
-                            com.cloud.storage.VMTemplateStorageResourceAssoc.Status.DOWNLOADED, null, null, null, null, tmplt.getUrl());
-                    _vmTemplateHostDao.persist(vmTemplateHost);
-                } else {
-                    vmTemplateHost.setDownloadState(com.cloud.storage.VMTemplateStorageResourceAssoc.Status.DOWNLOADED);
-                    vmTemplateHost.setDownloadPercent(100);
-                    _vmTemplateHostDao.update(vmTemplateHost.getId(), vmTemplateHost);
-                }
-            }
-        }*/
+        /*
+         * if(forRebalance) return; if ( Host.Type.SecondaryStorage ==
+         * host.getType() ) { List<VMTemplateVO> tmplts =
+         * _vmTemplateDao.listAll(); for( VMTemplateVO tmplt : tmplts ) {
+         * VMTemplateHostVO vmTemplateHost =
+         * _vmTemplateHostDao.findByHostTemplate(host.getId(), tmplt.getId());
+         * if (vmTemplateHost == null) { vmTemplateHost = new
+         * VMTemplateHostVO(host.getId(), tmplt.getId(), new Date(), 100,
+         * com.cloud.storage.VMTemplateStorageResourceAssoc.Status.DOWNLOADED,
+         * null, null, null, null, tmplt.getUrl());
+         * _vmTemplateHostDao.persist(vmTemplateHost); } else {
+         * vmTemplateHost.setDownloadState
+         * (com.cloud.storage.VMTemplateStorageResourceAssoc.Status.DOWNLOADED);
+         * vmTemplateHost.setDownloadPercent(100);
+         * _vmTemplateHostDao.update(vmTemplateHost.getId(), vmTemplateHost); }
+         * } }
+         */
 
     }
 

@@ -140,7 +140,7 @@ public class DiskOfferingJoinVO extends BaseViewVO implements InternalIdentity, 
         return displayText;
     }
 
-    public Storage.ProvisioningType getProvisioningType(){
+    public Storage.ProvisioningType getProvisioningType() {
         return provisioningType;
     }
 

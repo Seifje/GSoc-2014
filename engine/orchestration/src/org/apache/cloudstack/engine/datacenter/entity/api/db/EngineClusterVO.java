@@ -84,7 +84,7 @@ public class EngineClusterVO implements EngineCluster, Identity {
     @Column(name = "uuid")
     String uuid;
 
-    //orchestration
+    // orchestration
 
     @Column(name = "owner")
     private String owner = null;
@@ -97,9 +97,9 @@ public class EngineClusterVO implements EngineCluster, Identity {
     protected Date lastUpdated;
 
     /**
-     * Note that state is intentionally missing the setter.  Any updates to
-     * the state machine needs to go through the DAO object because someone
-     * else could be updating it as well.
+     * Note that state is intentionally missing the setter. Any updates to the
+     * state machine needs to go through the DAO object because someone else
+     * could be updating it as well.
      */
     @Enumerated(value = EnumType.STRING)
     @StateMachine(state = State.class, event = Event.class)

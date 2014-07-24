@@ -57,14 +57,14 @@ public class MockConfigurationVO implements InternalIdentity {
     @Column(name = "values")
     private String values;
 
-    @Column(name="count")
+    @Column(name = "count")
     private Integer count;
 
-    @Column(name="json_response")
+    @Column(name = "json_response")
     private String jsonResponse;
 
-    @Column(name="removed")
-    @Temporal(value=TemporalType.TIMESTAMP)
+    @Column(name = "removed")
+    @Temporal(value = TemporalType.TIMESTAMP)
     private Date removed;
 
     @Override

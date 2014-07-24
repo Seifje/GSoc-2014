@@ -50,12 +50,9 @@ import com.google.gson.annotations.SerializedName;
  */
 public class SspClient {
     private static final Logger s_logger = Logger.getLogger(SspClient.class);
-    private static final HttpClient s_client = new DefaultHttpClient(
-            new PoolingClientConnectionManager());
+    private static final HttpClient s_client = new DefaultHttpClient(new PoolingClientConnectionManager());
     static {
-        s_client.getParams()
-                .setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY)
-                .setParameter(CoreConnectionPNames.SO_TIMEOUT, 10000);
+        s_client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY).setParameter(CoreConnectionPNames.SO_TIMEOUT, 10000);
     }
 
     private final String apiUrl;
@@ -76,8 +73,7 @@ public class SspClient {
     private String executeMethod(HttpRequestBase req, String path) {
         try {
             URI base = new URI(apiUrl);
-            req.setURI(new URI(base.getScheme(), base.getUserInfo(), base.getHost(),
-                    base.getPort(), path, null, null));
+            req.setURI(new URI(base.getScheme(), base.getUserInfo(), base.getHost(), base.getPort(), path, null, null));
         } catch (URISyntaxException e) {
             s_logger.error("invalid API URL " + apiUrl + " path " + path, e);
             return null;
@@ -107,9 +103,7 @@ public class SspClient {
     public boolean login() {
         HttpPost method = new HttpPost();
         try {
-            method.setEntity(new UrlEncodedFormEntity(Arrays.asList(
-                    new BasicNameValuePair("username", username),
-                    new BasicNameValuePair("password", password))));
+            method.setEntity(new UrlEncodedFormEntity(Arrays.asList(new BasicNameValuePair("username", username), new BasicNameValuePair("password", password))));
         } catch (UnsupportedEncodingException e) {
             s_logger.error("invalid username or password", e);
             return false;
@@ -134,9 +128,7 @@ public class SspClient {
 
         HttpPost method = new HttpPost();
         method.setEntity(new StringEntity(new Gson().toJson(req), ContentType.APPLICATION_JSON));
-        return new Gson().fromJson(
-                executeMethod(method, "/ssp.v1/tenant-networks"),
-                TenantNetwork.class);
+        return new Gson().fromJson(executeMethod(method, "/ssp.v1/tenant-networks"), TenantNetwork.class);
     }
 
     public boolean deleteTenantNetwork(String tenantNetworkUuid) {
@@ -167,9 +159,7 @@ public class SspClient {
 
         HttpPost method = new HttpPost();
         method.setEntity(new StringEntity(new Gson().toJson(req), ContentType.APPLICATION_JSON));
-        return new Gson().fromJson(
-                executeMethod(method, "/ssp.v1/tenant-ports"),
-                TenantPort.class);
+        return new Gson().fromJson(executeMethod(method, "/ssp.v1/tenant-ports"), TenantPort.class);
     }
 
     public boolean deleteTenantPort(String tenantPortUuid) {
@@ -191,8 +181,6 @@ public class SspClient {
 
         HttpPut method = new HttpPut();
         method.setEntity(new StringEntity(new Gson().toJson(req), ContentType.APPLICATION_JSON));
-        return new Gson().fromJson(
-                executeMethod(method, "/ssp.v1/tenant-ports/" + portUuid),
-                TenantPort.class);
+        return new Gson().fromJson(executeMethod(method, "/ssp.v1/tenant-ports/" + portUuid), TenantPort.class);
     }
 }

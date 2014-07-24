@@ -89,7 +89,10 @@ public class ServerEventHandlerImpl implements ServerEventHandler {
 
         org.apache.cloudstack.framework.events.Event event = (org.apache.cloudstack.framework.events.Event)args;
 
-        /* Method name should be on<ClassName><Operation> for example: onDomainCreate */
+        /*
+         * Method name should be on<ClassName><Operation> for example:
+         * onDomainCreate
+         */
         Method method = null;
 
         try {
@@ -162,10 +165,15 @@ public class ServerEventHandlerImpl implements ServerEventHandler {
         return;
     }
 
-    /* Description string contains substring of format "resourceType Id: <int>" for example: "Project id: 35"
+    /*
+     * Description string contains substring of format "resourceType Id: <int>"
+     * for example: "Project id: 35"
      *
-     * example:
-     *  description: {"details":"Successfully completed deleting project. Project Id: 39","status":"Completed","event":"PROJECT.DELETE","account":"3afca502-d83c-11e2-b748-52540076b7ca","user":"3b111406-d83c-11e2-b748-52540076b7ca"}
+     * example: description:
+     * {"details":"Successfully completed deleting project. Project Id: 39"
+     * ,"status":"Completed","event":"PROJECT.DELETE","account":
+     * "3afca502-d83c-11e2-b748-52540076b7ca"
+     * ,"user":"3b111406-d83c-11e2-b748-52540076b7ca"}
      *
      * If the description string format is changed, this code has to be modified
      */

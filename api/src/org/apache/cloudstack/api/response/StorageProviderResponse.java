@@ -41,7 +41,8 @@ public class StorageProviderResponse extends BaseResponse {
     }
 
     /**
-     * @param type the type to set
+     * @param type
+     *            the type to set
      */
     public void setType(String type) {
         this.type = type;
@@ -55,7 +56,8 @@ public class StorageProviderResponse extends BaseResponse {
     }
 
     /**
-     * @param name the name to set
+     * @param name
+     *            the name to set
      */
     public void setName(String name) {
         this.name = name;

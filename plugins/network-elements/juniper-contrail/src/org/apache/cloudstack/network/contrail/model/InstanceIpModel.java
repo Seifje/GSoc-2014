@@ -123,7 +123,8 @@ public class InstanceIpModel extends ModelObjectBase {
             }
             _ipAddress = ip_obj.getAddress();
         } else {
-            // Ensure that the instance-ip has the correct value and is pointing at the VMI.
+            // Ensure that the instance-ip has the correct value and is pointing
+            // at the VMI.
             InstanceIp ip_obj = (InstanceIp)api.findById(InstanceIp.class, ipid);
             if (ip_obj == null) {
                 throw new InternalErrorException("Unable to read instance-ip " + _name);

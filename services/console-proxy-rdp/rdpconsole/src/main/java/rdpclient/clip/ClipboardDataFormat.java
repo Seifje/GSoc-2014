@@ -35,15 +35,15 @@ public class ClipboardDataFormat {
      * Supported clipboard data formats in order of preference.
      */
     public static final Object[] supportedTextBasedFormats = new Object[] {
-        // ID's
-        CB_FORMAT_UNICODETEXT, CB_FORMAT_TEXT,
+            // ID's
+            CB_FORMAT_UNICODETEXT, CB_FORMAT_TEXT,
 
-        // Names
-        HTML_FORMAT,
+            // Names
+            HTML_FORMAT,
 
-        // RTF_AS_TEXT,
-        // RICH_TEXT_FORMAT_WITHOUT_OBJECTS,
-        // RICH_TEXT_FORMAT,
+    // RTF_AS_TEXT,
+    // RICH_TEXT_FORMAT_WITHOUT_OBJECTS,
+    // RICH_TEXT_FORMAT,
 
     };
 
@@ -86,8 +86,8 @@ public class ClipboardDataFormat {
 
     @Override
     public String toString() {
-        return "ClipboardDataFormat [id=" + id + ", name=\"" + name + "\"" + ((id == CB_FORMAT_UNICODETEXT) ? " (Unicode text)" : "")
-                + ((id == CB_FORMAT_TEXT) ? " (text)" : "") + "]";
+        return "ClipboardDataFormat [id=" + id + ", name=\"" + name + "\"" + ((id == CB_FORMAT_UNICODETEXT) ? " (Unicode text)" : "") + ((id == CB_FORMAT_TEXT) ? " (text)" : "")
+                + "]";
     }
 
     public int getId() {
@@ -113,16 +113,20 @@ public class ClipboardDataFormat {
             return null;
 
         if (HTML_FORMAT.equals(name))
-            return buf.readVariableString(RdpConstants.CHARSET_8); // TODO: verify
+            return buf.readVariableString(RdpConstants.CHARSET_8); // TODO:
+        // verify
 
         // if (RTF_AS_TEXT.equals(name))
-        // return buf.readVariableString(RdpConstants.CHARSET_8); // TODO: verify
+        // return buf.readVariableString(RdpConstants.CHARSET_8); // TODO:
+        // verify
         //
         // if (RICH_TEXT_FORMAT_WITHOUT_OBJECTS.equals(name))
-        // return buf.readVariableString(RdpConstants.CHARSET_8); // TODO: verify
+        // return buf.readVariableString(RdpConstants.CHARSET_8); // TODO:
+        // verify
         //
         // if (RICH_TEXT_FORMAT.equals(name))
-        // return buf.readVariableString(RdpConstants.CHARSET_8); // TODO: verify
+        // return buf.readVariableString(RdpConstants.CHARSET_8); // TODO:
+        // verify
 
         return null;
     }

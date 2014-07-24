@@ -85,7 +85,8 @@ public interface VolumeDao extends GenericDao<VolumeVO, Long>, StateDao<Volume.S
      * Gets the Total Primary Storage space allocated for an account
      *
      * @param account
-     * @param list of ids of virtual router VMs under this account
+     * @param list
+     *            of ids of virtual router VMs under this account
      * @return total Primary Storage space (in bytes) used
      */
     long primaryStorageUsedForAccount(long accountId, List<Long> virtualRouters);
@@ -102,12 +103,15 @@ public interface VolumeDao extends GenericDao<VolumeVO, Long>, StateDao<Volume.S
     /***
      *
      * @param volumeId
-     * @return the scope of the storage pool where the volume is present (ZONE/CLUSTER)
+     * @return the scope of the storage pool where the volume is present
+     *         (ZONE/CLUSTER)
      */
     ScopeType getVolumeStoragePoolScope(long volumeId);
 
     /***
-     * Updates the destVol uuid with srcVol uuid and sets the srcVol uuid as null.
+     * Updates the destVol uuid with srcVol uuid and sets the srcVol uuid as
+     * null.
+     *
      * @param srcVolId
      * @param destVolId
      * @return returns true if transaction is successful.

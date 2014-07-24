@@ -101,7 +101,7 @@ public class StartupStorageCommand extends StartupCommand {
         this.resourceType = resourceType;
     }
 
-    /*For secondary storage*/
+    /* For secondary storage */
     public Map<String, String> getHostDetails() {
         return hostDetails;
     }

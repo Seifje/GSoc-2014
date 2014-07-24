@@ -76,8 +76,11 @@ public class ServiceInstanceModel extends ModelObjectBase {
         } else {
             parent_name = ContrailManager.VNC_ROOT_DOMAIN + ":" + ContrailManager.VNC_DEFAULT_PROJECT;
 
-            //In the original code, if the projectId is null, it will simply throw NPE on the last line (nr. 90) of the method where the projectId.getUuid() is called.
-            //This was added as a way to avoid NPE. Should we perhaps throw a CloudRuntimeException if the project object is null?
+            // In the original code, if the projectId is null, it will simply
+            // throw NPE on the last line (nr. 90) of the method where the
+            // projectId.getUuid() is called.
+            // This was added as a way to avoid NPE. Should we perhaps throw a
+            // CloudRuntimeException if the project object is null?
             _projectId = UUID.randomUUID().toString();
         }
         _fqName = parent_name + ":" + name;
@@ -95,6 +98,7 @@ public class ServiceInstanceModel extends ModelObjectBase {
 
     /**
      * Create an empty ServiceInstance.
+     *
      * @param uuid
      */
     public ServiceInstanceModel(String uuid) {
@@ -110,7 +114,9 @@ public class ServiceInstanceModel extends ModelObjectBase {
     }
 
     /**
-     * Recreate the model object from the Contrail API which is the master for this type of object.
+     * Recreate the model object from the Contrail API which is the master for
+     * this type of object.
+     *
      * @param siObj
      */
     public void build(ModelController controller, ServiceInstance siObj) {

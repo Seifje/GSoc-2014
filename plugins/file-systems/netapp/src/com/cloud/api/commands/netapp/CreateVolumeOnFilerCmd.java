@@ -36,8 +36,7 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.netapp.NetappManager;
 import com.cloud.server.api.response.netapp.CreateVolumeOnFilerCmdResponse;
 
-@APICommand(name = "createVolumeOnFiler", description = "Create a volume", responseObject = CreateVolumeOnFilerCmdResponse.class,
-        requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
+@APICommand(name = "createVolumeOnFiler", description = "Create a volume", responseObject = CreateVolumeOnFilerCmdResponse.class, requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
 public class CreateVolumeOnFilerCmd extends BaseCmd {
     private static final String s_name = "createvolumeresponse";
 
@@ -108,9 +107,8 @@ public class CreateVolumeOnFilerCmd extends BaseCmd {
     NetappManager netappMgr;
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
-        //param checks
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
+        // param checks
         if (snapshotReservation != null && (snapshotReservation < 0 || snapshotReservation > 100))
             throw new InvalidParameterValueException("Invalid snapshot reservation");
 

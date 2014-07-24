@@ -23,7 +23,7 @@ import org.apache.cloudstack.api.ResourceDetail;
 
 @Entity
 @Table(name = "load_balancer_healthcheck_policy_details")
-public class LBHealthCheckPolicyDetailVO implements ResourceDetail{
+public class LBHealthCheckPolicyDetailVO implements ResourceDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

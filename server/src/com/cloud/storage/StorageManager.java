@@ -40,6 +40,7 @@ import com.cloud.vm.VMInstanceVO;
 public interface StorageManager extends StorageService {
     /**
      * Returns a comma separated list of tags for the specified storage pool
+     *
      * @param poolId
      * @return comma separated list of tags
      */
@@ -59,13 +60,17 @@ public interface StorageManager extends StorageService {
 
     /**
      * Checks if a host has running VMs that are using its local storage pool.
+     *
      * @return true if local storage is active on the host
      */
     boolean isLocalStorageActiveOnHost(Long hostId);
 
     /**
      * Cleans up storage pools by removing unused templates.
-     * @param recurring - true if this cleanup is part of a recurring garbage collection thread
+     *
+     * @param recurring
+     *            - true if this cleanup is part of a recurring garbage
+     *            collection thread
      */
     void cleanupStorage(boolean recurring);
 

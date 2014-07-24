@@ -141,7 +141,7 @@ public class AsyncJobVO implements AsyncJob, JobInfo {
         this.accountId = accountId;
         this.cmd = cmd;
         this.cmdInfo = cmdInfo;
-        uuid = ( injectedUuid == null ? UUID.randomUUID().toString() : injectedUuid );
+        uuid = (injectedUuid == null ? UUID.randomUUID().toString() : injectedUuid);
         this.related = related;
         this.instanceId = instanceId;
         this.instanceType = instanceType;

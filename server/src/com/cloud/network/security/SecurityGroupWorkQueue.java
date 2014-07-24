@@ -20,8 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Security Group Work queue
- * standard producer / consumer interface
+ * Security Group Work queue standard producer / consumer interface
  *
  */
 public interface SecurityGroupWorkQueue {

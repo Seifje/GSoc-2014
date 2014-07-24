@@ -44,32 +44,35 @@ public class AwtRdpMouseAdapter extends BaseElement {
 
     /**
      * Bit field describing the number of rotation units the mouse wheel was
-     * rotated. The value is negative if the PTRFLAGS_WHEEL_NEGATIVE flag is set.
+     * rotated. The value is negative if the PTRFLAGS_WHEEL_NEGATIVE flag is
+     * set.
      */
     public final static int WHEEL_ROTATION_MASK = 0x01FF;
 
     /**
-     * Indicates that the mouse position MUST be updated to the location specified
-     * by the xPos and yPos fields.
+     * Indicates that the mouse position MUST be updated to the location
+     * specified by the xPos and yPos fields.
      */
     public final static int PTRFLAGS_MOVE = 0x0800;
 
     /**
-     * Indicates that a click event has occurred at the position specified by the
-     * xPos and yPos fields. The button flags indicate which button has been
+     * Indicates that a click event has occurred at the position specified by
+     * the xPos and yPos fields. The button flags indicate which button has been
      * clicked and at least one of these flags MUST be set.
      */
     public final static int PTRFLAGS_DOWN = 0x8000;
 
     /**
-     * Mouse button 1 (left button) was clicked or released. If the PTRFLAGS_DOWN
-     * flag is set, then the button was clicked, otherwise it was released.
+     * Mouse button 1 (left button) was clicked or released. If the
+     * PTRFLAGS_DOWN flag is set, then the button was clicked, otherwise it was
+     * released.
      */
     public final static int PTRFLAGS_BUTTON1 = 0x1000;
 
     /**
-     * Mouse button 2 (right button) was clicked or released. If the PTRFLAGS_DOWN
-     * flag is set, then the button was clicked, otherwise it was released.
+     * Mouse button 2 (right button) was clicked or released. If the
+     * PTRFLAGS_DOWN flag is set, then the button was clicked, otherwise it was
+     * released.
      */
     public final static int PTRFLAGS_BUTTON2 = 0x2000;
 
@@ -94,7 +97,8 @@ public class AwtRdpMouseAdapter extends BaseElement {
 
         ByteBuffer outBuf = new ByteBuffer(7, true);
 
-        // eventHeader (1 byte): An 8-bit, unsigned integer. EventCode bitfield (top
+        // eventHeader (1 byte): An 8-bit, unsigned integer. EventCode bitfield
+        // (top
         // 3 bits) MUST be set to FASTPATH_INPUT_EVENT_MOUSE (1). The
         // eventFlags bitfield (low 5 bits) MUST be zeroed out.
         outBuf.writeByte(FASTPATH_INPUT_EVENT_MOUSE << 5);

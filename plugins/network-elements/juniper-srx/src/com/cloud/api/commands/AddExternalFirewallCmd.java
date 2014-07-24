@@ -35,21 +35,16 @@ import com.cloud.network.element.JuniperSRXFirewallElementService;
 import com.cloud.user.Account;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "addExternalFirewall", description = "Adds an external firewall appliance", responseObject = ExternalFirewallResponse.class,
-        requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
+@APICommand(name = "addExternalFirewall", description = "Adds an external firewall appliance", responseObject = ExternalFirewallResponse.class, requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
 public class AddExternalFirewallCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(AddExternalFirewallCmd.class.getName());
     private static final String s_name = "addexternalfirewallresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ZONE_ID,
-               type = CommandType.UUID,
-               entityType = ZoneResponse.class,
-               required = true,
-               description = "Zone in which to add the external firewall appliance.")
+    @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, required = true, description = "Zone in which to add the external firewall appliance.")
     private Long zoneId;
 
     @Parameter(name = ApiConstants.URL, type = CommandType.STRING, required = true, description = "URL of the external firewall appliance.")
@@ -61,9 +56,9 @@ public class AddExternalFirewallCmd extends BaseCmd {
     @Parameter(name = ApiConstants.PASSWORD, type = CommandType.STRING, required = true, description = "Password of the external firewall appliance.")
     private String password;
 
-    ///////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getZoneId() {
         return zoneId;
@@ -81,9 +76,9 @@ public class AddExternalFirewallCmd extends BaseCmd {
         return password;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Inject
     JuniperSRXFirewallElementService _srxElementService;

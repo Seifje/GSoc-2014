@@ -64,10 +64,12 @@ public class VolumeUsageParser {
         }
 
         // - query usage_volume table with the following criteria:
-        //     - look for an entry for accountId with start date in the given range
-        //     - look for an entry for accountId with end date in the given range
-        //     - look for an entry for accountId with end date null (currently running vm or owned IP)
-        //     - look for an entry for accountId with start date before given range *and* end date after given range
+        // - look for an entry for accountId with start date in the given range
+        // - look for an entry for accountId with end date in the given range
+        // - look for an entry for accountId with end date null (currently
+        // running vm or owned IP)
+        // - look for an entry for accountId with start date before given range
+        // *and* end date after given range
         List<UsageVolumeVO> usageUsageVols = s_usageVolumeDao.getUsageRecords(account.getId(), account.getDomainId(), startDate, endDate, false, 0);
 
         if (usageUsageVols.isEmpty()) {
@@ -98,12 +100,15 @@ public class VolumeUsageParser {
                 volDeleteDate = endDate;
             }
 
-            // clip the start date to the beginning of our aggregation range if the vm has been running for a while
+            // clip the start date to the beginning of our aggregation range if
+            // the vm has been running for a while
             if (volCreateDate.before(startDate)) {
                 volCreateDate = startDate;
             }
 
-            long currentDuration = (volDeleteDate.getTime() - volCreateDate.getTime()) + 1; // make sure this is an inclusive check for milliseconds (i.e. use n - m + 1 to find total number of millis to charge)
+            long currentDuration = (volDeleteDate.getTime() - volCreateDate.getTime()) + 1; // make sure this is an inclusive check for
+            // milliseconds (i.e. use n - m + 1 to find
+            // total number of millis to charge)
 
             updateVolUsageData(usageMap, key, usageVol.getId(), currentDuration);
         }
@@ -112,11 +117,12 @@ public class VolumeUsageParser {
             Pair<Long, Long> voltimeInfo = usageMap.get(volIdKey);
             long useTime = voltimeInfo.second().longValue();
 
-            // Only create a usage record if we have a runningTime of bigger than zero.
+            // Only create a usage record if we have a runningTime of bigger
+            // than zero.
             if (useTime > 0L) {
                 VolInfo info = diskOfferingMap.get(volIdKey);
-                createUsageRecord(UsageTypes.VOLUME, useTime, startDate, endDate, account, info.getVolumeId(), info.getZoneId(), info.getDiskOfferingId(),
-                    info.getTemplateId(), info.getSize());
+                createUsageRecord(UsageTypes.VOLUME, useTime, startDate, endDate, account, info.getVolumeId(), info.getZoneId(), info.getDiskOfferingId(), info.getTemplateId(),
+                        info.getSize());
             }
         }
 
@@ -135,8 +141,8 @@ public class VolumeUsageParser {
         usageDataMap.put(key, volUsageInfo);
     }
 
-    private static void createUsageRecord(int type, long runningTime, Date startDate, Date endDate, AccountVO account, long volId, long zoneId, Long doId,
-        Long templateId, long size) {
+    private static void createUsageRecord(int type, long runningTime, Date startDate, Date endDate, AccountVO account, long volId, long zoneId, Long doId, Long templateId,
+            long size) {
         // Our smallest increment is hourly for now
         if (s_logger.isDebugEnabled()) {
             s_logger.debug("Total running time " + runningTime + "ms");
@@ -148,8 +154,8 @@ public class VolumeUsageParser {
         String usageDisplay = dFormat.format(usage);
 
         if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Creating Volume usage record for vol: " + volId + ", usage: " + usageDisplay + ", startDate: " + startDate + ", endDate: " + endDate +
-                ", for account: " + account.getId());
+            s_logger.debug("Creating Volume usage record for vol: " + volId + ", usage: " + usageDisplay + ", startDate: " + startDate + ", endDate: " + endDate
+                    + ", for account: " + account.getId());
         }
 
         // Create the usage record
@@ -161,9 +167,8 @@ public class VolumeUsageParser {
             usageDesc += " (DiskOffering: " + doId + ")";
         }
 
-        UsageVO usageRecord =
-            new UsageVO(zoneId, account.getId(), account.getDomainId(), usageDesc, usageDisplay + " Hrs", type, new Double(usage), null, null, doId, templateId, volId,
-                size, startDate, endDate);
+        UsageVO usageRecord = new UsageVO(zoneId, account.getId(), account.getDomainId(), usageDesc, usageDisplay + " Hrs", type, new Double(usage), null, null, doId, templateId,
+                volId, size, startDate, endDate);
         s_usageDao.persist(usageRecord);
     }
 

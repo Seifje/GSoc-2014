@@ -36,23 +36,18 @@ import com.cloud.network.element.F5ExternalLoadBalancerElementService;
 import com.cloud.user.Account;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "addExternalLoadBalancer", description = "Adds F5 external load balancer appliance.", responseObject = ExternalLoadBalancerResponse.class,
-        requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
+@APICommand(name = "addExternalLoadBalancer", description = "Adds F5 external load balancer appliance.", responseObject = ExternalLoadBalancerResponse.class, requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
 @Deprecated
 // API supported only for backward compatibility.
 public class AddExternalLoadBalancerCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(AddExternalLoadBalancerCmd.class.getName());
     private static final String s_name = "addexternalloadbalancerresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ZONE_ID,
-               type = CommandType.UUID,
-               entityType = ZoneResponse.class,
-               required = true,
-               description = "Zone in which to add the external load balancer appliance.")
+    @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, required = true, description = "Zone in which to add the external load balancer appliance.")
     private Long zoneId;
 
     @Parameter(name = ApiConstants.URL, type = CommandType.STRING, required = true, description = "URL of the external load balancer appliance.")
@@ -64,9 +59,9 @@ public class AddExternalLoadBalancerCmd extends BaseCmd {
     @Parameter(name = ApiConstants.PASSWORD, type = CommandType.STRING, required = true, description = "Password of the external load balancer appliance.")
     private String password;
 
-    ///////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getZoneId() {
         return zoneId;
@@ -87,9 +82,9 @@ public class AddExternalLoadBalancerCmd extends BaseCmd {
     @Inject
     F5ExternalLoadBalancerElementService _f5DeviceManagerService;
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

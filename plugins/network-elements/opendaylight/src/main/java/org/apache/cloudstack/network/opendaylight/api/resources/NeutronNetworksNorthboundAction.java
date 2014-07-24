@@ -55,7 +55,7 @@ public class NeutronNetworksNorthboundAction extends Action {
         Type returnType = new TypeToken<NeutronNetworksList<NeutronNetwork>>() {
         }.getType();
 
-        T returnValue = (T) gsonNeutronNetwork.fromJson(bodystring, returnType);
+        T returnValue = (T)gsonNeutronNetwork.fromJson(bodystring, returnType);
 
         return returnValue;
     }
@@ -70,7 +70,7 @@ public class NeutronNetworksNorthboundAction extends Action {
         Type returnType = new TypeToken<NeutronNetworkWrapper>() {
         }.getType();
 
-        T returnValue = (T) gsonNeutronNetwork.fromJson(bodystring, returnType);
+        T returnValue = (T)gsonNeutronNetwork.fromJson(bodystring, returnType);
 
         return returnValue;
     }
@@ -83,7 +83,7 @@ public class NeutronNetworksNorthboundAction extends Action {
 
             String bodystring = executePost(uri, entity);
 
-            T result = (T) gsonNeutronNetwork.fromJson(bodystring, TypeToken.get(NeutronNetworkWrapper.class).getType());
+            T result = (T)gsonNeutronNetwork.fromJson(bodystring, TypeToken.get(NeutronNetworkWrapper.class).getType());
 
             return result;
         } catch (UnsupportedEncodingException e) {

@@ -147,8 +147,7 @@ public class SnapshotTestWithFakeData {
     public void setUp() {
         // create data center
 
-        DataCenterVO dc =
-            new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, DataCenter.NetworkType.Basic, null,
+        DataCenterVO dc = new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, DataCenter.NetworkType.Basic, null,
                 null, true, true, null, null);
         dc = dcDao.persist(dc);
         dcId = dc.getId();
@@ -205,15 +204,14 @@ public class SnapshotTestWithFakeData {
 
     private SnapshotVO createSnapshotInDb() {
         Snapshot.Type snapshotType = Snapshot.Type.RECURRING;
-        SnapshotVO snapshotVO =
-            new SnapshotVO(dcId, 2, 1, 1L, 1L, UUID.randomUUID().toString(), (short)snapshotType.ordinal(), snapshotType.name(), 100, Hypervisor.HypervisorType.XenServer);
+        SnapshotVO snapshotVO = new SnapshotVO(dcId, 2, 1, 1L, 1L, UUID.randomUUID().toString(), (short)snapshotType.ordinal(), snapshotType.name(), 100,
+                Hypervisor.HypervisorType.XenServer);
         return snapshotDao.persist(snapshotVO);
     }
 
     private SnapshotVO createSnapshotInDb(Long volumeId) {
         Snapshot.Type snapshotType = Snapshot.Type.DAILY;
-        SnapshotVO snapshotVO =
-            new SnapshotVO(dcId, 2, 1, volumeId, 1L, UUID.randomUUID().toString(), (short)snapshotType.ordinal(), snapshotType.name(), 100,
+        SnapshotVO snapshotVO = new SnapshotVO(dcId, 2, 1, volumeId, 1L, UUID.randomUUID().toString(), (short)snapshotType.ordinal(), snapshotType.name(), 100,
                 Hypervisor.HypervisorType.XenServer);
         return snapshotDao.persist(snapshotVO);
     }
@@ -250,7 +248,7 @@ public class SnapshotTestWithFakeData {
         return store;
     }
 
-    //@Test
+    // @Test
     public void testTakeSnapshot() throws URISyntaxException {
         SnapshotVO snapshotVO = createSnapshotInDb();
         DataStore store = createDataStore();
@@ -271,7 +269,7 @@ public class SnapshotTestWithFakeData {
         }
     }
 
-    //@Test
+    // @Test
     public void testTakeSnapshotWithFailed() throws URISyntaxException {
         SnapshotVO snapshotVO = createSnapshotInDb();
         DataStore store = null;
@@ -292,7 +290,7 @@ public class SnapshotTestWithFakeData {
         }
     }
 
-    //@Test
+    // @Test
     public void testTakeSnapshotFromVolume() throws URISyntaxException {
         DataStore store = createDataStore();
         FakePrimaryDataStoreDriver dataStoreDriver = (FakePrimaryDataStoreDriver)store.getDriver();

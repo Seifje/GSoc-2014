@@ -130,7 +130,8 @@ public class SocketWrapperImpl extends PipelineImpl implements SocketWrapper {
 
         try {
             // Use most secure implementation of SSL available now.
-            // JVM will try to negotiate TLS1.2, then will fallback to TLS1.0, if
+            // JVM will try to negotiate TLS1.2, then will fallback to TLS1.0,
+            // if
             // TLS1.2 is not supported.
             SSLContext sslContext = SSLContext.getInstance(sslVersionToUse);
 
@@ -238,7 +239,7 @@ public class SocketWrapperImpl extends PipelineImpl implements SocketWrapper {
             server.start();
             InetSocketAddress address = server.getAddress();
 
-            /*DEBUG*/System.out.println("Address: " + address);
+            /* DEBUG */System.out.println("Address: " + address);
             socketWrapper.connect(address);
 
         } catch (Exception e) {

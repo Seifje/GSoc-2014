@@ -23,7 +23,7 @@ import streamer.Link;
 public class ServerClipRdrChannelRouter extends BaseElement {
 
     /**
-     * Key for ASCII names message flag in payload metadata.  Value is Boolean.
+     * Key for ASCII names message flag in payload metadata. Value is Boolean.
      */
     public static final String ASCII_NAMES = "ascii_names";
 
@@ -90,8 +90,8 @@ public class ServerClipRdrChannelRouter extends BaseElement {
     /**
      * Used by the Format List Response PDU, Format Data Response PDU, and File
      * Contents Response PDU to indicate that the associated request Format List
-     * PDU, Format Data Request PDU, and File Contents Request PDU were processed
-     * successfully.
+     * PDU, Format Data Request PDU, and File Contents Request PDU were
+     * processed successfully.
      */
     public static final int CB_RESPONSE_OK = 0x0001;
 

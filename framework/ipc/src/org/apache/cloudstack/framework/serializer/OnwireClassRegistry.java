@@ -35,7 +35,6 @@ import java.util.jar.JarInputStream;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
-
 //
 // Finding classes in a given package code is taken and modified from
 // Credit: http://internna.blogspot.com/2007/11/java-5-retrieving-all-classes-from.html

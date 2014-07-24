@@ -103,7 +103,7 @@ public class ApiResponseSerializer {
                         sb.append(", ").append(jsonStr);
                     }
                     sb.append(" ] }");
-                } else  {
+                } else {
                     if (!nonZeroCount) {
                         sb.append("{");
                     }
@@ -188,13 +188,12 @@ public class ApiResponseSerializer {
         if (obj instanceof AsyncJobResponse)
             isAsync = true;
 
-        //Field[] fields = obj.getClass().getDeclaredFields();
+        // Field[] fields = obj.getClass().getDeclaredFields();
         Field[] fields = getFlattenFields(obj.getClass());
         for (Field field : fields) {
             if ((field.getModifiers() & Modifier.TRANSIENT) != 0) {
                 continue; // skip transient fields
             }
-
 
             SerializedName serializedName = field.getAnnotation(SerializedName.class);
             if (serializedName == null) {
@@ -274,13 +273,8 @@ public class ApiResponseSerializer {
                         sb.append("</").append(serializedName.value()).append(">");
                     }
                 } else if (fieldValue instanceof Date) {
-                    sb.append("<")
-                        .append(serializedName.value())
-                        .append(">")
-                        .append(BaseCmd.getDateString((Date)fieldValue))
-                        .append("</")
-                        .append(serializedName.value())
-                        .append(">");
+                    sb.append("<").append(serializedName.value()).append(">").append(BaseCmd.getDateString((Date)fieldValue)).append("</").append(serializedName.value())
+                            .append(">");
                 } else {
                     String resultString = escapeSpecialXmlChars(fieldValue.toString());
                     if (!(obj instanceof ExceptionResponse)) {

@@ -25,6 +25,7 @@ import com.cloud.network.rules.PortForwardingRule;
 public interface PortForwardingServiceProvider extends NetworkElement, IpDeployingRequester {
     /**
      * Apply rules
+     *
      * @param network
      * @param rules
      * @return

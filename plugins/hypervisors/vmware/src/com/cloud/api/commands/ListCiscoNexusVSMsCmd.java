@@ -43,45 +43,34 @@ import com.cloud.network.CiscoNexusVSMDevice;
 import com.cloud.network.element.CiscoNexusVSMElementService;
 import com.cloud.user.Account;
 
-@APICommand(name = "listCiscoNexusVSMs",
-            responseObject = CiscoNexusVSMResponse.class,
-            description = "Retrieves a Cisco Nexus 1000v Virtual Switch Manager device associated with a Cluster",
-            requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listCiscoNexusVSMs", responseObject = CiscoNexusVSMResponse.class, description = "Retrieves a Cisco Nexus 1000v Virtual Switch Manager device associated with a Cluster", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListCiscoNexusVSMsCmd extends BaseListCmd {
 
     /**
-     * This command returns a list of all the VSMs configured in the management server.
-     * If a clusterId is specified, it will return a list containing only that VSM
-     * that is associated with that cluster. If a zone is specified, it will pull
-     * up all the clusters of type vmware in that zone, and prepare a list of VSMs
-     * associated with those clusters.
+     * This command returns a list of all the VSMs configured in the management
+     * server. If a clusterId is specified, it will return a list containing
+     * only that VSM that is associated with that cluster. If a zone is
+     * specified, it will pull up all the clusters of type vmware in that zone,
+     * and prepare a list of VSMs associated with those clusters.
      */
     public static final Logger s_logger = Logger.getLogger(ListCiscoNexusVSMsCmd.class.getName());
     private static final String s_name = "listcisconexusvsmscmdresponse";
     @Inject
     CiscoNexusVSMElementService _ciscoNexusVSMService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.CLUSTER_ID,
-               type = CommandType.UUID,
-               entityType = ClusterResponse.class,
-               required = false,
-               description = "Id of the CloudStack cluster in which the Cisco Nexus 1000v VSM appliance.")
+    @Parameter(name = ApiConstants.CLUSTER_ID, type = CommandType.UUID, entityType = ClusterResponse.class, required = false, description = "Id of the CloudStack cluster in which the Cisco Nexus 1000v VSM appliance.")
     private long clusterId;
 
-    @Parameter(name = ApiConstants.ZONE_ID,
-               type = CommandType.UUID,
-               entityType = ZoneResponse.class,
-               required = false,
-               description = "Id of the CloudStack cluster in which the Cisco Nexus 1000v VSM appliance.")
+    @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, required = false, description = "Id of the CloudStack cluster in which the Cisco Nexus 1000v VSM appliance.")
     private long zoneId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public long getClusterId() {
         return clusterId;
@@ -91,16 +80,18 @@ public class ListCiscoNexusVSMsCmd extends BaseListCmd {
         return zoneId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
-    // NOTE- The uuid that is sent in during the invocation of the API AddCiscoNexusVSM()
-    // automagically gets translated to the corresponding db id before this execute() method
-    // is invoked. That's the reason why we don't have any uuid-dbid translation code here.
+    // NOTE- The uuid that is sent in during the invocation of the API
+    // AddCiscoNexusVSM()
+    // automagically gets translated to the corresponding db id before this
+    // execute() method
+    // is invoked. That's the reason why we don't have any uuid-dbid translation
+    // code here.
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         List<? extends CiscoNexusVSMDevice> vsmDeviceList = _ciscoNexusVSMService.getCiscoNexusVSMs(this);
 
         if (vsmDeviceList.size() > 0) {

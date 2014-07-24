@@ -94,7 +94,8 @@ public class OCFS2ManagerImpl extends ManagerBase implements OCFS2Manager, Resou
         List<Ternary<Integer, String, String>> lst = new ArrayList<Ternary<Integer, String, String>>();
         for (HostVO h : hosts) {
             /**
-             * Don't show "node" in node name otherwise OVM's utils/config_o2cb.sh will be going crazy
+             * Don't show "node" in node name otherwise OVM's
+             * utils/config_o2cb.sh will be going crazy
              */
             String nodeName = "ovm_" + h.getPrivateIpAddress().replace(".", "_");
             Ternary<Integer, String, String> node = new Ternary<Integer, String, String>(i, h.getPrivateIpAddress(), nodeName);
@@ -181,9 +182,8 @@ public class OCFS2ManagerImpl extends ManagerBase implements OCFS2Manager, Resou
 
     @Override
     public void processDeletHostEventAfter(Host host) {
-        String errMsg =
-            String.format("Prepare OCFS2 nodes failed after delete host %1$s (zone:%2$s, pod:%3$s, cluster:%4$s", host.getId(), host.getDataCenterId(), host.getPodId(),
-                host.getClusterId());
+        String errMsg = String.format("Prepare OCFS2 nodes failed after delete host %1$s (zone:%2$s, pod:%3$s, cluster:%4$s", host.getId(), host.getDataCenterId(),
+                host.getPodId(), host.getClusterId());
 
         if (host.getHypervisorType() != HypervisorType.Ovm) {
             return;

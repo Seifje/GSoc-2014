@@ -26,7 +26,7 @@ public class GPUDeviceTO {
     private String vgpuType;
     private HashMap<String, HashMap<String, VgpuTypesInfo>> groupDetails = new HashMap<String, HashMap<String, VgpuTypesInfo>>();
 
-    public GPUDeviceTO( String gpuGroup, String vgpuType, HashMap<String, HashMap<String, VgpuTypesInfo>> groupDetails) {
+    public GPUDeviceTO(String gpuGroup, String vgpuType, HashMap<String, HashMap<String, VgpuTypesInfo>> groupDetails) {
         this.gpuGroup = gpuGroup;
         this.vgpuType = vgpuType;
         this.groupDetails = groupDetails;

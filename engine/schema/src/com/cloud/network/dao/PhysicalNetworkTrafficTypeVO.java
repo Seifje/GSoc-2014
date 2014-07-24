@@ -69,8 +69,8 @@ public class PhysicalNetworkTrafficTypeVO implements PhysicalNetworkTrafficType 
     public PhysicalNetworkTrafficTypeVO() {
     }
 
-    public PhysicalNetworkTrafficTypeVO(long physicalNetworkId, TrafficType trafficType, String xenLabel, String kvmLabel, String vmwareLabel, String simulatorLabel,
-            String vlan, String hypervLabel) {
+    public PhysicalNetworkTrafficTypeVO(long physicalNetworkId, TrafficType trafficType, String xenLabel, String kvmLabel, String vmwareLabel, String simulatorLabel, String vlan,
+            String hypervLabel) {
         this.physicalNetworkId = physicalNetworkId;
         this.trafficType = trafficType;
         this.xenNetworkLabel = xenLabel;

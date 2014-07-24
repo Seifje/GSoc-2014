@@ -37,13 +37,20 @@ public interface VirtualMachineTemplate extends ControlledEntity, Identity, Inte
     };
 
     public enum TemplateFilter {
-        featured, // returns templates that have been marked as featured and public
-        self, // returns templates that have been registered or created by the calling user
-        selfexecutable, // same as self, but only returns templates that are ready to be deployed with
-        shared, // including templates that have been granted to the calling user by another user
-        sharedexecutable, // ready templates that have been granted to the calling user by another user
-        executable, // templates that are owned by the calling user, or public templates, that can be used to deploy a
-        community, // returns templates that have been marked as public but not featured
+        featured, // returns templates that have been marked as featured and
+        // public
+        self, // returns templates that have been registered or created by the
+        // calling user
+        selfexecutable, // same as self, but only returns templates that are
+        // ready to be deployed with
+        shared, // including templates that have been granted to the calling
+        // user by another user
+        sharedexecutable, // ready templates that have been granted to the
+        // calling user by another user
+        executable, // templates that are owned by the calling user, or public
+        // templates, that can be used to deploy a
+        community, // returns templates that have been marked as public but not
+        // featured
         all // all templates (only usable by admins)
     }
 

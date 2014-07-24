@@ -64,8 +64,8 @@ public class SwiftUtil {
         }
         Script command = new Script("/bin/bash", logger);
         command.add("-c");
-        command.add("/usr/bin/python " + swiftCli + " -A " + cfg.getEndPoint() + " -U " + cfg.getAccount() + ":" + cfg.getUserName() + " -K " + cfg.getKey() + " post " +
-            container + " " + object + " " + cms.toString());
+        command.add("/usr/bin/python " + swiftCli + " -A " + cfg.getEndPoint() + " -U " + cfg.getAccount() + ":" + cfg.getUserName() + " -K " + cfg.getKey() + " post " + container
+                + " " + object + " " + cms.toString());
         OutputInterpreter.OneLineParser parser = new OutputInterpreter.OneLineParser();
         String result = command.execute(parser);
         if (result != null) {
@@ -84,11 +84,11 @@ public class SwiftUtil {
         long size = srcFile.length();
         command.add("-c");
         if (size <= SWIFT_MAX_SIZE) {
-            command.add("cd " + srcDirectory + ";/usr/bin/python " + swiftCli + " -A " + cfg.getEndPoint() + " -U " + cfg.getAccount() + ":" + cfg.getUserName() +
-                " -K " + cfg.getKey() + " upload " + container + " " + fileName);
+            command.add("cd " + srcDirectory + ";/usr/bin/python " + swiftCli + " -A " + cfg.getEndPoint() + " -U " + cfg.getAccount() + ":" + cfg.getUserName() + " -K "
+                    + cfg.getKey() + " upload " + container + " " + fileName);
         } else {
-            command.add("cd " + srcDirectory + ";/usr/bin/python " + swiftCli + " -A " + cfg.getEndPoint() + " -U " + cfg.getAccount() + ":" + cfg.getUserName() +
-                " -K " + cfg.getKey() + " upload -S " + SWIFT_MAX_SIZE + " " + container + " " + fileName);
+            command.add("cd " + srcDirectory + ";/usr/bin/python " + swiftCli + " -A " + cfg.getEndPoint() + " -U " + cfg.getAccount() + ":" + cfg.getUserName() + " -K "
+                    + cfg.getKey() + " upload -S " + SWIFT_MAX_SIZE + " " + container + " " + fileName);
         }
         OutputInterpreter.AllLinesParser parser = new OutputInterpreter.AllLinesParser();
         String result = command.execute(parser);
@@ -170,8 +170,8 @@ public class SwiftUtil {
         String swiftCli = getSwiftCLIPath();
         Script command = new Script("/bin/bash", logger);
         command.add("-c");
-        command.add("/usr/bin/python " + swiftCli + " -A " + cfg.getEndPoint() + " -U " + cfg.getAccount() + ":" + cfg.getUserName() + " -K " + cfg.getKey() +
-            " download " + container + " " + srcPath + " -o " + destFilePath);
+        command.add("/usr/bin/python " + swiftCli + " -A " + cfg.getEndPoint() + " -U " + cfg.getAccount() + ":" + cfg.getUserName() + " -K " + cfg.getKey() + " download "
+                + container + " " + srcPath + " -o " + destFilePath);
         OutputInterpreter.AllLinesParser parser = new OutputInterpreter.AllLinesParser();
         String result = command.execute(parser);
         if (result != null) {

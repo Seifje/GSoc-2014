@@ -88,8 +88,9 @@ public class BigSwitchVnsResourceTest {
 
         assertTrue("bigswitchvnstestdevice".equals(_resource.getName()));
 
-        /* Pretty lame test, but here to assure this plugin fails
-         * if the type name ever changes from L2Networking
+        /*
+         * Pretty lame test, but here to assure this plugin fails if the type
+         * name ever changes from L2Networking
          */
         assertTrue(_resource.getType() == Host.Type.L2Networking);
     }

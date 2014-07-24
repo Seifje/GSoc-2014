@@ -123,19 +123,19 @@ public class ClusterServiceServletHttpHandler implements HttpRequestHandler {
             }
 
             switch (nMethod) {
-                case RemoteMethodConstants.METHOD_DELIVER_PDU:
-                    responseContent = handleDeliverPduMethodCall(req);
-                    break;
+            case RemoteMethodConstants.METHOD_DELIVER_PDU:
+                responseContent = handleDeliverPduMethodCall(req);
+                break;
 
-                case RemoteMethodConstants.METHOD_PING:
-                    responseContent = handlePingMethodCall(req);
-                    break;
+            case RemoteMethodConstants.METHOD_PING:
+                responseContent = handlePingMethodCall(req);
+                break;
 
-                case RemoteMethodConstants.METHOD_UNKNOWN:
-                default:
-                    assert (false);
-                    s_logger.error("unrecognized method " + nMethod);
-                    break;
+            case RemoteMethodConstants.METHOD_UNKNOWN:
+            default:
+                assert (false);
+                s_logger.error("unrecognized method " + nMethod);
+                break;
             }
         } catch (Throwable e) {
             s_logger.error("Unexpected exception when processing cluster service request : ", e);

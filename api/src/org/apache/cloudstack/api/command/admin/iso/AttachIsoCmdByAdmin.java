@@ -34,8 +34,8 @@ public class AttachIsoCmdByAdmin extends AttachIsoCmd {
     public static final Logger s_logger = Logger.getLogger(AttachIsoCmdByAdmin.class.getName());
 
     @Override
-    public void execute(){
-        CallContext.current().setEventDetails("Vm Id: " +getVirtualMachineId()+ " ISO Id: "+getId());
+    public void execute() {
+        CallContext.current().setEventDetails("Vm Id: " + getVirtualMachineId() + " ISO Id: " + getId());
         boolean result = _templateService.attachIso(id, virtualMachineId);
         if (result) {
             UserVm userVm = _responseGenerator.findUserVmById(virtualMachineId);

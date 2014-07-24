@@ -55,46 +55,52 @@ import com.cloud.utils.component.ComponentContext;
 @Ignore("Requires database to be set up")
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/testContext.xml")
-//@ComponentSetup(managerName="management-server", setupXml="network-mgr-component.xml")
+// @ComponentSetup(managerName="management-server",
+// setupXml="network-mgr-component.xml")
 public class FirewallManagerTest {
     private static final Logger s_logger = Logger.getLogger(FirewallManagerTest.class);
 
-//    @Before
-//    public void setUp() {
-//        Logger daoLogger = Logger.getLogger(GenericDaoBase.class);
-//        Logger cloudLogger = Logger.getLogger("com.cloud");
-//
-//        componentlogger.setLevel(Level.WARN);
-//        daoLogger.setLevel(Level.ERROR);
-//        cloudLogger.setLevel(Level.ERROR);
-//        s_logger.setLevel(Level.INFO);
-//        super.setUp();
-//    }
+    // @Before
+    // public void setUp() {
+    // Logger daoLogger = Logger.getLogger(GenericDaoBase.class);
+    // Logger cloudLogger = Logger.getLogger("com.cloud");
+    //
+    // componentlogger.setLevel(Level.WARN);
+    // daoLogger.setLevel(Level.ERROR);
+    // cloudLogger.setLevel(Level.ERROR);
+    // s_logger.setLevel(Level.INFO);
+    // super.setUp();
+    // }
 
     @Test
     public void testInjected() {
 
-//        FirewallManagerImpl firewallMgr = (FirewallManagerImpl)ComponentLocator.getCurrentLocator().getManager(FirewallManager.class);
-//        Assert.assertTrue(firewallMgr._firewallElements.enumeration().hasMoreElements());
-//        Assert.assertTrue(firewallMgr._pfElements.enumeration().hasMoreElements());
-//        Assert.assertTrue(firewallMgr._staticNatElements.enumeration().hasMoreElements());
-//        Assert.assertTrue(firewallMgr._networkAclElements.enumeration().hasMoreElements());
-//        Assert.assertNotNull(firewallMgr._networkModel);
-//
-//        Assert.assertNotNull(firewallMgr._firewallElements.get("VirtualRouter"));
-//        Assert.assertNotNull(firewallMgr._firewallElements.get("VpcVirtualRouter"));
-//        Assert.assertNotNull(firewallMgr._pfElements.get("VirtualRouter"));
-//        Assert.assertNotNull(firewallMgr._pfElements.get("VpcVirtualRouter"));
-//        Assert.assertNotNull(firewallMgr._staticNatElements.get("VirtualRouter"));
-//        Assert.assertNotNull(firewallMgr._staticNatElements.get("VpcVirtualRouter"));
-//        Assert.assertNotNull(firewallMgr._networkAclElements.get("VpcVirtualRouter"));
-//        Assert.assertNull(firewallMgr._networkAclElements.get("VirtualRouter"));
-//
-//
-//        Assert.assertTrue(firewallMgr._firewallElements.get("VirtualRouter") instanceof FirewallServiceProvider);
-//        Assert.assertTrue(firewallMgr._pfElements.get("VirtualRouter") instanceof PortForwardingServiceProvider);
-//        Assert.assertTrue(firewallMgr._staticNatElements.get("VirtualRouter") instanceof StaticNatServiceProvider);
-//        Assert.assertTrue(firewallMgr._networkAclElements.get("VpcVirtualRouter") instanceof NetworkACLServiceProvider);
+        // FirewallManagerImpl firewallMgr =
+        // (FirewallManagerImpl)ComponentLocator.getCurrentLocator().getManager(FirewallManager.class);
+        // Assert.assertTrue(firewallMgr._firewallElements.enumeration().hasMoreElements());
+        // Assert.assertTrue(firewallMgr._pfElements.enumeration().hasMoreElements());
+        // Assert.assertTrue(firewallMgr._staticNatElements.enumeration().hasMoreElements());
+        // Assert.assertTrue(firewallMgr._networkAclElements.enumeration().hasMoreElements());
+        // Assert.assertNotNull(firewallMgr._networkModel);
+        //
+        // Assert.assertNotNull(firewallMgr._firewallElements.get("VirtualRouter"));
+        // Assert.assertNotNull(firewallMgr._firewallElements.get("VpcVirtualRouter"));
+        // Assert.assertNotNull(firewallMgr._pfElements.get("VirtualRouter"));
+        // Assert.assertNotNull(firewallMgr._pfElements.get("VpcVirtualRouter"));
+        // Assert.assertNotNull(firewallMgr._staticNatElements.get("VirtualRouter"));
+        // Assert.assertNotNull(firewallMgr._staticNatElements.get("VpcVirtualRouter"));
+        // Assert.assertNotNull(firewallMgr._networkAclElements.get("VpcVirtualRouter"));
+        // Assert.assertNull(firewallMgr._networkAclElements.get("VirtualRouter"));
+        //
+        //
+        // Assert.assertTrue(firewallMgr._firewallElements.get("VirtualRouter")
+        // instanceof FirewallServiceProvider);
+        // Assert.assertTrue(firewallMgr._pfElements.get("VirtualRouter")
+        // instanceof PortForwardingServiceProvider);
+        // Assert.assertTrue(firewallMgr._staticNatElements.get("VirtualRouter")
+        // instanceof StaticNatServiceProvider);
+        // Assert.assertTrue(firewallMgr._networkAclElements.get("VpcVirtualRouter")
+        // instanceof NetworkACLServiceProvider);
 
         s_logger.info("Done testing injection of service elements into firewall manager");
 
@@ -141,7 +147,8 @@ public class FirewallManagerTest {
         try {
             when(virtualRouter.applyFWRules(any(Network.class), any(List.class))).thenReturn(false);
             when(vpcVirtualRouter.applyFWRules(any(Network.class), any(List.class))).thenReturn(true);
-            //Network network, Purpose purpose, List<? extends FirewallRule> rules
+            // Network network, Purpose purpose, List<? extends FirewallRule>
+            // rules
             firewallMgr.applyRules(mock(Network.class), Purpose.Firewall, ruleList);
             verify(vpcVirtualRouter).applyFWRules(any(Network.class), any(List.class));
             verify(virtualRouter).applyFWRules(any(Network.class), any(List.class));

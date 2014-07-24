@@ -24,14 +24,14 @@
 package com.amazon.ec2;
 
 /**
- *  AmazonEC2SkeletonInterface java skeleton interface for the axisService
+ * AmazonEC2SkeletonInterface java skeleton interface for the axisService
  */
 public interface AmazonEC2SkeletonInterface {
 
     /**
      * Auto generated method signature
      *
-                                * @param describePlacementGroups
+     * @param describePlacementGroups
      */
 
     public com.amazon.ec2.DescribePlacementGroupsResponse describePlacementGroups(com.amazon.ec2.DescribePlacementGroups describePlacementGroups);
@@ -39,7 +39,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createSecurityGroup
+     * @param createSecurityGroup
      */
 
     public com.amazon.ec2.CreateSecurityGroupResponse createSecurityGroup(com.amazon.ec2.CreateSecurityGroup createSecurityGroup);
@@ -47,16 +47,15 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param resetNetworkInterfaceAttribute
+     * @param resetNetworkInterfaceAttribute
      */
 
-    public com.amazon.ec2.ResetNetworkInterfaceAttributeResponse resetNetworkInterfaceAttribute(
-        com.amazon.ec2.ResetNetworkInterfaceAttribute resetNetworkInterfaceAttribute);
+    public com.amazon.ec2.ResetNetworkInterfaceAttributeResponse resetNetworkInterfaceAttribute(com.amazon.ec2.ResetNetworkInterfaceAttribute resetNetworkInterfaceAttribute);
 
     /**
      * Auto generated method signature
      *
-                                * @param createDhcpOptions
+     * @param createDhcpOptions
      */
 
     public com.amazon.ec2.CreateDhcpOptionsResponse createDhcpOptions(com.amazon.ec2.CreateDhcpOptions createDhcpOptions);
@@ -64,7 +63,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createRouteTable
+     * @param createRouteTable
      */
 
     public com.amazon.ec2.CreateRouteTableResponse createRouteTable(com.amazon.ec2.CreateRouteTable createRouteTable);
@@ -72,7 +71,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeSubnets
+     * @param describeSubnets
      */
 
     public com.amazon.ec2.DescribeSubnetsResponse describeSubnets(com.amazon.ec2.DescribeSubnets describeSubnets);
@@ -80,7 +79,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deactivateLicense
+     * @param deactivateLicense
      */
 
     public com.amazon.ec2.DeactivateLicenseResponse deactivateLicense(com.amazon.ec2.DeactivateLicense deactivateLicense);
@@ -88,7 +87,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteVpc
+     * @param deleteVpc
      */
 
     public com.amazon.ec2.DeleteVpcResponse deleteVpc(com.amazon.ec2.DeleteVpc deleteVpc);
@@ -96,7 +95,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param cancelSpotInstanceRequests
+     * @param cancelSpotInstanceRequests
      */
 
     public com.amazon.ec2.CancelSpotInstanceRequestsResponse cancelSpotInstanceRequests(com.amazon.ec2.CancelSpotInstanceRequests cancelSpotInstanceRequests);
@@ -104,7 +103,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createSubnet
+     * @param createSubnet
      */
 
     public com.amazon.ec2.CreateSubnetResponse createSubnet(com.amazon.ec2.CreateSubnet createSubnet);
@@ -112,7 +111,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteVpnGateway
+     * @param deleteVpnGateway
      */
 
     public com.amazon.ec2.DeleteVpnGatewayResponse deleteVpnGateway(com.amazon.ec2.DeleteVpnGateway deleteVpnGateway);
@@ -120,7 +119,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createNetworkAclEntry
+     * @param createNetworkAclEntry
      */
 
     public com.amazon.ec2.CreateNetworkAclEntryResponse createNetworkAclEntry(com.amazon.ec2.CreateNetworkAclEntry createNetworkAclEntry);
@@ -128,7 +127,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param requestSpotInstances
+     * @param requestSpotInstances
      */
 
     public com.amazon.ec2.RequestSpotInstancesResponse requestSpotInstances(com.amazon.ec2.RequestSpotInstances requestSpotInstances);
@@ -136,7 +135,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeVolumeAttribute
+     * @param describeVolumeAttribute
      */
 
     public com.amazon.ec2.DescribeVolumeAttributeResponse describeVolumeAttribute(com.amazon.ec2.DescribeVolumeAttribute describeVolumeAttribute);
@@ -144,7 +143,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param associateDhcpOptions
+     * @param associateDhcpOptions
      */
 
     public com.amazon.ec2.AssociateDhcpOptionsResponse associateDhcpOptions(com.amazon.ec2.AssociateDhcpOptions associateDhcpOptions);
@@ -152,7 +151,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeTags
+     * @param describeTags
      */
 
     public com.amazon.ec2.DescribeTagsResponse describeTags(com.amazon.ec2.DescribeTags describeTags);
@@ -160,7 +159,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param importKeyPair
+     * @param importKeyPair
      */
 
     public com.amazon.ec2.ImportKeyPairResponse importKeyPair(com.amazon.ec2.ImportKeyPair importKeyPair);
@@ -168,7 +167,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteNetworkInterface
+     * @param deleteNetworkInterface
      */
 
     public com.amazon.ec2.DeleteNetworkInterfaceResponse deleteNetworkInterface(com.amazon.ec2.DeleteNetworkInterface deleteNetworkInterface);
@@ -176,7 +175,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeVpcs
+     * @param describeVpcs
      */
 
     public com.amazon.ec2.DescribeVpcsResponse describeVpcs(com.amazon.ec2.DescribeVpcs describeVpcs);
@@ -184,7 +183,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeLicenses
+     * @param describeLicenses
      */
 
     public com.amazon.ec2.DescribeLicensesResponse describeLicenses(com.amazon.ec2.DescribeLicenses describeLicenses);
@@ -192,7 +191,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param bundleInstance
+     * @param bundleInstance
      */
 
     public com.amazon.ec2.BundleInstanceResponse bundleInstance(com.amazon.ec2.BundleInstance bundleInstance);
@@ -200,7 +199,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeVpnConnections
+     * @param describeVpnConnections
      */
 
     public com.amazon.ec2.DescribeVpnConnectionsResponse describeVpnConnections(com.amazon.ec2.DescribeVpnConnections describeVpnConnections);
@@ -208,7 +207,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeImages
+     * @param describeImages
      */
 
     public com.amazon.ec2.DescribeImagesResponse describeImages(com.amazon.ec2.DescribeImages describeImages);
@@ -216,7 +215,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createInternetGateway
+     * @param createInternetGateway
      */
 
     public com.amazon.ec2.CreateInternetGatewayResponse createInternetGateway(com.amazon.ec2.CreateInternetGateway createInternetGateway);
@@ -224,7 +223,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param disassociateRouteTable
+     * @param disassociateRouteTable
      */
 
     public com.amazon.ec2.DisassociateRouteTableResponse disassociateRouteTable(com.amazon.ec2.DisassociateRouteTable disassociateRouteTable);
@@ -232,7 +231,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param replaceNetworkAclEntry
+     * @param replaceNetworkAclEntry
      */
 
     public com.amazon.ec2.ReplaceNetworkAclEntryResponse replaceNetworkAclEntry(com.amazon.ec2.ReplaceNetworkAclEntry replaceNetworkAclEntry);
@@ -240,7 +239,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param authorizeSecurityGroupIngress
+     * @param authorizeSecurityGroupIngress
      */
 
     public com.amazon.ec2.AuthorizeSecurityGroupIngressResponse authorizeSecurityGroupIngress(com.amazon.ec2.AuthorizeSecurityGroupIngress authorizeSecurityGroupIngress);
@@ -248,7 +247,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeSnapshotAttribute
+     * @param describeSnapshotAttribute
      */
 
     public com.amazon.ec2.DescribeSnapshotAttributeResponse describeSnapshotAttribute(com.amazon.ec2.DescribeSnapshotAttribute describeSnapshotAttribute);
@@ -256,7 +255,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createVpnGateway
+     * @param createVpnGateway
      */
 
     public com.amazon.ec2.CreateVpnGatewayResponse createVpnGateway(com.amazon.ec2.CreateVpnGateway createVpnGateway);
@@ -264,7 +263,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param resetInstanceAttribute
+     * @param resetInstanceAttribute
      */
 
     public com.amazon.ec2.ResetInstanceAttributeResponse resetInstanceAttribute(com.amazon.ec2.ResetInstanceAttribute resetInstanceAttribute);
@@ -272,7 +271,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createTags
+     * @param createTags
      */
 
     public com.amazon.ec2.CreateTagsResponse createTags(com.amazon.ec2.CreateTags createTags);
@@ -280,7 +279,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param authorizeSecurityGroupEgress
+     * @param authorizeSecurityGroupEgress
      */
 
     public com.amazon.ec2.AuthorizeSecurityGroupEgressResponse authorizeSecurityGroupEgress(com.amazon.ec2.AuthorizeSecurityGroupEgress authorizeSecurityGroupEgress);
@@ -288,7 +287,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param associateAddress
+     * @param associateAddress
      */
 
     public com.amazon.ec2.AssociateAddressResponse associateAddress(com.amazon.ec2.AssociateAddress associateAddress);
@@ -296,7 +295,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeImageAttribute
+     * @param describeImageAttribute
      */
 
     public com.amazon.ec2.DescribeImageAttributeResponse describeImageAttribute(com.amazon.ec2.DescribeImageAttribute describeImageAttribute);
@@ -304,7 +303,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeSpotPriceHistory
+     * @param describeSpotPriceHistory
      */
 
     public com.amazon.ec2.DescribeSpotPriceHistoryResponse describeSpotPriceHistory(com.amazon.ec2.DescribeSpotPriceHistory describeSpotPriceHistory);
@@ -312,7 +311,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param modifySnapshotAttribute
+     * @param modifySnapshotAttribute
      */
 
     public com.amazon.ec2.ModifySnapshotAttributeResponse modifySnapshotAttribute(com.amazon.ec2.ModifySnapshotAttribute modifySnapshotAttribute);
@@ -320,7 +319,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeSpotInstanceRequests
+     * @param describeSpotInstanceRequests
      */
 
     public com.amazon.ec2.DescribeSpotInstanceRequestsResponse describeSpotInstanceRequests(com.amazon.ec2.DescribeSpotInstanceRequests describeSpotInstanceRequests);
@@ -328,7 +327,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param importInstance
+     * @param importInstance
      */
 
     public com.amazon.ec2.ImportInstanceResponse importInstance(com.amazon.ec2.ImportInstance importInstance);
@@ -336,7 +335,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeKeyPairs
+     * @param describeKeyPairs
      */
 
     public com.amazon.ec2.DescribeKeyPairsResponse describeKeyPairs(com.amazon.ec2.DescribeKeyPairs describeKeyPairs);
@@ -344,7 +343,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param revokeSecurityGroupIngress
+     * @param revokeSecurityGroupIngress
      */
 
     public com.amazon.ec2.RevokeSecurityGroupIngressResponse revokeSecurityGroupIngress(com.amazon.ec2.RevokeSecurityGroupIngress revokeSecurityGroupIngress);
@@ -352,7 +351,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createPlacementGroup
+     * @param createPlacementGroup
      */
 
     public com.amazon.ec2.CreatePlacementGroupResponse createPlacementGroup(com.amazon.ec2.CreatePlacementGroup createPlacementGroup);
@@ -360,7 +359,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteNetworkAclEntry
+     * @param deleteNetworkAclEntry
      */
 
     public com.amazon.ec2.DeleteNetworkAclEntryResponse deleteNetworkAclEntry(com.amazon.ec2.DeleteNetworkAclEntry deleteNetworkAclEntry);
@@ -368,7 +367,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param activateLicense
+     * @param activateLicense
      */
 
     public com.amazon.ec2.ActivateLicenseResponse activateLicense(com.amazon.ec2.ActivateLicense activateLicense);
@@ -376,7 +375,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteRouteTable
+     * @param deleteRouteTable
      */
 
     public com.amazon.ec2.DeleteRouteTableResponse deleteRouteTable(com.amazon.ec2.DeleteRouteTable deleteRouteTable);
@@ -384,7 +383,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param unmonitorInstances
+     * @param unmonitorInstances
      */
 
     public com.amazon.ec2.UnmonitorInstancesResponse unmonitorInstances(com.amazon.ec2.UnmonitorInstances unmonitorInstances);
@@ -392,7 +391,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param startInstances
+     * @param startInstances
      */
 
     public com.amazon.ec2.StartInstancesResponse startInstances(com.amazon.ec2.StartInstances startInstances);
@@ -400,7 +399,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param confirmProductInstance
+     * @param confirmProductInstance
      */
 
     public com.amazon.ec2.ConfirmProductInstanceResponse confirmProductInstance(com.amazon.ec2.ConfirmProductInstance confirmProductInstance);
@@ -408,16 +407,16 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeNetworkInterfaceAttribute
+     * @param describeNetworkInterfaceAttribute
      */
 
     public com.amazon.ec2.DescribeNetworkInterfaceAttributeResponse describeNetworkInterfaceAttribute(
-        com.amazon.ec2.DescribeNetworkInterfaceAttribute describeNetworkInterfaceAttribute);
+            com.amazon.ec2.DescribeNetworkInterfaceAttribute describeNetworkInterfaceAttribute);
 
     /**
      * Auto generated method signature
      *
-                                * @param runInstances
+     * @param runInstances
      */
 
     public com.amazon.ec2.RunInstancesResponse runInstances(com.amazon.ec2.RunInstances runInstances);
@@ -425,16 +424,15 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createReservedInstancesListing
+     * @param createReservedInstancesListing
      */
 
-    public com.amazon.ec2.CreateReservedInstancesListingResponse createReservedInstancesListing(
-        com.amazon.ec2.CreateReservedInstancesListing createReservedInstancesListing);
+    public com.amazon.ec2.CreateReservedInstancesListingResponse createReservedInstancesListing(com.amazon.ec2.CreateReservedInstancesListing createReservedInstancesListing);
 
     /**
      * Auto generated method signature
      *
-                                * @param createCustomerGateway
+     * @param createCustomerGateway
      */
 
     public com.amazon.ec2.CreateCustomerGatewayResponse createCustomerGateway(com.amazon.ec2.CreateCustomerGateway createCustomerGateway);
@@ -442,7 +440,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createNetworkAcl
+     * @param createNetworkAcl
      */
 
     public com.amazon.ec2.CreateNetworkAclResponse createNetworkAcl(com.amazon.ec2.CreateNetworkAcl createNetworkAcl);
@@ -450,7 +448,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param resetImageAttribute
+     * @param resetImageAttribute
      */
 
     public com.amazon.ec2.ResetImageAttributeResponse resetImageAttribute(com.amazon.ec2.ResetImageAttribute resetImageAttribute);
@@ -458,7 +456,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param modifyVolumeAttribute
+     * @param modifyVolumeAttribute
      */
 
     public com.amazon.ec2.ModifyVolumeAttributeResponse modifyVolumeAttribute(com.amazon.ec2.ModifyVolumeAttribute modifyVolumeAttribute);
@@ -466,7 +464,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeReservedInstances
+     * @param describeReservedInstances
      */
 
     public com.amazon.ec2.DescribeReservedInstancesResponse describeReservedInstances(com.amazon.ec2.DescribeReservedInstances describeReservedInstances);
@@ -474,7 +472,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param resetSnapshotAttribute
+     * @param resetSnapshotAttribute
      */
 
     public com.amazon.ec2.ResetSnapshotAttributeResponse resetSnapshotAttribute(com.amazon.ec2.ResetSnapshotAttribute resetSnapshotAttribute);
@@ -482,7 +480,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteVolume
+     * @param deleteVolume
      */
 
     public com.amazon.ec2.DeleteVolumeResponse deleteVolume(com.amazon.ec2.DeleteVolume deleteVolume);
@@ -490,7 +488,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeAvailabilityZones
+     * @param describeAvailabilityZones
      */
 
     public com.amazon.ec2.DescribeAvailabilityZonesResponse describeAvailabilityZones(com.amazon.ec2.DescribeAvailabilityZones describeAvailabilityZones);
@@ -498,7 +496,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createVpnConnection
+     * @param createVpnConnection
      */
 
     public com.amazon.ec2.CreateVpnConnectionResponse createVpnConnection(com.amazon.ec2.CreateVpnConnection createVpnConnection);
@@ -506,7 +504,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param cancelBundleTask
+     * @param cancelBundleTask
      */
 
     public com.amazon.ec2.CancelBundleTaskResponse cancelBundleTask(com.amazon.ec2.CancelBundleTask cancelBundleTask);
@@ -514,7 +512,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param replaceNetworkAclAssociation
+     * @param replaceNetworkAclAssociation
      */
 
     public com.amazon.ec2.ReplaceNetworkAclAssociationResponse replaceNetworkAclAssociation(com.amazon.ec2.ReplaceNetworkAclAssociation replaceNetworkAclAssociation);
@@ -522,7 +520,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param detachVpnGateway
+     * @param detachVpnGateway
      */
 
     public com.amazon.ec2.DetachVpnGatewayResponse detachVpnGateway(com.amazon.ec2.DetachVpnGateway detachVpnGateway);
@@ -530,7 +528,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeSnapshots
+     * @param describeSnapshots
      */
 
     public com.amazon.ec2.DescribeSnapshotsResponse describeSnapshots(com.amazon.ec2.DescribeSnapshots describeSnapshots);
@@ -538,7 +536,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteSubnet
+     * @param deleteSubnet
      */
 
     public com.amazon.ec2.DeleteSubnetResponse deleteSubnet(com.amazon.ec2.DeleteSubnet deleteSubnet);
@@ -546,7 +544,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeBundleTasks
+     * @param describeBundleTasks
      */
 
     public com.amazon.ec2.DescribeBundleTasksResponse describeBundleTasks(com.amazon.ec2.DescribeBundleTasks describeBundleTasks);
@@ -554,7 +552,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createKeyPair
+     * @param createKeyPair
      */
 
     public com.amazon.ec2.CreateKeyPairResponse createKeyPair(com.amazon.ec2.CreateKeyPair createKeyPair);
@@ -562,7 +560,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createImage
+     * @param createImage
      */
 
     public com.amazon.ec2.CreateImageResponse createImage(com.amazon.ec2.CreateImage createImage);
@@ -570,7 +568,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param enableVgwRoutePropagation
+     * @param enableVgwRoutePropagation
      */
 
     public com.amazon.ec2.EnableVgwRoutePropagationResponse enableVgwRoutePropagation(com.amazon.ec2.EnableVgwRoutePropagation enableVgwRoutePropagation);
@@ -578,7 +576,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param unassignPrivateIpAddresses
+     * @param unassignPrivateIpAddresses
      */
 
     public com.amazon.ec2.UnassignPrivateIpAddressesResponse unassignPrivateIpAddresses(com.amazon.ec2.UnassignPrivateIpAddresses unassignPrivateIpAddresses);
@@ -586,7 +584,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deregisterImage
+     * @param deregisterImage
      */
 
     public com.amazon.ec2.DeregisterImageResponse deregisterImage(com.amazon.ec2.DeregisterImage deregisterImage);
@@ -594,7 +592,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteVpnConnectionRoute
+     * @param deleteVpnConnectionRoute
      */
 
     public com.amazon.ec2.DeleteVpnConnectionRouteResponse deleteVpnConnectionRoute(com.amazon.ec2.DeleteVpnConnectionRoute deleteVpnConnectionRoute);
@@ -602,7 +600,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param modifyImageAttribute
+     * @param modifyImageAttribute
      */
 
     public com.amazon.ec2.ModifyImageAttributeResponse modifyImageAttribute(com.amazon.ec2.ModifyImageAttribute modifyImageAttribute);
@@ -610,7 +608,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param cancelConversionTask
+     * @param cancelConversionTask
      */
 
     public com.amazon.ec2.CancelConversionTaskResponse cancelConversionTask(com.amazon.ec2.CancelConversionTask cancelConversionTask);
@@ -618,7 +616,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeVolumes
+     * @param describeVolumes
      */
 
     public com.amazon.ec2.DescribeVolumesResponse describeVolumes(com.amazon.ec2.DescribeVolumes describeVolumes);
@@ -626,16 +624,15 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param cancelReservedInstancesListing
+     * @param cancelReservedInstancesListing
      */
 
-    public com.amazon.ec2.CancelReservedInstancesListingResponse cancelReservedInstancesListing(
-        com.amazon.ec2.CancelReservedInstancesListing cancelReservedInstancesListing);
+    public com.amazon.ec2.CancelReservedInstancesListingResponse cancelReservedInstancesListing(com.amazon.ec2.CancelReservedInstancesListing cancelReservedInstancesListing);
 
     /**
      * Auto generated method signature
      *
-                                * @param getPasswordData
+     * @param getPasswordData
      */
 
     public com.amazon.ec2.GetPasswordDataResponse getPasswordData(com.amazon.ec2.GetPasswordData getPasswordData);
@@ -643,7 +640,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param allocateAddress
+     * @param allocateAddress
      */
 
     public com.amazon.ec2.AllocateAddressResponse allocateAddress(com.amazon.ec2.AllocateAddress allocateAddress);
@@ -651,7 +648,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteSecurityGroup
+     * @param deleteSecurityGroup
      */
 
     public com.amazon.ec2.DeleteSecurityGroupResponse deleteSecurityGroup(com.amazon.ec2.DeleteSecurityGroup deleteSecurityGroup);
@@ -659,7 +656,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deletePlacementGroup
+     * @param deletePlacementGroup
      */
 
     public com.amazon.ec2.DeletePlacementGroupResponse deletePlacementGroup(com.amazon.ec2.DeletePlacementGroup deletePlacementGroup);
@@ -667,7 +664,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param disassociateAddress
+     * @param disassociateAddress
      */
 
     public com.amazon.ec2.DisassociateAddressResponse disassociateAddress(com.amazon.ec2.DisassociateAddress disassociateAddress);
@@ -675,7 +672,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteDhcpOptions
+     * @param deleteDhcpOptions
      */
 
     public com.amazon.ec2.DeleteDhcpOptionsResponse deleteDhcpOptions(com.amazon.ec2.DeleteDhcpOptions deleteDhcpOptions);
@@ -683,16 +680,15 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeSpotDatafeedSubscription
+     * @param describeSpotDatafeedSubscription
      */
 
-    public com.amazon.ec2.DescribeSpotDatafeedSubscriptionResponse describeSpotDatafeedSubscription(
-        com.amazon.ec2.DescribeSpotDatafeedSubscription describeSpotDatafeedSubscription);
+    public com.amazon.ec2.DescribeSpotDatafeedSubscriptionResponse describeSpotDatafeedSubscription(com.amazon.ec2.DescribeSpotDatafeedSubscription describeSpotDatafeedSubscription);
 
     /**
      * Auto generated method signature
      *
-                                * @param describeNetworkAcls
+     * @param describeNetworkAcls
      */
 
     public com.amazon.ec2.DescribeNetworkAclsResponse describeNetworkAcls(com.amazon.ec2.DescribeNetworkAcls describeNetworkAcls);
@@ -700,7 +696,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param enableVolumeIO
+     * @param enableVolumeIO
      */
 
     public com.amazon.ec2.EnableVolumeIOResponse enableVolumeIO(com.amazon.ec2.EnableVolumeIO enableVolumeIO);
@@ -708,7 +704,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param attachVpnGateway
+     * @param attachVpnGateway
      */
 
     public com.amazon.ec2.AttachVpnGatewayResponse attachVpnGateway(com.amazon.ec2.AttachVpnGateway attachVpnGateway);
@@ -716,7 +712,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeInternetGateways
+     * @param describeInternetGateways
      */
 
     public com.amazon.ec2.DescribeInternetGatewaysResponse describeInternetGateways(com.amazon.ec2.DescribeInternetGateways describeInternetGateways);
@@ -724,7 +720,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeDhcpOptions
+     * @param describeDhcpOptions
      */
 
     public com.amazon.ec2.DescribeDhcpOptionsResponse describeDhcpOptions(com.amazon.ec2.DescribeDhcpOptions describeDhcpOptions);
@@ -732,25 +728,24 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createSpotDatafeedSubscription
+     * @param createSpotDatafeedSubscription
      */
 
-    public com.amazon.ec2.CreateSpotDatafeedSubscriptionResponse createSpotDatafeedSubscription(
-        com.amazon.ec2.CreateSpotDatafeedSubscription createSpotDatafeedSubscription);
+    public com.amazon.ec2.CreateSpotDatafeedSubscriptionResponse createSpotDatafeedSubscription(com.amazon.ec2.CreateSpotDatafeedSubscription createSpotDatafeedSubscription);
 
     /**
      * Auto generated method signature
      *
-                                * @param describeReservedInstancesListings
+     * @param describeReservedInstancesListings
      */
 
     public com.amazon.ec2.DescribeReservedInstancesListingsResponse describeReservedInstancesListings(
-        com.amazon.ec2.DescribeReservedInstancesListings describeReservedInstancesListings);
+            com.amazon.ec2.DescribeReservedInstancesListings describeReservedInstancesListings);
 
     /**
      * Auto generated method signature
      *
-                                * @param describeInstanceStatus
+     * @param describeInstanceStatus
      */
 
     public com.amazon.ec2.DescribeInstanceStatusResponse describeInstanceStatus(com.amazon.ec2.DescribeInstanceStatus describeInstanceStatus);
@@ -758,16 +753,15 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param modifyNetworkInterfaceAttribute
+     * @param modifyNetworkInterfaceAttribute
      */
 
-    public com.amazon.ec2.ModifyNetworkInterfaceAttributeResponse modifyNetworkInterfaceAttribute(
-        com.amazon.ec2.ModifyNetworkInterfaceAttribute modifyNetworkInterfaceAttribute);
+    public com.amazon.ec2.ModifyNetworkInterfaceAttributeResponse modifyNetworkInterfaceAttribute(com.amazon.ec2.ModifyNetworkInterfaceAttribute modifyNetworkInterfaceAttribute);
 
     /**
      * Auto generated method signature
      *
-                                * @param disableVgwRoutePropagation
+     * @param disableVgwRoutePropagation
      */
 
     public com.amazon.ec2.DisableVgwRoutePropagationResponse disableVgwRoutePropagation(com.amazon.ec2.DisableVgwRoutePropagation disableVgwRoutePropagation);
@@ -775,7 +769,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeVolumeStatus
+     * @param describeVolumeStatus
      */
 
     public com.amazon.ec2.DescribeVolumeStatusResponse describeVolumeStatus(com.amazon.ec2.DescribeVolumeStatus describeVolumeStatus);
@@ -783,7 +777,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param detachNetworkInterface
+     * @param detachNetworkInterface
      */
 
     public com.amazon.ec2.DetachNetworkInterfaceResponse detachNetworkInterface(com.amazon.ec2.DetachNetworkInterface detachNetworkInterface);
@@ -791,7 +785,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeSecurityGroups
+     * @param describeSecurityGroups
      */
 
     public com.amazon.ec2.DescribeSecurityGroupsResponse describeSecurityGroups(com.amazon.ec2.DescribeSecurityGroups describeSecurityGroups);
@@ -799,7 +793,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeInstances
+     * @param describeInstances
      */
 
     public com.amazon.ec2.DescribeInstancesResponse describeInstances(com.amazon.ec2.DescribeInstances describeInstances);
@@ -807,7 +801,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeNetworkInterfaces
+     * @param describeNetworkInterfaces
      */
 
     public com.amazon.ec2.DescribeNetworkInterfacesResponse describeNetworkInterfaces(com.amazon.ec2.DescribeNetworkInterfaces describeNetworkInterfaces);
@@ -815,7 +809,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteKeyPair
+     * @param deleteKeyPair
      */
 
     public com.amazon.ec2.DeleteKeyPairResponse deleteKeyPair(com.amazon.ec2.DeleteKeyPair deleteKeyPair);
@@ -823,7 +817,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createSnapshot
+     * @param createSnapshot
      */
 
     public com.amazon.ec2.CreateSnapshotResponse createSnapshot(com.amazon.ec2.CreateSnapshot createSnapshot);
@@ -831,7 +825,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeVpnGateways
+     * @param describeVpnGateways
      */
 
     public com.amazon.ec2.DescribeVpnGatewaysResponse describeVpnGateways(com.amazon.ec2.DescribeVpnGateways describeVpnGateways);
@@ -839,7 +833,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteTags
+     * @param deleteTags
      */
 
     public com.amazon.ec2.DeleteTagsResponse deleteTags(com.amazon.ec2.DeleteTags deleteTags);
@@ -847,7 +841,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteSnapshot
+     * @param deleteSnapshot
      */
 
     public com.amazon.ec2.DeleteSnapshotResponse deleteSnapshot(com.amazon.ec2.DeleteSnapshot deleteSnapshot);
@@ -855,7 +849,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteCustomerGateway
+     * @param deleteCustomerGateway
      */
 
     public com.amazon.ec2.DeleteCustomerGatewayResponse deleteCustomerGateway(com.amazon.ec2.DeleteCustomerGateway deleteCustomerGateway);
@@ -863,7 +857,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createVolume
+     * @param createVolume
      */
 
     public com.amazon.ec2.CreateVolumeResponse createVolume(com.amazon.ec2.CreateVolume createVolume);
@@ -871,7 +865,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param cancelExportTask
+     * @param cancelExportTask
      */
 
     public com.amazon.ec2.CancelExportTaskResponse cancelExportTask(com.amazon.ec2.CancelExportTask cancelExportTask);
@@ -879,7 +873,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param registerImage
+     * @param registerImage
      */
 
     public com.amazon.ec2.RegisterImageResponse registerImage(com.amazon.ec2.RegisterImage registerImage);
@@ -887,7 +881,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param detachVolume
+     * @param detachVolume
      */
 
     public com.amazon.ec2.DetachVolumeResponse detachVolume(com.amazon.ec2.DetachVolume detachVolume);
@@ -895,7 +889,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param stopInstances
+     * @param stopInstances
      */
 
     public com.amazon.ec2.StopInstancesResponse stopInstances(com.amazon.ec2.StopInstances stopInstances);
@@ -903,7 +897,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createRoute
+     * @param createRoute
      */
 
     public com.amazon.ec2.CreateRouteResponse createRoute(com.amazon.ec2.CreateRoute createRoute);
@@ -911,7 +905,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param releaseAddress
+     * @param releaseAddress
      */
 
     public com.amazon.ec2.ReleaseAddressResponse releaseAddress(com.amazon.ec2.ReleaseAddress releaseAddress);
@@ -919,7 +913,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeRouteTables
+     * @param describeRouteTables
      */
 
     public com.amazon.ec2.DescribeRouteTablesResponse describeRouteTables(com.amazon.ec2.DescribeRouteTables describeRouteTables);
@@ -927,7 +921,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeCustomerGateways
+     * @param describeCustomerGateways
      */
 
     public com.amazon.ec2.DescribeCustomerGatewaysResponse describeCustomerGateways(com.amazon.ec2.DescribeCustomerGateways describeCustomerGateways);
@@ -935,7 +929,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteNetworkAcl
+     * @param deleteNetworkAcl
      */
 
     public com.amazon.ec2.DeleteNetworkAclResponse deleteNetworkAcl(com.amazon.ec2.DeleteNetworkAcl deleteNetworkAcl);
@@ -943,7 +937,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteRoute
+     * @param deleteRoute
      */
 
     public com.amazon.ec2.DeleteRouteResponse deleteRoute(com.amazon.ec2.DeleteRoute deleteRoute);
@@ -951,7 +945,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param rebootInstances
+     * @param rebootInstances
      */
 
     public com.amazon.ec2.RebootInstancesResponse rebootInstances(com.amazon.ec2.RebootInstances rebootInstances);
@@ -959,7 +953,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param modifyInstanceAttribute
+     * @param modifyInstanceAttribute
      */
 
     public com.amazon.ec2.ModifyInstanceAttributeResponse modifyInstanceAttribute(com.amazon.ec2.ModifyInstanceAttribute modifyInstanceAttribute);
@@ -967,7 +961,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param terminateInstances
+     * @param terminateInstances
      */
 
     public com.amazon.ec2.TerminateInstancesResponse terminateInstances(com.amazon.ec2.TerminateInstances terminateInstances);
@@ -975,7 +969,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createVpnConnectionRoute
+     * @param createVpnConnectionRoute
      */
 
     public com.amazon.ec2.CreateVpnConnectionRouteResponse createVpnConnectionRoute(com.amazon.ec2.CreateVpnConnectionRoute createVpnConnectionRoute);
@@ -983,7 +977,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeConversionTasks
+     * @param describeConversionTasks
      */
 
     public com.amazon.ec2.DescribeConversionTasksResponse describeConversionTasks(com.amazon.ec2.DescribeConversionTasks describeConversionTasks);
@@ -991,7 +985,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeAddresses
+     * @param describeAddresses
      */
 
     public com.amazon.ec2.DescribeAddressesResponse describeAddresses(com.amazon.ec2.DescribeAddresses describeAddresses);
@@ -999,7 +993,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeInstanceAttribute
+     * @param describeInstanceAttribute
      */
 
     public com.amazon.ec2.DescribeInstanceAttributeResponse describeInstanceAttribute(com.amazon.ec2.DescribeInstanceAttribute describeInstanceAttribute);
@@ -1007,7 +1001,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param attachInternetGateway
+     * @param attachInternetGateway
      */
 
     public com.amazon.ec2.AttachInternetGatewayResponse attachInternetGateway(com.amazon.ec2.AttachInternetGateway attachInternetGateway);
@@ -1015,7 +1009,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createVpc
+     * @param createVpc
      */
 
     public com.amazon.ec2.CreateVpcResponse createVpc(com.amazon.ec2.CreateVpc createVpc);
@@ -1023,7 +1017,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param replaceRouteTableAssociation
+     * @param replaceRouteTableAssociation
      */
 
     public com.amazon.ec2.ReplaceRouteTableAssociationResponse replaceRouteTableAssociation(com.amazon.ec2.ReplaceRouteTableAssociation replaceRouteTableAssociation);
@@ -1031,7 +1025,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param associateRouteTable
+     * @param associateRouteTable
      */
 
     public com.amazon.ec2.AssociateRouteTableResponse associateRouteTable(com.amazon.ec2.AssociateRouteTable associateRouteTable);
@@ -1039,7 +1033,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param detachInternetGateway
+     * @param detachInternetGateway
      */
 
     public com.amazon.ec2.DetachInternetGatewayResponse detachInternetGateway(com.amazon.ec2.DetachInternetGateway detachInternetGateway);
@@ -1047,16 +1041,16 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param purchaseReservedInstancesOffering
+     * @param purchaseReservedInstancesOffering
      */
 
     public com.amazon.ec2.PurchaseReservedInstancesOfferingResponse purchaseReservedInstancesOffering(
-        com.amazon.ec2.PurchaseReservedInstancesOffering purchaseReservedInstancesOffering);
+            com.amazon.ec2.PurchaseReservedInstancesOffering purchaseReservedInstancesOffering);
 
     /**
      * Auto generated method signature
      *
-                                * @param importVolume
+     * @param importVolume
      */
 
     public com.amazon.ec2.ImportVolumeResponse importVolume(com.amazon.ec2.ImportVolume importVolume);
@@ -1064,7 +1058,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeExportTasks
+     * @param describeExportTasks
      */
 
     public com.amazon.ec2.DescribeExportTasksResponse describeExportTasks(com.amazon.ec2.DescribeExportTasks describeExportTasks);
@@ -1072,7 +1066,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createInstanceExportTask
+     * @param createInstanceExportTask
      */
 
     public com.amazon.ec2.CreateInstanceExportTaskResponse createInstanceExportTask(com.amazon.ec2.CreateInstanceExportTask createInstanceExportTask);
@@ -1080,7 +1074,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param assignPrivateIpAddresses
+     * @param assignPrivateIpAddresses
      */
 
     public com.amazon.ec2.AssignPrivateIpAddressesResponse assignPrivateIpAddresses(com.amazon.ec2.AssignPrivateIpAddresses assignPrivateIpAddresses);
@@ -1088,7 +1082,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param reportInstanceStatus
+     * @param reportInstanceStatus
      */
 
     public com.amazon.ec2.ReportInstanceStatusResponse reportInstanceStatus(com.amazon.ec2.ReportInstanceStatus reportInstanceStatus);
@@ -1096,16 +1090,16 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeReservedInstancesOfferings
+     * @param describeReservedInstancesOfferings
      */
 
     public com.amazon.ec2.DescribeReservedInstancesOfferingsResponse describeReservedInstancesOfferings(
-        com.amazon.ec2.DescribeReservedInstancesOfferings describeReservedInstancesOfferings);
+            com.amazon.ec2.DescribeReservedInstancesOfferings describeReservedInstancesOfferings);
 
     /**
      * Auto generated method signature
      *
-                                * @param deleteVpnConnection
+     * @param deleteVpnConnection
      */
 
     public com.amazon.ec2.DeleteVpnConnectionResponse deleteVpnConnection(com.amazon.ec2.DeleteVpnConnection deleteVpnConnection);
@@ -1113,7 +1107,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteInternetGateway
+     * @param deleteInternetGateway
      */
 
     public com.amazon.ec2.DeleteInternetGatewayResponse deleteInternetGateway(com.amazon.ec2.DeleteInternetGateway deleteInternetGateway);
@@ -1121,16 +1115,15 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param deleteSpotDatafeedSubscription
+     * @param deleteSpotDatafeedSubscription
      */
 
-    public com.amazon.ec2.DeleteSpotDatafeedSubscriptionResponse deleteSpotDatafeedSubscription(
-        com.amazon.ec2.DeleteSpotDatafeedSubscription deleteSpotDatafeedSubscription);
+    public com.amazon.ec2.DeleteSpotDatafeedSubscriptionResponse deleteSpotDatafeedSubscription(com.amazon.ec2.DeleteSpotDatafeedSubscription deleteSpotDatafeedSubscription);
 
     /**
      * Auto generated method signature
      *
-                                * @param attachNetworkInterface
+     * @param attachNetworkInterface
      */
 
     public com.amazon.ec2.AttachNetworkInterfaceResponse attachNetworkInterface(com.amazon.ec2.AttachNetworkInterface attachNetworkInterface);
@@ -1138,7 +1131,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param createNetworkInterface
+     * @param createNetworkInterface
      */
 
     public com.amazon.ec2.CreateNetworkInterfaceResponse createNetworkInterface(com.amazon.ec2.CreateNetworkInterface createNetworkInterface);
@@ -1146,7 +1139,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param revokeSecurityGroupEgress
+     * @param revokeSecurityGroupEgress
      */
 
     public com.amazon.ec2.RevokeSecurityGroupEgressResponse revokeSecurityGroupEgress(com.amazon.ec2.RevokeSecurityGroupEgress revokeSecurityGroupEgress);
@@ -1154,7 +1147,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param monitorInstances
+     * @param monitorInstances
      */
 
     public com.amazon.ec2.MonitorInstancesResponse monitorInstances(com.amazon.ec2.MonitorInstances monitorInstances);
@@ -1162,7 +1155,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param replaceRoute
+     * @param replaceRoute
      */
 
     public com.amazon.ec2.ReplaceRouteResponse replaceRoute(com.amazon.ec2.ReplaceRoute replaceRoute);
@@ -1170,7 +1163,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param attachVolume
+     * @param attachVolume
      */
 
     public com.amazon.ec2.AttachVolumeResponse attachVolume(com.amazon.ec2.AttachVolume attachVolume);
@@ -1178,7 +1171,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param getConsoleOutput
+     * @param getConsoleOutput
      */
 
     public com.amazon.ec2.GetConsoleOutputResponse getConsoleOutput(com.amazon.ec2.GetConsoleOutput getConsoleOutput);
@@ -1186,7 +1179,7 @@ public interface AmazonEC2SkeletonInterface {
     /**
      * Auto generated method signature
      *
-                                * @param describeRegions
+     * @param describeRegions
      */
 
     public com.amazon.ec2.DescribeRegionsResponse describeRegions(com.amazon.ec2.DescribeRegions describeRegions);

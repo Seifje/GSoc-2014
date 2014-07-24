@@ -81,7 +81,8 @@ public class MonitoringServiceVO implements MonitoringService {
 
     @Override
     public String getServiceName() {
-        return serviceName;  //To change body of implemented methods use File | Settings | File Templates.
+        return serviceName; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 
     @Override
@@ -96,17 +97,20 @@ public class MonitoringServiceVO implements MonitoringService {
 
     @Override
     public String getUuid() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 
     @Override
     public long getAccountId() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return 0; // To change body of implemented methods use File | Settings |
+        // File Templates.
     }
 
     @Override
     public long getDomainId() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return 0; // To change body of implemented methods use File | Settings |
+        // File Templates.
     }
 
     public boolean isDefaultService() {

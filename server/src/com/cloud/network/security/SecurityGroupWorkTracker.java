@@ -54,7 +54,7 @@ public class SecurityGroupWorkTracker {
             currLength = outstanding.intValue();
             if (currLength + 1 > _bufferLength) {
                 long discarded = _discardCount.incrementAndGet();
-                //drop it on the floor
+                // drop it on the floor
                 s_logger.debug("SecurityGroupManager: dropping a message because there are more than " + currLength + " outstanding messages, total dropped=" + discarded);
                 return false;
             }

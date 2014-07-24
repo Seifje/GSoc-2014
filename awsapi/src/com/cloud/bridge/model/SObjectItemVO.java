@@ -116,7 +116,8 @@ public class SObjectItemVO {
     }
 
     public void setStoredPath(String storedPath) {
-        this.storedPath = storedPath;   // TODO - storedpath holds integer, called from S3Engine.allocObjectItem
+        this.storedPath = storedPath; // TODO - storedpath holds integer, called
+                                      // from S3Engine.allocObjectItem
     }
 
     public long getStoredSize() {

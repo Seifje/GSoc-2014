@@ -68,23 +68,27 @@ public class LibvirtStoragePoolXMLParser {
                 } else {
                     return new LibvirtStoragePoolDef(LibvirtStoragePoolDef.poolType.valueOf(type.toUpperCase()), poolName, uuid, host, port, pool, "");
                 }
-                /* Gluster is a sub-type of LibvirtStoragePoolDef.poolType.NETFS, need to check format */
+                /*
+                 * Gluster is a sub-type of
+                 * LibvirtStoragePoolDef.poolType.NETFS, need to check format
+                 */
             } else if (format != null && format.equalsIgnoreCase("glusterfs")) {
-                /* libvirt does not return the default port, but requires it for a disk-definition */
+                /*
+                 * libvirt does not return the default port, but requires it for
+                 * a disk-definition
+                 */
                 int port = 24007;
 
                 String path = getAttrValue("dir", "path", source);
 
-                Element target = (Element) rootElement.getElementsByTagName(
-                        "target").item(0);
+                Element target = (Element)rootElement.getElementsByTagName("target").item(0);
                 String targetPath = getTagValue("path", target);
 
                 String portValue = getAttrValue("host", "port", source);
                 if (portValue != null && !portValue.isEmpty())
                     port = Integer.parseInt(portValue);
 
-                return new LibvirtStoragePoolDef(LibvirtStoragePoolDef.poolType.valueOf(format.toUpperCase()),
-                        poolName, uuid, host, port, path, targetPath);
+                return new LibvirtStoragePoolDef(LibvirtStoragePoolDef.poolType.valueOf(format.toUpperCase()), poolName, uuid, host, port, path, targetPath);
             } else {
                 String path = getAttrValue("dir", "path", source);
 

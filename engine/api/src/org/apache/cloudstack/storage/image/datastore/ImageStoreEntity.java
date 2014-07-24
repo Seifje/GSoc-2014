@@ -43,7 +43,7 @@ public interface ImageStoreEntity extends DataStore, ImageStore {
 
     String getMountPoint(); // get the mount point on ssvm.
 
-    String createEntityExtractUrl(String installPath, ImageFormat format, DataObject dataObject);  // get the entity download URL
+    String createEntityExtractUrl(String installPath, ImageFormat format, DataObject dataObject); // get the entity download URL
 
     void deleteExtractUrl(String installPath, String url, Upload.Type volume);
 }

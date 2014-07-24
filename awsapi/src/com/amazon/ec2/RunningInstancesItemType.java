@@ -25,15 +25,15 @@
 package com.amazon.ec2;
 
 /**
-*  RunningInstancesItemType bean class
-*/
+ * RunningInstancesItemType bean class
+ */
 
 public class RunningInstancesItemType implements org.apache.axis2.databinding.ADBBean {
-    /* This type was generated from the piece of schema that had
-            name = RunningInstancesItemType
-            Namespace URI = http://ec2.amazonaws.com/doc/2012-08-15/
-            Namespace Prefix = ns1
-            */
+    /*
+     * This type was generated from the piece of schema that had name =
+     * RunningInstancesItemType Namespace URI =
+     * http://ec2.amazonaws.com/doc/2012-08-15/ Namespace Prefix = ns1
+     */
 
     private static java.lang.String generatePrefix(java.lang.String namespace) {
         if (namespace.equals("http://ec2.amazonaws.com/doc/2012-08-15/")) {
@@ -43,23 +43,26 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for InstanceId
-    */
+     * field for InstanceId
+     */
 
     protected java.lang.String localInstanceId;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getInstanceId() {
         return localInstanceId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param InstanceId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            InstanceId
+     */
     public void setInstanceId(java.lang.String param) {
 
         this.localInstanceId = param;
@@ -67,33 +70,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for ImageId
-    */
+     * field for ImageId
+     */
 
     protected java.lang.String localImageId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localImageIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getImageId() {
         return localImageId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param ImageId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            ImageId
+     */
     public void setImageId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localImageIdTracker = true;
         } else {
             localImageIdTracker = false;
@@ -105,23 +112,26 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for InstanceState
-    */
+     * field for InstanceState
+     */
 
     protected com.amazon.ec2.InstanceStateType localInstanceState;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.InstanceStateType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.InstanceStateType
+     */
     public com.amazon.ec2.InstanceStateType getInstanceState() {
         return localInstanceState;
     }
 
     /**
-       * Auto generated setter method
-       * @param param InstanceState
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            InstanceState
+     */
     public void setInstanceState(com.amazon.ec2.InstanceStateType param) {
 
         this.localInstanceState = param;
@@ -129,23 +139,26 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for PrivateDnsName
-    */
+     * field for PrivateDnsName
+     */
 
     protected java.lang.String localPrivateDnsName;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getPrivateDnsName() {
         return localPrivateDnsName;
     }
 
     /**
-       * Auto generated setter method
-       * @param param PrivateDnsName
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            PrivateDnsName
+     */
     public void setPrivateDnsName(java.lang.String param) {
 
         this.localPrivateDnsName = param;
@@ -153,33 +166,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for DnsName
-    */
+     * field for DnsName
+     */
 
     protected java.lang.String localDnsName;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localDnsNameTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getDnsName() {
         return localDnsName;
     }
 
     /**
-       * Auto generated setter method
-       * @param param DnsName
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            DnsName
+     */
     public void setDnsName(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localDnsNameTracker = true;
         } else {
             localDnsNameTracker = false;
@@ -191,33 +208,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for Reason
-    */
+     * field for Reason
+     */
 
     protected java.lang.String localReason;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localReasonTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getReason() {
         return localReason;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Reason
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Reason
+     */
     public void setReason(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localReasonTracker = true;
         } else {
             localReasonTracker = false;
@@ -229,33 +250,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for KeyName
-    */
+     * field for KeyName
+     */
 
     protected java.lang.String localKeyName;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localKeyNameTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getKeyName() {
         return localKeyName;
     }
 
     /**
-       * Auto generated setter method
-       * @param param KeyName
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            KeyName
+     */
     public void setKeyName(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localKeyNameTracker = true;
         } else {
             localKeyNameTracker = false;
@@ -267,33 +292,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for AmiLaunchIndex
-    */
+     * field for AmiLaunchIndex
+     */
 
     protected java.lang.String localAmiLaunchIndex;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localAmiLaunchIndexTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getAmiLaunchIndex() {
         return localAmiLaunchIndex;
     }
 
     /**
-       * Auto generated setter method
-       * @param param AmiLaunchIndex
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            AmiLaunchIndex
+     */
     public void setAmiLaunchIndex(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localAmiLaunchIndexTracker = true;
         } else {
             localAmiLaunchIndexTracker = false;
@@ -305,33 +334,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for ProductCodes
-    */
+     * field for ProductCodes
+     */
 
     protected com.amazon.ec2.ProductCodesSetType localProductCodes;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localProductCodesTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.ProductCodesSetType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.ProductCodesSetType
+     */
     public com.amazon.ec2.ProductCodesSetType getProductCodes() {
         return localProductCodes;
     }
 
     /**
-       * Auto generated setter method
-       * @param param ProductCodes
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            ProductCodes
+     */
     public void setProductCodes(com.amazon.ec2.ProductCodesSetType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localProductCodesTracker = true;
         } else {
             localProductCodesTracker = false;
@@ -343,23 +376,26 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for InstanceType
-    */
+     * field for InstanceType
+     */
 
     protected java.lang.String localInstanceType;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getInstanceType() {
         return localInstanceType;
     }
 
     /**
-       * Auto generated setter method
-       * @param param InstanceType
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            InstanceType
+     */
     public void setInstanceType(java.lang.String param) {
 
         this.localInstanceType = param;
@@ -367,23 +403,26 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for LaunchTime
-    */
+     * field for LaunchTime
+     */
 
     protected java.util.Calendar localLaunchTime;
 
     /**
-    * Auto generated getter method
-    * @return java.util.Calendar
-    */
+     * Auto generated getter method
+     * 
+     * @return java.util.Calendar
+     */
     public java.util.Calendar getLaunchTime() {
         return localLaunchTime;
     }
 
     /**
-       * Auto generated setter method
-       * @param param LaunchTime
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            LaunchTime
+     */
     public void setLaunchTime(java.util.Calendar param) {
 
         this.localLaunchTime = param;
@@ -391,33 +430,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for Placement
-    */
+     * field for Placement
+     */
 
     protected com.amazon.ec2.PlacementResponseType localPlacement;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localPlacementTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.PlacementResponseType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.PlacementResponseType
+     */
     public com.amazon.ec2.PlacementResponseType getPlacement() {
         return localPlacement;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Placement
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Placement
+     */
     public void setPlacement(com.amazon.ec2.PlacementResponseType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localPlacementTracker = true;
         } else {
             localPlacementTracker = false;
@@ -429,33 +472,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for KernelId
-    */
+     * field for KernelId
+     */
 
     protected java.lang.String localKernelId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localKernelIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getKernelId() {
         return localKernelId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param KernelId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            KernelId
+     */
     public void setKernelId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localKernelIdTracker = true;
         } else {
             localKernelIdTracker = false;
@@ -467,33 +514,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for RamdiskId
-    */
+     * field for RamdiskId
+     */
 
     protected java.lang.String localRamdiskId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localRamdiskIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getRamdiskId() {
         return localRamdiskId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param RamdiskId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            RamdiskId
+     */
     public void setRamdiskId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localRamdiskIdTracker = true;
         } else {
             localRamdiskIdTracker = false;
@@ -505,33 +556,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for Platform
-    */
+     * field for Platform
+     */
 
     protected java.lang.String localPlatform;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localPlatformTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getPlatform() {
         return localPlatform;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Platform
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Platform
+     */
     public void setPlatform(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localPlatformTracker = true;
         } else {
             localPlatformTracker = false;
@@ -543,33 +598,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for Monitoring
-    */
+     * field for Monitoring
+     */
 
     protected com.amazon.ec2.InstanceMonitoringStateType localMonitoring;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localMonitoringTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.InstanceMonitoringStateType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.InstanceMonitoringStateType
+     */
     public com.amazon.ec2.InstanceMonitoringStateType getMonitoring() {
         return localMonitoring;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Monitoring
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Monitoring
+     */
     public void setMonitoring(com.amazon.ec2.InstanceMonitoringStateType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localMonitoringTracker = true;
         } else {
             localMonitoringTracker = false;
@@ -581,33 +640,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for SubnetId
-    */
+     * field for SubnetId
+     */
 
     protected java.lang.String localSubnetId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localSubnetIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getSubnetId() {
         return localSubnetId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param SubnetId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            SubnetId
+     */
     public void setSubnetId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localSubnetIdTracker = true;
         } else {
             localSubnetIdTracker = false;
@@ -619,33 +682,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for VpcId
-    */
+     * field for VpcId
+     */
 
     protected java.lang.String localVpcId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localVpcIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getVpcId() {
         return localVpcId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param VpcId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            VpcId
+     */
     public void setVpcId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localVpcIdTracker = true;
         } else {
             localVpcIdTracker = false;
@@ -657,33 +724,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for PrivateIpAddress
-    */
+     * field for PrivateIpAddress
+     */
 
     protected java.lang.String localPrivateIpAddress;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localPrivateIpAddressTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getPrivateIpAddress() {
         return localPrivateIpAddress;
     }
 
     /**
-       * Auto generated setter method
-       * @param param PrivateIpAddress
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            PrivateIpAddress
+     */
     public void setPrivateIpAddress(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localPrivateIpAddressTracker = true;
         } else {
             localPrivateIpAddressTracker = false;
@@ -695,33 +766,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for IpAddress
-    */
+     * field for IpAddress
+     */
 
     protected java.lang.String localIpAddress;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localIpAddressTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getIpAddress() {
         return localIpAddress;
     }
 
     /**
-       * Auto generated setter method
-       * @param param IpAddress
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            IpAddress
+     */
     public void setIpAddress(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localIpAddressTracker = true;
         } else {
             localIpAddressTracker = false;
@@ -733,29 +808,33 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for SourceDestCheck
-    */
+     * field for SourceDestCheck
+     */
 
     protected boolean localSourceDestCheck;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localSourceDestCheckTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return boolean
-    */
+     * Auto generated getter method
+     * 
+     * @return boolean
+     */
     public boolean getSourceDestCheck() {
         return localSourceDestCheck;
     }
 
     /**
-       * Auto generated setter method
-       * @param param SourceDestCheck
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            SourceDestCheck
+     */
     public void setSourceDestCheck(boolean param) {
 
         // setting primitive attribute tracker to true
@@ -772,23 +851,26 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for GroupSet
-    */
+     * field for GroupSet
+     */
 
     protected com.amazon.ec2.GroupSetType localGroupSet;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.GroupSetType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.GroupSetType
+     */
     public com.amazon.ec2.GroupSetType getGroupSet() {
         return localGroupSet;
     }
 
     /**
-       * Auto generated setter method
-       * @param param GroupSet
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            GroupSet
+     */
     public void setGroupSet(com.amazon.ec2.GroupSetType param) {
 
         this.localGroupSet = param;
@@ -796,33 +878,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for StateReason
-    */
+     * field for StateReason
+     */
 
     protected com.amazon.ec2.StateReasonType localStateReason;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localStateReasonTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.StateReasonType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.StateReasonType
+     */
     public com.amazon.ec2.StateReasonType getStateReason() {
         return localStateReason;
     }
 
     /**
-       * Auto generated setter method
-       * @param param StateReason
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            StateReason
+     */
     public void setStateReason(com.amazon.ec2.StateReasonType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localStateReasonTracker = true;
         } else {
             localStateReasonTracker = false;
@@ -834,33 +920,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for Architecture
-    */
+     * field for Architecture
+     */
 
     protected java.lang.String localArchitecture;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localArchitectureTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getArchitecture() {
         return localArchitecture;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Architecture
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Architecture
+     */
     public void setArchitecture(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localArchitectureTracker = true;
         } else {
             localArchitectureTracker = false;
@@ -872,33 +962,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for RootDeviceType
-    */
+     * field for RootDeviceType
+     */
 
     protected java.lang.String localRootDeviceType;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localRootDeviceTypeTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getRootDeviceType() {
         return localRootDeviceType;
     }
 
     /**
-       * Auto generated setter method
-       * @param param RootDeviceType
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            RootDeviceType
+     */
     public void setRootDeviceType(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localRootDeviceTypeTracker = true;
         } else {
             localRootDeviceTypeTracker = false;
@@ -910,33 +1004,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for RootDeviceName
-    */
+     * field for RootDeviceName
+     */
 
     protected java.lang.String localRootDeviceName;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localRootDeviceNameTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getRootDeviceName() {
         return localRootDeviceName;
     }
 
     /**
-       * Auto generated setter method
-       * @param param RootDeviceName
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            RootDeviceName
+     */
     public void setRootDeviceName(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localRootDeviceNameTracker = true;
         } else {
             localRootDeviceNameTracker = false;
@@ -948,33 +1046,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for BlockDeviceMapping
-    */
+     * field for BlockDeviceMapping
+     */
 
     protected com.amazon.ec2.InstanceBlockDeviceMappingResponseType localBlockDeviceMapping;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localBlockDeviceMappingTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.InstanceBlockDeviceMappingResponseType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.InstanceBlockDeviceMappingResponseType
+     */
     public com.amazon.ec2.InstanceBlockDeviceMappingResponseType getBlockDeviceMapping() {
         return localBlockDeviceMapping;
     }
 
     /**
-       * Auto generated setter method
-       * @param param BlockDeviceMapping
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            BlockDeviceMapping
+     */
     public void setBlockDeviceMapping(com.amazon.ec2.InstanceBlockDeviceMappingResponseType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localBlockDeviceMappingTracker = true;
         } else {
             localBlockDeviceMappingTracker = false;
@@ -986,33 +1088,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for InstanceLifecycle
-    */
+     * field for InstanceLifecycle
+     */
 
     protected java.lang.String localInstanceLifecycle;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localInstanceLifecycleTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getInstanceLifecycle() {
         return localInstanceLifecycle;
     }
 
     /**
-       * Auto generated setter method
-       * @param param InstanceLifecycle
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            InstanceLifecycle
+     */
     public void setInstanceLifecycle(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localInstanceLifecycleTracker = true;
         } else {
             localInstanceLifecycleTracker = false;
@@ -1024,33 +1130,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for SpotInstanceRequestId
-    */
+     * field for SpotInstanceRequestId
+     */
 
     protected java.lang.String localSpotInstanceRequestId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localSpotInstanceRequestIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getSpotInstanceRequestId() {
         return localSpotInstanceRequestId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param SpotInstanceRequestId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            SpotInstanceRequestId
+     */
     public void setSpotInstanceRequestId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localSpotInstanceRequestIdTracker = true;
         } else {
             localSpotInstanceRequestIdTracker = false;
@@ -1062,33 +1172,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for License
-    */
+     * field for License
+     */
 
     protected com.amazon.ec2.InstanceLicenseResponseType localLicense;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localLicenseTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.InstanceLicenseResponseType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.InstanceLicenseResponseType
+     */
     public com.amazon.ec2.InstanceLicenseResponseType getLicense() {
         return localLicense;
     }
 
     /**
-       * Auto generated setter method
-       * @param param License
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            License
+     */
     public void setLicense(com.amazon.ec2.InstanceLicenseResponseType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localLicenseTracker = true;
         } else {
             localLicenseTracker = false;
@@ -1100,33 +1214,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for VirtualizationType
-    */
+     * field for VirtualizationType
+     */
 
     protected java.lang.String localVirtualizationType;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localVirtualizationTypeTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getVirtualizationType() {
         return localVirtualizationType;
     }
 
     /**
-       * Auto generated setter method
-       * @param param VirtualizationType
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            VirtualizationType
+     */
     public void setVirtualizationType(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localVirtualizationTypeTracker = true;
         } else {
             localVirtualizationTypeTracker = false;
@@ -1138,33 +1256,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for ClientToken
-    */
+     * field for ClientToken
+     */
 
     protected java.lang.String localClientToken;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localClientTokenTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getClientToken() {
         return localClientToken;
     }
 
     /**
-       * Auto generated setter method
-       * @param param ClientToken
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            ClientToken
+     */
     public void setClientToken(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localClientTokenTracker = true;
         } else {
             localClientTokenTracker = false;
@@ -1176,33 +1298,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for TagSet
-    */
+     * field for TagSet
+     */
 
     protected com.amazon.ec2.ResourceTagSetType localTagSet;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localTagSetTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.ResourceTagSetType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.ResourceTagSetType
+     */
     public com.amazon.ec2.ResourceTagSetType getTagSet() {
         return localTagSet;
     }
 
     /**
-       * Auto generated setter method
-       * @param param TagSet
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            TagSet
+     */
     public void setTagSet(com.amazon.ec2.ResourceTagSetType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localTagSetTracker = true;
         } else {
             localTagSetTracker = false;
@@ -1214,33 +1340,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for Hypervisor
-    */
+     * field for Hypervisor
+     */
 
     protected java.lang.String localHypervisor;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localHypervisorTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getHypervisor() {
         return localHypervisor;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Hypervisor
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Hypervisor
+     */
     public void setHypervisor(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localHypervisorTracker = true;
         } else {
             localHypervisorTracker = false;
@@ -1252,33 +1382,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for NetworkInterfaceSet
-    */
+     * field for NetworkInterfaceSet
+     */
 
     protected com.amazon.ec2.InstanceNetworkInterfaceSetType localNetworkInterfaceSet;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localNetworkInterfaceSetTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.InstanceNetworkInterfaceSetType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.InstanceNetworkInterfaceSetType
+     */
     public com.amazon.ec2.InstanceNetworkInterfaceSetType getNetworkInterfaceSet() {
         return localNetworkInterfaceSet;
     }
 
     /**
-       * Auto generated setter method
-       * @param param NetworkInterfaceSet
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            NetworkInterfaceSet
+     */
     public void setNetworkInterfaceSet(com.amazon.ec2.InstanceNetworkInterfaceSetType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localNetworkInterfaceSetTracker = true;
         } else {
             localNetworkInterfaceSetTracker = false;
@@ -1290,33 +1424,37 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for IamInstanceProfile
-    */
+     * field for IamInstanceProfile
+     */
 
     protected com.amazon.ec2.IamInstanceProfileResponseType localIamInstanceProfile;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localIamInstanceProfileTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.IamInstanceProfileResponseType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.IamInstanceProfileResponseType
+     */
     public com.amazon.ec2.IamInstanceProfileResponseType getIamInstanceProfile() {
         return localIamInstanceProfile;
     }
 
     /**
-       * Auto generated setter method
-       * @param param IamInstanceProfile
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            IamInstanceProfile
+     */
     public void setIamInstanceProfile(com.amazon.ec2.IamInstanceProfileResponseType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localIamInstanceProfileTracker = true;
         } else {
             localIamInstanceProfileTracker = false;
@@ -1328,29 +1466,33 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for EbsOptimized
-    */
+     * field for EbsOptimized
+     */
 
     protected boolean localEbsOptimized;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localEbsOptimizedTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return boolean
-    */
+     * Auto generated getter method
+     * 
+     * @return boolean
+     */
     public boolean getEbsOptimized() {
         return localEbsOptimized;
     }
 
     /**
-       * Auto generated setter method
-       * @param param EbsOptimized
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            EbsOptimized
+     */
     public void setEbsOptimized(boolean param) {
 
         // setting primitive attribute tracker to true
@@ -1367,9 +1509,10 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -1382,13 +1525,13 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, parentQName) {
 
@@ -1401,14 +1544,13 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
         java.lang.String prefix = null;
         java.lang.String namespace = null;
@@ -2359,8 +2501,8 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -2372,10 +2514,10 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -2385,10 +2527,10 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -2411,7 +2553,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -2439,7 +2581,8 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -2473,8 +2616,8 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -2493,9 +2636,9 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
         java.util.ArrayList elementList = new java.util.ArrayList();
@@ -2811,17 +2954,20 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static RunningInstancesItemType parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             RunningInstancesItemType object = new RunningInstancesItemType();
 
@@ -2846,7 +2992,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
                         java.lang.String type = fullTypeName.substring(fullTypeName.indexOf(":") + 1);
 
                         if (!"RunningInstancesItemType".equals(type)) {
-                            //find namespace for the prefix
+                            // find namespace for the prefix
                             java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
                             return (RunningInstancesItemType)com.amazon.ec2.ExtensionMapper.getTypeObject(nsUri, type, reader);
                         }
@@ -2855,7 +3001,8 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                 }
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -2872,10 +3019,11 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -2890,7 +3038,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2905,10 +3053,11 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -2923,10 +3072,11 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -2941,7 +3091,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2958,7 +3108,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2975,7 +3125,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -2992,7 +3142,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3007,7 +3157,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3024,10 +3174,11 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -3042,10 +3193,11 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -3058,7 +3210,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3075,7 +3227,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3092,7 +3244,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3109,7 +3261,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3124,7 +3276,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3141,7 +3293,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3158,7 +3310,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3175,7 +3327,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3192,7 +3344,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3209,7 +3361,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3224,10 +3376,11 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -3240,7 +3393,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3257,7 +3410,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3274,7 +3427,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3291,7 +3444,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3306,7 +3459,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3323,7 +3476,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3332,8 +3485,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
                 while (!reader.isStartElement() && !reader.isEndElement())
                     reader.next();
 
-                if (reader.isStartElement() &&
-                    new javax.xml.namespace.QName("http://ec2.amazonaws.com/doc/2012-08-15/", "spotInstanceRequestId").equals(reader.getName())) {
+                if (reader.isStartElement() && new javax.xml.namespace.QName("http://ec2.amazonaws.com/doc/2012-08-15/", "spotInstanceRequestId").equals(reader.getName())) {
 
                     java.lang.String content = reader.getElementText();
 
@@ -3341,7 +3493,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3356,7 +3508,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3373,7 +3525,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3390,7 +3542,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3405,7 +3557,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3422,7 +3574,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3437,7 +3589,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3452,7 +3604,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3469,7 +3621,7 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -3479,7 +3631,8 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
                     reader.next();
 
                 if (reader.isStartElement())
-                    // A start element we are not expecting indicates a trailing invalid property
+                    // A start element we are not expecting indicates a trailing
+                    // invalid property
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
 
             } catch (javax.xml.stream.XMLStreamException e) {
@@ -3489,6 +3642,6 @@ public class RunningInstancesItemType implements org.apache.axis2.databinding.AD
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

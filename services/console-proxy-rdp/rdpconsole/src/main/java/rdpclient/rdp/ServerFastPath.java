@@ -56,14 +56,14 @@ public class ServerFastPath extends BaseElement {
     private static final String PALETTE_PAD = "palette";
 
     /**
-     * Indicates that packet contains 8 byte secure checksum at top of packet. Top
-     * two bits of first byte.
+     * Indicates that packet contains 8 byte secure checksum at top of packet.
+     * Top two bits of first byte.
      */
     public static final int FASTPATH_OUTPUT_SECURE_CHECKSUM = 1;
 
     /**
-     * Indicates that packet contains 8 byte secure checksum at top of packet and
-     * packet content is encrypted. Top two bits of first byte.
+     * Indicates that packet contains 8 byte secure checksum at top of packet
+     * and packet content is encrypted. Top two bits of first byte.
      */
     public static final int FASTPATH_OUTPUT_ENCRYPTED = 2;
 
@@ -153,7 +153,8 @@ public class ServerFastPath extends BaseElement {
         if (verbose)
             System.out.println("[" + this + "] INFO: CredSSP data received: " + buf + ".");
 
-        // Store header position: will parse whole header later in BER format parser
+        // Store header position: will parse whole header later in BER format
+        // parser
         int headerPosition = buf.cursor - 1;
 
         long payloadLength = buf.readBerLength();
@@ -256,8 +257,8 @@ public class ServerFastPath extends BaseElement {
                 data.unref();
 
                 if (size != 0)
-                    throw new RuntimeException("Size of FastPath synchronize packet must be 0. UpdateCode: " + updateCode + ", fragmentation: " + fragmentation
-                            + ", compression: " + compression + ", size: " + size + ", data: " + data + ".");
+                    throw new RuntimeException("Size of FastPath synchronize packet must be 0. UpdateCode: " + updateCode + ", fragmentation: " + fragmentation + ", compression: "
+                            + compression + ", size: " + size + ", data: " + data + ".");
                 break;
 
             case FASTPATH_UPDATETYPE_SURFCMDS:

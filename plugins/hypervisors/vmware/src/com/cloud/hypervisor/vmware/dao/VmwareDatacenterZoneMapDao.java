@@ -22,13 +22,15 @@ import com.cloud.utils.db.GenericDao;
 
 public interface VmwareDatacenterZoneMapDao extends GenericDao<VmwareDatacenterZoneMapVO, Long> {
     /**
-     * @param id of zone
+     * @param id
+     *            of zone
      * @return map object of VMware datacenter & zone
      */
     VmwareDatacenterZoneMapVO findByZoneId(long zoneId);
 
     /**
-     * @param id of VMware datacenter
+     * @param id
+     *            of VMware datacenter
      * @return map object of VMware datacenter & zone
      */
     VmwareDatacenterZoneMapVO findByVmwareDcId(long vmwareDcId);

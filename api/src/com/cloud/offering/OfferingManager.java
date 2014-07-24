@@ -19,9 +19,9 @@ package com.cloud.offering;
 /**
  * An administrator can create, delete, enable, and disable offerings.
  *
- * There are three types of offerings:
- * - Disk Offering - package of disk performance and size specification.
- * - Network Offering - package of services available on a network.
+ * There are three types of offerings: - Disk Offering - package of disk
+ * performance and size specification. - Network Offering - package of services
+ * available on a network.
  *
  */
 public interface OfferingManager {

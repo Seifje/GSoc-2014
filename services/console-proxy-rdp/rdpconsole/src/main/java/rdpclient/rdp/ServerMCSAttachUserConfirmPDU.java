@@ -66,7 +66,8 @@ public class ServerMCSAttachUserConfirmPDU extends OneTimeSwitch {
             throw new RuntimeException("[" + this + "] ERROR: Cannot attach user: request failed. Error code: " + rtSuccess + ", data: " + buf + ".");
 
         // If the initiator field is present, the client stores the value of the
-        // initiator in the User Channel ID store , because the initiator specifies
+        // initiator in the User Channel ID store , because the initiator
+        // specifies
         // the User Channel ID.
         state.serverUserChannelId = buf.readUnsignedShort() + 1001;
 

@@ -39,12 +39,7 @@ import com.cloud.exception.ResourceAllocationException;
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.network.VirtualRouterProvider;
 
-@APICommand(name = "listInternalLoadBalancerElements",
-            description = "Lists all available Internal Load Balancer elements.",
-            responseObject = InternalLoadBalancerElementResponse.class,
-            since = "4.2.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "listInternalLoadBalancerElements", description = "Lists all available Internal Load Balancer elements.", responseObject = InternalLoadBalancerElementResponse.class, since = "4.2.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListInternalLoadBalancerElementsCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListInternalLoadBalancerElementsCmd.class.getName());
     private static final String s_name = "listinternalloadbalancerelementsresponse";
@@ -52,27 +47,21 @@ public class ListInternalLoadBalancerElementsCmd extends BaseListCmd {
     @Inject
     private InternalLoadBalancerElementService _service;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = InternalLoadBalancerElementResponse.class,
-               description = "list internal load balancer elements by id")
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = InternalLoadBalancerElementResponse.class, description = "list internal load balancer elements by id")
     private Long id;
 
-    @Parameter(name = ApiConstants.NSP_ID,
-               type = CommandType.UUID,
-               entityType = ProviderResponse.class,
-               description = "list internal load balancer elements by network service provider id")
+    @Parameter(name = ApiConstants.NSP_ID, type = CommandType.UUID, entityType = ProviderResponse.class, description = "list internal load balancer elements by network service provider id")
     private Long nspId;
 
     @Parameter(name = ApiConstants.ENABLED, type = CommandType.BOOLEAN, description = "list internal load balancer elements by enabled state")
     private Boolean enabled;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -92,8 +81,7 @@ public class ListInternalLoadBalancerElementsCmd extends BaseListCmd {
     }
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         List<? extends VirtualRouterProvider> providers = _service.searchForInternalLoadBalancerElements(getId(), getNspId(), getEnabled());
         ListResponse<InternalLoadBalancerElementResponse> response = new ListResponse<InternalLoadBalancerElementResponse>();
         List<InternalLoadBalancerElementResponse> providerResponses = new ArrayList<InternalLoadBalancerElementResponse>();

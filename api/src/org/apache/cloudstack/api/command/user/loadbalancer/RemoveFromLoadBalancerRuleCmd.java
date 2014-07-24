@@ -43,43 +43,28 @@ import com.cloud.network.rules.LoadBalancer;
 import com.cloud.user.Account;
 import com.cloud.utils.StringUtils;
 
-@APICommand(name = "removeFromLoadBalancerRule",
-            description = "Removes a virtual machine or a list of virtual machines from a load balancer rule.",
-            responseObject = SuccessResponse.class,
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "removeFromLoadBalancerRule", description = "Removes a virtual machine or a list of virtual machines from a load balancer rule.", responseObject = SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class RemoveFromLoadBalancerRuleCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(RemoveFromLoadBalancerRuleCmd.class.getName());
 
     private static final String s_name = "removefromloadbalancerruleresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ID,
-               type = CommandType.UUID,
-               entityType = FirewallRuleResponse.class,
-               required = true,
-               description = "The ID of the load balancer rule")
+    @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = FirewallRuleResponse.class, required = true, description = "The ID of the load balancer rule")
     private Long id;
 
-    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_IDS,
-               type = CommandType.LIST,
-               collectionType = CommandType.UUID,
-               entityType = UserVmResponse.class,
-               description = "the list of IDs of the virtual machines that are being removed from the load balancer rule (i.e. virtualMachineIds=1,2,3)")
+    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_IDS, type = CommandType.LIST, collectionType = CommandType.UUID, entityType = UserVmResponse.class, description = "the list of IDs of the virtual machines that are being removed from the load balancer rule (i.e. virtualMachineIds=1,2,3)")
     private List<Long> virtualMachineIds;
 
-    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID_IP,
-            type = CommandType.MAP,
-            description = "VM ID and IP map, vmidipmap[0].vmid=1 vmidipmap[0].ip=10.1.1.75",
-            since = "4.4")
+    @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID_IP, type = CommandType.MAP, description = "VM ID and IP map, vmidipmap[0].vmid=1 vmidipmap[0].ip=10.1.1.75", since = "4.4")
     private Map vmIdIpMap;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -93,9 +78,9 @@ public class RemoveFromLoadBalancerRuleCmd extends BaseAsyncCmd {
         return vmIdIpMap;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -106,7 +91,9 @@ public class RemoveFromLoadBalancerRuleCmd extends BaseAsyncCmd {
     public long getEntityOwnerId() {
         LoadBalancer lb = _entityMgr.findById(LoadBalancer.class, getId());
         if (lb == null) {
-            return Account.ACCOUNT_ID_SYSTEM; // bad id given, parent this command to SYSTEM so ERROR events are tracked
+            return Account.ACCOUNT_ID_SYSTEM; // bad id given, parent this
+            // command to SYSTEM so ERROR
+            // events are tracked
         }
         return lb.getAccountId();
     }
@@ -115,7 +102,6 @@ public class RemoveFromLoadBalancerRuleCmd extends BaseAsyncCmd {
     public String getEventType() {
         return EventTypes.EVENT_REMOVE_FROM_LOAD_BALANCER_RULE;
     }
-
 
     public Map<Long, List<String>> getVmIdIpListMap() {
         Map<Long, List<String>> vmIdIpsMap = new HashMap<Long, List<String>>();
@@ -155,7 +141,7 @@ public class RemoveFromLoadBalancerRuleCmd extends BaseAsyncCmd {
     }
 
     @Override
-    public void execute()  {
+    public void execute() {
         CallContext.current().setEventDetails("Load balancer Id: " + getId() + " VmIds: " + StringUtils.join(getVirtualMachineIds(), ","));
         Map<Long, List<String>> vmIdIpsMap = getVmIdIpListMap();
         try {
@@ -166,7 +152,7 @@ public class RemoveFromLoadBalancerRuleCmd extends BaseAsyncCmd {
             } else {
                 throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to remove instance from load balancer rule");
             }
-        }catch (InvalidParameterValueException ex) {
+        } catch (InvalidParameterValueException ex) {
             throw new ServerApiException(ApiErrorCode.PARAM_ERROR, "Failed to remove instance from load balancer rule");
         }
     }

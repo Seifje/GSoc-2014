@@ -138,8 +138,7 @@ public class VolumeServiceTest extends CloudStackTestNGBase {
             return;
         }
         // create data center
-        DataCenterVO dc =
-            new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Basic, null, null, true,
+        DataCenterVO dc = new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Basic, null, null, true,
                 true, null, null);
         dc = dcDao.persist(dc);
         dcId = dc.getId();
@@ -336,14 +335,14 @@ public class VolumeServiceTest extends CloudStackTestNGBase {
              * ("sample primary data store provider");
              * primaryDataStoreProviderMgr.configure("primary data store mgr",
              * new HashMap<String, Object>());
-             *
+             * 
              * List<PrimaryDataStoreVO> ds =
              * primaryStoreDao.findPoolByName(this.primaryName); if (ds.size()
              * >= 1) { PrimaryDataStoreVO store = ds.get(0); if
              * (store.getRemoved() == null) { return
              * provider.getDataStore(store.getId()); } }
-             *
-             *
+             * 
+             * 
              * Map<String, String> params = new HashMap<String, String>();
              * params.put("url", this.getPrimaryStorageUrl());
              * params.put("dcId", dcId.toString()); params.put("clusterId",
@@ -454,13 +453,13 @@ public class VolumeServiceTest extends CloudStackTestNGBase {
          * AssertJUnit.assertFalse(new VMDK().equals(new VHD())); VMDK vmdk =
          * new VMDK(); AssertJUnit.assertTrue(vmdk.equals(vmdk)); VMDK newvmdk =
          * new VMDK(); AssertJUnit.assertTrue(vmdk.equals(newvmdk));
-         *
+         * 
          * ImageFormat ova = new OVA(); ImageFormat iso = new ISO();
          * AssertJUnit.assertTrue(ova.equals(new OVA()));
          * AssertJUnit.assertFalse(ova.equals(iso));
          * AssertJUnit.assertTrue(ImageFormatHelper.getFormat("test").equals(new
          * Unknown()));
-         *
+         * 
          * VolumeDiskType qcow2 = new QCOW2(); ImageFormat qcow2format = new
          * org.apache.cloudstack.storage.image.format.QCOW2();
          * AssertJUnit.assertFalse(qcow2.equals(qcow2format));

@@ -75,8 +75,7 @@ public class AutoScalePolicyVO implements AutoScalePolicy, InternalIdentity {
     public AutoScalePolicyVO() {
     }
 
-    public AutoScalePolicyVO(long domainId, long accountId, int duration,
-            int quietTime, Date lastQuiteTime, String action) {
+    public AutoScalePolicyVO(long domainId, long accountId, int duration, int quietTime, Date lastQuiteTime, String action) {
         uuid = UUID.randomUUID().toString();
         this.domainId = domainId;
         this.accountId = accountId;

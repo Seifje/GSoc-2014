@@ -80,40 +80,46 @@ public class ServiceManagerImpl implements ServiceManager {
     ContrailManager _manager;
 
     /**
-     * In the case of service instance the master object is in the contrail API server. This object stores the
-     * service instance parameters in the database.
+     * In the case of service instance the master object is in the contrail API
+     * server. This object stores the service instance parameters in the
+     * database.
      *
-     * @param owner     Used to determine the project.
-     * @param name      Service instance name (user specified).
-     * @param template  Image to execute.
+     * @param owner
+     *            Used to determine the project.
+     * @param name
+     *            Service instance name (user specified).
+     * @param template
+     *            Image to execute.
      * @param serviceOffering
-     * @param left      Inside network.
-     * @param right     Outside network.
+     * @param left
+     *            Inside network.
+     * @param right
+     *            Outside network.
      * @return
      */
 
     /**
      * create a new ServiceVM object.
+     *
      * @return
      */
     @ActionEvent(eventType = EventTypes.EVENT_VM_CREATE, eventDescription = "createServiceInstance", create = true)
     private ServiceVirtualMachine createServiceVM(DataCenter zone, Account owner, VirtualMachineTemplate template, ServiceOffering serviceOffering, String name,
-        ServiceInstance siObj, Network left, Network right) {
+            ServiceInstance siObj, Network left, Network right) {
         long id = _vmDao.getNextInSequence(Long.class, "id");
 
         DataCenterDeployment plan = new DataCenterDeployment(zone.getId());
         LinkedHashMap<NetworkVO, List<? extends NicProfile>> networks = new LinkedHashMap<NetworkVO, List<? extends NicProfile>>();
-        NetworkVO linklocal = (NetworkVO) _networkModel.getSystemNetworkByZoneAndTrafficType(zone.getId(),
-                TrafficType.Management);
+        NetworkVO linklocal = (NetworkVO)_networkModel.getSystemNetworkByZoneAndTrafficType(zone.getId(), TrafficType.Management);
         networks.put(linklocal, new ArrayList<NicProfile>());
         networks.put((NetworkVO)left, new ArrayList<NicProfile>());
         networks.put((NetworkVO)right, new ArrayList<NicProfile>());
         String instanceName = VirtualMachineName.getVmName(id, owner.getId(), "SRV");
-        ServiceVirtualMachine svm =
-            new ServiceVirtualMachine(id, instanceName, name, template.getId(), serviceOffering.getId(), template.getHypervisorType(), template.getGuestOSId(),
-                zone.getId(), owner.getDomainId(), owner.getAccountId(), false);
+        ServiceVirtualMachine svm = new ServiceVirtualMachine(id, instanceName, name, template.getId(), serviceOffering.getId(), template.getHypervisorType(),
+                template.getGuestOSId(), zone.getId(), owner.getDomainId(), owner.getAccountId(), false);
 
-        // database synchronization code must be able to distinguish service instance VMs.
+        // database synchronization code must be able to distinguish service
+        // instance VMs.
         Map<String, String> kvmap = new HashMap<String, String>();
         kvmap.put("service-instance", siObj.getUuid());
         Gson json = new Gson();
@@ -130,8 +136,8 @@ public class ServiceManagerImpl implements ServiceManager {
     }
 
     @Override
-    public ServiceVirtualMachine createServiceInstance(DataCenter zone, Account owner, VirtualMachineTemplate template, ServiceOffering serviceOffering, String name,
-        Network left, Network right) {
+    public ServiceVirtualMachine createServiceInstance(DataCenter zone, Account owner, VirtualMachineTemplate template, ServiceOffering serviceOffering, String name, Network left,
+            Network right) {
         s_logger.debug("createServiceInstance by " + owner.getAccountName());
         // TODO: permission model.
         // service instances need to be able to access the public network.
@@ -143,13 +149,11 @@ public class ServiceManagerImpl implements ServiceManager {
         }
 
         final ApiConnector api = _manager.getApiConnector();
-        VirtualNetworkModel leftModel = _manager.getDatabase().lookupVirtualNetwork(left.getUuid(),
-                _manager.getCanonicalName(left), left.getTrafficType());
+        VirtualNetworkModel leftModel = _manager.getDatabase().lookupVirtualNetwork(left.getUuid(), _manager.getCanonicalName(left), left.getTrafficType());
         if (leftModel == null) {
             throw new CloudRuntimeException("Unable to read virtual-network object");
         }
-        VirtualNetworkModel rightModel = _manager.getDatabase().lookupVirtualNetwork(right.getUuid(),
-                _manager.getCanonicalName(right), right.getTrafficType());
+        VirtualNetworkModel rightModel = _manager.getDatabase().lookupVirtualNetwork(right.getUuid(), _manager.getCanonicalName(right), right.getTrafficType());
         if (rightModel == null) {
             throw new CloudRuntimeException("Unable to read virtual-network object");
         }
@@ -173,8 +177,7 @@ public class ServiceManagerImpl implements ServiceManager {
         }
 
         // 1. Create service-instance.
-        ServiceInstanceModel serviceModel = new ServiceInstanceModel(project, name, template, serviceOffering,
-                leftModel, rightModel);
+        ServiceInstanceModel serviceModel = new ServiceInstanceModel(project, name, template, serviceOffering, leftModel, rightModel);
 
         try {
             serviceModel.update(_manager.getModelController());

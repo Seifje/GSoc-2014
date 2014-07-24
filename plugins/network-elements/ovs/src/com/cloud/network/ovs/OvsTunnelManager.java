@@ -25,14 +25,15 @@ public interface OvsTunnelManager extends Manager {
     boolean isOvsTunnelEnabled();
 
     /**
-     *  create a bridge on the host if not already created for the network and establish full tunnel mesh with
-     *  the rest of the hosts on which network spans
+     * create a bridge on the host if not already created for the network and
+     * establish full tunnel mesh with the rest of the hosts on which network
+     * spans
      */
     public void checkAndPrepareHostForTunnelNetwork(Network nw, Host host);
 
     /**
-     * remove the bridge and tunnels to the hosts on which network spans if there are no other VM's
-     * belonging to the network are running on the host
+     * remove the bridge and tunnels to the hosts on which network spans if
+     * there are no other VM's belonging to the network are running on the host
      */
     public void checkAndRemoveHostFromTunnelNetwork(Network nw, Host host);
 

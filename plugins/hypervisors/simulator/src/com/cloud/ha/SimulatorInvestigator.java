@@ -41,7 +41,7 @@ import com.cloud.utils.component.AdapterBase;
 import com.cloud.vm.VirtualMachine;
 import com.cloud.vm.VirtualMachine.State;
 
-@Local(value=Investigator.class)
+@Local(value = Investigator.class)
 public class SimulatorInvestigator extends AdapterBase implements Investigator {
     private final static Logger s_logger = Logger.getLogger(SimulatorInvestigator.class);
     @Inject

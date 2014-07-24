@@ -54,9 +54,7 @@ import com.cloud.vm.dao.DomainRouterDao;
 import com.cloud.vm.dao.NicDao;
 
 @Configuration
-@ComponentScan(basePackageClasses = {NetUtils.class},
-               includeFilters = {@Filter(value = LbChildTestConfiguration.Library.class, type = FilterType.CUSTOM)},
-               useDefaultFilters = false)
+@ComponentScan(basePackageClasses = {NetUtils.class}, includeFilters = {@Filter(value = LbChildTestConfiguration.Library.class, type = FilterType.CUSTOM)}, useDefaultFilters = false)
 public class LbChildTestConfiguration {
 
     public static class Library implements TypeFilter {

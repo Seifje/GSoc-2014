@@ -33,10 +33,10 @@ public class AwtRdpKeyboardAdapter extends BaseElement {
 
     /**
      * Keystroke message contains an extended scancode. For enhanced 101-key and
-     * 102-key keyboards, extended keys include the right ALT and right CTRL keys
-     * on the main section of the keyboard; the INS, DEL, HOME, END, PAGE UP, PAGE
-     * DOWN and ARROW keys in the clusters to the left of the numeric keypad; and
-     * the Divide ("/") and ENTER keys in the numeric keypad.
+     * 102-key keyboards, extended keys include the right ALT and right CTRL
+     * keys on the main section of the keyboard; the INS, DEL, HOME, END, PAGE
+     * UP, PAGE DOWN and ARROW keys in the clusters to the left of the numeric
+     * keypad; and the Divide ("/") and ENTER keys in the numeric keypad.
      */
     public static final int FASTPATH_INPUT_KBDFLAGS_EXTENDED = 0x02;
 
@@ -80,9 +80,12 @@ public class AwtRdpKeyboardAdapter extends BaseElement {
     private int map_en_us(KeyEvent event) {
         // Also set extended key flag when necessary.
         // For enhanced 101-key and 102-key keyboards, extended keys include the
-        // right ALT and right CTRL keys on the main section of the keyboard; the
-        // INS, DEL, HOME, END, PAGE UP, PAGE DOWN and ARROW keys in the clusters to
-        // the left of the numeric keypad; and the Divide ("/") and ENTER keys in
+        // right ALT and right CTRL keys on the main section of the keyboard;
+        // the
+        // INS, DEL, HOME, END, PAGE UP, PAGE DOWN and ARROW keys in the
+        // clusters to
+        // the left of the numeric keypad; and the Divide ("/") and ENTER keys
+        // in
         // the numeric keypad.
 
         switch (event.getKeyCode()) {

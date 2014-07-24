@@ -32,7 +32,7 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.user.Account;
 import com.cloud.user.User;
 
-public class AsyncJobExecutionContext  {
+public class AsyncJobExecutionContext {
     private static final Logger s_logger = Logger.getLogger(AsyncJobExecutionContext.class);
 
     private AsyncJob _job;
@@ -108,20 +108,20 @@ public class AsyncJobExecutionContext  {
         s_jobMgr.joinJob(_job.getId(), joinJobId);
     }
 
-    public void joinJob(long joinJobId, String wakeupHandler, String wakeupDispatcher,
-            String[] wakeupTopcisOnMessageBus, long wakeupIntervalInMilliSeconds, long timeoutInMilliSeconds) {
+    public void joinJob(long joinJobId, String wakeupHandler, String wakeupDispatcher, String[] wakeupTopcisOnMessageBus, long wakeupIntervalInMilliSeconds,
+            long timeoutInMilliSeconds) {
         assert (_job != null);
-        s_jobMgr.joinJob(_job.getId(), joinJobId, wakeupHandler, wakeupDispatcher, wakeupTopcisOnMessageBus,
-                wakeupIntervalInMilliSeconds, timeoutInMilliSeconds);
+        s_jobMgr.joinJob(_job.getId(), joinJobId, wakeupHandler, wakeupDispatcher, wakeupTopcisOnMessageBus, wakeupIntervalInMilliSeconds, timeoutInMilliSeconds);
     }
 
     //
-    // check failure exception before we disjoin the worker job, work job usually fails with exception
+    // check failure exception before we disjoin the worker job, work job
+    // usually fails with exception
     // this will help propogate exception between jobs
-    // TODO : it is ugly and this will become unnecessary after we switch to full-async mode
+    // TODO : it is ugly and this will become unnecessary after we switch to
+    // full-async mode
     //
-    public void disjoinJob(long joinedJobId) throws InsufficientCapacityException,
-            ConcurrentOperationException, ResourceUnavailableException {
+    public void disjoinJob(long joinedJobId) throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException {
         assert (_job != null);
 
         AsyncJobJoinMapVO record = s_joinMapDao.getJoinRecord(_job.getId(), joinedJobId);
@@ -134,16 +134,13 @@ public class AsyncJobExecutionContext  {
                     if (exception instanceof InsufficientCapacityException) {
                         s_logger.error("Job " + joinedJobId + " failed with InsufficientCapacityException");
                         throw (InsufficientCapacityException)exception;
-                    }
-                    else if (exception instanceof ConcurrentOperationException) {
+                    } else if (exception instanceof ConcurrentOperationException) {
                         s_logger.error("Job " + joinedJobId + " failed with ConcurrentOperationException");
                         throw (ConcurrentOperationException)exception;
-                    }
-                    else if (exception instanceof ResourceUnavailableException) {
+                    } else if (exception instanceof ResourceUnavailableException) {
                         s_logger.error("Job " + joinedJobId + " failed with ResourceUnavailableException");
                         throw (ResourceUnavailableException)exception;
-                    }
-                    else {
+                    } else {
                         s_logger.error("Job " + joinedJobId + " failed with exception");
                         throw new RuntimeException((Exception)exception);
                     }
@@ -169,13 +166,14 @@ public class AsyncJobExecutionContext  {
     public static AsyncJobExecutionContext getCurrentExecutionContext() {
         AsyncJobExecutionContext context = s_currentExectionContext.get();
         if (context == null) {
-            // TODO, this has security implications, operations carried from API layer should always
-            // set its context, otherwise, the fall-back here will use system security context
+            // TODO, this has security implications, operations carried from API
+            // layer should always
+            // set its context, otherwise, the fall-back here will use system
+            // security context
             //
             s_logger.warn("Job is executed without a context, setup psudo job for the executing thread");
             if (CallContext.current() != null)
-                context = registerPseudoExecutionContext(CallContext.current().getCallingAccountId(),
-                        CallContext.current().getCallingUserId());
+                context = registerPseudoExecutionContext(CallContext.current().getCallingAccountId(), CallContext.current().getCallingUserId());
             else
                 context = registerPseudoExecutionContext(Account.ACCOUNT_ID_SYSTEM, User.UID_SYSTEM);
         }

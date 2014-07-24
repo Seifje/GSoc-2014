@@ -116,8 +116,8 @@ public class TransportAddress {
         if (this == other)
             return true;
 
-        return _nodeId.equals(((TransportAddress)other)._nodeId) && _connectionId == (((TransportAddress)other)._connectionId) &&
-            _endpointId.equals(((TransportAddress)other)._endpointId) && _magic == ((TransportAddress)other)._magic;
+        return _nodeId.equals(((TransportAddress)other)._nodeId) && _connectionId == (((TransportAddress)other)._connectionId)
+                && _endpointId.equals(((TransportAddress)other)._endpointId) && _magic == ((TransportAddress)other)._magic;
     }
 
     @Override

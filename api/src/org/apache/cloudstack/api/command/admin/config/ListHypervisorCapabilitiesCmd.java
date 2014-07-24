@@ -32,20 +32,15 @@ import com.cloud.hypervisor.Hypervisor.HypervisorType;
 import com.cloud.hypervisor.HypervisorCapabilities;
 import com.cloud.utils.Pair;
 
-@APICommand(name = "listHypervisorCapabilities",
-            description = "Lists all hypervisor capabilities.",
-            responseObject = HypervisorCapabilitiesResponse.class,
-            since = "3.0.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "listHypervisorCapabilities", description = "Lists all hypervisor capabilities.", responseObject = HypervisorCapabilitiesResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListHypervisorCapabilitiesCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListHypervisorCapabilitiesCmd.class.getName());
 
     private static final String s_name = "listhypervisorcapabilitiesresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = HypervisorCapabilitiesResponse.class, description = "ID of the hypervisor capability")
     private Long id;
@@ -53,9 +48,9 @@ public class ListHypervisorCapabilitiesCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.HYPERVISOR, type = CommandType.STRING, description = "the hypervisor for which to restrict the search")
     private String hypervisor;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -69,9 +64,9 @@ public class ListHypervisorCapabilitiesCmd extends BaseListCmd {
         }
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -80,8 +75,8 @@ public class ListHypervisorCapabilitiesCmd extends BaseListCmd {
 
     @Override
     public void execute() {
-        Pair<List<? extends HypervisorCapabilities>, Integer> hpvCapabilities =
-            _mgr.listHypervisorCapabilities(getId(), getHypervisor(), getKeyword(), this.getStartIndex(), this.getPageSizeVal());
+        Pair<List<? extends HypervisorCapabilities>, Integer> hpvCapabilities = _mgr.listHypervisorCapabilities(getId(), getHypervisor(), getKeyword(), this.getStartIndex(),
+                this.getPageSizeVal());
         ListResponse<HypervisorCapabilitiesResponse> response = new ListResponse<HypervisorCapabilitiesResponse>();
         List<HypervisorCapabilitiesResponse> hpvCapabilitiesResponses = new ArrayList<HypervisorCapabilitiesResponse>();
         for (HypervisorCapabilities capability : hpvCapabilities.first()) {

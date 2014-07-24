@@ -141,13 +141,13 @@ public class ResourceCountDaoImpl extends GenericDaoBase<ResourceCountVO, Long> 
         Set<Long> rowIds = new HashSet<Long>();
 
         if (ownerType == ResourceOwnerType.Account) {
-            //get records for account
+            // get records for account
             ResourceCountVO accountCountRecord = findByOwnerAndType(ownerId, ResourceOwnerType.Account, type);
             if (accountCountRecord != null) {
                 rowIds.add(accountCountRecord.getId());
             }
 
-            //get records for account's domain and all its parent domains
+            // get records for account's domain and all its parent domains
             rowIds.addAll(listRowsToUpdateForDomain(_accountDao.findByIdIncludingRemoved(ownerId).getDomainId(), type));
         } else if (ownerType == ResourceOwnerType.Domain) {
             return listRowsToUpdateForDomain(ownerId, type);

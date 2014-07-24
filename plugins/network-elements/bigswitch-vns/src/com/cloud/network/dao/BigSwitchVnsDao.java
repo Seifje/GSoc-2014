@@ -24,7 +24,9 @@ import com.cloud.utils.db.GenericDao;
 public interface BigSwitchVnsDao extends GenericDao<BigSwitchVnsDeviceVO, Long> {
     /**
      * list all the bigswitch Vns devices added in to this physical network
-     * @param physicalNetworkId physical Network Id
+     *
+     * @param physicalNetworkId
+     *            physical Network Id
      * @return list of BigSwitchVnsDeviceVO for this physical network.
      */
     List<BigSwitchVnsDeviceVO> listByPhysicalNetwork(long physicalNetworkId);

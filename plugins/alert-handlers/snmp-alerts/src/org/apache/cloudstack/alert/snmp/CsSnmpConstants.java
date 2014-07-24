@@ -21,9 +21,9 @@ package org.apache.cloudstack.alert.snmp;
  * <p/>
  * IMPORTANT
  * <p/>
- * These OIDs are based on <b>CS-ROOT-MIB</b> MIB file. If there is any change in MIB file
- * then that should be reflected in this file also *
- * <br/><br/>
+ * These OIDs are based on <b>CS-ROOT-MIB</b> MIB file. If there is any change
+ * in MIB file then that should be reflected in this file also * <br/>
+ * <br/>
  * suffix 2 due to conflict with SnmpConstants class of snmp4j
  */
 public class CsSnmpConstants {

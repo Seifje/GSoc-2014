@@ -28,8 +28,9 @@ import org.apache.commons.httpclient.HttpMethodBase;
 
 /**
  * Base 64 encoded authorization strategy. This implementation as opposed to
- * {@link RESTValidationStrategy} doesn't do a login after auth error, but instead
- * includes the encoded credentials in each request, instead of a cookie.
+ * {@link RESTValidationStrategy} doesn't do a login after auth error, but
+ * instead includes the encoded credentials in each request, instead of a
+ * cookie.
  */
 public class BasicEncodedRESTValidationStrategy extends RESTValidationStrategy {
 
@@ -44,9 +45,7 @@ public class BasicEncodedRESTValidationStrategy extends RESTValidationStrategy {
     }
 
     @Override
-    public void executeMethod(final HttpMethodBase method, final HttpClient client,
-            final String protocol)
-                    throws CloudstackRESTException, HttpException, IOException {
+    public void executeMethod(final HttpMethodBase method, final HttpClient client, final String protocol) throws CloudstackRESTException, HttpException, IOException {
         if (host == null || host.isEmpty() || user == null || user.isEmpty() || password == null || password.isEmpty()) {
             throw new CloudstackRESTException("Hostname/credentials are null or empty");
         }

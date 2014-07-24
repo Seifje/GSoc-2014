@@ -39,8 +39,8 @@ public class BaseElement implements Element {
     protected boolean verbose = false;
 
     /**
-     * Limit on number of packets sent to sink from this element. Can be handy for
-     * fake elements and handshake-related elements.
+     * Limit on number of packets sent to sink from this element. Can be handy
+     * for fake elements and handshake-related elements.
      */
     protected int numBuffers = 0;
 
@@ -108,8 +108,8 @@ public class BaseElement implements Element {
         switch (direction) {
         case IN:
             if (inputPads.get(padName) != null)
-                throw new RuntimeException("Cannot link more than one wire to same pad. Element: " + this + ", pad: " + padName + ":" + direction + ", new link: "
-                        + link + ", existing link: " + inputPads.get(padName) + ".");
+                throw new RuntimeException("Cannot link more than one wire to same pad. Element: " + this + ", pad: " + padName + ":" + direction + ", new link: " + link
+                        + ", existing link: " + inputPads.get(padName) + ".");
             inputPads.put(padName, link);
             link.setSink(this);
 
@@ -117,8 +117,8 @@ public class BaseElement implements Element {
 
         case OUT:
             if (outputPads.get(padName) != null)
-                throw new RuntimeException("Cannot link more than one wire to same pad. Element: " + this + ", pad: " + padName + ":" + direction + ", new link: "
-                        + link + ", existing link: " + outputPads.get(padName) + ".");
+                throw new RuntimeException("Cannot link more than one wire to same pad. Element: " + this + ", pad: " + padName + ":" + direction + ", new link: " + link
+                        + ", existing link: " + outputPads.get(padName) + ".");
 
             outputPads.put(padName, link);
             link.setSource(this);
@@ -160,8 +160,8 @@ public class BaseElement implements Element {
     }
 
     /**
-     * By default, do nothing with incoming data and retransmit data to all output
-     * pads.
+     * By default, do nothing with incoming data and retransmit data to all
+     * output pads.
      */
     @Override
     public void handleData(ByteBuffer buf, Link link) {
@@ -178,7 +178,7 @@ public class BaseElement implements Element {
 
         if (buf == null)
             throw new NullPointerException();
-        //return;
+        // return;
 
         if (outputPads.size() == 0)
             throw new RuntimeException("Number of outgoing connection is zero. Cannot send data to output. Data: " + buf + ".");
@@ -253,10 +253,10 @@ public class BaseElement implements Element {
      * Send event to all outputs.
      *
      * @param event
-     *          a event
+     *            a event
      * @param direction
-     *          IN to send event to input pads, OUT to send event to all output
-     *          pads
+     *            IN to send event to input pads, OUT to send event to all
+     *            output pads
      */
     protected final void sendEventToAllPads(Event event, Direction direction) {
         if (verbose)
@@ -279,19 +279,19 @@ public class BaseElement implements Element {
     }
 
     /**
-     * Ensure that packet has required minimum and maximum length, cuts tail when
-     * necessary.
+     * Ensure that packet has required minimum and maximum length, cuts tail
+     * when necessary.
      *
      * @param buf
-     *          a buffer
+     *            a buffer
      * @param minLength
-     *          minimum length of packet or -1
+     *            minimum length of packet or -1
      * @param maxLength
-     *          maximum length of packet or -1
+     *            maximum length of packet or -1
      * @param link
-     *          source link, to push unnecessary data back
+     *            source link, to push unnecessary data back
      * @param fromCursor
-     *          if true, then position will be included into calculation
+     *            if true, then position will be included into calculation
      * @return true, if buffer is long enough, false otherwise
      */
     public boolean cap(ByteBuffer buf, int minLength, int maxLength, Link link, boolean fromCursor) {

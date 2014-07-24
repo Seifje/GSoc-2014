@@ -60,11 +60,9 @@ public class PrimaryDataStoreDaoImpl extends GenericDaoBase<StoragePoolVO, Long>
     @Inject
     protected StoragePoolHostDao _hostDao;
 
-    private final String DetailsSqlPrefix =
-        "SELECT storage_pool.* from storage_pool LEFT JOIN storage_pool_details ON storage_pool.id = storage_pool_details.pool_id WHERE storage_pool.removed is null and storage_pool.status = 'Up' and storage_pool.data_center_id = ? and (storage_pool.pod_id = ? or storage_pool.pod_id is null) and storage_pool.scope = ? and (";
+    private final String DetailsSqlPrefix = "SELECT storage_pool.* from storage_pool LEFT JOIN storage_pool_details ON storage_pool.id = storage_pool_details.pool_id WHERE storage_pool.removed is null and storage_pool.status = 'Up' and storage_pool.data_center_id = ? and (storage_pool.pod_id = ? or storage_pool.pod_id is null) and storage_pool.scope = ? and (";
     private final String DetailsSqlSuffix = ") GROUP BY storage_pool_details.pool_id HAVING COUNT(storage_pool_details.name) >= ?";
-    private final String ZoneWideDetailsSqlPrefix =
-        "SELECT storage_pool.* from storage_pool LEFT JOIN storage_pool_details ON storage_pool.id = storage_pool_details.pool_id WHERE storage_pool.removed is null and storage_pool.status = 'Up' and storage_pool.data_center_id = ? and storage_pool.scope = ? and (";
+    private final String ZoneWideDetailsSqlPrefix = "SELECT storage_pool.* from storage_pool LEFT JOIN storage_pool_details ON storage_pool.id = storage_pool_details.pool_id WHERE storage_pool.removed is null and storage_pool.status = 'Up' and storage_pool.data_center_id = ? and storage_pool.scope = ? and (";
     private final String ZoneWideDetailsSqlSuffix = ") GROUP BY storage_pool_details.pool_id HAVING COUNT(storage_pool_details.name) >= ?";
 
     private final String FindPoolTagDetails = "SELECT storage_pool_details.name FROM storage_pool_details WHERE pool_id = ? and value = ?";
@@ -254,11 +252,7 @@ public class PrimaryDataStoreDaoImpl extends GenericDaoBase<StoragePoolVO, Long>
         }
 
         for (Map.Entry<String, String> detail : details.entrySet()) {
-            sql.append("((storage_pool_details.name='")
-                .append(detail.getKey())
-                .append("') AND (storage_pool_details.value='")
-                .append(detail.getValue())
-                .append("')) OR ");
+            sql.append("((storage_pool_details.name='").append(detail.getKey()).append("') AND (storage_pool_details.value='").append(detail.getValue()).append("')) OR ");
         }
         sql.delete(sql.length() - 4, sql.length());
         sql.append(DetailsSqlSuffix);
@@ -323,7 +317,8 @@ public class PrimaryDataStoreDaoImpl extends GenericDaoBase<StoragePoolVO, Long>
     public List<StoragePoolVO> findLocalStoragePoolsByHostAndTags(long hostId, String[] tags) {
         SearchBuilder<StoragePoolVO> hostSearch = createSearchBuilder();
         SearchBuilder<StoragePoolHostVO> hostPoolSearch = _hostDao.createSearchBuilder();
-        SearchBuilder<StoragePoolDetailVO> tagPoolSearch = _detailsDao.createSearchBuilder();;
+        SearchBuilder<StoragePoolDetailVO> tagPoolSearch = _detailsDao.createSearchBuilder();
+        ;
 
         // Search for pools on the host
         hostPoolSearch.and("hostId", hostPoolSearch.entity().getHostId(), Op.EQ);
@@ -333,21 +328,21 @@ public class PrimaryDataStoreDaoImpl extends GenericDaoBase<StoragePoolVO, Long>
         hostSearch.and("status", hostSearch.entity().getStatus(), Op.EQ);
         hostSearch.join("hostJoin", hostPoolSearch, hostSearch.entity().getId(), hostPoolSearch.entity().getPoolId(), JoinBuilder.JoinType.INNER);
 
-        if (!(tags == null || tags.length == 0 )) {
+        if (!(tags == null || tags.length == 0)) {
             tagPoolSearch.and("name", tagPoolSearch.entity().getName(), Op.EQ);
             tagPoolSearch.and("value", tagPoolSearch.entity().getValue(), Op.EQ);
             hostSearch.join("tagJoin", tagPoolSearch, hostSearch.entity().getId(), tagPoolSearch.entity().getResourceId(), JoinBuilder.JoinType.INNER);
         }
 
         SearchCriteria<StoragePoolVO> sc = hostSearch.create();
-        sc.setJoinParameters("hostJoin", "hostId", hostId );
+        sc.setJoinParameters("hostJoin", "hostId", hostId);
         sc.setParameters("scope", ScopeType.HOST.toString());
         sc.setParameters("status", Status.Up.toString());
 
-        if (!(tags == null || tags.length == 0 )) {
+        if (!(tags == null || tags.length == 0)) {
             Map<String, String> details = tagsToDetails(tags);
             for (Map.Entry<String, String> detail : details.entrySet()) {
-                sc.setJoinParameters("tagJoin","name", detail.getKey());
+                sc.setJoinParameters("tagJoin", "name", detail.getKey());
                 sc.setJoinParameters("tagJoin", "value", detail.getValue());
             }
         }
@@ -369,11 +364,7 @@ public class PrimaryDataStoreDaoImpl extends GenericDaoBase<StoragePoolVO, Long>
             StringBuilder sql = new StringBuilder(ZoneWideDetailsSqlPrefix);
 
             for (Map.Entry<String, String> detail : details.entrySet()) {
-                sql.append("((storage_pool_details.name='")
-                    .append(detail.getKey())
-                    .append("') AND (storage_pool_details.value='")
-                    .append(detail.getValue())
-                    .append("')) OR ");
+                sql.append("((storage_pool_details.name='").append(detail.getKey()).append("') AND (storage_pool_details.value='").append(detail.getValue()).append("')) OR ");
             }
             sql.delete(sql.length() - 4, sql.length());
             sql.append(ZoneWideDetailsSqlSuffix);

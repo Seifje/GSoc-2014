@@ -62,10 +62,14 @@ public class HypervManagerImpl implements HypervManager {
     Map<String, String> _storageMounts = new HashMap<String, String>();
     StorageLayer _storage;
 
-    @Inject ConfigurationDao _configDao;
-    @Inject DataStoreManager _dataStoreMgr;
-    @Inject VMInstanceDao _vminstanceDao;
-    @Inject NicDao _nicDao;
+    @Inject
+    ConfigurationDao _configDao;
+    @Inject
+    DataStoreManager _dataStoreMgr;
+    @Inject
+    VMInstanceDao _vminstanceDao;
+    @Inject
+    NicDao _nicDao;
     int _routerExtraPublicNics = 2;
 
     @Override
@@ -126,6 +130,7 @@ public class HypervManagerImpl implements HypervManager {
         runLevel = level;
     }
 
+    @Override
     public String prepareSecondaryStorageStore(long zoneId) {
         String secondaryStorageUri = getSecondaryStorageStoreUrl(zoneId);
         if (secondaryStorageUri == null) {
@@ -170,8 +175,7 @@ public class HypervManagerImpl implements HypervManager {
                     File srcIso = getSystemVMPatchIsoFile();
                     File destIso = new File(mountPoint + "/systemvm/" + getSystemVMIsoFileNameOnDatastore());
                     if (!destIso.exists()) {
-                        s_logger.info("Copy System VM patch ISO file to secondary storage. source ISO: " +
-                            srcIso.getAbsolutePath() + ", destination: " + destIso.getAbsolutePath());
+                        s_logger.info("Copy System VM patch ISO file to secondary storage. source ISO: " + srcIso.getAbsolutePath() + ", destination: " + destIso.getAbsolutePath());
                         try {
                             FileUtil.copyfile(srcIso, destIso);
                         } catch (IOException e) {
@@ -211,8 +215,7 @@ public class HypervManagerImpl implements HypervManager {
                 throw new CloudRuntimeException("Unable to create mount point due to invalid storage URL format " + storageUrl);
             }
 
-            mountPoint = mount(File.separator + File.separator + uri.getHost() + uri.getPath(), getMountParent(),
-                uri.getScheme(), uri.getQuery());
+            mountPoint = mount(File.separator + File.separator + uri.getHost() + uri.getPath(), getMountParent(), uri.getScheme(), uri.getQuery());
             if (mountPoint == null) {
                 s_logger.error("Unable to create mount point for " + storageUrl);
                 return "/mnt/sec";

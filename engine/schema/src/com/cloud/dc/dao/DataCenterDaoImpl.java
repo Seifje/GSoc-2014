@@ -49,11 +49,9 @@ import com.cloud.utils.db.TransactionLegacy;
 import com.cloud.utils.net.NetUtils;
 
 /**
- * @config
- * {@table
- *    || Param Name | Description | Values | Default ||
- *    || mac.address.prefix | prefix to attach to all public and private mac addresses | number | 06 ||
- *  }
+ * @config {@table || Param Name | Description | Values | Default || ||
+ *         mac.address.prefix | prefix to attach to all public and private mac
+ *         addresses | number | 06 || * }
  **/
 @Component
 @Local(value = {DataCenterDao.class})
@@ -140,7 +138,7 @@ public class DataCenterDaoImpl extends GenericDaoBase<DataCenterVO, Long> implem
             ssc.addOr("description", SearchCriteria.Op.LIKE, "%" + keyword + "%");
             sc.addAnd("name", SearchCriteria.Op.SC, ssc);
         }
-        //sc.setParameters("domainId", domainId);
+        // sc.setParameters("domainId", domainId);
         return listBy(sc);
     }
 

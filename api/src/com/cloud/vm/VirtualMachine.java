@@ -35,23 +35,15 @@ import com.cloud.utils.fsm.StateObject;
 public interface VirtualMachine extends RunningOn, ControlledEntity, Identity, InternalIdentity, Displayable, StateObject<VirtualMachine.State> {
 
     public enum PowerState {
-        PowerUnknown,
-        PowerOn,
-        PowerOff,
-        PowerReportMissing
+        PowerUnknown, PowerOn, PowerOff, PowerReportMissing
     }
 
     public enum State {
-        Starting(true, "VM is being started.  At this state, you should find host id filled which means it's being started on that host."),
-        Running(false, "VM is running.  host id has the host that it is running on."),
-        Stopping(true, "VM is being stopped.  host id has the host that it is being stopped on."),
-        Stopped(false, "VM is stopped.  host id should be null."),
-        Destroyed(false, "VM is marked for destroy."),
-        Expunging(true, "VM is being   expunged."),
-        Migrating(true, "VM is being migrated.  host id holds to from host"),
-        Error(false, "VM is in error"),
-        Unknown(false, "VM state is unknown."),
-        Shutdowned(false, "VM is shutdowned from inside");
+        Starting(true, "VM is being started.  At this state, you should find host id filled which means it's being started on that host."), Running(false,
+                "VM is running.  host id has the host that it is running on."), Stopping(true, "VM is being stopped.  host id has the host that it is being stopped on."), Stopped(
+                        false, "VM is stopped.  host id should be null."), Destroyed(false, "VM is marked for destroy."), Expunging(true, "VM is being   expunged."), Migrating(true,
+                                "VM is being migrated.  host id holds to from host"), Error(false, "VM is in error"), Unknown(false, "VM state is unknown."), Shutdowned(false,
+                                        "VM is shutdowned from inside");
 
         private final boolean _transitional;
         String _description;
@@ -80,7 +72,8 @@ public interface VirtualMachine extends RunningOn, ControlledEntity, Identity, I
             s_fsm.addTransition(State.Stopped, VirtualMachine.Event.StopRequested, State.Stopped);
             s_fsm.addTransition(State.Stopped, VirtualMachine.Event.AgentReportStopped, State.Stopped);
 
-            // please pay attention about state transition to Error state, there should be only one case (failed in VM
+            // please pay attention about state transition to Error state, there
+            // should be only one case (failed in VM
             // creation process)
             // that can have such transition
             s_fsm.addTransition(State.Stopped, VirtualMachine.Event.OperationFailedToError, State.Error);
@@ -182,36 +175,18 @@ public interface VirtualMachine extends RunningOn, ControlledEntity, Identity, I
     static final String IsDynamicScalingEnabled = "enable.dynamic.scaling";
 
     public enum Event {
-        CreateRequested,
-        StartRequested,
-        StopRequested,
-        DestroyRequested,
-        RecoveryRequested,
-        AgentReportStopped,
-        AgentReportRunning,
-        MigrationRequested,
-        StorageMigrationRequested,
-        ExpungeOperation,
-        OperationSucceeded,
-        OperationFailed,
-        OperationFailedToError,
-        OperationRetry,
-        AgentReportShutdowned,
-        AgentReportMigrated,
-        RevertRequested,
-        SnapshotRequested,
+        CreateRequested, StartRequested, StopRequested, DestroyRequested, RecoveryRequested, AgentReportStopped, AgentReportRunning, MigrationRequested, StorageMigrationRequested, ExpungeOperation, OperationSucceeded, OperationFailed, OperationFailedToError, OperationRetry, AgentReportShutdowned, AgentReportMigrated, RevertRequested, SnapshotRequested,
 
         // added for new VMSync logic
-        FollowAgentPowerOnReport,
-        FollowAgentPowerOffReport,
+        FollowAgentPowerOnReport, FollowAgentPowerOffReport,
     };
 
     public enum Type {
         User(false), DomainRouter(true), ConsoleProxy(true), SecondaryStorageVm(true), ElasticIpVm(true), ElasticLoadBalancerVm(true), InternalLoadBalancerVm(true),
 
         /*
-         * UserBareMetal is only used for selecting VirtualMachineGuru, there is no
-         * VM with this type. UserBareMetal should treat exactly as User.
+         * UserBareMetal is only used for selecting VirtualMachineGuru, there is
+         * no VM with this type. UserBareMetal should treat exactly as User.
          */
         UserBareMetal(false),
 
@@ -233,14 +208,14 @@ public interface VirtualMachine extends RunningOn, ControlledEntity, Identity, I
 
     /**
      * @return The name of the vm instance used by the cloud stack to uniquely
-     *         reference this VM. You can build names that starts with this name and it
-     *         guarantees uniqueness for things related to the VM.
+     *         reference this VM. You can build names that starts with this name
+     *         and it guarantees uniqueness for things related to the VM.
      */
     String getInstanceName();
 
     /**
-     * @return the host name of the virtual machine. If the user did not
-     *         specify the host name when creating the virtual machine then it is
+     * @return the host name of the virtual machine. If the user did not specify
+     *         the host name when creating the virtual machine then it is
      *         defaults to the instance name.
      */
     String getHostName();

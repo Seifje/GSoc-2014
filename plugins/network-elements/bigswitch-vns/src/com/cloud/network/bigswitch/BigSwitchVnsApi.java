@@ -60,8 +60,8 @@ public class BigSwitchVnsApi {
 
     private HttpClient _client;
 
-    /* This factory method is protected so we can extend this
-     * in the unittests.
+    /*
+     * This factory method is protected so we can extend this in the unittests.
      */
     protected HttpClient createHttpClient() {
         return new HttpClient(s_httpClientManager);
@@ -99,7 +99,8 @@ public class BigSwitchVnsApi {
     }
 
     /**
-     * Logs into the BigSwitch API. The cookie is stored in the <code>_authcookie<code> variable.
+     * Logs into the BigSwitch API. The cookie is stored in the
+     * <code>_authcookie<code> variable.
      * <p>
      * The method returns false if the login failed or the connection could not be made.
      *
@@ -299,7 +300,8 @@ public class BigSwitchVnsApi {
 
         if ("text/html".equals(method.getResponseHeader(CONTENT_TYPE).getValue())) {
             // The error message is the response content
-            // Safety margin of 1024 characters, anything longer is probably useless
+            // Safety margin of 1024 characters, anything longer is probably
+            // useless
             // and will clutter the logs
             try {
                 return method.getResponseBodyAsString(1024);

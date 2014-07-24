@@ -22,7 +22,8 @@ import java.util.List;
 
 public class TileTracker {
 
-    // 2 dimension tile status snapshot, a true value means the corresponding tile has been invalidated
+    // 2 dimension tile status snapshot, a true value means the corresponding
+    // tile has been invalidated
     private boolean[][] snapshot;
 
     private int tileWidth = 0;

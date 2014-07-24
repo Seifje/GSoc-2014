@@ -32,7 +32,9 @@ import com.cloud.exception.ResourceInUseException;
 public interface SecurityGroupService {
     /**
      * Create a network group with the given name and description
-     * @param command the command specifying the name and description
+     *
+     * @param command
+     *            the command specifying the name and description
      * @return the created security group if successful, null otherwise
      */
     public SecurityGroup createSecurityGroup(CreateSecurityGroupCmd command) throws PermissionDeniedException, InvalidParameterValueException;

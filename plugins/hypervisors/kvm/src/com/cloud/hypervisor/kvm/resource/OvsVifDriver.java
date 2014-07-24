@@ -67,14 +67,15 @@ public class OvsVifDriver extends VifDriverBase {
         } else if (nic.getBroadcastType() == Networks.BroadcastDomainType.Lswitch) {
             logicalSwitchUuid = Networks.BroadcastDomainType.getValue(nic.getBroadcastUri());
         } else if (nic.getBroadcastType() == Networks.BroadcastDomainType.Pvlan) {
-            // TODO consider moving some of this functionality from NetUtils to Networks....
+            // TODO consider moving some of this functionality from NetUtils to
+            // Networks....
             vlanId = NetUtils.getPrimaryPvlanFromUri(nic.getBroadcastUri());
         }
         String trafficLabel = nic.getName();
         if (nic.getType() == Networks.TrafficType.Guest) {
             Integer networkRateKBps = (nic.getNetworkRateMbps() != null && nic.getNetworkRateMbps().intValue() != -1) ? nic.getNetworkRateMbps().intValue() * 128 : 0;
-            if ((nic.getBroadcastType() == Networks.BroadcastDomainType.Vlan || nic.getBroadcastType() == Networks.BroadcastDomainType.Pvlan) &&
-                    !vlanId.equalsIgnoreCase("untagged")) {
+            if ((nic.getBroadcastType() == Networks.BroadcastDomainType.Vlan || nic.getBroadcastType() == Networks.BroadcastDomainType.Pvlan)
+                    && !vlanId.equalsIgnoreCase("untagged")) {
                 if (trafficLabel != null && !trafficLabel.isEmpty()) {
                     s_logger.debug("creating a vlan dev and bridge for guest traffic per traffic label " + trafficLabel);
                     intf.defBridgeNet(_pifs.get(trafficLabel), null, nic.getMac(), getGuestNicModel(guestOsType, nicAdapter), networkRateKBps);
@@ -147,8 +148,8 @@ public class OvsVifDriver extends VifDriverBase {
             }
         }
         if (!foundLinkLocalBr) {
-            Script.runSimpleBashScript("ifconfig " + linkLocalBr + " 169.254.0.1;" + "ip route add " + NetUtils.getLinkLocalCIDR() + " dev " + linkLocalBr + " src " +
-                    NetUtils.getLinkLocalGateway());
+            Script.runSimpleBashScript("ifconfig " + linkLocalBr + " 169.254.0.1;" + "ip route add " + NetUtils.getLinkLocalCIDR() + " dev " + linkLocalBr + " src "
+                    + NetUtils.getLinkLocalGateway());
         }
     }
 

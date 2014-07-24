@@ -39,7 +39,8 @@ public class EC2ImportKeyPair {
     }
 
     /**
-     * @param keyName the keyName to set
+     * @param keyName
+     *            the keyName to set
      */
     public void setKeyName(String keyName) {
         this.keyName = keyName;
@@ -53,7 +54,8 @@ public class EC2ImportKeyPair {
     }
 
     /**
-     * @param publicKeyMaterial the publicKeyMaterial to set
+     * @param publicKeyMaterial
+     *            the publicKeyMaterial to set
      */
     public void setPublicKeyMaterial(String publicKeyMaterial) {
         this.publicKeyMaterial = publicKeyMaterial;

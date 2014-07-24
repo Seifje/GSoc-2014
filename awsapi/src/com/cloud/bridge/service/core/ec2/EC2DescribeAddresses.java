@@ -30,7 +30,8 @@ public class EC2DescribeAddresses {
     }
 
     /*
-     * inPublicIpSet will return true if the ip is in the set, or if set length is 0
+     * inPublicIpSet will return true if the ip is in the set, or if set length
+     * is 0
      */
     public boolean inPublicIpSet(String ip) {
         if (publicIpsSet.isEmpty())
@@ -51,7 +52,8 @@ public class EC2DescribeAddresses {
     }
 
     /**
-     * @param keyFilterSet the keyFilterSet to set
+     * @param keyFilterSet
+     *            the keyFilterSet to set
      */
     public void setFilterSet(EC2AddressFilterSet keyFilterSet) {
         this.filterSet = keyFilterSet;

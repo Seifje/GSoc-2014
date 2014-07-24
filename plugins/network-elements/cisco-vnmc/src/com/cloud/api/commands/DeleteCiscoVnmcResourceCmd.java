@@ -38,40 +38,34 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.network.element.CiscoVnmcElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "deleteCiscoVnmcResource", responseObject = SuccessResponse.class, description = "Deletes a Cisco Vnmc controller",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteCiscoVnmcResource", responseObject = SuccessResponse.class, description = "Deletes a Cisco Vnmc controller", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteCiscoVnmcResourceCmd extends BaseCmd {
     private static final Logger s_logger = Logger.getLogger(DeleteCiscoVnmcResourceCmd.class.getName());
     private static final String s_name = "deleteCiscoVnmcResource";
     @Inject
     CiscoVnmcElementService _ciscoVnmcElementService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.RESOURCE_ID,
-               type = CommandType.UUID,
-               required = true,
-               entityType = CiscoVnmcResourceResponse.class,
-               description = "Cisco Vnmc resource ID")
+    @Parameter(name = ApiConstants.RESOURCE_ID, type = CommandType.UUID, required = true, entityType = CiscoVnmcResourceResponse.class, description = "Cisco Vnmc resource ID")
     private Long ciscoVnmcResourceId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getCiscoVnmcResourceId() {
         return ciscoVnmcResourceId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             boolean result = _ciscoVnmcElementService.deleteCiscoVnmcResource(this);
             if (result) {

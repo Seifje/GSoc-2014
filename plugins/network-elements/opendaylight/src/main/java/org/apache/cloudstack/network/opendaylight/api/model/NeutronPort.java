@@ -148,7 +148,7 @@ public class NeutronPort {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        NeutronPort other = (NeutronPort) obj;
+        NeutronPort other = (NeutronPort)obj;
         if (adminStateUp != other.adminStateUp) {
             return false;
         }
@@ -214,7 +214,7 @@ public class NeutronPort {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        NeutronPort other = (NeutronPort) obj;
+        NeutronPort other = (NeutronPort)obj;
         if (adminStateUp != other.adminStateUp) {
             return false;
         }

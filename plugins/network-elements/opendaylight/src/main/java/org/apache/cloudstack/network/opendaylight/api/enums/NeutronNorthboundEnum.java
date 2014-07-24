@@ -21,16 +21,12 @@ package org.apache.cloudstack.network.opendaylight.api.enums;
 
 public enum NeutronNorthboundEnum {
 
-    NETWORKS_URI("/controller/nb/v2/neutron/networks"),
-    NETWORK_PARAM_URI("/controller/nb/v2/neutron/networks/{0}"),
+    NETWORKS_URI("/controller/nb/v2/neutron/networks"), NETWORK_PARAM_URI("/controller/nb/v2/neutron/networks/{0}"),
 
-    PORTS_URI("/controller/nb/v2/neutron/ports"),
-    PORTS_PARAM_URI("/controller/nb/v2/neutron/ports/{0}"),
+    PORTS_URI("/controller/nb/v2/neutron/ports"), PORTS_PARAM_URI("/controller/nb/v2/neutron/ports/{0}"),
 
-    NODES_URI("/controller/nb/v2/connectionmanager/nodes"),
-    NODE_PARAM_URI("/controller/nb/v2/connectionmanager/node/{0}/{1}"),
-    NODE_PORT_PER_NODE_URI("/controller/nb/v2/connectionmanager/node/{0}/address/{1}/port/{2}"),
-    NODE_PORT_PER_TYPE_URI("/controller/nb/v2/connectionmanager/node/{0}/{1}/address/{2}/port/{3}");
+    NODES_URI("/controller/nb/v2/connectionmanager/nodes"), NODE_PARAM_URI("/controller/nb/v2/connectionmanager/node/{0}/{1}"), NODE_PORT_PER_NODE_URI(
+            "/controller/nb/v2/connectionmanager/node/{0}/address/{1}/port/{2}"), NODE_PORT_PER_TYPE_URI("/controller/nb/v2/connectionmanager/node/{0}/{1}/address/{2}/port/{3}");
 
     private String uri;
 

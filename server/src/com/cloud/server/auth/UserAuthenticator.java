@@ -35,7 +35,9 @@ public interface UserAuthenticator extends Adapter {
      * @param username
      * @param password
      * @param domainId
-     * @return the pair of 2 booleans - first identifies the success of authenciation, the second - whether to increase incorrect login attempts count in case of failed authentication
+     * @return the pair of 2 booleans - first identifies the success of
+     *         authenciation, the second - whether to increase incorrect login
+     *         attempts count in case of failed authentication
      */
     public Pair<Boolean, ActionOnFailedAuthentication> authenticate(String username, String password, Long domainId, Map<String, Object[]> requestParameters);
 

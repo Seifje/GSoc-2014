@@ -99,8 +99,10 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
         DataStoreTO srcStoreTO = srcTO.getDataStore();
 
         if (srcStoreTO instanceof NfsTO || srcStoreTO.getRole() == DataStoreRole.ImageCache) {
-            //||
-            //    (srcStoreTO instanceof PrimaryDataStoreTO && ((PrimaryDataStoreTO)srcStoreTO).getPoolType() == StoragePoolType.NetworkFilesystem)) {
+            // ||
+            // (srcStoreTO instanceof PrimaryDataStoreTO &&
+            // ((PrimaryDataStoreTO)srcStoreTO).getPoolType() ==
+            // StoragePoolType.NetworkFilesystem)) {
             return false;
         }
 
@@ -116,8 +118,8 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
         }
 
         if (s_logger.isDebugEnabled()) {
-            s_logger.debug("needCacheStorage true, dest at " + destTO.getPath() + " dest role " + destStoreTO.getRole().toString() + srcTO.getPath() + " src role " +
-                srcStoreTO.getRole().toString());
+            s_logger.debug("needCacheStorage true, dest at " + destTO.getPath() + " dest role " + destStoreTO.getRole().toString() + srcTO.getPath() + " src role "
+                    + srcStoreTO.getRole().toString());
         }
         return true;
     }
@@ -175,10 +177,13 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
 
             if (cacheData != null) {
                 if (srcData.getType() == DataObjectType.VOLUME && destData.getType() == DataObjectType.VOLUME) {
-                    // volume transfer from primary to secondary or vice versa. Volume transfer between primary pools are already handled by copyVolumeBetweenPools
+                    // volume transfer from primary to secondary or vice versa.
+                    // Volume transfer between primary pools are already handled
+                    // by copyVolumeBetweenPools
                     cacheMgr.deleteCacheObject(srcForCopy);
                 } else {
-                    // for template, we want to leave it on cache for performance reason
+                    // for template, we want to leave it on cache for
+                    // performance reason
                     if ((answer == null || !answer.getResult()) && srcForCopy.getRefCount() < 2) {
                         // cache object created by this copy, not already there
                         cacheMgr.deleteCacheObject(srcForCopy);
@@ -214,7 +219,6 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
         return leafData;
     }
 
-
     protected void deleteSnapshotCacheChain(SnapshotInfo snapshot) {
         while (snapshot != null) {
             cacheMgr.deleteCacheObject(snapshot);
@@ -239,7 +243,8 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
         DataObject srcData = snapObj;
         try {
             if (!(storTO instanceof NfsTO)) {
-                // cache snapshot to zone-wide staging store for the volume to be created
+                // cache snapshot to zone-wide staging store for the volume to
+                // be created
                 srcData = cacheSnapshotChain(snapshot, new ZoneScope(pool.getDataCenterId()));
             }
 
@@ -269,7 +274,8 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
             throw new CloudRuntimeException(basicErrMsg);
         } finally {
             if (!(storTO instanceof NfsTO)) {
-                // still keep snapshot on cache which may be migrated from previous secondary storage
+                // still keep snapshot on cache which may be migrated from
+                // previous secondary storage
                 releaseSnapshotCacheChain((SnapshotInfo)srcData);
             }
         }
@@ -301,7 +307,8 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
         Scope destScope = getZoneScope(destData.getDataStore().getScope());
         DataStore cacheStore = cacheMgr.getCacheStorage(destScope);
         if (cacheStore == null) {
-            // need to find a nfs or cifs image store, assuming that can't copy volume
+            // need to find a nfs or cifs image store, assuming that can't copy
+            // volume
             // directly to s3
             ImageStoreEntity imageStore = (ImageStoreEntity)dataStoreMgr.getImageStore(destScope.getScopeId());
             if (!imageStore.getProtocol().equalsIgnoreCase("nfs") && !imageStore.getProtocol().equalsIgnoreCase("cifs")) {
@@ -393,8 +400,10 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
             volumeVo.setPodId(destPool.getPodId());
             volumeVo.setPoolId(destPool.getId());
             volumeVo.setLastPoolId(oldPoolId);
-            // For SMB, pool credentials are also stored in the uri query string.  We trim the query string
-            // part  here to make sure the credentials do not get stored in the db unencrypted.
+            // For SMB, pool credentials are also stored in the uri query
+            // string. We trim the query string
+            // part here to make sure the credentials do not get stored in the
+            // db unencrypted.
             String folder = destPool.getPath();
             if (destPool.getPoolType() == StoragePoolType.SMB && folder != null && folder.contains("?")) {
                 folder = folder.substring(0, folder.indexOf("?"));
@@ -420,8 +429,8 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
                 answer = createTemplateFromSnapshot(srcData, destData);
             } else if (srcData.getType() == DataObjectType.TEMPLATE && destData.getType() == DataObjectType.VOLUME) {
                 answer = cloneVolume(srcData, destData);
-            } else if (destData.getType() == DataObjectType.VOLUME && srcData.getType() == DataObjectType.VOLUME &&
-                srcData.getDataStore().getRole() == DataStoreRole.Primary && destData.getDataStore().getRole() == DataStoreRole.Primary) {
+            } else if (destData.getType() == DataObjectType.VOLUME && srcData.getType() == DataObjectType.VOLUME && srcData.getDataStore().getRole() == DataStoreRole.Primary
+                    && destData.getDataStore().getRole() == DataStoreRole.Primary) {
                 if (srcData.getId() == destData.getId()) {
                     // The volume has to be migrated across storage pools.
                     answer = migrateVolumeToPool(srcData, destData);
@@ -461,7 +470,7 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
         boolean needCache = false;
         if (needCacheStorage(srcData, destData)) {
             needCache = true;
-            SnapshotInfo snapshot = (SnapshotInfo) srcData;
+            SnapshotInfo snapshot = (SnapshotInfo)srcData;
             srcData = cacheSnapshotChain(snapshot, snapshot.getDataStore().getScope());
         }
 
@@ -484,7 +493,10 @@ public class AncientDataMotionStrategy implements DataMotionStrategy {
 
         // clean up snapshot copied to staging
         if (needCache && srcData != null) {
-            cacheMgr.releaseCacheObject(srcData);  // reduce ref count, but keep it there on cache which is converted from previous secondary storage
+            cacheMgr.releaseCacheObject(srcData); // reduce ref count, but keep
+                                                  // it there on cache which is
+                                                  // converted from previous
+                                                  // secondary storage
         }
         return answer;
     }

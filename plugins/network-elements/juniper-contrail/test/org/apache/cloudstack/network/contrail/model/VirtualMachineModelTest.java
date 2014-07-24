@@ -40,24 +40,23 @@ import com.cloud.vm.VirtualMachine;
 import com.cloud.vm.dao.UserVmDao;
 
 public class VirtualMachineModelTest extends TestCase {
-    private static final Logger s_logger =
-            Logger.getLogger(VirtualMachineModelTest.class);
+    private static final Logger s_logger = Logger.getLogger(VirtualMachineModelTest.class);
 
     @Test
     public void testVirtualMachineDBLookup() {
         ModelDatabase db = new ModelDatabase();
-        VMInstanceVO vm  = mock(VMInstanceVO.class);
+        VMInstanceVO vm = mock(VMInstanceVO.class);
 
         // Create 3 dummy Virtual Machine model objects
         // Add these models to database.
         // Each VM is identified by unique UUId.
-        VirtualMachineModel  vm0 = new VirtualMachineModel(vm, "fbc1f8fa-4b78-45ee-bba0-b551dbf72353");
+        VirtualMachineModel vm0 = new VirtualMachineModel(vm, "fbc1f8fa-4b78-45ee-bba0-b551dbf72353");
         db.getVirtualMachines().add(vm0);
 
-        VirtualMachineModel  vm1 = new VirtualMachineModel(vm, "fbc1f8fa-4b78-45ee-bba0-b551dbf83464");
+        VirtualMachineModel vm1 = new VirtualMachineModel(vm, "fbc1f8fa-4b78-45ee-bba0-b551dbf83464");
         db.getVirtualMachines().add(vm1);
 
-        VirtualMachineModel  vm2 = new VirtualMachineModel(vm, "fbc1f8fa-4b78-45ee-bba0-b551dbf94575");
+        VirtualMachineModel vm2 = new VirtualMachineModel(vm, "fbc1f8fa-4b78-45ee-bba0-b551dbf94575");
         db.getVirtualMachines().add(vm2);
 
         s_logger.debug("No of Vitual Machines added to database : " + db.getVirtualMachines().size());
@@ -74,7 +73,7 @@ public class VirtualMachineModelTest extends TestCase {
 
         String uuid = UUID.randomUUID().toString();
         ContrailManagerImpl contrailMgr = mock(ContrailManagerImpl.class);
-        ModelController controller      = mock(ModelController.class);
+        ModelController controller = mock(ModelController.class);
         ApiConnector api = new ApiConnectorMock(null, 0);
         when(controller.getManager()).thenReturn(contrailMgr);
         when(controller.getApiAccessor()).thenReturn(api);
@@ -99,7 +98,7 @@ public class VirtualMachineModelTest extends TestCase {
         when(vm.getDomainId()).thenReturn(10L);
         when(vm.getAccountId()).thenReturn(42L);
 
-        UserVmDao VmDao      = mock(UserVmDao.class);
+        UserVmDao VmDao = mock(UserVmDao.class);
         when(VmDao.findById(anyLong())).thenReturn(null);
         when(controller.getVmDao()).thenReturn(VmDao);
 
@@ -115,7 +114,7 @@ public class VirtualMachineModelTest extends TestCase {
             fail("virtual-network update failed ");
         }
 
-        //verify
+        // verify
         assertTrue(vmModel.verify(controller));
     }
 }

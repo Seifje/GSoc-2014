@@ -63,10 +63,14 @@ public class XenServer56SP2Resource extends XenServer56FP1Resource {
             s_logger.warn("No recommended value found for dynamic max, setting static max and dynamic max equal");
             return dynamicMaxRam;
         }
-        long staticMax = Math.min(recommendedValue, 4l * dynamicMinRam);  // XS constraint for stability
-        if (dynamicMaxRam > staticMax) { // XS contraint that dynamic max <= static max
-            s_logger.warn("dynamixMax " + dynamicMaxRam + " cant be greater than static max " + staticMax +
-                ", can lead to stability issues. Setting static max as much as dynamic max ");
+        long staticMax = Math.min(recommendedValue, 4l * dynamicMinRam); // XS
+        // constraint
+        // for
+        // stability
+        if (dynamicMaxRam > staticMax) { // XS contraint that dynamic max <=
+            // static max
+            s_logger.warn("dynamixMax " + dynamicMaxRam + " cant be greater than static max " + staticMax
+                    + ", can lead to stability issues. Setting static max as much as dynamic max ");
             return dynamicMaxRam;
         }
         return staticMax;
@@ -80,7 +84,8 @@ public class XenServer56SP2Resource extends XenServer56FP1Resource {
             return dynamicMinRam;
         }
 
-        if (dynamicMinRam < recommendedValue) {   // XS contraint that dynamic min > static min
+        if (dynamicMinRam < recommendedValue) { // XS contraint that dynamic min
+            // > static min
             s_logger.warn("Vm is set to dynamixMin " + dynamicMinRam + " less than the recommended static min " + recommendedValue + ", could lead to stability issues");
         }
         return dynamicMinRam;

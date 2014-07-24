@@ -37,8 +37,7 @@ import com.cloud.event.EventTypes;
 import com.cloud.server.ResourceTag;
 import com.cloud.server.ResourceTag.ResourceObjectType;
 
-@APICommand(name = "createTags", description = "Creates resource tag(s)", responseObject = SuccessResponse.class, since = "4.0.0", entityType = {ResourceTag.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createTags", description = "Creates resource tag(s)", responseObject = SuccessResponse.class, since = "4.0.0", entityType = {ResourceTag.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateTagsCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(CreateTagsCmd.class.getName());
 
@@ -54,20 +53,16 @@ public class CreateTagsCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.RESOURCE_TYPE, type = CommandType.STRING, required = true, description = "type of the resource")
     private String resourceType;
 
-    @Parameter(name = ApiConstants.RESOURCE_IDS,
-               type = CommandType.LIST,
-               required = true,
-               collectionType = CommandType.STRING,
-               description = "list of resources to create the tags for")
+    @Parameter(name = ApiConstants.RESOURCE_IDS, type = CommandType.LIST, required = true, collectionType = CommandType.STRING, description = "list of resources to create the tags for")
     private List<String> resourceIds;
 
     @Parameter(name = ApiConstants.CUSTOMER, type = CommandType.STRING, description = "identifies client specific tag. "
-        + "When the value is not null, the tag can't be used by cloudStack code internally")
+            + "When the value is not null, the tag can't be used by cloudStack code internally")
     private String customer;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public ResourceObjectType getResourceType() {
         return _taggedResourceService.getResourceType(resourceType);
@@ -108,7 +103,7 @@ public class CreateTagsCmd extends BaseAsyncCmd {
 
     @Override
     public long getEntityOwnerId() {
-        //FIXME - validate the owner here
+        // FIXME - validate the owner here
         return 1;
     }
 

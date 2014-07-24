@@ -31,7 +31,9 @@ public class UserContext {
     private boolean annonymous = false;
     private String accessKey;
     private String secretKey;
-    private String canonicalUserId;  // In our design, we re-use the accessKey to provide the canonicalUserId  -- TODO loPri - reconsider?
+    private String canonicalUserId; // In our design, we re-use the accessKey to
+                                    // provide the canonicalUserId -- TODO loPri
+                                    // - reconsider?
     private String description;
     private HttpServletRequest request = null;
 

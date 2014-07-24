@@ -114,7 +114,8 @@ public class SspElementTest {
     public void isReadyTest() {
         fullyConfigured();
 
-        // isReady is called in changing the networkserviceprovider state to Enabled.
+        // isReady is called in changing the networkserviceprovider state to
+        // Enabled.
         when(nspvo.getState()).thenReturn(PhysicalNetworkServiceProvider.State.Disabled);
 
         // ssp is ready
@@ -137,7 +138,8 @@ public class SspElementTest {
         when(nspvo.getState()).thenReturn(PhysicalNetworkServiceProvider.State.Disabled);
         assertFalse(_element.canHandle(psvo));
 
-        // If you don't want ssp for a specific physicalnetwork, you don't need to
+        // If you don't want ssp for a specific physicalnetwork, you don't need
+        // to
         // setup physicalNetworkProvider.
         when(_element._physicalNetworkServiceProviderDao.findByServiceProvider(physicalNetworkId, "StratosphereSsp")).thenReturn(null);
         assertFalse(_element.canHandle(psvo));

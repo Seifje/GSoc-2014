@@ -37,8 +37,7 @@ import com.cloud.hypervisor.vmware.VmwareDatacenterVO;
 import com.cloud.user.Account;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "addVmwareDc", description = "Adds a VMware datacenter to specified zone", responseObject = VmwareDatacenterResponse.class,
-        requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
+@APICommand(name = "addVmwareDc", description = "Adds a VMware datacenter to specified zone", responseObject = VmwareDatacenterResponse.class, requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
 public class AddVmwareDcCmd extends BaseCmd {
 
     @Inject
@@ -51,10 +50,7 @@ public class AddVmwareDcCmd extends BaseCmd {
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "Name of VMware datacenter to be added to specified zone.")
     private String name;
 
-    @Parameter(name = ApiConstants.VCENTER,
-               type = CommandType.STRING,
-               required = true,
-               description = "The name/ip of vCenter. Make sure it is IP address or full qualified domain name for host running vCenter server.")
+    @Parameter(name = ApiConstants.VCENTER, type = CommandType.STRING, required = true, description = "The name/ip of vCenter. Make sure it is IP address or full qualified domain name for host running vCenter server.")
     private String vCenter;
 
     @Parameter(name = ApiConstants.USERNAME, type = CommandType.STRING, required = false, description = "The Username required to connect to resource.")

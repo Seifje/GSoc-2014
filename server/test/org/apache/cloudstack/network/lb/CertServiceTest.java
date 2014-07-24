@@ -68,17 +68,20 @@ public class CertServiceTest {
     }
 
     /**
-     * JCE is known to be working fine without additional configuration in OpenJDK.
-     * This checks if the tests are running in OpenJDK;
-     * @return  true if openjdk environment
+     * JCE is known to be working fine without additional configuration in
+     * OpenJDK. This checks if the tests are running in OpenJDK;
+     *
+     * @return true if openjdk environment
      */
     static boolean isOpenJdk() {
-        //TODO: find a better way for OpenJDK detection
+        // TODO: find a better way for OpenJDK detection
         return System.getProperty("java.home").toLowerCase().contains("openjdk");
     }
 
     /**
-     * One can run the tests on Oracle JDK after installing JCE by specifying -Dcloudstack.jce.enabled=true
+     * One can run the tests on Oracle JDK after installing JCE by specifying
+     * -Dcloudstack.jce.enabled=true
+     *
      * @return true if the jce enable property was set to true
      */
     static boolean isJCEInstalled() {
@@ -105,7 +108,7 @@ public class CertServiceTest {
 
         CertServiceImpl certService = new CertServiceImpl();
 
-        //setting mock objects
+        // setting mock objects
         certService._accountMgr = Mockito.mock(AccountManager.class);
         Account account = new AccountVO("testaccount", 1, "networkdomain", (short)0, UUID.randomUUID().toString());
         when(certService._accountMgr.getAccount(anyLong())).thenReturn(account);
@@ -116,7 +119,7 @@ public class CertServiceTest {
         certService._accountDao = Mockito.mock(AccountDao.class);
         when(certService._accountDao.findByIdIncludingRemoved(anyLong())).thenReturn((AccountVO)account);
 
-        //creating the command
+        // creating the command
         UploadSslCertCmd uploadCmd = new UploadSslCertCmdExtn();
         Class<?> _class = uploadCmd.getClass().getSuperclass();
 
@@ -156,7 +159,7 @@ public class CertServiceTest {
 
         CertServiceImpl certService = new CertServiceImpl();
 
-        //setting mock objects
+        // setting mock objects
         certService._accountMgr = Mockito.mock(AccountManager.class);
         Account account = new AccountVO("testaccount", 1, "networkdomain", (short)0, UUID.randomUUID().toString());
         when(certService._accountMgr.getAccount(anyLong())).thenReturn(account);
@@ -167,7 +170,7 @@ public class CertServiceTest {
         certService._accountDao = Mockito.mock(AccountDao.class);
         when(certService._accountDao.findByIdIncludingRemoved(anyLong())).thenReturn((AccountVO)account);
 
-        //creating the command
+        // creating the command
         UploadSslCertCmd uploadCmd = new UploadSslCertCmdExtn();
         Class<?> _class = uploadCmd.getClass().getSuperclass();
 
@@ -202,7 +205,7 @@ public class CertServiceTest {
 
         CertServiceImpl certService = new CertServiceImpl();
 
-        //setting mock objects
+        // setting mock objects
         certService._accountMgr = Mockito.mock(AccountManager.class);
         Account account = new AccountVO("testaccount", 1, "networkdomain", (short)0, UUID.randomUUID().toString());
         when(certService._accountMgr.getAccount(anyLong())).thenReturn(account);
@@ -213,7 +216,7 @@ public class CertServiceTest {
         certService._accountDao = Mockito.mock(AccountDao.class);
         when(certService._accountDao.findByIdIncludingRemoved(anyLong())).thenReturn((AccountVO)account);
 
-        //creating the command
+        // creating the command
         UploadSslCertCmd uploadCmd = new UploadSslCertCmdExtn();
         Class<?> _class = uploadCmd.getClass().getSuperclass();
 
@@ -243,7 +246,7 @@ public class CertServiceTest {
 
         CertServiceImpl certService = new CertServiceImpl();
 
-        //setting mock objects
+        // setting mock objects
         certService._accountMgr = Mockito.mock(AccountManager.class);
         Account account = new AccountVO("testaccount", 1, "networkdomain", (short)0, UUID.randomUUID().toString());
         when(certService._accountMgr.getAccount(anyLong())).thenReturn(account);
@@ -251,7 +254,7 @@ public class CertServiceTest {
         certService._sslCertDao = Mockito.mock(SslCertDao.class);
         when(certService._sslCertDao.persist(any(SslCertVO.class))).thenReturn(new SslCertVO());
 
-        //creating the command
+        // creating the command
         UploadSslCertCmd uploadCmd = new UploadSslCertCmdExtn();
         Class<?> _class = uploadCmd.getClass().getSuperclass();
 
@@ -295,7 +298,7 @@ public class CertServiceTest {
 
         CertServiceImpl certService = new CertServiceImpl();
 
-        //setting mock objects
+        // setting mock objects
         certService._accountMgr = Mockito.mock(AccountManager.class);
         Account account = new AccountVO("testaccount", 1, "networkdomain", (short)0, UUID.randomUUID().toString());
         when(certService._accountMgr.getAccount(anyLong())).thenReturn(account);
@@ -303,7 +306,7 @@ public class CertServiceTest {
         certService._sslCertDao = Mockito.mock(SslCertDao.class);
         when(certService._sslCertDao.persist(any(SslCertVO.class))).thenReturn(new SslCertVO());
 
-        //creating the command
+        // creating the command
         UploadSslCertCmd uploadCmd = new UploadSslCertCmdExtn();
         Class<?> _class = uploadCmd.getClass().getSuperclass();
 
@@ -346,7 +349,7 @@ public class CertServiceTest {
 
         CertServiceImpl certService = new CertServiceImpl();
 
-        //setting mock objects
+        // setting mock objects
         certService._accountMgr = Mockito.mock(AccountManager.class);
         Account account = new AccountVO("testaccount", 1, "networkdomain", (short)0, UUID.randomUUID().toString());
         when(certService._accountMgr.getAccount(anyLong())).thenReturn(account);
@@ -354,7 +357,7 @@ public class CertServiceTest {
         certService._sslCertDao = Mockito.mock(SslCertDao.class);
         when(certService._sslCertDao.persist(any(SslCertVO.class))).thenReturn(new SslCertVO());
 
-        //creating the command
+        // creating the command
         UploadSslCertCmd uploadCmd = new UploadSslCertCmdExtn();
         Class<?> _class = uploadCmd.getClass().getSuperclass();
 
@@ -391,7 +394,7 @@ public class CertServiceTest {
 
         CertServiceImpl certService = new CertServiceImpl();
 
-        //setting mock objects
+        // setting mock objects
         certService._accountMgr = Mockito.mock(AccountManager.class);
         Account account = new AccountVO("testaccount", 1, "networkdomain", (short)0, UUID.randomUUID().toString());
         when(certService._accountMgr.getAccount(anyLong())).thenReturn(account);
@@ -399,7 +402,7 @@ public class CertServiceTest {
         certService._sslCertDao = Mockito.mock(SslCertDao.class);
         when(certService._sslCertDao.persist(any(SslCertVO.class))).thenReturn(new SslCertVO());
 
-        //creating the command
+        // creating the command
         UploadSslCertCmd uploadCmd = new UploadSslCertCmdExtn();
         Class<?> _class = uploadCmd.getClass().getSuperclass();
 
@@ -435,7 +438,7 @@ public class CertServiceTest {
 
         CertServiceImpl certService = new CertServiceImpl();
 
-        //setting mock objects
+        // setting mock objects
         certService._accountMgr = Mockito.mock(AccountManager.class);
         Account account = new AccountVO("testaccount", 1, "networkdomain", (short)0, UUID.randomUUID().toString());
         when(certService._accountMgr.getAccount(anyLong())).thenReturn(account);
@@ -443,7 +446,7 @@ public class CertServiceTest {
         certService._sslCertDao = Mockito.mock(SslCertDao.class);
         when(certService._sslCertDao.persist(any(SslCertVO.class))).thenReturn(new SslCertVO());
 
-        //creating the command
+        // creating the command
         UploadSslCertCmd uploadCmd = new UploadSslCertCmdExtn();
         Class<?> _class = uploadCmd.getClass().getSuperclass();
 
@@ -474,7 +477,7 @@ public class CertServiceTest {
 
         CertServiceImpl certService = new CertServiceImpl();
 
-        //setting mock objects
+        // setting mock objects
         certService._accountMgr = Mockito.mock(AccountManager.class);
         Account account = new AccountVO("testaccount", 1, "networkdomain", (short)0, UUID.randomUUID().toString());
         when(certService._accountMgr.getAccount(anyLong())).thenReturn(account);
@@ -482,7 +485,7 @@ public class CertServiceTest {
         certService._sslCertDao = Mockito.mock(SslCertDao.class);
         when(certService._sslCertDao.persist(any(SslCertVO.class))).thenReturn(new SslCertVO());
 
-        //creating the command
+        // creating the command
         UploadSslCertCmd uploadCmd = new UploadSslCertCmdExtn();
         Class<?> _class = uploadCmd.getClass().getSuperclass();
 
@@ -514,7 +517,7 @@ public class CertServiceTest {
 
         CertServiceImpl certService = new CertServiceImpl();
 
-        //setting mock objects
+        // setting mock objects
         certService._accountMgr = Mockito.mock(AccountManager.class);
         Account account = new AccountVO("testaccount", 1, "networkdomain", (short)0, UUID.randomUUID().toString());
         when(certService._accountMgr.getAccount(anyLong())).thenReturn(account);
@@ -522,7 +525,7 @@ public class CertServiceTest {
         certService._sslCertDao = Mockito.mock(SslCertDao.class);
         when(certService._sslCertDao.persist(any(SslCertVO.class))).thenReturn(new SslCertVO());
 
-        //creating the command
+        // creating the command
         UploadSslCertCmd uploadCmd = new UploadSslCertCmdExtn();
         Class<?> _class = uploadCmd.getClass().getSuperclass();
 
@@ -553,7 +556,7 @@ public class CertServiceTest {
 
         CertServiceImpl certService = new CertServiceImpl();
 
-        //setting mock objects
+        // setting mock objects
         certService._accountMgr = Mockito.mock(AccountManager.class);
         Account account = new AccountVO("testaccount", 1, "networkdomain", (short)0, UUID.randomUUID().toString());
         when(certService._accountMgr.getAccount(anyLong())).thenReturn(account);
@@ -561,7 +564,7 @@ public class CertServiceTest {
         certService._sslCertDao = Mockito.mock(SslCertDao.class);
         when(certService._sslCertDao.persist(any(SslCertVO.class))).thenReturn(new SslCertVO());
 
-        //creating the command
+        // creating the command
         UploadSslCertCmd uploadCmd = new UploadSslCertCmdExtn();
         Class<?> _class = uploadCmd.getClass().getSuperclass();
 
@@ -593,7 +596,7 @@ public class CertServiceTest {
 
         CertServiceImpl certService = new CertServiceImpl();
 
-        //setting mock objects
+        // setting mock objects
         certService._accountMgr = Mockito.mock(AccountManager.class);
         Account account = new AccountVO("testaccount", 1, "networkdomain", (short)0, UUID.randomUUID().toString());
         when(certService._accountMgr.getAccount(anyLong())).thenReturn(account);
@@ -601,7 +604,7 @@ public class CertServiceTest {
         certService._sslCertDao = Mockito.mock(SslCertDao.class);
         when(certService._sslCertDao.persist(any(SslCertVO.class))).thenReturn(new SslCertVO());
 
-        //creating the command
+        // creating the command
         UploadSslCertCmd uploadCmd = new UploadSslCertCmdExtn();
         Class<?> _class = uploadCmd.getClass().getSuperclass();
 
@@ -632,7 +635,7 @@ public class CertServiceTest {
         CertServiceImpl certService = new CertServiceImpl();
         long certId = 1;
 
-        //setting mock objects
+        // setting mock objects
         certService._accountMgr = Mockito.mock(AccountManager.class);
         Account account = new AccountVO("testaccount", 1, "networkdomain", (short)0, UUID.randomUUID().toString());
         when(certService._accountMgr.getAccount(anyLong())).thenReturn(account);
@@ -646,7 +649,7 @@ public class CertServiceTest {
         certService._lbCertDao = Mockito.mock(LoadBalancerCertMapDao.class);
         when(certService._lbCertDao.listByCertId(anyLong())).thenReturn(null);
 
-        //creating the command
+        // creating the command
         DeleteSslCertCmd deleteCmd = new DeleteSslCertCmdExtn();
         Class<?> _class = deleteCmd.getClass().getSuperclass();
 
@@ -664,7 +667,7 @@ public class CertServiceTest {
 
         CertServiceImpl certService = new CertServiceImpl();
 
-        //setting mock objects
+        // setting mock objects
         long certId = 1;
 
         certService._accountMgr = Mockito.mock(AccountManager.class);
@@ -687,7 +690,7 @@ public class CertServiceTest {
         certService._entityMgr = Mockito.mock(EntityManager.class);
         when(certService._entityMgr.findById(eq(LoadBalancerVO.class), anyLong())).thenReturn(new LoadBalancerVO());
 
-        //creating the command
+        // creating the command
         DeleteSslCertCmd deleteCmd = new DeleteSslCertCmdExtn();
         Class<?> _class = deleteCmd.getClass().getSuperclass();
 
@@ -724,7 +727,7 @@ public class CertServiceTest {
         certService._lbCertDao = Mockito.mock(LoadBalancerCertMapDao.class);
         when(certService._lbCertDao.listByCertId(anyLong())).thenReturn(null);
 
-        //creating the command
+        // creating the command
         DeleteSslCertCmd deleteCmd = new DeleteSslCertCmdExtn();
         Class<?> _class = deleteCmd.getClass().getSuperclass();
 

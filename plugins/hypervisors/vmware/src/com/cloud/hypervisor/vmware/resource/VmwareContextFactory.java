@@ -62,8 +62,8 @@ public class VmwareContextFactory {
 
         String serviceUrl = "https://" + vCenterAddress + "/sdk/vimService";
         if (s_logger.isDebugEnabled())
-            s_logger.debug("initialize VmwareContext. url: " + serviceUrl + ", username: " + vCenterUserName + ", password: " +
-                StringUtils.getMaskedPasswordForDisplay(vCenterPassword));
+            s_logger.debug("initialize VmwareContext. url: " + serviceUrl + ", username: " + vCenterUserName + ", password: "
+                    + StringUtils.getMaskedPasswordForDisplay(vCenterPassword));
 
         VmwareClient vimClient = new VmwareClient(vCenterAddress + "-" + s_seq++);
         vimClient.setVcenterSessionTimeout(s_vmwareMgr.getVcenterSessionTimeout());
@@ -87,7 +87,8 @@ public class VmwareContextFactory {
         if (context == null) {
             context = create(vCenterAddress, vCenterUserName, vCenterPassword);
         } else {
-            // Validate current context and verify if vCenter session timeout value of the context matches the timeout value set by Admin
+            // Validate current context and verify if vCenter session timeout
+            // value of the context matches the timeout value set by Admin
             if (!context.validate() || (context.getVimClient().getVcenterSessionTimeout() != s_vmwareMgr.getVcenterSessionTimeout())) {
                 s_logger.info("Validation of the context failed, dispose and create a new one");
                 context.close();

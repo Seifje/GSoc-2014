@@ -186,21 +186,24 @@ public class ConfigurationManagerTest {
         runDedicatePublicIpRangePostiveTest();
 
         /*
-         * TEST 2: given invalid public ip range DedicatePublicIpRange should fail
+         * TEST 2: given invalid public ip range DedicatePublicIpRange should
+         * fail
          */
         runDedicatePublicIpRangeInvalidRange();
         /*
-        * TEST 3: given public IP range that is already dedicated to a different account DedicatePublicIpRange should fail
-        */
+         * TEST 3: given public IP range that is already dedicated to a
+         * different account DedicatePublicIpRange should fail
+         */
         runDedicatePublicIpRangeDedicatedRange();
 
         /*
-        * TEST 4: given zone is of type Basic DedicatePublicIpRange should fail
-        */
+         * TEST 4: given zone is of type Basic DedicatePublicIpRange should fail
+         */
         runDedicatePublicIpRangeInvalidZone();
 
         /*
-         * TEST 5: given range is already allocated to a different account DedicatePublicIpRange should fail
+         * TEST 5: given range is already allocated to a different account
+         * DedicatePublicIpRange should fail
          */
         runDedicatePublicIpRangeIPAdressAllocated();
     }
@@ -211,7 +214,8 @@ public class ConfigurationManagerTest {
         s_logger.info("Running tests for DedicatePublicIpRange API");
 
         /*
-         * TEST 1: given valid parameters and no allocated public ip's in the range ReleasePublicIpRange should succeed
+         * TEST 1: given valid parameters and no allocated public ip's in the
+         * range ReleasePublicIpRange should succeed
          */
         runReleasePublicIpRangePostiveTest1();
 
@@ -238,9 +242,8 @@ public class ConfigurationManagerTest {
 
         when(configurationMgr._accountVlanMapDao.listAccountVlanMapsByAccount(anyLong())).thenReturn(null);
 
-        DataCenterVO dc =
-            new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Advanced, null, null, true,
-                true, null, null);
+        DataCenterVO dc = new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Advanced, null, null,
+                true, true, null, null);
         when(configurationMgr._zoneDao.findById(anyLong())).thenReturn(dc);
 
         List<IPAddressVO> ipAddressList = new ArrayList<IPAddressVO>();
@@ -282,9 +285,8 @@ public class ConfigurationManagerTest {
         accountVlanMaps.add(accountVlanMap);
         when(configurationMgr._accountVlanMapDao.listAccountVlanMapsByVlan(anyLong())).thenReturn(accountVlanMaps);
 
-        DataCenterVO dc =
-            new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Advanced, null, null, true,
-                true, null, null);
+        DataCenterVO dc = new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Advanced, null, null,
+                true, true, null, null);
         when(configurationMgr._zoneDao.findById(anyLong())).thenReturn(dc);
 
         List<IPAddressVO> ipAddressList = new ArrayList<IPAddressVO>();
@@ -309,8 +311,7 @@ public class ConfigurationManagerTest {
         when(configurationMgr._accountVlanMapDao.listAccountVlanMapsByVlan(anyLong())).thenReturn(null);
 
         // public ip range belongs to zone of type basic
-        DataCenterVO dc =
-            new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Basic, null, null, true,
+        DataCenterVO dc = new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Basic, null, null, true,
                 true, null, null);
         when(configurationMgr._zoneDao.findById(anyLong())).thenReturn(dc);
 
@@ -335,12 +336,12 @@ public class ConfigurationManagerTest {
 
         when(configurationMgr._accountVlanMapDao.listAccountVlanMapsByAccount(anyLong())).thenReturn(null);
 
-        DataCenterVO dc =
-            new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Advanced, null, null, true,
-                true, null, null);
+        DataCenterVO dc = new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Advanced, null, null,
+                true, true, null, null);
         when(configurationMgr._zoneDao.findById(anyLong())).thenReturn(dc);
 
-        // one of the ip addresses of the range is allocated to different account
+        // one of the ip addresses of the range is allocated to different
+        // account
         List<IPAddressVO> ipAddressList = new ArrayList<IPAddressVO>();
         IPAddressVO ipAddress = new IPAddressVO(new Ip("75.75.75.75"), 1, 0xaabbccddeeffL, 10, false);
         ipAddress.setAllocatedToAccountId(1L);
@@ -493,9 +494,9 @@ public class ConfigurationManagerTest {
             configurationMgr.validateStaticNatServiceCapablities(staticNatServiceCapabilityMap);
         } catch (InvalidParameterValueException e) {
             Assert.assertTrue(
-                e.getMessage(),
-                e.getMessage().contains(
-                    "Capability " + Capability.AssociatePublicIP.getName() + " can only be set when capability " + Capability.ElasticIp.getName() + " is true"));
+                    e.getMessage(),
+                    e.getMessage().contains(
+                            "Capability " + Capability.AssociatePublicIP.getName() + " can only be set when capability " + Capability.ElasticIp.getName() + " is true"));
             caught = true;
         }
         Assert.assertTrue("should not be accepted", caught);

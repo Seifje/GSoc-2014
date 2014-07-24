@@ -37,7 +37,7 @@ public class AuthenticationModule implements Module {
     }
 
     public void engageNotify(AxisDescription axisDescription) throws AxisFault {
-        //logger.info( "engageNotify entry S3AuthenticationModule" );
+        // logger.info( "engageNotify entry S3AuthenticationModule" );
     }
 
     public boolean canSupportAssertion(Assertion assertion) {
@@ -48,6 +48,6 @@ public class AuthenticationModule implements Module {
     }
 
     public void shutdown(ConfigurationContext configurationContext) throws AxisFault {
-        //logger.info( "shutdown entry S3AuthenticationModule" );
+        // logger.info( "shutdown entry S3AuthenticationModule" );
     }
 }

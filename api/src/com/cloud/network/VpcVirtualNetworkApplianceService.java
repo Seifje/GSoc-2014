@@ -30,7 +30,8 @@ public interface VpcVirtualNetworkApplianceService extends VirtualNetworkApplian
      * @param router
      * @param network
      * @param isRedundant
-     * @param params TODO
+     * @param params
+     *            TODO
      * @return
      * @throws ConcurrentOperationException
      * @throws ResourceUnavailableException

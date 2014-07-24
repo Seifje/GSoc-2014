@@ -55,8 +55,7 @@ public class SecurityGroupResultObject implements ControlledEntity, InternalIden
     public SecurityGroupResultObject() {
     }
 
-    public SecurityGroupResultObject(Long id, String name, String description, long domainId, long accountId, String accountName,
-            List<SecurityGroupRuleResultObject> ingressRules) {
+    public SecurityGroupResultObject(Long id, String name, String description, long domainId, long accountId, String accountName, List<SecurityGroupRuleResultObject> ingressRules) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -168,7 +167,8 @@ public class SecurityGroupResultObject implements ControlledEntity, InternalIden
                 }
 
                 if (netGroupRule.getRuleId() != null) {
-                    // there's at least one securitygroup rule for this network group, add the securitygroup rule data
+                    // there's at least one securitygroup rule for this network
+                    // group, add the securitygroup rule data
                     SecurityGroupRuleResultObject securityGroupRuleData = new SecurityGroupRuleResultObject();
                     securityGroupRuleData.setEndPort(netGroupRule.getEndPort());
                     securityGroupRuleData.setStartPort(netGroupRule.getStartPort());

@@ -33,18 +33,17 @@ import org.apache.cloudstack.context.CallContext;
 import com.cloud.uservm.UserVm;
 
 @APICommand(name = "removeNicFromVirtualMachine", description = "Removes VM from specified network by deleting a NIC", responseObject = UserVmResponse.class, responseView = ResponseView.Full)
-
 public class RemoveNicFromVMCmdByAdmin extends RemoveNicFromVMCmd {
     public static final Logger s_logger = Logger.getLogger(RemoveNicFromVMCmdByAdmin.class);
 
     @Override
-    public void execute(){
-        CallContext.current().setEventDetails("Vm Id: "+getVmId() + " Nic Id: " + getNicId());
+    public void execute() {
+        CallContext.current().setEventDetails("Vm Id: " + getVmId() + " Nic Id: " + getNicId());
         UserVm result = _userVmService.removeNicFromVirtualMachine(this);
         ArrayList<VMDetails> dc = new ArrayList<VMDetails>();
         dc.add(VMDetails.valueOf("nics"));
         EnumSet<VMDetails> details = EnumSet.copyOf(dc);
-        if (result != null){
+        if (result != null) {
             UserVmResponse response = _responseGenerator.createUserVmResponse(ResponseView.Full, "virtualmachine", details, result).get(0);
             response.setResponseName(getCommandName());
             setResponseObject(response);

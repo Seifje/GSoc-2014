@@ -32,8 +32,7 @@ public class StringEnumerationOption extends Option {
                 return super.parse(position, args) + 1;
         }
 
-        throw new NoArgumentForOptionException("Unexpected argument for option \"" + args[position] + "\": \"" + value + "\". Expected argument: "
-                + join("|", choices) + ".");
+        throw new NoArgumentForOptionException("Unexpected argument for option \"" + args[position] + "\": \"" + value + "\". Expected argument: " + join("|", choices) + ".");
     }
 
     @Override

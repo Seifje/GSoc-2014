@@ -21,7 +21,8 @@ package com.cloud.agent.api.routing;
 // in which the rule is configured
 public class SiteLoadBalancerConfig {
 
-    // true if the site details are local to the zone receiving 'GlobalLoadBalancerConfigCommand'
+    // true if the site details are local to the zone receiving
+    // 'GlobalLoadBalancerConfigCommand'
     boolean local;
 
     // true if the site needs to be removed from GSLB service

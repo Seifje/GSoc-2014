@@ -34,13 +34,12 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.exception.VirtualMachineMigrationException;
 import com.cloud.uservm.UserVm;
 
-
 @APICommand(name = "scaleVirtualMachine", description = "Scales the virtual machine to a new service offering.", responseObject = SuccessResponse.class, responseView = ResponseView.Full)
 public class ScaleVMCmdByAdmin extends ScaleVMCmd {
     public static final Logger s_logger = Logger.getLogger(ScaleVMCmdByAdmin.class.getName());
 
     @Override
-    public void execute(){
+    public void execute() {
         UserVm result;
         try {
             result = _userVmService.upgradeVirtualMachine(this);
@@ -57,7 +56,7 @@ public class ScaleVMCmdByAdmin extends ScaleVMCmd {
             s_logger.warn("Exception: ", ex);
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, ex.getMessage());
         }
-        if (result != null){
+        if (result != null) {
             List<UserVmResponse> responseList = _responseGenerator.createUserVmResponse(ResponseView.Full, "virtualmachine", result);
             UserVmResponse response = responseList.get(0);
             response.setResponseName(getCommandName());

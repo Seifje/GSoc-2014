@@ -32,19 +32,14 @@ import com.cloud.ucs.manager.UcsManager;
 import com.cloud.user.Account;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "deleteUcsManager", description = "Delete a Ucs manager", responseObject = SuccessResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteUcsManager", description = "Delete a Ucs manager", responseObject = SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteUcsManagerCmd extends BaseCmd {
     private static final Logger logger = Logger.getLogger(DeleteUcsManagerCmd.class);
 
     @Inject
     private UcsManager mgr;
 
-    @Parameter(name = ApiConstants.UCS_MANAGER_ID,
-               type = BaseCmd.CommandType.UUID,
-               description = "ucs manager id",
-               entityType = UcsManagerResponse.class,
-               required = true)
+    @Parameter(name = ApiConstants.UCS_MANAGER_ID, type = BaseCmd.CommandType.UUID, description = "ucs manager id", entityType = UcsManagerResponse.class, required = true)
     private Long ucsManagerId;
 
     public Long getUcsManagerId() {
@@ -52,8 +47,8 @@ public class DeleteUcsManagerCmd extends BaseCmd {
     }
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException, NetworkRuleConflictException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
+            NetworkRuleConflictException {
         try {
             mgr.deleteUcsManager(ucsManagerId);
             SuccessResponse rsp = new SuccessResponse();

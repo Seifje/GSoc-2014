@@ -47,7 +47,8 @@ public class TemplateResponse extends BaseResponse implements ControlledViewEnti
     private String displayText;
 
     @SerializedName(ApiConstants.IS_PUBLIC)
-    // propName="public"  (FIXME:  this used to be part of Param annotation, do we need it?)
+    // propName="public" (FIXME: this used to be part of Param annotation, do we
+    // need it?)
     @Param(description = "true if this template is a public template, false otherwise")
     private boolean isPublic;
 
@@ -60,7 +61,8 @@ public class TemplateResponse extends BaseResponse implements ControlledViewEnti
     private Date removed;
 
     @SerializedName(ApiConstants.IS_READY)
-    // propName="ready"  (FIXME:  this used to be part of Param annotation, do we need it?)
+    // propName="ready" (FIXME: this used to be part of Param annotation, do we
+    // need it?)
     @Param(description = "true if the template is ready to be deployed from, false otherwise.")
     private boolean isReady;
 
@@ -100,7 +102,8 @@ public class TemplateResponse extends BaseResponse implements ControlledViewEnti
     @Param(description = "the account name to which the template belongs")
     private String account;
 
-    //TODO: since a template can be associated to more than one zones, this model is not accurate. For backward-compatibility, keep these fields
+    // TODO: since a template can be associated to more than one zones, this
+    // model is not accurate. For backward-compatibility, keep these fields
     // here, but add a zones field to capture multiple zones.
     @SerializedName(ApiConstants.ZONE_ID)
     @Param(description = "the ID of the zone for this template")
@@ -170,10 +173,13 @@ public class TemplateResponse extends BaseResponse implements ControlledViewEnti
     @Param(description = "additional key/value details tied with template")
     private Map details;
 
-    // To avoid breaking backwards compatibility, we still treat a template at different zones as different templates, so not embedding
+    // To avoid breaking backwards compatibility, we still treat a template at
+    // different zones as different templates, so not embedding
     // template_zone information in this TemplateZoneResponse set.
-    //    @SerializedName("zones")  @Param(description="list of zones associated with tempate", responseObject = TemplateZoneResponse.class)
-    //    private Set<TemplateZoneResponse> zones;
+    // @SerializedName("zones")
+    // @Param(description="list of zones associated with tempate",
+    // responseObject = TemplateZoneResponse.class)
+    // private Set<TemplateZoneResponse> zones;
 
     @SerializedName(ApiConstants.TAGS)
     @Param(description = "the list of resource tags associated with tempate", responseObject = ResourceTagResponse.class)
@@ -188,7 +194,7 @@ public class TemplateResponse extends BaseResponse implements ControlledViewEnti
     private Boolean isDynamicallyScalable;
 
     public TemplateResponse() {
-        //  zones = new LinkedHashSet<TemplateZoneResponse>();
+        // zones = new LinkedHashSet<TemplateZoneResponse>();
         tags = new LinkedHashSet<ResourceTagResponse>();
     }
 

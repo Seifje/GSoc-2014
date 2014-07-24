@@ -46,7 +46,7 @@ import org.apache.log4j.Logger;
 import com.cloud.utils.concurrency.NamedThreadFactory;
 
 /**
- * NioConnection abstracts the NIO socket operations.  The Java implementation
+ * NioConnection abstracts the NIO socket operations. The Java implementation
  * provides that.
  */
 public abstract class NioConnection implements Runnable {
@@ -290,7 +290,7 @@ public abstract class NioConnection implements Runnable {
     protected void processTodos() {
         List<ChangeRequest> todos;
         if (_todos.size() == 0) {
-            return;             // Nothing to do.
+            return; // Nothing to do.
         }
 
         synchronized (this) {
@@ -304,55 +304,55 @@ public abstract class NioConnection implements Runnable {
         SelectionKey key;
         for (ChangeRequest todo : todos) {
             switch (todo.type) {
-                case ChangeRequest.CHANGEOPS:
-                    try {
-                        key = (SelectionKey)todo.key;
-                        if (key != null && key.isValid()) {
-                            if (todo.att != null) {
-                                key.attach(todo.att);
-                                Link link = (Link)todo.att;
-                                link.setKey(key);
-                            }
-                            key.interestOps(todo.ops);
-                        }
-                    } catch (CancelledKeyException e) {
-                        s_logger.debug("key has been cancelled");
-                    }
-                    break;
-                case ChangeRequest.REGISTER:
-                    try {
-                        key = ((SocketChannel)(todo.key)).register(_selector, todo.ops, todo.att);
+            case ChangeRequest.CHANGEOPS:
+                try {
+                    key = (SelectionKey)todo.key;
+                    if (key != null && key.isValid()) {
                         if (todo.att != null) {
+                            key.attach(todo.att);
                             Link link = (Link)todo.att;
                             link.setKey(key);
                         }
-                    } catch (ClosedChannelException e) {
-                        s_logger.warn("Couldn't register socket: " + todo.key);
-                        try {
-                            ((SocketChannel)(todo.key)).close();
-                        } catch (IOException ignore) {
-                        } finally {
-                            Link link = (Link)todo.att;
-                            link.terminated();
-                        }
+                        key.interestOps(todo.ops);
                     }
-                    break;
-                case ChangeRequest.CLOSE:
-                    if (s_logger.isTraceEnabled()) {
-                        s_logger.trace("Trying to close " + todo.key);
+                } catch (CancelledKeyException e) {
+                    s_logger.debug("key has been cancelled");
+                }
+                break;
+            case ChangeRequest.REGISTER:
+                try {
+                    key = ((SocketChannel)(todo.key)).register(_selector, todo.ops, todo.att);
+                    if (todo.att != null) {
+                        Link link = (Link)todo.att;
+                        link.setKey(key);
                     }
-                    key = (SelectionKey)todo.key;
-                    closeConnection(key);
-                    if (key != null) {
-                        Link link = (Link)key.attachment();
-                        if (link != null) {
-                            link.terminated();
-                        }
+                } catch (ClosedChannelException e) {
+                    s_logger.warn("Couldn't register socket: " + todo.key);
+                    try {
+                        ((SocketChannel)(todo.key)).close();
+                    } catch (IOException ignore) {
+                    } finally {
+                        Link link = (Link)todo.att;
+                        link.terminated();
                     }
-                    break;
-                default:
-                    s_logger.warn("Shouldn't be here");
-                    throw new RuntimeException("Shouldn't be here");
+                }
+                break;
+            case ChangeRequest.CLOSE:
+                if (s_logger.isTraceEnabled()) {
+                    s_logger.trace("Trying to close " + todo.key);
+                }
+                key = (SelectionKey)todo.key;
+                closeConnection(key);
+                if (key != null) {
+                    Link link = (Link)key.attachment();
+                    if (link != null) {
+                        link.terminated();
+                    }
+                }
+                break;
+            default:
+                s_logger.warn("Shouldn't be here");
+                throw new RuntimeException("Shouldn't be here");
             }
         }
         s_logger.trace("Todos Done processing");

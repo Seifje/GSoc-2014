@@ -43,8 +43,7 @@ import com.cloud.hypervisor.vmware.VmwareDatacenter;
 import com.cloud.hypervisor.vmware.VmwareDatacenterService;
 import com.cloud.user.Account;
 
-@APICommand(name = "listVmwareDcs", responseObject = VmwareDatacenterResponse.class, description = "Retrieves VMware DC(s) associated with a zone.",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listVmwareDcs", responseObject = VmwareDatacenterResponse.class, description = "Retrieves VMware DC(s) associated with a zone.", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListVmwareDcsCmd extends BaseListCmd {
 
     @Inject
@@ -54,28 +53,27 @@ public class ListVmwareDcsCmd extends BaseListCmd {
 
     private static final String s_name = "listvmwaredcsresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, required = true, description = "Id of the CloudStack zone.")
     private Long zoneId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getZoneId() {
         return zoneId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         List<? extends VmwareDatacenter> vmwareDcList = null;
 
         try {

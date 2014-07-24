@@ -31,11 +31,13 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.log4j.Logger;
 
 /**
- * Basic authentication strategy. This strategy needs user and password for authentication.
+ * Basic authentication strategy. This strategy needs user and password for
+ * authentication.
  *
- * A login URL is needed which will be used for login and getting the cookie to be
- * used in next requests. If an executeMethod request fails due to authorization it will try
- * to login, get the cookie and repeat the attempt to execute the method.
+ * A login URL is needed which will be used for login and getting the cookie to
+ * be used in next requests. If an executeMethod request fails due to
+ * authorization it will try to login, get the cookie and repeat the attempt to
+ * execute the method.
  */
 public class RESTValidationStrategy {
 
@@ -47,8 +49,7 @@ public class RESTValidationStrategy {
     protected String serverVersion;
     protected String loginUrl;
 
-    public RESTValidationStrategy(final String host, final String user, final String password,
-            final String serverVersion, final String loginUrl) {
+    public RESTValidationStrategy(final String host, final String user, final String password, final String serverVersion, final String loginUrl) {
         super();
         this.host = host;
         this.user = user;
@@ -96,9 +97,7 @@ public class RESTValidationStrategy {
         this.host = host;
     }
 
-    public void executeMethod(final HttpMethodBase method, final HttpClient client,
-            final String protocol)
-                    throws CloudstackRESTException, HttpException, IOException {
+    public void executeMethod(final HttpMethodBase method, final HttpClient client, final String protocol) throws CloudstackRESTException, HttpException, IOException {
         if (host == null || host.isEmpty() || user == null || user.isEmpty() || password == null || password.isEmpty()) {
             throw new CloudstackRESTException("Hostname/credentials are null or empty");
         }
@@ -113,14 +112,13 @@ public class RESTValidationStrategy {
     }
 
     /**
-     * Logs against the REST server. The cookie is stored in the <code>_authcookie<code> variable.
+     * Logs against the REST server. The cookie is stored in the
+     * <code>_authcookie<code> variable.
      * <p>
      * The method returns false if the login failed or the connection could not be made.
      *
      */
-    protected void login(final String protocol,
-            final HttpClient client)
-                    throws CloudstackRESTException {
+    protected void login(final String protocol, final HttpClient client) throws CloudstackRESTException {
         String url;
 
         if (host == null || host.isEmpty() || user == null || user.isEmpty() || password == null || password.isEmpty()) {

@@ -56,9 +56,8 @@ public class Ternary<T, U, V> {
 
     @Override
     // Note: This means any two pairs with null for both values will match each
-    // other but what can I do?  This is due to stupid type erasure.
-        public
-        int hashCode() {
+    // other but what can I do? This is due to stupid type erasure.
+    public int hashCode() {
         return (t != null ? t.hashCode() : 0) | (u != null ? u.hashCode() : 0) | (v != null ? v.hashCode() : 0);
     }
 

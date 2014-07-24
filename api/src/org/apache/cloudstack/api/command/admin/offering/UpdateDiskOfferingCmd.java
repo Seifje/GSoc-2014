@@ -29,20 +29,16 @@ import org.apache.cloudstack.api.response.DiskOfferingResponse;
 import com.cloud.offering.DiskOffering;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateDiskOffering", description = "Updates a disk offering.", responseObject = DiskOfferingResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "updateDiskOffering", description = "Updates a disk offering.", responseObject = DiskOfferingResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateDiskOfferingCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateDiskOfferingCmd.class.getName());
     private static final String s_name = "updatediskofferingresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.DISPLAY_TEXT,
-               type = CommandType.STRING,
-               description = "updates alternate display text of the disk offering with this value",
-               length = 4096)
+    @Parameter(name = ApiConstants.DISPLAY_TEXT, type = CommandType.STRING, description = "updates alternate display text of the disk offering with this value", length = 4096)
     private String displayText;
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = DiskOfferingResponse.class, required = true, description = "ID of the disk offering")
@@ -54,14 +50,12 @@ public class UpdateDiskOfferingCmd extends BaseCmd {
     @Parameter(name = ApiConstants.SORT_KEY, type = CommandType.INTEGER, description = "sort key of the disk offering, integer")
     private Integer sortKey;
 
-    @Parameter(name = ApiConstants.DISPLAY_OFFERING,
-               type = CommandType.BOOLEAN,
-               description = "an optional field, whether to display the offering to the end user or not.")
+    @Parameter(name = ApiConstants.DISPLAY_OFFERING, type = CommandType.BOOLEAN, description = "an optional field, whether to display the offering to the end user or not.")
     private Boolean displayOffering;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getDisplayText() {
         return displayText;
@@ -83,9 +77,9 @@ public class UpdateDiskOfferingCmd extends BaseCmd {
         return displayOffering;
     }
 
-/////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

@@ -28,13 +28,13 @@ import com.cloud.network.rules.LoadBalancer;
 import com.cloud.user.Account;
 
 public interface ElasticLoadBalancerManager {
-    public static final int DEFAULT_ELB_VM_RAMSIZE = 128;            // 512 MB
-    public static final int DEFAULT_ELB_VM_CPU_MHZ = 256;               // 500 MHz
+    public static final int DEFAULT_ELB_VM_RAMSIZE = 128; // 512 MB
+    public static final int DEFAULT_ELB_VM_CPU_MHZ = 256; // 500 MHz
 
     public boolean applyLoadBalancerRules(Network network, List<LoadBalancingRule> rules) throws ResourceUnavailableException;
 
     public LoadBalancer handleCreateLoadBalancerRule(CreateLoadBalancerRuleCmd lb, Account caller, long networkId) throws InsufficientAddressCapacityException,
-        NetworkRuleConflictException;
+            NetworkRuleConflictException;
 
     public void handleDeleteLoadBalancerRule(LoadBalancer lb, long callerUserId, Account caller);
 }

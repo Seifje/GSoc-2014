@@ -33,15 +33,15 @@ import com.cloud.utils.fsm.StateDao;
  * Data Access Object for server
  *
  */
-public interface EngineHostDao extends GenericDao<EngineHostVO, Long>,
-        StateDao<DataCenterResourceEntity.State, DataCenterResourceEntity.State.Event, DataCenterResourceEntity> {
+public interface EngineHostDao extends GenericDao<EngineHostVO, Long>, StateDao<DataCenterResourceEntity.State, DataCenterResourceEntity.State.Event, DataCenterResourceEntity> {
     long countBy(long clusterId, ResourceState... states);
 
     /**
-     * Mark all hosts associated with a certain management server
-     * as disconnected.
+     * Mark all hosts associated with a certain management server as
+     * disconnected.
      *
-     * @param msId management server id.
+     * @param msId
+     *            management server id.
      */
     void markHostsAsDisconnected(long msId, long lastPing);
 
@@ -78,7 +78,8 @@ public interface EngineHostDao extends GenericDao<EngineHostVO, Long>,
      * @param clusterId
      * @param podId
      * @param dcId
-     * @param haTag TODO
+     * @param haTag
+     *            TODO
      * @return
      */
     List<EngineHostVO> listAllUpAndEnabledNonHAHosts(Type type, Long clusterId, Long podId, long dcId, String haTag);

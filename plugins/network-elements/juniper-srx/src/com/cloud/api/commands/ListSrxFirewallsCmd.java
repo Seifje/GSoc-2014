@@ -42,8 +42,7 @@ import com.cloud.network.dao.ExternalFirewallDeviceVO;
 import com.cloud.network.element.JuniperSRXFirewallElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "listSrxFirewalls", responseObject = SrxFirewallResponse.class, description = "lists SRX firewall devices in a physical network",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listSrxFirewalls", responseObject = SrxFirewallResponse.class, description = "lists SRX firewall devices in a physical network", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListSrxFirewallsCmd extends BaseListCmd {
 
     public static final Logger s_logger = Logger.getLogger(ListSrxFirewallsCmd.class.getName());
@@ -51,9 +50,9 @@ public class ListSrxFirewallsCmd extends BaseListCmd {
     @Inject
     JuniperSRXFirewallElementService _srxFwService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, description = "the Physical Network ID")
     private Long physicalNetworkId;
@@ -61,9 +60,9 @@ public class ListSrxFirewallsCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.FIREWALL_DEVICE_ID, type = CommandType.UUID, entityType = SrxFirewallResponse.class, description = "SRX firewall device ID")
     private Long fwDeviceId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getFirewallDeviceId() {
         return fwDeviceId;
@@ -73,13 +72,12 @@ public class ListSrxFirewallsCmd extends BaseListCmd {
         return physicalNetworkId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             List<ExternalFirewallDeviceVO> fwDevices = _srxFwService.listSrxFirewalls(this);
             ListResponse<SrxFirewallResponse> response = new ListResponse<SrxFirewallResponse>();

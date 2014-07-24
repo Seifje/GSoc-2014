@@ -31,22 +31,22 @@ public enum InputEventType {
 
     public static InputEventType fromEventCode(int eventCode) {
         switch (eventCode) {
-            case 1:
-                return MOUSE_MOVE;
-            case 2:
-                return MOUSE_DOWN;
-            case 3:
-                return MOUSE_UP;
-            case 4:
-                return KEY_PRESS;
-            case 5:
-                return KEY_DOWN;
-            case 6:
-                return KEY_UP;
-            case 8:
-                return MOUSE_DBLCLICK;
-            default:
-                break;
+        case 1:
+            return MOUSE_MOVE;
+        case 2:
+            return MOUSE_DOWN;
+        case 3:
+            return MOUSE_UP;
+        case 4:
+            return KEY_PRESS;
+        case 5:
+            return KEY_DOWN;
+        case 6:
+            return KEY_UP;
+        case 8:
+            return MOUSE_DBLCLICK;
+        default:
+            break;
         }
         throw new IllegalArgumentException("Unsupport event code: " + eventCode);
     }

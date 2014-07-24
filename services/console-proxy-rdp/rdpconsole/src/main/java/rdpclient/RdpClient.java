@@ -75,35 +75,36 @@ public class RdpClient extends PipelineImpl {
      * Create new RDP or HyperV cli
      *
      * @param id
-     *          id of this element
+     *            id of this element
      * @param userName
-     *          user name
+     *            user name
      * @param password
-     *          password
+     *            password
      * @param pcb
-     *          pre-connection blob for HyperV server or null/empty string to
-     *          disable. Usually, HyperV VM ID, e.g.
-     *          "39418F90-6D03-468E-B796-91C60DD6653A".
+     *            pre-connection blob for HyperV server or null/empty string to
+     *            disable. Usually, HyperV VM ID, e.g.
+     *            "39418F90-6D03-468E-B796-91C60DD6653A".
      * @param screen
-     *          screen description to fill
+     *            screen description to fill
      * @param canvas
-     *          canvas to draw on
+     *            canvas to draw on
      * @param sslState
      */
-    public RdpClient(String id, String serverHostName, String domain, String userName, String password, String pcb, ScreenDescription screen,
-            BufferedImageCanvas canvas, SSLState sslState) {
+    public RdpClient(String id, String serverHostName, String domain, String userName, String password, String pcb, ScreenDescription screen, BufferedImageCanvas canvas,
+            SSLState sslState) {
         super(id);
         assembleRDPPipeline(serverHostName, domain, userName, password, pcb, screen, canvas, sslState);
     }
 
     // /* DEBUG */
-//  @Override
-//  protected HashMap<String, streamer.Element> initElementMap(String id) {
-//    HashMap<String, streamer.Element> map = new HashMap<String, streamer.Element>();
-//    map.put("IN", new ServerPacketSniffer("server <"));
-//    map.put("OUT", new ClientPacketSniffer("> client"));
-//    return map;
-//  }
+    // @Override
+    // protected HashMap<String, streamer.Element> initElementMap(String id) {
+    // HashMap<String, streamer.Element> map = new HashMap<String,
+    // streamer.Element>();
+    // map.put("IN", new ServerPacketSniffer("server <"));
+    // map.put("OUT", new ClientPacketSniffer("> client"));
+    // return map;
+    // }
 
     /**
      * Assemble connection sequence and main pipeline.
@@ -117,12 +118,14 @@ public class RdpClient extends PipelineImpl {
      * Connection sequence for HyperV w NLA: pcb SSL credssp cookie(TPKT)
      * x224(TPKT) main(FastPath).
      */
-    protected void assembleRDPPipeline(String serverHostName, String domain, String userName, String password, String pcb, ScreenDescription screen,
-            BufferedImageCanvas canvas, SSLState sslState) {
-        // If preconnection blob with VM ID is specified, then we are connecting to
+    protected void assembleRDPPipeline(String serverHostName, String domain, String userName, String password, String pcb, ScreenDescription screen, BufferedImageCanvas canvas,
+            SSLState sslState) {
+        // If preconnection blob with VM ID is specified, then we are connecting
+        // to
         // HyperV server
         boolean hyperv = (pcb != null && !pcb.isEmpty());
-        // HyperV server requires NLA (CredSSP/SPNEGO/NTLMSSP) to connect, because
+        // HyperV server requires NLA (CredSSP/SPNEGO/NTLMSSP) to connect,
+        // because
         // it cannot display login screen
         boolean credssp = hyperv || (password != null && !password.isEmpty());
 
@@ -141,10 +144,11 @@ public class RdpClient extends PipelineImpl {
         NtlmState ntlmState = new NtlmState();
 
         int[] channelsToJoin = new int[] {RdpConstants.CHANNEL_IO,
-                // RdpConstants.CHANNEL_RDPRDR, // RDPRDR channel is not used in current
-                // version
+        // RdpConstants.CHANNEL_RDPRDR, // RDPRDR channel is not used in current
+        // version
 
-                // RdpConstants .CHANNEL_CLIPRDR // Clipboard channel is refused to join :-/
+        // RdpConstants .CHANNEL_CLIPRDR // Clipboard channel is refused to join
+        // :-/
         };
 
         // Add elements
@@ -160,48 +164,48 @@ public class RdpClient extends PipelineImpl {
         if (credssp) {
             protocol = RdpConstants.RDP_NEG_REQ_PROTOCOL_HYBRID;
 
-            add(
-                    new ClientNtlmsspNegotiate("client_ntlmssp_nego", ntlmState),
+            add(new ClientNtlmsspNegotiate("client_ntlmssp_nego", ntlmState),
 
-                    new ServerNtlmsspChallenge("server_ntlmssp_challenge", ntlmState),
+            new ServerNtlmsspChallenge("server_ntlmssp_challenge", ntlmState),
 
-                    new ClientNtlmsspPubKeyAuth("client_ntlmssp_auth", ntlmState, sslState, serverHostName, domain, workstation, userName, password),
+            new ClientNtlmsspPubKeyAuth("client_ntlmssp_auth", ntlmState, sslState, serverHostName, domain, workstation, userName, password),
 
-                    new ServerNtlmsspPubKeyPlus1("server_ntlmssp_confirm", ntlmState),
+            new ServerNtlmsspPubKeyPlus1("server_ntlmssp_confirm", ntlmState),
 
-                    new ClientNtlmsspUserCredentials("client_ntlmssp_finish", ntlmState)
+            new ClientNtlmsspUserCredentials("client_ntlmssp_finish", ntlmState)
 
-                    );
+            );
         }
 
-        add(new ClientX224ConnectionRequestPDU("client_connection_req", userName, protocol), new ServerX224ConnectionConfirmPDU("server_connection_conf"),
-                new UpgradeSocketToSSL("upgrade_to_ssl"),
+        add(new ClientX224ConnectionRequestPDU("client_connection_req", userName, protocol), new ServerX224ConnectionConfirmPDU("server_connection_conf"), new UpgradeSocketToSSL(
+                "upgrade_to_ssl"),
 
-                new ClientMCSConnectInitial("client_initial_conference_create"), new ServerMCSConnectResponse("server_initial_conference_create"),
+        new ClientMCSConnectInitial("client_initial_conference_create"), new ServerMCSConnectResponse("server_initial_conference_create"),
 
-                new ClientMCSErectDomainRequest("client_erect_domain"),
+        new ClientMCSErectDomainRequest("client_erect_domain"),
 
-                new ClientMCSAttachUserRequest("client_atach_user"), new ServerMCSAttachUserConfirmPDU("server_atach_user_confirm", state),
+        new ClientMCSAttachUserRequest("client_atach_user"), new ServerMCSAttachUserConfirmPDU("server_atach_user_confirm", state),
 
-                new ClientMCSChannelJoinRequestServerMCSChannelConfirmPDUs("client_channel_join_rdprdr", channelsToJoin, state),
+        new ClientMCSChannelJoinRequestServerMCSChannelConfirmPDUs("client_channel_join_rdprdr", channelsToJoin, state),
 
-                new ClientInfoPDU("client_info_req", userName),
+        new ClientInfoPDU("client_info_req", userName),
 
-                new ServerLicenseErrorPDUValidClient("server_valid_client"),
+        new ServerLicenseErrorPDUValidClient("server_valid_client"),
 
-                new ServerFastPath("server_fastpath"),
+        new ServerFastPath("server_fastpath"),
 
-                // new ServerTpkt("server_tpkt"),
+        // new ServerTpkt("server_tpkt"),
 
                 new ServerX224DataPdu("server_x224_data"),
 
-                // These TPKT and X224 wrappers are connected directly to OUT for
+                // These TPKT and X224 wrappers are connected directly to OUT
+                // for
                 // handshake sequence
                 new ClientTpkt("client_tpkt_ot"),
 
                 new ClientX224DataPDU("client_x224_data_ot")
 
-                );
+        );
 
         // If HyperV VM ID is set, then insert element which will send VM ID as
         // first packet of connection, before other packets
@@ -211,10 +215,11 @@ public class RdpClient extends PipelineImpl {
 
             link("IN",
 
-                    // Pre Connection Blob
+            // Pre Connection Blob
                     "pcb",
 
-                    // Main (will be used after connection seq) or tpkt (to X224)
+                    // Main (will be used after connection seq) or tpkt (to
+                    // X224)
                     "server_fastpath >tpkt",
 
                     // SSL
@@ -229,8 +234,7 @@ public class RdpClient extends PipelineImpl {
                     // X224
                     "client_initial_conference_create");
 
-            for (String element : new String[] {"pcb", "client_ntlmssp_nego", "server_ntlmssp_challenge", "client_ntlmssp_auth", "server_ntlmssp_confirm",
-            "client_ntlmssp_finish"}) {
+            for (String element : new String[] {"pcb", "client_ntlmssp_nego", "server_ntlmssp_challenge", "client_ntlmssp_auth", "server_ntlmssp_confirm", "client_ntlmssp_finish"}) {
                 link(element + " >otout", element + "< OUT");
 
             }
@@ -241,7 +245,7 @@ public class RdpClient extends PipelineImpl {
 
             link("IN",
 
-                    // Main or tpkt
+            // Main or tpkt
                     "server_fastpath >tpkt",
 
                     // Cookie
@@ -254,14 +258,13 @@ public class RdpClient extends PipelineImpl {
                 // SSL
                 link("upgrade_to_ssl",
 
-                        // CredSSP
+                // CredSSP
                         "client_ntlmssp_nego", "server_ntlmssp_challenge", "client_ntlmssp_auth", "server_ntlmssp_confirm", "client_ntlmssp_finish",
 
                         // X224
                         "client_initial_conference_create");
 
-                for (String element : new String[] {"client_ntlmssp_nego", "server_ntlmssp_challenge", "client_ntlmssp_auth", "server_ntlmssp_confirm",
-                "client_ntlmssp_finish"}) {
+                for (String element : new String[] {"client_ntlmssp_nego", "server_ntlmssp_challenge", "client_ntlmssp_auth", "server_ntlmssp_confirm", "client_ntlmssp_finish"}) {
                     link(element + " >otout", element + "< OUT");
 
                 }
@@ -269,31 +272,31 @@ public class RdpClient extends PipelineImpl {
             } else {
 
                 link(
-                        // SSL
-                        "upgrade_to_ssl",
+                // SSL
+                "upgrade_to_ssl",
 
-                        // X224
+                // X224
                         "client_initial_conference_create");
             }
         }
 
         link(
-                // X224
-                "client_initial_conference_create", "server_initial_conference_create",
+        // X224
+        "client_initial_conference_create", "server_initial_conference_create",
 
-                "client_erect_domain",
+        "client_erect_domain",
 
-                "server_x224_data",
+        "server_x224_data",
 
-                "client_atach_user", "server_atach_user_confirm",
+        "client_atach_user", "server_atach_user_confirm",
 
-                "client_channel_join_rdprdr",
+        "client_channel_join_rdprdr",
 
-                "client_info_req",
+        "client_info_req",
 
-                "server_valid_client"
+        "server_valid_client"
 
-                );
+        );
 
         // Chain for direct handshake responses (without involving of queue)
         link("client_x224_data_ot", "client_tpkt_ot", "client_tpkt_ot< OUT");
@@ -316,13 +319,13 @@ public class RdpClient extends PipelineImpl {
         //
 
         add(
-                // To transfer packets between input threads and output thread.
-                new Queue("queue"),
+        // To transfer packets between input threads and output thread.
+        new Queue("queue"),
 
-                // Slow path: MultiChannel Support
+        // Slow path: MultiChannel Support
                 new ServerMCSPDU("server_mcs")
 
-                );
+        );
 
         // Last element of handshake sequence will wake up queue and and socket
         // output pull loop, which will switch links, between socket output and
@@ -347,23 +350,23 @@ public class RdpClient extends PipelineImpl {
         // Add elements
         add(
 
-                new ServerIOChannelRouter("server_io_channel", state),
+        new ServerIOChannelRouter("server_io_channel", state),
 
-                new ServerDemandActivePDU("server_demand_active", screen, state),
+        new ServerDemandActivePDU("server_demand_active", screen, state),
 
-                new ClientConfirmActivePDU("client_confirm_active", screen, state),
+        new ClientConfirmActivePDU("client_confirm_active", screen, state),
 
-                new ServerBitmapUpdate("server_bitmap_update"),
+        new ServerBitmapUpdate("server_bitmap_update"),
 
-                new AwtCanvasAdapter("canvas_adapter", canvas, screen),
+        new AwtCanvasAdapter("canvas_adapter", canvas, screen),
 
-                new ServerPaletteUpdate("server_palette", screen),
+        new ServerPaletteUpdate("server_palette", screen),
 
-                keyEventSource, new AwtRdpKeyboardAdapter("keyboard_adapter"),
+        keyEventSource, new AwtRdpKeyboardAdapter("keyboard_adapter"),
 
-                mouseEventSource, new AwtRdpMouseAdapter("mouse_adapter"),
+        mouseEventSource, new AwtRdpMouseAdapter("mouse_adapter"),
 
-                // These FastPath, TPKT, and X224 wrappers are connected to queue
+        // These FastPath, TPKT, and X224 wrappers are connected to queue
                 new ClientTpkt("client_tpkt_queue"),
 
                 new ClientX224DataPDU("client_x224_data_queue"),

@@ -91,8 +91,8 @@ public class OpendaylightGuestNetworkGuru extends GuestNetworkGuru {
 
     @Override
     protected boolean canHandle(NetworkOffering offering, NetworkType networkType, PhysicalNetwork physicalNetwork) {
-        if (networkType == NetworkType.Advanced && isMyTrafficType(offering.getTrafficType()) && offering.getGuestType() == Network.GuestType.Isolated &&
-                isMyIsolationMethod(physicalNetwork) && ntwkOfferingSrvcDao.areServicesSupportedByNetworkOffering(offering.getId(), Service.Connectivity)
+        if (networkType == NetworkType.Advanced && isMyTrafficType(offering.getTrafficType()) && offering.getGuestType() == Network.GuestType.Isolated
+                && isMyIsolationMethod(physicalNetwork) && ntwkOfferingSrvcDao.areServicesSupportedByNetworkOffering(offering.getId(), Service.Connectivity)
                 && ntwkOfferingSrvcDao.isProviderForNetworkOffering(offering.getId(), Provider.Opendaylight)) {
             return true;
         } else {
@@ -134,10 +134,11 @@ public class OpendaylightGuestNetworkGuru extends GuestNetworkGuru {
 
         long dcId = dest.getDataCenter().getId();
 
-        //get physical network id
+        // get physical network id
         Long physicalNetworkId = network.getPhysicalNetworkId();
 
-        // physical network id can be null in Guest Network in Basic zone, so locate the physical network
+        // physical network id can be null in Guest Network in Basic zone, so
+        // locate the physical network
         if (physicalNetworkId == null) {
             physicalNetworkId = networkModel.findPhysicalNetworkId(dcId, offering.getTags(), offering.getTrafficType());
         }
@@ -186,7 +187,7 @@ public class OpendaylightGuestNetworkGuru extends GuestNetworkGuru {
             throws InsufficientVirtualNetworkCapcityException, InsufficientAddressCapacityException {
         super.reserve(nic, network, vm, dest, context);
 
-        //get physical network id
+        // get physical network id
         Long physicalNetworkId = network.getPhysicalNetworkId();
 
         List<OpenDaylightControllerVO> devices = openDaylightControllerMappingDao.listByPhysicalNetwork(physicalNetworkId);
@@ -219,7 +220,7 @@ public class OpendaylightGuestNetworkGuru extends GuestNetworkGuru {
         boolean success = super.release(nic, vm, reservationId);
 
         if (success) {
-            //get physical network id
+            // get physical network id
             NetworkVO network = _networkDao.findById(nic.getNetworkId());
             Long physicalNetworkId = network.getPhysicalNetworkId();
 

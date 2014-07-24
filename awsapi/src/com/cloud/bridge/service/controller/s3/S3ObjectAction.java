@@ -142,7 +142,8 @@ public class S3ObjectAction implements ServletAction {
                     executeCompleteMultipartUpload(request, response);
             } else if (request.getAttribute(S3Constants.PLAIN_POST_ACCESS_KEY) != null)
                 executePlainPostObject(request, response);
-            // TODO - Having implemented the request, now provide an informative HTML page response
+            // TODO - Having implemented the request, now provide an informative
+            // HTML page response
             else
                 executePostObject(request, response);
         } else
@@ -171,7 +172,8 @@ public class S3ObjectAction implements ServletAction {
         // The value of copy should look like: "bucket-name/object-name"
         index = copy.indexOf('/');
 
-        // In case it looks like "/bucket-name/object-name" discard a leading '/' if it exists
+        // In case it looks like "/bucket-name/object-name" discard a leading
+        // '/' if it exists
         if (0 == index) {
             copy = copy.substring(1);
             index = copy.indexOf('/');
@@ -183,7 +185,8 @@ public class S3ObjectAction implements ServletAction {
         sourceBucketName = copy.substring(0, index);
         sourceKey = copy.substring(index + 1);
 
-        // [B] Set the object used in the SOAP request so it can do the bulk of the work for us
+        // [B] Set the object used in the SOAP request so it can do the bulk of
+        // the work for us
         engineRequest.setSourceBucketName(sourceBucketName);
         engineRequest.setSourceKey(sourceKey);
         engineRequest.setDestinationBucketName(bucketName);
@@ -228,7 +231,8 @@ public class S3ObjectAction implements ServletAction {
         engineRequest.setBucketName(bucketName);
         engineRequest.setKey(key);
 
-        // -> is this a request for a specific version of the object?  look for "versionId=" in the query string
+        // -> is this a request for a specific version of the object? look for
+        // "versionId=" in the query string
         String queryString = request.getQueryString();
         if (null != queryString)
             engineRequest.setVersion(returnParameter(queryString, "versionId="));
@@ -243,7 +247,8 @@ public class S3ObjectAction implements ServletAction {
         if (null != version)
             response.addHeader("x-amz-version-id", version);
 
-        // To allow the get object acl policy result to be serialized via Axiom classes
+        // To allow the get object acl policy result to be serialized via Axiom
+        // classes
         GetObjectAccessControlPolicyResponse onePolicy = S3SerializableServiceImplementation.toGetObjectAccessControlPolicyResponse(engineResponse);
 
         OutputStream outputStream = response.getOutputStream();
@@ -259,7 +264,8 @@ public class S3ObjectAction implements ServletAction {
     }
 
     private void executePutObjectAcl(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // [A] Determine that there is an applicable bucket which might have an ACL set
+        // [A] Determine that there is an applicable bucket which might have an
+        // ACL set
 
         String bucketName = (String)request.getAttribute(S3Constants.BUCKET_ATTR_KEY);
         String key = (String)request.getAttribute(S3Constants.OBJECT_ATTR_KEY);
@@ -277,7 +283,8 @@ public class S3ObjectAction implements ServletAction {
             throw new IOException("ACL update failed");
         }
 
-        // [B] Obtain the grant request which applies to the acl request string.  This latter is supplied as the value of the x-amz-acl header.
+        // [B] Obtain the grant request which applies to the acl request string.
+        // This latter is supplied as the value of the x-amz-acl header.
 
         S3SetObjectAccessControlPolicyRequest engineRequest = new S3SetObjectAccessControlPolicyRequest();
         S3Grant grantRequest = new S3Grant();
@@ -293,7 +300,8 @@ public class S3ObjectAction implements ServletAction {
         engineRequest.setBucketName(bucketName);
         engineRequest.setKey(key);
 
-        // [C] Allow an S3Engine to handle the S3SetObjectAccessControlPolicyRequest
+        // [C] Allow an S3Engine to handle the
+        // S3SetObjectAccessControlPolicyRequest
         S3Response engineResponse = ServiceProvider.getInstance().getS3Engine().handleRequest(engineRequest);
         response.setStatus(engineResponse.getResultCode());
 
@@ -308,10 +316,11 @@ public class S3ObjectAction implements ServletAction {
         engineRequest.setKey(key);
         engineRequest.setInlineData(true);
         engineRequest.setReturnData(true);
-        //engineRequest.setReturnMetadata(true);
+        // engineRequest.setReturnMetadata(true);
         engineRequest = setRequestByteRange(request, engineRequest);
 
-        // -> is this a request for a specific version of the object?  look for "versionId=" in the query string
+        // -> is this a request for a specific version of the object? look for
+        // "versionId=" in the query string
         String queryString = request.getQueryString();
         if (null != queryString)
             engineRequest.setVersion(returnParameter(queryString, "versionId="));
@@ -337,14 +346,14 @@ public class S3ObjectAction implements ServletAction {
             return;
 
         // -> is there data to return
-        // -> from the Amazon REST documentation it appears that Meta data is only returned as part of a HEAD request
-        //returnMetaData( engineResponse, response );
+        // -> from the Amazon REST documentation it appears that Meta data is
+        // only returned as part of a HEAD request
+        // returnMetaData( engineResponse, response );
 
         DataHandler dataHandler = engineResponse.getData();
         if (dataHandler != null) {
             response.addHeader("ETag", "\"" + engineResponse.getETag() + "\"");
-            response.addHeader("Last-Modified",
-                DateHelper.getDateDisplayString(DateHelper.GMT_TIMEZONE, engineResponse.getLastModified().getTime(), "E, d MMM yyyy HH:mm:ss z"));
+            response.addHeader("Last-Modified", DateHelper.getDateDisplayString(DateHelper.GMT_TIMEZONE, engineResponse.getLastModified().getTime(), "E, d MMM yyyy HH:mm:ss z"));
 
             response.setContentLength((int)engineResponse.getContentLength());
             S3RestServlet.writeResponse(response, dataHandler.getInputStream());
@@ -379,8 +388,9 @@ public class S3ObjectAction implements ServletAction {
     }
 
     /**
-     * Once versioining is turned on then to delete an object requires specifying a version
-     * parameter.   A deletion marker is set once versioning is turned on in a bucket.
+     * Once versioining is turned on then to delete an object requires
+     * specifying a version parameter. A deletion marker is set once versioning
+     * is turned on in a bucket.
      */
     private void executeDeleteObject(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String bucket = (String)request.getAttribute(S3Constants.BUCKET_ATTR_KEY);
@@ -390,7 +400,8 @@ public class S3ObjectAction implements ServletAction {
         engineRequest.setBucketName(bucket);
         engineRequest.setKey(key);
 
-        // -> is this a request for a specific version of the object?  look for "versionId=" in the query string
+        // -> is this a request for a specific version of the object? look for
+        // "versionId=" in the query string
         String queryString = request.getQueryString();
         if (null != queryString)
             engineRequest.setVersion(returnParameter(queryString, "versionId="));
@@ -404,15 +415,17 @@ public class S3ObjectAction implements ServletAction {
     }
 
     /*
-     * The purpose of a plain POST operation is to add an object to a specified bucket using HTML forms.
-     * The capability is for developer and tester convenience providing a simple browser-based upload
-     * feature as an alternative to using PUTs.
-     * In the case of PUTs the upload information is passed through HTTP headers.  However in the case of a
-     * POST this information must be supplied as form fields.  Many of these are mandatory or otherwise
-     * the POST request will be rejected.
-     * The requester using the HTML page must submit valid credentials sufficient for checking that
-     * the bucket to which the object is to be added has WRITE permission for that user.  The AWS access
-     * key field on the form is taken to be synonymous with the user canonical ID for this purpose.
+     * The purpose of a plain POST operation is to add an object to a specified
+     * bucket using HTML forms. The capability is for developer and tester
+     * convenience providing a simple browser-based upload feature as an
+     * alternative to using PUTs. In the case of PUTs the upload information is
+     * passed through HTTP headers. However in the case of a POST this
+     * information must be supplied as form fields. Many of these are mandatory
+     * or otherwise the POST request will be rejected. The requester using the
+     * HTML page must submit valid credentials sufficient for checking that the
+     * bucket to which the object is to be added has WRITE permission for that
+     * user. The AWS access key field on the form is taken to be synonymous with
+     * the user canonical ID for this purpose.
      */
     private void executePlainPostObject(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String continueHeader = request.getHeader("Expect");
@@ -457,12 +470,14 @@ public class S3ObjectAction implements ServletAction {
         S3GetObjectRequest engineRequest = new S3GetObjectRequest();
         engineRequest.setBucketName(bucket);
         engineRequest.setKey(key);
-        engineRequest.setInlineData(true);    // -> need to set so we get ETag etc returned
+        engineRequest.setInlineData(true); // -> need to set so we get ETag etc
+                                           // returned
         engineRequest.setReturnData(true);
         engineRequest.setReturnMetadata(true);
         engineRequest = setRequestByteRange(request, engineRequest);
 
-        // -> is this a request for a specific version of the object?  look for "versionId=" in the query string
+        // -> is this a request for a specific version of the object? look for
+        // "versionId=" in the query string
         String queryString = request.getQueryString();
         if (null != queryString)
             engineRequest.setVersion(returnParameter(queryString, "versionId="));
@@ -470,7 +485,7 @@ public class S3ObjectAction implements ServletAction {
         S3GetObjectResponse engineResponse = ServiceProvider.getInstance().getS3Engine().handleRequest(engineRequest);
         response.setStatus(engineResponse.getResultCode());
 
-        //bucket lookup for non-existance key
+        // bucket lookup for non-existance key
 
         if (engineResponse.getResultCode() == 404)
             return;
@@ -495,19 +510,22 @@ public class S3ObjectAction implements ServletAction {
         DataHandler dataHandler = engineResponse.getData();
         if (dataHandler != null) {
             response.addHeader("ETag", "\"" + engineResponse.getETag() + "\"");
-            response.addHeader("Last-Modified",
-                DateHelper.getDateDisplayString(DateHelper.GMT_TIMEZONE, engineResponse.getLastModified().getTime(), "E, d MMM yyyy HH:mm:ss z"));
+            response.addHeader("Last-Modified", DateHelper.getDateDisplayString(DateHelper.GMT_TIMEZONE, engineResponse.getLastModified().getTime(), "E, d MMM yyyy HH:mm:ss z"));
 
             response.setContentLength((int)engineResponse.getContentLength());
         }
     }
 
-    // There is a problem with POST since the 'Signature' and 'AccessKey' parameters are not
-    // determined until we hit this function (i.e., they are encoded in the body of the message
-    // they are not HTTP request headers).  All the values we used to get in the request headers
+    // There is a problem with POST since the 'Signature' and 'AccessKey'
+    // parameters are not
+    // determined until we hit this function (i.e., they are encoded in the body
+    // of the message
+    // they are not HTTP request headers). All the values we used to get in the
+    // request headers
     // are not encoded in the request body.
     //
-    // add ETag header computed as Base64 MD5 whenever object is uploaded or updated
+    // add ETag header computed as Base64 MD5 whenever object is uploaded or
+    // updated
     //
     private void executePostObject(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String bucket = (String)request.getAttribute(S3Constants.BUCKET_ATTR_KEY);
@@ -523,20 +541,22 @@ public class S3ObjectAction implements ServletAction {
         String oneLine = null;
         String name = null;
         String value = null;
-        String metaName = null;   // -> after stripped off the x-amz-meta-
+        String metaName = null; // -> after stripped off the x-amz-meta-
         boolean isMetaTag = false;
         int countMeta = 0;
         int state = 0;
 
-        // [A] First parse all the parts out of the POST request and message body
+        // [A] First parse all the parts out of the POST request and message
+        // body
         // -> bucket name is still encoded in a Host header
         S3AuthParams params = new S3AuthParams();
         List<S3MetaDataEntry> metaSet = new ArrayList<S3MetaDataEntry>();
         S3PutObjectInlineRequest engineRequest = new S3PutObjectInlineRequest();
         engineRequest.setBucketName(bucket);
 
-        // -> the last body part contains the content that is used to write the S3 object, all
-        //    other body parts are header values
+        // -> the last body part contains the content that is used to write the
+        // S3 object, all
+        // other body parts are header values
         while (null != (oneLine = br.readLine())) {
             if (oneLine.startsWith(lastBoundary)) {
                 // -> this is the data of the object to put
@@ -553,7 +573,7 @@ public class S3ObjectAction implements ServletAction {
                 if (0 < temp.length()) {
                     value = temp.toString().trim();
                     temp.setLength(0);
-                    //System.out.println( "param: " + name + " = " + value );
+                    // System.out.println( "param: " + name + " = " + value );
 
                     if (name.equalsIgnoreCase("key")) {
                         engineRequest.setKey(value);
@@ -568,7 +588,8 @@ public class S3ObjectAction implements ServletAction {
                         metaName = null;
                     }
 
-                    // -> build up the headers so we can do authentication on this POST
+                    // -> build up the headers so we can do authentication on
+                    // this POST
                     HeaderParam oneHeader = new HeaderParam();
                     oneHeader.setName(name);
                     oneHeader.setValue(value);
@@ -579,7 +600,8 @@ public class S3ObjectAction implements ServletAction {
                 // -> data of a body part starts here
                 state = 2;
             } else if (1 == state) {
-                // -> the name of the 'name-value' pair is encoded in the Content-Disposition header
+                // -> the name of the 'name-value' pair is encoded in the
+                // Content-Disposition header
                 if (oneLine.startsWith("Content-Disposition: form-data;")) {
                     isMetaTag = false;
                     int nameOffset = oneLine.indexOf("name=");
@@ -599,10 +621,12 @@ public class S3ObjectAction implements ServletAction {
                 }
             } else if (2 == state) {
                 // -> the body parts data may take up multiple lines
-                //System.out.println( oneLine.length() + " body data: " + oneLine );
+                // System.out.println( oneLine.length() + " body data: " +
+                // oneLine );
                 temp.append(oneLine);
             }
-//            else System.out.println( oneLine.length() + " preamble: " + oneLine );
+            // else System.out.println( oneLine.length() + " preamble: " +
+            // oneLine );
         }
 
         // [B] Authenticate the POST request after we have all the headers
@@ -623,13 +647,15 @@ public class S3ObjectAction implements ServletAction {
     }
 
     /**
-     * Save all the information about the multipart upload request in the database so once it is finished
-     * (in the future) we can create the real S3 object.
+     * Save all the information about the multipart upload request in the
+     * database so once it is finished (in the future) we can create the real S3
+     * object.
      *
      * @throws IOException
      */
     private void executeInitiateMultipartUpload(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // This request is via a POST which typically has its auth parameters inside the message
+        // This request is via a POST which typically has its auth parameters
+        // inside the message
         try {
             S3RestServlet.authenticateRequest(request, S3RestServlet.extractRequestHeaders(request));
         } catch (Exception e) {
@@ -700,7 +726,8 @@ public class S3ObjectAction implements ServletAction {
                 return;
             }
 
-            // -> another requirement is that only the upload initiator can upload parts
+            // -> another requirement is that only the upload initiator can
+            // upload parts
             String initiator = uploadDao.getInitiator(uploadId);
             if (null == initiator || !initiator.equals(UserContext.current().getAccessKey())) {
                 response.setStatus(403);
@@ -726,14 +753,16 @@ public class S3ObjectAction implements ServletAction {
     }
 
     /**
-     * This function is required to both parsing XML on the request and return XML as part of its result.
+     * This function is required to both parsing XML on the request and return
+     * XML as part of its result.
      *
      * @param request
      * @param response
      * @throws IOException
      */
     private void executeCompleteMultipartUpload(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // [A] This request is via a POST which typically has its auth parameters inside the message
+        // [A] This request is via a POST which typically has its auth
+        // parameters inside the message
         try {
             S3RestServlet.authenticateRequest(request, S3RestServlet.extractRequestHeaders(request));
         } catch (Exception e) {
@@ -747,8 +776,10 @@ public class S3ObjectAction implements ServletAction {
         String cannedAccess = null;
         int uploadId = -1;
 
-        //  AWS S3 specifies that the keep alive connection is by sending whitespace characters until done
-        // Therefore the XML version prolog is prepended to the stream in advance
+        // AWS S3 specifies that the keep alive connection is by sending
+        // whitespace characters until done
+        // Therefore the XML version prolog is prepended to the stream in
+        // advance
         OutputStream outputStream = response.getOutputStream();
         outputStream.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>".getBytes());
 
@@ -765,7 +796,8 @@ public class S3ObjectAction implements ServletAction {
                 return;
             }
 
-            // -> another requirement is that only the upload initiator can upload parts
+            // -> another requirement is that only the upload initiator can
+            // upload parts
             String initiator = uploadDao.getInitiator(uploadId);
             if (null == initiator || !initiator.equals(UserContext.current().getAccessKey())) {
                 response.setStatus(403);
@@ -800,12 +832,15 @@ public class S3ObjectAction implements ServletAction {
 
         S3PutObjectInlineResponse engineResponse = ServiceProvider.getInstance().getS3Engine().concatentateMultipartUploads(response, engineRequest, parts, outputStream);
         int result = engineResponse.getResultCode();
-        // -> free all multipart state since we now have one concatentated object
+        // -> free all multipart state since we now have one concatentated
+        // object
         if (200 == result)
             ServiceProvider.getInstance().getS3Engine().freeUploadParts(bucket, uploadId, false);
 
         // If all successful then clean up all left over parts
-        // Notice that "<?xml version=\"1.0\" encoding=\"utf-8\"?>" has already been written into the servlet output stream at the beginning of section [A]
+        // Notice that "<?xml version=\"1.0\" encoding=\"utf-8\"?>" has already
+        // been written into the servlet output stream at the beginning of
+        // section [A]
         if (200 == result) {
             StringBuffer xml = new StringBuffer();
             xml.append("<CompleteMultipartUploadResult xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\">");
@@ -814,7 +849,10 @@ public class S3ObjectAction implements ServletAction {
             xml.append("<Key>").append(key).append("</Key>");
             xml.append("<ETag>\"").append(engineResponse.getETag()).append("\"</ETag>");
             xml.append("</CompleteMultipartUploadResult>");
-            String xmlString = xml.toString().replaceAll("^\\s+", "");   // Remove leading whitespace characters
+            String xmlString = xml.toString().replaceAll("^\\s+", ""); // Remove
+                                                                       // leading
+                                                                       // whitespace
+                                                                       // characters
             outputStream.write(xmlString.getBytes());
             outputStream.close();
         } else
@@ -881,7 +919,8 @@ public class S3ObjectAction implements ServletAction {
             initiator = uploadDao.getInitiator(uploadId);
             if (null == initiator || !initiator.equals(UserContext.current().getAccessKey())) {
                 try {
-                    // -> write permission on a bucket allows a PutObject / DeleteObject action on any object in the bucket
+                    // -> write permission on a bucket allows a PutObject /
+                    // DeleteObject action on any object in the bucket
                     S3PolicyContext context = new S3PolicyContext(PolicyActions.ListMultipartUploadParts, bucketName);
                     context.setKeyName(exists.getSecond());
                     S3Engine.verifyAccess(context, "SBucket", bucket.getId(), SAcl.PERMISSION_WRITE);
@@ -905,7 +944,8 @@ public class S3ObjectAction implements ServletAction {
         xml.append("<Key>").append(key).append("</Key>");
         xml.append("<UploadId>").append(uploadId).append("</UploadId>");
 
-        // -> currently we just have the access key and have no notion of a display name
+        // -> currently we just have the access key and have no notion of a
+        // display name
         xml.append("<Initiator>");
         xml.append("<ID>").append(initiator).append("</ID>");
         xml.append("<DisplayName></DisplayName>");
@@ -946,6 +986,7 @@ public class S3ObjectAction implements ServletAction {
 
     /**
      * Support the "Range: bytes=0-399" header with just one byte range.
+     * 
      * @param request
      * @param engineRequest
      * @return
@@ -1009,11 +1050,13 @@ public class S3ObjectAction implements ServletAction {
     }
 
     /**
-     * Return the saved object's meta data back to the client as HTTP "x-amz-meta-" headers.
-     * This function is constructing an HTTP header and these headers have a defined syntax
-     * as defined in rfc2616.   Any characters that could cause an invalid HTTP header will
-     * prevent that meta data from being returned via the REST call (as is defined in the Amazon
-     * spec).   These characters can be defined if using the SOAP API as well as the REST API.
+     * Return the saved object's meta data back to the client as HTTP
+     * "x-amz-meta-" headers. This function is constructing an HTTP header and
+     * these headers have a defined syntax as defined in rfc2616. Any characters
+     * that could cause an invalid HTTP header will prevent that meta data from
+     * being returned via the REST call (as is defined in the Amazon spec).
+     * These characters can be defined if using the SOAP API as well as the REST
+     * API.
      *
      * @param engineResponse
      * @param response
@@ -1029,7 +1072,8 @@ public class S3ObjectAction implements ServletAction {
             byte[] nameBytes = name.getBytes();
             ignoreMeta = false;
 
-            // -> cannot have control characters (octets 0 - 31) and DEL (127), in an HTTP header
+            // -> cannot have control characters (octets 0 - 31) and DEL (127),
+            // in an HTTP header
             for (int j = 0; j < name.length(); j++) {
                 if ((0 <= nameBytes[j] && 31 >= nameBytes[j]) || 127 == nameBytes[j]) {
                     ignoreMeta = true;
@@ -1038,10 +1082,10 @@ public class S3ObjectAction implements ServletAction {
             }
 
             // -> cannot have HTTP separators in an HTTP header
-            if (-1 != name.indexOf('(') || -1 != name.indexOf(')') || -1 != name.indexOf('@') || -1 != name.indexOf('<') || -1 != name.indexOf('>') ||
-                -1 != name.indexOf('\"') || -1 != name.indexOf('[') || -1 != name.indexOf(']') || -1 != name.indexOf('=') || -1 != name.indexOf(',') ||
-                -1 != name.indexOf(';') || -1 != name.indexOf(':') || -1 != name.indexOf('\\') || -1 != name.indexOf('/') || -1 != name.indexOf(' ') ||
-                -1 != name.indexOf('{') || -1 != name.indexOf('}') || -1 != name.indexOf('?') || -1 != name.indexOf('\t'))
+            if (-1 != name.indexOf('(') || -1 != name.indexOf(')') || -1 != name.indexOf('@') || -1 != name.indexOf('<') || -1 != name.indexOf('>') || -1 != name.indexOf('\"')
+                    || -1 != name.indexOf('[') || -1 != name.indexOf(']') || -1 != name.indexOf('=') || -1 != name.indexOf(',') || -1 != name.indexOf(';')
+                    || -1 != name.indexOf(':') || -1 != name.indexOf('\\') || -1 != name.indexOf('/') || -1 != name.indexOf(' ') || -1 != name.indexOf('{')
+                    || -1 != name.indexOf('}') || -1 != name.indexOf('?') || -1 != name.indexOf('\t'))
                 ignoreMeta = true;
 
             if (ignoreMeta)
@@ -1088,12 +1132,14 @@ public class S3ObjectAction implements ServletAction {
     }
 
     /**
-     * Parameters on the query string may or may not be name-value pairs.
-     * For example:  "?acl&versionId=2", notice that "acl" has no value other
-     * than it is present.
+     * Parameters on the query string may or may not be name-value pairs. For
+     * example: "?acl&versionId=2", notice that "acl" has no value other than it
+     * is present.
      *
-     * @param queryString - from a URL to locate the 'find' parameter
-     * @param find        - name string to return first found
+     * @param queryString
+     *            - from a URL to locate the 'find' parameter
+     * @param find
+     *            - name string to return first found
      * @return the value matching the found name
      */
     private String returnParameter(String queryString, String find) {
@@ -1129,13 +1175,14 @@ public class S3ObjectAction implements ServletAction {
 
     /**
      * The Complete Multipart Upload function pass in the request body a list of
-     * all uploaded body parts.   It is required that we verify that list matches
+     * all uploaded body parts. It is required that we verify that list matches
      * what was uploaded.
      *
      * @param is
      * @param parts
      * @return error code, and error string
-     * @throws ParserConfigurationException, IOException, SAXException
+     * @throws ParserConfigurationException
+     *             , IOException, SAXException
      */
     private OrderedPair<Integer, String> verifyParts(InputStream is, S3MultipartPart[] parts) {
         try {
@@ -1164,7 +1211,8 @@ public class S3ObjectAction implements ServletAction {
             if (count != parts.length)
                 return new OrderedPair<Integer, String>(400, "InvalidPart");
 
-            // -> get a list of all the children elements of the 'Part' parent element
+            // -> get a list of all the children elements of the 'Part' parent
+            // element
             for (int i = 0; i < count; i++) {
                 partNumber = -1;
                 eTag = null;
@@ -1179,15 +1227,16 @@ public class S3ObjectAction implements ServletAction {
                             temp = contents.getFirstChild().getNodeValue();
                             if (null != temp)
                                 partNumber = Integer.parseInt(temp);
-                            //System.out.println( "part: " + partNumber );
+                            // System.out.println( "part: " + partNumber );
                         } else if (element.endsWith("ETag")) {
                             eTag = contents.getFirstChild().getNodeValue();
-                            //System.out.println( "etag: " + eTag );
+                            // System.out.println( "etag: " + eTag );
                         }
                     }
                 }
 
-                // -> do the parts given in the call XML match what was previously uploaded?
+                // -> do the parts given in the call XML match what was
+                // previously uploaded?
                 if (lastNumber >= partNumber) {
                     return new OrderedPair<Integer, String>(400, "InvalidPartOrder");
                 }

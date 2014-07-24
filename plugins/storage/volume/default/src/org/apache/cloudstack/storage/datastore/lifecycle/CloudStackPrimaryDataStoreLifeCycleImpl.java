@@ -360,11 +360,10 @@ public class CloudStackPrimaryDataStoreLifeCycleImpl implements PrimaryDataStore
     protected boolean createStoragePool(long hostId, StoragePool pool) {
         s_logger.debug("creating pool " + pool.getName() + " on  host " + hostId);
 
-        if (pool.getPoolType() != StoragePoolType.NetworkFilesystem && pool.getPoolType() != StoragePoolType.Filesystem &&
-                pool.getPoolType() != StoragePoolType.IscsiLUN && pool.getPoolType() != StoragePoolType.Iscsi && pool.getPoolType() != StoragePoolType.VMFS &&
-                pool.getPoolType() != StoragePoolType.SharedMountPoint && pool.getPoolType() != StoragePoolType.PreSetup && pool.getPoolType() != StoragePoolType.OCFS2 &&
-                pool.getPoolType() != StoragePoolType.RBD && pool.getPoolType() != StoragePoolType.CLVM && pool.getPoolType() != StoragePoolType.SMB &&
-                pool.getPoolType() != StoragePoolType.Gluster) {
+        if (pool.getPoolType() != StoragePoolType.NetworkFilesystem && pool.getPoolType() != StoragePoolType.Filesystem && pool.getPoolType() != StoragePoolType.IscsiLUN
+                && pool.getPoolType() != StoragePoolType.Iscsi && pool.getPoolType() != StoragePoolType.VMFS && pool.getPoolType() != StoragePoolType.SharedMountPoint
+                && pool.getPoolType() != StoragePoolType.PreSetup && pool.getPoolType() != StoragePoolType.OCFS2 && pool.getPoolType() != StoragePoolType.RBD
+                && pool.getPoolType() != StoragePoolType.CLVM && pool.getPoolType() != StoragePoolType.SMB && pool.getPoolType() != StoragePoolType.Gluster) {
             s_logger.warn(" Doesn't support storage pool type " + pool.getPoolType());
             return false;
         }
@@ -390,8 +389,7 @@ public class CloudStackPrimaryDataStoreLifeCycleImpl implements PrimaryDataStore
     public boolean attachCluster(DataStore store, ClusterScope scope) {
         PrimaryDataStoreInfo primarystore = (PrimaryDataStoreInfo)store;
         // Check if there is host up in this cluster
-        List<HostVO> allHosts =
-                _resourceMgr.listAllUpAndEnabledHosts(Host.Type.Routing, primarystore.getClusterId(), primarystore.getPodId(), primarystore.getDataCenterId());
+        List<HostVO> allHosts = _resourceMgr.listAllUpAndEnabledHosts(Host.Type.Routing, primarystore.getClusterId(), primarystore.getPodId(), primarystore.getDataCenterId());
         if (allHosts.isEmpty()) {
             primaryDataStoreDao.expunge(primarystore.getId());
             throw new CloudRuntimeException("No host up to associate a storage pool with in cluster " + primarystore.getClusterId());
@@ -487,7 +485,8 @@ public class CloudStackPrimaryDataStoreLifeCycleImpl implements PrimaryDataStore
 
             if (answer != null && answer.getResult()) {
                 deleteFlag = true;
-                // if host is KVM hypervisor then send deleteStoragepoolcmd to all the kvm hosts.
+                // if host is KVM hypervisor then send deleteStoragepoolcmd to
+                // all the kvm hosts.
                 if (HypervisorType.KVM != hType) {
                     break;
                 }
@@ -518,8 +517,13 @@ public class CloudStackPrimaryDataStoreLifeCycleImpl implements PrimaryDataStore
         return true;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.cloudstack.engine.subsystem.api.storage.DataStoreLifeCycle#migrateToObjectStore(org.apache.cloudstack.engine.subsystem.api.storage.DataStore)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.apache.cloudstack.engine.subsystem.api.storage.DataStoreLifeCycle
+     * #migrateToObjectStore
+     * (org.apache.cloudstack.engine.subsystem.api.storage.DataStore)
      */
     @Override
     public boolean migrateToObjectStore(DataStore store) {

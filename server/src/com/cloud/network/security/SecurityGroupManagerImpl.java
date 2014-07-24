@@ -213,7 +213,7 @@ public class SecurityGroupManagerImpl extends ManagerBase implements SecurityGro
             try {
                 cleanupFinishedWork();
                 cleanupUnfinishedWork();
-                //processScheduledWork();
+                // processScheduledWork();
             } catch (Throwable th) {
                 try {
                     s_logger.error("Problem with SG Cleanup", th);
@@ -323,7 +323,8 @@ public class SecurityGroupManagerImpl extends ManagerBase implements SecurityGro
 
         @Override
         public int compare(String cidr1, String cidr2) {
-            // parse both to find significance first (low number of bits is high)
+            // parse both to find significance first (low number of bits is
+            // high)
             // if equal then just do a string compare
             if (significance(cidr1) == significance(cidr2)) {
                 return cidr1.compareTo(cidr2);
@@ -462,13 +463,15 @@ public class SecurityGroupManagerImpl extends ManagerBase implements SecurityGro
         affectedVms.add(vm.getId());
         List<SecurityGroupVMMapVO> groupsForVm = _securityGroupVMMapDao.listByInstanceId(vm.getId());
         // For each group, find the security rules that allow the group
-        for (SecurityGroupVMMapVO mapVO : groupsForVm) {// FIXME: use custom sql in the dao
-            //Add usage events for security group assign
+        for (SecurityGroupVMMapVO mapVO : groupsForVm) {// FIXME: use custom sql
+            // in the dao
+            // Add usage events for security group assign
             UsageEventUtils.publishUsageEvent(EventTypes.EVENT_SECURITY_GROUP_ASSIGN, vm.getAccountId(), vm.getDataCenterId(), vm.getId(), mapVO.getSecurityGroupId(), vm
                     .getClass().getName(), vm.getUuid());
 
             List<SecurityGroupRuleVO> allowingRules = _securityGroupRuleDao.listByAllowedSecurityGroupId(mapVO.getSecurityGroupId());
-            // For each security rule that allows a group that the vm belongs to, find the group it belongs to
+            // For each security rule that allows a group that the vm belongs
+            // to, find the group it belongs to
             affectedVms.addAll(getAffectedVmsForSecurityRules(allowingRules));
         }
         return affectedVms;
@@ -478,13 +481,15 @@ public class SecurityGroupManagerImpl extends ManagerBase implements SecurityGro
         List<Long> affectedVms = new ArrayList<Long>();
         List<SecurityGroupVMMapVO> groupsForVm = _securityGroupVMMapDao.listByInstanceId(vm.getId());
         // For each group, find the security rules rules that allow the group
-        for (SecurityGroupVMMapVO mapVO : groupsForVm) {// FIXME: use custom sql in the dao
-            //Add usage events for security group remove
+        for (SecurityGroupVMMapVO mapVO : groupsForVm) {// FIXME: use custom sql
+            // in the dao
+            // Add usage events for security group remove
             UsageEventUtils.publishUsageEvent(EventTypes.EVENT_SECURITY_GROUP_REMOVE, vm.getAccountId(), vm.getDataCenterId(), vm.getId(), mapVO.getSecurityGroupId(), vm
                     .getClass().getName(), vm.getUuid());
 
             List<SecurityGroupRuleVO> allowingRules = _securityGroupRuleDao.listByAllowedSecurityGroupId(mapVO.getSecurityGroupId());
-            // For each security rule that allows a group that the vm belongs to, find the group it belongs to
+            // For each security rule that allows a group that the vm belongs
+            // to, find the group it belongs to
             affectedVms.addAll(getAffectedVmsForSecurityRules(allowingRules));
         }
         return affectedVms;
@@ -711,7 +716,8 @@ public class SecurityGroupManagerImpl extends ManagerBase implements SecurityGro
 
         final Set<SecurityGroupVO> authorizedGroups2 = new TreeSet<SecurityGroupVO>(new SecurityGroupVOComparator());
 
-        authorizedGroups2.addAll(authorizedGroups); // Ensure we don't re-lock the same row
+        authorizedGroups2.addAll(authorizedGroups); // Ensure we don't re-lock
+        // the same row
 
         final Integer startPortOrTypeFinal = startPortOrType;
         final Integer endPortOrCodeFinal = endPortOrCode;
@@ -719,7 +725,8 @@ public class SecurityGroupManagerImpl extends ManagerBase implements SecurityGro
         List<SecurityGroupRuleVO> newRules = Transaction.execute(new TransactionCallback<List<SecurityGroupRuleVO>>() {
             @Override
             public List<SecurityGroupRuleVO> doInTransaction(TransactionStatus status) {
-                // Prevents other threads/management servers from creating duplicate security rules
+                // Prevents other threads/management servers from
+                // creating duplicate security rules
                 SecurityGroup securityGroup = _securityGroupDao.acquireInLockTable(securityGroupId);
                 if (securityGroup == null) {
                     s_logger.warn("Could not acquire lock on network security group: id= " + securityGroupId);
@@ -729,7 +736,8 @@ public class SecurityGroupManagerImpl extends ManagerBase implements SecurityGro
                 try {
                     for (final SecurityGroupVO ngVO : authorizedGroups2) {
                         final Long ngId = ngVO.getId();
-                        // Don't delete the referenced group from under us
+                        // Don't delete the referenced group from under
+                        // us
                         if (ngVO.getId() != securityGroup.getId()) {
                             final SecurityGroupVO tmpGrp = _securityGroupDao.lockRow(ngId, false);
                             if (tmpGrp == null) {
@@ -828,7 +836,8 @@ public class SecurityGroupManagerImpl extends ManagerBase implements SecurityGro
                 SecurityGroupVO groupHandle = null;
 
                 try {
-                    // acquire lock on parent group (preserving this logic)
+                    // acquire lock on parent group (preserving this
+                    // logic)
                     groupHandle = _securityGroupDao.acquireInLockTable(rule.getSecurityGroupId());
                     if (groupHandle == null) {
                         s_logger.warn("Could not acquire lock on security group id: " + rule.getSecurityGroupId());
@@ -1008,7 +1017,7 @@ public class SecurityGroupManagerImpl extends ManagerBase implements SecurityGro
                             List<String> nicSecIps = null;
                             if (nic != null) {
                                 if (nic.getSecondaryIp()) {
-                                    //get secondary ips of the vm
+                                    // get secondary ips of the vm
                                     long networkId = nic.getNetworkId();
                                     nicSecIps = _nicSecIpDao.getSecondaryIpAddressesForNic(nic.getId());
                                 }
@@ -1047,7 +1056,13 @@ public class SecurityGroupManagerImpl extends ManagerBase implements SecurityGro
             return Transaction.execute(new TransactionCallback<Boolean>() {
                 @Override
                 public Boolean doInTransaction(TransactionStatus status) {
-                    UserVm userVm = _userVMDao.acquireInLockTable(userVmId); // ensures that duplicate entries are not created.
+                    UserVm userVm = _userVMDao.acquireInLockTable(userVmId); // ensures
+                    // that
+                    // duplicate
+                    // entries
+                    // are
+                    // not
+                    // created.
                     List<SecurityGroupVO> sgs = new ArrayList<SecurityGroupVO>();
                     for (Long sgId : groups) {
                         sgs.add(_securityGroupDao.findById(sgId));
@@ -1094,7 +1109,14 @@ public class SecurityGroupManagerImpl extends ManagerBase implements SecurityGro
         Transaction.execute(new TransactionCallbackNoReturn() {
             @Override
             public void doInTransactionWithoutResult(TransactionStatus status) {
-                UserVm userVm = _userVMDao.acquireInLockTable(userVmId); // ensures that duplicate entries are not created in
+                UserVm userVm = _userVMDao.acquireInLockTable(userVmId); // ensures
+                // that
+                // duplicate
+                // entries
+                // are
+                // not
+                // created
+                // in
                 // addInstance
                 if (userVm == null) {
                     s_logger.warn("Failed to acquire lock on user vm id=" + userVmId);
@@ -1368,11 +1390,11 @@ public class SecurityGroupManagerImpl extends ManagerBase implements SecurityGro
             return true;
         }
 
-        //If network does not support SG service, no need add SG rules for secondary ip
+        // If network does not support SG service, no need add SG rules for
+        // secondary ip
         Network network = _networkModel.getNetwork(nic.getNetworkId());
         if (!_networkModel.isSecurityGroupSupportedInNetwork(network)) {
-            s_logger.debug("Network " + network + " is not enabled with security group service, "+
-                    "so not applying SG rules for secondary ip");
+            s_logger.debug("Network " + network + " is not enabled with security group service, " + "so not applying SG rules for secondary ip");
             return true;
         }
 
@@ -1382,7 +1404,7 @@ public class SecurityGroupManagerImpl extends ManagerBase implements SecurityGro
             throw new InvalidParameterValueException("vm name or vm mac can't be null");
         }
 
-        //create command for the to add ip in ipset and arptables rules
+        // create command for the to add ip in ipset and arptables rules
         NetworkRulesVmSecondaryIpCommand cmd = new NetworkRulesVmSecondaryIpCommand(vmName, vmMac, secondaryIp, ruleAction);
         s_logger.debug("Asking agent to configure rules for vm secondary ip");
         Commands cmds = null;

@@ -48,14 +48,16 @@ public class XmlObject {
         }
         Object old = elements.get(key);
         if (old == null) {
-            //System.out.println(String.format("no %s, add new", key));
+            // System.out.println(String.format("no %s, add new", key));
             elements.put(key, e);
         } else {
             if (old instanceof List) {
-                //System.out.println(String.format("already list %s, add", key));
+                // System.out.println(String.format("already list %s, add",
+                // key));
                 ((List)old).add(e);
             } else {
-                //System.out.println(String.format("not list list %s, add list", key));
+                // System.out.println(String.format("not list list %s, add list",
+                // key));
                 List lst = new ArrayList();
                 lst.add(old);
                 lst.add(e);
@@ -132,8 +134,8 @@ public class XmlObject {
             } else if (val instanceof List) {
                 children.addAll((Collection<? extends XmlObject>)val);
             } else {
-                throw new CloudRuntimeException(String.format("unsupported element type[tag:%s, class: %s], only allowed type of [String, List<XmlObject>, Object]", key,
-                    val.getClass().getName()));
+                throw new CloudRuntimeException(String.format("unsupported element type[tag:%s, class: %s], only allowed type of [String, List<XmlObject>, Object]", key, val
+                        .getClass().getName()));
             }
         }
 

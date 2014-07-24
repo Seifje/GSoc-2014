@@ -123,11 +123,11 @@ public class BufferedImagePixelsAdapter extends BaseElement {
 
         Element renderer = new BufferedImagePixelsAdapter("renderer", canvas);
 
-        byte[] pixels = new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5,
-                6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+        byte[] pixels = new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
 
-        int[] pixelsLE = new int[] {0x04030201, 0x08070605, 0x0c0b0a09, 0x100f0e0d, 0x04030201, 0x08070605, 0x0c0b0a09, 0x100f0e0d, 0x04030201, 0x08070605,
-                0x0c0b0a09, 0x100f0e0d, 0x04030201, 0x08070605, 0x0c0b0a09, 0x100f0e0d};
+        int[] pixelsLE = new int[] {0x04030201, 0x08070605, 0x0c0b0a09, 0x100f0e0d, 0x04030201, 0x08070605, 0x0c0b0a09, 0x100f0e0d, 0x04030201, 0x08070605, 0x0c0b0a09, 0x100f0e0d,
+                0x04030201, 0x08070605, 0x0c0b0a09, 0x100f0e0d};
 
         ByteBuffer buf = new ByteBuffer(pixels);
         buf.putMetadata(TARGET_X, 0);

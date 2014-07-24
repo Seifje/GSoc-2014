@@ -120,8 +120,7 @@ public class DownloadMonitorImpl extends ManagerBase implements DownloadMonitor 
     }
 
     public boolean isTemplateUpdateable(Long templateId, Long storeId) {
-        List<TemplateDataStoreVO> downloadsInProgress =
-            _vmTemplateStoreDao.listByTemplateStoreDownloadStatus(templateId, storeId, Status.DOWNLOAD_IN_PROGRESS, Status.DOWNLOADED);
+        List<TemplateDataStoreVO> downloadsInProgress = _vmTemplateStoreDao.listByTemplateStoreDownloadStatus(templateId, storeId, Status.DOWNLOAD_IN_PROGRESS, Status.DOWNLOADED);
         return (downloadsInProgress.size() == 0);
     }
 
@@ -132,8 +131,7 @@ public class DownloadMonitorImpl extends ManagerBase implements DownloadMonitor 
 
         vmTemplateStore = _vmTemplateStoreDao.findByStoreTemplate(store.getId(), template.getId());
         if (vmTemplateStore == null) {
-            vmTemplateStore =
-                new TemplateDataStoreVO(store.getId(), template.getId(), new Date(), 0, Status.NOT_DOWNLOADED, null, null, "jobid0000", null, template.getUri());
+            vmTemplateStore = new TemplateDataStoreVO(store.getId(), template.getId(), new Date(), 0, Status.NOT_DOWNLOADED, null, null, "jobid0000", null, template.getUri());
             vmTemplateStore.setDataStoreRole(store.getRole());
             vmTemplateStore = _vmTemplateStoreDao.persist(vmTemplateStore);
         } else if ((vmTemplateStore.getJobId() != null) && (vmTemplateStore.getJobId().length() > 2)) {
@@ -159,7 +157,8 @@ public class DownloadMonitorImpl extends ManagerBase implements DownloadMonitor 
                 throw new CloudRuntimeException(errMsg);
             }
             DownloadListener dl = new DownloadListener(ep, store, template, _timer, this, dcmd, callback);
-            ComponentContext.inject(dl);  // initialize those auto-wired field in download listener.
+            ComponentContext.inject(dl); // initialize those auto-wired field in
+            // download listener.
             if (downloadJobExists) {
                 // due to handling existing download job issues, we still keep
                 // downloadState in template_store_ref to avoid big change in
@@ -194,8 +193,7 @@ public class DownloadMonitorImpl extends ManagerBase implements DownloadMonitor 
             }
         } else {
             s_logger.info("Template download is already in progress or already downloaded");
-            DownloadAnswer ans =
-                new DownloadAnswer("Template download is already in progress or already downloaded", Status.UNKNOWN);
+            DownloadAnswer ans = new DownloadAnswer("Template download is already in progress or already downloaded", Status.UNKNOWN);
             callback.complete(ans);
         }
     }
@@ -236,7 +234,8 @@ public class DownloadMonitorImpl extends ManagerBase implements DownloadMonitor 
                 return;
             }
             DownloadListener dl = new DownloadListener(ep, store, volume, _timer, this, dcmd, callback);
-            ComponentContext.inject(dl); // auto-wired those injected fields in DownloadListener
+            ComponentContext.inject(dl); // auto-wired those injected fields in
+            // DownloadListener
 
             if (downloadJobExists) {
                 dl.setCurrState(volumeHost.getDownloadState());

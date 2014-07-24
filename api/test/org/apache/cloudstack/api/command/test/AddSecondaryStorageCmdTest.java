@@ -62,8 +62,7 @@ public class AddSecondaryStorageCmdTest extends TestCase {
 
         ImageStore store = Mockito.mock(ImageStore.class);
 
-        Mockito.when(resourceService.discoverImageStore(anyString(), anyString(), anyString(), anyLong(), (Map)anyObject()))
-                .thenReturn(store);
+        Mockito.when(resourceService.discoverImageStore(anyString(), anyString(), anyString(), anyLong(), (Map)anyObject())).thenReturn(store);
 
         ResponseGenerator responseGenerator = Mockito.mock(ResponseGenerator.class);
         addImageStoreCmd._responseGenerator = responseGenerator;
@@ -90,8 +89,7 @@ public class AddSecondaryStorageCmdTest extends TestCase {
         StorageService resourceService = Mockito.mock(StorageService.class);
         addImageStoreCmd._storageService = resourceService;
 
-        Mockito.when(resourceService.discoverImageStore(anyString(), anyString(), anyString(), anyLong(), (Map)anyObject()))
-                .thenReturn(null);
+        Mockito.when(resourceService.discoverImageStore(anyString(), anyString(), anyString(), anyLong(), (Map)anyObject())).thenReturn(null);
 
         try {
             addImageStoreCmd.execute();

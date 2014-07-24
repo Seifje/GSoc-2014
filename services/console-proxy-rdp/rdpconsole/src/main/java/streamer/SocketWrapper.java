@@ -23,8 +23,8 @@ public interface SocketWrapper extends Element {
 
     /**
      * Connect this socket wrapper to remote server and start main loop on
-     * Source stdout link, to watch for incoming data, and
-     * Sink stdin link, to pull for outgoing data.
+     * Source stdout link, to watch for incoming data, and Sink stdin link, to
+     * pull for outgoing data.
      */
     public void connect(InetSocketAddress address) throws IOException;
 

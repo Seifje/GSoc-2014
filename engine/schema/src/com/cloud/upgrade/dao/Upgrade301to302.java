@@ -96,17 +96,15 @@ public class Upgrade301to302 implements DbUpgrade {
         ResultSet rs1 = null;
 
         try {
-            pstmt =
-                conn.prepareStatement("select n.id, map.id from `cloud`.`network_offerings` n, `cloud`.`ntwk_offering_service_map` map "
+            pstmt = conn.prepareStatement("select n.id, map.id from `cloud`.`network_offerings` n, `cloud`.`ntwk_offering_service_map` map "
                     + "where n.id=map.network_offering_id and map.service='Lb' and map.provider='VirtualRouter';");
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 long ntwkOffId = rs.getLong(1);
                 long mapId = rs.getLong(2);
 
-                //check if the network offering has source nat service enabled
-                pstmt =
-                    conn.prepareStatement("select n.id from `cloud`.`network_offerings` n, `cloud`.`ntwk_offering_service_map`"
+                // check if the network offering has source nat service enabled
+                pstmt = conn.prepareStatement("select n.id from `cloud`.`network_offerings` n, `cloud`.`ntwk_offering_service_map`"
                         + " map where n.id=map.network_offering_id and map.service='SourceNat' AND n.id=?");
                 pstmt.setLong(1, ntwkOffId);
                 rs1 = pstmt.executeQuery();
@@ -114,9 +112,9 @@ public class Upgrade301to302 implements DbUpgrade {
                     continue;
                 }
 
-                //delete the service only when there are no lb rules for the network(s) using this network offering
-                pstmt =
-                    conn.prepareStatement("select * from  `cloud`.`firewall_rules` f, `cloud`.`networks` n, `cloud`.`network_offerings`"
+                // delete the service only when there are no lb rules for the
+                // network(s) using this network offering
+                pstmt = conn.prepareStatement("select * from  `cloud`.`firewall_rules` f, `cloud`.`networks` n, `cloud`.`network_offerings`"
                         + " off where f.purpose='LB' and f.network_id=n.id and n.network_offering_id=off.id and off.id=?");
                 pstmt.setLong(1, ntwkOffId);
                 rs1 = pstmt.executeQuery();
@@ -124,15 +122,14 @@ public class Upgrade301to302 implements DbUpgrade {
                     continue;
                 }
 
-                //delete lb service for the network offering
+                // delete lb service for the network offering
                 pstmt = conn.prepareStatement("DELETE FROM `cloud`.`ntwk_offering_service_map` WHERE id=?");
                 pstmt.setLong(1, mapId);
                 pstmt.executeUpdate();
                 s_logger.debug("Deleted lb service for network offering id=" + ntwkOffId + " as it doesn't have source nat service enabled");
 
-                //delete lb service for the network
-                pstmt =
-                    conn.prepareStatement("SELECT map.id, n.id FROM `cloud`.`ntwk_service_map` map, networks n WHERE n.network_offering_id=? "
+                // delete lb service for the network
+                pstmt = conn.prepareStatement("SELECT map.id, n.id FROM `cloud`.`ntwk_service_map` map, networks n WHERE n.network_offering_id=? "
                         + "AND  map.network_id=n.id AND map.service='Lb'");
                 pstmt.setLong(1, ntwkOffId);
                 rs1 = pstmt.executeQuery();
@@ -166,10 +163,10 @@ public class Upgrade301to302 implements DbUpgrade {
     }
 
     private void fixLastHostIdKey(Connection conn) {
-        //Drop i_usage_event__created key (if exists) and re-add it again
+        // Drop i_usage_event__created key (if exists) and re-add it again
         List<String> keys = new ArrayList<String>();
 
-        //Drop vmInstance keys (if exists) and insert one with correct name
+        // Drop vmInstance keys (if exists) and insert one with correct name
         keys = new ArrayList<String>();
 
         keys.add("fk_vm_instance__last_host_id");
@@ -179,8 +176,7 @@ public class Upgrade301to302 implements DbUpgrade {
         DbUpgradeUtils.dropKeysIfExist(conn, "cloud.vm_instance", keys, false);
         PreparedStatement pstmt = null;
         try {
-            pstmt =
-                conn.prepareStatement("ALTER TABLE `cloud`.`vm_instance` ADD CONSTRAINT `fk_vm_instance__last_host_id` FOREIGN KEY (`last_host_id`) REFERENCES `host` (`id`)");
+            pstmt = conn.prepareStatement("ALTER TABLE `cloud`.`vm_instance` ADD CONSTRAINT `fk_vm_instance__last_host_id` FOREIGN KEY (`last_host_id`) REFERENCES `host` (`id`)");
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException e) {

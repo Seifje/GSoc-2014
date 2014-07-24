@@ -101,7 +101,8 @@ public class CitrixResourceBaseTest {
 
     }
 
-    // Expecting XmlRpcException while trying to get the record of vm using connection
+    // Expecting XmlRpcException while trying to get the record of vm using
+    // connection
     @Test(expected = XmlRpcException.class)
     public void testScaleVMF1() throws Types.BadServerResponse, Types.XenAPIException, XmlRpcException {
         doReturn(conn).when(_resource).getConnection();
@@ -174,7 +175,6 @@ public class CitrixResourceBaseTest {
         verify(_resource, times(1)).callHostPlugin(conn, "vmops", "add_to_VCPUs_params_live", "key", "weight", "value", "253", "vmname", "i-2-3-VM");
         verify(_resource, times(1)).callHostPlugin(conn, "vmops", "add_to_VCPUs_params_live", "key", "cap", "value", "99", "vmname", "i-2-3-VM");
     }
-
 
     @Test
     public void testSetNicDevIdIfCorrectVifIsNotNull() throws Exception {

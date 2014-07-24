@@ -44,16 +44,15 @@ import com.cloud.network.Network;
 import com.cloud.network.Network.GuestType;
 import com.cloud.offering.NetworkOffering;
 
-@APICommand(name = "createNetwork", description = "Creates a network", responseObject = NetworkResponse.class, responseView = ResponseView.Restricted, entityType = {Network.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createNetwork", description = "Creates a network", responseObject = NetworkResponse.class, responseView = ResponseView.Restricted, entityType = {Network.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateNetworkCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(CreateNetworkCmd.class.getName());
 
     private static final String s_name = "createnetworkresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "the name of the network")
     private String name;
@@ -61,35 +60,28 @@ public class CreateNetworkCmd extends BaseCmd {
     @Parameter(name = ApiConstants.DISPLAY_TEXT, type = CommandType.STRING, required = true, description = "the display text of the network")
     private String displayText;
 
-    @Parameter(name = ApiConstants.NETWORK_OFFERING_ID,
-               type = CommandType.UUID,
-               entityType = NetworkOfferingResponse.class,
-               required = true,
-               description = "the network offering id")
+    @Parameter(name = ApiConstants.NETWORK_OFFERING_ID, type = CommandType.UUID, entityType = NetworkOfferingResponse.class, required = true, description = "the network offering id")
     private Long networkOfferingId;
 
     @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, required = true, description = "the Zone ID for the network")
     private Long zoneId;
 
-    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = PhysicalNetworkResponse.class,
-               description = "the Physical Network ID the network belongs to")
+    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, description = "the Physical Network ID the network belongs to")
     private Long physicalNetworkId;
 
     @Parameter(name = ApiConstants.GATEWAY, type = CommandType.STRING, description = "the gateway of the network. Required "
-        + "for Shared networks and Isolated networks when it belongs to VPC")
+            + "for Shared networks and Isolated networks when it belongs to VPC")
     private String gateway;
 
     @Parameter(name = ApiConstants.NETMASK, type = CommandType.STRING, description = "the netmask of the network. Required "
-        + "for Shared networks and Isolated networks when it belongs to VPC")
+            + "for Shared networks and Isolated networks when it belongs to VPC")
     private String netmask;
 
     @Parameter(name = ApiConstants.START_IP, type = CommandType.STRING, description = "the beginning IP address in the network IP range")
     private String startIp;
 
     @Parameter(name = ApiConstants.END_IP, type = CommandType.STRING, description = "the ending IP address in the network IP"
-        + " range. If not specified, will be defaulted to startIP")
+            + " range. If not specified, will be defaulted to startIP")
     private String endIp;
 
     @Parameter(name = ApiConstants.VLAN, type = CommandType.STRING, description = "the ID or VID of the network")
@@ -102,8 +94,8 @@ public class CreateNetworkCmd extends BaseCmd {
     private String networkDomain;
 
     @Parameter(name = ApiConstants.ACL_TYPE, type = CommandType.STRING, description = "Access control type; supported values"
-        + " are account and domain. In 3.0 all shared networks should have aclType=Domain, and all Isolated networks"
-        + " - Account. Account means that only the account owner can use the network, domain - all accouns in the domain can use the network")
+            + " are account and domain. In 3.0 all shared networks should have aclType=Domain, and all Isolated networks"
+            + " - Account. Account means that only the account owner can use the network, domain - all accouns in the domain can use the network")
     private String aclType;
 
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "account who will own the network")
@@ -115,10 +107,8 @@ public class CreateNetworkCmd extends BaseCmd {
     @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "domain ID of the account owning a network")
     private Long domainId;
 
-    @Parameter(name = ApiConstants.SUBDOMAIN_ACCESS,
-               type = CommandType.BOOLEAN,
-               description = "Defines whether to allow"
-                   + " subdomains to use networks dedicated to their parent domain(s). Should be used with aclType=Domain, defaulted to allow.subdomain.network.access global config if not specified")
+    @Parameter(name = ApiConstants.SUBDOMAIN_ACCESS, type = CommandType.BOOLEAN, description = "Defines whether to allow"
+            + " subdomains to use networks dedicated to their parent domain(s). Should be used with aclType=Domain, defaulted to allow.subdomain.network.access global config if not specified")
     private Boolean subdomainAccess;
 
     @Parameter(name = ApiConstants.VPC_ID, type = CommandType.UUID, entityType = VpcResponse.class, description = "the VPC network belongs to")
@@ -131,23 +121,21 @@ public class CreateNetworkCmd extends BaseCmd {
     private String endIpv6;
 
     @Parameter(name = ApiConstants.IP6_GATEWAY, type = CommandType.STRING, description = "the gateway of the IPv6 network. Required "
-        + "for Shared networks and Isolated networks when it belongs to VPC")
+            + "for Shared networks and Isolated networks when it belongs to VPC")
     private String ip6Gateway;
 
     @Parameter(name = ApiConstants.IP6_CIDR, type = CommandType.STRING, description = "the CIDR of IPv6 network, must be at least /64")
     private String ip6Cidr;
 
-    @Parameter(name = ApiConstants.DISPLAY_NETWORK,
-               type = CommandType.BOOLEAN,
- description = "an optional field, whether to the display the network to the end user or not.", authorized = {RoleType.Admin})
+    @Parameter(name = ApiConstants.DISPLAY_NETWORK, type = CommandType.BOOLEAN, description = "an optional field, whether to the display the network to the end user or not.", authorized = {RoleType.Admin})
     private Boolean displayNetwork;
 
     @Parameter(name = ApiConstants.ACL_ID, type = CommandType.UUID, entityType = NetworkACLResponse.class, description = "Network ACL Id associated for the network")
     private Long aclId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
     public Long getNetworkOfferingId() {
         return networkOfferingId;
     }
@@ -214,7 +202,7 @@ public class CreateNetworkCmd extends BaseCmd {
 
     @Override
     public boolean isDisplay() {
-        if(displayNetwork == null)
+        if (displayNetwork == null)
             return true;
         else
             return displayNetwork;
@@ -282,9 +270,9 @@ public class CreateNetworkCmd extends BaseCmd {
         return aclId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
     @Override
     public String getCommandName() {
         return s_name;
@@ -302,8 +290,7 @@ public class CreateNetworkCmd extends BaseCmd {
 
     @Override
     // an exception thrown by createNetwork() will be caught by the dispatcher.
-        public
-        void execute() throws InsufficientCapacityException, ConcurrentOperationException, ResourceAllocationException {
+    public void execute() throws InsufficientCapacityException, ConcurrentOperationException, ResourceAllocationException {
         Network result = _networkService.createGuestNetwork(this);
         if (result != null) {
             NetworkResponse response = _responseGenerator.createNetworkResponse(ResponseView.Restricted, result);

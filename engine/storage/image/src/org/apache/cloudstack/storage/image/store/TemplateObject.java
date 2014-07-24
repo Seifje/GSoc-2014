@@ -24,12 +24,12 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
-
 import org.apache.cloudstack.engine.subsystem.api.storage.DataObjectInStore;
 import org.apache.cloudstack.engine.subsystem.api.storage.DataStore;
 import org.apache.cloudstack.engine.subsystem.api.storage.ObjectInDataStoreStateMachine;
 import org.apache.cloudstack.engine.subsystem.api.storage.ObjectInDataStoreStateMachine.Event;
 import org.apache.cloudstack.engine.subsystem.api.storage.PrimaryDataStore;
+import org.apache.cloudstack.engine.subsystem.api.storage.PrimaryDataStoreInfo;
 import org.apache.cloudstack.engine.subsystem.api.storage.TemplateInfo;
 import org.apache.cloudstack.storage.command.CopyCmdAnswer;
 import org.apache.cloudstack.storage.datastore.ObjectInDataStoreManager;
@@ -60,7 +60,9 @@ public class TemplateObject implements TemplateInfo {
     private VMTemplateVO imageVO;
     private DataStore dataStore;
     private String url;
-    private String installPath; // temporarily set installPath before passing to resource for entries with empty installPath for object store migration case
+    private String installPath; // temporarily set installPath before passing to
+    // resource for entries with empty installPath
+    // for object store migration case
     @Inject
     VMTemplateDao imageDao;
     @Inject
@@ -214,7 +216,8 @@ public class TemplateObject implements TemplateInfo {
                             templateVO.setFormat(newTemplate.getFormat());
                         }
                         if (newTemplate.getName() != null) {
-                            // For template created from snapshot, template name is determine by resource code.
+                            // For template created from snapshot, template name
+                            // is determine by resource code.
                             templateVO.setUniqueName(newTemplate.getName());
                         }
                         templateVO.setSize(newTemplate.getSize());
@@ -307,7 +310,7 @@ public class TemplateObject implements TemplateInfo {
 
             Map<String, String> details = primaryDataStore.getDetails();
 
-            boolean managed = details != null && Boolean.parseBoolean(details.get(PrimaryDataStore.MANAGED));
+            boolean managed = details != null && Boolean.parseBoolean(details.get(PrimaryDataStoreInfo.MANAGED));
 
             if (managed) {
                 return null;

@@ -77,7 +77,7 @@ public class NeutronNetworkAdapterTest {
         NeutronNetworkWrapper networkWrapper = new NeutronNetworkWrapper();
         networkWrapper.setNetwork(network);
 
-        NeutronNetworkWrapper returnValue = (NeutronNetworkWrapper) gsonNeutronNetwork.fromJson(jsonString, TypeToken.get(networkWrapper.getClass()).getType());
+        NeutronNetworkWrapper returnValue = (NeutronNetworkWrapper)gsonNeutronNetwork.fromJson(jsonString, TypeToken.get(networkWrapper.getClass()).getType());
 
         Assert.assertNotNull(returnValue);
         Assert.assertEquals("test_gre", returnValue.getNetwork().getName());

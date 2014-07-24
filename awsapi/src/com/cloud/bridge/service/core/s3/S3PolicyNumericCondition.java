@@ -36,6 +36,7 @@ public class S3PolicyNumericCondition extends S3PolicyCondition {
 
     /**
      * Return a set holding all the condition keys kept in this object.
+     * 
      * @return Set<String>
      */
     public Set<ConditionKeys> getAllKeys() {
@@ -43,8 +44,9 @@ public class S3PolicyNumericCondition extends S3PolicyCondition {
     }
 
     /**
-     * After calling getAllKeys(), pass in each key from that result to get
-     * the key's associated list of values.
+     * After calling getAllKeys(), pass in each key from that result to get the
+     * key's associated list of values.
+     * 
      * @param key
      * @return String[]
      */
@@ -53,8 +55,9 @@ public class S3PolicyNumericCondition extends S3PolicyCondition {
     }
 
     /**
-     * Convert the key's values into the type depending on the what
-     * the condition expects.
+     * Convert the key's values into the type depending on the what the
+     * condition expects.
+     * 
      * @throws ParseException
      */
     public void setKey(ConditionKeys key, String[] values) throws ParseException {
@@ -82,7 +85,8 @@ public class S3PolicyNumericCondition extends S3PolicyCondition {
             Float[] valueList = getKeyValues(keyName);
             boolean keyResult = false;
 
-            // -> not having the proper parameters to evaluate an expression results in false
+            // -> not having the proper parameters to evaluate an expression
+            // results in false
             if (null == (temp = context.getEvalParam(keyName)))
                 return false;
             try {
@@ -91,43 +95,45 @@ public class S3PolicyNumericCondition extends S3PolicyCondition {
                 return false;
             }
 
-            // -> stop when we hit the first true key value (i.e., key values are 'OR'ed together)
+            // -> stop when we hit the first true key value (i.e., key values
+            // are 'OR'ed together)
             for (int i = 0; i < valueList.length && !keyResult; i++) {
                 int difference = valueList[i].compareTo(toCompareWith);
 
                 switch (condition) {
-                    case NumericEquals:
-                        if (0 == difference)
-                            keyResult = true;
-                        break;
-                    case NumericNotEquals:
-                        if (0 != difference)
-                            keyResult = true;
-                        break;
-                    case NumericLessThan:
-                        if (0 > difference)
-                            keyResult = true;
-                        break;
-                    case NumericLessThanEquals:
-                        if (0 > difference || 0 == difference)
-                            keyResult = true;
-                        break;
-                    case NumericGreaterThan:
-                        if (0 < difference)
-                            keyResult = true;
-                        break;
-                    case NumericGreaterThanEquals:
-                        if (0 < difference || 0 == difference)
-                            keyResult = true;
-                        break;
-                    default:
-                        return false;
+                case NumericEquals:
+                    if (0 == difference)
+                        keyResult = true;
+                    break;
+                case NumericNotEquals:
+                    if (0 != difference)
+                        keyResult = true;
+                    break;
+                case NumericLessThan:
+                    if (0 > difference)
+                        keyResult = true;
+                    break;
+                case NumericLessThanEquals:
+                    if (0 > difference || 0 == difference)
+                        keyResult = true;
+                    break;
+                case NumericGreaterThan:
+                    if (0 < difference)
+                        keyResult = true;
+                    break;
+                case NumericGreaterThanEquals:
+                    if (0 < difference || 0 == difference)
+                        keyResult = true;
+                    break;
+                default:
+                    return false;
                 }
-                logger.info("S3PolicyNumericCondition eval - SID: " + SID + ", " + condition + ", key: " + keyName + ", valuePassedIn: " + toCompareWith +
-                    ", valueInRule: " + valueList[i] + ", result: " + keyResult);
+                logger.info("S3PolicyNumericCondition eval - SID: " + SID + ", " + condition + ", key: " + keyName + ", valuePassedIn: " + toCompareWith + ", valueInRule: "
+                        + valueList[i] + ", result: " + keyResult);
             }
 
-            // -> if all key values are, false then that key is false and then the entire condition is then false
+            // -> if all key values are, false then that key is false and then
+            // the entire condition is then false
             if (!keyResult)
                 return false;
         }

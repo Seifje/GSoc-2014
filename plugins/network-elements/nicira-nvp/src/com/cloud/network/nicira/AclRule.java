@@ -28,7 +28,8 @@ public class AclRule extends AccessRule {
     public static final String ETHERTYPE_ARP = "ARP";
 
     /**
-     * @TODO Convert this String into Enum and check the JSON communication still works
+     * @TODO Convert this String into Enum and check the JSON communication
+     *       still works
      */
     protected String action;
 
@@ -54,7 +55,6 @@ public class AclRule extends AccessRule {
 
     protected int order;
 
-
     /**
      * Default constructor
      */
@@ -64,11 +64,9 @@ public class AclRule extends AccessRule {
     /**
      * Fully parameterized constructor
      */
-    public AclRule(String ethertype, int protocol, String action, String sourceMacAddress,
-            String destinationMacAddress, String sourceIpPrefix, String destinationIpPrefix,
-            Integer sourcePortRangeMin, Integer sourcePortRangeMax,
-            Integer destinationPortRangeMin, Integer destinationPortRangeMax,
-            int order, Integer icmpProtocolCode, Integer icmpProtocolType) {
+    public AclRule(String ethertype, int protocol, String action, String sourceMacAddress, String destinationMacAddress, String sourceIpPrefix, String destinationIpPrefix,
+            Integer sourcePortRangeMin, Integer sourcePortRangeMax, Integer destinationPortRangeMin, Integer destinationPortRangeMax, int order, Integer icmpProtocolCode,
+            Integer icmpProtocolType) {
         this.ethertype = ethertype;
         this.protocol = protocol;
         this.action = action;
@@ -84,7 +82,6 @@ public class AclRule extends AccessRule {
         this.icmpProtocolCode = icmpProtocolCode;
         this.icmpProtocolType = icmpProtocolType;
     }
-
 
     public String getAction() {
         return action;
@@ -184,9 +181,7 @@ public class AclRule extends AccessRule {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 31)
-            .append(ethertype).append(protocol)
-            .toHashCode();
+        return new HashCodeBuilder(17, 31).append(ethertype).append(protocol).toHashCode();
     }
 
     @Override
@@ -200,10 +195,7 @@ public class AclRule extends AccessRule {
         if (!(obj instanceof AclRule)) {
             return false;
         }
-        AclRule another = (AclRule) obj;
-        return new EqualsBuilder()
-                .append(ethertype, another.ethertype)
-                .append(protocol, another.protocol)
-                .isEquals();
+        AclRule another = (AclRule)obj;
+        return new EqualsBuilder().append(ethertype, another.ethertype).append(protocol, another.protocol).isEquals();
     }
 }

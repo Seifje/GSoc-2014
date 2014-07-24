@@ -28,7 +28,8 @@ import com.cloud.consoleproxy.vnc.FrameBufferCanvas;
 
 /**
  *
- * an instance of specialized console protocol implementation, such as VNC or RDP
+ * an instance of specialized console protocol implementation, such as VNC or
+ * RDP
  *
  * It mainly implements the features needed by front-end AJAX viewer
  *
@@ -236,8 +237,8 @@ public abstract class ConsoleProxyClientBase implements ConsoleProxyClient, Cons
     }
 
     private String onAjaxClientConnectFailed() {
-        return "<html><head></head><body><div id=\"main_panel\" tabindex=\"1\"><p>"
-            + "Unable to start console session as connection is refused by the machine you are accessing" + "</p></div></body></html>";
+        return "<html><head></head><body><div id=\"main_panel\" tabindex=\"1\"><p>" + "Unable to start console session as connection is refused by the machine you are accessing"
+                + "</p></div></body></html>";
     }
 
     @Override
@@ -261,16 +262,10 @@ public abstract class ConsoleProxyClientBase implements ConsoleProxyClient, Cons
             s_logger.trace("Ajax client start, frame buffer w: " + width + ", " + height);
 
         /*
-                int retry = 0;
-                tracker.initCoverageTest();
-                while(!tracker.hasFullCoverage() && retry < 10) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                    }
-                    retry++;
-                }
-        */
+         * int retry = 0; tracker.initCoverageTest();
+         * while(!tracker.hasFullCoverage() && retry < 10) { try {
+         * Thread.sleep(1000); } catch (InterruptedException e) { } retry++; }
+         */
 
         List<TileInfo> tiles = tracker.scan(true);
         String imgUrl = prepareAjaxImage(tiles, true);
@@ -287,11 +282,11 @@ public abstract class ConsoleProxyClientBase implements ConsoleProxyClient, Cons
         }
 
         return getAjaxViewerPageContent(sbTileSequence.toString(), imgUrl, updateUrl, width, height, tileWidth, tileHeight, title,
-            ConsoleProxy.keyboardType == ConsoleProxy.KEYBOARD_RAW, languages, guest, this.clientParam.getLocale());
+                ConsoleProxy.keyboardType == ConsoleProxy.KEYBOARD_RAW, languages, guest, this.clientParam.getLocale());
     }
 
     private String getAjaxViewerPageContent(String tileSequence, String imgUrl, String updateUrl, int width, int height, int tileWidth, int tileHeight, String title,
-        boolean rawKeyboard, List<String> languages, String guest, String locale) {
+            boolean rawKeyboard, List<String> languages, String guest, String locale) {
 
         StringBuffer sbLanguages = new StringBuffer("");
         if (languages != null) {
@@ -303,8 +298,7 @@ public abstract class ConsoleProxyClientBase implements ConsoleProxyClient, Cons
             }
         }
 
-        String[] content =
-            new String[] {"<html>", "<head>", "<script type=\"text/javascript\" language=\"javascript\" src=\"/resource/js/jquery.js\"></script>",
+        String[] content = new String[] {"<html>", "<head>", "<script type=\"text/javascript\" language=\"javascript\" src=\"/resource/js/jquery.js\"></script>",
                 "<script type=\"text/javascript\" language=\"javascript\" src=\"/resource/js/cloud.logger.js\"></script>",
                 "<script type=\"text/javascript\" language=\"javascript\" src=\"/resource/js/ajaxkeys.js\"></script>",
                 "<script type=\"text/javascript\" language=\"javascript\" src=\"/resource/js/ajaxviewer.js\"></script>",
@@ -318,11 +312,10 @@ public abstract class ConsoleProxyClientBase implements ConsoleProxyClient, Cons
 
                 "<li class=\"pulldown\">", "<a href=\"#\">",
                 "<span><img align=\"left\" src=\"/resource/images/winlog.png\" alt=\"Keyboard\" style=\"width:16px;height:16px\"/>Keyboard</span>", "</a>", "<ul>",
-                "<li><a href=\"#\" cmd=\"keyboard_us\"><span>Standard (US) keyboard</span></a></li>",
-                "<li><a href=\"#\" cmd=\"keyboard_uk\"><span>UK keyboard</span></a></li>",
+                "<li><a href=\"#\" cmd=\"keyboard_us\"><span>Standard (US) keyboard</span></a></li>", "<li><a href=\"#\" cmd=\"keyboard_uk\"><span>UK keyboard</span></a></li>",
                 "<li><a href=\"#\" cmd=\"keyboard_jp\"><span>Japanese keyboard</span></a></li>", "</ul>", "</li>", "</ul>",
-                "<span id=\"light\" class=\"dark\" cmd=\"toggle_logwin\"></span>", "</div>", "<div id=\"main_panel\" tabindex=\"1\"></div>",
-                "<script language=\"javascript\">", "var acceptLanguages = '" + sbLanguages.toString() + "';", "var tileMap = [ " + tileSequence + " ];",
+                "<span id=\"light\" class=\"dark\" cmd=\"toggle_logwin\"></span>", "</div>", "<div id=\"main_panel\" tabindex=\"1\"></div>", "<script language=\"javascript\">",
+                "var acceptLanguages = '" + sbLanguages.toString() + "';", "var tileMap = [ " + tileSequence + " ];",
                 "var ajaxViewer = new AjaxViewer('main_panel', '" + imgUrl + "', '" + updateUrl + "', '" + locale + "', tileMap, ",
                 String.valueOf(width) + ", " + String.valueOf(height) + ", " + String.valueOf(tileWidth) + ", " + String.valueOf(tileHeight) + ");",
 
@@ -384,13 +377,12 @@ public abstract class ConsoleProxyClientBase implements ConsoleProxyClient, Cons
         }
 
         return getAjaxViewerUpdatePageContent(sbTileSequence.toString(), imgUrl, doResize, resizedFramebufferWidth, resizedFramebufferHeight, tracker.getTileWidth(),
-            tracker.getTileHeight());
+                tracker.getTileHeight());
     }
 
     private String getAjaxViewerUpdatePageContent(String tileSequence, String imgUrl, boolean resized, int width, int height, int tileWidth, int tileHeight) {
 
-        String[] content =
-            new String[] {"tileMap = [ " + tileSequence + " ];",
+        String[] content = new String[] {"tileMap = [ " + tileSequence + " ];",
                 resized ? "ajaxViewer.resize('main_panel', " + width + ", " + height + " , " + tileWidth + ", " + tileHeight + ");" : "",
                 "ajaxViewer.refresh('" + imgUrl + "', tileMap, false);"};
 

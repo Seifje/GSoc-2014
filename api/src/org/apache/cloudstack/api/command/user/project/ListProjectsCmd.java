@@ -32,19 +32,14 @@ import org.apache.cloudstack.api.response.ProjectResponse;
 
 import com.cloud.exception.InvalidParameterValueException;
 
-@APICommand(name = "listProjects",
-            description = "Lists projects and provides detailed information for listed projects",
-            responseObject = ProjectResponse.class,
-            since = "3.0.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "listProjects", description = "Lists projects and provides detailed information for listed projects", responseObject = ProjectResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListProjectsCmd extends BaseListAccountResourcesCmd {
     public static final Logger s_logger = Logger.getLogger(ListProjectsCmd.class.getName());
     private static final String s_name = "listprojectsresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = ProjectResponse.class, description = "list projects by project ID")
     private Long id;
@@ -61,9 +56,9 @@ public class ListProjectsCmd extends BaseListAccountResourcesCmd {
     @Parameter(name = ApiConstants.TAGS, type = CommandType.MAP, description = "List projects by tags (key/value pairs)")
     private Map tags;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -105,9 +100,9 @@ public class ListProjectsCmd extends BaseListAccountResourcesCmd {
         return tagsMap;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public void execute() {

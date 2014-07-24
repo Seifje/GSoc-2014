@@ -42,7 +42,8 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 /**
- * Note: toPairList and appendPairList only support simple POJO objects currently
+ * Note: toPairList and appendPairList only support simple POJO objects
+ * currently
  */
 public class JobSerializerHelper {
     private static final Logger s_logger = Logger.getLogger(JobSerializerHelper.class);
@@ -192,7 +193,7 @@ public class JobSerializerHelper {
             json.add("class", new JsonPrimitive(th.getClass().getName()));
             json.add("cause", s_gson.toJsonTree(th.getCause()));
             json.add("msg", new JsonPrimitive(th.getMessage()));
-//            json.add("stack", s_gson.toJsonTree(th.getStackTrace()));
+            // json.add("stack", s_gson.toJsonTree(th.getStackTrace()));
 
             return json;
         }

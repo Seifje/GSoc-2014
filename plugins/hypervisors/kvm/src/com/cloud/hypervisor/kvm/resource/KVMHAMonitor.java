@@ -75,7 +75,8 @@ public class KVMHAMonitor extends KVMHABase implements Runnable {
                 for (String uuid : _storagePool.keySet()) {
                     NfsStoragePool primaryStoragePool = _storagePool.get(uuid);
 
-                    // check for any that have been deregistered with libvirt and
+                    // check for any that have been deregistered with libvirt
+                    // and
                     // skip,remove them
 
                     StoragePool storage = null;
@@ -98,7 +99,8 @@ public class KVMHAMonitor extends KVMHABase implements Runnable {
                     } catch (LibvirtException e) {
                         s_logger.debug("Failed to lookup libvirt storage pool " + uuid + " due to: " + e);
 
-                        // we only want to remove pool if it's not found, not if libvirt
+                        // we only want to remove pool if it's not found, not if
+                        // libvirt
                         // connection fails
                         if (e.toString().contains("pool not found")) {
                             s_logger.debug("removing pool from HA monitor since it was deleted");

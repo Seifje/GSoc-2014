@@ -137,7 +137,6 @@ public class TaggedResourceManagerImpl extends ManagerBase implements TaggedReso
     @Inject
     DomainManager _domainMgr;
 
-
     @Override
     public boolean configure(String name, Map<String, Object> params) throws ConfigurationException {
         return true;
@@ -163,9 +162,9 @@ public class TaggedResourceManagerImpl extends ManagerBase implements TaggedReso
         entity = _entityMgr.findById(clazz, resourceId);
         if (entity != null) {
             return ((InternalIdentity)entity).getId();
-                }
-            throw new InvalidParameterValueException("Unable to find resource by id " + resourceId + " and type " + resourceType);
         }
+        throw new InvalidParameterValueException("Unable to find resource by id " + resourceId + " and type " + resourceType);
+    }
 
     private Pair<Long, Long> getAccountDomain(long resourceId, ResourceObjectType resourceType) {
         Class<?> clazz = s_typeMap.get(resourceType);
@@ -216,7 +215,7 @@ public class TaggedResourceManagerImpl extends ManagerBase implements TaggedReso
             public void doInTransactionWithoutResult(TransactionStatus status) {
                 for (String key : tags.keySet()) {
                     for (String resourceId : resourceIds) {
-                        if (!resourceType.resourceTagsSupport())  {
+                        if (!resourceType.resourceTagsSupport()) {
                             throw new InvalidParameterValueException("The resource type " + resourceType + " doesn't support resource tags");
                         }
 
@@ -229,7 +228,7 @@ public class TaggedResourceManagerImpl extends ManagerBase implements TaggedReso
                         if (accountId != null) {
                             _accountMgr.checkAccess(caller, null, false, _accountMgr.getAccount(accountId));
                         } else if (domainId != null && !_accountMgr.isNormalUser(caller.getId())) {
-                            //check permissions;
+                            // check permissions;
                             _accountMgr.checkAccess(caller, _domainMgr.getDomain(domainId));
                         } else {
                             throw new PermissionDeniedException("Account " + caller + " doesn't have permissions to create tags" + " for resource " + key);
@@ -259,10 +258,10 @@ public class TaggedResourceManagerImpl extends ManagerBase implements TaggedReso
         Object entity = _entityMgr.findById(clazz, resourceId);
         if (entity != null && entity instanceof Identity) {
             return ((Identity)entity).getUuid();
-       }
+        }
 
-           return resourceId;
-       }
+        return resourceId;
+    }
 
     @Override
     @DB
@@ -287,10 +286,10 @@ public class TaggedResourceManagerImpl extends ManagerBase implements TaggedReso
 
         // Finalize which tags should be removed
         for (ResourceTag resourceTag : resourceTags) {
-            //1) validate the permissions
+            // 1) validate the permissions
             Account owner = _accountMgr.getAccount(resourceTag.getAccountId());
             _accountMgr.checkAccess(caller, null, false, owner);
-            //2) Only remove tag if it matches key value pairs
+            // 2) Only remove tag if it matches key value pairs
             if (tags != null && !tags.isEmpty()) {
                 for (String key : tags.keySet()) {
                     boolean canBeRemoved = false;
@@ -318,7 +317,7 @@ public class TaggedResourceManagerImpl extends ManagerBase implements TaggedReso
             throw new InvalidParameterValueException("Unable to find tags by parameters specified");
         }
 
-        //Remove the tags
+        // Remove the tags
         Transaction.execute(new TransactionCallbackNoReturn() {
             @Override
             public void doInTransactionWithoutResult(TransactionStatus status) {

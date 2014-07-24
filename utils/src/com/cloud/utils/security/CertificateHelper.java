@@ -48,7 +48,7 @@ import org.bouncycastle.openssl.PEMReader;
 
 public class CertificateHelper {
     public static byte[] buildAndSaveKeystore(String alias, String cert, String privateKey, String storePassword) throws KeyStoreException, CertificateException,
-        NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+    NoSuchAlgorithmException, InvalidKeySpecException, IOException {
         KeyStore ks = buildKeystore(alias, cert, privateKey, storePassword);
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -58,11 +58,11 @@ public class CertificateHelper {
     }
 
     public static byte[] buildAndSaveKeystore(List<Ternary<String, String, String>> certs, String storePassword) throws KeyStoreException, NoSuchAlgorithmException,
-        CertificateException, IOException, InvalidKeySpecException {
+    CertificateException, IOException, InvalidKeySpecException {
         KeyStore ks = KeyStore.getInstance("JKS");
         ks.load(null, storePassword != null ? storePassword.toCharArray() : null);
 
-        //name,cert,key
+        // name,cert,key
         for (Ternary<String, String, String> cert : certs) {
             if (cert.third() == null) {
                 Certificate c = buildCertificate(cert.second());
@@ -93,7 +93,7 @@ public class CertificateHelper {
     }
 
     public static KeyStore buildKeystore(String alias, String cert, String privateKey, String storePassword) throws KeyStoreException, CertificateException,
-        NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+    NoSuchAlgorithmException, InvalidKeySpecException, IOException {
 
         KeyStore ks = KeyStore.getInstance("JKS");
         ks.load(null, storePassword != null ? storePassword.toCharArray() : null);

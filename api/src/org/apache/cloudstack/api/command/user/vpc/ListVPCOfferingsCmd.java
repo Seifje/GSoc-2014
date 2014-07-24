@@ -30,15 +30,14 @@ import org.apache.cloudstack.api.response.VpcOfferingResponse;
 
 import com.cloud.network.vpc.VpcOffering;
 
-@APICommand(name = "listVPCOfferings", description = "Lists VPC offerings", responseObject = VpcOfferingResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listVPCOfferings", description = "Lists VPC offerings", responseObject = VpcOfferingResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListVPCOfferingsCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListVPCOfferingsCmd.class.getName());
     private static final String s_name = "listvpcofferingsresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = VpcOfferingResponse.class, description = "list VPC offerings by id")
     private Long id;
 
@@ -51,18 +50,15 @@ public class ListVPCOfferingsCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.IS_DEFAULT, type = CommandType.BOOLEAN, description = "true if need to list only default " + "VPC offerings. Default value is false")
     private Boolean isDefault;
 
-    @Parameter(name = ApiConstants.SUPPORTED_SERVICES,
-               type = CommandType.LIST,
-               collectionType = CommandType.STRING,
-               description = "list VPC offerings supporting certain services")
+    @Parameter(name = ApiConstants.SUPPORTED_SERVICES, type = CommandType.LIST, collectionType = CommandType.STRING, description = "list VPC offerings supporting certain services")
     private List<String> supportedServices;
 
     @Parameter(name = ApiConstants.STATE, type = CommandType.STRING, description = "list VPC offerings by state")
     private String state;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
     public Long getId() {
         return id;
     }
@@ -87,15 +83,14 @@ public class ListVPCOfferingsCmd extends BaseListCmd {
         return state;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public void execute() {
-        List<? extends VpcOffering> offerings =
-            _vpcProvSvc.listVpcOfferings(getId(), getVpcOffName(), getDisplayText(), getSupportedServices(), isDefault, this.getKeyword(), getState(),
-                this.getStartIndex(), this.getPageSizeVal());
+        List<? extends VpcOffering> offerings = _vpcProvSvc.listVpcOfferings(getId(), getVpcOffName(), getDisplayText(), getSupportedServices(), isDefault, this.getKeyword(),
+                getState(), this.getStartIndex(), this.getPageSizeVal());
         ListResponse<VpcOfferingResponse> response = new ListResponse<VpcOfferingResponse>();
         List<VpcOfferingResponse> offeringResponses = new ArrayList<VpcOfferingResponse>();
         for (VpcOffering offering : offerings) {

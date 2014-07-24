@@ -74,7 +74,8 @@ public class ClusterMO extends BaseMO implements VmwareHypervisorHost {
 
     @Override
     public ClusterDasConfigInfo getDasConfig() throws Exception {
-        // Note getDynamicProperty() with "configurationEx.dasConfig" does not work here because of that dasConfig is a property in subclass
+        // Note getDynamicProperty() with "configurationEx.dasConfig" does not
+        // work here because of that dasConfig is a property in subclass
         ClusterConfigInfoEx configInfo = (ClusterConfigInfoEx)_context.getVimClient().getDynamicProperty(_mor, "configurationEx");
         return configInfo.getDasConfig();
     }
@@ -254,8 +255,8 @@ public class ClusterMO extends BaseMO implements VmwareHypervisorHost {
     @Override
     public void importVmFromOVF(String ovfFilePath, String vmName, DatastoreMO dsMo, String diskOption) throws Exception {
         if (s_logger.isTraceEnabled())
-            s_logger.trace("vCenter API trace - importVmFromOVF(). target MOR: " + _mor.getValue() + ", ovfFilePath: " + ovfFilePath + ", vmName: " + vmName +
-                    ", datastore: " + dsMo.getMor().getValue() + ", diskOption: " + diskOption);
+            s_logger.trace("vCenter API trace - importVmFromOVF(). target MOR: " + _mor.getValue() + ", ovfFilePath: " + ovfFilePath + ", vmName: " + vmName + ", datastore: "
+                    + dsMo.getMor().getValue() + ", diskOption: " + diskOption);
 
         ManagedObjectReference morRp = getHyperHostOwnerResourcePool();
         assert (morRp != null);
@@ -270,17 +271,16 @@ public class ClusterMO extends BaseMO implements VmwareHypervisorHost {
     }
 
     @Override
-    public boolean createBlankVm(String vmName, String vmInternalCSName, int cpuCount, int cpuSpeedMHz, int cpuReservedMHz, boolean limitCpuUse, int memoryMB,
-            int memoryReserveMB, String guestOsIdentifier, ManagedObjectReference morDs, boolean snapshotDirToParent) throws Exception {
+    public boolean createBlankVm(String vmName, String vmInternalCSName, int cpuCount, int cpuSpeedMHz, int cpuReservedMHz, boolean limitCpuUse, int memoryMB, int memoryReserveMB,
+            String guestOsIdentifier, ManagedObjectReference morDs, boolean snapshotDirToParent) throws Exception {
 
         if (s_logger.isTraceEnabled())
-            s_logger.trace("vCenter API trace - createBlankVm(). target MOR: " + _mor.getValue() + ", vmName: " + vmName + ", cpuCount: " + cpuCount + ", cpuSpeedMhz: " +
-                    cpuSpeedMHz + ", cpuReservedMHz: " + cpuReservedMHz + ", limitCpu: " + limitCpuUse + ", memoryMB: " + memoryMB + ", guestOS: " + guestOsIdentifier +
-                    ", datastore: " + morDs.getValue() + ", snapshotDirToParent: " + snapshotDirToParent);
+            s_logger.trace("vCenter API trace - createBlankVm(). target MOR: " + _mor.getValue() + ", vmName: " + vmName + ", cpuCount: " + cpuCount + ", cpuSpeedMhz: "
+                    + cpuSpeedMHz + ", cpuReservedMHz: " + cpuReservedMHz + ", limitCpu: " + limitCpuUse + ", memoryMB: " + memoryMB + ", guestOS: " + guestOsIdentifier
+                    + ", datastore: " + morDs.getValue() + ", snapshotDirToParent: " + snapshotDirToParent);
 
-        boolean result =
-                HypervisorHostHelper.createBlankVm(this, vmName, vmInternalCSName, cpuCount, cpuSpeedMHz, cpuReservedMHz, limitCpuUse, memoryMB, memoryReserveMB,
-                        guestOsIdentifier, morDs, snapshotDirToParent);
+        boolean result = HypervisorHostHelper.createBlankVm(this, vmName, vmInternalCSName, cpuCount, cpuSpeedMHz, cpuReservedMHz, limitCpuUse, memoryMB, memoryReserveMB,
+                guestOsIdentifier, morDs, snapshotDirToParent);
 
         if (s_logger.isTraceEnabled())
             s_logger.trace("vCenter API trace - createBlankVm() done");
@@ -292,8 +292,8 @@ public class ClusterMO extends BaseMO implements VmwareHypervisorHost {
     public ManagedObjectReference mountDatastore(boolean vmfsDatastore, String poolHostAddress, int poolHostPort, String poolPath, String poolUuid) throws Exception {
 
         if (s_logger.isTraceEnabled())
-            s_logger.trace("vCenter API trace - mountDatastore(). target MOR: " + _mor.getValue() + ", vmfs: " + vmfsDatastore + ", poolHost: " + poolHostAddress +
-                    ", poolHostPort: " + poolHostPort + ", poolPath: " + poolPath + ", poolUuid: " + poolUuid);
+            s_logger.trace("vCenter API trace - mountDatastore(). target MOR: " + _mor.getValue() + ", vmfs: " + vmfsDatastore + ", poolHost: " + poolHostAddress
+                    + ", poolHostPort: " + poolHostPort + ", poolPath: " + poolPath + ", poolUuid: " + poolUuid);
 
         ManagedObjectReference morDs = null;
         ManagedObjectReference morDsFirst = null;
@@ -441,7 +441,8 @@ public class ClusterMO extends BaseMO implements VmwareHypervisorHost {
         if (ocs != null && ocs.length > 0) {
             for (ObjectContent oc : ocs) {
                 HostRuntimeInfo runtimeInfo = (HostRuntimeInfo)oc.getPropSet().get(0).getVal();
-                // as long as we have one host connected, we assume the cluster is up
+                // as long as we have one host connected, we assume the cluster
+                // is up
                 if (runtimeInfo.getConnectionState() == HostSystemConnectionState.CONNECTED)
                     return true;
             }
@@ -579,7 +580,8 @@ public class ClusterMO extends BaseMO implements VmwareHypervisorHost {
 
     @Override
     public LicenseAssignmentManagerMO getLicenseAssignmentManager() throws Exception {
-        // LicenseAssignmentManager deals with only host/vcenter licenses only. Has nothing todo with cluster
+        // LicenseAssignmentManager deals with only host/vcenter licenses only.
+        // Has nothing todo with cluster
         throw new CloudRuntimeException("Unable to get LicenseAssignmentManager at cluster level");
     }
 }

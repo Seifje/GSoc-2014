@@ -57,7 +57,6 @@ public class Upgrade440to450 implements DbUpgrade {
     public void performDataMigration(Connection conn) {
     }
 
-
     @Override
     public File[] getCleanupScripts() {
         String script = Script.findScript("", "db/schema-440to450-cleanup.sql");

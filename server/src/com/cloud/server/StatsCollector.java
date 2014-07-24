@@ -198,11 +198,15 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
     private int _usageAggregationRange = 1440;
     private String _usageTimeZone = "GMT";
     private final long mgmtSrvrId = MacAddress.getMacAddress().toLong();
-    private static final int ACQUIRE_GLOBAL_LOCK_TIMEOUT_FOR_COOPERATION = 5;    // 5 seconds
-    private static final int USAGE_AGGREGATION_RANGE_MIN = 10; // 10 minutes, same to com.cloud.usage.UsageManagerImpl.USAGE_AGGREGATION_RANGE_MIN
+    private static final int ACQUIRE_GLOBAL_LOCK_TIMEOUT_FOR_COOPERATION = 5; // 5
+    // seconds
+    private static final int USAGE_AGGREGATION_RANGE_MIN = 10; // 10 minutes,
+    // same to
+    // com.cloud.usage.UsageManagerImpl.USAGE_AGGREGATION_RANGE_MIN
     private boolean _dailyOrHourly = false;
 
-    //private final GlobalLock m_capacityCheckLock = GlobalLock.getInternLock("capacity.check");
+    // private final GlobalLock m_capacityCheckLock =
+    // GlobalLock.getInternLock("capacity.check");
 
     public static StatsCollector getInstance() {
         return s_instance;
@@ -255,7 +259,7 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
             _executor.scheduleAtFixedRate(new VmDiskStatsTask(), vmDiskStatsInterval, vmDiskStatsInterval, TimeUnit.SECONDS);
         }
 
-        //Schedule disk stats update task
+        // Schedule disk stats update task
         _diskStatsUpdateExecutor = Executors.newScheduledThreadPool(1, new NamedThreadFactory("DiskStatsUpdater"));
         String aggregationRange = configs.get("usage.stats.job.aggregation.range");
         _usageAggregationRange = NumbersUtil.parseInt(aggregationRange, 1440);
@@ -295,7 +299,7 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
             _usageAggregationRange = USAGE_AGGREGATION_RANGE_MIN;
         }
         _diskStatsUpdateExecutor.scheduleAtFixedRate(new VmDiskStatsUpdaterTask(), (endDate - System.currentTimeMillis()), (_usageAggregationRange * 60 * 1000),
-            TimeUnit.MILLISECONDS);
+                TimeUnit.MILLISECONDS);
 
     }
 
@@ -330,7 +334,8 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
                     }
                 }
                 _hostStats = hostStats;
-                // Get a subset of hosts with GPU support from the list of "hosts"
+                // Get a subset of hosts with GPU support from the list of
+                // "hosts"
                 List<HostVO> gpuEnabledHosts = new ArrayList<HostVO>();
                 if (hostIds != null) {
                     for (HostVO host : hosts) {
@@ -392,10 +397,11 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
                                 statsInMemory = (VmStatsEntry)_VmStats.get(vmId);
 
                                 if (statsInMemory == null) {
-                                    //no stats exist for this vm, directly persist
+                                    // no stats exist for this vm, directly
+                                    // persist
                                     _VmStats.put(vmId, statsForCurrentIteration);
                                 } else {
-                                    //update each field
+                                    // update each field
                                     statsInMemory.setCPUUtilization(statsForCurrentIteration.getCPUUtilization());
                                     statsInMemory.setNumCPUs(statsForCurrentIteration.getNumCPUs());
                                     statsInMemory.setNetworkReadKBs(statsInMemory.getNetworkReadKBs() + statsForCurrentIteration.getNetworkReadKBs());
@@ -432,8 +438,8 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
             GlobalLock scanLock = GlobalLock.getInternLock("vm.disk.stats");
             try {
                 if (scanLock.lock(ACQUIRE_GLOBAL_LOCK_TIMEOUT_FOR_COOPERATION)) {
-                    //Check for ownership
-                    //msHost in UP state with min id should run the job
+                    // Check for ownership
+                    // msHost in UP state with min id should run the job
                     ManagementServerHostVO msHost = _msHostDao.findOneInUpState(new Filter(ManagementServerHostVO.class, "id", true, 0L, 1L));
                     if (msHost == null || (msHost.getMsid() != mgmtSrvrId)) {
                         s_logger.debug("Skipping aggregate disk stats update");
@@ -444,11 +450,11 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
                         Transaction.execute(new TransactionCallbackNoReturn() {
                             @Override
                             public void doInTransactionWithoutResult(TransactionStatus status) {
-                                //get all stats with delta > 0
+                                // get all stats with delta > 0
                                 List<VmDiskStatisticsVO> updatedVmNetStats = _vmDiskStatsDao.listUpdatedStats();
                                 for (VmDiskStatisticsVO stat : updatedVmNetStats) {
                                     if (_dailyOrHourly) {
-                                        //update agg bytes
+                                        // update agg bytes
                                         stat.setAggBytesRead(stat.getCurrentBytesRead() + stat.getNetBytesRead());
                                         stat.setAggBytesWrite(stat.getCurrentBytesWrite() + stat.getNetBytesWrite());
                                         stat.setAggIORead(stat.getCurrentIORead() + stat.getNetIORead());
@@ -476,17 +482,18 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
     class VmDiskStatsTask extends ManagedContextRunnable {
         @Override
         protected void runInContext() {
-            // collect the vm disk statistics(total) from hypervisor. added by weizhou, 2013.03.
+            // collect the vm disk statistics(total) from hypervisor. added by
+            // weizhou, 2013.03.
             try {
                 Transaction.execute(new TransactionCallbackNoReturn() {
                     @Override
                     public void doInTransactionWithoutResult(TransactionStatus status) {
                         SearchCriteria<HostVO> sc = _hostDao.createSearchCriteria();
                         sc.addAnd("status", SearchCriteria.Op.EQ, Status.Up.toString());
-                        sc.addAnd("resourceState", SearchCriteria.Op.NIN, ResourceState.Maintenance, ResourceState.PrepareForMaintenance,
-                            ResourceState.ErrorInMaintenance);
+                        sc.addAnd("resourceState", SearchCriteria.Op.NIN, ResourceState.Maintenance, ResourceState.PrepareForMaintenance, ResourceState.ErrorInMaintenance);
                         sc.addAnd("type", SearchCriteria.Op.EQ, Host.Type.Routing.toString());
-                        sc.addAnd("hypervisorType", SearchCriteria.Op.EQ, HypervisorType.KVM); // support KVM only util 2013.06.25
+                        sc.addAnd("hypervisorType", SearchCriteria.Op.EQ, HypervisorType.KVM); // support KVM only util
+                        // 2013.06.25
                         List<HostVO> hosts = _hostDao.search(sc, null);
 
                         for (HostVO host : hosts) {
@@ -494,7 +501,8 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
                             List<Long> vmIds = new ArrayList<Long>();
 
                             for (UserVmVO vm : vms) {
-                                if (vm.getType() == VirtualMachine.Type.User) // user vm
+                                if (vm.getType() == VirtualMachine.Type.User) // user
+                                    // vm
                                     vmIds.add(vm.getId());
                             }
 
@@ -515,71 +523,70 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
                                     if ((volumes == null) || (volumes.size() == 0))
                                         break;
                                     VolumeVO volume = volumes.get(0);
-                                    VmDiskStatisticsVO previousVmDiskStats =
-                                        _vmDiskStatsDao.findBy(userVm.getAccountId(), userVm.getDataCenterId(), vmId, volume.getId());
+                                    VmDiskStatisticsVO previousVmDiskStats = _vmDiskStatsDao.findBy(userVm.getAccountId(), userVm.getDataCenterId(), vmId, volume.getId());
                                     VmDiskStatisticsVO vmDiskStat_lock = _vmDiskStatsDao.lock(userVm.getAccountId(), userVm.getDataCenterId(), vmId, volume.getId());
 
-                                    if ((vmDiskStat.getBytesRead() == 0) && (vmDiskStat.getBytesWrite() == 0) && (vmDiskStat.getIORead() == 0) &&
-                                        (vmDiskStat.getIOWrite() == 0)) {
+                                    if ((vmDiskStat.getBytesRead() == 0) && (vmDiskStat.getBytesWrite() == 0) && (vmDiskStat.getIORead() == 0) && (vmDiskStat.getIOWrite() == 0)) {
                                         s_logger.debug("IO/bytes read and write are all 0. Not updating vm_disk_statistics");
                                         continue;
                                     }
 
                                     if (vmDiskStat_lock == null) {
-                                        s_logger.warn("unable to find vm disk stats from host for account: " + userVm.getAccountId() + " with vmId: " + userVm.getId() +
-                                            " and volumeId:" + volume.getId());
+                                        s_logger.warn("unable to find vm disk stats from host for account: " + userVm.getAccountId() + " with vmId: " + userVm.getId()
+                                                + " and volumeId:" + volume.getId());
                                         continue;
                                     }
 
-                                    if (previousVmDiskStats != null &&
-                                        ((previousVmDiskStats.getCurrentBytesRead() != vmDiskStat_lock.getCurrentBytesRead()) ||
-                                            (previousVmDiskStats.getCurrentBytesWrite() != vmDiskStat_lock.getCurrentBytesWrite()) ||
-                                            (previousVmDiskStats.getCurrentIORead() != vmDiskStat_lock.getCurrentIORead()) || (previousVmDiskStats.getCurrentIOWrite() != vmDiskStat_lock.getCurrentIOWrite()))) {
-                                        s_logger.debug("vm disk stats changed from the time GetVmDiskStatsCommand was sent. " + "Ignoring current answer. Host: " +
-                                            host.getName() + " . VM: " + vmDiskStat.getVmName() + " Read(Bytes): " + vmDiskStat.getBytesRead() + " write(Bytes): " +
-                                            vmDiskStat.getBytesWrite() + " Read(IO): " + vmDiskStat.getIORead() + " write(IO): " + vmDiskStat.getIOWrite());
+                                    if (previousVmDiskStats != null
+                                            && ((previousVmDiskStats.getCurrentBytesRead() != vmDiskStat_lock.getCurrentBytesRead())
+                                                    || (previousVmDiskStats.getCurrentBytesWrite() != vmDiskStat_lock.getCurrentBytesWrite())
+                                                    || (previousVmDiskStats.getCurrentIORead() != vmDiskStat_lock.getCurrentIORead()) || (previousVmDiskStats.getCurrentIOWrite() != vmDiskStat_lock
+                                                    .getCurrentIOWrite()))) {
+                                        s_logger.debug("vm disk stats changed from the time GetVmDiskStatsCommand was sent. " + "Ignoring current answer. Host: " + host.getName()
+                                                + " . VM: " + vmDiskStat.getVmName() + " Read(Bytes): " + vmDiskStat.getBytesRead() + " write(Bytes): "
+                                                + vmDiskStat.getBytesWrite() + " Read(IO): " + vmDiskStat.getIORead() + " write(IO): " + vmDiskStat.getIOWrite());
                                         continue;
                                     }
 
                                     if (vmDiskStat_lock.getCurrentBytesRead() > vmDiskStat.getBytesRead()) {
                                         if (s_logger.isDebugEnabled()) {
-                                            s_logger.debug("Read # of bytes that's less than the last one.  " +
-                                                "Assuming something went wrong and persisting it. Host: " + host.getName() + " . VM: " + vmDiskStat.getVmName() +
-                                                " Reported: " + vmDiskStat.getBytesRead() + " Stored: " + vmDiskStat_lock.getCurrentBytesRead());
+                                            s_logger.debug("Read # of bytes that's less than the last one.  " + "Assuming something went wrong and persisting it. Host: "
+                                                    + host.getName() + " . VM: " + vmDiskStat.getVmName() + " Reported: " + vmDiskStat.getBytesRead() + " Stored: "
+                                                    + vmDiskStat_lock.getCurrentBytesRead());
                                         }
                                         vmDiskStat_lock.setNetBytesRead(vmDiskStat_lock.getNetBytesRead() + vmDiskStat_lock.getCurrentBytesRead());
                                     }
                                     vmDiskStat_lock.setCurrentBytesRead(vmDiskStat.getBytesRead());
                                     if (vmDiskStat_lock.getCurrentBytesWrite() > vmDiskStat.getBytesWrite()) {
                                         if (s_logger.isDebugEnabled()) {
-                                            s_logger.debug("Write # of bytes that's less than the last one.  " +
-                                                "Assuming something went wrong and persisting it. Host: " + host.getName() + " . VM: " + vmDiskStat.getVmName() +
-                                                " Reported: " + vmDiskStat.getBytesWrite() + " Stored: " + vmDiskStat_lock.getCurrentBytesWrite());
+                                            s_logger.debug("Write # of bytes that's less than the last one.  " + "Assuming something went wrong and persisting it. Host: "
+                                                    + host.getName() + " . VM: " + vmDiskStat.getVmName() + " Reported: " + vmDiskStat.getBytesWrite() + " Stored: "
+                                                    + vmDiskStat_lock.getCurrentBytesWrite());
                                         }
                                         vmDiskStat_lock.setNetBytesWrite(vmDiskStat_lock.getNetBytesWrite() + vmDiskStat_lock.getCurrentBytesWrite());
                                     }
                                     vmDiskStat_lock.setCurrentBytesWrite(vmDiskStat.getBytesWrite());
                                     if (vmDiskStat_lock.getCurrentIORead() > vmDiskStat.getIORead()) {
                                         if (s_logger.isDebugEnabled()) {
-                                            s_logger.debug("Read # of IO that's less than the last one.  " + "Assuming something went wrong and persisting it. Host: " +
-                                                host.getName() + " . VM: " + vmDiskStat.getVmName() + " Reported: " + vmDiskStat.getIORead() + " Stored: " +
-                                                vmDiskStat_lock.getCurrentIORead());
+                                            s_logger.debug("Read # of IO that's less than the last one.  " + "Assuming something went wrong and persisting it. Host: "
+                                                    + host.getName() + " . VM: " + vmDiskStat.getVmName() + " Reported: " + vmDiskStat.getIORead() + " Stored: "
+                                                    + vmDiskStat_lock.getCurrentIORead());
                                         }
                                         vmDiskStat_lock.setNetIORead(vmDiskStat_lock.getNetIORead() + vmDiskStat_lock.getCurrentIORead());
                                     }
                                     vmDiskStat_lock.setCurrentIORead(vmDiskStat.getIORead());
                                     if (vmDiskStat_lock.getCurrentIOWrite() > vmDiskStat.getIOWrite()) {
                                         if (s_logger.isDebugEnabled()) {
-                                            s_logger.debug("Write # of IO that's less than the last one.  " + "Assuming something went wrong and persisting it. Host: " +
-                                                host.getName() + " . VM: " + vmDiskStat.getVmName() + " Reported: " + vmDiskStat.getIOWrite() + " Stored: " +
-                                                vmDiskStat_lock.getCurrentIOWrite());
+                                            s_logger.debug("Write # of IO that's less than the last one.  " + "Assuming something went wrong and persisting it. Host: "
+                                                    + host.getName() + " . VM: " + vmDiskStat.getVmName() + " Reported: " + vmDiskStat.getIOWrite() + " Stored: "
+                                                    + vmDiskStat_lock.getCurrentIOWrite());
                                         }
                                         vmDiskStat_lock.setNetIOWrite(vmDiskStat_lock.getNetIOWrite() + vmDiskStat_lock.getCurrentIOWrite());
                                     }
                                     vmDiskStat_lock.setCurrentIOWrite(vmDiskStat.getIOWrite());
 
                                     if (!_dailyOrHourly) {
-                                        //update agg bytes
+                                        // update agg bytes
                                         vmDiskStat_lock.setAggBytesWrite(vmDiskStat_lock.getNetBytesWrite() + vmDiskStat_lock.getCurrentBytesWrite());
                                         vmDiskStat_lock.setAggBytesRead(vmDiskStat_lock.getNetBytesRead() + vmDiskStat_lock.getCurrentBytesRead());
                                         vmDiskStat_lock.setAggIOWrite(vmDiskStat_lock.getNetIOWrite() + vmDiskStat_lock.getCurrentIOWrite());
@@ -623,8 +630,7 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
                     Answer answer = ssAhost.sendMessage(command);
                     if (answer != null && answer.getResult()) {
                         storageStats.put(storeId, (StorageStats)answer);
-                        s_logger.trace("HostId: " + storeId + " Used: " + ((StorageStats)answer).getByteUsed() + " Total Available: " +
-                            ((StorageStats)answer).getCapacityBytes());
+                        s_logger.trace("HostId: " + storeId + " Used: " + ((StorageStats)answer).getByteUsed() + " Total Available: " + ((StorageStats)answer).getCapacityBytes());
                     }
                 }
                 _storageStats = storageStats;
@@ -643,7 +649,9 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
                         if (answer != null && answer.getResult()) {
                             storagePoolStats.put(pool.getId(), (StorageStats)answer);
 
-                            // Seems like we have dynamically updated the pool size since the prev. size and the current do not match
+                            // Seems like we have dynamically updated the pool
+                            // size since the prev. size and the current do not
+                            // match
                             if (_storagePoolStats.get(poolId) != null && _storagePoolStats.get(poolId).getCapacityBytes() != ((StorageStats)answer).getCapacityBytes()) {
                                 pool.setCapacityBytes(((StorageStats)answer).getCapacityBytes());
                                 _storagePoolDao.update(pool.getId(), pool);
@@ -681,11 +689,10 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
                             continue;
                         }
 
-                        //check interval
+                        // check interval
                         long now = (new Date()).getTime();
                         if (asGroup.getLastInterval() != null)
-                            if ((now - asGroup.getLastInterval().getTime()) < asGroup
-                                .getInterval()) {
+                            if ((now - asGroup.getLastInterval().getTime()) < asGroup.getInterval()) {
                                 continue;
                             }
 
@@ -703,7 +710,8 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
                         for (int i = 0; i < asGroupVmVOs.size(); i++) {
                             long vmId = asGroupVmVOs.get(i).getInstanceId();
                             VMInstanceVO vmVO = _vmInstance.findById(vmId);
-                            //xe vm-list | grep vmname -B 1 | head -n 1 | awk -F':' '{print $2}'
+                            // xe vm-list | grep vmname -B 1 | head -n 1 | awk
+                            // -F':' '{print $2}'
                             params.put("vmname" + String.valueOf(i + 1), vmVO.getInstanceName());
                             params.put("vmid" + String.valueOf(i + 1), String.valueOf(vmVO.getId()));
 
@@ -754,7 +762,8 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
                                             Long conditionId = Long.parseLong(params.get("con" + counter_vm[1]));
                                             Double coVal = Double.parseDouble(counterVals[1]);
 
-                                            // Summary of all counter by counterId key
+                                            // Summary of all counter by
+                                            // counterId key
                                             if (avgCounter.get(counterId) == null) {
                                                 /* initialize if data is not set */
                                                 avgCounter.put(counterId, new Double(0));
@@ -850,7 +859,8 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
                                 long thresholdValue = conditionVO.getThreshold();
                                 Double thresholdPercent = (double)thresholdValue / 100;
                                 CounterVO counterVO = _asCounterDao.findById(conditionVO.getCounterid());
-//Double sum = avgCounter.get(conditionVO.getCounterid());
+                                // Double sum =
+                                // avgCounter.get(conditionVO.getCounterid());
                                 long counter_count = 1;
                                 do {
                                     String counter_param = params.get("counter" + String.valueOf(counter_count));
@@ -864,10 +874,10 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
                                 Double avg = sum / currentVM;
                                 Operator op = conditionVO.getRelationalOperator();
                                 boolean bConditionCheck = ((op == com.cloud.network.as.Condition.Operator.EQ) && (thresholdPercent.equals(avg)))
-                                    || ((op == com.cloud.network.as.Condition.Operator.GE) && (avg.doubleValue() >= thresholdPercent.doubleValue()))
-                                    || ((op == com.cloud.network.as.Condition.Operator.GT) && (avg.doubleValue() > thresholdPercent.doubleValue()))
-                                    || ((op == com.cloud.network.as.Condition.Operator.LE) && (avg.doubleValue() <= thresholdPercent.doubleValue()))
-                                    || ((op == com.cloud.network.as.Condition.Operator.LT) && (avg.doubleValue() < thresholdPercent.doubleValue()));
+                                        || ((op == com.cloud.network.as.Condition.Operator.GE) && (avg.doubleValue() >= thresholdPercent.doubleValue()))
+                                        || ((op == com.cloud.network.as.Condition.Operator.GT) && (avg.doubleValue() > thresholdPercent.doubleValue()))
+                                        || ((op == com.cloud.network.as.Condition.Operator.LE) && (avg.doubleValue() <= thresholdPercent.doubleValue()))
+                                        || ((op == com.cloud.network.as.Condition.Operator.LT) && (avg.doubleValue() < thresholdPercent.doubleValue()));
 
                                 if (!bConditionCheck) {
                                     bValid = false;
@@ -897,21 +907,20 @@ public class StatsCollector extends ManagerBase implements ComponentMethodInterc
             return lstResult;
         }
 
-        public List<Pair<String, Integer>> getPairofCounternameAndDuration(
-            long groupId) {
+        public List<Pair<String, Integer>> getPairofCounternameAndDuration(long groupId) {
             AutoScaleVmGroupVO groupVo = _asGroupDao.findById(groupId);
             if (groupVo == null)
                 return null;
             List<Pair<String, Integer>> result = new ArrayList<Pair<String, Integer>>();
-            //list policy map
+            // list policy map
             List<AutoScaleVmGroupPolicyMapVO> groupPolicymap = _asGroupPolicyDao.listByVmGroupId(groupVo.getId());
             if (groupPolicymap == null)
                 return null;
             for (AutoScaleVmGroupPolicyMapVO gpMap : groupPolicymap) {
-                //get duration
+                // get duration
                 AutoScalePolicyVO policyVo = _asPolicyDao.findById(gpMap.getPolicyId());
                 Integer duration = policyVo.getDuration();
-                //get collection of counter name
+                // get collection of counter name
                 String counterNames = "";
                 List<AutoScalePolicyConditionMapVO> lstPCmap = _asConditionMapDao.findByPolicyId(policyVo.getId());
                 for (AutoScalePolicyConditionMapVO pcMap : lstPCmap) {

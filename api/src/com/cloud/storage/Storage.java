@@ -23,16 +23,8 @@ import java.util.List;
 
 public class Storage {
     public static enum ImageFormat {
-        QCOW2(true, true, false, "qcow2"),
-        RAW(false, false, false, "raw"),
-        VHD(true, true, true, "vhd"),
-        ISO(false, false, false, "iso"),
-        OVA(true, true, true, "ova"),
-        VHDX(true, true, true, "vhdx"),
-        BAREMETAL(false, false, false, "BAREMETAL"),
-        VMDK(true, true, false, "vmdk"),
-        VDI(true, true, false, "vdi"),
-        TAR(false, false, false, "tar");
+        QCOW2(true, true, false, "qcow2"), RAW(false, false, false, "raw"), VHD(true, true, true, "vhd"), ISO(false, false, false, "iso"), OVA(true, true, true, "ova"), VHDX(true,
+                true, true, "vhdx"), BAREMETAL(false, false, false, "BAREMETAL"), VMDK(true, true, false, "vmdk"), VDI(true, true, false, "vdi"), TAR(false, false, false, "tar");
 
         private final boolean supportThinProvisioning;
         private final boolean supportSparse;
@@ -75,30 +67,29 @@ public class Storage {
     }
 
     public static enum ProvisioningType {
-        THIN("thin"),
-        SPARSE("sparse"),
-        FAT("fat");
+        THIN("thin"), SPARSE("sparse"), FAT("fat");
 
         private final String provisionType;
 
-        private ProvisioningType(String provisionType){
+        private ProvisioningType(String provisionType) {
             this.provisionType = provisionType;
         }
 
-        public String toString(){
+        @Override
+        public String toString() {
             return this.provisionType;
         }
 
-        public static ProvisioningType getProvisioningType(String provisioningType){
+        public static ProvisioningType getProvisioningType(String provisioningType) {
 
-            if(provisioningType.equals(THIN.provisionType)){
+            if (provisioningType.equals(THIN.provisionType)) {
                 return ProvisioningType.THIN;
-            } else if(provisioningType.equals(SPARSE.provisionType)){
+            } else if (provisioningType.equals(SPARSE.provisionType)) {
                 return ProvisioningType.SPARSE;
-            } else if (provisioningType.equals(FAT.provisionType)){
+            } else if (provisioningType.equals(FAT.provisionType)) {
                 return ProvisioningType.FAT;
-            } else{
-                    throw new NotImplementedException();
+            } else {
+                throw new NotImplementedException();
             }
         }
     }
@@ -111,7 +102,10 @@ public class Storage {
         ROUTING, // Router template
         SYSTEM, /* routing, system vm template */
         BUILTIN, /* buildin template */
-        PERHOST, /* every host has this template, don't need to install it in secondary storage */
+        PERHOST, /*
+         * every host has this template, don't need to install it in
+         * secondary storage
+         */
         USER /* User supplied template/iso */
     }
 
@@ -122,15 +116,11 @@ public class Storage {
         Iscsi(true), // for e.g., ZFS Comstar
         ISO(false), // for iso image
         LVM(false), // XenServer local LVM SR
-        CLVM(true),
-        RBD(true), // http://libvirt.org/storage.html#StorageBackendRBD
-        SharedMountPoint(true),
-        VMFS(true), // VMware VMFS storage
+        CLVM(true), RBD(true), // http://libvirt.org/storage.html#StorageBackendRBD
+        SharedMountPoint(true), VMFS(true), // VMware VMFS storage
         PreSetup(true), // for XenServer, Storage Pool is set up by customers.
         EXT(false), // XenServer local EXT SR
-        OCFS2(true),
-        SMB(true),
-        Gluster(true);
+        OCFS2(true), SMB(true), Gluster(true);
 
         boolean shared;
 

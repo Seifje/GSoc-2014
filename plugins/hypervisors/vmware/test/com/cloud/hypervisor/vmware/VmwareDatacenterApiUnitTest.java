@@ -164,9 +164,8 @@ public class VmwareDatacenterApiUnitTest {
         ComponentContext.initComponentsLifeCycle();
         MockitoAnnotations.initMocks(this);
 
-        DataCenterVO zone =
-            new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Basic, null, null, true,
-                true, null, null);
+        DataCenterVO zone = new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Basic, null, null,
+                true, true, null, null);
         zoneId = 1L;
 
         HostPodVO pod = new HostPodVO(UUID.randomUUID().toString(), zoneId, "192.168.56.1", "192.168.56.0/24", 8, "test");
@@ -230,13 +229,13 @@ public class VmwareDatacenterApiUnitTest {
         CallContext.unregister();
     }
 
-    //@Test(expected = InvalidParameterValueException.class)
+    // @Test(expected = InvalidParameterValueException.class)
     public void testAddVmwareDcToInvalidZone() throws ResourceInUseException, IllegalArgumentException, DiscoveryException, Exception {
         Mockito.when(addCmd.getZoneId()).thenReturn(2L);
         _vmwareDatacenterService.addVmwareDatacenter(addCmd);
     }
 
-    //@Test(expected = ResourceInUseException.class)
+    // @Test(expected = ResourceInUseException.class)
     public void testAddVmwareDcToZoneWithClusters() throws ResourceInUseException, IllegalArgumentException, DiscoveryException, Exception {
         Mockito.when(_clusterDao.listByZoneId(1L)).thenReturn(clusterList);
         _vmwareDatacenterService.addVmwareDatacenter(addCmd);
@@ -254,37 +253,37 @@ public class VmwareDatacenterApiUnitTest {
         _vmwareDatacenterService.removeVmwareDatacenter(removeCmd);
     }
 
-    //@Test(expected = ResourceInUseException.class)
+    // @Test(expected = ResourceInUseException.class)
     public void testAddVmwareDcToZoneWithVmwareDc() throws ResourceInUseException, IllegalArgumentException, DiscoveryException, Exception {
         Mockito.when(_vmwareDcDao.getVmwareDatacenterByNameAndVcenter(vmwareDcName, vCenterHost)).thenReturn(vmwareDcs);
         _vmwareDatacenterService.addVmwareDatacenter(addCmd);
     }
 
-    //@Test(expected = InvalidParameterValueException.class)
+    // @Test(expected = InvalidParameterValueException.class)
     public void testAddVmwareDcWithNullUser() throws ResourceInUseException, IllegalArgumentException, DiscoveryException, Exception {
         Mockito.when(addCmd.getUsername()).thenReturn(null);
         _vmwareDatacenterService.addVmwareDatacenter(addCmd);
     }
 
-    //@Test(expected = InvalidParameterValueException.class)
+    // @Test(expected = InvalidParameterValueException.class)
     public void testAddVmwareDcWithNullPassword() throws ResourceInUseException, IllegalArgumentException, DiscoveryException, Exception {
         Mockito.when(addCmd.getPassword()).thenReturn(null);
         _vmwareDatacenterService.addVmwareDatacenter(addCmd);
     }
 
-    //@Test(expected = InvalidParameterValueException.class)
+    // @Test(expected = InvalidParameterValueException.class)
     public void testAddVmwareDcWithNullUrl() throws ResourceInUseException, IllegalArgumentException, DiscoveryException, Exception {
         Mockito.when(addCmd.getVcenter()).thenReturn(null);
         _vmwareDatacenterService.addVmwareDatacenter(addCmd);
     }
 
-    //@Test(expected = InvalidParameterValueException.class)
+    // @Test(expected = InvalidParameterValueException.class)
     public void testAddVmwareDcWithNullDcName() throws ResourceInUseException, IllegalArgumentException, DiscoveryException, Exception {
         Mockito.when(addCmd.getName()).thenReturn(null);
         _vmwareDatacenterService.addVmwareDatacenter(addCmd);
     }
 
-    //@Test(expected = CloudRuntimeException.class)
+    // @Test(expected = CloudRuntimeException.class)
     public void testReAddVmwareDc() throws ResourceInUseException, IllegalArgumentException, DiscoveryException, Exception {
         Mockito.when(_vmwareDcZoneMapDao.findByZoneId(1L)).thenReturn(dcZoneMap);
         _vmwareDatacenterService.addVmwareDatacenter(addCmd);
@@ -297,9 +296,7 @@ public class VmwareDatacenterApiUnitTest {
     }
 
     @Configuration
-    @ComponentScan(basePackageClasses = {VmwareManagerImpl.class},
-                   includeFilters = {@Filter(value = TestConfiguration.Library.class, type = FilterType.CUSTOM)},
-                   useDefaultFilters = false)
+    @ComponentScan(basePackageClasses = {VmwareManagerImpl.class}, includeFilters = {@Filter(value = TestConfiguration.Library.class, type = FilterType.CUSTOM)}, useDefaultFilters = false)
     public static class TestConfiguration extends SpringUtils.CloudStackTestConfiguration {
 
         @Bean

@@ -45,26 +45,26 @@ public abstract class UploadActiveState extends UploadState {
             s_logger.debug("handleAnswer, answer status=" + answer.getUploadStatus() + ", curr state=" + getName());
         }
         switch (answer.getUploadStatus()) {
-            case UPLOAD_IN_PROGRESS:
-                getUploadListener().scheduleStatusCheck(RequestType.GET_STATUS);
-                return Status.UPLOAD_IN_PROGRESS.toString();
-            case UPLOADED:
-                getUploadListener().scheduleImmediateStatusCheck(RequestType.PURGE);
-                getUploadListener().cancelTimeoutTask();
-                return Status.UPLOADED.toString();
-            case NOT_UPLOADED:
-                getUploadListener().scheduleStatusCheck(RequestType.GET_STATUS);
-                return Status.NOT_UPLOADED.toString();
-            case UPLOAD_ERROR:
-                getUploadListener().cancelStatusTask();
-                getUploadListener().cancelTimeoutTask();
-                return Status.UPLOAD_ERROR.toString();
-            case UNKNOWN:
-                getUploadListener().cancelStatusTask();
-                getUploadListener().cancelTimeoutTask();
-                return Status.UPLOAD_ERROR.toString();
-            default:
-                return null;
+        case UPLOAD_IN_PROGRESS:
+            getUploadListener().scheduleStatusCheck(RequestType.GET_STATUS);
+            return Status.UPLOAD_IN_PROGRESS.toString();
+        case UPLOADED:
+            getUploadListener().scheduleImmediateStatusCheck(RequestType.PURGE);
+            getUploadListener().cancelTimeoutTask();
+            return Status.UPLOADED.toString();
+        case NOT_UPLOADED:
+            getUploadListener().scheduleStatusCheck(RequestType.GET_STATUS);
+            return Status.NOT_UPLOADED.toString();
+        case UPLOAD_ERROR:
+            getUploadListener().cancelStatusTask();
+            getUploadListener().cancelTimeoutTask();
+            return Status.UPLOAD_ERROR.toString();
+        case UNKNOWN:
+            getUploadListener().cancelStatusTask();
+            getUploadListener().cancelTimeoutTask();
+            return Status.UPLOAD_ERROR.toString();
+        default:
+            return null;
         }
     }
 

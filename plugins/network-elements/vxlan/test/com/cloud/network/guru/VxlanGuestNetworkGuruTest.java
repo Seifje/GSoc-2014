@@ -166,8 +166,9 @@ public class VxlanGuestNetworkGuruTest {
         when(dest.getDataCenter()).thenReturn(dc);
 
         when(netmodel.findPhysicalNetworkId(anyLong(), (String)any(), (TrafficType)any())).thenReturn(42L);
-        //TODO(VXLAN): doesn't support VNI specified
-        //when(confsvr.getConfigValue((String) any(), (String) any(), anyLong())).thenReturn("true");
+        // TODO(VXLAN): doesn't support VNI specified
+        // when(confsvr.getConfigValue((String) any(), (String) any(),
+        // anyLong())).thenReturn("true");
         when(dcdao.allocateVnet(anyLong(), anyLong(), anyLong(), (String)any(), eq(true))).thenReturn("42");
         doNothing().when(guru).allocateVnetComplete((Network)any(), (NetworkVO)any(), anyLong(), anyLong(), (String)any(), eq("42"));
 
@@ -211,8 +212,9 @@ public class VxlanGuestNetworkGuruTest {
 
         when(netmodel.findPhysicalNetworkId(anyLong(), (String)any(), (TrafficType)any())).thenReturn(42L);
 
-        //TODO(VXLAN): doesn't support VNI specified
-        //when(confsvr.getConfigValue((String) any(), (String) any(), anyLong())).thenReturn("true");
+        // TODO(VXLAN): doesn't support VNI specified
+        // when(confsvr.getConfigValue((String) any(), (String) any(),
+        // anyLong())).thenReturn("true");
         when(dcdao.allocateVnet(anyLong(), anyLong(), anyLong(), (String)any(), eq(true))).thenReturn("42");
         doNothing().when(guru).allocateVnetComplete((Network)any(), (NetworkVO)any(), anyLong(), anyLong(), (String)any(), eq("42"));
 

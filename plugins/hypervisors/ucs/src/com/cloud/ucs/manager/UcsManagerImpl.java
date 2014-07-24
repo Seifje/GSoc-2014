@@ -265,7 +265,8 @@ public class UcsManagerImpl implements UcsManager {
                 String cookie = xo.get("outCookie");
                 ucsCookie = new UcsCookie(cookie, currentTime);
                 cookies.put(ucsMgrId, ucsCookie);
-                //cookiesTime.put(cookie, currentTime); //This is currentTime on purpose, and not latest time.
+                // cookiesTime.put(cookie, currentTime); //This is currentTime
+                // on purpose, and not latest time.
             }
             return ucsCookie.getCookie();
         } catch (Exception e) {
@@ -327,8 +328,7 @@ public class UcsManagerImpl implements UcsManager {
         s_logger.debug(String.format("association response is %s", res));
 
         if (xo.get("outConfig.computeBlade.association").equals("none")) {
-            throw new CloudRuntimeException(String.format("cannot associated a profile to blade[dn:%s]. please check your UCS manasger for detailed error information",
-                dn));
+            throw new CloudRuntimeException(String.format("cannot associated a profile to blade[dn:%s]. please check your UCS manasger for detailed error information", dn));
         }
 
         return xo.get("outConfig.computeBlade.association").equals("associated");

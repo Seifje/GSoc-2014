@@ -105,7 +105,8 @@ public class ServiceOfferingDaoImpl extends GenericDaoBase<ServiceOfferingVO, Lo
         assert offering.getUniqueName() != null : "how are you going to find this later if you don't set it?";
         ServiceOfferingVO vo = findByName(offering.getUniqueName());
         if (vo != null) {
-            // check invalid CPU speed in system service offering, set it to default value of 500 Mhz if 0 CPU speed is found
+            // check invalid CPU speed in system service offering, set it to
+            // default value of 500 Mhz if 0 CPU speed is found
             if (vo.getSpeed() <= 0) {
                 vo.setSpeed(500);
                 update(vo.getId(), vo);

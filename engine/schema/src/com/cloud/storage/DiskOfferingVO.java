@@ -124,10 +124,10 @@ public class DiskOfferingVO implements DiskOffering {
     @Enumerated(value = EnumType.STRING)
     private DiskCacheMode cacheMode;
 
-    @Column(name="provisioning_type")
+    @Column(name = "provisioning_type")
     Storage.ProvisioningType provisioningType;
 
-    @Column(name="display_offering")
+    @Column(name = "display_offering")
     boolean displayOffering = true;
 
     @Enumerated(EnumType.STRING)
@@ -179,8 +179,8 @@ public class DiskOfferingVO implements DiskOffering {
         state = State.Active;
     }
 
-    public DiskOfferingVO(String name, String displayText, Storage.ProvisioningType provisioningType, boolean mirrored, String tags, boolean recreatable,
-            boolean useLocalStorage, boolean systemUse, boolean customized) {
+    public DiskOfferingVO(String name, String displayText, Storage.ProvisioningType provisioningType, boolean mirrored, String tags, boolean recreatable, boolean useLocalStorage,
+            boolean systemUse, boolean customized) {
         domainId = null;
         type = Type.Service;
         this.name = name;
@@ -197,8 +197,8 @@ public class DiskOfferingVO implements DiskOffering {
 
     // domain specific offerings constructor (null domainId implies public
     // offering)
-    public DiskOfferingVO(String name, String displayText, Storage.ProvisioningType provisioningType, boolean mirrored, String tags, boolean recreatable,
-            boolean useLocalStorage, boolean systemUse, boolean customized, Long domainId) {
+    public DiskOfferingVO(String name, String displayText, Storage.ProvisioningType provisioningType, boolean mirrored, String tags, boolean recreatable, boolean useLocalStorage,
+            boolean systemUse, boolean customized, Long domainId) {
         type = Type.Service;
         this.name = name;
         this.displayText = displayText;
@@ -350,7 +350,7 @@ public class DiskOfferingVO implements DiskOffering {
     }
 
     @Override
-    public Storage.ProvisioningType getProvisioningType(){
+    public Storage.ProvisioningType getProvisioningType() {
         return provisioningType;
     }
 

@@ -21,9 +21,15 @@ import java.util.List;
 
 public class EC2DescribeImages {
 
-    private List<String> executableBySet = new ArrayList<String>();;    // a list of strings identifying users
-    private List<String> imageSet = new ArrayList<String>();     // a list of AMI id's
-    private List<String> ownersSet = new ArrayList<String>();     // a list of AMI owner id's
+    private List<String> executableBySet = new ArrayList<String>();; // a list
+                                                                     // of
+                                                                     // strings
+                                                                     // identifying
+                                                                     // users
+    private List<String> imageSet = new ArrayList<String>(); // a list of AMI
+                                                             // id's
+    private List<String> ownersSet = new ArrayList<String>(); // a list of AMI
+                                                              // owner id's
     private EC2ImageFilterSet ifs = null;
 
     public EC2DescribeImages() {

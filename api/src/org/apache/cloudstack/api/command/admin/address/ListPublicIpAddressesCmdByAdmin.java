@@ -35,7 +35,7 @@ public class ListPublicIpAddressesCmdByAdmin extends ListPublicIpAddressesCmd {
     public static final Logger s_logger = Logger.getLogger(ListPublicIpAddressesCmdByAdmin.class.getName());
 
     @Override
-    public void execute(){
+    public void execute() {
         Pair<List<? extends IpAddress>, Integer> result = _mgr.searchForIPAddresses(this);
         ListResponse<IPAddressResponse> response = new ListResponse<IPAddressResponse>();
         List<IPAddressResponse> ipAddrResponses = new ArrayList<IPAddressResponse>();

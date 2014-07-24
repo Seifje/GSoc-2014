@@ -27,30 +27,25 @@ import org.apache.cloudstack.api.response.DomainResponse;
 
 import com.cloud.user.Account;
 
-@APICommand(name = "lockAccount", description = "Locks an account", responseObject = AccountResponse.class, entityType = {Account.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = true)
+@APICommand(name = "lockAccount", description = "Locks an account", responseObject = AccountResponse.class, entityType = {Account.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = true)
 public class LockAccountCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(LockAccountCmd.class.getName());
 
     private static final String s_name = "lockaccountresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, required = true, description = "Locks the specified account.")
     private String accountName;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               entityType = DomainResponse.class,
-               required = true,
-               description = "Locks the specified account on this domain.")
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, required = true, description = "Locks the specified account on this domain.")
     private Long domainId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getAccountName() {
         return accountName;
@@ -60,9 +55,9 @@ public class LockAccountCmd extends BaseCmd {
         return domainId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -76,19 +71,23 @@ public class LockAccountCmd extends BaseCmd {
             return account.getAccountId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
     @Override
     public void execute() {
-//        Account result = null;
-        //result = _accountService.lockAccount(this);
-//        if (result != null){
-//            AccountResponse response = _responseGenerator.createAccountResponse(result);
-//            response.setResponseName(getCommandName());
-//            this.setResponseObject(response);
-//        } else {
-//            throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to lock account");
-//        }
+        // Account result = null;
+        // result = _accountService.lockAccount(this);
+        // if (result != null){
+        // AccountResponse response =
+        // _responseGenerator.createAccountResponse(result);
+        // response.setResponseName(getCommandName());
+        // this.setResponseObject(response);
+        // } else {
+        // throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR,
+        // "Failed to lock account");
+        // }
     }
 }

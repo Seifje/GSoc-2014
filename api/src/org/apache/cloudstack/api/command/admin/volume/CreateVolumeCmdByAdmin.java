@@ -31,18 +31,17 @@ import com.cloud.storage.Volume;
 import com.cloud.vm.VirtualMachine;
 
 @APICommand(name = "createVolume", responseObject = VolumeResponse.class, description = "Creates a disk volume from a disk offering. This disk volume must still be attached to a virtual machine to make use of it.", responseView = ResponseView.Full, entityType = {
-        Volume.class, VirtualMachine.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+    Volume.class, VirtualMachine.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateVolumeCmdByAdmin extends CreateVolumeCmd {
     public static final Logger s_logger = Logger.getLogger(CreateVolumeCmdByAdmin.class.getName());
 
     @Override
-    public void execute(){
-        CallContext.current().setEventDetails("Volume Id: "+getEntityId()+((getSnapshotId() == null) ? "" : " from snapshot: " + getSnapshotId()));
+    public void execute() {
+        CallContext.current().setEventDetails("Volume Id: " + getEntityId() + ((getSnapshotId() == null) ? "" : " from snapshot: " + getSnapshotId()));
         Volume volume = _volumeService.createVolume(this);
         if (volume != null) {
             VolumeResponse response = _responseGenerator.createVolumeResponse(ResponseView.Full, volume);
-            //FIXME - have to be moved to ApiResponseHelper
+            // FIXME - have to be moved to ApiResponseHelper
             if (getSnapshotId() != null) {
                 Snapshot snap = _entityMgr.findById(Snapshot.class, getSnapshotId());
                 if (snap != null) {

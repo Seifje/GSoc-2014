@@ -43,9 +43,7 @@ import com.cloud.vm.dao.VMInstanceDaoImpl;
 
 @Configuration
 @ComponentScan(basePackageClasses = {SnapshotDaoImpl.class, ResourceTagsDaoImpl.class, VMInstanceDaoImpl.class, VolumeDaoImpl.class, NicDaoImpl.class, HostDaoImpl.class,
-    HostDetailsDaoImpl.class, HostTagsDaoImpl.class, HostTransferMapDaoImpl.class, ClusterDaoImpl.class, HostPodDaoImpl.class},
-               includeFilters = {@Filter(value = SnapshotDaoTestConfiguration.Library.class, type = FilterType.CUSTOM)},
-               useDefaultFilters = false)
+        HostDetailsDaoImpl.class, HostTagsDaoImpl.class, HostTransferMapDaoImpl.class, ClusterDaoImpl.class, HostPodDaoImpl.class}, includeFilters = {@Filter(value = SnapshotDaoTestConfiguration.Library.class, type = FilterType.CUSTOM)}, useDefaultFilters = false)
 public class SnapshotDaoTestConfiguration {
 
     public static class Library implements TypeFilter {

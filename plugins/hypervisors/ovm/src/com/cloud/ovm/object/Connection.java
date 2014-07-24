@@ -46,7 +46,8 @@ public class Connection {
             url = new URL("http://" + _ip + ":" + _port.toString());
             _config.setTimeZone(TimeZone.getTimeZone("UTC"));
             _config.setServerURL(url);
-            _config.setReplyTimeout(0); // disable, we use asyncexecute to control timeout
+            _config.setReplyTimeout(0); // disable, we use asyncexecute to
+            // control timeout
             _config.setConnectionTimeout(6000);
             _config.setBasicUserName(_username);
             _config.setBasicPassword(_password);
@@ -93,7 +94,8 @@ public class Connection {
 
         if (debug) {
             /*
-             * some parameters including user password should not be printed in log
+             * some parameters including user password should not be printed in
+             * log
              */
             s_logger.debug("Call Ovm agent: " + Coder.toJson(mParams));
         }

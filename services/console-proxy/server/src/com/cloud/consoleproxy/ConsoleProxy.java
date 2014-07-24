@@ -44,7 +44,8 @@ import com.cloud.utils.PropertiesUtil;
 
 /**
  *
- * ConsoleProxy, singleton class that manages overall activities in console proxy process. To make legacy code work, we still
+ * ConsoleProxy, singleton class that manages overall activities in console
+ * proxy process. To make legacy code work, we still
  */
 public class ConsoleProxy {
     private static final Logger s_logger = Logger.getLogger(ConsoleProxy.class);
@@ -56,7 +57,8 @@ public class ConsoleProxy {
 
     public static Object context;
 
-    // this has become more ugly, to store keystore info passed from management server (we now use management server managed keystore to support
+    // this has become more ugly, to store keystore info passed from management
+    // server (we now use management server managed keystore to support
     // dynamically changing to customer supplied certificate)
     public static byte[] ksBits;
     public static String ksPassword;
@@ -195,9 +197,8 @@ public class ConsoleProxy {
         if (authMethod != null) {
             Object result;
             try {
-                result =
-                        authMethod.invoke(ConsoleProxy.context, param.getClientHostAddress(), String.valueOf(param.getClientHostPort()), param.getClientTag(),
-                                param.getClientHostPassword(), param.getTicket(), new Boolean(reauthentication));
+                result = authMethod.invoke(ConsoleProxy.context, param.getClientHostAddress(), String.valueOf(param.getClientHostPort()), param.getClientTag(),
+                        param.getClientHostPassword(), param.getTicket(), new Boolean(reauthentication));
             } catch (IllegalAccessException e) {
                 s_logger.error("Unable to invoke authenticateConsoleAccess due to IllegalAccessException" + " for vm: " + param.getClientTag(), e);
                 authResult.setSuccess(false);
@@ -260,7 +261,8 @@ public class ConsoleProxy {
         configLog4j();
         Logger.setFactory(new ConsoleProxyLoggerFactory());
 
-        // Using reflection to setup private/secure communication channel towards management server
+        // Using reflection to setup private/secure communication channel
+        // towards management server
         ConsoleProxy.context = context;
         ConsoleProxy.ksBits = ksBits;
         ConsoleProxy.ksPassword = ksPassword;
@@ -298,7 +300,8 @@ public class ConsoleProxy {
                 props.load(confs);
 
                 for (Object key : props.keySet()) {
-                    // give properties passed via context high priority, treat properties from consoleproxy.properties
+                    // give properties passed via context high priority, treat
+                    // properties from consoleproxy.properties
                     // as default values
                     if (conf.get(key) == null)
                         conf.put(key, props.get(key));
@@ -353,7 +356,8 @@ public class ConsoleProxy {
             server.createContext("/resource/", new ConsoleProxyResourceHandler());
             server.createContext("/ajax", new ConsoleProxyAjaxHandler());
             server.createContext("/ajaximg", new ConsoleProxyAjaxImageHandler());
-            server.setExecutor(new ThreadExecutor()); // creates a default executor
+            server.setExecutor(new ThreadExecutor()); // creates a default
+                                                      // executor
             server.start();
         } catch (Exception e) {
             s_logger.error(e.getMessage(), e);
@@ -366,7 +370,8 @@ public class ConsoleProxy {
             s_logger.info("Listening for HTTP CMDs on port " + httpCmdListenPort);
             HttpServer cmdServer = HttpServer.create(new InetSocketAddress(httpCmdListenPort), 2);
             cmdServer.createContext("/cmd", new ConsoleProxyCmdHandler());
-            cmdServer.setExecutor(new ThreadExecutor()); // creates a default executor
+            cmdServer.setExecutor(new ThreadExecutor()); // creates a default
+                                                         // executor
             cmdServer.start();
         } catch (Exception e) {
             s_logger.error(e.getMessage(), e);
@@ -417,8 +422,7 @@ public class ConsoleProxy {
                 s_logger.info("The rfb thread died, reinitializing the viewer " + viewer);
                 viewer.initClient(param);
             } else if (!param.getClientHostPassword().equals(viewer.getClientHostPassword())) {
-                s_logger.warn("Bad sid detected(VNC port may be reused). sid in session: " + viewer.getClientHostPassword() + ", sid in request: " +
-                        param.getClientHostPassword());
+                s_logger.warn("Bad sid detected(VNC port may be reused). sid in session: " + viewer.getClientHostPassword() + ", sid in request: " + param.getClientHostPassword());
                 viewer.initClient(param);
             }
         }
@@ -456,8 +460,7 @@ public class ConsoleProxy {
                         throw new AuthenticationException("Cannot use the existing viewer " + viewer + ": modified AJAX session id");
                 }
 
-                if (param.getClientHostPassword() == null || param.getClientHostPassword().isEmpty() ||
-                        !param.getClientHostPassword().equals(viewer.getClientHostPassword()))
+                if (param.getClientHostPassword() == null || param.getClientHostPassword().isEmpty() || !param.getClientHostPassword().equals(viewer.getClientHostPassword()))
                     throw new AuthenticationException("Cannot use the existing viewer " + viewer + ": bad sid");
 
                 if (!viewer.isFrontEndAlive()) {

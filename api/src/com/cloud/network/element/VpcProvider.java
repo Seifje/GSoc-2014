@@ -31,14 +31,17 @@ import com.cloud.vm.ReservationContext;
 public interface VpcProvider extends NetworkElement {
     /**
      * Start vpc element as specified
-     * @param vpc fully specified vpc configuration.
+     *
+     * @param vpc
+     *            fully specified vpc configuration.
      */
     boolean implementVpc(Vpc vpc, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException,
-        InsufficientCapacityException;
+    InsufficientCapacityException;
 
     /**
      * @param vpc
-     * @param context TODO
+     * @param context
+     *            TODO
      * @return
      * @throws ConcurrentOperationException
      * @throws ResourceUnavailableException

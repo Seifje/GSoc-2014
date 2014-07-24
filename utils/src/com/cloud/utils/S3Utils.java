@@ -103,7 +103,7 @@ public final class S3Utils {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(format("Creating S3 client with configuration: [protocol: %1$s, connectionTimeOut: " + "%2$s, maxErrorRetry: %3$s, socketTimeout: %4$s]",
-                configuration.getProtocol(), configuration.getConnectionTimeout(), configuration.getMaxErrorRetry(), configuration.getSocketTimeout()));
+                    configuration.getProtocol(), configuration.getConnectionTimeout(), configuration.getMaxErrorRetry(), configuration.getSocketTimeout()));
         }
 
         final AmazonS3Client client = new AmazonS3Client(credentials, configuration);
@@ -179,8 +179,7 @@ public final class S3Utils {
     }
 
     // multi-part upload object
-    public static void mputObject(final ClientOptions clientOptions, final InputStream sourceStream, final String bucketName, final String key)
-        throws InterruptedException {
+    public static void mputObject(final ClientOptions clientOptions, final InputStream sourceStream, final String bucketName, final String key) throws InterruptedException {
 
         assert clientOptions != null;
         assert sourceStream != null;
@@ -229,7 +228,8 @@ public final class S3Utils {
 
     }
 
-    // Note that whenever S3Object is returned, client code needs to close the internal stream to avoid resource leak.
+    // Note that whenever S3Object is returned, client code needs to close the
+    // internal stream to avoid resource leak.
     public static S3Object getObject(final ClientOptions clientOptions, final String bucketName, final String key) {
 
         assert clientOptions != null;
@@ -245,8 +245,7 @@ public final class S3Utils {
     }
 
     @SuppressWarnings("unchecked")
-    public static File getFile(final ClientOptions clientOptions, final String bucketName, final String key, final File targetDirectory,
-        final FileNamingStrategy namingStrategy) {
+    public static File getFile(final ClientOptions clientOptions, final String bucketName, final String key, final File targetDirectory, final FileNamingStrategy namingStrategy) {
 
         assert clientOptions != null;
         assert isNotBlank(bucketName);
@@ -269,7 +268,8 @@ public final class S3Utils {
             try {
                 connection.getObject(new GetObjectRequest(bucketName, key), tempFile);
             } catch (AmazonClientException ex) {
-                // hack to handle different ETAG format generated from RiakCS for multi-part uploaded object
+                // hack to handle different ETAG format generated from RiakCS
+                // for multi-part uploaded object
                 String msg = ex.getMessage();
                 if (!msg.contains("verify integrity")) {
                     throw ex;
@@ -283,13 +283,12 @@ public final class S3Utils {
 
         } catch (FileNotFoundException e) {
 
-            throw new CloudRuntimeException(format("Failed open file %1$s in order to get object %2$s from bucket %3$s.", targetDirectory.getAbsoluteFile(), bucketName,
-                key), e);
+            throw new CloudRuntimeException(format("Failed open file %1$s in order to get object %2$s from bucket %3$s.", targetDirectory.getAbsoluteFile(), bucketName, key), e);
 
         } catch (IOException e) {
 
-            throw new CloudRuntimeException(format("Unable to allocate temporary file in directory %1$s to download %2$s:%3$s from S3",
-                targetDirectory.getAbsolutePath(), bucketName, key), e);
+            throw new CloudRuntimeException(format("Unable to allocate temporary file in directory %1$s to download %2$s:%3$s from S3", targetDirectory.getAbsolutePath(),
+                    bucketName, key), e);
 
         } finally {
 
@@ -302,7 +301,7 @@ public final class S3Utils {
     }
 
     public static List<File> getDirectory(final ClientOptions clientOptions, final String bucketName, final String sourcePath, final File targetDirectory,
-        final FileNamingStrategy namingStrategy) {
+            final FileNamingStrategy namingStrategy) {
 
         assert clientOptions != null;
         assert isNotBlank(bucketName);
@@ -349,7 +348,7 @@ public final class S3Utils {
     }
 
     public static void putDirectory(final ClientOptions clientOptions, final String bucketName, final File directory, final FilenameFilter fileNameFilter,
-        final ObjectNamingStrategy namingStrategy) {
+            final ObjectNamingStrategy namingStrategy) {
 
         assert clientOptions != null;
         assert isNotBlank(bucketName);
@@ -515,13 +514,12 @@ public final class S3Utils {
         final List<String> errorMessages = new ArrayList<String>();
 
         if (bucket.length() < MIN_BUCKET_NAME_LENGTH) {
-            errorMessages.add(format("The length of %1$s " + "for the %2$s must have a length of at least %3$s " + "characters", bucket, bucketLabel,
-                MIN_BUCKET_NAME_LENGTH));
+            errorMessages.add(format("The length of %1$s " + "for the %2$s must have a length of at least %3$s " + "characters", bucket, bucketLabel, MIN_BUCKET_NAME_LENGTH));
         }
 
         if (bucket.length() > MAX_BUCKET_NAME_LENGTH) {
             errorMessages.add(format("The length of %1$s " + "for the %2$s must not have a length of at greater" + " than %3$s characters", bucket, bucketLabel,
-                MAX_BUCKET_NAME_LENGTH));
+                    MAX_BUCKET_NAME_LENGTH));
         }
 
         return unmodifiableList(errorMessages);

@@ -84,8 +84,8 @@ import com.cloud.vm.ReservationContext;
 import com.cloud.vm.VirtualMachineProfile;
 
 @Local(value = {NetworkElement.class, FirewallServiceProvider.class, PortForwardingServiceProvider.class, IpDeployer.class, SourceNatServiceProvider.class})
-public class PaloAltoExternalFirewallElement extends ExternalFirewallDeviceManagerImpl implements SourceNatServiceProvider, FirewallServiceProvider,
-        PortForwardingServiceProvider, IpDeployer, PaloAltoFirewallElementService, StaticNatServiceProvider {
+public class PaloAltoExternalFirewallElement extends ExternalFirewallDeviceManagerImpl implements SourceNatServiceProvider, FirewallServiceProvider, PortForwardingServiceProvider,
+        IpDeployer, PaloAltoFirewallElementService, StaticNatServiceProvider {
 
     private static final Logger s_logger = Logger.getLogger(PaloAltoExternalFirewallElement.class);
 
@@ -144,7 +144,7 @@ public class PaloAltoExternalFirewallElement extends ExternalFirewallDeviceManag
 
     @Override
     public boolean implement(Network network, NetworkOffering offering, DeployDestination dest, ReservationContext context) throws ResourceUnavailableException,
-        ConcurrentOperationException, InsufficientNetworkCapacityException {
+            ConcurrentOperationException, InsufficientNetworkCapacityException {
         DataCenter zone = _entityMgr.findById(DataCenter.class, network.getDataCenterId());
 
         // don't have to implement network is Basic zone
@@ -160,7 +160,8 @@ public class PaloAltoExternalFirewallElement extends ExternalFirewallDeviceManag
         try {
             return manageGuestNetworkWithExternalFirewall(true, network);
         } catch (InsufficientCapacityException capacityException) {
-            // TODO: handle out of capacity exception in more gracefule manner when multiple providers are present for
+            // TODO: handle out of capacity exception in more gracefule manner
+            // when multiple providers are present for
             // the network
             s_logger.error("Fail to implement the Palo Alto for network " + network, capacityException);
             return false;
@@ -168,8 +169,8 @@ public class PaloAltoExternalFirewallElement extends ExternalFirewallDeviceManag
     }
 
     @Override
-    public boolean prepare(Network config, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
-        throws ConcurrentOperationException, InsufficientNetworkCapacityException, ResourceUnavailableException {
+    public boolean prepare(Network config, NicProfile nic, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException,
+            InsufficientNetworkCapacityException, ResourceUnavailableException {
         return true;
     }
 
@@ -238,7 +239,8 @@ public class PaloAltoExternalFirewallElement extends ExternalFirewallDeviceManag
         capabilities.put(Service.Gateway, null);
 
         Map<Capability, String> sourceNatCapabilities = new HashMap<Capability, String>();
-        // Specifies that this element supports either one source NAT rule per account;
+        // Specifies that this element supports either one source NAT rule per
+        // account;
         sourceNatCapabilities.put(Capability.SupportedSourceNatTypes, "peraccount");
         capabilities.put(Service.SourceNat, sourceNatCapabilities);
 
@@ -264,7 +266,8 @@ public class PaloAltoExternalFirewallElement extends ExternalFirewallDeviceManag
     public boolean isReady(PhysicalNetworkServiceProvider provider) {
 
         List<ExternalFirewallDeviceVO> fwDevices = _fwDevicesDao.listByPhysicalNetworkAndProvider(provider.getPhysicalNetworkId(), Provider.PaloAlto.getName());
-        // true if at-least one Palo Alto device is added in to physical network and is in configured (in enabled state) state
+        // true if at-least one Palo Alto device is added in to physical network
+        // and is in configured (in enabled state) state
         if (fwDevices != null && !fwDevices.isEmpty()) {
             for (ExternalFirewallDeviceVO fwDevice : fwDevices) {
                 if (fwDevice.getDeviceState() == FirewallDeviceState.Enabled) {
@@ -276,8 +279,7 @@ public class PaloAltoExternalFirewallElement extends ExternalFirewallDeviceManag
     }
 
     @Override
-    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException,
-        ResourceUnavailableException {
+    public boolean shutdownProviderInstances(PhysicalNetworkServiceProvider provider, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
         // TODO Auto-generated method stub
         return true;
     }
@@ -445,7 +447,8 @@ public class PaloAltoExternalFirewallElement extends ExternalFirewallDeviceManag
 
     @Override
     public boolean applyIps(Network network, List<? extends PublicIpAddress> ipAddress, Set<Service> service) throws ResourceUnavailableException {
-        // return true, as IP will be associated as part of static NAT/port forwarding rule configuration
+        // return true, as IP will be associated as part of static NAT/port
+        // forwarding rule configuration
         return true;
     }
 

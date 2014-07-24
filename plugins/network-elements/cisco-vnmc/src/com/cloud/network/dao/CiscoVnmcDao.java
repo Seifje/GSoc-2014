@@ -24,7 +24,9 @@ import com.cloud.utils.db.GenericDao;
 public interface CiscoVnmcDao extends GenericDao<CiscoVnmcControllerVO, Long> {
     /**
      * list all the Cisco VNMC devices added in to this physical network
-     * @param physicalNetworkId physical Network Id
+     * 
+     * @param physicalNetworkId
+     *            physical Network Id
      * @return list of CiscoVnmcDeviceVO for this physical network.
      */
     List<CiscoVnmcControllerVO> listByPhysicalNetwork(long physicalNetworkId);

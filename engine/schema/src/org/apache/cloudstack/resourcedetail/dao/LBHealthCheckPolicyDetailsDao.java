@@ -17,6 +17,6 @@ import org.apache.cloudstack.resourcedetail.ResourceDetailsDao;
 
 import com.cloud.utils.db.GenericDao;
 
-public interface LBHealthCheckPolicyDetailsDao extends GenericDao<LBHealthCheckPolicyDetailVO, Long>, ResourceDetailsDao<LBHealthCheckPolicyDetailVO>{
+public interface LBHealthCheckPolicyDetailsDao extends GenericDao<LBHealthCheckPolicyDetailVO, Long>, ResourceDetailsDao<LBHealthCheckPolicyDetailVO> {
 
 }

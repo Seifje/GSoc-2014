@@ -23,7 +23,8 @@ import com.cloud.serializer.Param;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * @deprecated as of 4.3 along with the api {@link org.apache.cloudstack.api.command.LDAPConfigCmd}
+ * @deprecated as of 4.3 along with the api
+ *             {@link org.apache.cloudstack.api.command.LDAPConfigCmd}
  */
 @Deprecated
 public class LDAPConfigResponse extends BaseResponse {

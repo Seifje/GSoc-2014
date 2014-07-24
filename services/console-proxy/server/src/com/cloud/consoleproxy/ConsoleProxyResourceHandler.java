@@ -75,7 +75,7 @@ public class ConsoleProxyResourceHandler implements HttpHandler {
             throw e;
         } catch (Throwable e) {
             s_logger.error("Unexpected exception, ", e);
-            t.sendResponseHeaders(500, -1);     // server error
+            t.sendResponseHeaders(500, -1); // server error
         } finally {
             t.close();
         }
@@ -98,7 +98,7 @@ public class ConsoleProxyResourceHandler implements HttpHandler {
             if (s_logger.isInfoEnabled())
                 s_logger.info("Resource access is forbidden, uri: " + path);
 
-            t.sendResponseHeaders(403, -1);     // forbidden
+            t.sendResponseHeaders(403, -1); // forbidden
             return;
         }
 

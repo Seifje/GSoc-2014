@@ -138,9 +138,7 @@ public class SolidFirePrimaryDataStoreLifeCycle implements PrimaryDataStoreLifeC
                 lClusterDefaultMinIops = Long.parseLong(clusterDefaultMinIops);
             }
         } catch (NumberFormatException ex) {
-            s_logger.warn("Cannot parse the setting of " + SolidFireUtil.CLUSTER_DEFAULT_MIN_IOPS +
-                          ", using default value: " + lClusterDefaultMinIops +
-                          ". Exception: " + ex);
+            s_logger.warn("Cannot parse the setting of " + SolidFireUtil.CLUSTER_DEFAULT_MIN_IOPS + ", using default value: " + lClusterDefaultMinIops + ". Exception: " + ex);
         }
 
         try {
@@ -150,9 +148,7 @@ public class SolidFirePrimaryDataStoreLifeCycle implements PrimaryDataStoreLifeC
                 lClusterDefaultMaxIops = Long.parseLong(clusterDefaultMaxIops);
             }
         } catch (NumberFormatException ex) {
-            s_logger.warn("Cannot parse the setting of " + SolidFireUtil.CLUSTER_DEFAULT_MAX_IOPS +
-                          ", using default value: " + lClusterDefaultMaxIops +
-                          ". Exception: " + ex);
+            s_logger.warn("Cannot parse the setting of " + SolidFireUtil.CLUSTER_DEFAULT_MAX_IOPS + ", using default value: " + lClusterDefaultMaxIops + ". Exception: " + ex);
         }
 
         try {
@@ -162,14 +158,13 @@ public class SolidFirePrimaryDataStoreLifeCycle implements PrimaryDataStoreLifeC
                 fClusterDefaultBurstIopsPercentOfMaxIops = Float.parseFloat(clusterDefaultBurstIopsPercentOfMaxIops);
             }
         } catch (NumberFormatException ex) {
-            s_logger.warn("Cannot parse the setting of " + SolidFireUtil.CLUSTER_DEFAULT_BURST_IOPS_PERCENT_OF_MAX_IOPS +
-                          ", using default value: " + fClusterDefaultBurstIopsPercentOfMaxIops +
-                          ". Exception: " + ex);
+            s_logger.warn("Cannot parse the setting of " + SolidFireUtil.CLUSTER_DEFAULT_BURST_IOPS_PERCENT_OF_MAX_IOPS + ", using default value: "
+                    + fClusterDefaultBurstIopsPercentOfMaxIops + ". Exception: " + ex);
         }
 
         if (lClusterDefaultMinIops > lClusterDefaultMaxIops) {
-            throw new CloudRuntimeException("The parameter '" + SolidFireUtil.CLUSTER_DEFAULT_MIN_IOPS + "' must be less than " + "or equal to the parameter '" +
-                SolidFireUtil.CLUSTER_DEFAULT_MAX_IOPS + "'.");
+            throw new CloudRuntimeException("The parameter '" + SolidFireUtil.CLUSTER_DEFAULT_MIN_IOPS + "' must be less than " + "or equal to the parameter '"
+                    + SolidFireUtil.CLUSTER_DEFAULT_MAX_IOPS + "'.");
         }
 
         if (Float.compare(fClusterDefaultBurstIopsPercentOfMaxIops, 1.0f) < 0) {
@@ -180,7 +175,8 @@ public class SolidFirePrimaryDataStoreLifeCycle implements PrimaryDataStoreLifeC
         details.put(SolidFireUtil.CLUSTER_DEFAULT_MAX_IOPS, String.valueOf(lClusterDefaultMaxIops));
         details.put(SolidFireUtil.CLUSTER_DEFAULT_BURST_IOPS_PERCENT_OF_MAX_IOPS, String.valueOf(fClusterDefaultBurstIopsPercentOfMaxIops));
 
-        // this adds a row in the cloud.storage_pool table for this SolidFire cluster
+        // this adds a row in the cloud.storage_pool table for this SolidFire
+        // cluster
         return dataStoreHelper.createPrimaryDataStore(parameters);
     }
 
@@ -292,13 +288,15 @@ public class SolidFirePrimaryDataStoreLifeCycle implements PrimaryDataStoreLifeC
     // do not implement this method for SolidFire's plug-in
     @Override
     public boolean attachHost(DataStore store, HostScope scope, StoragePoolInfo existingInfo) {
-        return true; // should be ignored for zone-wide-only plug-ins like SolidFire's
+        return true; // should be ignored for zone-wide-only plug-ins like
+        // SolidFire's
     }
 
     // do not implement this method for SolidFire's plug-in
     @Override
     public boolean attachCluster(DataStore store, ClusterScope scope) {
-        return true; // should be ignored for zone-wide-only plug-ins like SolidFire's
+        return true; // should be ignored for zone-wide-only plug-ins like
+        // SolidFire's
     }
 
     @Override
@@ -347,8 +345,13 @@ public class SolidFirePrimaryDataStoreLifeCycle implements PrimaryDataStoreLifeC
         return dataStoreHelper.deletePrimaryDataStore(store);
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.cloudstack.engine.subsystem.api.storage.DataStoreLifeCycle#migrateToObjectStore(org.apache.cloudstack.engine.subsystem.api.storage.DataStore)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.apache.cloudstack.engine.subsystem.api.storage.DataStoreLifeCycle
+     * #migrateToObjectStore
+     * (org.apache.cloudstack.engine.subsystem.api.storage.DataStore)
      */
     @Override
     public boolean migrateToObjectStore(DataStore store) {

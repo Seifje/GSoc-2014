@@ -32,16 +32,15 @@ import org.apache.cloudstack.api.response.ZoneResponse;
 import com.cloud.dc.Pod;
 import com.cloud.utils.Pair;
 
-@APICommand(name = "listPods", description = "Lists all Pods.", responseObject = PodResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listPods", description = "Lists all Pods.", responseObject = PodResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListPodsByCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListPodsByCmd.class.getName());
 
     private static final String s_name = "listpodsresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = PodResponse.class, description = "list Pods by ID")
     private Long id;
@@ -58,9 +57,9 @@ public class ListPodsByCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.SHOW_CAPACITIES, type = CommandType.BOOLEAN, description = "flag to display the capacity of the pods")
     private Boolean showCapacities;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -82,9 +81,9 @@ public class ListPodsByCmd extends BaseListCmd {
         return showCapacities;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

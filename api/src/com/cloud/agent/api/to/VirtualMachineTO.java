@@ -30,14 +30,14 @@ public class VirtualMachineTO {
     int cpus;
 
     /**
-        'speed' is still here since 4.0.X/4.1.X management servers do not support
-         the overcommit feature yet.
-
-         The overcommit feature sends minSpeed and maxSpeed
-
-         So this is here for backwards compatibility with 4.0.X/4.1.X management servers
-         and newer agents.
-    */
+     * 'speed' is still here since 4.0.X/4.1.X management servers do not support
+     * the overcommit feature yet.
+     *
+     * The overcommit feature sends minSpeed and maxSpeed
+     *
+     * So this is here for backwards compatibility with 4.0.X/4.1.X management
+     * servers and newer agents.
+     */
     Integer speed;
     Integer minSpeed;
     Integer maxSpeed;
@@ -62,8 +62,8 @@ public class VirtualMachineTO {
     NicTO[] nics;
     GPUDeviceTO gpuDevice;
 
-    public VirtualMachineTO(long id, String instanceName, VirtualMachine.Type type, int cpus, Integer speed, long minRam, long maxRam, BootloaderType bootloader,
-            String os, boolean enableHA, boolean limitCpuUse, String vncPassword) {
+    public VirtualMachineTO(long id, String instanceName, VirtualMachine.Type type, int cpus, Integer speed, long minRam, long maxRam, BootloaderType bootloader, String os,
+            boolean enableHA, boolean limitCpuUse, String vncPassword) {
         this.id = id;
         this.name = instanceName;
         this.type = type;

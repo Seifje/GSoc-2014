@@ -27,6 +27,7 @@ public interface NetworkACL extends InternalIdentity, Identity, Displayable {
 
     String getDescription();
 
+    @Override
     String getUuid();
 
     Long getVpcId();

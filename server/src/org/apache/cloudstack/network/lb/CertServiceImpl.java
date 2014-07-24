@@ -222,7 +222,7 @@ public class CertServiceImpl implements CertService {
 
         }
 
-        //reached here look by accountId
+        // reached here look by accountId
         List<SslCertVO> certVOList = _sslCertDao.listByAccountId(accountId);
         if (certVOList == null || certVOList.isEmpty())
             return certResponseList;

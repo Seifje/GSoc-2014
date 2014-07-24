@@ -124,8 +124,9 @@ import com.cloud.vm.DomainRouterVO;
 public class VmwareManagerImpl extends ManagerBase implements VmwareManager, VmwareStorageMount, Listener, VmwareDatacenterService {
     private static final Logger s_logger = Logger.getLogger(VmwareManagerImpl.class);
 
-    private static final int STARTUP_DELAY = 60000;                 // 60 seconds
-    private static final long DEFAULT_HOST_SCAN_INTERVAL = 600000;     // every 10 minutes
+    private static final int STARTUP_DELAY = 60000; // 60 seconds
+    private static final long DEFAULT_HOST_SCAN_INTERVAL = 600000; // every 10
+                                                                   // minutes
 
     private long _hostScanInterval = DEFAULT_HOST_SCAN_INTERVAL;
     private int _timeout;
@@ -375,13 +376,13 @@ public class VmwareManagerImpl extends ManagerBase implements VmwareManager, Vmw
             }
         }
         s_logger.info("Preparing network on host " + hostMo.getContext().toString() + " for " + privateTrafficLabel);
-        //The management network is probably always going to be a physical network with vlans, so assume BroadcastDomainType VLAN
+        // The management network is probably always going to be a physical
+        // network with vlans, so assume BroadcastDomainType VLAN
         HypervisorHostHelper.prepareNetwork(vSwitchName, "cloud.private", hostMo, vlanId, null, null, 180000, false, BroadcastDomainType.Vlan, null);
     }
 
     @Override
-    public List<ManagedObjectReference> addHostToPodCluster(VmwareContext serviceContext, long dcId, Long podId, Long clusterId, String hostInventoryPath)
-            throws Exception {
+    public List<ManagedObjectReference> addHostToPodCluster(VmwareContext serviceContext, long dcId, Long podId, Long clusterId, String hostInventoryPath) throws Exception {
         if (serviceContext == null) {
             throw new CloudRuntimeException("Invalid serviceContext");
         }
@@ -399,7 +400,8 @@ public class VmwareManagerImpl extends ManagerBase implements VmwareManager, Vmw
                 List<ManagedObjectReference> hosts = serviceContext.getVimClient().getDynamicProperty(mor, "host");
                 assert (hosts != null && hosts.size() > 0);
 
-                // For ESX host, we need to enable host firewall to allow VNC access
+                // For ESX host, we need to enable host firewall to allow VNC
+                // access
                 HostMO hostMo = new HostMO(serviceContext, hosts.get(0));
 
                 prepareHost(hostMo, privateTrafficLabel);
@@ -421,14 +423,16 @@ public class VmwareManagerImpl extends ManagerBase implements VmwareManager, Vmw
                 }
 
                 for (ManagedObjectReference morHost : hosts) {
-                    // For ESX host, we need to enable host firewall to allow VNC access
+                    // For ESX host, we need to enable host firewall to allow
+                    // VNC access
                     HostMO hostMo = new HostMO(serviceContext, morHost);
                     prepareHost(hostMo, privateTrafficLabel);
                     returnedHostList.add(morHost);
                 }
                 return returnedHostList;
             } else if (mor.getType().equals("HostSystem")) {
-                // For ESX host, we need to enable host firewall to allow VNC access
+                // For ESX host, we need to enable host firewall to allow VNC
+                // access
                 HostMO hostMo = new HostMO(serviceContext, mor);
                 prepareHost(hostMo, privateTrafficLabel);
                 returnedHostList.add(mor);
@@ -537,14 +541,14 @@ public class VmwareManagerImpl extends ManagerBase implements VmwareManager, Vmw
             return true;
         }
 
-        // disable time-out check until we have found out a VMware API that can check if
+        // disable time-out check until we have found out a VMware API that can
+        // check if
         // there are pending tasks on the subject VM
         /*
-                if(System.currentTimeMillis() - startTick > _hungWorkerTimeout) {
-                    if(s_logger.isInfoEnabled())
-                        s_logger.info("Worker VM expired, seconds elapsed: " + (System.currentTimeMillis() - startTick) / 1000);
-                    return true;
-                }
+         * if(System.currentTimeMillis() - startTick > _hungWorkerTimeout) {
+         * if(s_logger.isInfoEnabled())
+         * s_logger.info("Worker VM expired, seconds elapsed: " +
+         * (System.currentTimeMillis() - startTick) / 1000); return true; }
          */
         return false;
     }
@@ -572,8 +576,7 @@ public class VmwareManagerImpl extends ManagerBase implements VmwareManager, Vmw
                         s_logger.info("Inject SSH key pairs before copying systemvm.iso into secondary storage");
                         _configServer.updateKeyPairs();
 
-                        s_logger.info("Copy System VM patch ISO file to secondary storage. source ISO: " + srcIso.getAbsolutePath() + ", destination: " +
-                                destIso.getAbsolutePath());
+                        s_logger.info("Copy System VM patch ISO file to secondary storage. source ISO: " + srcIso.getAbsolutePath() + ", destination: " + destIso.getAbsolutePath());
                         try {
                             FileUtil.copyfile(srcIso, destIso);
                         } catch (IOException e) {
@@ -650,7 +653,8 @@ public class VmwareManagerImpl extends ManagerBase implements VmwareManager, Vmw
             @Override
             public void run() {
                 // TODO scan vSphere for newly added hosts.
-                // we are going to both support adding host from CloudStack UI and
+                // we are going to both support adding host from CloudStack UI
+                // and
                 // adding host via vSphere server
                 //
                 // will implement host scanning later
@@ -677,7 +681,9 @@ public class VmwareManagerImpl extends ManagerBase implements VmwareManager, Vmw
             mountPoint = mount(uri.getHost() + ":" + uri.getPath(), _mountParent);
             if (mountPoint == null) {
                 s_logger.error("Unable to create mount point for " + storageUrl);
-                return "/mnt/sec"; // throw new CloudRuntimeException("Unable to create mount point for " + storageUrl);
+                return "/mnt/sec"; // throw new
+                                   // CloudRuntimeException("Unable to create mount point for "
+                                   // + storageUrl);
             }
 
             _storageMounts.put(storageUrl, mountPoint);
@@ -760,7 +766,8 @@ public class VmwareManagerImpl extends ManagerBase implements VmwareManager, Vmw
         String result = null;
         Script command = new Script(true, "mount", _timeout, s_logger);
         command.add("-t", "nfs");
-        // command.add("-o", "soft,timeo=133,retrans=2147483647,tcp,acdirmax=0,acdirmin=0");
+        // command.add("-o",
+        // "soft,timeo=133,retrans=2147483647,tcp,acdirmax=0,acdirmin=0");
         if ("Mac OS X".equalsIgnoreCase(System.getProperty("os.name"))) {
             command.add("-o", "resvport");
         }
@@ -995,22 +1002,25 @@ public class VmwareManagerImpl extends ManagerBase implements VmwareManager, Vmw
         VmwareDatacenterZoneMapVO vmwareDcZoneMap = _vmwareDcZoneMapDao.findByZoneId(zoneId);
         // Check if zone is associated with VMware DC
         if (vmwareDcZoneMap != null) {
-            // Check if the associated VMware DC matches the one specified in API params
-            // This check would yield success as the association exists between same entities (zone and VMware DC)
-            // This scenario would result in if the API addVmwareDc is called more than once with same parameters.
+            // Check if the associated VMware DC matches the one specified in
+            // API params
+            // This check would yield success as the association exists between
+            // same entities (zone and VMware DC)
+            // This scenario would result in if the API addVmwareDc is called
+            // more than once with same parameters.
             Long associatedVmwareDcId = vmwareDcZoneMap.getVmwareDcId();
             VmwareDatacenterVO associatedVmwareDc = _vmwareDcDao.findById(associatedVmwareDcId);
             if (associatedVmwareDc.getVcenterHost().equalsIgnoreCase(vCenterHost) && associatedVmwareDc.getVmwareDatacenterName().equalsIgnoreCase(vmwareDcName)) {
-                s_logger.info("Ignoring API call addVmwareDc, because VMware DC " + vCenterHost + "/" + vmwareDcName +
-                        " is already associated with specified zone with id " + zoneId);
+                s_logger.info("Ignoring API call addVmwareDc, because VMware DC " + vCenterHost + "/" + vmwareDcName + " is already associated with specified zone with id "
+                        + zoneId);
                 return associatedVmwareDc;
             } else {
-                throw new CloudRuntimeException("Zone " + zoneId + " is already associated with a VMware datacenter. " +
-                        "Only 1 VMware DC can be associated with a zone.");
+                throw new CloudRuntimeException("Zone " + zoneId + " is already associated with a VMware datacenter. " + "Only 1 VMware DC can be associated with a zone.");
             }
         }
         // Zone validation to check if the zone already has resources.
-        // Association of VMware DC to zone is not allowed if zone already has resources added.
+        // Association of VMware DC to zone is not allowed if zone already has
+        // resources added.
         validateZoneWithResources(zoneId, "add VMware datacenter to zone");
 
         // Check if DC is already part of zone
@@ -1039,7 +1049,8 @@ public class VmwareManagerImpl extends ManagerBase implements VmwareManager, Vmw
                 throw new InvalidParameterValueException(msg);
             }
 
-            // Check if DC is already associated with another cloudstack deployment
+            // Check if DC is already associated with another cloudstack
+            // deployment
             // Get custom field property cloud.zone over this DC
             guid = vmwareDcName + "@" + vCenterHost;
 
@@ -1090,7 +1101,8 @@ public class VmwareManagerImpl extends ManagerBase implements VmwareManager, Vmw
         // Validate zone
         validateZone(zoneId);
         // Zone validation to check if the zone already has resources.
-        // Association of VMware DC to zone is not allowed if zone already has resources added.
+        // Association of VMware DC to zone is not allowed if zone already has
+        // resources added.
         validateZoneWithResources(zoneId, "remove VMware datacenter to zone");
 
         // Get DC associated with this zone
@@ -1115,7 +1127,8 @@ public class VmwareManagerImpl extends ManagerBase implements VmwareManager, Vmw
         Transaction.execute(new TransactionCallbackNoReturn() {
             @Override
             public void doInTransactionWithoutResult(TransactionStatus status) {
-                // Remove the VMware datacenter entry in table vmware_data_center
+                // Remove the VMware datacenter entry in table
+                // vmware_data_center
                 _vmwareDcDao.remove(vmwareDcId);
                 // Remove the map entry in table vmware_data_center_zone_map
                 _vmwareDcZoneMapDao.remove(vmwareDcZoneMap.getId());
@@ -1215,7 +1228,9 @@ public class VmwareManagerImpl extends ManagerBase implements VmwareManager, Vmw
         vmwareDcList.add(vmwareDatacenter);
 
         // Currently a zone can have only 1 VMware DC associated with.
-        // Returning list of VmwareDatacenterVO objects, in-line with future requirements, if any, like participation of multiple VMware DCs in a zone.
+        // Returning list of VmwareDatacenterVO objects, in-line with future
+        // requirements, if any, like participation of multiple VMware DCs in a
+        // zone.
         return vmwareDcList;
     }
 }

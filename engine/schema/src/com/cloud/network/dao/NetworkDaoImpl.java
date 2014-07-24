@@ -200,12 +200,11 @@ public class NetworkDaoImpl extends GenericDaoBase<NetworkVO, Long> implements N
         SearchBuilder<NetworkAccountVO> join4 = _accountsDao.createSearchBuilder();
         join4.and("account", join4.entity().getAccountId(), Op.EQ);
         join4.and("isOwner", join4.entity().isOwner(), Op.EQ);
-        NetworksRegularUserCanCreateSearch.join("accounts", join4, NetworksRegularUserCanCreateSearch.entity().getId(), join4.entity().getNetworkId(),
-            JoinBuilder.JoinType.INNER);
+        NetworksRegularUserCanCreateSearch.join("accounts", join4, NetworksRegularUserCanCreateSearch.entity().getId(), join4.entity().getNetworkId(), JoinBuilder.JoinType.INNER);
         SearchBuilder<NetworkOfferingVO> join5 = _ntwkOffDao.createSearchBuilder();
         join5.and("specifyVlan", join5.entity().getSpecifyVlan(), Op.EQ);
         NetworksRegularUserCanCreateSearch.join("ntwkOff", join5, NetworksRegularUserCanCreateSearch.entity().getNetworkOfferingId(), join5.entity().getId(),
-            JoinBuilder.JoinType.INNER);
+                JoinBuilder.JoinType.INNER);
         NetworksRegularUserCanCreateSearch.done();
 
         _tgMacAddress = _tgs.get("macAddress");
@@ -231,12 +230,12 @@ public class NetworkDaoImpl extends GenericDaoBase<NetworkVO, Long> implements N
         OfferingAccountNetworkSearch.select(null, Func.DISTINCT, OfferingAccountNetworkSearch.entity().getId());
         SearchBuilder<NetworkOfferingVO> ntwkOfferingJoin = _ntwkOffDao.createSearchBuilder();
         ntwkOfferingJoin.and("isSystem", ntwkOfferingJoin.entity().isSystemOnly(), Op.EQ);
-        OfferingAccountNetworkSearch.join("ntwkOfferingSearch", ntwkOfferingJoin, OfferingAccountNetworkSearch.entity().getNetworkOfferingId(), ntwkOfferingJoin.entity()
-            .getId(), JoinBuilder.JoinType.LEFT);
+        OfferingAccountNetworkSearch.join("ntwkOfferingSearch", ntwkOfferingJoin, OfferingAccountNetworkSearch.entity().getNetworkOfferingId(), ntwkOfferingJoin.entity().getId(),
+                JoinBuilder.JoinType.LEFT);
         SearchBuilder<NetworkAccountVO> ntwkAccountJoin = _accountsDao.createSearchBuilder();
         ntwkAccountJoin.and("accountId", ntwkAccountJoin.entity().getAccountId(), Op.EQ);
         OfferingAccountNetworkSearch.join("ntwkAccountSearch", ntwkAccountJoin, OfferingAccountNetworkSearch.entity().getId(), ntwkAccountJoin.entity().getNetworkId(),
-            JoinBuilder.JoinType.INNER);
+                JoinBuilder.JoinType.INNER);
         OfferingAccountNetworkSearch.and("zoneId", OfferingAccountNetworkSearch.entity().getDataCenterId(), Op.EQ);
         OfferingAccountNetworkSearch.and("type", OfferingAccountNetworkSearch.entity().getGuestType(), Op.EQ);
         OfferingAccountNetworkSearch.done();
@@ -606,7 +605,7 @@ public class NetworkDaoImpl extends GenericDaoBase<NetworkVO, Long> implements N
     public long countVpcNetworks(long vpcId) {
         SearchCriteria<Long> sc = VpcNetworksCount.create();
         sc.setParameters("vpcId", vpcId);
-        //offering shouldn't be system (the one used by the private gateway)
+        // offering shouldn't be system (the one used by the private gateway)
         sc.setJoinParameters("offerings", "isSystem", false);
         return customSearch(sc, null).get(0);
     }

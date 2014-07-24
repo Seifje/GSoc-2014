@@ -87,7 +87,8 @@ public class SnapshotSchedulerImpl extends ManagerBase implements SnapshotSchedu
 
     protected AsyncJobDispatcher _asyncDispatcher;
 
-    private static final int ACQUIRE_GLOBAL_LOCK_TIMEOUT_FOR_COOPERATION = 5;    // 5 seconds
+    private static final int ACQUIRE_GLOBAL_LOCK_TIMEOUT_FOR_COOPERATION = 5; // 5
+    // seconds
     private int _snapshotPollInterval;
     private Timer _testClockTimer;
     private Date _currentTimestamp;
@@ -160,58 +161,71 @@ public class SnapshotSchedulerImpl extends ManagerBase implements SnapshotSchedu
             final Long asyncJobId = snapshotSchedule.getAsyncJobId();
             final AsyncJobVO asyncJob = _asyncJobDao.findById(asyncJobId);
             switch (asyncJob.getStatus()) {
-                case SUCCEEDED:
-                    // The snapshot has been successfully backed up.
-                    // The snapshot state has also been cleaned up.
-                    // We can schedule the next job for this snapshot.
-                    // Remove the existing entry in the snapshot_schedule table.
+            case SUCCEEDED:
+                // The snapshot has been successfully backed up.
+                // The snapshot state has also been cleaned up.
+                // We can schedule the next job for this snapshot.
+                // Remove the existing entry in the snapshot_schedule table.
+                scheduleNextSnapshotJob(snapshotSchedule);
+                break;
+            case FAILED:
+                // Check the snapshot status.
+                final Long snapshotId = snapshotSchedule.getSnapshotId();
+                if (snapshotId == null) {
+                    // createSnapshotAsync exited, successfully or
+                    // unsuccessfully,
+                    // even before creating a snapshot record
+                    // No cleanup needs to be done.
+                    // Schedule the next snapshot.
                     scheduleNextSnapshotJob(snapshotSchedule);
-                    break;
-                case FAILED:
-                    // Check the snapshot status.
-                    final Long snapshotId = snapshotSchedule.getSnapshotId();
-                    if (snapshotId == null) {
-                        // createSnapshotAsync exited, successfully or unsuccessfully,
-                        // even before creating a snapshot record
-                        // No cleanup needs to be done.
+                } else {
+                    final SnapshotVO snapshot = _snapshotDao.findById(snapshotId);
+                    if (snapshot == null || snapshot.getRemoved() != null) {
+                        // This snapshot has been deleted successfully from the
+                        // primary storage
+                        // Again no cleanup needs to be done.
                         // Schedule the next snapshot.
+                        // There's very little probability that the code reaches
+                        // this point.
+                        // The snapshotId is a foreign key for the
+                        // snapshot_schedule table
+                        // set to ON DELETE CASCADE. So if the snapshot entry is
+                        // deleted, the snapshot_schedule entry will be too.
+                        // But what if it has only been marked as removed?
                         scheduleNextSnapshotJob(snapshotSchedule);
                     } else {
-                        final SnapshotVO snapshot = _snapshotDao.findById(snapshotId);
-                        if (snapshot == null || snapshot.getRemoved() != null) {
-                            // This snapshot has been deleted successfully from the primary storage
-                            // Again no cleanup needs to be done.
-                            // Schedule the next snapshot.
-                            // There's very little probability that the code reaches this point.
-                            // The snapshotId is a foreign key for the snapshot_schedule table
-                            // set to ON DELETE CASCADE. So if the snapshot entry is deleted, the snapshot_schedule entry will be too.
-                            // But what if it has only been marked as removed?
-                            scheduleNextSnapshotJob(snapshotSchedule);
-                        } else {
-                            // The management server executing this snapshot job appears to have crashed
-                            // while creating the snapshot on primary storage/or backing it up.
-                            // We have no idea whether the snapshot was successfully taken on the primary or not.
-                            // Schedule the next snapshot job.
-                            // The ValidatePreviousSnapshotCommand will take appropriate action on this snapshot
-                            // If the snapshot was taken successfully on primary, it will retry backing it up.
-                            // and cleanup the previous snapshot
-                            // Set the userId to that of system.
-                            //_snapshotManager.validateSnapshot(1L, snapshot);
-                            // In all cases, schedule the next snapshot job
-                            scheduleNextSnapshotJob(snapshotSchedule);
-                        }
+                        // The management server executing this snapshot job
+                        // appears to have crashed
+                        // while creating the snapshot on primary storage/or
+                        // backing it up.
+                        // We have no idea whether the snapshot was successfully
+                        // taken on the primary or not.
+                        // Schedule the next snapshot job.
+                        // The ValidatePreviousSnapshotCommand will take
+                        // appropriate action on this snapshot
+                        // If the snapshot was taken successfully on primary, it
+                        // will retry backing it up.
+                        // and cleanup the previous snapshot
+                        // Set the userId to that of system.
+                        // _snapshotManager.validateSnapshot(1L, snapshot);
+                        // In all cases, schedule the next snapshot job
+                        scheduleNextSnapshotJob(snapshotSchedule);
                     }
+                }
 
-                    break;
-                case IN_PROGRESS:
-                    // There is no way of knowing from here whether
-                    // 1) Another management server is processing this snapshot job
-                    // 2) The management server has crashed and this snapshot is lying
-                    // around in an inconsistent state.
-                    // Hopefully, this can be resolved at the backend when the current snapshot gets executed.
-                    // But if it remains in this state, the current snapshot will not get executed.
-                    // And it will remain in stasis.
-                    break;
+                break;
+            case IN_PROGRESS:
+                // There is no way of knowing from here whether
+                // 1) Another management server is processing this snapshot job
+                // 2) The management server has crashed and this snapshot is
+                // lying
+                // around in an inconsistent state.
+                // Hopefully, this can be resolved at the backend when the
+                // current snapshot gets executed.
+                // But if it remains in this state, the current snapshot will
+                // not get executed.
+                // And it will remain in stasis.
+                break;
             }
         }
     }
@@ -245,9 +259,8 @@ public class SnapshotSchedulerImpl extends ManagerBase implements SnapshotSchedu
                 }
 
                 tmpSnapshotScheduleVO = _snapshotScheduleDao.acquireInLockTable(snapshotScheId);
-                final Long eventId =
-                    ActionEventUtils.onScheduledActionEvent(User.UID_SYSTEM, volume.getAccountId(), EventTypes.EVENT_SNAPSHOT_CREATE, "creating snapshot for volume Id:" +
-                        volumeId, true, 0);
+                final Long eventId = ActionEventUtils.onScheduledActionEvent(User.UID_SYSTEM, volume.getAccountId(), EventTypes.EVENT_SNAPSHOT_CREATE,
+                        "creating snapshot for volume Id:" + volumeId, true, 0);
 
                 final Map<String, String> params = new HashMap<String, String>();
                 params.put(ApiConstants.VOLUME_ID, "" + volumeId);
@@ -262,9 +275,8 @@ public class SnapshotSchedulerImpl extends ManagerBase implements SnapshotSchedu
                 params.put("id", "" + cmd.getEntityId());
                 params.put("ctxStartEventId", "1");
 
-                AsyncJobVO job = new AsyncJobVO("", User.UID_SYSTEM, volume.getAccountId(), CreateSnapshotCmd.class.getName(),
-                        ApiGsonHelper.getBuilder().create().toJson(params), cmd.getEntityId(),
-                        cmd.getInstanceType() != null ? cmd.getInstanceType().toString() : null, null);
+                AsyncJobVO job = new AsyncJobVO("", User.UID_SYSTEM, volume.getAccountId(), CreateSnapshotCmd.class.getName(), ApiGsonHelper.getBuilder().create().toJson(params),
+                        cmd.getEntityId(), cmd.getInstanceType() != null ? cmd.getInstanceType().toString() : null, null);
                 job.setDispatcher(_asyncDispatcher.getName());
 
                 final long jobId = _asyncMgr.submitAsyncJob(job);
@@ -333,7 +345,8 @@ public class SnapshotSchedulerImpl extends ManagerBase implements SnapshotSchedu
     @Override
     @DB
     public boolean removeSchedule(final Long volumeId, final Long policyId) {
-        // We can only remove schedules which are in the future. Not which are already executed in the past.
+        // We can only remove schedules which are in the future. Not which are
+        // already executed in the past.
         final SnapshotScheduleVO schedule = _snapshotScheduleDao.getCurrentSchedule(volumeId, policyId, false);
         boolean success = true;
         if (schedule != null) {
@@ -351,7 +364,8 @@ public class SnapshotSchedulerImpl extends ManagerBase implements SnapshotSchedu
         _snapshotPollInterval = NumbersUtil.parseInt(_configDao.getValue("snapshot.poll.interval"), 300);
         final boolean snapshotsRecurringTest = Boolean.parseBoolean(_configDao.getValue("snapshot.recurring.test"));
         if (snapshotsRecurringTest) {
-            // look for some test values in the configuration table so that snapshots can be taken more frequently (QA test code)
+            // look for some test values in the configuration table so that
+            // snapshots can be taken more frequently (QA test code)
             final int minutesPerHour = NumbersUtil.parseInt(_configDao.getValue("snapshot.test.minutes.per.hour"), 60);
             final int hoursPerDay = NumbersUtil.parseInt(_configDao.getValue("snapshot.test.hours.per.day"), 24);
             final int daysPerWeek = NumbersUtil.parseInt(_configDao.getValue("snapshot.test.days.per.week"), 7);
@@ -380,7 +394,8 @@ public class SnapshotSchedulerImpl extends ManagerBase implements SnapshotSchedu
         }
         if (_testTimerTask != null) {
             _testClockTimer = new Timer("TestClock");
-            // Run the test clock every 60s. Because every tick is counted as 1 minute.
+            // Run the test clock every 60s. Because every tick is counted as 1
+            // minute.
             // Else it becomes too confusing.
             _testClockTimer.schedule(_testTimerTask, 100 * 1000L, 60 * 1000L);
         } else {

@@ -33,18 +33,20 @@ import com.cloud.utils.Pair;
 public interface SnapshotApiService {
 
     /**
-     * List all snapshots of a disk volume. Optionally lists snapshots created by specified interval
+     * List all snapshots of a disk volume. Optionally lists snapshots created
+     * by specified interval
      *
      * @param cmd
-     *            the command containing the search criteria (order by, limit, etc.)
+     *            the command containing the search criteria (order by, limit,
+     *            etc.)
      * @return list of snapshots
      */
     Pair<List<? extends Snapshot>, Integer> listSnapshots(ListSnapshotsCmd cmd);
 
     /**
-     * Delete specified snapshot from the specified. If no other policies are assigned it calls destroy snapshot. This
-     * will be
-     * used for manual snapshots too.
+     * Delete specified snapshot from the specified. If no other policies are
+     * assigned it calls destroy snapshot. This will be used for manual
+     * snapshots too.
      *
      * @param snapshotId
      *            TODO
@@ -52,9 +54,9 @@ public interface SnapshotApiService {
     boolean deleteSnapshot(long snapshotId);
 
     /**
-     * Creates a policy with specified schedule. maxSnaps specifies the number of most recent snapshots that are to be
-     * retained.
-     * If the number of snapshots go beyond maxSnaps the oldest snapshot is deleted
+     * Creates a policy with specified schedule. maxSnaps specifies the number
+     * of most recent snapshots that are to be retained. If the number of
+     * snapshots go beyond maxSnaps the oldest snapshot is deleted
      *
      * @param cmd
      *            the command that
@@ -65,11 +67,13 @@ public interface SnapshotApiService {
     SnapshotPolicy createPolicy(CreateSnapshotPolicyCmd cmd, Account policyOwner);
 
     /**
-     * Get the recurring snapshots scheduled for this volume currently along with the time at which they are scheduled
+     * Get the recurring snapshots scheduled for this volume currently along
+     * with the time at which they are scheduled
      *
      * @param cmd
-     *            the command wrapping the volumeId (volume for which the snapshots are required) and policyId (to show
-     *            snapshots for only this policy).
+     *            the command wrapping the volumeId (volume for which the
+     *            snapshots are required) and policyId (to show snapshots for
+     *            only this policy).
      * @return The list of snapshot schedules.
      */
     public List<? extends SnapshotSchedule> findRecurringSnapshotSchedule(ListRecurringSnapshotScheduleCmd cmd);
@@ -93,7 +97,8 @@ public interface SnapshotApiService {
      * @param snapshotOwner
      *            TODO
      * @param cmd
-     *            the API command wrapping the parameters for creating the snapshot (mainly volumeId)
+     *            the API command wrapping the parameters for creating the
+     *            snapshot (mainly volumeId)
      *
      * @return the Snapshot that was created
      */

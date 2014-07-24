@@ -123,7 +123,7 @@ public class EngineDataCenterVO implements EngineDataCenter, Identity {
     @Column(name = GenericDao.REMOVED_COLUMN)
     private Date removed;
 
-    // This is a delayed load value.  If the value is null,
+    // This is a delayed load value. If the value is null,
     // then this field has not been loaded yet.
     // Call the dao to load it.
     @Transient
@@ -142,7 +142,7 @@ public class EngineDataCenterVO implements EngineDataCenter, Identity {
     @Column(name = "is_local_storage_enabled")
     boolean localStorageEnabled;
 
-    //orchestration
+    // orchestration
     @Column(name = "owner")
     private String owner = null;
 
@@ -154,9 +154,9 @@ public class EngineDataCenterVO implements EngineDataCenter, Identity {
     protected Date lastUpdated;
 
     /**
-     * Note that state is intentionally missing the setter.  Any updates to
-     * the state machine needs to go through the DAO object because someone
-     * else could be updating it as well.
+     * Note that state is intentionally missing the setter. Any updates to the
+     * state machine needs to go through the DAO object because someone else
+     * could be updating it as well.
      */
     @Enumerated(value = EnumType.STRING)
     @StateMachine(state = State.class, event = Event.class)
@@ -208,8 +208,8 @@ public class EngineDataCenterVO implements EngineDataCenter, Identity {
         this.firewallProvider = firewallProvider;
     }
 
-    public EngineDataCenterVO(long id, String name, String description, String dns1, String dns2, String dns3, String dns4, String guestCidr, String domain,
-            Long domainId, NetworkType zoneType, String zoneToken, String domainSuffix) {
+    public EngineDataCenterVO(long id, String name, String description, String dns1, String dns2, String dns3, String dns4, String guestCidr, String domain, Long domainId,
+            NetworkType zoneType, String zoneToken, String domainSuffix) {
         this(name, description, dns1, dns2, dns3, dns4, guestCidr, domain, domainId, zoneType, zoneToken, domainSuffix, false, false, null, null);
         this.id = id;
         this.allocationState = Grouping.AllocationState.Enabled;

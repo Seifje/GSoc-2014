@@ -36,8 +36,7 @@ import com.cloud.exception.ResourceInUseException;
 import com.cloud.network.as.Condition;
 import com.cloud.user.Account;
 
-@APICommand(name = "deleteCondition", description = "Removes a condition", responseObject = SuccessResponse.class, entityType = {Condition.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteCondition", description = "Removes a condition", responseObject = SuccessResponse.class, entityType = {Condition.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteConditionCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(DeleteConditionCmd.class.getName());
     private static final String s_name = "deleteconditionresponse";
@@ -97,7 +96,9 @@ public class DeleteConditionCmd extends BaseAsyncCmd {
             return condition.getAccountId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are
         // tracked
     }
 

@@ -35,9 +35,12 @@ public interface AsyncJob extends JobInfo {
 
     public static interface Constants {
 
-        // Although we may have detailed masks for each individual wakeup event, i.e.
-        // periodical timer, matched topic from message bus, it seems that we don't
-        // need to distinguish them to such level. Therefore, only one wakeup signal
+        // Although we may have detailed masks for each individual wakeup event,
+        // i.e.
+        // periodical timer, matched topic from message bus, it seems that we
+        // don't
+        // need to distinguish them to such level. Therefore, only one wakeup
+        // signal
         // is defined
         public static final int SIGNAL_MASK_WAKEUP = 1;
 

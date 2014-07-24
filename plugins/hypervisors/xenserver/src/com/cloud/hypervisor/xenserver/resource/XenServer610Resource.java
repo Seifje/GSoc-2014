@@ -153,7 +153,8 @@ public class XenServer610Resource extends XenServer602Resource {
             Set<VM> vms = VM.getByNameLabel(connection, vmSpec.getName());
             VM vmToMigrate = vms.iterator().next();
 
-            // Create the vif map. The vm stays in the same cluster so we have to pass an empty vif map.
+            // Create the vif map. The vm stays in the same cluster so we have
+            // to pass an empty vif map.
             Map<VIF, Network> vifMap = new HashMap<VIF, Network>();
             Map<VDI, SR> vdiMap = new HashMap<VDI, SR>();
             for (Map.Entry<VolumeTO, StorageFilerTO> entry : volumeToFiler.entrySet()) {
@@ -266,7 +267,8 @@ public class XenServer610Resource extends XenServer602Resource {
             Map<String, String> other = new HashMap<String, String>();
             other.put("live", "true");
 
-            // Create the vdi map which tells what volumes of the vm need to go on which sr on the destination.
+            // Create the vdi map which tells what volumes of the vm need to go
+            // on which sr on the destination.
             Map<VDI, SR> vdiMap = new HashMap<VDI, SR>();
             for (Map.Entry<VolumeTO, Object> entry : volumeToSr.entrySet()) {
                 if (entry.getValue() instanceof SR) {
@@ -407,10 +409,14 @@ public class XenServer610Resource extends XenServer602Resource {
             s_logger.warn("No recommended value found for dynamic max, setting static max and dynamic max equal");
             return dynamicMaxRam;
         }
-        long staticMax = Math.min(recommendedValue, 4l * dynamicMinRam);  // XS constraint for stability
-        if (dynamicMaxRam > staticMax) { // XS contraint that dynamic max <= static max
-            s_logger.warn("dynamixMax " + dynamicMaxRam + " cant be greater than static max " + staticMax +
-                ", can lead to stability issues. Setting static max as much as dynamic max ");
+        long staticMax = Math.min(recommendedValue, 4l * dynamicMinRam); // XS
+        // constraint
+        // for
+        // stability
+        if (dynamicMaxRam > staticMax) { // XS contraint that dynamic max <=
+            // static max
+            s_logger.warn("dynamixMax " + dynamicMaxRam + " cant be greater than static max " + staticMax
+                    + ", can lead to stability issues. Setting static max as much as dynamic max ");
             return dynamicMaxRam;
         }
         return staticMax;
@@ -424,7 +430,8 @@ public class XenServer610Resource extends XenServer602Resource {
             return dynamicMinRam;
         }
 
-        if (dynamicMinRam < recommendedValue) {   // XS contraint that dynamic min > static min
+        if (dynamicMinRam < recommendedValue) { // XS contraint that dynamic min
+            // > static min
             s_logger.warn("Vm is set to dynamixMin " + dynamicMinRam + " less than the recommended static min " + recommendedValue + ", could lead to stability issues");
         }
         return dynamicMinRam;

@@ -30,8 +30,10 @@ import com.cloud.utils.component.ComponentContext;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 /**
- * A test fixture to test APIs or bugs found for Transaction class. This test fixture will do one time setup before
- * all its testcases to set up a test db table, and then tear down these test db artifacts after all testcases are run.
+ * A test fixture to test APIs or bugs found for Transaction class. This test
+ * fixture will do one time setup before all its testcases to set up a test db
+ * table, and then tear down these test db artifacts after all testcases are
+ * run.
  *
  */
 public class TransactionTest {
@@ -43,8 +45,7 @@ public class TransactionTest {
         try {
             conn = TransactionLegacy.getStandaloneConnection();
 
-            pstmt =
-                conn.prepareStatement("CREATE TABLE `cloud`.`test` (" + "`id` bigint unsigned NOT NULL UNIQUE AUTO_INCREMENT," + "`fld_int` int unsigned,"
+            pstmt = conn.prepareStatement("CREATE TABLE `cloud`.`test` (" + "`id` bigint unsigned NOT NULL UNIQUE AUTO_INCREMENT," + "`fld_int` int unsigned,"
                     + "`fld_long` bigint unsigned," + "`fld_string` varchar(255)," + "PRIMARY KEY (`id`)" + ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
             pstmt.execute();

@@ -104,7 +104,7 @@ public class FirewallRuleVO implements FirewallRule {
     @Column(name = "display", updatable = true, nullable = false)
     protected boolean display = true;
 
-    // This is a delayed load value.  If the value is null,
+    // This is a delayed load value. If the value is null,
     // then this field has not been loaded yet.
     // Call firewallrules dao to load it.
     @Transient
@@ -194,8 +194,8 @@ public class FirewallRuleVO implements FirewallRule {
         uuid = UUID.randomUUID().toString();
     }
 
-    public FirewallRuleVO(String xId, Long ipAddressId, Integer portStart, Integer portEnd, String protocol, long networkId, long accountId, long domainId,
-            Purpose purpose, List<String> sourceCidrs, Integer icmpCode, Integer icmpType, Long related, TrafficType trafficType) {
+    public FirewallRuleVO(String xId, Long ipAddressId, Integer portStart, Integer portEnd, String protocol, long networkId, long accountId, long domainId, Purpose purpose,
+            List<String> sourceCidrs, Integer icmpCode, Integer icmpType, Long related, TrafficType trafficType) {
         this.xId = xId;
         if (xId == null) {
             this.xId = UUID.randomUUID().toString();
@@ -223,14 +223,14 @@ public class FirewallRuleVO implements FirewallRule {
         this.trafficType = trafficType;
     }
 
-    public FirewallRuleVO(String xId, Long ipAddressId, Integer portStart, Integer portEnd, String protocol, long networkId, long accountId, long domainId,
-            Purpose purpose, List<String> sourceCidrs, Integer icmpCode, Integer icmpType, Long related, TrafficType trafficType, FirewallRuleType type) {
+    public FirewallRuleVO(String xId, Long ipAddressId, Integer portStart, Integer portEnd, String protocol, long networkId, long accountId, long domainId, Purpose purpose,
+            List<String> sourceCidrs, Integer icmpCode, Integer icmpType, Long related, TrafficType trafficType, FirewallRuleType type) {
         this(xId, ipAddressId, portStart, portEnd, protocol, networkId, accountId, domainId, purpose, sourceCidrs, icmpCode, icmpType, related, trafficType);
         this.type = type;
     }
 
-    public FirewallRuleVO(String xId, long ipAddressId, int port, String protocol, long networkId, long accountId, long domainId, Purpose purpose,
-            List<String> sourceCidrs, Integer icmpCode, Integer icmpType, Long related) {
+    public FirewallRuleVO(String xId, long ipAddressId, int port, String protocol, long networkId, long accountId, long domainId, Purpose purpose, List<String> sourceCidrs,
+            Integer icmpCode, Integer icmpType, Long related) {
         this(xId, ipAddressId, port, port, protocol, networkId, accountId, domainId, purpose, sourceCidrs, icmpCode, icmpType, related, null);
     }
 
@@ -271,7 +271,6 @@ public class FirewallRuleVO implements FirewallRule {
     public TrafficType getTrafficType() {
         return trafficType;
     }
-
 
     public void setDisplay(boolean display) {
         this.display = display;

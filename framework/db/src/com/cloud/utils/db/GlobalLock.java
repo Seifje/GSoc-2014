@@ -145,7 +145,8 @@ public class GlobalLock {
 
                         continue;
                     } else {
-                        // take ownership temporarily to prevent others enter into stage of acquiring DB lock
+                        // take ownership temporarily to prevent others enter
+                        // into stage of acquiring DB lock
                         ownerThread = Thread.currentThread();
                         addRef();
                     }
@@ -187,7 +188,8 @@ public class GlobalLock {
                         s_logger.trace("lock " + name + " is returned to free state, total holding time :" + (System.currentTimeMillis() - holdingStartTick));
                     holdingStartTick = 0;
 
-                    // release holding position in intern map when we released the DB connection
+                    // release holding position in intern map when we released
+                    // the DB connection
                     releaseRef();
                     notifyAll();
                 }

@@ -52,7 +52,8 @@ public class ReflectUtil {
         } catch (SecurityException e) {
             throw new CloudRuntimeException("How the heck?", e);
         } catch (NoSuchFieldException e) {
-            // Do I really want this?  No I don't but what can I do?  It only throws the NoSuchFieldException.
+            // Do I really want this? No I don't but what can I do? It only
+            // throws the NoSuchFieldException.
             Class<?> parent = clazz.getSuperclass();
             if (parent != null) {
                 return getAnyField(parent, fieldName);
@@ -108,8 +109,11 @@ public class ReflectUtil {
 
     /**
      * Returns all unique fields except excludeClasses for a cmd class
-     * @param cmdClass    the class in which fields should be collected
-     * @param excludeClasses the classes whose fields must be ignored
+     *
+     * @param cmdClass
+     *            the class in which fields should be collected
+     * @param excludeClasses
+     *            the classes whose fields must be ignored
      * @return list of fields
      */
     public static Set<Field> getAllFieldsForClass(Class<?> cmdClass, Class<?>[] excludeClasses) {
@@ -189,15 +193,15 @@ public class ReflectUtil {
 
     }
 
-    public static String getEntityName(Class clz){
-        if(clz == null)
+    public static String getEntityName(Class clz) {
+        if (clz == null)
             return null;
 
         String entityName = clz.getName();
         int index = entityName.lastIndexOf(".");
         if (index != -1) {
             return entityName.substring(index + 1);
-        }else{
+        } else {
             return entityName;
         }
     }

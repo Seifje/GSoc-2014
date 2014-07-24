@@ -245,32 +245,32 @@ public class VncClient {
         int authType = is.readInt();
 
         switch (authType) {
-            case RfbConstants.CONNECTION_FAILED: {
-                // Server forbids to connect. Read reason and throw exception
+        case RfbConstants.CONNECTION_FAILED: {
+            // Server forbids to connect. Read reason and throw exception
 
-                int length = is.readInt();
-                byte[] buf = new byte[length];
-                is.readFully(buf);
-                String reason = new String(buf, RfbConstants.CHARSET);
+            int length = is.readInt();
+            byte[] buf = new byte[length];
+            is.readFully(buf);
+            String reason = new String(buf, RfbConstants.CHARSET);
 
-                s_logger.error("Authentication to VNC server is failed. Reason: " + reason);
-                throw new RuntimeException("Authentication to VNC server is failed. Reason: " + reason);
-            }
+            s_logger.error("Authentication to VNC server is failed. Reason: " + reason);
+            throw new RuntimeException("Authentication to VNC server is failed. Reason: " + reason);
+        }
 
-            case RfbConstants.NO_AUTH: {
-                // Client can connect without authorization. Nothing to do.
-                break;
-            }
+        case RfbConstants.NO_AUTH: {
+            // Client can connect without authorization. Nothing to do.
+            break;
+        }
 
-            case RfbConstants.VNC_AUTH: {
-                s_logger.info("VNC server requires password authentication");
-                doVncAuth(password);
-                break;
-            }
+        case RfbConstants.VNC_AUTH: {
+            s_logger.info("VNC server requires password authentication");
+            doVncAuth(password);
+            break;
+        }
 
-            default:
-                s_logger.error("Unsupported VNC protocol authorization scheme, scheme code: " + authType + ".");
-                throw new RuntimeException("Unsupported VNC protocol authorization scheme, scheme code: " + authType + ".");
+        default:
+            s_logger.error("Unsupported VNC protocol authorization scheme, scheme code: " + authType + ".");
+            throw new RuntimeException("Unsupported VNC protocol authorization scheme, scheme code: " + authType + ".");
         }
     }
 
@@ -300,22 +300,22 @@ public class VncClient {
         int authResult = is.readInt();
 
         switch (authResult) {
-            case RfbConstants.VNC_AUTH_OK: {
-                // Nothing to do
-                break;
-            }
+        case RfbConstants.VNC_AUTH_OK: {
+            // Nothing to do
+            break;
+        }
 
-            case RfbConstants.VNC_AUTH_TOO_MANY:
-                s_logger.error("Connection to VNC server failed: too many wrong attempts.");
-                throw new RuntimeException("Connection to VNC server failed: too many wrong attempts.");
+        case RfbConstants.VNC_AUTH_TOO_MANY:
+            s_logger.error("Connection to VNC server failed: too many wrong attempts.");
+            throw new RuntimeException("Connection to VNC server failed: too many wrong attempts.");
 
-            case RfbConstants.VNC_AUTH_FAILED:
-                s_logger.error("Connection to VNC server failed: wrong password.");
-                throw new RuntimeException("Connection to VNC server failed: wrong password.");
+        case RfbConstants.VNC_AUTH_FAILED:
+            s_logger.error("Connection to VNC server failed: wrong password.");
+            throw new RuntimeException("Connection to VNC server failed: wrong password.");
 
-            default:
-                s_logger.error("Connection to VNC server failed, reason code: " + authResult);
-                throw new RuntimeException("Connection to VNC server failed, reason code: " + authResult);
+        default:
+            s_logger.error("Connection to VNC server failed, reason code: " + authResult);
+            throw new RuntimeException("Connection to VNC server failed, reason code: " + authResult);
         }
     }
 

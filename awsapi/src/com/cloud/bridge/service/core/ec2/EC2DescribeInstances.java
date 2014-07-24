@@ -21,7 +21,10 @@ import java.util.List;
 
 public class EC2DescribeInstances {
 
-    private List<String> instancesSet = new ArrayList<String>();    // a list of strings identifying instances
+    private List<String> instancesSet = new ArrayList<String>(); // a list of
+                                                                 // strings
+                                                                 // identifying
+                                                                 // instances
     private EC2InstanceFilterSet ifs = null;
     private List<EC2TagKeyValue> resourceTagSet = new ArrayList<EC2TagKeyValue>();
 

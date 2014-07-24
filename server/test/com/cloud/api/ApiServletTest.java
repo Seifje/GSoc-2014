@@ -38,6 +38,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -85,17 +86,14 @@ public class ApiServletTest {
     ApiServlet servlet;
 
     @Before
-    public void setup() throws SecurityException, NoSuchFieldException,
-            IllegalArgumentException, IllegalAccessException, IOException {
+    public void setup() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException, IOException {
         servlet = new ApiServlet();
         responseWriter = new StringWriter();
-        Mockito.when(response.getWriter()).thenReturn(
-                new PrintWriter(responseWriter));
+        Mockito.when(response.getWriter()).thenReturn(new PrintWriter(responseWriter));
         Mockito.when(request.getRemoteAddr()).thenReturn("127.0.0.1");
         Mockito.when(accountService.getSystemUser()).thenReturn(user);
         Mockito.when(accountService.getSystemAccount()).thenReturn(account);
-        Field accountMgrField = ApiServlet.class
-                .getDeclaredField("_accountMgr");
+        Field accountMgrField = ApiServlet.class.getDeclaredField("_accountMgr");
         accountMgrField.setAccessible(true);
         accountMgrField.set(servlet, accountService);
 
@@ -113,8 +111,7 @@ public class ApiServletTest {
         Field smsField = ApiDBUtils.class.getDeclaredField("s_ms");
         smsField.setAccessible(true);
         smsField.set(null, managementServer);
-        Mockito.when(managementServer.getVersion()).thenReturn(
-                "LATEST-AND-GREATEST");
+        Mockito.when(managementServer.getVersion()).thenReturn("LATEST-AND-GREATEST");
     }
 
     @After
@@ -126,8 +123,7 @@ public class ApiServletTest {
 
     @Test
     public void utf8Fixup() {
-        Mockito.when(request.getQueryString()).thenReturn(
-                "foo=12345&bar=blah&baz=&param=param");
+        Mockito.when(request.getQueryString()).thenReturn("foo=12345&bar=blah&baz=&param=param");
         HashMap<String, Object[]> params = new HashMap<String, Object[]>();
         servlet.utf8Fixup(request, params);
         Assert.assertEquals("12345", params.get("foo")[0]);
@@ -150,9 +146,7 @@ public class ApiServletTest {
 
     @Test
     public void utf8FixupUtf() throws UnsupportedEncodingException {
-        Mockito.when(request.getQueryString()).thenReturn(
-                URLEncoder.encode("防水镜钻孔机", "UTF-8") + "="
-                        + URLEncoder.encode("árvíztűrőtükörfúró", "UTF-8"));
+        Mockito.when(request.getQueryString()).thenReturn(URLEncoder.encode("防水镜钻孔机", "UTF-8") + "=" + URLEncoder.encode("árvíztűrőtükörfúró", "UTF-8"));
         HashMap<String, Object[]> params = new HashMap<String, Object[]>();
         servlet.utf8Fixup(request, params);
         Assert.assertEquals("árvíztűrőtükörfúró", params.get("防水镜钻孔机")[0]);
@@ -162,39 +156,30 @@ public class ApiServletTest {
     @Test
     public void processRequestInContextUnauthorizedGET() {
         Mockito.when(request.getMethod()).thenReturn("GET");
-        Mockito.when(
-                apiServer.verifyRequest(Mockito.anyMap(), Mockito.anyLong()))
-                .thenReturn(false);
+        Mockito.when(apiServer.verifyRequest(Matchers.anyMap(), Matchers.anyLong())).thenReturn(false);
         servlet.processRequestInContext(request, response);
         Mockito.verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        Mockito.verify(apiServer, Mockito.never()).handleRequest(
-                Mockito.anyMap(), Mockito.anyString(),
-                Mockito.any(StringBuilder.class));
+        Mockito.verify(apiServer, Mockito.never()).handleRequest(Matchers.anyMap(), Matchers.anyString(), Matchers.any(StringBuilder.class));
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void processRequestInContextAuthorizedGet() {
         Mockito.when(request.getMethod()).thenReturn("GET");
-        Mockito.when(
-                apiServer.verifyRequest(Mockito.anyMap(), Mockito.anyLong()))
-                .thenReturn(true);
+        Mockito.when(apiServer.verifyRequest(Matchers.anyMap(), Matchers.anyLong())).thenReturn(true);
         servlet.processRequestInContext(request, response);
         Mockito.verify(response).setStatus(HttpServletResponse.SC_OK);
-        Mockito.verify(apiServer, Mockito.times(1)).handleRequest(
-                Mockito.anyMap(), Mockito.anyString(),
-                Mockito.any(StringBuilder.class));
+        Mockito.verify(apiServer, Mockito.times(1)).handleRequest(Matchers.anyMap(), Matchers.anyString(), Matchers.any(StringBuilder.class));
     }
 
     @Test
     public void processRequestInContextLogout() {
         Mockito.when(request.getMethod()).thenReturn("GET");
-        Mockito.when(request.getSession(Mockito.anyBoolean())).thenReturn(
-                session);
+        Mockito.when(request.getSession(Matchers.anyBoolean())).thenReturn(session);
         Mockito.when(session.getAttribute("userid")).thenReturn(1l);
         Mockito.when(session.getAttribute("accountobj")).thenReturn(account);
         HashMap<String, String[]> params = new HashMap<String, String[]>();
-        params.put(ApiConstants.COMMAND, new String[] { "logout" });
+        params.put(ApiConstants.COMMAND, new String[] {"logout"});
         Mockito.when(request.getParameterMap()).thenReturn(params);
 
         servlet.processRequestInContext(request, response);
@@ -207,14 +192,13 @@ public class ApiServletTest {
     @Test
     public void processRequestInContextLogin() {
         Mockito.when(request.getMethod()).thenReturn("GET");
-        Mockito.when(request.getSession(Mockito.anyBoolean())).thenReturn(
-                session);
+        Mockito.when(request.getSession(Matchers.anyBoolean())).thenReturn(session);
         HashMap<String, String[]> params = new HashMap<String, String[]>();
-        params.put(ApiConstants.COMMAND, new String[] { "login" });
-        params.put(ApiConstants.USERNAME, new String[] { "TEST" });
-        params.put(ApiConstants.PASSWORD, new String[] { "TEST-PWD" });
-        params.put(ApiConstants.DOMAIN_ID, new String[] { "42" });
-        params.put(ApiConstants.DOMAIN, new String[] { "TEST-DOMAIN" });
+        params.put(ApiConstants.COMMAND, new String[] {"login"});
+        params.put(ApiConstants.USERNAME, new String[] {"TEST"});
+        params.put(ApiConstants.PASSWORD, new String[] {"TEST-PWD"});
+        params.put(ApiConstants.DOMAIN_ID, new String[] {"42"});
+        params.put(ApiConstants.DOMAIN, new String[] {"TEST-DOMAIN"});
         Mockito.when(request.getParameterMap()).thenReturn(params);
         Mockito.when(apiServer.fetchDomainId("42")).thenReturn(null);
         Mockito.when(session.getAttribute("userid")).thenReturn(1l);
@@ -223,42 +207,30 @@ public class ApiServletTest {
         servlet.processRequestInContext(request, response);
 
         Mockito.verify(request).getSession(true);
-        Mockito.verify(apiServer).loginUser(Mockito.any(HttpSession.class),
-                Mockito.eq("TEST"), Mockito.eq("TEST-PWD"), Mockito.eq(42l),
-                Mockito.eq("/TEST-DOMAIN/"), Mockito.eq("127.0.0.1"),
-                Mockito.any(Map.class));
+        Mockito.verify(apiServer).loginUser(Matchers.any(HttpSession.class), Matchers.eq("TEST"), Matchers.eq("TEST-PWD"), Matchers.eq(42l), Matchers.eq("/TEST-DOMAIN/"),
+                Matchers.eq("127.0.0.1"), Matchers.any(Map.class));
         Mockito.verify(response).setStatus(HttpServletResponse.SC_OK);
     }
 
     @SuppressWarnings("unchecked")
     @Test
-    public void getLoginSuccessResponseJson() throws JsonParseException,
-            IOException {
-        Mockito.when(session.getAttributeNames()).thenReturn(
-                new IteratorEnumeration(Arrays.asList("foo", "bar", "userid",
-                        "domainid").iterator()));
-        Mockito.when(session.getAttribute(Mockito.anyString())).thenReturn(
-                "TEST");
+    public void getLoginSuccessResponseJson() throws JsonParseException, IOException {
+        Mockito.when(session.getAttributeNames()).thenReturn(new IteratorEnumeration(Arrays.asList("foo", "bar", "userid", "domainid").iterator()));
+        Mockito.when(session.getAttribute(Matchers.anyString())).thenReturn("TEST");
 
         String loginResponse = servlet.getLoginSuccessResponse(session, "json");
 
-        ObjectNode node = (ObjectNode) new ObjectMapper()
-                .readTree(loginResponse);
+        ObjectNode node = (ObjectNode)new ObjectMapper().readTree(loginResponse);
         Assert.assertNotNull(node.get("loginresponse"));
     }
 
     @SuppressWarnings("unchecked")
     @Test
-    public void getLoginSuccessResponseXml() throws JsonParseException,
-            IOException, SAXException {
-        Mockito.when(session.getAttributeNames()).thenReturn(
-                new IteratorEnumeration(Arrays.asList("foo", "bar", "userid",
-                        "domainid").iterator()));
-        Mockito.when(session.getAttribute(Mockito.anyString())).thenReturn(
-                "TEST");
+    public void getLoginSuccessResponseXml() throws JsonParseException, IOException, SAXException {
+        Mockito.when(session.getAttributeNames()).thenReturn(new IteratorEnumeration(Arrays.asList("foo", "bar", "userid", "domainid").iterator()));
+        Mockito.when(session.getAttribute(Matchers.anyString())).thenReturn("TEST");
         String loginResponse = servlet.getLoginSuccessResponse(session, "xml");
-        XMLReaderFactory.createXMLReader().parse(
-                new InputSource(new StringReader(loginResponse)));
+        XMLReaderFactory.createXMLReader().parse(new InputSource(new StringReader(loginResponse)));
         ;
     }
 

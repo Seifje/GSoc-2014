@@ -93,9 +93,8 @@ public class AutoScaleVmGroupVO implements AutoScaleVmGroup, InternalIdentity {
     public AutoScaleVmGroupVO() {
     }
 
-    public AutoScaleVmGroupVO(long lbRuleId, long zoneId, long domainId,
-            long accountId, int minMembers, int maxMembers, int memberPort,
-            int interval, Date lastInterval, long profileId, String state) {
+    public AutoScaleVmGroupVO(long lbRuleId, long zoneId, long domainId, long accountId, int minMembers, int maxMembers, int memberPort, int interval, Date lastInterval,
+            long profileId, String state) {
 
         uuid = UUID.randomUUID().toString();
         loadBalancerId = lbRuleId;

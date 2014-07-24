@@ -56,11 +56,9 @@ public class SnapshotDataStoreDaoImpl extends GenericDaoBase<SnapshotDataStoreVO
     private SearchBuilder<SnapshotDataStoreVO> snapshotIdSearch;
 
     private final String parentSearch = "select store_id, store_role, snapshot_id from cloud.snapshot_store_ref where store_id = ? "
-        + " and store_role = ? and volume_id = ? and state = 'Ready'" + " order by created DESC " + " limit 1";
-    private final String findLatestSnapshot = "select store_id, store_role, snapshot_id from cloud.snapshot_store_ref where " +
-            " store_role = ? and volume_id = ? and state = 'Ready'" +
-            " order by created DESC " +
-            " limit 1";
+            + " and store_role = ? and volume_id = ? and state = 'Ready'" + " order by created DESC " + " limit 1";
+    private final String findLatestSnapshot = "select store_id, store_role, snapshot_id from cloud.snapshot_store_ref where "
+            + " store_role = ? and volume_id = ? and state = 'Ready'" + " order by created DESC " + " limit 1";
 
     @Override
     public boolean configure(String name, Map<String, Object> params) throws ConfigurationException {
@@ -135,34 +133,12 @@ public class SnapshotDataStoreDaoImpl extends GenericDaoBase<SnapshotDataStoreVO
             SnapshotDataStoreVO dbVol = findByIdIncludingRemoved(dataObj.getId());
             if (dbVol != null) {
                 StringBuilder str = new StringBuilder("Unable to update ").append(dataObj.toString());
-                str.append(": DB Data={id=")
-                    .append(dbVol.getId())
-                    .append("; state=")
-                    .append(dbVol.getState())
-                    .append("; updatecount=")
-                    .append(dbVol.getUpdatedCount())
-                    .append(";updatedTime=")
-                    .append(dbVol.getUpdated());
-                str.append(": New Data={id=")
-                    .append(dataObj.getId())
-                    .append("; state=")
-                    .append(nextState)
-                    .append("; event=")
-                    .append(event)
-                    .append("; updatecount=")
-                    .append(dataObj.getUpdatedCount())
-                    .append("; updatedTime=")
-                    .append(dataObj.getUpdated());
-                str.append(": stale Data={id=")
-                    .append(dataObj.getId())
-                    .append("; state=")
-                    .append(currentState)
-                    .append("; event=")
-                    .append(event)
-                    .append("; updatecount=")
-                    .append(oldUpdated)
-                    .append("; updatedTime=")
-                    .append(oldUpdatedTime);
+                str.append(": DB Data={id=").append(dbVol.getId()).append("; state=").append(dbVol.getState()).append("; updatecount=").append(dbVol.getUpdatedCount())
+                .append(";updatedTime=").append(dbVol.getUpdated());
+                str.append(": New Data={id=").append(dataObj.getId()).append("; state=").append(nextState).append("; event=").append(event).append("; updatecount=")
+                .append(dataObj.getUpdatedCount()).append("; updatedTime=").append(dataObj.getUpdated());
+                str.append(": stale Data={id=").append(dataObj.getId()).append("; state=").append(currentState).append("; event=").append(event).append("; updatecount=")
+                .append(oldUpdated).append("; updatedTime=").append(oldUpdatedTime);
             } else {
                 s_logger.debug("Unable to update objectIndatastore: id=" + dataObj.getId() + ", as there is no such object exists in the database anymore");
             }
@@ -306,7 +282,8 @@ public class SnapshotDataStoreDaoImpl extends GenericDaoBase<SnapshotDataStoreVO
         sc.setParameters("store_role", DataStoreRole.ImageCache);
         sc.setParameters("destroyed", false);
         List<SnapshotDataStoreVO> snapshots = listBy(sc);
-        // create an entry for each record, but with empty install path since the content is not yet on region-wide store yet
+        // create an entry for each record, but with empty install path since
+        // the content is not yet on region-wide store yet
         if (snapshots != null) {
             s_logger.info("Duplicate " + snapshots.size() + " snapshot cache store records to region store");
             for (SnapshotDataStoreVO snap : snapshots) {
@@ -327,7 +304,8 @@ public class SnapshotDataStoreDaoImpl extends GenericDaoBase<SnapshotDataStoreVO
                 ss.setPhysicalSize(snap.getPhysicalSize());
                 ss.setRefCnt(snap.getRefCnt());
                 persist(ss);
-                // increase ref_cnt so that this will not be recycled before the content is pushed to region-wide store
+                // increase ref_cnt so that this will not be recycled before the
+                // content is pushed to region-wide store
                 snap.incrRefCnt();
                 update(snap.getId(), snap);
             }

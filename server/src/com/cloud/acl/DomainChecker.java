@@ -99,8 +99,7 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
     }
 
     @Override
-    public boolean checkAccess(Account caller, ControlledEntity entity, AccessType accessType)
-            throws PermissionDeniedException {
+    public boolean checkAccess(Account caller, ControlledEntity entity, AccessType accessType) throws PermissionDeniedException {
         if (entity instanceof VirtualMachineTemplate) {
 
             VirtualMachineTemplate template = (VirtualMachineTemplate)entity;
@@ -110,22 +109,25 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
                 if (_accountService.isRootAdmin(caller.getId()) || (owner.getId() == caller.getId())) {
                     return true;
                 }
-                //special handling for the project case
+                // special handling for the project case
                 if (owner.getType() == Account.ACCOUNT_TYPE_PROJECT && _projectMgr.canAccessProjectAccount(caller, owner.getId())) {
                     return true;
                 }
 
-                // since the current account is not the owner of the template, check the launch permissions table to see if the
+                // since the current account is not the owner of the template,
+                // check the launch permissions table to see if the
                 // account can launch a VM from this template
                 LaunchPermissionVO permission = _launchPermissionDao.findByTemplateAndAccount(template.getId(), caller.getId());
                 if (permission == null) {
                     throw new PermissionDeniedException(caller + " does not have permission to launch instances from " + template);
                 }
             } else {
-                // Domain admin and regular user can delete/modify only templates created by them
+                // Domain admin and regular user can delete/modify only
+                // templates created by them
                 if (accessType != null && accessType == AccessType.OperateEntry) {
                     if (!_accountService.isRootAdmin(caller.getId()) && owner.getId() != caller.getId()) {
-                        // For projects check if the caller account can access the project account
+                        // For projects check if the caller account can access
+                        // the project account
                         if (owner.getType() != Account.ACCOUNT_TYPE_PROJECT || !(_projectMgr.canAccessProjectAccount(caller, owner.getId()))) {
                             throw new PermissionDeniedException("Domain Admin and regular users can modify only their own Public templates");
                         }
@@ -143,7 +145,7 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
                 Account account = _accountDao.findById(entity.getAccountId());
 
                 if (account != null && account.getType() == Account.ACCOUNT_TYPE_PROJECT) {
-                    //only project owner can delete/modify the project
+                    // only project owner can delete/modify the project
                     if (accessType != null && accessType == AccessType.ModifyProject) {
                         if (!_projectMgr.canModifyProjectAccount(caller, account.getId())) {
                             throw new PermissionDeniedException(caller + " does not have permission to operate with resource " + entity);
@@ -170,26 +172,26 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
 
     @Override
     public boolean checkAccess(Account account, DiskOffering dof) throws PermissionDeniedException {
-        if (account == null || dof.getDomainId() == null) {//public offering
+        if (account == null || dof.getDomainId() == null) {// public offering
             return true;
         } else {
-            //admin has all permissions
+            // admin has all permissions
             if (_accountService.isRootAdmin(account.getId())) {
                 return true;
             }
-            //if account is normal user or domain admin
-            //check if account's domain is a child of zone's domain (Note: This is made consistent with the list command for disk offering)
-            else if (_accountService.isNormalUser(account.getId())
-                    || account.getType() == Account.ACCOUNT_TYPE_RESOURCE_DOMAIN_ADMIN
+            // if account is normal user or domain admin
+            // check if account's domain is a child of zone's domain (Note: This
+            // is made consistent with the list command for disk offering)
+            else if (_accountService.isNormalUser(account.getId()) || account.getType() == Account.ACCOUNT_TYPE_RESOURCE_DOMAIN_ADMIN
                     || _accountService.isDomainAdmin(account.getId())) {
                 if (account.getDomainId() == dof.getDomainId()) {
-                    return true; //disk offering and account at exact node
+                    return true; // disk offering and account at exact node
                 } else {
                     Domain domainRecord = _domainDao.findById(account.getDomainId());
                     if (domainRecord != null) {
                         while (true) {
                             if (domainRecord.getId() == dof.getDomainId()) {
-                                //found as a child
+                                // found as a child
                                 return true;
                             }
                             if (domainRecord.getParent() != null) {
@@ -202,32 +204,32 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
                 }
             }
         }
-        //not found
+        // not found
         return false;
     }
 
     @Override
     public boolean checkAccess(Account account, ServiceOffering so) throws PermissionDeniedException {
-        if (account == null || so.getDomainId() == null) {//public offering
+        if (account == null || so.getDomainId() == null) {// public offering
             return true;
         } else {
-            //admin has all permissions
+            // admin has all permissions
             if (_accountService.isRootAdmin(account.getId())) {
                 return true;
             }
-            //if account is normal user or domain admin
-            //check if account's domain is a child of zone's domain (Note: This is made consistent with the list command for service offering)
-            else if (_accountService.isNormalUser(account.getId())
-                    || account.getType() == Account.ACCOUNT_TYPE_RESOURCE_DOMAIN_ADMIN
+            // if account is normal user or domain admin
+            // check if account's domain is a child of zone's domain (Note: This
+            // is made consistent with the list command for service offering)
+            else if (_accountService.isNormalUser(account.getId()) || account.getType() == Account.ACCOUNT_TYPE_RESOURCE_DOMAIN_ADMIN
                     || _accountService.isDomainAdmin(account.getId())) {
                 if (account.getDomainId() == so.getDomainId()) {
-                    return true; //service offering and account at exact node
+                    return true; // service offering and account at exact node
                 } else {
                     Domain domainRecord = _domainDao.findById(account.getDomainId());
                     if (domainRecord != null) {
                         while (true) {
                             if (domainRecord.getId() == so.getDomainId()) {
-                                //found as a child
+                                // found as a child
                                 return true;
                             }
                             if (domainRecord.getParent() != null) {
@@ -240,21 +242,21 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
                 }
             }
         }
-        //not found
+        // not found
         return false;
     }
 
     @Override
     public boolean checkAccess(Account account, DataCenter zone) throws PermissionDeniedException {
-        if (account == null || zone.getDomainId() == null) {//public zone
+        if (account == null || zone.getDomainId() == null) {// public zone
             return true;
         } else {
-            //admin has all permissions
+            // admin has all permissions
             if (_accountService.isRootAdmin(account.getId())) {
                 return true;
             }
-            //if account is normal user
-            //check if account's domain is a child of zone's domain
+            // if account is normal user
+            // check if account's domain is a child of zone's domain
             else if (_accountService.isNormalUser(account.getId()) || account.getType() == Account.ACCOUNT_TYPE_PROJECT) {
                 // if zone is dedicated to an account check that the accountId
                 // matches.
@@ -269,13 +271,13 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
                     }
                 }
                 if (account.getDomainId() == zone.getDomainId()) {
-                    return true; //zone and account at exact node
+                    return true; // zone and account at exact node
                 } else {
                     Domain domainRecord = _domainDao.findById(account.getDomainId());
                     if (domainRecord != null) {
                         while (true) {
                             if (domainRecord.getId() == zone.getDomainId()) {
-                                //found as a child
+                                // found as a child
                                 return true;
                             }
                             if (domainRecord.getParent() != null) {
@@ -286,14 +288,15 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
                         }
                     }
                 }
-                //not found
+                // not found
                 return false;
             }
-            //if account is domain admin
-            //check if the account's domain is either child of zone's domain, or if zone's domain is child of account's domain
+            // if account is domain admin
+            // check if the account's domain is either child of zone's domain,
+            // or if zone's domain is child of account's domain
             else if (_accountService.isDomainAdmin(account.getId())) {
                 if (account.getDomainId() == zone.getDomainId()) {
-                    return true; //zone and account at exact node
+                    return true; // zone and account at exact node
                 } else {
                     Domain zoneDomainRecord = _domainDao.findById(zone.getDomainId());
                     Domain accountDomainRecord = _domainDao.findById(account.getDomainId());
@@ -301,7 +304,7 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
                         Domain localRecord = accountDomainRecord;
                         while (true) {
                             if (localRecord.getId() == zone.getDomainId()) {
-                                //found as a child
+                                // found as a child
                                 return true;
                             }
                             if (localRecord.getParent() != null) {
@@ -311,14 +314,12 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
                             }
                         }
                     }
-                    //didn't find in upper tree
-                    if (zoneDomainRecord != null &&
-                            accountDomainRecord != null &&
-                            zoneDomainRecord.getPath().contains(accountDomainRecord.getPath())) {
+                    // didn't find in upper tree
+                    if (zoneDomainRecord != null && accountDomainRecord != null && zoneDomainRecord.getPath().contains(accountDomainRecord.getPath())) {
                         return true;
                     }
                 }
-                //not found
+                // not found
                 return false;
             }
         }
@@ -326,8 +327,7 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
     }
 
     @Override
-    public boolean checkAccess(Account caller, ControlledEntity entity, AccessType accessType, String action)
-            throws PermissionDeniedException {
+    public boolean checkAccess(Account caller, ControlledEntity entity, AccessType accessType, String action) throws PermissionDeniedException {
 
         if (action != null && ("SystemCapability".equals(action))) {
             if (caller != null && caller.getType() == Account.ACCOUNT_TYPE_ADMIN) {
@@ -352,8 +352,7 @@ public class DomainChecker extends AdapterBase implements SecurityChecker {
     }
 
     @Override
-    public boolean checkAccess(Account caller, AccessType accessType, String action, ControlledEntity... entities)
-            throws PermissionDeniedException {
+    public boolean checkAccess(Account caller, AccessType accessType, String action, ControlledEntity... entities) throws PermissionDeniedException {
 
         // returns true only if access to all entities is granted
         for (ControlledEntity entity : entities) {

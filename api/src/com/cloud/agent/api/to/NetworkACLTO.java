@@ -80,19 +80,9 @@ public class NetworkACLTO implements InternalIdentity {
     }
 
     public NetworkACLTO(NetworkACLItem rule, String vlanTag, NetworkACLItem.TrafficType trafficType) {
-        this(rule.getId(),
-            vlanTag,
-            rule.getProtocol(),
-            rule.getSourcePortStart(),
-            rule.getSourcePortEnd(),
-            rule.getState() == NetworkACLItem.State.Revoke,
-            rule.getState() == NetworkACLItem.State.Active,
-            rule.getSourceCidrList(),
-            rule.getIcmpType(),
-            rule.getIcmpCode(),
-            trafficType,
-            rule.getAction() == NetworkACLItem.Action.Allow,
-            rule.getNumber());
+        this(rule.getId(), vlanTag, rule.getProtocol(), rule.getSourcePortStart(), rule.getSourcePortEnd(), rule.getState() == NetworkACLItem.State.Revoke,
+                rule.getState() == NetworkACLItem.State.Active, rule.getSourceCidrList(), rule.getIcmpType(), rule.getIcmpCode(), trafficType,
+                rule.getAction() == NetworkACLItem.Action.Allow, rule.getNumber());
     }
 
     @Override

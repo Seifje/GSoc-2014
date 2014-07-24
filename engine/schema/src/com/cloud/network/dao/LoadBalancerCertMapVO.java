@@ -79,7 +79,7 @@ public class LoadBalancerCertMapVO implements InternalIdentity {
         return revoke;
     }
 
-    //Setters
+    // Setters
     public void setLbId(Long lbId) {
         this.lbId = lbId;
     }

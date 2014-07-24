@@ -43,9 +43,10 @@ public class RegistryLifecycle implements BeanPostProcessor, SmartLifecycle, App
 
     Registry<Object> registry;
 
-    /* The bean name works around circular dependency issues in Spring.  This shouldn't be
-     * needed if your beans are already nicely organized.  If they look like spaghetti, then you
-     * can use this.
+    /*
+     * The bean name works around circular dependency issues in Spring. This
+     * shouldn't be needed if your beans are already nicely organized. If they
+     * look like spaghetti, then you can use this.
      */
     String registryBeanName;
     Set<Object> beans = new HashSet<Object>();

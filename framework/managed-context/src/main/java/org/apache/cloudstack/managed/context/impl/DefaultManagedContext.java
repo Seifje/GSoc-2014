@@ -58,9 +58,9 @@ public class DefaultManagedContext implements ManagedContext {
                 }
             });
         } catch (Exception e) {
-            /* Only care about non-checked exceptions
-             * as the nature of runnable prevents checked
-             * exceptions from happening
+            /*
+             * Only care about non-checked exceptions as the nature of runnable
+             * prevents checked exceptions from happening
              */
             ManagedContextUtils.rethrowException(e);
         }
@@ -82,8 +82,9 @@ public class DefaultManagedContext implements ManagedContext {
                 try {
                     data = listener.onEnterContext(reentry);
                 } catch (Throwable t) {
-                    /* If one listener fails, still call all other listeners
-                     * and then we will call onLeaveContext for all
+                    /*
+                     * If one listener fails, still call all other listeners and
+                     * then we will call onLeaveContext for all
                      */
                     if (firstError == null) {
                         firstError = t;
@@ -91,15 +92,19 @@ public class DefaultManagedContext implements ManagedContext {
                     log.error("Failed onEnterContext for listener [{}]", listener, t);
                 }
 
-                /* Stack data structure is used because in between onEnter and onLeave
-                 * the listeners list could have changed
+                /*
+                 * Stack data structure is used because in between onEnter and
+                 * onLeave the listeners list could have changed
                  */
                 invocations.push(new ListenerInvocation((ManagedContextListener<Object>)listener, data));
             }
 
             try {
                 if (firstError == null) {
-                    /* Only call if all the listeners didn't blow up on onEnterContext */
+                    /*
+                     * Only call if all the listeners didn't blow up on
+                     * onEnterContext
+                     */
                     return callable.call();
                 } else {
                     throwException(firstError);

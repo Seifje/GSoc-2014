@@ -56,7 +56,8 @@ public class ConsoleProxySecureServerFactoryImpl implements ConsoleProxyServerFa
                 KeyStore ks = KeyStore.getInstance("JKS");
 
                 ks.load(new FileInputStream("certs/realhostip.keystore"), passphrase);
-                // ks.load(ConsoleProxy.class.getResourceAsStream("/realhostip.keystore"), passphrase);
+                // ks.load(ConsoleProxy.class.getResourceAsStream("/realhostip.keystore"),
+                // passphrase);
 
                 s_logger.info("SSL certificate loaded");
 

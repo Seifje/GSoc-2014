@@ -19,8 +19,8 @@ package com.cloud.agent.api;
 import com.cloud.host.Host;
 
 /**
- * Implementation of bootstrap command sent from management server to agent running on
- * System Center Virtual Machine Manager host
+ * Implementation of bootstrap command sent from management server to agent
+ * running on System Center Virtual Machine Manager host
  **/
 
 public class StartupVMMAgentCommand extends Command {

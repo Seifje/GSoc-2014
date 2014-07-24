@@ -31,16 +31,14 @@ import com.cloud.exception.InsufficientCapacityException;
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.uservm.UserVm;
 
-@APICommand(name = "resetSSHKeyForVirtualMachine", responseObject = UserVmResponse.class, description = "Resets the SSH Key for virtual machine. " +
-        "The virtual machine must be in a \"Stopped\" state. [async]", responseView = ResponseView.Full)
+@APICommand(name = "resetSSHKeyForVirtualMachine", responseObject = UserVmResponse.class, description = "Resets the SSH Key for virtual machine. "
+        + "The virtual machine must be in a \"Stopped\" state. [async]", responseView = ResponseView.Full)
 public class ResetVMSSHKeyCmdByAdmin extends ResetVMSSHKeyCmd {
 
     public static final Logger s_logger = Logger.getLogger(ResetVMSSHKeyCmdByAdmin.class.getName());
 
-
     @Override
-    public void execute() throws ResourceUnavailableException,
-            InsufficientCapacityException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException {
 
         CallContext.current().setEventDetails("Vm Id: " + getId());
         UserVm result = _userVmService.resetVMSSHKey(this);

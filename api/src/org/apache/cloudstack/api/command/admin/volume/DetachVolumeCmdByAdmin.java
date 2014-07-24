@@ -32,12 +32,11 @@ import com.cloud.storage.Volume;
 public class DetachVolumeCmdByAdmin extends DetachVolumeCmd {
     public static final Logger s_logger = Logger.getLogger(DetachVolumeCmdByAdmin.class.getName());
 
-
     @Override
-    public void execute(){
-        CallContext.current().setEventDetails("Volume Id: "+getId()+" VmId: "+getVirtualMachineId());
+    public void execute() {
+        CallContext.current().setEventDetails("Volume Id: " + getId() + " VmId: " + getVirtualMachineId());
         Volume result = _volumeService.detachVolumeFromVM(this);
-        if (result != null){
+        if (result != null) {
             VolumeResponse response = _responseGenerator.createVolumeResponse(ResponseView.Full, result);
             response.setResponseName("volume");
             setResponseObject(response);

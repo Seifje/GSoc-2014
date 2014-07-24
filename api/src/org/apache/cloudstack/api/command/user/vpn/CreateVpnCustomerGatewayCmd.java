@@ -31,16 +31,15 @@ import org.apache.cloudstack.context.CallContext;
 import com.cloud.event.EventTypes;
 import com.cloud.network.Site2SiteCustomerGateway;
 
-@APICommand(name = "createVpnCustomerGateway", description = "Creates site to site vpn customer gateway", responseObject = Site2SiteCustomerGatewayResponse.class, entityType = {Site2SiteCustomerGateway.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createVpnCustomerGateway", description = "Creates site to site vpn customer gateway", responseObject = Site2SiteCustomerGatewayResponse.class, entityType = {Site2SiteCustomerGateway.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateVpnCustomerGatewayCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(CreateVpnCustomerGatewayCmd.class.getName());
 
     private static final String s_name = "createvpncustomergatewayresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = false, description = "name of this customer gateway")
     private String name;
 
@@ -59,16 +58,10 @@ public class CreateVpnCustomerGatewayCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.ESP_POLICY, type = CommandType.STRING, required = true, description = "ESP policy of the customer gateway")
     private String espPolicy;
 
-    @Parameter(name = ApiConstants.IKE_LIFETIME,
-               type = CommandType.LONG,
-               required = false,
-               description = "Lifetime of phase 1 VPN connection to the customer gateway, in seconds")
+    @Parameter(name = ApiConstants.IKE_LIFETIME, type = CommandType.LONG, required = false, description = "Lifetime of phase 1 VPN connection to the customer gateway, in seconds")
     private Long ikeLifetime;
 
-    @Parameter(name = ApiConstants.ESP_LIFETIME,
-               type = CommandType.LONG,
-               required = false,
-               description = "Lifetime of phase 2 VPN connection to the customer gateway, in seconds")
+    @Parameter(name = ApiConstants.ESP_LIFETIME, type = CommandType.LONG, required = false, description = "Lifetime of phase 2 VPN connection to the customer gateway, in seconds")
     private Long espLifetime;
 
     @Parameter(name = ApiConstants.DPD, type = CommandType.BOOLEAN, required = false, description = "If DPD is enabled for VPN connection")
@@ -77,16 +70,13 @@ public class CreateVpnCustomerGatewayCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "the account associated with the gateway. Must be used with the domainId parameter.")
     private String accountName;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               entityType = DomainResponse.class,
-               description = "the domain ID associated with the gateway. If used with the account parameter returns the "
-                   + "gateway associated with the account for the specified domain.")
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "the domain ID associated with the gateway. If used with the account parameter returns the "
+            + "gateway associated with the account for the specified domain.")
     private Long domainId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getName() {
         return name;
@@ -132,9 +122,9 @@ public class CreateVpnCustomerGatewayCmd extends BaseAsyncCmd {
         return domainId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

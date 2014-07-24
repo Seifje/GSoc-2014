@@ -22,8 +22,8 @@ import com.cloud.storage.Storage.ProvisioningType;
 import com.cloud.storage.Volume;
 
 /**
- * DiskProfile describes a disk and what functionality is required from it.
- * and resources to allocate and create disks. There object is immutable once
+ * DiskProfile describes a disk and what functionality is required from it. and
+ * resources to allocate and create disks. There object is immutable once
  */
 public class DiskProfile {
     private long size;
@@ -48,8 +48,7 @@ public class DiskProfile {
     protected DiskProfile() {
     }
 
-    public DiskProfile(long volumeId, Volume.Type type, String name, long diskOfferingId, long size, String[] tags, boolean useLocalStorage, boolean recreatable,
-            Long templateId) {
+    public DiskProfile(long volumeId, Volume.Type type, String name, long diskOfferingId, long size, String[] tags, boolean useLocalStorage, boolean recreatable, Long templateId) {
         this.type = type;
         this.name = name;
         this.size = size;
@@ -62,15 +61,8 @@ public class DiskProfile {
     }
 
     public DiskProfile(Volume vol, DiskOffering offering, HypervisorType hyperType) {
-        this(vol.getId(),
-            vol.getVolumeType(),
-            vol.getName(),
-            offering.getId(),
-            vol.getSize(),
-            offering.getTagsArray(),
-            offering.getUseLocalStorage(),
-            offering.isCustomized(),
-            null);
+        this(vol.getId(), vol.getVolumeType(), vol.getName(), offering.getId(), vol.getSize(), offering.getTagsArray(), offering.getUseLocalStorage(), offering.isCustomized(),
+                null);
         this.hyperType = hyperType;
     }
 
@@ -100,7 +92,8 @@ public class DiskProfile {
     }
 
     /**
-     * @return tags for the disk. This can be used to match it to different storage pools.
+     * @return tags for the disk. This can be used to match it to different
+     *         storage pools.
      */
     public String[] getTags() {
         return tags;
@@ -125,15 +118,16 @@ public class DiskProfile {
     }
 
     /**
-     * @return Is this volume recreatable? A volume is recreatable if the disk's content can be
-     *         reconstructed from the template.
+     * @return Is this volume recreatable? A volume is recreatable if the disk's
+     *         content can be reconstructed from the template.
      */
     public boolean isRecreatable() {
         return recreatable;
     }
 
     /**
-     * @return template id the disk is based on. Can be null if it is not based on any templates.
+     * @return template id the disk is based on. Can be null if it is not based
+     *         on any templates.
      */
     public Long getTemplateId() {
         return templateId;
@@ -167,11 +161,11 @@ public class DiskProfile {
         return this.path;
     }
 
-    public void setProvisioningType(ProvisioningType provisioningType){
+    public void setProvisioningType(ProvisioningType provisioningType) {
         this.provisioningType = provisioningType;
     }
 
-    public ProvisioningType getProvisioningType(){
+    public ProvisioningType getProvisioningType() {
         return this.provisioningType;
     }
 

@@ -99,7 +99,8 @@ public abstract class AbstractInvestigatorImpl extends AdapterBase implements In
                 if (s_logger.isDebugEnabled()) {
                     s_logger.debug("host (" + testHostIp + ") has been successfully pinged, returning that host is up");
                 }
-                // computing host is available, but could not reach agent, return false
+                // computing host is available, but could not reach agent,
+                // return false
                 return Status.Up;
             } else {
                 if (s_logger.isDebugEnabled()) {

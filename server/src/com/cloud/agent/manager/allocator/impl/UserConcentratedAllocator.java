@@ -108,8 +108,7 @@ public class UserConcentratedAllocator extends AdapterBase implements PodAllocat
                     // enough memory for the service offering, plus
                     // some extra padding for xen overhead
                     long[] hostCandiates = new long[1];
-                    boolean enoughCapacity =
-                        dataCenterAndPodHasEnoughCapacity(zoneId, podId, (offering.getRamSize()) * 1024L * 1024L, Capacity.CAPACITY_TYPE_MEMORY, hostCandiates);
+                    boolean enoughCapacity = dataCenterAndPodHasEnoughCapacity(zoneId, podId, (offering.getRamSize()) * 1024L * 1024L, Capacity.CAPACITY_TYPE_MEMORY, hostCandiates);
 
                     if (!enoughCapacity) {
                         if (s_logger.isDebugEnabled()) {
@@ -119,8 +118,7 @@ public class UserConcentratedAllocator extends AdapterBase implements PodAllocat
                     }
 
                     // test for enough CPU in the pod
-                    enoughCapacity =
-                        dataCenterAndPodHasEnoughCapacity(zoneId, podId, (offering.getCpu() * offering.getSpeed()), Capacity.CAPACITY_TYPE_CPU, hostCandiates);
+                    enoughCapacity = dataCenterAndPodHasEnoughCapacity(zoneId, podId, (offering.getCpu() * offering.getSpeed()), Capacity.CAPACITY_TYPE_CPU, hostCandiates);
                     if (!enoughCapacity) {
                         if (s_logger.isDebugEnabled()) {
                             s_logger.debug("Not enough cpu available in zone/pod to allocate storage for user VM (zone: " + zoneId + ", pod: " + podId + ")");
@@ -218,8 +216,8 @@ public class UserConcentratedAllocator extends AdapterBase implements PodAllocat
             long millisecondsSinceLastUpdate = DateUtil.currentGMTTime().getTime() - vm.getUpdateTime().getTime();
             if (millisecondsSinceLastUpdate > secondsToSkipVMs * 1000L) {
                 if (s_logger.isDebugEnabled()) {
-                    s_logger.debug("Skip counting " + vm.getState().toString() + " vm " + vm.getInstanceName() + " in capacity allocation as it has been " +
-                        vm.getState().toString().toLowerCase() + " for " + millisecondsSinceLastUpdate / 60000 + " minutes");
+                    s_logger.debug("Skip counting " + vm.getState().toString() + " vm " + vm.getInstanceName() + " in capacity allocation as it has been "
+                            + vm.getState().toString().toLowerCase() + " for " + millisecondsSinceLastUpdate / 60000 + " minutes");
                 }
                 return true;
             }
@@ -263,15 +261,15 @@ public class UserConcentratedAllocator extends AdapterBase implements PodAllocat
                     usedCapacity += so.getRamSize() * 1024L * 1024L;
 
                     if (s_logger.isDebugEnabled()) {
-                        s_logger.debug("Counting memory capacity used by vm: " + vm.getId() + ", size: " + so.getRamSize() + "MB, host: " + hostId + ", currently counted: " +
-                                usedCapacity + " Bytes");
+                        s_logger.debug("Counting memory capacity used by vm: " + vm.getId() + ", size: " + so.getRamSize() + "MB, host: " + hostId + ", currently counted: "
+                                + usedCapacity + " Bytes");
                     }
                 } else if (capacityType == Capacity.CAPACITY_TYPE_CPU) {
                     usedCapacity += so.getCpu() * so.getSpeed();
 
                     if (s_logger.isDebugEnabled()) {
-                        s_logger.debug("Counting cpu capacity used by vm: " + vm.getId() + ", cpu: " + so.getCpu() + ", speed: " + so.getSpeed() + ", currently counted: " +
-                                usedCapacity + " Bytes");
+                        s_logger.debug("Counting cpu capacity used by vm: " + vm.getId() + ", cpu: " + so.getCpu() + ", speed: " + so.getSpeed() + ", currently counted: "
+                                + usedCapacity + " Bytes");
                     }
                 }
             }
@@ -283,15 +281,20 @@ public class UserConcentratedAllocator extends AdapterBase implements PodAllocat
     private boolean templateAvailableInPod(long templateId, long dcId, long podId) {
         return true;
         /*
-         * List<VMTemplateHostVO> thvoList = _templateHostDao.listByTemplateStatus(templateId, dcId, podId, Status.DOWNLOADED);
-         * List<VMTemplateStoragePoolVO> tpvoList = _templatePoolDao.listByTemplateStatus(templateId, dcId, podId,
+         * List<VMTemplateHostVO> thvoList =
+         * _templateHostDao.listByTemplateStatus(templateId, dcId, podId,
+         * Status.DOWNLOADED); List<VMTemplateStoragePoolVO> tpvoList =
+         * _templatePoolDao.listByTemplateStatus(templateId, dcId, podId,
          * Status.DOWNLOADED);
          *
-         * if (thvoList != null && thvoList.size() > 0) { if (s_logger.isDebugEnabled()) { s_logger.debug("Found " +
-         * thvoList.size() + " storage hosts in pod " + podId + " with template " + templateId); } return true; } else if
-         * (tpvoList != null && tpvoList.size() > 0) { if (s_logger.isDebugEnabled()) { s_logger.debug("Found " +
-         * tpvoList.size() + " storage pools in pod " + podId + " with template " + templateId); } return true; }else { return
-         * false; }
+         * if (thvoList != null && thvoList.size() > 0) { if
+         * (s_logger.isDebugEnabled()) { s_logger.debug("Found " +
+         * thvoList.size() + " storage hosts in pod " + podId +
+         * " with template " + templateId); } return true; } else if (tpvoList
+         * != null && tpvoList.size() > 0) { if (s_logger.isDebugEnabled()) {
+         * s_logger.debug("Found " + tpvoList.size() + " storage pools in pod "
+         * + podId + " with template " + templateId); } return true; }else {
+         * return false; }
          */
     }
 

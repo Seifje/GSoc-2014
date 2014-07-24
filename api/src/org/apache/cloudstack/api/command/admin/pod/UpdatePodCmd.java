@@ -29,16 +29,15 @@ import org.apache.cloudstack.api.response.PodResponse;
 import com.cloud.dc.Pod;
 import com.cloud.user.Account;
 
-@APICommand(name = "updatePod", description = "Updates a Pod.", responseObject = PodResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "updatePod", description = "Updates a Pod.", responseObject = PodResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdatePodCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(UpdatePodCmd.class.getName());
 
     private static final String s_name = "updatepodresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = PodResponse.class, required = true, description = "the ID of the Pod")
     private Long id;
@@ -61,9 +60,9 @@ public class UpdatePodCmd extends BaseCmd {
     @Parameter(name = ApiConstants.ALLOCATION_STATE, type = CommandType.STRING, description = "Allocation state of this cluster for allocation of new resources")
     private String allocationState;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getNetmask() {
         return netmask;
@@ -93,9 +92,9 @@ public class UpdatePodCmd extends BaseCmd {
         return allocationState;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

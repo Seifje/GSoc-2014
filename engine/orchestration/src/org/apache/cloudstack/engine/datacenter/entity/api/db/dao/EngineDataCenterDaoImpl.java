@@ -46,11 +46,9 @@ import com.cloud.utils.db.UpdateBuilder;
 import com.cloud.utils.net.NetUtils;
 
 /**
- * @config
- * {@table
- *    || Param Name | Description | Values | Default ||
- *    || mac.address.prefix | prefix to attach to all public and private mac addresses | number | 06 ||
- *  }
+ * @config {@table || Param Name | Description | Values | Default || ||
+ *         mac.address.prefix | prefix to attach to all public and private mac
+ *         addresses | number | 06 || * }
  **/
 @Component(value = "EngineDataCenterDao")
 @Local(value = {EngineDataCenterDao.class})
@@ -129,7 +127,7 @@ public class EngineDataCenterDaoImpl extends GenericDaoBase<EngineDataCenterVO, 
             ssc.addOr("description", SearchCriteria.Op.LIKE, "%" + keyword + "%");
             sc.addAnd("name", SearchCriteria.Op.SC, ssc);
         }
-        //sc.setParameters("domainId", domainId);
+        // sc.setParameters("domainId", domainId);
         return listBy(sc);
     }
 
@@ -313,22 +311,10 @@ public class EngineDataCenterDaoImpl extends GenericDaoBase<EngineDataCenterVO, 
             if (dbDC != null) {
                 StringBuilder str = new StringBuilder("Unable to update ").append(vo.toString());
                 str.append(": DB Data={id=").append(dbDC.getId()).append("; state=").append(dbDC.getState()).append(";updatedTime=").append(dbDC.getLastUpdated());
-                str.append(": New Data={id=")
-                    .append(vo.getId())
-                    .append("; state=")
-                    .append(nextState)
-                    .append("; event=")
-                    .append(event)
-                    .append("; updatedTime=")
-                    .append(vo.getLastUpdated());
-                str.append(": stale Data={id=")
-                    .append(vo.getId())
-                    .append("; state=")
-                    .append(currentState)
-                    .append("; event=")
-                    .append(event)
-                    .append("; updatedTime=")
-                    .append(oldUpdatedTime);
+                str.append(": New Data={id=").append(vo.getId()).append("; state=").append(nextState).append("; event=").append(event).append("; updatedTime=")
+                        .append(vo.getLastUpdated());
+                str.append(": stale Data={id=").append(vo.getId()).append("; state=").append(currentState).append("; event=").append(event).append("; updatedTime=")
+                        .append(oldUpdatedTime);
             } else {
                 s_logger.debug("Unable to update dataCenter: id=" + vo.getId() + ", as there is no such dataCenter exists in the database anymore");
             }

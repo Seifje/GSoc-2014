@@ -20,15 +20,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
- * This command represents physical view of how a VPC is laid out on the physical infrastructure. Contains information:
- *   - on which hypervisor hosts VPC spans (host running at least one VM from the VPC)
- *   - information of tiers, so we can figure how one VM can talk to a different VM in same tier or different tier
- *   - information on all the VM's in the VPC.
- *   - information of NIC's of each VM in the VPC
+ * This command represents physical view of how a VPC is laid out on the
+ * physical infrastructure. Contains information: - on which hypervisor hosts
+ * VPC spans (host running at least one VM from the VPC) - information of tiers,
+ * so we can figure how one VM can talk to a different VM in same tier or
+ * different tier - information on all the VM's in the VPC. - information of
+ * NIC's of each VM in the VPC
  */
 public class OvsVpcPhysicalTopologyConfigCommand extends Command {
 
-    VpcConfig vpcConfig =null;
+    VpcConfig vpcConfig = null;
     long hostId;
     String bridgeName;
 
@@ -39,7 +40,7 @@ public class OvsVpcPhysicalTopologyConfigCommand extends Command {
         long hostId;
         String ipAddress;
 
-        public Host (long hostId, String ipAddress) {
+        public Host(long hostId, String ipAddress) {
             this.hostId = hostId;
             this.ipAddress = ipAddress;
         }
@@ -49,7 +50,8 @@ public class OvsVpcPhysicalTopologyConfigCommand extends Command {
         String ipAddress;
         String macAddress;
         String networkUuid;
-        public Nic (String ipAddress, String macAddress, String networkUuid) {
+
+        public Nic(String ipAddress, String macAddress, String networkUuid) {
             this.ipAddress = ipAddress;
             this.macAddress = macAddress;
             this.networkUuid = networkUuid;
@@ -62,6 +64,7 @@ public class OvsVpcPhysicalTopologyConfigCommand extends Command {
         String gatewayIp;
         String gatewayMac;
         String cidr;
+
         public Tier(long greKey, String networkUuid, String gatewayIp, String gatewayMac, String cidr) {
             this.greKey = greKey;
             this.networkUuid = networkUuid;
@@ -74,6 +77,7 @@ public class OvsVpcPhysicalTopologyConfigCommand extends Command {
     public static class Vm {
         long hostId;
         Nic[] nics;
+
         public Vm(long hostId, Nic[] nics) {
             this.hostId = hostId;
             this.nics = nics;
@@ -84,7 +88,8 @@ public class OvsVpcPhysicalTopologyConfigCommand extends Command {
         String cidr;
         Host[] hosts;
         Tier[] tiers;
-        Vm[]  vms;
+        Vm[] vms;
+
         public Vpc(Host[] hosts, Tier[] tiers, Vm[] vms, String cidr) {
             this.hosts = hosts;
             this.tiers = tiers;
@@ -95,6 +100,7 @@ public class OvsVpcPhysicalTopologyConfigCommand extends Command {
 
     public static class VpcConfig {
         Vpc vpc;
+
         public VpcConfig(Vpc vpc) {
             this.vpc = vpc;
         }

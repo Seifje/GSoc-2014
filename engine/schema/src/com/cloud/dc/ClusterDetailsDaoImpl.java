@@ -51,7 +51,8 @@ public class ClusterDetailsDaoImpl extends GenericDaoBase<ClusterDetailsVO, Long
     @Override
     public ClusterDetailsVO findDetail(long clusterId, String name) {
         SearchCriteria<ClusterDetailsVO> sc = DetailSearch.create();
-        // This is temporary fix to support list/update configuration api for cpu and memory overprovisioning ratios
+        // This is temporary fix to support list/update configuration api for
+        // cpu and memory overprovisioning ratios
         if (name.equalsIgnoreCase("cpu.overprovisioning.factor")) {
             name = "cpuOvercommitRatio";
         }

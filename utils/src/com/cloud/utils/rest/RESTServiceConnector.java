@@ -68,13 +68,15 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * This abstraction encapsulates client side code for REST service communication. It encapsulates
- * access in a delegate validation strategy. There may different implementations extending
- * {@link RESTValidationStrategy}, and any of them should mention the needed data to work.
+ * This abstraction encapsulates client side code for REST service
+ * communication. It encapsulates access in a delegate validation strategy.
+ * There may different implementations extending {@link RESTValidationStrategy},
+ * and any of them should mention the needed data to work.
  *
- * This connector allows the use of {@link JsonDeserializer} for specific classes. You can provide
- * in the constructor a list of classes and a list of deserializers for these classes. These should
- * be a correlated so that Nth deserializer is correctly mapped to Nth class.
+ * This connector allows the use of {@link JsonDeserializer} for specific
+ * classes. You can provide in the constructor a list of classes and a list of
+ * deserializers for these classes. These should be a correlated so that Nth
+ * deserializer is correctly mapped to Nth class.
  */
 public class RESTServiceConnector {
     private static final String HTTPS = "https";
@@ -100,7 +102,6 @@ public class RESTServiceConnector {
 
     private final Gson gson;
 
-
     /**
      * Getter that may be needed only for test purpose
      *
@@ -120,15 +121,16 @@ public class RESTServiceConnector {
         client.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
 
         try {
-            // Cast to ProtocolSocketFactory to avoid the deprecated constructor with the SecureProtocolSocketFactory parameter
+            // Cast to ProtocolSocketFactory to avoid the deprecated constructor
+            // with the SecureProtocolSocketFactory parameter
             Protocol.registerProtocol(HTTPS, new Protocol(HTTPS, (ProtocolSocketFactory)new TrustingProtocolSocketFactory(), HTTPS_PORT));
         } catch (final IOException e) {
             s_logger.warn("Failed to register the TrustingProtocolSocketFactory, falling back to default SSLSocketFactory", e);
         }
 
         final GsonBuilder gsonBuilder = new GsonBuilder();
-        if(classList != null && deserializerList != null) {
-            for(int i = 0; i < classList.size() && i < deserializerList.size(); i++) {
+        if (classList != null && deserializerList != null) {
+            for (int i = 0; i < classList.size() && i < deserializerList.size(); i++) {
                 gsonBuilder.registerTypeAdapter(classList.get(i), deserializerList.get(i));
             }
         }
@@ -192,8 +194,7 @@ public class RESTServiceConnector {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> T executeCreateObject(final T newObject, final Type returnObjectType, final String uri, final Map<String, String> parameters)
-            throws CloudstackRESTException {
+    public <T> T executeCreateObject(final T newObject, final Type returnObjectType, final String uri, final Map<String, String> parameters) throws CloudstackRESTException {
 
         final PostMethod pm = (PostMethod)createMethod(POST_METHOD_TYPE, uri);
         pm.setRequestHeader(CONTENT_TYPE, JSON_CONTENT_TYPE);
@@ -291,7 +292,8 @@ public class RESTServiceConnector {
 
         if (TEXT_HTML_CONTENT_TYPE.equals(method.getResponseHeader(CONTENT_TYPE).getValue())) {
             // The error message is the response content
-            // Safety margin of 1024 characters, anything longer is probably useless
+            // Safety margin of 1024 characters, anything longer is probably
+            // useless
             // and will clutter the logs
             try {
                 return method.getResponseBodyAsString(BODY_RESP_MAX_LEN);
@@ -304,10 +306,10 @@ public class RESTServiceConnector {
         return method.getStatusText();
     }
 
-    /* Some controllers use a self-signed certificate. The
-     * TrustingProtocolSocketFactory will accept any provided
-     * certificate when making an SSL connection to the SDN
-     * Manager
+    /*
+     * Some controllers use a self-signed certificate. The
+     * TrustingProtocolSocketFactory will accept any provided certificate when
+     * making an SSL connection to the SDN Manager
      */
     private class TrustingProtocolSocketFactory implements SecureProtocolSocketFactory {
 
@@ -360,8 +362,8 @@ public class RESTServiceConnector {
         }
 
         @Override
-        public Socket createSocket(final String host, final int port, final InetAddress localAddress, final int localPort, final HttpConnectionParams params)
-                throws IOException, UnknownHostException, ConnectTimeoutException {
+        public Socket createSocket(final String host, final int port, final InetAddress localAddress, final int localPort, final HttpConnectionParams params) throws IOException,
+        UnknownHostException, ConnectTimeoutException {
             final int timeout = params.getConnectionTimeout();
             if (timeout == 0) {
                 return createSocket(host, port, localAddress, localPort);

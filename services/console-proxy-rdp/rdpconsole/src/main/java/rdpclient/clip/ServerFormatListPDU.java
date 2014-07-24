@@ -46,7 +46,8 @@ public class ServerFormatListPDU extends BaseElement {
         parseFormatNames(buf);
         buf.unref();
 
-        // Automatically send request for text-based data to insert it into local
+        // Automatically send request for text-based data to insert it into
+        // local
         // clipboard
         ClipboardDataFormat textFormat = ClipboardDataFormat.findBestTextFormat(state.serverClipboardDataFormats);
         if (textFormat != null) {
@@ -62,8 +63,8 @@ public class ServerFormatListPDU extends BaseElement {
 
     /**
      * The Format Data Request PDU is sent by the recipient of the Format List
-     * PDU. It is used to request the data for one of the formats that was listed
-     * in the Format List PDU.
+     * PDU. It is used to request the data for one of the formats that was
+     * listed in the Format List PDU.
      */
     protected void sendFormatDataRequest(ClipboardDataFormat textFormat) {
 
@@ -91,8 +92,8 @@ public class ServerFormatListPDU extends BaseElement {
     }
 
     /**
-     * The Format List Response PDU is sent as a reply to the Format List PDU. It
-     * is used to indicate whether processing of the Format List PDU was
+     * The Format List Response PDU is sent as a reply to the Format List PDU.
+     * It is used to indicate whether processing of the Format List PDU was
      * successful.
      *
      * @param b
@@ -114,7 +115,8 @@ public class ServerFormatListPDU extends BaseElement {
 
     protected void parseFormatNames(ByteBuffer buf) {
 
-        // Set will not be modified after creation, so there is no need to make it
+        // Set will not be modified after creation, so there is no need to make
+        // it
         // synchronous.
         Map<Object, ClipboardDataFormat> formats = new HashMap<Object, ClipboardDataFormat>();
 
@@ -160,46 +162,127 @@ public class ServerFormatListPDU extends BaseElement {
 
         /* @formatter:off */
         byte[] packet = new byte[] {
-                0x02, 0x00,  //  CLIPRDR_HEADER::msgType = CB_FORMAT_LIST (2)
-                0x00, 0x00,  //  CLIPRDR_HEADER::msgFlags = 0
-                (byte) 0xe0, 0x00, 0x00, 0x00,  //  CLIPRDR_HEADER::dataLen = 0xe0 = 224 bytes
+                0x02,
+                0x00, // CLIPRDR_HEADER::msgType = CB_FORMAT_LIST (2)
+                0x00,
+                0x00, // CLIPRDR_HEADER::msgFlags = 0
+                (byte) 0xe0,
+                0x00,
+                0x00,
+                0x00, // CLIPRDR_HEADER::dataLen = 0xe0 = 224 bytes
 
-                (byte) 0x8a, (byte) 0xc0, 0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatId = 0xc08a = 49290
-                0x52, 0x00, 0x69, 0x00, 0x63, 0x00, 0x68, 0x00, 0x20, 0x00, 0x54, 0x00, 0x65, 0x00, 0x78, 0x00, 0x74, 0x00, 0x20, 0x00, 0x46, 0x00, 0x6f, 0x00, 0x72, 0x00, 0x6d, 0x00, 0x61, 0x00, 0x74, 0x00, 0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatName = "Rich Text Format"
+                (byte) 0x8a,
+                (byte) 0xc0,
+                0x00,
+                0x00, // CLIPRDR_LONG_FORMAT_NAME::formatId = 0xc08a = 49290
+                0x52, 0x00, 0x69, 0x00, 0x63, 0x00, 0x68, 0x00, 0x20, 0x00,
+                0x54, 0x00,
+                0x65,
+                0x00,
+                0x78,
+                0x00,
+                0x74,
+                0x00,
+                0x20,
+                0x00,
+                0x46,
+                0x00,
+                0x6f,
+                0x00,
+                0x72,
+                0x00,
+                0x6d,
+                0x00,
+                0x61,
+                0x00,
+                0x74,
+                0x00,
+                0x00,
+                0x00, // CLIPRDR_LONG_FORMAT_NAME::formatName =
+                // "Rich Text Format"
 
-                0x45, (byte) 0xc1, 0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatId = 0xc145 = 49477
-                0x52, 0x00, 0x69, 0x00, 0x63, 0x00, 0x68, 0x00, 0x20, 0x00, 0x54, 0x00, 0x65, 0x00, 0x78, 0x00,
-                0x74, 0x00, 0x20, 0x00, 0x46, 0x00, 0x6f, 0x00, 0x72, 0x00, 0x6d, 0x00, 0x61, 0x00, 0x74, 0x00,
-                0x20, 0x00, 0x57, 0x00, 0x69, 0x00, 0x74, 0x00, 0x68, 0x00, 0x6f, 0x00, 0x75, 0x00, 0x74, 0x00,
-                0x20, 0x00, 0x4f, 0x00, 0x62, 0x00, 0x6a, 0x00, 0x65, 0x00, 0x63, 0x00, 0x74, 0x00, 0x73, 0x00,
-                0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatName = "Rich Text Format Without Objects"
+                0x45,
+                (byte) 0xc1,
+                0x00,
+                0x00, // CLIPRDR_LONG_FORMAT_NAME::formatId = 0xc145 = 49477
+                0x52, 0x00, 0x69, 0x00, 0x63, 0x00, 0x68, 0x00, 0x20, 0x00,
+                0x54, 0x00, 0x65, 0x00, 0x78, 0x00, 0x74, 0x00, 0x20, 0x00,
+                0x46, 0x00, 0x6f, 0x00, 0x72, 0x00, 0x6d, 0x00, 0x61, 0x00,
+                0x74, 0x00, 0x20, 0x00, 0x57, 0x00, 0x69, 0x00, 0x74, 0x00,
+                0x68, 0x00, 0x6f, 0x00, 0x75, 0x00, 0x74, 0x00, 0x20, 0x00,
+                0x4f, 0x00, 0x62, 0x00, 0x6a, 0x00, 0x65,
+                0x00,
+                0x63,
+                0x00,
+                0x74,
+                0x00,
+                0x73,
+                0x00,
+                0x00,
+                0x00, // CLIPRDR_LONG_FORMAT_NAME::formatName =
+                // "Rich Text Format Without Objects"
 
-                0x43, (byte) 0xc1, 0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatId = 0xc143 = 49475
-                0x52, 0x00, 0x54, 0x00, 0x46, 0x00, 0x20, 0x00, 0x41, 0x00, 0x73, 0x00, 0x20, 0x00, 0x54, 0x00,
-                0x65, 0x00, 0x78, 0x00, 0x74, 0x00, 0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatName = "RTF As Text"
+                0x43,
+                (byte) 0xc1,
+                0x00,
+                0x00, // CLIPRDR_LONG_FORMAT_NAME::formatId = 0xc143 = 49475
+                0x52, 0x00, 0x54, 0x00, 0x46, 0x00, 0x20, 0x00, 0x41, 0x00,
+                0x73, 0x00, 0x20, 0x00, 0x54,
+                0x00,
+                0x65,
+                0x00,
+                0x78,
+                0x00,
+                0x74,
+                0x00,
+                0x00,
+                0x00, // CLIPRDR_LONG_FORMAT_NAME::formatName = "RTF As Text"
 
-                0x01, 0x00, 0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatId = 1
-                0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatName = ""
+                0x01,
+                0x00,
+                0x00,
+                0x00, // CLIPRDR_LONG_FORMAT_NAME::formatId = 1
+                0x00,
+                0x00, // CLIPRDR_LONG_FORMAT_NAME::formatName = ""
 
-                0x0d, 0x00, 0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatId = 0x0d = 13
-                0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatName = ""
+                0x0d,
+                0x00,
+                0x00,
+                0x00, // CLIPRDR_LONG_FORMAT_NAME::formatId = 0x0d = 13
+                0x00,
+                0x00, // CLIPRDR_LONG_FORMAT_NAME::formatName = ""
 
-                0x04, (byte) 0xc0, 0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatId = 0xc004 = 49156
-                0x4e, 0x00, 0x61, 0x00, 0x74, 0x00, 0x69, 0x00, 0x76, 0x00, 0x65, 0x00, 0x00, 0x00,  //  "Native"
+                0x04,
+                (byte) 0xc0,
+                0x00,
+                0x00, // CLIPRDR_LONG_FORMAT_NAME::formatId = 0xc004 = 49156
+                0x4e, 0x00, 0x61, 0x00, 0x74, 0x00, 0x69, 0x00, 0x76, 0x00,
+                0x65,
+                0x00,
+                0x00,
+                0x00, // "Native"
 
-                0x0e, (byte) 0xc0, 0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatId = 0xc00e = 49166
-                0x4f, 0x00, 0x62, 0x00, 0x6a, 0x00, 0x65, 0x00, 0x63, 0x00, 0x74, 0x00, 0x20, 0x00, 0x44, 0x00,
-                0x65, 0x00, 0x73, 0x00, 0x63, 0x00, 0x72, 0x00, 0x69, 0x00, 0x70, 0x00, 0x74, 0x00, 0x6f, 0x00,
-                0x72, 0x00, 0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatName = "Object Descriptor"
+                0x0e,
+                (byte) 0xc0,
+                0x00,
+                0x00, // CLIPRDR_LONG_FORMAT_NAME::formatId = 0xc00e = 49166
+                0x4f, 0x00, 0x62, 0x00, 0x6a, 0x00, 0x65, 0x00, 0x63, 0x00,
+                0x74, 0x00, 0x20, 0x00, 0x44, 0x00, 0x65, 0x00, 0x73, 0x00,
+                0x63, 0x00, 0x72, 0x00, 0x69, 0x00, 0x70, 0x00, 0x74, 0x00,
+                0x6f, 0x00, 0x72, 0x00, 0x00, 0x00, // CLIPRDR_LONG_FORMAT_NAME::formatName
+                // = "Object Descriptor"
 
-                0x03, 0x00, 0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatId = 3
-                0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatName = ""
+                0x03, 0x00, 0x00, 0x00, // CLIPRDR_LONG_FORMAT_NAME::formatId =
+                // 3
+                0x00, 0x00, // CLIPRDR_LONG_FORMAT_NAME::formatName = ""
 
-                0x10, 0x00, 0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatId = 16
-                0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatName = ""
+                0x10, 0x00, 0x00, 0x00, // CLIPRDR_LONG_FORMAT_NAME::formatId =
+                // 16
+                0x00, 0x00, // CLIPRDR_LONG_FORMAT_NAME::formatName = ""
 
-                0x07, 0x00, 0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatId = 7
-                0x00, 0x00,  //  CLIPRDR_LONG_FORMAT_NAME::formatName = ""
+                0x07, 0x00, 0x00, 0x00, // CLIPRDR_LONG_FORMAT_NAME::formatId =
+                // 7
+                0x00, 0x00, // CLIPRDR_LONG_FORMAT_NAME::formatName = ""
         };
         /* @formatter:on */
 
@@ -211,17 +294,22 @@ public class ServerFormatListPDU extends BaseElement {
 
         Element sink = new MockSink("sink", ByteBuffer.convertByteArraysToByteBuffers(new byte[] {
                 // Format List Response PDU
-                0x03, 0x00, // CLIPRDR_HEADER::msgType = CB_FORMAT_LIST_RESPONSE (3)
-                0x01, 0x00, // CLIPRDR_HEADER::msgFlags = 0x0001 = CB_RESPONSE_OK
-                0x00, 0x00, 0x00, 0x00, // CLIPRDR_HEADER::dataLen = 0 bytes
-        }, new byte[] {
-                // Format Data Request PDU
-                0x04, 0x00, // CLIPRDR_HEADER::msgType = CB_FORMAT_DATA_REQUEST (4)
-                0x00, 0x00, // CLIPRDR_HEADER::msgFlags = 0
-                0x04, 0x00, 0x00, 0x00, // CLIPRDR_HEADER::dataLen = 4 bytes
-                0x0d, 0x00, 0x00, 0x00, // CLIPRDR_FORMAT_DATA_REQUEST::requestedFormatId
+                0x03, 0x00, // CLIPRDR_HEADER::msgType =
+                // CB_FORMAT_LIST_RESPONSE (3)
+                0x01, 0x00, // CLIPRDR_HEADER::msgFlags = 0x0001 =
+                // CB_RESPONSE_OK
+                0x00, 0x00, 0x00, 0x00, // CLIPRDR_HEADER::dataLen = 0
+        // bytes
+                }, new byte[] {
+                        // Format Data Request PDU
+                        0x04, 0x00, // CLIPRDR_HEADER::msgType =
+                        // CB_FORMAT_DATA_REQUEST (4)
+                        0x00, 0x00, // CLIPRDR_HEADER::msgFlags = 0
+                        0x04, 0x00, 0x00, 0x00, // CLIPRDR_HEADER::dataLen = 4
+                        // bytes
+                        0x0d, 0x00, 0x00, 0x00, // CLIPRDR_FORMAT_DATA_REQUEST::requestedFormatId
                 // = 0x0d
-        }));
+                }));
 
         Pipeline pipeline = new PipelineImpl("test");
         pipeline.add(source, router, format_list, sink);

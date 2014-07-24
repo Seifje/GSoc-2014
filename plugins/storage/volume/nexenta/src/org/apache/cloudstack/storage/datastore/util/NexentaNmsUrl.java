@@ -67,6 +67,7 @@ public class NexentaNmsUrl {
         return "/rest/nms";
     }
 
+    @Override
     public String toString() {
         StringBuilder b = new StringBuilder();
         if (isAuto) {

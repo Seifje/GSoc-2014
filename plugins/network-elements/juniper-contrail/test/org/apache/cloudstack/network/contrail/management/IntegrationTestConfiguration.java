@@ -300,42 +300,41 @@ import com.cloud.vm.dao.VMInstanceDaoImpl;
 import com.cloud.vm.snapshot.VMSnapshotManager;
 import com.cloud.vm.snapshot.dao.VMSnapshotDaoImpl;
 
-@ComponentScan(basePackageClasses = {AccountDaoImpl.class, AccountDetailsDaoImpl.class, AccountGuestVlanMapDaoImpl.class, AccountJoinDaoImpl.class,
-    AccountVlanMapDaoImpl.class, AffinityGroupDaoImpl.class, AffinityGroupDomainMapDaoImpl.class, AffinityGroupJoinDaoImpl.class, AffinityGroupVMMapDaoImpl.class,
-    ApiDBUtils.class, ApplicationLoadBalancerRuleDaoImpl.class, AsyncJobDaoImpl.class, AsyncJobJoinDaoImpl.class, AsyncJobJoinMapDaoImpl.class,
-    AsyncJobJournalDaoImpl.class, AsyncJobManagerImpl.class, AutoScalePolicyConditionMapDaoImpl.class, AutoScalePolicyDaoImpl.class, AutoScaleVmGroupDaoImpl.class,
-    AutoScaleVmGroupPolicyMapDaoImpl.class, AutoScaleVmProfileDaoImpl.class, CapacityDaoImpl.class, ClusterDaoImpl.class, ClusterDetailsDaoImpl.class,
-    ConditionDaoImpl.class, ConfigurationDaoImpl.class, ConfigurationManagerImpl.class, ConfigurationServerImpl.class, ConsoleProxyDaoImpl.class,
-    ContrailElementImpl.class, ContrailGuru.class, ContrailManagerImpl.class, CounterDaoImpl.class, DataCenterDaoImpl.class, DataCenterDetailsDaoImpl.class, DataCenterIpAddressDaoImpl.class,
-    DataCenterJoinDaoImpl.class, DataCenterLinkLocalIpAddressDaoImpl.class, DataCenterVnetDaoImpl.class, DcDetailsDaoImpl.class, DedicatedResourceDaoImpl.class,
-    DiskOfferingDaoImpl.class, DiskOfferingJoinDaoImpl.class, DomainDaoImpl.class, DomainManagerImpl.class, DomainRouterDaoImpl.class, DomainRouterJoinDaoImpl.class,
-    EventDaoImpl.class, EventJoinDaoImpl.class, EventUtils.class, ExtensionRegistry.class, FirewallManagerImpl.class, FirewallRulesCidrsDaoImpl.class,
-    FirewallRulesDaoImpl.class, GuestOSCategoryDaoImpl.class, GuestOSDaoImpl.class, HostDaoImpl.class, HostDetailsDaoImpl.class, HostJoinDaoImpl.class,
-    HostPodDaoImpl.class, HostTagsDaoImpl.class, HostTransferMapDaoImpl.class, HypervisorCapabilitiesDaoImpl.class, HypervisorGuruManagerImpl.class,
- ImageStoreDaoImpl.class, ImageStoreJoinDaoImpl.class, InstanceGroupDaoImpl.class, InstanceGroupJoinDaoImpl.class,
-    InstanceGroupVMMapDaoImpl.class, InternalLoadBalancerElement.class, IPAddressDaoImpl.class, IpAddressManagerImpl.class, Ipv6AddressManagerImpl.class, ItWorkDaoImpl.class, LBHealthCheckPolicyDaoImpl.class,
-    LBStickinessPolicyDaoImpl.class, LaunchPermissionDaoImpl.class, LoadBalancerDaoImpl.class, LoadBalancerVMMapDaoImpl.class, LoadBalancingRulesManagerImpl.class,
-    ManagementServerHostDaoImpl.class, MockAccountManager.class, NetworkACLDaoImpl.class, NetworkACLItemDaoImpl.class, NetworkACLManagerImpl.class,
-    NetworkAccountDaoImpl.class, NetworkDaoImpl.class, NetworkDomainDaoImpl.class, NetworkOfferingDaoImpl.class,
-    NetworkOfferingDetailsDaoImpl.class, NetworkOfferingServiceMapDaoImpl.class, NetworkOpDaoImpl.class, NetworkOrchestrator.class, NetworkRuleConfigDaoImpl.class, NetworkServiceImpl.class,
-    NetworkServiceMapDaoImpl.class, NicDaoImpl.class, NicIpAliasDaoImpl.class, NicSecondaryIpDaoImpl.class, PhysicalNetworkDaoImpl.class, PhysicalNetworkServiceProviderDaoImpl.class,
-    PhysicalNetworkTrafficTypeDaoImpl.class, PlannerHostReservationDaoImpl.class, PodVlanDaoImpl.class, PodVlanMapDaoImpl.class, PortForwardingRulesDaoImpl.class,
-    PortableIpDaoImpl.class, PortableIpRangeDaoImpl.class, PrimaryDataStoreDaoImpl.class, PrivateIpDaoImpl.class, ProjectAccountDaoImpl.class,
-    ProjectAccountJoinDaoImpl.class, ProjectInvitationDaoImpl.class, ProjectDaoImpl.class, ProjectInvitationJoinDaoImpl.class, ProjectJoinDaoImpl.class,
-    ProjectManagerImpl.class, RegionDaoImpl.class, RemoteAccessVpnDaoImpl.class, ResourceCountDaoImpl.class, ResourceLimitDaoImpl.class, ResourceTagDao.class,
-    ResourceTagJoinDaoImpl.class, ResourceTagsDaoImpl.class, RouterNetworkDaoImpl.class, RulesManagerImpl.class, SSHKeyPairDaoImpl.class,
-    SecondaryStorageVmDaoImpl.class, SecurityGroupDaoImpl.class, SecurityGroupJoinDaoImpl.class, SecurityGroupRuleDaoImpl.class, SecurityGroupRulesDaoImpl.class,
-    SecurityGroupVMMapDaoImpl.class, SecurityGroupWorkDaoImpl.class, ServerEventHandlerImpl.class, ServiceOfferingDaoImpl.class, ServiceOfferingDetailsDaoImpl.class,
-    ServiceOfferingJoinDaoImpl.class, Site2SiteCustomerGatewayDaoImpl.class, Site2SiteVpnConnectionDaoImpl.class, Site2SiteVpnGatewayDaoImpl.class,
-    SnapshotDaoImpl.class, SnapshotPolicyDaoImpl.class, StaticRouteDaoImpl.class, StatsCollector.class, StoragePoolDetailsDaoImpl.class, StoragePoolHostDaoImpl.class,
-    StoragePoolJoinDaoImpl.class, SyncQueueItemDaoImpl.class, TemplateDataStoreDaoImpl.class, TemplateJoinDaoImpl.class, UploadDaoImpl.class, UsageEventDaoImpl.class,
-    UserAccountJoinDaoImpl.class, UserDaoImpl.class, UserIpv6AddressDaoImpl.class, UserStatisticsDaoImpl.class, UserStatsLogDaoImpl.class,
-    UserVmCloneSettingDaoImpl.class, UserVmDaoImpl.class, UserVmDetailsDaoImpl.class, UserVmJoinDaoImpl.class, UserVmManagerImpl.class, VMInstanceDaoImpl.class, VMSnapshotDaoImpl.class,
-    VMTemplateDaoImpl.class, VMTemplateDetailsDaoImpl.class, VMTemplateHostDaoImpl.class, VMTemplateZoneDaoImpl.class, VirtualMachineManagerImpl.class, VirtualRouterProviderDaoImpl.class,
-    VlanDaoImpl.class, VmDiskStatisticsDaoImpl.class, VmRulesetLogDaoImpl.class, VolumeDaoImpl.class, VolumeHostDaoImpl.class, VolumeJoinDaoImpl.class, VpcDaoImpl.class,
-    VpcGatewayDaoImpl.class, VpcManagerImpl.class, VpcOfferingDaoImpl.class, VpcOfferingServiceMapDaoImpl.class, VpcServiceMapDaoImpl.class,
-    VpcVirtualNetworkApplianceManagerImpl.class, VpnUserDaoImpl.class, XenServerGuru.class}, includeFilters = {@Filter(value = IntegrationTestConfiguration.ComponentFilter.class,
-                                                                                                  type = FilterType.CUSTOM)}, useDefaultFilters = false)
+@ComponentScan(basePackageClasses = {AccountDaoImpl.class, AccountDetailsDaoImpl.class, AccountGuestVlanMapDaoImpl.class, AccountJoinDaoImpl.class, AccountVlanMapDaoImpl.class,
+        AffinityGroupDaoImpl.class, AffinityGroupDomainMapDaoImpl.class, AffinityGroupJoinDaoImpl.class, AffinityGroupVMMapDaoImpl.class, ApiDBUtils.class,
+        ApplicationLoadBalancerRuleDaoImpl.class, AsyncJobDaoImpl.class, AsyncJobJoinDaoImpl.class, AsyncJobJoinMapDaoImpl.class, AsyncJobJournalDaoImpl.class,
+        AsyncJobManagerImpl.class, AutoScalePolicyConditionMapDaoImpl.class, AutoScalePolicyDaoImpl.class, AutoScaleVmGroupDaoImpl.class, AutoScaleVmGroupPolicyMapDaoImpl.class,
+        AutoScaleVmProfileDaoImpl.class, CapacityDaoImpl.class, ClusterDaoImpl.class, ClusterDetailsDaoImpl.class, ConditionDaoImpl.class, ConfigurationDaoImpl.class,
+        ConfigurationManagerImpl.class, ConfigurationServerImpl.class, ConsoleProxyDaoImpl.class, ContrailElementImpl.class, ContrailGuru.class, ContrailManagerImpl.class,
+        CounterDaoImpl.class, DataCenterDaoImpl.class, DataCenterDetailsDaoImpl.class, DataCenterIpAddressDaoImpl.class, DataCenterJoinDaoImpl.class,
+        DataCenterLinkLocalIpAddressDaoImpl.class, DataCenterVnetDaoImpl.class, DcDetailsDaoImpl.class, DedicatedResourceDaoImpl.class, DiskOfferingDaoImpl.class,
+        DiskOfferingJoinDaoImpl.class, DomainDaoImpl.class, DomainManagerImpl.class, DomainRouterDaoImpl.class, DomainRouterJoinDaoImpl.class, EventDaoImpl.class,
+        EventJoinDaoImpl.class, EventUtils.class, ExtensionRegistry.class, FirewallManagerImpl.class, FirewallRulesCidrsDaoImpl.class, FirewallRulesDaoImpl.class,
+        GuestOSCategoryDaoImpl.class, GuestOSDaoImpl.class, HostDaoImpl.class, HostDetailsDaoImpl.class, HostJoinDaoImpl.class, HostPodDaoImpl.class, HostTagsDaoImpl.class,
+        HostTransferMapDaoImpl.class, HypervisorCapabilitiesDaoImpl.class, HypervisorGuruManagerImpl.class, ImageStoreDaoImpl.class, ImageStoreJoinDaoImpl.class,
+        InstanceGroupDaoImpl.class, InstanceGroupJoinDaoImpl.class, InstanceGroupVMMapDaoImpl.class, InternalLoadBalancerElement.class, IPAddressDaoImpl.class,
+        IpAddressManagerImpl.class, Ipv6AddressManagerImpl.class, ItWorkDaoImpl.class, LBHealthCheckPolicyDaoImpl.class, LBStickinessPolicyDaoImpl.class,
+        LaunchPermissionDaoImpl.class, LoadBalancerDaoImpl.class, LoadBalancerVMMapDaoImpl.class, LoadBalancingRulesManagerImpl.class, ManagementServerHostDaoImpl.class,
+        MockAccountManager.class, NetworkACLDaoImpl.class, NetworkACLItemDaoImpl.class, NetworkACLManagerImpl.class, NetworkAccountDaoImpl.class, NetworkDaoImpl.class,
+        NetworkDomainDaoImpl.class, NetworkOfferingDaoImpl.class, NetworkOfferingDetailsDaoImpl.class, NetworkOfferingServiceMapDaoImpl.class, NetworkOpDaoImpl.class,
+        NetworkOrchestrator.class, NetworkRuleConfigDaoImpl.class, NetworkServiceImpl.class, NetworkServiceMapDaoImpl.class, NicDaoImpl.class, NicIpAliasDaoImpl.class,
+        NicSecondaryIpDaoImpl.class, PhysicalNetworkDaoImpl.class, PhysicalNetworkServiceProviderDaoImpl.class, PhysicalNetworkTrafficTypeDaoImpl.class,
+        PlannerHostReservationDaoImpl.class, PodVlanDaoImpl.class, PodVlanMapDaoImpl.class, PortForwardingRulesDaoImpl.class, PortableIpDaoImpl.class,
+        PortableIpRangeDaoImpl.class, PrimaryDataStoreDaoImpl.class, PrivateIpDaoImpl.class, ProjectAccountDaoImpl.class, ProjectAccountJoinDaoImpl.class,
+        ProjectInvitationDaoImpl.class, ProjectDaoImpl.class, ProjectInvitationJoinDaoImpl.class, ProjectJoinDaoImpl.class, ProjectManagerImpl.class, RegionDaoImpl.class,
+        RemoteAccessVpnDaoImpl.class, ResourceCountDaoImpl.class, ResourceLimitDaoImpl.class, ResourceTagDao.class, ResourceTagJoinDaoImpl.class, ResourceTagsDaoImpl.class,
+        RouterNetworkDaoImpl.class, RulesManagerImpl.class, SSHKeyPairDaoImpl.class, SecondaryStorageVmDaoImpl.class, SecurityGroupDaoImpl.class, SecurityGroupJoinDaoImpl.class,
+        SecurityGroupRuleDaoImpl.class, SecurityGroupRulesDaoImpl.class, SecurityGroupVMMapDaoImpl.class, SecurityGroupWorkDaoImpl.class, ServerEventHandlerImpl.class,
+        ServiceOfferingDaoImpl.class, ServiceOfferingDetailsDaoImpl.class, ServiceOfferingJoinDaoImpl.class, Site2SiteCustomerGatewayDaoImpl.class,
+        Site2SiteVpnConnectionDaoImpl.class, Site2SiteVpnGatewayDaoImpl.class, SnapshotDaoImpl.class, SnapshotPolicyDaoImpl.class, StaticRouteDaoImpl.class, StatsCollector.class,
+        StoragePoolDetailsDaoImpl.class, StoragePoolHostDaoImpl.class, StoragePoolJoinDaoImpl.class, SyncQueueItemDaoImpl.class, TemplateDataStoreDaoImpl.class,
+        TemplateJoinDaoImpl.class, UploadDaoImpl.class, UsageEventDaoImpl.class, UserAccountJoinDaoImpl.class, UserDaoImpl.class, UserIpv6AddressDaoImpl.class,
+        UserStatisticsDaoImpl.class, UserStatsLogDaoImpl.class, UserVmCloneSettingDaoImpl.class, UserVmDaoImpl.class, UserVmDetailsDaoImpl.class, UserVmJoinDaoImpl.class,
+        UserVmManagerImpl.class, VMInstanceDaoImpl.class, VMSnapshotDaoImpl.class, VMTemplateDaoImpl.class, VMTemplateDetailsDaoImpl.class, VMTemplateHostDaoImpl.class,
+        VMTemplateZoneDaoImpl.class, VirtualMachineManagerImpl.class, VirtualRouterProviderDaoImpl.class, VlanDaoImpl.class, VmDiskStatisticsDaoImpl.class,
+        VmRulesetLogDaoImpl.class, VolumeDaoImpl.class, VolumeHostDaoImpl.class, VolumeJoinDaoImpl.class, VpcDaoImpl.class, VpcGatewayDaoImpl.class, VpcManagerImpl.class,
+        VpcOfferingDaoImpl.class, VpcOfferingServiceMapDaoImpl.class, VpcServiceMapDaoImpl.class, VpcVirtualNetworkApplianceManagerImpl.class, VpnUserDaoImpl.class,
+        XenServerGuru.class}, includeFilters = {@Filter(value = IntegrationTestConfiguration.ComponentFilter.class, type = FilterType.CUSTOM)}, useDefaultFilters = false)
 @Configuration
 public class IntegrationTestConfiguration {
     public static class ComponentFilter implements TypeFilter {
@@ -389,8 +388,8 @@ public class IntegrationTestConfiguration {
                 }
             });
             Mockito.when(
-                mock.createAffinityGroupInternal(Matchers.any(String.class), Matchers.any(Long.class), Matchers.any(String.class), Matchers.any(String.class),
-                    Matchers.any(String.class))).thenReturn(gmock);
+                    mock.createAffinityGroupInternal(Matchers.any(String.class), Matchers.any(Long.class), Matchers.any(String.class), Matchers.any(String.class),
+                            Matchers.any(String.class))).thenReturn(gmock);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -721,34 +720,42 @@ public class IntegrationTestConfiguration {
     public VolumeOrchestrationService volumeOrchestrationService() {
         return Mockito.mock(VolumeOrchestrationService.class);
     }
+
     @Bean
     public FirewallServiceProvider firewallServiceProvider() {
         return Mockito.mock(FirewallServiceProvider.class);
     }
+
     @Bean
     public PortForwardingServiceProvider portForwardingServiceProvider() {
         return Mockito.mock(PortForwardingServiceProvider.class);
     }
+
     @Bean
     public NetworkACLServiceProvider networkACLServiceProvider() {
         return Mockito.mock(NetworkACLServiceProvider.class);
     }
+
     @Bean
     public VpcProvider vpcProvier() {
         return Mockito.mock(VpcProvider.class);
     }
+
     @Bean
     public VolumeService volumeService() {
         return Mockito.mock(VolumeService.class);
     }
+
     @Bean
     public PrimaryDataStoreProviderManager privateDataStoreProviderManager() {
         return Mockito.mock(PrimaryDataStoreProviderManager.class);
     }
+
     @Bean
     public ImageStoreProviderManager imageStoreProviderManager() {
         return Mockito.mock(ImageStoreProviderManager.class);
     }
+
     @Bean
     public DataStoreProvider dataStoreProvider() {
         return Mockito.mock(DataStoreProvider.class);

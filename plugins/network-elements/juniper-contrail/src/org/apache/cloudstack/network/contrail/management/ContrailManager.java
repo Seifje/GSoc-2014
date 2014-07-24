@@ -57,8 +57,11 @@ public interface ContrailManager {
     public static final String managementNetworkName = "ip-fabric";
 
     public NetworkOffering getRouterOffering();
+
     public NetworkOffering getPublicRouterOffering();
+
     public NetworkOffering getVpcRouterOffering();
+
     public VpcOffering getVpcOffering();
 
     public void syncNetworkDB(short syncMode) throws IOException;
@@ -67,9 +70,11 @@ public interface ContrailManager {
 
     /**
      * Lookup the virtual network that implements the CloudStack network object.
-     * @param net_id internal identifier of the NetworkVO object.
-     * @return the uuid of the virtual network that corresponds to the
-     * specified CloudStack network.
+     *
+     * @param net_id
+     *            internal identifier of the NetworkVO object.
+     * @return the uuid of the virtual network that corresponds to the specified
+     *         CloudStack network.
      */
     public String findVirtualNetworkId(Network net) throws IOException;
 
@@ -95,7 +100,7 @@ public interface ContrailManager {
 
     public net.juniper.contrail.api.types.Project getVncProject(long domainId, long accountId) throws IOException;
 
-    public net.juniper.contrail.api.types.Project  getDefaultVncProject() throws IOException;
+    public net.juniper.contrail.api.types.Project getDefaultVncProject() throws IOException;
 
     public boolean isSystemRootDomain(net.juniper.contrail.api.types.Domain vnc);
 

@@ -57,7 +57,8 @@ public class VmWorkSerializer {
     }
 
     public static String serialize(VmWork work) {
-        // TODO: there are way many generics, too tedious to get serialization work under GSON
+        // TODO: there are way many generics, too tedious to get serialization
+        // work under GSON
         // use java binary serialization instead
         //
         return JobSerializerHelper.toObjectSerializedString(work);
@@ -65,7 +66,8 @@ public class VmWorkSerializer {
     }
 
     public static <T extends VmWork> T deserialize(Class<?> clazz, String workInJsonText) {
-        // TODO: there are way many generics, too tedious to get serialization work under GSON
+        // TODO: there are way many generics, too tedious to get serialization
+        // work under GSON
         // use java binary serialization instead
         //
         return (T)JobSerializerHelper.fromObjectSerializedString(workInJsonText);

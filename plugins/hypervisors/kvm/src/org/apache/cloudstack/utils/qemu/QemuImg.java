@@ -49,30 +49,29 @@ public class QemuImg {
     }
 
     public static enum PreallocationType {
-        Off("off"),
-        Metadata("metadata"),
-        Full("full");
+        Off("off"), Metadata("metadata"), Full("full");
 
         private final String preallocationType;
 
-        private PreallocationType(String preallocationType){
+        private PreallocationType(String preallocationType) {
             this.preallocationType = preallocationType;
         }
 
-        public String toString(){
+        @Override
+        public String toString() {
             return this.preallocationType;
         }
 
-        public static PreallocationType getPreallocationType(Storage.ProvisioningType provisioningType){
-            switch (provisioningType){
-                case THIN:
-                    return PreallocationType.Off;
-                case SPARSE:
-                    return PreallocationType.Metadata;
-                case FAT:
-                    return PreallocationType.Full;
-                default:
-                    throw new NotImplementedException();
+        public static PreallocationType getPreallocationType(Storage.ProvisioningType provisioningType) {
+            switch (provisioningType) {
+            case THIN:
+                return PreallocationType.Off;
+            case SPARSE:
+                return PreallocationType.Metadata;
+            case FAT:
+                return PreallocationType.Full;
+            default:
+                throw new NotImplementedException();
             }
         }
     }
@@ -114,8 +113,9 @@ public class QemuImg {
      * @param backingFile
      *            A backing file if used (for example with qcow2)
      * @param options
-     *            Options for the create. Takes a Map<String, String> with key value
-     *            pairs which are passed on to qemu-img without validation.
+     *            Options for the create. Takes a Map<String, String> with key
+     *            value pairs which are passed on to qemu-img without
+     *            validation.
      * @return void
      */
     public void create(QemuImgFile file, QemuImgFile backingFile, Map<String, String> options) throws QemuImgException {
@@ -132,9 +132,9 @@ public class QemuImg {
         }
 
         /*
-            -b for a backing file does not show up in the docs, but it works.
-            Shouldn't this be -o backing_file=filename instead?
-        */
+         * -b for a backing file does not show up in the docs, but it works.
+         * Shouldn't this be -o backing_file=filename instead?
+         */
         s.add("-f");
         if (backingFile != null) {
             s.add(backingFile.getFormat().toString());
@@ -193,8 +193,9 @@ public class QemuImg {
      * @param file
      *            The file to create
      * @param options
-     *            Options for the create. Takes a Map<String, String> with key value
-     *            pairs which are passed on to qemu-img without validation.
+     *            Options for the create. Takes a Map<String, String> with key
+     *            value pairs which are passed on to qemu-img without
+     *            validation.
      * @return void
      */
     public void create(QemuImgFile file, Map<String, String> options) throws QemuImgException {
@@ -204,8 +205,8 @@ public class QemuImg {
     /**
      * Convert a image from source to destination
      *
-     * This method calls 'qemu-img convert' and takes two objects
-     * as an argument.
+     * This method calls 'qemu-img convert' and takes two objects as an
+     * argument.
      *
      *
      * @param srcFile
@@ -213,16 +214,19 @@ public class QemuImg {
      * @param destFile
      *            The destination file
      * @param options
-     *            Options for the convert. Takes a Map<String, String> with key value
-     *            pairs which are passed on to qemu-img without validation.
+     *            Options for the convert. Takes a Map<String, String> with key
+     *            value pairs which are passed on to qemu-img without
+     *            validation.
      * @return void
      */
     public void convert(QemuImgFile srcFile, QemuImgFile destFile, Map<String, String> options) throws QemuImgException {
         Script s = new Script(_qemuImgPath, timeout);
         s.add("convert");
-        // autodetect source format. Sometime int he future we may teach KVMPhysicalDisk about more formats, then we can explicitly pass them if necessary
-        //s.add("-f");
-        //s.add(srcFile.getFormat().toString());
+        // autodetect source format. Sometime int he future we may teach
+        // KVMPhysicalDisk about more formats, then we can explicitly pass them
+        // if necessary
+        // s.add("-f");
+        // s.add(srcFile.getFormat().toString());
         s.add("-O");
         s.add(destFile.getFormat().toString());
 
@@ -251,8 +255,8 @@ public class QemuImg {
     /**
      * Convert a image from source to destination
      *
-     * This method calls 'qemu-img convert' and takes two objects
-     * as an argument.
+     * This method calls 'qemu-img convert' and takes two objects as an
+     * argument.
      *
      *
      * @param srcFile
@@ -268,8 +272,7 @@ public class QemuImg {
     /**
      * Commit the changes recorded in the file in its base image.
      *
-     * This method calls 'qemu-img commit' and takes one object as
-     * an argument
+     * This method calls 'qemu-img commit' and takes one object as an argument
      *
      * @param file
      *            The file of which changes have to be committed
@@ -282,16 +285,18 @@ public class QemuImg {
     /**
      * Execute qemu-img info for the given file
      *
-     * Qemu-img returns human readable output, but this method does it's best
-     * to turn that into machine readeable data.
+     * Qemu-img returns human readable output, but this method does it's best to
+     * turn that into machine readeable data.
      *
-     * Spaces in keys are replaced by hyphen-minus (-).
-     * Sizes (virtual-size and disk-size) are returned in bytes
-     * Paths (image and backing-file) are the absolute path to the file
+     * Spaces in keys are replaced by hyphen-minus (-). Sizes (virtual-size and
+     * disk-size) are returned in bytes Paths (image and backing-file) are the
+     * absolute path to the file
      *
      * @param file
-     *            A QemuImgFile object containing the file to get the information from
-     * @return A HashMap with String key-value information as returned by 'qemu-img info'
+     *            A QemuImgFile object containing the file to get the
+     *            information from
+     * @return A HashMap with String key-value information as returned by
+     *         'qemu-img info'
      */
     public Map<String, String> info(QemuImgFile file) throws QemuImgException {
         Script s = new Script(_qemuImgPath);
@@ -305,7 +310,8 @@ public class QemuImg {
             throw new QemuImgException(result);
         }
 
-        Type stringStringMap = new TypeToken<Map<String, String>>(){}.getType();
+        Type stringStringMap = new TypeToken<Map<String, String>>() {
+        }.getType();
         Gson gson = new Gson();
         return gson.fromJson(parser.getLines(), stringStringMap);
     }
@@ -323,8 +329,8 @@ public class QemuImg {
     /**
      * Resize an image
      *
-     * This method simple calls 'qemu-img resize'.
-     * A negative size value will get prefixed with - and a positive with +
+     * This method simple calls 'qemu-img resize'. A negative size value will
+     * get prefixed with - and a positive with +
      *
      * Sizes are in bytes and will be passed on that way
      *
@@ -365,8 +371,8 @@ public class QemuImg {
     /**
      * Resize an image
      *
-     * This method simple calls 'qemu-img resize'.
-     * A negative size value will get prefixed with - and a positive with +
+     * This method simple calls 'qemu-img resize'. A negative size value will
+     * get prefixed with - and a positive with +
      *
      * Sizes are in bytes and will be passed on that way
      *

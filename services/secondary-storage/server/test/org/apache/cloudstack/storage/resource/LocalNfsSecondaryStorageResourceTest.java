@@ -75,7 +75,7 @@ public class LocalNfsSecondaryStorageResourceTest extends TestCase {
         }
 
         System.setProperty("paths.script", "/Users/edison/develop/asf-master/script");
-        //resource.configure("test", new HashMap<String, Object>());
+        // resource.configure("test", new HashMap<String, Object>());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class LocalNfsSecondaryStorageResourceTest extends TestCase {
 
         Mockito.when(template.getPath()).thenReturn(answer.getInstallPath());
         Mockito.when(template.getDataStore()).thenReturn(swift);
-        //download swift:
+        // download swift:
         Mockito.when(cacheStore.getRole()).thenReturn(DataStoreRole.ImageCache);
         TemplateObjectTO destTemplate = Mockito.mock(TemplateObjectTO.class);
         Mockito.when(destTemplate.getPath()).thenReturn("template/1/2");
@@ -115,7 +115,7 @@ public class LocalNfsSecondaryStorageResourceTest extends TestCase {
         CopyCmdAnswer copyCmdAnswer = (CopyCmdAnswer)resource.executeRequest(cpyCmd);
         Assert.assertTrue(copyCmdAnswer.getResult());
 
-        //list template
+        // list template
         ListTemplateCommand listCmd = new ListTemplateCommand(swift);
         ListTemplateAnswer listAnswer = (ListTemplateAnswer)resource.executeRequest(listCmd);
 

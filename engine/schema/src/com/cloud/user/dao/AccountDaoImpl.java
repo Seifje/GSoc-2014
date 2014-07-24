@@ -46,8 +46,8 @@ import com.cloud.utils.db.TransactionLegacy;
 public class AccountDaoImpl extends GenericDaoBase<AccountVO, Long> implements AccountDao {
     private static final Logger s_logger = Logger.getLogger(AccountDaoImpl.class);
     private static final String FIND_USER_ACCOUNT_BY_API_KEY = "SELECT u.id, u.username, u.account_id, u.secret_key, u.state, "
-        + "a.id, a.account_name, a.type, a.domain_id, a.state " + "FROM `cloud`.`user` u, `cloud`.`account` a "
-        + "WHERE u.account_id = a.id AND u.api_key = ? and u.removed IS NULL";
+            + "a.id, a.account_name, a.type, a.domain_id, a.state " + "FROM `cloud`.`user` u, `cloud`.`account` a "
+            + "WHERE u.account_id = a.id AND u.api_key = ? and u.removed IS NULL";
 
     protected final SearchBuilder<AccountVO> AllFieldsSearch;
     protected final SearchBuilder<AccountVO> AccountTypeSearch;
@@ -131,7 +131,8 @@ public class AccountDaoImpl extends GenericDaoBase<AccountVO, Long> implements A
             pstmt = txn.prepareAutoCloseStatement(sql);
             pstmt.setString(1, apiKey);
             ResultSet rs = pstmt.executeQuery();
-            // TODO:  make sure we don't have more than 1 result?  ApiKey had better be unique
+            // TODO: make sure we don't have more than 1 result? ApiKey had
+            // better be unique
             if (rs.next()) {
                 User u = new UserVO(rs.getLong(1));
                 u.setUsername(rs.getString(2));

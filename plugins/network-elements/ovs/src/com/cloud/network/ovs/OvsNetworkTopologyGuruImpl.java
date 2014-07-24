@@ -58,14 +58,14 @@ public class OvsNetworkTopologyGuruImpl extends ManagerBase implements OvsNetwor
     NetworkDao _networkDao;
 
     /**
-     * get the list of hypervisor hosts on which VM's belonging to a network currently spans
+     * get the list of hypervisor hosts on which VM's belonging to a network
+     * currently spans
      */
-    public  List<Long> getNetworkSpanedHosts(long networkId) {
+    public List<Long> getNetworkSpanedHosts(long networkId) {
         List<Long> hostIds = new ArrayList<Long>();
         // Find active VMs with a NIC on the target network
-        List<UserVmVO> vms = _userVmDao.listByNetworkIdAndStates(networkId,
-                VirtualMachine.State.Running, VirtualMachine.State.Starting, VirtualMachine.State.Stopping, VirtualMachine.State.Unknown,
-                VirtualMachine.State.Migrating);
+        List<UserVmVO> vms = _userVmDao.listByNetworkIdAndStates(networkId, VirtualMachine.State.Running, VirtualMachine.State.Starting, VirtualMachine.State.Stopping,
+                VirtualMachine.State.Unknown, VirtualMachine.State.Migrating);
         // Find routers for the network
         List<DomainRouterVO> routers = _routerDao.findByNetwork(networkId);
         List<VMInstanceVO> ins = new ArrayList<VMInstanceVO>();
@@ -84,15 +84,16 @@ public class OvsNetworkTopologyGuruImpl extends ManagerBase implements OvsNetwor
                 hostIds.add(rh);
             }
         }
-        return  hostIds;
+        return hostIds;
     }
 
     /**
-     * get the list of hypervisor hosts on which VM's belonging to a VPC currently spans
+     * get the list of hypervisor hosts on which VM's belonging to a VPC
+     * currently spans
      */
     @Override
     public List<Long> getVpcSpannedHosts(long vpcId) {
-        List<? extends Network> vpcNetworks =  _vpcMgr.getVpcNetworks(vpcId);
+        List<? extends Network> vpcNetworks = _vpcMgr.getVpcNetworks(vpcId);
         List<Long> vpcHostIds = new ArrayList<>();
         for (Network vpcNetwork : vpcNetworks) {
             List<Long> networkHostIds = new ArrayList<Long>();
@@ -109,7 +110,8 @@ public class OvsNetworkTopologyGuruImpl extends ManagerBase implements OvsNetwor
     }
 
     /**
-     * get the list of VPC id's of the vpc's for which one or more VM's from the VPC are running on the host
+     * get the list of VPC id's of the vpc's for which one or more VM's from the
+     * VPC are running on the host
      */
     @Override
     public List<Long> getVpcOnHost(long hostId) {
@@ -117,7 +119,7 @@ public class OvsNetworkTopologyGuruImpl extends ManagerBase implements OvsNetwor
         List<VMInstanceVO> vmInstances = _vmInstanceDao.listByHostId(hostId);
         for (VMInstanceVO instance : vmInstances) {
             List<NicVO> nics = _nicDao.listByVmId(instance.getId());
-            for (Nic nic: nics) {
+            for (Nic nic : nics) {
                 Network network = _networkDao.findById(nic.getNetworkId());
                 if (network.getTrafficType() == Networks.TrafficType.Guest && network.getVpcId() != null) {
                     if (!vpcIds.contains(network.getVpcId())) {
@@ -134,10 +136,9 @@ public class OvsNetworkTopologyGuruImpl extends ManagerBase implements OvsNetwor
      */
     @Override
     public List<Long> getAllActiveVmsInNetwork(long networkId) {
-        List <Long> vmIds = new ArrayList<>();
-        List<UserVmVO> vms = _userVmDao.listByNetworkIdAndStates(networkId,
-                VirtualMachine.State.Running, VirtualMachine.State.Starting, VirtualMachine.State.Stopping, VirtualMachine.State.Unknown,
-                VirtualMachine.State.Migrating);
+        List<Long> vmIds = new ArrayList<>();
+        List<UserVmVO> vms = _userVmDao.listByNetworkIdAndStates(networkId, VirtualMachine.State.Running, VirtualMachine.State.Starting, VirtualMachine.State.Stopping,
+                VirtualMachine.State.Unknown, VirtualMachine.State.Migrating);
         // Find routers for the network
         List<DomainRouterVO> routers = _routerDao.findByNetwork(networkId);
 
@@ -147,11 +148,11 @@ public class OvsNetworkTopologyGuruImpl extends ManagerBase implements OvsNetwor
             }
         }
         if (routers.size() != 0) {
-            for (DomainRouterVO router: routers) {
+            for (DomainRouterVO router : routers) {
                 vmIds.add(router.getId());
             }
         }
-        return  vmIds;
+        return vmIds;
     }
 
     /**
@@ -161,10 +162,10 @@ public class OvsNetworkTopologyGuruImpl extends ManagerBase implements OvsNetwor
     public List<Long> getAllActiveVmsInVpc(long vpcId) {
 
         Set<Long> vmIdsSet = new HashSet<>();
-        List<? extends Network> vpcNetworks =  _vpcMgr.getVpcNetworks(vpcId);
+        List<? extends Network> vpcNetworks = _vpcMgr.getVpcNetworks(vpcId);
         for (Network network : vpcNetworks) {
             List<Long> networkVmIds = getAllActiveVmsInNetwork(network.getId());
-            if (networkVmIds  != null && !networkVmIds.isEmpty()) {
+            if (networkVmIds != null && !networkVmIds.isEmpty()) {
                 vmIdsSet.addAll(networkVmIds);
             }
         }
@@ -174,15 +175,16 @@ public class OvsNetworkTopologyGuruImpl extends ManagerBase implements OvsNetwor
     }
 
     /**
-     * get the list of all Vm id's in the VPC for all the tiers that are running on the host
+     * get the list of all Vm id's in the VPC for all the tiers that are running
+     * on the host
      */
     @Override
     public List<Long> getActiveVmsInVpcOnHost(long vpcId, long hostId) {
         Set<Long> vmIdsSet = new HashSet<>();
-        List<? extends Network> vpcNetworks =  _vpcMgr.getVpcNetworks(vpcId);
+        List<? extends Network> vpcNetworks = _vpcMgr.getVpcNetworks(vpcId);
         for (Network network : vpcNetworks) {
             List<Long> networkVmIds = getActiveVmsInNetworkOnHost(network.getId(), hostId, false);
-            if (networkVmIds  != null && !networkVmIds.isEmpty()) {
+            if (networkVmIds != null && !networkVmIds.isEmpty()) {
                 vmIdsSet.addAll(networkVmIds);
             }
         }
@@ -196,9 +198,8 @@ public class OvsNetworkTopologyGuruImpl extends ManagerBase implements OvsNetwor
      */
     @Override
     public List<Long> getActiveVmsInNetworkOnHost(long networkId, long hostId, boolean includeVr) {
-        List <Long> vmIds = new ArrayList<>();
-        List<UserVmVO> vms = _userVmDao.listByNetworkIdAndStates(networkId,
-                VirtualMachine.State.Running, VirtualMachine.State.Migrating);
+        List<Long> vmIds = new ArrayList<>();
+        List<UserVmVO> vms = _userVmDao.listByNetworkIdAndStates(networkId, VirtualMachine.State.Running, VirtualMachine.State.Migrating);
         // Find routers for the network
         List<DomainRouterVO> routers = _routerDao.findByNetwork(networkId);
         if (vms != null) {
@@ -208,16 +209,17 @@ public class OvsNetworkTopologyGuruImpl extends ManagerBase implements OvsNetwor
             }
         }
         if (routers.size() != 0 && includeVr) {
-            for (DomainRouterVO router: routers) {
+            for (DomainRouterVO router : routers) {
                 if (router.getHostId() == hostId)
                     vmIds.add(router.getId());
             }
         }
-        return  vmIds;
+        return vmIds;
     }
 
     /**
-     * get the list of all Vpc id's in which, a VM has a nic in the network that is part of VPC
+     * get the list of all Vpc id's in which, a VM has a nic in the network that
+     * is part of VPC
      */
     @Override
     public List<Long> getVpcIdsVmIsPartOf(long vmId) {
@@ -225,7 +227,7 @@ public class OvsNetworkTopologyGuruImpl extends ManagerBase implements OvsNetwor
         List<NicVO> nics = _nicDao.listByVmId(vmId);
         if (nics == null)
             return null;
-        for (Nic nic: nics) {
+        for (Nic nic : nics) {
             Network network = _networkDao.findById(nic.getNetworkId());
             if (network != null && network.getTrafficType() == Networks.TrafficType.Guest && network.getVpcId() != null) {
                 if (!vpcIds.contains(network.getVpcId())) {
@@ -233,6 +235,6 @@ public class OvsNetworkTopologyGuruImpl extends ManagerBase implements OvsNetwor
                 }
             }
         }
-        return  vpcIds;
+        return vpcIds;
     }
 }

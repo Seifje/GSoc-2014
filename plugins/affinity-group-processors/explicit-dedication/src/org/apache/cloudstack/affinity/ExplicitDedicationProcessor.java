@@ -81,11 +81,15 @@ public class ExplicitDedicationProcessor extends AffinityProcessorBase implement
     protected AffinityGroupVMMapDao _affinityGroupVMMapDao;
 
     /**
-     * This method will process the affinity group of type 'Explicit Dedication' for a deployment of a VM that demands dedicated resources.
-     * For ExplicitDedicationProcessor we need to add dedicated resources into the IncludeList based on the level we have dedicated resources available.
-     * For eg. if admin dedicates a pod to a domain, then all the user in that domain can use the resources of that pod.
-     * We need to take care of the situation when dedicated resources further have resources dedicated to sub-domain/account.
-     * This IncludeList is then used to update the avoid list for a given data center.
+     * This method will process the affinity group of type 'Explicit Dedication'
+     * for a deployment of a VM that demands dedicated resources. For
+     * ExplicitDedicationProcessor we need to add dedicated resources into the
+     * IncludeList based on the level we have dedicated resources available. For
+     * eg. if admin dedicates a pod to a domain, then all the user in that
+     * domain can use the resources of that pod. We need to take care of the
+     * situation when dedicated resources further have resources dedicated to
+     * sub-domain/account. This IncludeList is then used to update the avoid
+     * list for a given data center.
      */
     @Override
     public void process(VirtualMachineProfile vmProfile, DeploymentPlan plan, ExcludeList avoid) throws AffinityConflictException {
@@ -119,10 +123,10 @@ public class ExplicitDedicationProcessor extends AffinityProcessorBase implement
                 DataCenterVO zoneOfHost = _dcDao.findById(host.getDataCenterId());
                 if (resourceList != null && resourceList.size() != 0) {
                     for (DedicatedResourceVO resource : resourceList) {
-                        if ((resource.getHostId() != null && resource.getHostId().longValue() == plan.getHostId().longValue()) ||
-                                (resource.getClusterId() != null && resource.getClusterId().longValue() == clusterofHost.getId()) ||
-                                (resource.getPodId() != null && resource.getPodId().longValue() == podOfHost.getId()) ||
-                                (resource.getDataCenterId() != null && resource.getDataCenterId().longValue() == zoneOfHost.getId())) {
+                        if ((resource.getHostId() != null && resource.getHostId().longValue() == plan.getHostId().longValue())
+                                || (resource.getClusterId() != null && resource.getClusterId().longValue() == clusterofHost.getId())
+                                || (resource.getPodId() != null && resource.getPodId().longValue() == podOfHost.getId())
+                                || (resource.getDataCenterId() != null && resource.getDataCenterId().longValue() == zoneOfHost.getId())) {
                             canUse = true;
                         }
                     }
@@ -138,9 +142,9 @@ public class ExplicitDedicationProcessor extends AffinityProcessorBase implement
                 // check whether this cluster or its pod is dedicated
                 if (resourceList != null && resourceList.size() != 0) {
                     for (DedicatedResourceVO resource : resourceList) {
-                        if ((resource.getClusterId() != null && resource.getClusterId() == cluster.getId()) ||
-                            (resource.getPodId() != null && resource.getPodId() == podOfCluster.getId()) ||
-                            (resource.getDataCenterId() != null && resource.getDataCenterId() == zoneOfCluster.getId())) {
+                        if ((resource.getClusterId() != null && resource.getClusterId() == cluster.getId())
+                                || (resource.getPodId() != null && resource.getPodId() == podOfCluster.getId())
+                                || (resource.getDataCenterId() != null && resource.getDataCenterId() == zoneOfCluster.getId())) {
                             canUse = true;
                         }
 
@@ -180,8 +184,8 @@ public class ExplicitDedicationProcessor extends AffinityProcessorBase implement
                 // check whether this cluster or its pod is dedicated
                 if (resourceList != null && resourceList.size() != 0) {
                     for (DedicatedResourceVO resource : resourceList) {
-                        if ((resource.getPodId() != null && resource.getPodId() == pod.getId()) ||
-                            (resource.getDataCenterId() != null && resource.getDataCenterId() == zoneOfPod.getId())) {
+                        if ((resource.getPodId() != null && resource.getPodId() == pod.getId())
+                                || (resource.getDataCenterId() != null && resource.getDataCenterId() == zoneOfPod.getId())) {
                             canUse = true;
                         }
 
@@ -242,8 +246,8 @@ public class ExplicitDedicationProcessor extends AffinityProcessorBase implement
                 }
 
                 if (s_logger.isDebugEnabled()) {
-                    s_logger.debug("ExplicitDedicationProcessor returns Avoid List as: Deploy avoids pods: " + avoid.getPodsToAvoid() + ", clusters: " +
-                        avoid.getClustersToAvoid() + ", hosts: " + avoid.getHostsToAvoid());
+                    s_logger.debug("ExplicitDedicationProcessor returns Avoid List as: Deploy avoids pods: " + avoid.getPodsToAvoid() + ", clusters: " + avoid.getClustersToAvoid()
+                            + ", hosts: " + avoid.getHostsToAvoid());
                 }
             }
         }
@@ -262,7 +266,7 @@ public class ExplicitDedicationProcessor extends AffinityProcessorBase implement
 
             if (dr.getClusterId() != null) {
                 includeList.addCluster(dr.getClusterId());
-                //add all hosts inside this in includeList
+                // add all hosts inside this in includeList
                 List<HostVO> hostList = _hostDao.findByClusterId(dr.getClusterId());
                 for (HostVO host : hostList) {
                     DedicatedResourceVO dHost = _dedicatedDao.findByHostId(host.getId());
@@ -278,7 +282,7 @@ public class ExplicitDedicationProcessor extends AffinityProcessorBase implement
 
             if (dr.getPodId() != null) {
                 includeList.addPod(dr.getPodId());
-                //add all cluster under this pod in includeList
+                // add all cluster under this pod in includeList
                 List<ClusterVO> clusterList = _clusterDao.listByPodId(dr.getPodId());
                 for (ClusterVO cluster : clusterList) {
                     DedicatedResourceVO dCluster = _dedicatedDao.findByClusterId(cluster.getId());
@@ -288,7 +292,7 @@ public class ExplicitDedicationProcessor extends AffinityProcessorBase implement
                         includeList.addCluster(cluster.getId());
                     }
                 }
-                //add all hosts inside this pod in includeList
+                // add all hosts inside this pod in includeList
                 List<HostVO> hostList = _hostDao.findByPodId(dr.getPodId());
                 for (HostVO host : hostList) {
                     DedicatedResourceVO dHost = _dedicatedDao.findByHostId(host.getId());
@@ -302,7 +306,7 @@ public class ExplicitDedicationProcessor extends AffinityProcessorBase implement
 
             if (dr.getDataCenterId() != null) {
                 includeList.addDataCenter(dr.getDataCenterId());
-                //add all Pod under this data center in includeList
+                // add all Pod under this data center in includeList
                 List<HostPodVO> podList = _podDao.listByDataCenterId(dr.getDataCenterId());
                 for (HostPodVO pod : podList) {
                     DedicatedResourceVO dPod = _dedicatedDao.findByPodId(pod.getId());
@@ -321,7 +325,7 @@ public class ExplicitDedicationProcessor extends AffinityProcessorBase implement
                         includeList.addCluster(cluster.getId());
                     }
                 }
-                //add all hosts inside this in includeList
+                // add all hosts inside this in includeList
                 List<HostVO> hostList = _hostDao.listByDataCenterId(dr.getDataCenterId());
                 for (HostVO host : hostList) {
                     DedicatedResourceVO dHost = _dedicatedDao.findByHostId(host.getId());
@@ -333,8 +337,8 @@ public class ExplicitDedicationProcessor extends AffinityProcessorBase implement
                 }
             }
         }
-        //Update avoid list using includeList.
-        //add resources in avoid list which are not in include list.
+        // Update avoid list using includeList.
+        // add resources in avoid list which are not in include list.
 
         List<HostPodVO> pods = _podDao.listByDataCenterId(dc.getId());
         List<ClusterVO> clusters = _clusterDao.listClustersByDcId(dc.getId());

@@ -107,7 +107,8 @@ public class DefaultModuleDefinitionSet implements ModuleDefinitionSet {
                         // Ignore
                     }
                 } catch (EmptyStackException e) {
-                    // The root context is already loaded, so ignore the exception
+                    // The root context is already loaded, so ignore the
+                    // exception
                 }
             }
         });
@@ -121,7 +122,8 @@ public class DefaultModuleDefinitionSet implements ModuleDefinitionSet {
                     ApplicationContext parent = getApplicationContext(parents.peek().getName());
                     loadContext(def, parent);
                 } catch (EmptyStackException e) {
-                    // The root context is already loaded, so ignore the exception
+                    // The root context is already loaded, so ignore the
+                    // exception
                 }
             }
         });

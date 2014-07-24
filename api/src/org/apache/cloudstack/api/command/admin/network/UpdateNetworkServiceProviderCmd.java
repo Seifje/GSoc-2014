@@ -33,35 +33,27 @@ import com.cloud.event.EventTypes;
 import com.cloud.network.PhysicalNetworkServiceProvider;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateNetworkServiceProvider",
-            description = "Updates a network serviceProvider of a physical network",
-            responseObject = ProviderResponse.class,
-            since = "3.0.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "updateNetworkServiceProvider", description = "Updates a network serviceProvider of a physical network", responseObject = ProviderResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateNetworkServiceProviderCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateNetworkServiceProviderCmd.class.getName());
 
     private static final String s_name = "updatenetworkserviceproviderresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
     @Parameter(name = ApiConstants.STATE, type = CommandType.STRING, description = "Enabled/Disabled/Shutdown the physical network service provider")
     private String state;
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = ProviderResponse.class, required = true, description = "network service provider id")
     private Long id;
 
-    @Parameter(name = ApiConstants.SERVICE_LIST,
-               type = CommandType.LIST,
-               collectionType = CommandType.STRING,
-               description = "the list of services to be enabled for this physical network service provider")
+    @Parameter(name = ApiConstants.SERVICE_LIST, type = CommandType.LIST, collectionType = CommandType.STRING, description = "the list of services to be enabled for this physical network service provider")
     private List<String> enabledServices;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getState() {
         return state;
@@ -75,9 +67,9 @@ public class UpdateNetworkServiceProviderCmd extends BaseAsyncCmd {
         return enabledServices;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

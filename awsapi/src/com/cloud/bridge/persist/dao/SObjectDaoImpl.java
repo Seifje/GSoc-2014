@@ -77,7 +77,9 @@ public class SObjectDaoImpl extends GenericDaoBase<SObjectVO, Long> implements S
 
         SearchByBucket.and("SBucketID", SearchByBucket.entity().getBucketID(), SearchCriteria.Op.EQ);
         SearchByBucket.and("DeletionMark", SearchByBucket.entity().getDeletionMark(), SearchCriteria.Op.NULL);
-        TransactionLegacy txn = TransactionLegacy.currentTxn();  // Transaction.open("cloudbridge", Transaction.AWSAPI_DB, true);
+        TransactionLegacy txn = TransactionLegacy.currentTxn(); // Transaction.open("cloudbridge",
+                                                                // Transaction.AWSAPI_DB,
+                                                                // true);
         try {
             txn.start();
             SearchCriteria<SObjectVO> sc = SearchByBucket.create();
@@ -101,7 +103,9 @@ public class SObjectDaoImpl extends GenericDaoBase<SObjectVO, Long> implements S
         List<SObjectVO> objects = new ArrayList<SObjectVO>();
         getAllBuckets.and("SBucketID", getAllBuckets.entity().getBucketID(), SearchCriteria.Op.EQ);
 
-        TransactionLegacy txn = TransactionLegacy.currentTxn();  // Transaction.open("cloudbridge", Transaction.AWSAPI_DB, true);
+        TransactionLegacy txn = TransactionLegacy.currentTxn(); // Transaction.open("cloudbridge",
+                                                                // Transaction.AWSAPI_DB,
+                                                                // true);
         try {
             txn.start();
             SearchCriteria<SObjectVO> sc = getAllBuckets.create();

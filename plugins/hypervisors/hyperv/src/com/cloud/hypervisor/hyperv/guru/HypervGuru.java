@@ -51,10 +51,14 @@ public class HypervGuru extends HypervisorGuruBase implements HypervisorGuru {
 
     @Inject
     private GuestOSDao _guestOsDao;
-    @Inject HypervManager _hypervMgr;
-    @Inject NetworkDao _networkDao;
-    @Inject NetworkModel _networkMgr;
+    @Inject
+    HypervManager _hypervMgr;
+    @Inject
+    NetworkDao _networkDao;
+    @Inject
+    NetworkModel _networkMgr;
     int MaxNicSupported = 8;
+
     @Override
     public final HypervisorType getHypervisorType() {
         return HypervisorType.Hyperv;
@@ -72,48 +76,48 @@ public class HypervGuru extends HypervisorGuruBase implements HypervisorGuru {
         VirtualMachineTO to = toVirtualMachineTO(vm);
         List<NicProfile> nicProfiles = vm.getNics();
 
-        if(vm.getVirtualMachine().getType() ==  VirtualMachine.Type.DomainRouter) {
+        if (vm.getVirtualMachine().getType() == VirtualMachine.Type.DomainRouter) {
 
             NicProfile publicNicProfile = null;
             NicProfile controlNicProfile = null;
             NicProfile profile = null;
-            for(NicProfile nicProfile : nicProfiles) {
-                if(nicProfile.getTrafficType() == TrafficType.Public) {
+            for (NicProfile nicProfile : nicProfiles) {
+                if (nicProfile.getTrafficType() == TrafficType.Public) {
                     publicNicProfile = nicProfile;
                     break;
-                }
-                else if (nicProfile.getTrafficType() == TrafficType.Control) {
+                } else if (nicProfile.getTrafficType() == TrafficType.Control) {
                     controlNicProfile = nicProfile;
                 }
             }
 
-            if(publicNicProfile != null || controlNicProfile != null) {
+            if (publicNicProfile != null || controlNicProfile != null) {
                 NicTO[] nics = to.getNics();
                 // reserve extra NICs
                 NicTO[] expandedNics = new NicTO[MaxNicSupported];
                 int i = 0;
                 int deviceId = -1;
-                for(i = 0; i < nics.length; i++) {
+                for (i = 0; i < nics.length; i++) {
                     expandedNics[i] = nics[i];
-                    if(nics[i].getDeviceId() > deviceId)
+                    if (nics[i].getDeviceId() > deviceId)
                         deviceId = nics[i].getDeviceId();
                 }
                 deviceId++;
 
                 long networkId = 0;
-                if(publicNicProfile != null ) {
-                    networkId= publicNicProfile.getNetworkId();
+                if (publicNicProfile != null) {
+                    networkId = publicNicProfile.getNetworkId();
                     profile = publicNicProfile;
-                }
-                else {
-                    networkId =  controlNicProfile.getNetworkId();
+                } else {
+                    networkId = controlNicProfile.getNetworkId();
                     profile = controlNicProfile;
                 }
 
                 NetworkVO network = _networkDao.findById(networkId);
-                // for Hyperv Hot Nic plug is not supported and it will support upto 8 nics.
-                // creating the VR with extra nics (actual nics(3) + extra nics) will be 8
-                for(; i < MaxNicSupported; i++) {
+                // for Hyperv Hot Nic plug is not supported and it will support
+                // upto 8 nics.
+                // creating the VR with extra nics (actual nics(3) + extra nics)
+                // will be 8
+                for (; i < MaxNicSupported; i++) {
                     NicTO nicTo = new NicTO();
                     nicTo.setDeviceId(deviceId++);
                     nicTo.setBroadcastType(BroadcastDomainType.Vlan);
@@ -148,7 +152,7 @@ public class HypervGuru extends HypervisorGuruBase implements HypervisorGuru {
             }
 
             StringBuffer sbMacSequence = new StringBuffer();
-            for(NicTO nicTo : sortNicsByDeviceId(to.getNics())) {
+            for (NicTO nicTo : sortNicsByDeviceId(to.getNics())) {
                 sbMacSequence.append(nicTo.getMac()).append("|");
             }
 

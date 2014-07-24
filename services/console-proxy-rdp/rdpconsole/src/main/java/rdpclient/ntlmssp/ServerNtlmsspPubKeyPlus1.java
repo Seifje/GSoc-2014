@@ -40,11 +40,11 @@ public class ServerNtlmsspPubKeyPlus1 extends OneTimeSwitch implements Element {
 
         ByteBuffer encryptedPubKey = tsRequest.pubKeyAuth.value;
         if (encryptedPubKey == null || encryptedPubKey.length == 0)
-            throw new RuntimeException("[" + this
-                    + "] ERROR: Unexpected message from RDP server. Expected encrypted server public key but got nothing instead. Data: " + buf);
+            throw new RuntimeException("[" + this + "] ERROR: Unexpected message from RDP server. Expected encrypted server public key but got nothing instead. Data: " + buf);
 
         byte[] decryptedPubKey = ntlmState.ntlm_DecryptMessage(encryptedPubKey.toByteArray());
-        //* DEBUG */System.out.println("Decrypted pub key:\n" + new ByteBuffer(decryptedPubKey).dump());
+        // * DEBUG */System.out.println("Decrypted pub key:\n" + new
+        // ByteBuffer(decryptedPubKey).dump());
 
         // Decrease first byte by 1
         decryptedPubKey[0]--;

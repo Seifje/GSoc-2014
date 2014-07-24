@@ -65,7 +65,7 @@ public class Script implements Callable<String> {
     Process _process;
     Thread _thread;
 
-    public int getExitValue()  {
+    public int getExitValue() {
         return _process.exitValue();
     }
 
@@ -170,8 +170,8 @@ public class Script implements Callable<String> {
     }
 
     static String stackTraceAsString(Throwable throwable) {
-        //TODO: a StringWriter is bit to heavy weight
-        try(StringWriter out = new StringWriter(); PrintWriter writer = new PrintWriter(out);) {
+        // TODO: a StringWriter is bit to heavy weight
+        try (StringWriter out = new StringWriter(); PrintWriter writer = new PrintWriter(out);) {
             throwable.printStackTrace(writer);
             return out.toString();
         } catch (IOException e) {
@@ -352,8 +352,8 @@ public class Script implements Callable<String> {
         }
 
         /**
-         * Look in WEB-INF/classes of the webapp
-         * URI workaround the URL encoding of url.getFile
+         * Look in WEB-INF/classes of the webapp URI workaround the URL encoding
+         * of url.getFile
          */
         if (path.endsWith(File.separator)) {
             url = Script.class.getClassLoader().getResource(path + script);
@@ -376,7 +376,8 @@ public class Script implements Callable<String> {
         }
 
         if (path.startsWith(File.separator)) {
-            // Path given was absolute so we assume the caller knows what they want.
+            // Path given was absolute so we assume the caller knows what they
+            // want.
             file = new File(path + File.separator + script);
             return file.exists() ? file.getAbsolutePath() : null;
         }
@@ -388,7 +389,8 @@ public class Script implements Callable<String> {
                 String cp = Script.class.getResource(Script.class.getSimpleName() + ".class").toExternalForm();
                 int begin = cp.indexOf(File.separator);
 
-                // work around with the inconsistency of java classpath and file separator on Windows 7
+                // work around with the inconsistency of java classpath and file
+                // separator on Windows 7
                 if (begin < 0)
                     begin = cp.indexOf('/');
 

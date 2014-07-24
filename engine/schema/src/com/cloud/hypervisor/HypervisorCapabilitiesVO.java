@@ -70,8 +70,7 @@ public class HypervisorCapabilitiesVO implements HypervisorCapabilities {
         this.uuid = UUID.randomUUID().toString();
     }
 
-    public HypervisorCapabilitiesVO(HypervisorType hypervisorType, String hypervisorVersion, Long maxGuestsLimit, boolean securityGroupEnabled,
-            boolean storageMotionSupported) {
+    public HypervisorCapabilitiesVO(HypervisorType hypervisorType, String hypervisorVersion, Long maxGuestsLimit, boolean securityGroupEnabled, boolean storageMotionSupported) {
         this.hypervisorType = hypervisorType;
         this.hypervisorVersion = hypervisorVersion;
         this.maxGuestsLimit = maxGuestsLimit;
@@ -81,7 +80,8 @@ public class HypervisorCapabilitiesVO implements HypervisorCapabilities {
     }
 
     /**
-     * @param hypervisorType the hypervisorType to set
+     * @param hypervisorType
+     *            the hypervisorType to set
      */
     public void setHypervisorType(HypervisorType hypervisorType) {
         this.hypervisorType = hypervisorType;
@@ -96,7 +96,8 @@ public class HypervisorCapabilitiesVO implements HypervisorCapabilities {
     }
 
     /**
-     * @param hypervisorVersion the hypervisorVersion to set
+     * @param hypervisorVersion
+     *            the hypervisorVersion to set
      */
     public void setHypervisorVersion(String hypervisorVersion) {
         this.hypervisorVersion = hypervisorVersion;
@@ -123,7 +124,8 @@ public class HypervisorCapabilitiesVO implements HypervisorCapabilities {
     }
 
     /**
-     * @param maxGuests the maxGuests to set
+     * @param maxGuests
+     *            the maxGuests to set
      */
     public void setMaxGuestsLimit(Long maxGuestsLimit) {
         this.maxGuestsLimit = maxGuestsLimit;

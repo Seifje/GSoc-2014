@@ -46,8 +46,11 @@ public abstract class APITest {
 
     /**
      * Sending an api request through Http GET
-     * @param command command name
-     * @param params command query parameters in a HashMap
+     *
+     * @param command
+     *            command name
+     * @param params
+     *            command query parameters in a HashMap
      * @return http request response string
      */
     protected String sendRequest(String command, HashMap<String, String> params) {
@@ -147,27 +150,27 @@ public abstract class APITest {
                 if (repCls == LoginResponse.class || repCls == SuccessResponse.class) {
 
                     start = result.indexOf('{', result.indexOf('{') + 1); // find
-                                                                          // the
-                                                                          // second
-                                                                          // {
+                    // the
+                    // second
+                    // {
 
                     end = result.lastIndexOf('}', result.lastIndexOf('}') - 1); // find
-                                                                                // the
-                                                                                // second
-                                                                                // }
-                                                                                // backwards
+                    // the
+                    // second
+                    // }
+                    // backwards
 
                 } else {
                     // get real content
                     start = result.indexOf('{', result.indexOf('{', result.indexOf('{') + 1) + 1); // find
-                                                                                                   // the
-                                                                                                   // third
-                                                                                                   // {
+                    // the
+                    // third
+                    // {
                     end = result.lastIndexOf('}', result.lastIndexOf('}', result.lastIndexOf('}') - 1) - 1); // find
-                                                                                                             // the
-                                                                                                             // third
-                                                                                                             // }
-                                                                                                             // backwards
+                    // the
+                    // third
+                    // }
+                    // backwards
                 }
                 if (start < 0 || end < 0) {
                     throw new CloudRuntimeException("Response format is wrong: " + result);
@@ -184,12 +187,15 @@ public abstract class APITest {
 
     /**
      * Login call
-     * @param username user name
-     * @param password password (plain password, we will do MD5 hash here for you)
+     *
+     * @param username
+     *            user name
+     * @param password
+     *            password (plain password, we will do MD5 hash here for you)
      * @return login response string
      */
     protected void login(String username, String password) {
-        //String md5Psw = createMD5String(password);
+        // String md5Psw = createMD5String(password);
         // send login request
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("response", "json");

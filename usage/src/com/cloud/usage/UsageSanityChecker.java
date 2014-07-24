@@ -33,8 +33,8 @@ import org.apache.log4j.Logger;
 import com.cloud.utils.db.TransactionLegacy;
 
 /**
- * This class must not be used concurrently because its state changes often during
- * execution in a non synchronized way
+ * This class must not be used concurrently because its state changes often
+ * during execution in a non synchronized way
  */
 public class UsageSanityChecker {
 
@@ -56,7 +56,7 @@ public class UsageSanityChecker {
     protected boolean checkItemCountByPstmt() throws SQLException {
         boolean checkOk = true;
 
-        for(CheckCase check : checkCases) {
+        for (CheckCase check : checkCases) {
             checkOk &= checkItemCountByPstmt(check);
         }
 
@@ -70,7 +70,7 @@ public class UsageSanityChecker {
          * Check for item usage records which are created after it is removed
          */
         try (PreparedStatement pstmt = conn.prepareStatement(checkCase.sqlTemplate)) {
-            if(checkCase.checkId) {
+            if (checkCase.checkId) {
                 pstmt.setInt(1, lastId);
                 pstmt.setInt(2, maxId);
             }
@@ -88,8 +88,7 @@ public class UsageSanityChecker {
         int aggregationRange = DEFAULT_AGGREGATION_RANGE;
         List<PreparedStatement> pstmt2Close = new ArrayList<PreparedStatement>();
         try {
-            PreparedStatement pstmt = conn.prepareStatement(
-                    "SELECT value FROM `cloud`.`configuration` where name = 'usage.stats.job.aggregation.range'");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT value FROM `cloud`.`configuration` where name = 'usage.stats.job.aggregation.range'");
             pstmt2Close.add(pstmt);
             ResultSet rs = pstmt.executeQuery();
 
@@ -106,62 +105,45 @@ public class UsageSanityChecker {
 
         int aggregationHours = aggregationRange / 60;
 
-        addCheckCase("SELECT count(*) FROM `cloud_usage`.`cloud_usage` cu where usage_type not in (4,5) and raw_usage > "
-                + aggregationHours,
-                "usage records with raw_usage > " + aggregationHours,
-                lastCheckId);
+        addCheckCase("SELECT count(*) FROM `cloud_usage`.`cloud_usage` cu where usage_type not in (4,5) and raw_usage > " + aggregationHours, "usage records with raw_usage > "
+                + aggregationHours, lastCheckId);
     }
 
     protected void checkVmUsage() {
-        addCheckCase("select count(*) from cloud_usage.cloud_usage cu inner join cloud.vm_instance vm "
-                + "where vm.type = 'User' and cu.usage_type in (1 , 2) "
-                + "and cu.usage_id = vm.id and cu.start_date > vm.removed ",
-                "Vm usage records which are created after Vm is destroyed",
-                lastCheckId);
+        addCheckCase("select count(*) from cloud_usage.cloud_usage cu inner join cloud.vm_instance vm " + "where vm.type = 'User' and cu.usage_type in (1 , 2) "
+                + "and cu.usage_id = vm.id and cu.start_date > vm.removed ", "Vm usage records which are created after Vm is destroyed", lastCheckId);
 
-        addCheckCase("select sum(cnt) from (select count(*) as cnt from cloud_usage.usage_vm_instance "
-                + "where usage_type =1 and end_date is null group by vm_instance_id "
-                + "having count(vm_instance_id) > 1) c ;",
-                "duplicate running Vm entries in vm usage helper table");
+        addCheckCase("select sum(cnt) from (select count(*) as cnt from cloud_usage.usage_vm_instance " + "where usage_type =1 and end_date is null group by vm_instance_id "
+                + "having count(vm_instance_id) > 1) c ;", "duplicate running Vm entries in vm usage helper table");
 
-        addCheckCase("select sum(cnt) from (select count(*) as cnt from cloud_usage.usage_vm_instance "
-                + "where usage_type =2 and end_date is null group by vm_instance_id "
-                + "having count(vm_instance_id) > 1) c ;",
-                "duplicate allocated Vm entries in vm usage helper table");
+        addCheckCase("select sum(cnt) from (select count(*) as cnt from cloud_usage.usage_vm_instance " + "where usage_type =2 and end_date is null group by vm_instance_id "
+                + "having count(vm_instance_id) > 1) c ;", "duplicate allocated Vm entries in vm usage helper table");
 
-        addCheckCase("select count(vm_instance_id) from cloud_usage.usage_vm_instance o "
-                + "where o.end_date is null and o.usage_type=1 and not exists "
-                + "(select 1 from cloud_usage.usage_vm_instance i where "
-                + "i.vm_instance_id=o.vm_instance_id and usage_type=2 and i.end_date is null)",
+        addCheckCase("select count(vm_instance_id) from cloud_usage.usage_vm_instance o " + "where o.end_date is null and o.usage_type=1 and not exists "
+                + "(select 1 from cloud_usage.usage_vm_instance i where " + "i.vm_instance_id=o.vm_instance_id and usage_type=2 and i.end_date is null)",
                 "running Vm entries without corresponding allocated entries in vm usage helper table");
     }
 
     protected void checkVolumeUsage() {
         addCheckCase("select count(*) from cloud_usage.cloud_usage cu inner join cloud.volumes v where "
-                + "cu.usage_type = 6 and cu.usage_id = v.id and cu.start_date > v.removed ",
-                "volume usage records which are created after volume is removed",
-                lastCheckId);
+                + "cu.usage_type = 6 and cu.usage_id = v.id and cu.start_date > v.removed ", "volume usage records which are created after volume is removed", lastCheckId);
 
-        addCheckCase("select sum(cnt) from (select count(*) as cnt from cloud_usage.usage_volume "
-                + "where deleted is null group by id having count(id) > 1) c;",
+        addCheckCase("select sum(cnt) from (select count(*) as cnt from cloud_usage.usage_volume " + "where deleted is null group by id having count(id) > 1) c;",
                 "duplicate records in volume usage helper table");
     }
 
     protected void checkTemplateISOUsage() {
         addCheckCase("select count(*) from cloud_usage.cloud_usage cu inner join cloud.template_zone_ref tzr where "
                 + "cu.usage_id = tzr.template_id and cu.zone_id = tzr.zone_id and cu.usage_type in (7,8) and cu.start_date > tzr.removed ",
-                "template/ISO usage records which are created after it is removed",
-                lastCheckId);
+                "template/ISO usage records which are created after it is removed", lastCheckId);
     }
 
     protected void checkSnapshotUsage() {
         addCheckCase("select count(*) from cloud_usage.cloud_usage cu inner join cloud.snapshots s where "
-                + "cu.usage_id = s.id and cu.usage_type = 9 and cu.start_date > s.removed ",
-                "snapshot usage records which are created after it is removed",
-                lastCheckId);
+                + "cu.usage_id = s.id and cu.usage_type = 9 and cu.start_date > s.removed ", "snapshot usage records which are created after it is removed", lastCheckId);
     }
 
-    protected void readLastCheckId(){
+    protected void readLastCheckId() {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(lastCheckFile));
@@ -237,6 +219,7 @@ public class UsageSanityChecker {
 
     /**
      * Local acquisition of {@link Connection} to remove static cling
+     *
      * @return
      */
     protected Connection getConnection() {
@@ -264,7 +247,6 @@ public class UsageSanityChecker {
         checkCases.add(new CheckCase(sqlTemplate, itemName));
     }
 }
-
 
 /**
  * Just an abstraction of the kind of check to repeat across these cases

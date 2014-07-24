@@ -34,16 +34,13 @@ import com.cloud.utils.Pair;
 
 @APICommand(name = "listLoadBalancerRuleInstances", description = "List all virtual machine instances that are assigned to a load balancer rule.", responseObject = LoadBalancerRuleVmMapResponse.class, responseView = ResponseView.Full)
 public class ListLoadBalancerRuleInstancesCmdByAdmin extends ListLoadBalancerRuleInstancesCmd {
-    public static final Logger s_logger = Logger.getLogger (ListLoadBalancerRuleInstancesCmdByAdmin.class.getName());
-
-
+    public static final Logger s_logger = Logger.getLogger(ListLoadBalancerRuleInstancesCmdByAdmin.class.getName());
 
     @Override
-    public void execute(){
-        Pair<List<? extends UserVm>, List<String>> vmServiceMap =  _lbService.listLoadBalancerInstances(this);
+    public void execute() {
+        Pair<List<? extends UserVm>, List<String>> vmServiceMap = _lbService.listLoadBalancerInstances(this);
         List<? extends UserVm> result = vmServiceMap.first();
-        List<String> serviceStates  = vmServiceMap.second();
-
+        List<String> serviceStates = vmServiceMap.second();
 
         if (!isListLbVmip()) {
             // list lb instances
@@ -51,7 +48,6 @@ public class ListLoadBalancerRuleInstancesCmdByAdmin extends ListLoadBalancerRul
             List<UserVmResponse> vmResponses = new ArrayList<UserVmResponse>();
             if (result != null) {
                 vmResponses = _responseGenerator.createUserVmResponse(ResponseView.Restricted, "loadbalancerruleinstance", result.toArray(new UserVm[result.size()]));
-
 
                 for (int i = 0; i < result.size(); i++) {
                     vmResponses.get(i).setServiceState(serviceStates.get(i));
@@ -72,11 +68,11 @@ public class ListLoadBalancerRuleInstancesCmdByAdmin extends ListLoadBalancerRul
 
                 List<String> ipaddr = null;
 
-                for (int i=0;i<result.size(); i++) {
+                for (int i = 0; i < result.size(); i++) {
                     LoadBalancerRuleVmMapResponse lbRuleVmIpResponse = new LoadBalancerRuleVmMapResponse();
                     vmResponses.get(i).setServiceState(serviceStates.get(i));
                     lbRuleVmIpResponse.setUserVmResponse(vmResponses.get(i));
-                    //get vm id from the uuid
+                    // get vm id from the uuid
                     VirtualMachine lbvm = _entityMgr.findByUuid(VirtualMachine.class, vmResponses.get(i).getId());
                     lbRuleVmIpResponse.setIpAddr(_lbService.listLbVmIpAddress(getId(), lbvm.getId()));
                     lbRuleVmIpResponse.setObjectName("lbrulevmidip");

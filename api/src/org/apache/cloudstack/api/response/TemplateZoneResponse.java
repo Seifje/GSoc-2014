@@ -39,7 +39,8 @@ public class TemplateZoneResponse extends BaseResponse {
     private String status;
 
     @SerializedName(ApiConstants.IS_READY)
-    // propName="ready"  (FIXME:  this used to be part of Param annotation, do we need it?)
+    // propName="ready" (FIXME: this used to be part of Param annotation, do we
+    // need it?)
     @Param(description = "true if the template is ready to be deployed from, false otherwise.")
     private boolean isReady;
 

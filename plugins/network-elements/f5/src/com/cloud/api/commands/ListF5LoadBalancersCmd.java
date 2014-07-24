@@ -43,30 +43,26 @@ import com.cloud.network.dao.ExternalLoadBalancerDeviceVO;
 import com.cloud.network.element.F5ExternalLoadBalancerElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "listF5LoadBalancers", responseObject = F5LoadBalancerResponse.class, description = "lists F5 load balancer devices",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listF5LoadBalancers", responseObject = F5LoadBalancerResponse.class, description = "lists F5 load balancer devices", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListF5LoadBalancersCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListF5LoadBalancersCmd.class.getName());
     private static final String s_name = "listf5loadbalancerresponse";
     @Inject
     F5ExternalLoadBalancerElementService _f5DeviceManagerService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, description = "the Physical Network ID")
     private Long physicalNetworkId;
 
-    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_ID,
-               type = CommandType.UUID,
-               entityType = F5LoadBalancerResponse.class,
-               description = "f5 load balancer device ID")
+    @Parameter(name = ApiConstants.LOAD_BALANCER_DEVICE_ID, type = CommandType.UUID, entityType = F5LoadBalancerResponse.class, description = "f5 load balancer device ID")
     private Long lbDeviceId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getLoadBalancerDeviceId() {
         return lbDeviceId;
@@ -76,13 +72,12 @@ public class ListF5LoadBalancersCmd extends BaseListCmd {
         return physicalNetworkId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             List<ExternalLoadBalancerDeviceVO> lbDevices = _f5DeviceManagerService.listF5LoadBalancers(this);
             ListResponse<F5LoadBalancerResponse> response = new ListResponse<F5LoadBalancerResponse>();

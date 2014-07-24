@@ -28,7 +28,8 @@ import com.cloud.vm.dao.NicDao;
 import com.cloud.vm.dao.UserVmDao;
 
 /**
- * Collection of state necessary for model object to update the Contrail API server.
+ * Collection of state necessary for model object to update the Contrail API
+ * server.
  *
  */
 public class ModelController {

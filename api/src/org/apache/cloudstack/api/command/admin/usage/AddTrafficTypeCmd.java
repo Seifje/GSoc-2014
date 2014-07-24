@@ -34,57 +34,44 @@ import com.cloud.exception.ResourceAllocationException;
 import com.cloud.network.PhysicalNetworkTrafficType;
 import com.cloud.user.Account;
 
-@APICommand(name = "addTrafficType", description = "Adds traffic type to a physical network", responseObject = TrafficTypeResponse.class, since = "3.0.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "addTrafficType", description = "Adds traffic type to a physical network", responseObject = TrafficTypeResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class AddTrafficTypeCmd extends BaseAsyncCreateCmd {
     public static final Logger s_logger = Logger.getLogger(AddTrafficTypeCmd.class.getName());
 
     private static final String s_name = "addtraffictyperesponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = PhysicalNetworkResponse.class,
-               required = true,
-               description = "the Physical Network ID")
+    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, required = true, description = "the Physical Network ID")
     private Long physicalNetworkId;
 
     @Parameter(name = ApiConstants.TRAFFIC_TYPE, type = CommandType.STRING, required = true, description = "the trafficType to be added to the physical network")
     private String trafficType;
 
-    @Parameter(name = ApiConstants.XENSERVER_NETWORK_LABEL,
-               type = CommandType.STRING,
-               description = "The network name label of the physical device dedicated to this traffic on a XenServer host")
+    @Parameter(name = ApiConstants.XENSERVER_NETWORK_LABEL, type = CommandType.STRING, description = "The network name label of the physical device dedicated to this traffic on a XenServer host")
     private String xenLabel;
 
-    @Parameter(name = ApiConstants.KVM_NETWORK_LABEL,
-               type = CommandType.STRING,
-               description = "The network name label of the physical device dedicated to this traffic on a KVM host")
+    @Parameter(name = ApiConstants.KVM_NETWORK_LABEL, type = CommandType.STRING, description = "The network name label of the physical device dedicated to this traffic on a KVM host")
     private String kvmLabel;
 
-    @Parameter(name = ApiConstants.VMWARE_NETWORK_LABEL,
-               type = CommandType.STRING,
-               description = "The network name label of the physical device dedicated to this traffic on a VMware host")
+    @Parameter(name = ApiConstants.VMWARE_NETWORK_LABEL, type = CommandType.STRING, description = "The network name label of the physical device dedicated to this traffic on a VMware host")
     private String vmwareLabel;
 
-    @Parameter(name = ApiConstants.HYPERV_NETWORK_LABEL,
-               type = CommandType.STRING,
-               description = "The network name label of the physical device dedicated to this traffic on a Hyperv host")
+    @Parameter(name = ApiConstants.HYPERV_NETWORK_LABEL, type = CommandType.STRING, description = "The network name label of the physical device dedicated to this traffic on a Hyperv host")
     private String hypervLabel;
 
     @Parameter(name = ApiConstants.VLAN, type = CommandType.STRING, description = "The VLAN id to be used for Management traffic by VMware host")
     private String vlan;
 
-    @Parameter(name=ApiConstants.ISOLATION_METHOD, type=CommandType.STRING, description="Used if physical network has multiple isolation types and traffic type is public."
-        + " Choose which isolation method. Valid options currently 'vlan' or 'vxlan', defaults to 'vlan'.")
+    @Parameter(name = ApiConstants.ISOLATION_METHOD, type = CommandType.STRING, description = "Used if physical network has multiple isolation types and traffic type is public."
+            + " Choose which isolation method. Valid options currently 'vlan' or 'vxlan', defaults to 'vlan'.")
     private String isolationMethod;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getPhysicalNetworkId() {
         return physicalNetworkId;
@@ -111,7 +98,7 @@ public class AddTrafficTypeCmd extends BaseAsyncCreateCmd {
     }
 
     public String getSimulatorLabel() {
-        //simulators will have no labels
+        // simulators will have no labels
         return null;
     }
 
@@ -131,9 +118,9 @@ public class AddTrafficTypeCmd extends BaseAsyncCreateCmd {
         }
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -160,9 +147,8 @@ public class AddTrafficTypeCmd extends BaseAsyncCreateCmd {
 
     @Override
     public void create() throws ResourceAllocationException {
-        PhysicalNetworkTrafficType result =
-            _networkService.addTrafficTypeToPhysicalNetwork(getPhysicalNetworkId(), getTrafficType(), getIsolationMethod(), getXenLabel(), getKvmLabel(), getVmwareLabel(),
-                getSimulatorLabel(), getVlan(), getHypervLabel());
+        PhysicalNetworkTrafficType result = _networkService.addTrafficTypeToPhysicalNetwork(getPhysicalNetworkId(), getTrafficType(), getIsolationMethod(), getXenLabel(),
+                getKvmLabel(), getVmwareLabel(), getSimulatorLabel(), getVlan(), getHypervLabel());
         if (result != null) {
             setEntityId(result.getId());
             setEntityUuid(result.getUuid());

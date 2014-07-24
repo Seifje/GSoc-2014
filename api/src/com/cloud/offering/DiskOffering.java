@@ -25,8 +25,8 @@ import org.apache.cloudstack.api.InternalIdentity;
 import com.cloud.storage.Storage.ProvisioningType;
 
 /**
- * Represents a disk offering that specifies what the end user needs in
- * the disk offering.
+ * Represents a disk offering that specifies what the end user needs in the disk
+ * offering.
  *
  */
 public interface DiskOffering extends InfrastructureEntity, Identity, InternalIdentity {

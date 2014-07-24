@@ -77,9 +77,9 @@ public class PropertyMapDynamicBean implements DynamicMBean {
         Iterator<String> it = names.iterator();
         for (int i = 0; i < attrs.length; i++) {
             String name = it.next();
-            attrs[i] = new MBeanAttributeInfo(name, "java.lang.String", name, true,   // isReadable
-                true,   // isWritable
-                false); // isIs
+            attrs[i] = new MBeanAttributeInfo(name, "java.lang.String", name, true, // isReadable
+                    true, // isWritable
+                    false); // isIs
         }
 
         return new MBeanInfo(this.getClass().getName(), "Dynamic MBean", attrs, null, null, null);

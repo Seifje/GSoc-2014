@@ -70,9 +70,9 @@ public class VMEntityVO implements VirtualMachine, FiniteStateObject<State, Virt
     protected Date proxyAssignTime;
 
     /**
-     * Note that state is intentionally missing the setter.  Any updates to
-     * the state machine needs to go through the DAO object because someone
-     * else could be updating it as well.
+     * Note that state is intentionally missing the setter. Any updates to the
+     * state machine needs to go through the DAO object because someone else
+     * could be updating it as well.
      */
     @Enumerated(value = EnumType.STRING)
     @StateMachine(state = State.class, event = Event.class)
@@ -117,7 +117,9 @@ public class VMEntityVO implements VirtualMachine, FiniteStateObject<State, Virt
     private boolean limitCpuUse;
 
     @Column(name = "update_count", updatable = true, nullable = false)
-    protected long updated;    // This field should be updated everytime the state is updated.  There's no set method in the vo object because it is done with in the dao code.
+    protected long updated; // This field should be updated everytime the state
+    // is updated. There's no set method in the vo
+    // object because it is done with in the dao code.
 
     @Column(name = GenericDao.CREATED_COLUMN)
     protected Date created;
@@ -151,7 +153,7 @@ public class VMEntityVO implements VirtualMachine, FiniteStateObject<State, Virt
     @Column(name = "uuid")
     protected String uuid = UUID.randomUUID().toString();
 
-    //orchestration columns
+    // orchestration columns
     @Column(name = "owner")
     private String owner = null;
 
@@ -281,7 +283,8 @@ public class VMEntityVO implements VirtualMachine, FiniteStateObject<State, Virt
         return state;
     }
 
-    // don't use this directly, use VM state machine instead, this method is added for migration tool only
+    // don't use this directly, use VM state machine instead, this method is
+    // added for migration tool only
     @Override
     public void setState(State state) {
         this.state = state;

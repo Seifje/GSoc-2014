@@ -131,7 +131,11 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
     protected long _invitationTimeOut = 86400000;
     protected boolean _allowUserToCreateProject = true;
     protected ScheduledExecutorService _executor;
-    protected int _projectCleanupExpInvInterval = 60; //Interval defining how often project invitation cleanup thread is running
+    protected int _projectCleanupExpInvInterval = 60; // Interval defining how
+
+    // often project
+    // invitation cleanup
+    // thread is running
 
     @Override
     public boolean configure(final String name, final Map<String, Object> params) throws ConfigurationException {
@@ -182,12 +186,12 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
         Account caller = CallContext.current().getCallingAccount();
         Account owner = caller;
 
-        //check if the user authorized to create the project
+        // check if the user authorized to create the project
         if (_accountMgr.isNormalUser(caller.getId()) && !_allowUserToCreateProject) {
             throw new PermissionDeniedException("Regular user is not permitted to create a project");
         }
 
-        //Verify request parameters
+        // Verify request parameters
         if ((accountName != null && domainId == null) || (domainId != null && accountName == null)) {
             throw new InvalidParameterValueException("Account name and domain id must be specified together");
         }
@@ -196,12 +200,12 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
             owner = _accountMgr.finalizeOwner(caller, accountName, domainId, null);
         }
 
-        //don't allow 2 projects with the same name inside the same domain
+        // don't allow 2 projects with the same name inside the same domain
         if (_projectDao.findByNameAndDomain(name, owner.getDomainId()) != null) {
             throw new InvalidParameterValueException("Project with name " + name + " already exists in domain id=" + owner.getDomainId());
         }
 
-        //do resource limit check
+        // do resource limit check
         _resourceLimitMgr.checkResourceLimit(owner, ResourceType.project);
 
         final Account ownerFinal = owner;
@@ -209,26 +213,26 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
             @Override
             public Project doInTransaction(TransactionStatus status) {
 
-        //Create an account associated with the project
-        StringBuilder acctNm = new StringBuilder("PrjAcct-");
+                // Create an account associated with the project
+                StringBuilder acctNm = new StringBuilder("PrjAcct-");
                 acctNm.append(name).append("-").append(ownerFinal.getDomainId());
 
-        Account projectAccount = _accountMgr.createAccount(acctNm.toString(), Account.ACCOUNT_TYPE_PROJECT, domainId, null, null, UUID.randomUUID().toString());
+                Account projectAccount = _accountMgr.createAccount(acctNm.toString(), Account.ACCOUNT_TYPE_PROJECT, domainId, null, null, UUID.randomUUID().toString());
 
                 Project project = _projectDao.persist(new ProjectVO(name, displayText, ownerFinal.getDomainId(), projectAccount.getId()));
 
-        //assign owner to the project
+                // assign owner to the project
                 assignAccountToProject(project, ownerFinal.getId(), ProjectAccount.Role.Admin);
 
-        if (project != null) {
-            CallContext.current().setEventDetails("Project id=" + project.getId());
-        }
+                if (project != null) {
+                    CallContext.current().setEventDetails("Project id=" + project.getId());
+                }
 
-        //Increment resource count
+                // Increment resource count
                 _resourceLimitMgr.incrementResourceCount(ownerFinal.getId(), ResourceType.project);
 
-        return project;
-    }
+                return project;
+            }
         });
     }
 
@@ -239,14 +243,15 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
         Account caller = CallContext.current().getCallingAccount();
 
         ProjectVO project = getProject(projectId);
-        //verify input parameters
+        // verify input parameters
         if (project == null) {
             throw new InvalidParameterValueException("Unable to find project by id " + projectId);
         }
 
         _accountMgr.checkAccess(caller, AccessType.ModifyProject, true, _accountMgr.getAccount(project.getProjectAccountId()));
 
-        //at this point enabling project doesn't require anything, so just update the state
+        // at this point enabling project doesn't require anything, so just
+        // update the state
         project.setState(State.Active);
         _projectDao.update(projectId, project);
 
@@ -259,7 +264,7 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
         CallContext ctx = CallContext.current();
 
         ProjectVO project = getProject(projectId);
-        //verify input parameters
+        // verify input parameters
         if (project == null) {
             throw new InvalidParameterValueException("Unable to find project by id " + projectId);
         }
@@ -272,25 +277,26 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
     @DB
     @Override
     public boolean deleteProject(Account caller, long callerUserId, final ProjectVO project) {
-        //mark project as inactive first, so you can't add resources to it
+        // mark project as inactive first, so you can't add resources to it
         boolean updateResult = Transaction.execute(new TransactionCallback<Boolean>() {
             @Override
             public Boolean doInTransaction(TransactionStatus status) {
-        s_logger.debug("Marking project id=" + project.getId() + " with state " + State.Disabled + " as a part of project delete...");
-        project.setState(State.Disabled);
-        boolean updateResult = _projectDao.update(project.getId(), project);
-        //owner can be already removed at this point, so adding the conditional check
-        Account projectOwner = getProjectOwner(project.getId());
-        if (projectOwner != null) {
-            _resourceLimitMgr.decrementResourceCount(projectOwner.getId(), ResourceType.project);
-        }
+                s_logger.debug("Marking project id=" + project.getId() + " with state " + State.Disabled + " as a part of project delete...");
+                project.setState(State.Disabled);
+                boolean updateResult = _projectDao.update(project.getId(), project);
+                // owner can be already removed at this point, so adding
+                // the conditional check
+                Account projectOwner = getProjectOwner(project.getId());
+                if (projectOwner != null) {
+                    _resourceLimitMgr.decrementResourceCount(projectOwner.getId(), ResourceType.project);
+                }
 
                 return updateResult;
             }
         });
 
         if (updateResult) {
-            //pass system caller when clenaup projects account
+            // pass system caller when clenaup projects account
             if (!cleanupProject(project, _accountDao.findById(Account.ACCOUNT_ID_SYSTEM), User.UID_SYSTEM)) {
                 s_logger.warn("Failed to cleanup project's id=" + project.getId() + " resources, not removing the project yet");
                 return false;
@@ -306,26 +312,26 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
     @DB
     private boolean cleanupProject(final Project project, AccountVO caller, Long callerUserId) {
         boolean result = true;
-        //Delete project's account
+        // Delete project's account
         AccountVO account = _accountDao.findById(project.getProjectAccountId());
         s_logger.debug("Deleting projects " + project + " internal account id=" + account.getId() + " as a part of project cleanup...");
 
         result = result && _accountMgr.deleteAccount(account, callerUserId, caller);
 
         if (result) {
-            //Unassign all users from the project
+            // Unassign all users from the project
             result = Transaction.execute(new TransactionCallback<Boolean>() {
                 @Override
                 public Boolean doInTransaction(TransactionStatus status) {
                     boolean result = true;
-            s_logger.debug("Unassigning all accounts from project " + project + " as a part of project cleanup...");
-            List<? extends ProjectAccount> projectAccounts = _projectAccountDao.listByProjectId(project.getId());
-            for (ProjectAccount projectAccount : projectAccounts) {
-                result = result && unassignAccountFromProject(projectAccount.getProjectId(), projectAccount.getAccountId());
-            }
+                    s_logger.debug("Unassigning all accounts from project " + project + " as a part of project cleanup...");
+                    List<? extends ProjectAccount> projectAccounts = _projectAccountDao.listByProjectId(project.getId());
+                    for (ProjectAccount projectAccount : projectAccounts) {
+                        result = result && unassignAccountFromProject(projectAccount.getProjectId(), projectAccount.getAccountId());
+                    }
 
-            s_logger.debug("Removing all invitations for the project " + project + " as a part of project cleanup...");
-            _projectInvitationDao.cleanupInvitations(project.getId());
+                    s_logger.debug("Removing all invitations for the project " + project + " as a part of project cleanup...");
+                    _projectInvitationDao.cleanupInvitations(project.getId());
 
                     return result;
                 }
@@ -377,23 +383,23 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
         return Transaction.execute(new TransactionCallback<Boolean>() {
             @Override
             public Boolean doInTransaction(TransactionStatus status) {
-        boolean success = true;
+                boolean success = true;
 
-        //remove account
-        ProjectAccountVO projectAccount = _projectAccountDao.findByProjectIdAccountId(projectId, accountId);
-        success = _projectAccountDao.remove(projectAccount.getId());
+                // remove account
+                ProjectAccountVO projectAccount = _projectAccountDao.findByProjectIdAccountId(projectId, accountId);
+                success = _projectAccountDao.remove(projectAccount.getId());
 
-        //remove all invitations for account
-        if (success) {
-            s_logger.debug("Removed account " + accountId + " from project " + projectId + " , cleaning up old invitations for account/project...");
-            ProjectInvitation invite = _projectInvitationDao.findByAccountIdProjectId(accountId, projectId);
-            if (invite != null) {
-                success = success && _projectInvitationDao.remove(invite.getId());
+                // remove all invitations for account
+                if (success) {
+                    s_logger.debug("Removed account " + accountId + " from project " + projectId + " , cleaning up old invitations for account/project...");
+                    ProjectInvitation invite = _projectInvitationDao.findByAccountIdProjectId(accountId, projectId);
+                    if (invite != null) {
+                        success = success && _projectInvitationDao.remove(invite.getId());
+                    }
+                }
+
+                return success;
             }
-        }
-
-        return success;
-    }
         });
     }
 
@@ -424,7 +430,7 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
 
     @Override
     public boolean canAccessProjectAccount(Account caller, long accountId) {
-        //ROOT admin always can access the project
+        // ROOT admin always can access the project
         if (_accountMgr.isRootAdmin(caller.getId())) {
             return true;
         } else if (_accountMgr.isDomainAdmin(caller.getId())) {
@@ -438,7 +444,7 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
 
     @Override
     public boolean canModifyProjectAccount(Account caller, long accountId) {
-        //ROOT admin always can access the project
+        // ROOT admin always can access the project
         if (_accountMgr.isRootAdmin(caller.getId())) {
             return true;
         } else if (_accountMgr.isDomainAdmin(caller.getId())) {
@@ -455,56 +461,56 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
     public Project updateProject(final long projectId, final String displayText, final String newOwnerName) throws ResourceAllocationException {
         Account caller = CallContext.current().getCallingAccount();
 
-        //check that the project exists
+        // check that the project exists
         final ProjectVO project = getProject(projectId);
 
         if (project == null) {
             throw new InvalidParameterValueException("Unable to find the project id=" + projectId);
         }
 
-        //verify permissions
+        // verify permissions
         _accountMgr.checkAccess(caller, AccessType.ModifyProject, true, _accountMgr.getAccount(project.getProjectAccountId()));
 
         Transaction.execute(new TransactionCallbackWithExceptionNoReturn<ResourceAllocationException>() {
             @Override
             public void doInTransactionWithoutResult(TransactionStatus status) throws ResourceAllocationException {
-        if (displayText != null) {
-            project.setDisplayText(displayText);
-            _projectDao.update(projectId, project);
-        }
-
-        if (newOwnerName != null) {
-            //check that the new owner exists
-            Account futureOwnerAccount = _accountMgr.getActiveAccountByName(newOwnerName, project.getDomainId());
-            if (futureOwnerAccount == null) {
-                throw new InvalidParameterValueException("Unable to find account name=" + newOwnerName + " in domain id=" + project.getDomainId());
-            }
-            Account currentOwnerAccount = getProjectOwner(projectId);
-            if (currentOwnerAccount.getId() != futureOwnerAccount.getId()) {
-                ProjectAccountVO futureOwner = _projectAccountDao.findByProjectIdAccountId(projectId, futureOwnerAccount.getAccountId());
-                if (futureOwner == null) {
-                            throw new InvalidParameterValueException("Account " + newOwnerName +
-                                " doesn't belong to the project. Add it to the project first and then change the project's ownership");
+                if (displayText != null) {
+                    project.setDisplayText(displayText);
+                    _projectDao.update(projectId, project);
                 }
 
-                //do resource limit check
-                _resourceLimitMgr.checkResourceLimit(_accountMgr.getAccount(futureOwnerAccount.getId()), ResourceType.project);
+                if (newOwnerName != null) {
+                    // check that the new owner exists
+                    Account futureOwnerAccount = _accountMgr.getActiveAccountByName(newOwnerName, project.getDomainId());
+                    if (futureOwnerAccount == null) {
+                        throw new InvalidParameterValueException("Unable to find account name=" + newOwnerName + " in domain id=" + project.getDomainId());
+                    }
+                    Account currentOwnerAccount = getProjectOwner(projectId);
+                    if (currentOwnerAccount.getId() != futureOwnerAccount.getId()) {
+                        ProjectAccountVO futureOwner = _projectAccountDao.findByProjectIdAccountId(projectId, futureOwnerAccount.getAccountId());
+                        if (futureOwner == null) {
+                            throw new InvalidParameterValueException("Account " + newOwnerName
+                                    + " doesn't belong to the project. Add it to the project first and then change the project's ownership");
+                        }
 
-                //unset the role for the old owner
-                ProjectAccountVO currentOwner = _projectAccountDao.findByProjectIdAccountId(projectId, currentOwnerAccount.getId());
-                currentOwner.setAccountRole(Role.Regular);
-                _projectAccountDao.update(currentOwner.getId(), currentOwner);
-                _resourceLimitMgr.decrementResourceCount(currentOwnerAccount.getId(), ResourceType.project);
+                        // do resource limit check
+                        _resourceLimitMgr.checkResourceLimit(_accountMgr.getAccount(futureOwnerAccount.getId()), ResourceType.project);
 
-                //set new owner
-                futureOwner.setAccountRole(Role.Admin);
-                _projectAccountDao.update(futureOwner.getId(), futureOwner);
-                _resourceLimitMgr.incrementResourceCount(futureOwnerAccount.getId(), ResourceType.project);
+                        // unset the role for the old owner
+                        ProjectAccountVO currentOwner = _projectAccountDao.findByProjectIdAccountId(projectId, currentOwnerAccount.getId());
+                        currentOwner.setAccountRole(Role.Regular);
+                        _projectAccountDao.update(currentOwner.getId(), currentOwner);
+                        _resourceLimitMgr.decrementResourceCount(currentOwnerAccount.getId(), ResourceType.project);
 
-            } else {
-                s_logger.trace("Future owner " + newOwnerName + "is already the owner of the project id=" + projectId);
-            }
-        }
+                        // set new owner
+                        futureOwner.setAccountRole(Role.Admin);
+                        _projectAccountDao.update(futureOwner.getId(), futureOwner);
+                        _resourceLimitMgr.incrementResourceCount(futureOwnerAccount.getId(), ResourceType.project);
+
+                    } else {
+                        s_logger.trace("Future owner " + newOwnerName + "is already the owner of the project id=" + projectId);
+                    }
+                }
             }
         });
 
@@ -517,7 +523,7 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
     public boolean addAccountToProject(long projectId, String accountName, String email) {
         Account caller = CallContext.current().getCallingAccount();
 
-        //check that the project exists
+        // check that the project exists
         Project project = getProject(projectId);
 
         if (project == null) {
@@ -526,15 +532,15 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
             throw ex;
         }
 
-        //User can be added to Active project only
+        // User can be added to Active project only
         if (project.getState() != Project.State.Active) {
-            InvalidParameterValueException ex =
-                new InvalidParameterValueException("Can't add account to the specified project id in state=" + project.getState() + " as it's no longer active");
+            InvalidParameterValueException ex = new InvalidParameterValueException("Can't add account to the specified project id in state=" + project.getState()
+                    + " as it's no longer active");
             ex.addProxyObject(project.getUuid(), "projectId");
             throw ex;
         }
 
-        //check that account-to-add exists
+        // check that account-to-add exists
         Account account = null;
         if (accountName != null) {
             account = _accountMgr.getActiveAccountByName(accountName, project.getDomainId());
@@ -549,11 +555,11 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
                 throw ex;
             }
 
-            //verify permissions - only project owner can assign
+            // verify permissions - only project owner can assign
             _accountMgr.checkAccess(caller, AccessType.ModifyProject, true, _accountMgr.getAccount(project.getProjectAccountId()));
 
-            //Check if the account already added to the project
-            ProjectAccount projectAccount =  _projectAccountDao.findByProjectIdAccountId(projectId, account.getId());
+            // Check if the account already added to the project
+            ProjectAccount projectAccount = _projectAccountDao.findByProjectIdAccountId(projectId, account.getId());
             if (projectAccount != null) {
                 s_logger.debug("Account " + accountName + " already added to the project id=" + projectId);
                 return true;
@@ -586,7 +592,7 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
         }
 
         if (email != null) {
-            //generate the token
+            // generate the token
             String token = generateToken(10);
             if (generateTokenBasedInvitation(project, email, token) != null) {
                 return true;
@@ -604,7 +610,7 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
     public boolean deleteAccountFromProject(long projectId, String accountName) {
         Account caller = CallContext.current().getCallingAccount();
 
-        //check that the project exists
+        // check that the project exists
         Project project = getProject(projectId);
 
         if (project == null) {
@@ -613,11 +619,10 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
             throw ex;
         }
 
-        //check that account-to-remove exists
+        // check that account-to-remove exists
         Account account = _accountMgr.getActiveAccountByName(accountName, project.getDomainId());
         if (account == null) {
-            InvalidParameterValueException ex =
-                new InvalidParameterValueException("Unable to find account name=" + accountName + " in domain id=" + project.getDomainId());
+            InvalidParameterValueException ex = new InvalidParameterValueException("Unable to find account name=" + accountName + " in domain id=" + project.getDomainId());
             DomainVO domain = ApiDBUtils.findDomainById(project.getDomainId());
             String domainUuid = String.valueOf(project.getDomainId());
             if (domain != null) {
@@ -627,23 +632,23 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
             throw ex;
         }
 
-        //verify permissions
+        // verify permissions
         _accountMgr.checkAccess(caller, AccessType.ModifyProject, true, _accountMgr.getAccount(project.getProjectAccountId()));
 
-        //Check if the account exists in the project
-        ProjectAccount projectAccount =  _projectAccountDao.findByProjectIdAccountId(projectId, account.getId());
+        // Check if the account exists in the project
+        ProjectAccount projectAccount = _projectAccountDao.findByProjectIdAccountId(projectId, account.getId());
         if (projectAccount == null) {
             InvalidParameterValueException ex = new InvalidParameterValueException("Account " + accountName + " is not assigned to the project with specified id");
-            // Use the projectVO object and not the projectAccount object to inject the projectId.
+            // Use the projectVO object and not the projectAccount object to
+            // inject the projectId.
             ex.addProxyObject(project.getUuid(), "projectId");
             throw ex;
         }
 
-        //can't remove the owner of the project
+        // can't remove the owner of the project
         if (projectAccount.getAccountRole() == Role.Admin) {
-            InvalidParameterValueException ex =
-                new InvalidParameterValueException("Unable to delete account " + accountName +
-                    " from the project with specified id as the account is the owner of the project");
+            InvalidParameterValueException ex = new InvalidParameterValueException("Unable to delete account " + accountName
+                    + " from the project with specified id as the account is the owner of the project");
             ex.addProxyObject(project.getUuid(), "projectId");
             throw ex;
         }
@@ -666,40 +671,40 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
         return Transaction.execute(new TransactionCallback<Boolean>() {
             @Override
             public Boolean doInTransaction(TransactionStatus status) {
-        //verify if the invitation was already generated
-        ProjectInvitationVO invite = null;
-        if (accountId != null) {
-            invite = _projectInvitationDao.findByAccountIdProjectId(accountId, project.getId());
-        } else if (email != null) {
-            invite = _projectInvitationDao.findByEmailAndProjectId(email, project.getId());
-        }
-
-        if (invite != null) {
-            if (invite.getState() == ProjectInvitation.State.Completed ||
-                    (invite.getState() == ProjectInvitation.State.Pending && _projectInvitationDao.isActive(invite.getId(), _invitationTimeOut))) {
-                return true;
-            } else {
-                if (invite.getState() == ProjectInvitation.State.Pending) {
-                    expireInvitation(invite);
-                }
-                //remove the expired/declined invitation
+                // verify if the invitation was already generated
+                ProjectInvitationVO invite = null;
                 if (accountId != null) {
-                    s_logger.debug("Removing invitation in state " + invite.getState() + " for account id=" + accountId + " to project " + project);
+                    invite = _projectInvitationDao.findByAccountIdProjectId(accountId, project.getId());
                 } else if (email != null) {
-                    s_logger.debug("Removing invitation in state " + invite.getState() + " for email " + email + " to project " + project);
+                    invite = _projectInvitationDao.findByEmailAndProjectId(email, project.getId());
                 }
 
-                _projectInvitationDao.expunge(invite.getId());
-            }
-        }
+                if (invite != null) {
+                    if (invite.getState() == ProjectInvitation.State.Completed
+                            || (invite.getState() == ProjectInvitation.State.Pending && _projectInvitationDao.isActive(invite.getId(), _invitationTimeOut))) {
+                        return true;
+                    } else {
+                        if (invite.getState() == ProjectInvitation.State.Pending) {
+                            expireInvitation(invite);
+                        }
+                        // remove the expired/declined invitation
+                        if (accountId != null) {
+                            s_logger.debug("Removing invitation in state " + invite.getState() + " for account id=" + accountId + " to project " + project);
+                        } else if (email != null) {
+                            s_logger.debug("Removing invitation in state " + invite.getState() + " for email " + email + " to project " + project);
+                        }
 
-        return false;
-    }
+                        _projectInvitationDao.expunge(invite.getId());
+                    }
+                }
+
+                return false;
+            }
         });
     }
 
     public ProjectInvitation generateTokenBasedInvitation(Project project, String email, String token) {
-        //verify if the invitation was already generated
+        // verify if the invitation was already generated
         if (activeInviteExists(project, null, email)) {
             throw new InvalidParameterValueException("There is already a pending invitation for email " + email + " to the project id=" + project);
         }
@@ -730,12 +735,13 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
         Long accountId = null;
         boolean result = true;
 
-        //if accountname and token are null, default accountname to caller's account name
+        // if accountname and token are null, default accountname to caller's
+        // account name
         if (accountName == null && token == null) {
             accountName = caller.getAccountName();
         }
 
-        //check that the project exists
+        // check that the project exists
         final Project project = getProject(projectId);
 
         if (project == null) {
@@ -743,13 +749,13 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
         }
 
         if (accountName != null) {
-            //check that account-to-remove exists
+            // check that account-to-remove exists
             Account account = _accountMgr.getActiveAccountByName(accountName, project.getDomainId());
             if (account == null) {
                 throw new InvalidParameterValueException("Unable to find account name=" + accountName + " in domain id=" + project.getDomainId());
             }
 
-            //verify permissions
+            // verify permissions
             _accountMgr.checkAccess(caller, null, true, account);
 
             accountId = account.getId();
@@ -757,7 +763,7 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
             accountId = caller.getId();
         }
 
-        //check that invitation exists
+        // check that invitation exists
         ProjectInvitationVO invite = null;
         if (token == null) {
             invite = _projectInvitationDao.findByAccountIdProjectId(accountId, projectId, ProjectInvitation.State.Pending);
@@ -779,24 +785,26 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
                     public Boolean doInTransaction(TransactionStatus status) {
                         boolean result = true;
 
-                ProjectInvitation.State newState = accept ? ProjectInvitation.State.Completed : ProjectInvitation.State.Declined;
+                        ProjectInvitation.State newState = accept ? ProjectInvitation.State.Completed : ProjectInvitation.State.Declined;
 
-                //update invitation
+                        // update invitation
                         s_logger.debug("Marking invitation " + inviteFinal + " with state " + newState);
                         inviteFinal.setState(newState);
                         result = _projectInvitationDao.update(inviteFinal.getId(), inviteFinal);
 
-                if (result && accept) {
-                    //check if account already exists for the project (was added before invitation got accepted)
-                            ProjectAccount projectAccount =  _projectAccountDao.findByProjectIdAccountId(projectId, accountIdFinal);
-                    if (projectAccount != null) {
+                        if (result && accept) {
+                            // check if account already exists for the
+                            // project (was added before invitation got
+                            // accepted)
+                            ProjectAccount projectAccount = _projectAccountDao.findByProjectIdAccountId(projectId, accountIdFinal);
+                            if (projectAccount != null) {
                                 s_logger.debug("Account " + accountNameFinal + " already added to the project id=" + projectId);
-                    } else {
+                            } else {
                                 assignAccountToProject(project, accountIdFinal, ProjectAccount.Role.Regular);
-                    }
-                } else {
+                            }
+                        } else {
                             s_logger.warn("Failed to update project invitation " + inviteFinal + " with state " + newState);
-                }
+                        }
 
                         return result;
                     }
@@ -820,7 +828,7 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
     public Project activateProject(final long projectId) {
         Account caller = CallContext.current().getCallingAccount();
 
-        //check that the project exists
+        // check that the project exists
         final ProjectVO project = getProject(projectId);
 
         if (project == null) {
@@ -829,10 +837,10 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
             throw ex;
         }
 
-        //verify permissions
+        // verify permissions
         _accountMgr.checkAccess(caller, AccessType.ModifyProject, true, _accountMgr.getAccount(project.getProjectAccountId()));
 
-        //allow project activation only when it's in Suspended state
+        // allow project activation only when it's in Suspended state
         Project.State currentState = project.getState();
 
         if (currentState == State.Active) {
@@ -847,10 +855,10 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
         Transaction.execute(new TransactionCallbackNoReturn() {
             @Override
             public void doInTransactionWithoutResult(TransactionStatus status) {
-        project.setState(Project.State.Active);
-        _projectDao.update(projectId, project);
+                project.setState(Project.State.Active);
+                _projectDao.update(projectId, project);
 
-        _accountMgr.enableAccount(project.getProjectAccountId());
+                _accountMgr.enableAccount(project.getProjectAccountId());
             }
         });
 
@@ -863,7 +871,7 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
         Account caller = CallContext.current().getCallingAccount();
 
         ProjectVO project = getProject(projectId);
-        //verify input parameters
+        // verify input parameters
         if (project == null) {
             InvalidParameterValueException ex = new InvalidParameterValueException("Unable to find project with specified id");
             ex.addProxyObject(String.valueOf(projectId), "projectId");
@@ -1008,10 +1016,10 @@ public class ProjectManagerImpl extends ManagerBase implements ProjectManager {
             throw new InvalidParameterValueException("Unable to find project invitation by id " + id);
         }
 
-        //check that the project exists
+        // check that the project exists
         Project project = getProject(invitation.getProjectId());
 
-        //check permissions - only project owner can remove the invitations
+        // check permissions - only project owner can remove the invitations
         _accountMgr.checkAccess(caller, AccessType.ModifyProject, true, _accountMgr.getAccount(project.getProjectAccountId()));
 
         if (_projectInvitationDao.remove(id)) {

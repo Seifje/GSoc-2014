@@ -35,12 +35,12 @@ public class RebootVMCmdByAdmin extends RebootVMCmd {
     public static final Logger s_logger = Logger.getLogger(RebootVMCmdByAdmin.class.getName());
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException{
-        CallContext.current().setEventDetails("Vm Id: "+getId());
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException {
+        CallContext.current().setEventDetails("Vm Id: " + getId());
         UserVm result;
         result = _userVmService.rebootVirtualMachine(this);
 
-        if (result !=null){
+        if (result != null) {
             UserVmResponse response = _responseGenerator.createUserVmResponse(ResponseView.Full, "virtualmachine", result).get(0);
             response.setResponseName(getCommandName());
             setResponseObject(response);

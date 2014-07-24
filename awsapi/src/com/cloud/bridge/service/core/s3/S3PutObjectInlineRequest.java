@@ -28,7 +28,10 @@ public class S3PutObjectInlineRequest extends S3Request {
     protected long contentLength;
     protected S3MetaDataEntry[] metaEntries;
     protected S3AccessControlList acl;
-    protected String cannedAccessPolicy;    // Canned ACLs are public-read, public-read-write, private, authenticated-read or log-delivery-write
+    protected String cannedAccessPolicy; // Canned ACLs are public-read,
+                                         // public-read-write, private,
+                                         // authenticated-read or
+                                         // log-delivery-write
     protected DataHandler data;
     protected String dataAsString;
 

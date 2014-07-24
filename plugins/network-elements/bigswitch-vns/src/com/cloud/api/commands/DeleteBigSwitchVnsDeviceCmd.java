@@ -35,39 +35,33 @@ import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.network.element.BigSwitchVnsElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "deleteBigSwitchVnsDevice", responseObject = SuccessResponse.class, description = " delete a bigswitch vns device", since = "4.1.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteBigSwitchVnsDevice", responseObject = SuccessResponse.class, description = " delete a bigswitch vns device", since = "4.1.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteBigSwitchVnsDeviceCmd extends BaseAsyncCmd {
     private static final String s_name = "deletebigswitchvnsdeviceresponse";
     @Inject
     BigSwitchVnsElementService _bigswitchVnsElementService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = VnsConstants.BIGSWITCH_VNS_DEVICE_ID,
-               type = CommandType.UUID,
-               entityType = BigSwitchVnsDeviceResponse.class,
-               required = true,
-               description = "BigSwitch device ID")
+    @Parameter(name = VnsConstants.BIGSWITCH_VNS_DEVICE_ID, type = CommandType.UUID, entityType = BigSwitchVnsDeviceResponse.class, required = true, description = "BigSwitch device ID")
     private Long bigswitchVnsDeviceId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getBigSwitchVnsDeviceId() {
         return bigswitchVnsDeviceId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             boolean result = _bigswitchVnsElementService.deleteBigSwitchVnsDevice(this);
             if (result) {

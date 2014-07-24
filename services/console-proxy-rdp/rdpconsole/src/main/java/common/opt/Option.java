@@ -30,9 +30,9 @@ public class Option {
      * Parse option value, if any.
      *
      * @param position
-     *          position of this option in list of arguments
+     *            position of this option in list of arguments
      * @param args
-     *          command line arguments
+     *            command line arguments
      * @return how many arguments are consumed, at least 1
      */
     public int parse(int position, String args[]) {
@@ -86,9 +86,9 @@ public class Option {
      * Return description of options in format suitable for help and usage text.
      *
      * @param header
-     *          header string to print before list of options
+     *            header string to print before list of options
      * @param options
-     *          list of options to print
+     *            list of options to print
      */
     public static String toHelp(String header, Option[] options) {
         StringBuffer sb = new StringBuffer();

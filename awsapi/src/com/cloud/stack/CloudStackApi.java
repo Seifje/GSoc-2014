@@ -100,14 +100,16 @@ public class CloudStackApi {
     }
 
     /**
-     * @param apiKey the apiKey to set
+     * @param apiKey
+     *            the apiKey to set
      */
     public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
     }
 
     /**
-     * @param secretKey the secretKey to set
+     * @param secretKey
+     *            the secretKey to set
      */
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
@@ -139,8 +141,8 @@ public class CloudStackApi {
      * @throws Exception
      */
     public CloudStackUserVm deployVirtualMachine(String serviceOfferingId, String templateId, String zoneId, String account, String diskOfferingId, String displayName,
-        String domainId, String group, String hostId, String hypervisor, String keyPair, String name, String networkId, String securityGroupIds,
-        String securityGroupNames, Long size, String userData) throws Exception {
+            String domainId, String group, String hostId, String hypervisor, String keyPair, String name, String networkId, String securityGroupIds, String securityGroupNames,
+            Long size, String userData) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.DEPLOY_VIRTUAL_MACHINE);
         if (cmd != null) {
             // these are required
@@ -329,8 +331,8 @@ public class CloudStackApi {
      * @throws Exception
      */
     public List<CloudStackUserVm> listVirtualMachines(String account, String accountId, Boolean listAll, Boolean forVirtualNetwork, String groupId, String hostId,
-        String hypervisor, String id, Boolean isRecursive, String keyWord, String name, String networkId, String podId, String state, String storageId, String zoneId,
-        List<CloudStackKeyValue> resourceTags) throws Exception {
+            String hypervisor, String id, Boolean isRecursive, String keyWord, String name, String networkId, String podId, String state, String storageId, String zoneId,
+            List<CloudStackKeyValue> resourceTags) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_VIRTUAL_MACHINES);
         if (cmd != null) {
             if (account != null)
@@ -368,9 +370,8 @@ public class CloudStackApi {
             if (resourceTags != null && resourceTags.size() > 0)
                 cmd = setParams(cmd, null, null, resourceTags);
         }
-        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_VIRTUAL_MACHINES_RESPONSE, ApiConstants.VIRTUAL_MACHINE,
-            new TypeToken<List<CloudStackUserVm>>() {
-            }.getType());
+        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_VIRTUAL_MACHINES_RESPONSE, ApiConstants.VIRTUAL_MACHINE, new TypeToken<List<CloudStackUserVm>>() {
+        }.getType());
     }
 
     /**
@@ -384,12 +385,13 @@ public class CloudStackApi {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.GET_VM_PASSWORD);
         if (cmd != null)
             cmd.setParam(ApiConstants.ID, id);
-        // TODO: This probably isn't right.  Need to test with an instance that has a VM Password
+        // TODO: This probably isn't right. Need to test with an instance that
+        // has a VM Password
         return _client.call(cmd, apiKey, secretKey, true, ApiConstants.GET_VM_PASSWORD_RESPONSE, ApiConstants.PASSWORD, CloudStackPasswordData.class);
     }
 
     // Templates
-//<a href="user/createTemplate.html">createTemplate (A)</a>
+    // <a href="user/createTemplate.html">createTemplate (A)</a>
     /**
      * create a Template
      *
@@ -406,8 +408,8 @@ public class CloudStackApi {
      * @return
      * @throws Exception
      */
-    public CloudStackTemplate createTemplate(String displayText, String name, String osTypeId, String bits, Boolean isFeatured, Boolean isPublic,
-        Boolean passwordEnabled, Boolean requiresHVM, String snapshotId, String volumeId) throws Exception {
+    public CloudStackTemplate createTemplate(String displayText, String name, String osTypeId, String bits, Boolean isFeatured, Boolean isPublic, Boolean passwordEnabled,
+            Boolean requiresHVM, String snapshotId, String volumeId) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.CREATE_TEMPLATE);
         if (cmd != null) {
             cmd.setParam(ApiConstants.DISPLAY_TEXT, displayText);
@@ -453,9 +455,9 @@ public class CloudStackApi {
      * @return
      * @throws Exception
      */
-    public List<CloudStackTemplate> registerTemplate(String displayText, String format, String hypervisor, String name, String osTypeId, String url, String zoneId,
-        String account, String bits, String checksum, String domainId, Boolean isExtractable, Boolean isFeatured, Boolean isPublic, Boolean passwordEnabled,
-        Boolean requiresHVM) throws Exception {
+    public List<CloudStackTemplate> registerTemplate(String displayText, String format, String hypervisor, String name, String osTypeId, String url, String zoneId, String account,
+            String bits, String checksum, String domainId, Boolean isExtractable, Boolean isFeatured, Boolean isPublic, Boolean passwordEnabled, Boolean requiresHVM)
+            throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.REGISTER_TEMPLATE);
         if (cmd != null) {
             cmd.setParam(ApiConstants.DISPLAY_TEXT, displayText);
@@ -502,7 +504,7 @@ public class CloudStackApi {
      * @throws Exception
      */
     public CloudStackTemplate updateTemplate(String id, Boolean bootable, String displayText, String format, String name, String osTypeId, Boolean passwordEnabled)
-        throws Exception {
+            throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.UPDATE_TEMPLATE);
         if (cmd != null) {
             cmd.setParam(ApiConstants.ID, id);
@@ -525,9 +527,12 @@ public class CloudStackApi {
     /**
      * copy a template
      *
-     * @param id (required)
-     * @param destZoneId (required)
-     * @param sourceZoneId (required)
+     * @param id
+     *            (required)
+     * @param destZoneId
+     *            (required)
+     * @param sourceZoneId
+     *            (required)
      * @return
      * @throws Exception
      */
@@ -542,9 +547,11 @@ public class CloudStackApi {
     }
 
     /**
-     * Deletes a template from the system. All virtual machines using the deleted template will not be affected.
+     * Deletes a template from the system. All virtual machines using the
+     * deleted template will not be affected.
      *
-     * @param id (required)
+     * @param id
+     *            (required)
      * @param zoneId
      * @return
      * @throws Exception
@@ -562,7 +569,8 @@ public class CloudStackApi {
     /**
      * List all public, private, and privileged templates
      *
-     * @param templateFilter (required)
+     * @param templateFilter
+     *            (required)
      * @param account
      * @param domainId
      * @param hypervisor
@@ -573,8 +581,8 @@ public class CloudStackApi {
      * @return
      * @throws Exception
      */
-    public List<CloudStackTemplate> listTemplates(String templateFilter, String account, String domainId, String hypervisor, String id, String keyWord, String name,
-        String zoneId) throws Exception {
+    public List<CloudStackTemplate> listTemplates(String templateFilter, String account, String domainId, String hypervisor, String id, String keyWord, String name, String zoneId)
+            throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_TEMPLATES);
         if (cmd != null) {
             cmd.setParam(ApiConstants.TEMPLATE_FILTER, templateFilter);
@@ -598,9 +606,11 @@ public class CloudStackApi {
     }
 
     /**
-     * Updates a template visibility permissions. A public template is visible to all accounts within the same domain.
-     * A private template is visible only to the owner of the template. A priviledged template is a private template with account
-     * permissions added. Only accounts specified under the template permissions are visible to them.
+     * Updates a template visibility permissions. A public template is visible
+     * to all accounts within the same domain. A private template is visible
+     * only to the owner of the template. A priviledged template is a private
+     * template with account permissions added. Only accounts specified under
+     * the template permissions are visible to them.
      *
      * @param id
      * @param accounts
@@ -611,8 +621,7 @@ public class CloudStackApi {
      * @return
      * @throws Exception
      */
-    public CloudStackInfoResponse updateTemplatePermissions(String id, String accounts, Boolean isExtractable, Boolean isFeatured, Boolean isPublic, String op)
-        throws Exception {
+    public CloudStackInfoResponse updateTemplatePermissions(String id, String accounts, Boolean isExtractable, Boolean isFeatured, Boolean isPublic, String op) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.UPDATE_TEMPLATE_PERMISSIONS);
         if (cmd != null) {
             cmd.setParam(ApiConstants.ID, id);
@@ -631,7 +640,8 @@ public class CloudStackApi {
     }
 
     /**
-     * List template visibility and all accounts that have permissions to view this template.
+     * List template visibility and all accounts that have permissions to view
+     * this template.
      *
      * @param id
      * @param account
@@ -648,8 +658,7 @@ public class CloudStackApi {
             if (domainId != null)
                 cmd.setParam(ApiConstants.DOMAIN_ID, domainId);
         }
-        return _client.call(cmd, apiKey, secretKey, false, ApiConstants.LIST_TEMPLATE_PERMISSIONS_RESPONSE, ApiConstants.TEMPLATE_PERMISSION,
-            CloudStackTemplatePermission.class);
+        return _client.call(cmd, apiKey, secretKey, false, ApiConstants.LIST_TEMPLATE_PERMISSIONS_RESPONSE, ApiConstants.TEMPLATE_PERMISSION, CloudStackTemplatePermission.class);
     }
 
     /**
@@ -724,8 +733,8 @@ public class CloudStackApi {
      * @return
      * @throws Exception
      */
-    public List<CloudStackTemplate> listIsos(String account, Boolean bootable, String domainId, String hypervisor, String id, String isoFilter, Boolean isPublic,
-        Boolean isReady, String keyWord, String name, String zoneId) throws Exception {
+    public List<CloudStackTemplate> listIsos(String account, Boolean bootable, String domainId, String hypervisor, String id, String isoFilter, Boolean isPublic, Boolean isReady,
+            String keyWord, String name, String zoneId) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_ISOS);
         if (cmd != null) {
             if (account != null)
@@ -772,8 +781,8 @@ public class CloudStackApi {
      * @return
      * @throws Exception
      */
-    public CloudStackTemplate registerIso(String displayText, String name, String url, String zoneId, String account, Boolean bootable, String domainId,
-        Boolean isExtractable, Boolean isFeatured, Boolean isPublic, String osTypeId) throws Exception {
+    public CloudStackTemplate registerIso(String displayText, String name, String url, String zoneId, String account, Boolean bootable, String domainId, Boolean isExtractable,
+            Boolean isFeatured, Boolean isPublic, String osTypeId) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.REGISTER_ISO);
         if (cmd != null) {
             cmd.setParam(ApiConstants.DISPLAY_TEXT, displayText);
@@ -811,8 +820,7 @@ public class CloudStackApi {
      * @return
      * @throws Exception
      */
-    public CloudStackTemplate updateIso(String id, Boolean bootable, String displayText, String format, String name, String osTypeId, Boolean passwordEnabled)
-        throws Exception {
+    public CloudStackTemplate updateIso(String id, Boolean bootable, String displayText, String format, String name, String osTypeId, Boolean passwordEnabled) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.UPDATE_ISO);
         if (cmd != null) {
             cmd.setParam(ApiConstants.ID, id);
@@ -880,8 +888,7 @@ public class CloudStackApi {
      * @return
      * @throws Exception
      */
-    public CloudStackInfoResponse updateIsoPermissions(String id, String accounts, Boolean isExtractable, Boolean isFeatured, Boolean isPublic, String op)
-        throws Exception {
+    public CloudStackInfoResponse updateIsoPermissions(String id, String accounts, Boolean isExtractable, Boolean isFeatured, Boolean isPublic, String op) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.UPDATE_ISO_PERMISSIONS);
         if (cmd != null) {
             cmd.setParam(ApiConstants.ID, id);
@@ -900,7 +907,9 @@ public class CloudStackApi {
     }
 
     /**
-     * List template visibility and all accounts that have permissions to view this template
+     * List template visibility and all accounts that have permissions to view
+     * this template
+     * 
      * @param id
      * @param account
      * @param domainId
@@ -916,9 +925,8 @@ public class CloudStackApi {
             if (domainId != null)
                 cmd.setParam(ApiConstants.DOMAIN_ID, domainId);
         }
-        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_ISO_PERMISSIONS_RESPONSE, ApiConstants.TEMPLATE,
-            new TypeToken<List<CloudStackTemplatePermission>>() {
-            }.getType());
+        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_ISO_PERMISSIONS_RESPONSE, ApiConstants.TEMPLATE, new TypeToken<List<CloudStackTemplatePermission>>() {
+        }.getType());
     }
 
     /**
@@ -987,7 +995,8 @@ public class CloudStackApi {
     }
 
     /**
-     * Creates a disk volume from a disk offering. This disk volume must still be attached to a virtual machine to make use of it
+     * Creates a disk volume from a disk offering. This disk volume must still
+     * be attached to a virtual machine to make use of it
      *
      * @param name
      * @param account
@@ -999,8 +1008,7 @@ public class CloudStackApi {
      * @return
      * @throws Exception
      */
-    public CloudStackVolume createVolume(String name, String account, String diskOfferingId, String domainId, Long size, String snapshotId, String zoneId)
-        throws Exception {
+    public CloudStackVolume createVolume(String name, String account, String diskOfferingId, String domainId, Long size, String snapshotId, String zoneId) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.CREATE_VOLUME);
         if (cmd != null) {
             cmd.setParam(ApiConstants.NAME, name);
@@ -1052,7 +1060,7 @@ public class CloudStackApi {
      * @throws Exception
      */
     public List<CloudStackVolume> listVolumes(String account, String domainId, String hostId, String id, Boolean isRecursive, String keyWord, String name, String podId,
-        String type, String virtualMachineId, String zoneId, List<CloudStackKeyValue> resourceTags) throws Exception {
+            String type, String virtualMachineId, String zoneId, List<CloudStackKeyValue> resourceTags) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_VOLUMES);
         if (cmd != null) {
             if (account != null)
@@ -1106,12 +1114,14 @@ public class CloudStackApi {
         return _client.call(cmd, apiKey, secretKey, true, ApiConstants.EXTRACT_VOLUME_RESPONSE, ApiConstants.VOLUME, CloudStackExtractTemplate.class);
     }
 
-    //Tags
+    // Tags
     /**
      * Create tags
      *
-     * @param resource type
-     * @param resource id's
+     * @param resource
+     *            type
+     * @param resource
+     *            id's
      * @param tags
      * @return
      * @throws Exception
@@ -1126,8 +1136,10 @@ public class CloudStackApi {
     /**
      * Delete tags
      *
-     * @param resource type
-     * @param resource id's
+     * @param resource
+     *            type
+     * @param resource
+     *            id's
      * @param tags
      * @return
      * @throws Exception
@@ -1244,12 +1256,13 @@ public class CloudStackApi {
      * @param securityGroupId
      * @param securityGroupName
      * @param startPort
-     * @param userSecurityGroupList List<CloudStackKeyValue>
+     * @param userSecurityGroupList
+     *            List<CloudStackKeyValue>
      * @return
      * @throws Exception
      */
-    public CloudStackSecurityGroup authorizeSecurityGroupIngress(String account, String cidrList, String domainId, Long endPort, String icmpCode, String icmpType,
-        String protocol, String securityGroupId, String securityGroupName, Long startPort, List<CloudStackKeyValue> userSecurityGroupList) throws Exception {
+    public CloudStackSecurityGroup authorizeSecurityGroupIngress(String account, String cidrList, String domainId, Long endPort, String icmpCode, String icmpType, String protocol,
+            String securityGroupId, String securityGroupName, Long startPort, List<CloudStackKeyValue> userSecurityGroupList) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.AUTHORIZE_SECURITY_GROUP_INGRESS);
         if (cmd != null) {
             if (account != null)
@@ -1281,8 +1294,7 @@ public class CloudStackApi {
                 }
             }
         }
-        return _client.call(cmd, apiKey, secretKey, true, ApiConstants.AUTHORIZE_SECURITY_GROUP_INGRESS_RESPONSE, ApiConstants.SECURITY_GROUP,
-            CloudStackSecurityGroup.class);
+        return _client.call(cmd, apiKey, secretKey, true, ApiConstants.AUTHORIZE_SECURITY_GROUP_INGRESS_RESPONSE, ApiConstants.SECURITY_GROUP, CloudStackSecurityGroup.class);
     }
 
     /**
@@ -1312,7 +1324,7 @@ public class CloudStackApi {
      * @throws Exception
      */
     public List<CloudStackSecurityGroup> listSecurityGroups(String account, String domainId, String id, Boolean listAll, String keyWord, String securityGroupName,
-        String virtualMachineId) throws Exception {
+            String virtualMachineId) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_SECURITY_GROUPS);
         if (cmd != null) {
             if (account != null)
@@ -1330,14 +1342,14 @@ public class CloudStackApi {
             if (virtualMachineId != null)
                 cmd.setParam(ApiConstants.VIRTUAL_MACHINE_ID, virtualMachineId);
         }
-        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_SECURITY_GROUPS_RESPONSE, ApiConstants.SECURITY_GROUP,
-            new TypeToken<List<CloudStackSecurityGroup>>() {
-            }.getType());
+        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_SECURITY_GROUPS_RESPONSE, ApiConstants.SECURITY_GROUP, new TypeToken<List<CloudStackSecurityGroup>>() {
+        }.getType());
     }
 
     // Accounts
     /**
-     * Lists accounts and provides detailed account information for listed accounts
+     * Lists accounts and provides detailed account information for listed
+     * accounts
      *
      * @param accountType
      * @param domainId
@@ -1350,8 +1362,8 @@ public class CloudStackApi {
      * @return
      * @throws Exception
      */
-    public List<CloudStackAccount> listAccounts(Long accountType, String domainId, String id, Boolean isCleanupRequired, Boolean isRecursive, String keyWord,
-        String name, String state) throws Exception {
+    public List<CloudStackAccount> listAccounts(Long accountType, String domainId, String id, Boolean isCleanupRequired, Boolean isRecursive, String keyWord, String name,
+            String state) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_ACCOUNTS);
         if (cmd != null) {
             if (accountType != null)
@@ -1411,7 +1423,7 @@ public class CloudStackApi {
      * @throws Exception
      */
     public List<CloudStackSnapshot> listSnapshots(String account, String domainId, String id, String intervalType, Boolean isRecursive, String keyWord, String name,
-        String snapshotType, String volumeId, List<CloudStackKeyValue> resourceTags) throws Exception {
+            String snapshotType, String volumeId, List<CloudStackKeyValue> resourceTags) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_SNAPSHOTS);
         if (cmd != null) {
             if (account != null)
@@ -1516,9 +1528,8 @@ public class CloudStackApi {
             if (keyWord != null)
                 cmd.setParam(ApiConstants.KEYWORD, keyWord);
         }
-        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_SNAPSHOT_POLICIES_RESPONSE, ApiConstants.SNAPSHOT,
-            new TypeToken<List<CloudStackSnapshotPolicy>>() {
-            }.getType());
+        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_SNAPSHOT_POLICIES_RESPONSE, ApiConstants.SNAPSHOT, new TypeToken<List<CloudStackSnapshotPolicy>>() {
+        }.getType());
     }
 
     // Events
@@ -1539,7 +1550,7 @@ public class CloudStackApi {
      * @throws Exception
      */
     public List<CloudStackEvent> listEvents(String account, String domainId, Long duration, String endDate, String entryTime, String id, String keyWord, String level,
-        String startDate, String type) throws Exception {
+            String startDate, String type) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_EVENTS);
         if (cmd != null) {
             if (account != null)
@@ -1638,7 +1649,7 @@ public class CloudStackApi {
      * @throws Exception
      */
     public List<CloudStackServiceOffering> listServiceOfferings(String domainId, String id, Boolean isSystem, String keyWord, String name, String systemVmType,
-        String virtualMachineId) throws Exception {
+            String virtualMachineId) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_SERVICE_OFFERINGS);
         if (cmd != null) {
             if (domainId != null)
@@ -1657,8 +1668,8 @@ public class CloudStackApi {
                 cmd.setParam(ApiConstants.VIRTUAL_MACHINE_ID, virtualMachineId);
         }
         return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_SERVICE_OFFERINGS_RESPONSE, ApiConstants.SERVICE_OFFERING,
-            new TypeToken<List<CloudStackServiceOffering>>() {
-            }.getType());
+                new TypeToken<List<CloudStackServiceOffering>>() {
+                }.getType());
     }
 
     // Disk Offerings
@@ -1684,9 +1695,8 @@ public class CloudStackApi {
             if (name != null)
                 cmd.setParam(ApiConstants.NAME, name);
         }
-        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_DISK_OFFERINGS_RESPONSE, ApiConstants.DISK_OFFERING,
-            new TypeToken<List<CloudStackDiskOffering>>() {
-            }.getType());
+        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_DISK_OFFERINGS_RESPONSE, ApiConstants.DISK_OFFERING, new TypeToken<List<CloudStackDiskOffering>>() {
+        }.getType());
     }
 
     // SSH keys
@@ -1786,7 +1796,8 @@ public class CloudStackApi {
     public CloudStackIpAddress associateIpAddress(String zoneId, String account, String domainId, String networkId) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.ASSOCIATE_IP_ADDRESS);
         if (cmd != null) {
-            // previous zoneId was required according to api docs, but Management Server UI doesn't use it...
+            // previous zoneId was required according to api docs, but
+            // Management Server UI doesn't use it...
             if (zoneId != null)
                 cmd.setParam(ApiConstants.ZONE_ID, zoneId);
             if (account != null)
@@ -1823,8 +1834,8 @@ public class CloudStackApi {
      * @param id
      * @return
      */
-    public List<CloudStackIpAddress> listPublicIpAddresses(String account, Boolean allocatedOnly, String domainId, Boolean forVirtualNetwork, String id,
-        String ipAddress, String keyWord, String vlanId, String zoneId) throws Exception {
+    public List<CloudStackIpAddress> listPublicIpAddresses(String account, Boolean allocatedOnly, String domainId, Boolean forVirtualNetwork, String id, String ipAddress,
+            String keyWord, String vlanId, String zoneId) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_PUBLIC_IP_ADDRESSES);
         if (cmd != null) {
             if (account != null)
@@ -1846,9 +1857,8 @@ public class CloudStackApi {
             if (zoneId != null)
                 cmd.setParam(ApiConstants.ZONE_ID, zoneId);
         }
-        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_PUBLIC_IP_ADDRESSES_RESPONSE, ApiConstants.PUBLIC_IP_ADDRESS,
-            new TypeToken<List<CloudStackIpAddress>>() {
-            }.getType());
+        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_PUBLIC_IP_ADDRESSES_RESPONSE, ApiConstants.PUBLIC_IP_ADDRESS, new TypeToken<List<CloudStackIpAddress>>() {
+        }.getType());
     }
 
     // Firewall
@@ -1878,8 +1888,8 @@ public class CloudStackApi {
                 cmd.setParam(ApiConstants.KEYWORD, keyWord);
         }
         return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_PORT_FORWARDING_RULES_RESPONSE, ApiConstants.PORT_FORWARDING_RULE,
-            new TypeToken<List<CloudStackPortForwardingRule>>() {
-            }.getType());
+                new TypeToken<List<CloudStackPortForwardingRule>>() {
+                }.getType());
     }
 
     /**
@@ -1896,8 +1906,8 @@ public class CloudStackApi {
      * @return
      * @throws Exception
      */
-    public CloudStackPortForwardingRule createPortForwardingRule(String ipAddressId, Long privatePort, String protocol, Long publicPort, String virtualMachineId,
-        String cidrList, Long privateEndPort, Long publicEndPort) throws Exception {
+    public CloudStackPortForwardingRule createPortForwardingRule(String ipAddressId, Long privatePort, String protocol, Long publicPort, String virtualMachineId, String cidrList,
+            Long privateEndPort, Long publicEndPort) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.CREATE_PORT_FORWARDING_RULE);
         if (cmd != null) {
             cmd.setParam(ApiConstants.IP_ADDRESS_ID, ipAddressId);
@@ -1912,8 +1922,7 @@ public class CloudStackApi {
             if (publicEndPort != null)
                 cmd.setParam(ApiConstants.PUBLIC_END_PORT, publicEndPort.toString());
         }
-        return _client.call(cmd, apiKey, secretKey, true, ApiConstants.CREATE_PORT_FORWARDING_RULE_RESPONSE, ApiConstants.PORT_FORWARDING_RULE,
-            CloudStackPortForwardingRule.class);
+        return _client.call(cmd, apiKey, secretKey, true, ApiConstants.CREATE_PORT_FORWARDING_RULE_RESPONSE, ApiConstants.PORT_FORWARDING_RULE, CloudStackPortForwardingRule.class);
     }
 
     /**
@@ -1967,8 +1976,7 @@ public class CloudStackApi {
             if (endPort != null)
                 cmd.setParam(ApiConstants.END_PORT, endPort.toString());
         }
-        return _client.call(cmd, apiKey, secretKey, true, ApiConstants.CREATE_IP_FORWARDING_RULE_RESPONSE, ApiConstants.IP_FORWARDING_RULE,
-            CloudStackPortForwardingRule.class);
+        return _client.call(cmd, apiKey, secretKey, true, ApiConstants.CREATE_IP_FORWARDING_RULE_RESPONSE, ApiConstants.IP_FORWARDING_RULE, CloudStackPortForwardingRule.class);
     }
 
     /**
@@ -1998,8 +2006,8 @@ public class CloudStackApi {
      * @return
      * @throws Exception
      */
-    public List<CloudStackPortForwardingRule> listIpForwardingRules(String account, String domainId, String id, String ipAddressId, String keyWord,
-        String virtualMachineId) throws Exception {
+    public List<CloudStackPortForwardingRule> listIpForwardingRules(String account, String domainId, String id, String ipAddressId, String keyWord, String virtualMachineId)
+            throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_IP_FORWARDING_RULES);
         if (cmd != null) {
             if (account != null)
@@ -2016,8 +2024,8 @@ public class CloudStackApi {
                 cmd.setParam(ApiConstants.VIRTUAL_MACHINE_ID, virtualMachineId);
         }
         return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_IP_FORWARDING_RULES_RESPONSE, ApiConstants.IP_FORWARDING_RULE,
-            new TypeToken<List<CloudStackPortForwardingRule>>() {
-            }.getType());
+                new TypeToken<List<CloudStackPortForwardingRule>>() {
+                }.getType());
     }
 
     /**
@@ -2048,7 +2056,7 @@ public class CloudStackApi {
      * @throws Exception
      */
     public CloudStackLoadBalancerRule createLoadBalancerRule(String algorithm, String name, Long privatePort, String publicIpId, Long publicPort, String description)
-        throws Exception {
+            throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.CREATE_LOAD_BALANCER_RULE);
         if (cmd != null) {
             cmd.setParam(ApiConstants.ALGORITHM, algorithm);
@@ -2078,7 +2086,8 @@ public class CloudStackApi {
     }
 
     /**
-     * Removes a virtual machine or a list of virtual machines from a load balancer rule
+     * Removes a virtual machine or a list of virtual machines from a load
+     * balancer rule
      *
      * @param id
      * @param virtualMachineIds
@@ -2095,7 +2104,8 @@ public class CloudStackApi {
     }
 
     /**
-     * Assigns virtual machine or a list of virtual machines to a load balancer rule.
+     * Assigns virtual machine or a list of virtual machines to a load balancer
+     * rule.
      *
      * @param id
      * @param virtualMachineIds
@@ -2126,7 +2136,7 @@ public class CloudStackApi {
      * @throws Exception
      */
     public List<CloudStackLoadBalancerRule> listLoadBalancerRules(String account, String domainId, String id, String keyWord, String name, String publicIpId,
-        String virtualMachineId, String zoneId) throws Exception {
+            String virtualMachineId, String zoneId) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_LOAD_BALANCER_RULES);
         if (cmd != null) {
             if (account != null)
@@ -2147,8 +2157,8 @@ public class CloudStackApi {
                 cmd.setParam(ApiConstants.ZONE_ID, zoneId);
         }
         return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_LOAD_BALANCER_RULES_RESPONSE, ApiConstants.LOAD_BALANCER,
-            new TypeToken<List<CloudStackLoadBalancerRule>>() {
-            }.getType());
+                new TypeToken<List<CloudStackLoadBalancerRule>>() {
+                }.getType());
     }
 
     /**
@@ -2170,8 +2180,8 @@ public class CloudStackApi {
                 cmd.setParam(ApiConstants.KEYWORD, keyWord);
         }
         return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_LOAD_BALANCER_RULE_INSTANCES_RESPONSE, ApiConstants.VIRTUAL_MACHINE,
-            new TypeToken<List<CloudStackUserVm>>() {
-            }.getType());
+                new TypeToken<List<CloudStackUserVm>>() {
+                }.getType());
     }
 
     /**
@@ -2280,9 +2290,8 @@ public class CloudStackApi {
             if (name != null)
                 cmd.setParam(ApiConstants.NAME, name);
         }
-        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_INSTANCE_GROUPS_RESPONSE, ApiConstants.INSTANCE_GROUP,
-            new TypeToken<List<CloudStackInstanceGroup>>() {
-            }.getType());
+        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_INSTANCE_GROUPS_RESPONSE, ApiConstants.INSTANCE_GROUP, new TypeToken<List<CloudStackInstanceGroup>>() {
+        }.getType());
 
     }
 
@@ -2309,7 +2318,7 @@ public class CloudStackApi {
      * @throws Exception
      */
     public CloudStackNetwork createNetwork(String displayText, String name, String networkOfferingId, String zoneId, String account, String domainId, Boolean isDefault,
-        String startIp, String endIp, String gateway, String netmask, Boolean isShared, String networkDomain, String tags, String vlan) throws Exception {
+            String startIp, String endIp, String gateway, String netmask, Boolean isShared, String networkDomain, String tags, String vlan) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.CREATE_NETWORK);
         if (cmd != null) {
             // required params
@@ -2376,7 +2385,7 @@ public class CloudStackApi {
      * @throws Exception
      */
     public List<CloudStackNetwork> listNetworks(String account, String domainId, String id, Boolean isDefault, Boolean isShared, Boolean isSystem, String keyWord,
-        String trafficType, String type, String zoneId) throws Exception {
+            String trafficType, String type, String zoneId) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_NETWORKS);
         if (cmd != null) {
             if (account != null)
@@ -2508,8 +2517,8 @@ public class CloudStackApi {
      * @return
      * @throws Exception
      */
-    public List<CloudStackNetworkOffering> listNetworkOfferings(String availability, String displayText, String guestIpType, String id, Boolean isDefault,
-        Boolean isShared, String keyWord, String name, String specifyVLan, String trafficType, String zoneId) throws Exception {
+    public List<CloudStackNetworkOffering> listNetworkOfferings(String availability, String displayText, String guestIpType, String id, Boolean isDefault, Boolean isShared,
+            String keyWord, String name, String specifyVLan, String trafficType, String zoneId) throws Exception {
         CloudStackCommand cmd = new CloudStackCommand(ApiConstants.LIST_NETWORK_OFFERINGS);
         if (cmd != null) {
             if (availability != null)
@@ -2536,8 +2545,8 @@ public class CloudStackApi {
                 cmd.setParam(ApiConstants.ZONE_ID, zoneId);
         }
         return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_NETWORK_OFFERINGS_RESPONSE, ApiConstants.NETWORK_OFFERING,
-            new TypeToken<List<CloudStackNetworkOffering>>() {
-            }.getType());
+                new TypeToken<List<CloudStackNetworkOffering>>() {
+                }.getType());
     }
 
     // Configuration
@@ -2578,9 +2587,8 @@ public class CloudStackApi {
             if (resourceType != null)
                 cmd.setParam(ApiConstants.RESOURCE_TYPE, resourceType);
         }
-        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_RESOURCE_LIMITS_RESPONSE, ApiConstants.RESOURCE_LIMIT,
-            new TypeToken<List<CloudStackResourceLimit>>() {
-            }.getType());
+        return _client.listCall(cmd, apiKey, secretKey, ApiConstants.LIST_RESOURCE_LIMITS_RESPONSE, ApiConstants.RESOURCE_LIMIT, new TypeToken<List<CloudStackResourceLimit>>() {
+        }.getType());
 
     }
 

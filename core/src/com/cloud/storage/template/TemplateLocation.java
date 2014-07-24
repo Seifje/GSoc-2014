@@ -55,7 +55,7 @@ public class TemplateLocation {
         }
         _formats = new ArrayList<FormatInfo>(5);
         _props = new Properties();
-        //TO DO - remove this hack
+        // TO DO - remove this hack
         if (_templatePath.matches(".*" + "volumes" + ".*")) {
             _file = _storage.getFile(_templatePath + "volume.properties");
             _resourceType = ResourceType.VOLUME;
@@ -160,7 +160,9 @@ public class TemplateLocation {
     public TemplateProp getTemplateInfo() {
         TemplateProp tmplInfo = new TemplateProp();
         tmplInfo.id = Long.parseLong(_props.getProperty("id"));
-        tmplInfo.installPath = _templatePath + _props.getProperty("filename"); // _templatePath endsWith /
+        tmplInfo.installPath = _templatePath + _props.getProperty("filename"); // _templatePath
+        // endsWith
+        // /
         if (_resourceType == ResourceType.VOLUME) {
             tmplInfo.installPath = tmplInfo.installPath.substring(tmplInfo.installPath.indexOf("volumes"));
         } else {

@@ -71,8 +71,7 @@ public class SimulatorSecondaryDiscoverer extends SecondaryStorageDiscoverer imp
     }
 
     @Override
-    public Map<? extends ServerResource, Map<String, String>>
-        find(long dcId, Long podId, Long clusterId, URI uri, String username, String password, List<String> hostTags) {
+    public Map<? extends ServerResource, Map<String, String>> find(long dcId, Long podId, Long clusterId, URI uri, String username, String password, List<String> hostTags) {
         if (!uri.getScheme().equalsIgnoreCase("sim")) {
             s_logger.debug("It's not NFS or file or ISO, so not a secondary storage server: " + uri.toString());
             return null;
@@ -98,7 +97,7 @@ public class SimulatorSecondaryDiscoverer extends SecondaryStorageDiscoverer imp
 
     @Override
     public HostVO createHostVOForDirectConnectAgent(HostVO host, StartupCommand[] startup, ServerResource resource, Map<String, String> details, List<String> hostTags) {
-        //for detecting SSVM dispatch
+        // for detecting SSVM dispatch
         StartupCommand firstCmd = startup[0];
         if (!(firstCmd instanceof StartupSecondaryStorageCommand)) {
             return null;
@@ -110,7 +109,8 @@ public class SimulatorSecondaryDiscoverer extends SecondaryStorageDiscoverer imp
 
     @Override
     public DeleteHostAnswer deleteHost(HostVO host, boolean isForced, boolean isForceDeleteStorage) throws UnableDeleteHostException {
-        // no need to handle, since secondary storage is no longer a host anymore.
+        // no need to handle, since secondary storage is no longer a host
+        // anymore.
         return null;
     }
 

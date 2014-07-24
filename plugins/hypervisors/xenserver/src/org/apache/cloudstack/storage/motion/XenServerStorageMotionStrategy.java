@@ -144,8 +144,10 @@ public class XenServerStorageMotionStrategy implements DataMotionStrategy {
             }
 
             // Migration across cluster needs to be done in three phases.
-            // 1. Send a migrate receive command to the destination host so that it is ready to receive a vm.
-            // 2. Send a migrate send command to the source host. This actually migrates the vm to the destination.
+            // 1. Send a migrate receive command to the destination host so that
+            // it is ready to receive a vm.
+            // 2. Send a migrate send command to the source host. This actually
+            // migrates the vm to the destination.
             // 3. Complete the process. Update the volume details.
             MigrateWithStorageReceiveCommand receiveCmd = new MigrateWithStorageReceiveCommand(to, volumeToFilerto);
             MigrateWithStorageReceiveAnswer receiveAnswer = (MigrateWithStorageReceiveAnswer)agentMgr.send(destHost.getId(), receiveCmd);
@@ -157,8 +159,7 @@ public class XenServerStorageMotionStrategy implements DataMotionStrategy {
                 throw new CloudRuntimeException("Error while migrating the vm " + vm + " to host " + destHost + ". " + receiveAnswer.getDetails());
             }
 
-            MigrateWithStorageSendCommand sendCmd =
-                    new MigrateWithStorageSendCommand(to, receiveAnswer.getVolumeToSr(), receiveAnswer.getNicToNetwork(), receiveAnswer.getToken());
+            MigrateWithStorageSendCommand sendCmd = new MigrateWithStorageSendCommand(to, receiveAnswer.getVolumeToSr(), receiveAnswer.getNicToNetwork(), receiveAnswer.getToken());
             MigrateWithStorageSendAnswer sendAnswer = (MigrateWithStorageSendAnswer)agentMgr.send(srcHost.getId(), sendCmd);
             if (sendAnswer == null) {
                 s_logger.error("Migration with storage of vm " + vm + " to host " + destHost + " failed.");

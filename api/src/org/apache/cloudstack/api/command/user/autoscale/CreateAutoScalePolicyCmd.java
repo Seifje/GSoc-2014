@@ -37,11 +37,7 @@ import com.cloud.network.as.AutoScalePolicy;
 import com.cloud.network.as.Condition;
 import com.cloud.user.Account;
 
-@APICommand(name = "createAutoScalePolicy",
-            description = "Creates an autoscale policy for a provision or deprovision action, the action is taken when the all the conditions evaluates to true for the specified duration. The policy is in effect once it is attached to a autscale vm group.",
-        responseObject = AutoScalePolicyResponse.class, entityType = {AutoScalePolicy.class},
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "createAutoScalePolicy", description = "Creates an autoscale policy for a provision or deprovision action, the action is taken when the all the conditions evaluates to true for the specified duration. The policy is in effect once it is attached to a autscale vm group.", responseObject = AutoScalePolicyResponse.class, entityType = {AutoScalePolicy.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateAutoScalePolicyCmd extends BaseAsyncCreateCmd {
     public static final Logger s_logger = Logger.getLogger(CreateAutoScalePolicyCmd.class.getName());
 
@@ -51,29 +47,16 @@ public class CreateAutoScalePolicyCmd extends BaseAsyncCreateCmd {
     // ////////////// API parameters /////////////////////
     // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ACTION,
-               type = CommandType.STRING,
-               required = true,
-               description = "the action to be executed if all the conditions evaluate to true for the specified duration.")
+    @Parameter(name = ApiConstants.ACTION, type = CommandType.STRING, required = true, description = "the action to be executed if all the conditions evaluate to true for the specified duration.")
     private String action;
 
-    @Parameter(name = ApiConstants.DURATION,
-               type = CommandType.INTEGER,
-               required = true,
-               description = "the duration for which the conditions have to be true before action is taken")
+    @Parameter(name = ApiConstants.DURATION, type = CommandType.INTEGER, required = true, description = "the duration for which the conditions have to be true before action is taken")
     private int duration;
 
-    @Parameter(name = ApiConstants.QUIETTIME,
-               type = CommandType.INTEGER,
-               description = "the cool down period for which the policy should not be evaluated after the action has been taken")
+    @Parameter(name = ApiConstants.QUIETTIME, type = CommandType.INTEGER, description = "the cool down period for which the policy should not be evaluated after the action has been taken")
     private Integer quietTime;
 
-    @Parameter(name = ApiConstants.CONDITION_IDS,
-               type = CommandType.LIST,
-               collectionType = CommandType.UUID,
-               entityType = ConditionResponse.class,
-               required = true,
-               description = "the list of IDs of the conditions that are being evaluated on every interval")
+    @Parameter(name = ApiConstants.CONDITION_IDS, type = CommandType.LIST, collectionType = CommandType.UUID, entityType = ConditionResponse.class, required = true, description = "the list of IDs of the conditions that are being evaluated on every interval")
     private List<Long> conditionIds;
 
     // ///////////////////////////////////////////////////
@@ -134,7 +117,8 @@ public class CreateAutoScalePolicyCmd extends BaseAsyncCreateCmd {
         long conditionId = getConditionIds().get(0);
         Condition condition = _entityMgr.findById(Condition.class, conditionId);
         if (condition == null) {
-            // it is an invalid condition, return system acccount, error will be thrown later.
+            // it is an invalid condition, return system acccount, error will be
+            // thrown later.
             conditionDomainId = Domain.ROOT_DOMAIN;
             conditionAccountId = Account.ACCOUNT_ID_SYSTEM;
         } else {

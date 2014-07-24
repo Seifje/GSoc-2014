@@ -25,7 +25,6 @@ public class SecStorageSetupCommand extends Command {
     private String secUrl;
     private KeystoreManager.Certificates certs;
 
-
     public SecStorageSetupCommand() {
         super();
     }

@@ -61,7 +61,8 @@ public class AprSocketSink extends BaseElement {
             if (verbose)
                 System.out.println("[" + this + "] INFO: Writing data to stream: " + buf + ".");
 
-            // FIXME: If pull is destroyed or socket is closed, segfault will happen here
+            // FIXME: If pull is destroyed or socket is closed, segfault will
+            // happen here
             Socket.send(socket, buf.data, buf.offset, buf.length);
         } catch (Exception e) {
             System.err.println("[" + this + "] ERROR: " + e.getMessage());

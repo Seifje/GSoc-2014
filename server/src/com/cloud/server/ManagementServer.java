@@ -37,7 +37,7 @@ public interface ManagementServer extends ManagementService, PluggableService {
 
     /**
      * Fetches the version of cloud stack
-    */
+     */
     @Override
     String getVersion();
 
@@ -60,7 +60,8 @@ public interface ManagementServer extends ManagementService, PluggableService {
     /**
      * Returns the vnc port of the vm.
      *
-     * @param VirtualMachine vm
+     * @param VirtualMachine
+     *            vm
      * @return the vnc port if found; -1 if unable to find.
      */
     Pair<String, Integer> getVncPort(VirtualMachine vm);

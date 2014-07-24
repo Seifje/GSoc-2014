@@ -27,8 +27,7 @@ import org.apache.cloudstack.api.response.UsageTypeResponse;
 
 import com.cloud.user.Account;
 
-@APICommand(name = "listUsageTypes", description = "List Usage Types", responseObject = UsageTypeResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listUsageTypes", description = "List Usage Types", responseObject = UsageTypeResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListUsageTypesCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(ListUsageTypesCmd.class.getName());
     private static final String s_name = "listusagetypesresponse";

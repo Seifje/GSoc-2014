@@ -35,16 +35,15 @@ import org.apache.cloudstack.usage.Usage;
 
 import com.cloud.utils.Pair;
 
-@APICommand(name = "listUsageRecords", description = "Lists usage records for accounts", responseObject = UsageRecordResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listUsageRecords", description = "Lists usage records for accounts", responseObject = UsageRecordResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class GetUsageRecordsCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(GetUsageRecordsCmd.class.getName());
 
     private static final String s_name = "listusagerecordsresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "List usage records for the specified user.")
     private String accountName;
@@ -52,16 +51,10 @@ public class GetUsageRecordsCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "List usage records for the specified domain.")
     private Long domainId;
 
-    @Parameter(name = ApiConstants.END_DATE,
-               type = CommandType.DATE,
-               required = true,
-               description = "End date range for usage record query. Use yyyy-MM-dd as the date format, e.g. startDate=2009-06-03.")
+    @Parameter(name = ApiConstants.END_DATE, type = CommandType.DATE, required = true, description = "End date range for usage record query. Use yyyy-MM-dd as the date format, e.g. startDate=2009-06-03.")
     private Date endDate;
 
-    @Parameter(name = ApiConstants.START_DATE,
-               type = CommandType.DATE,
-               required = true,
-               description = "Start date range for usage record query. Use yyyy-MM-dd as the date format, e.g. startDate=2009-06-01.")
+    @Parameter(name = ApiConstants.START_DATE, type = CommandType.DATE, required = true, description = "Start date range for usage record query. Use yyyy-MM-dd as the date format, e.g. startDate=2009-06-01.")
     private Date startDate;
 
     @Parameter(name = ApiConstants.ACCOUNT_ID, type = CommandType.UUID, entityType = AccountResponse.class, description = "List usage records for the specified account")
@@ -73,9 +66,9 @@ public class GetUsageRecordsCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.TYPE, type = CommandType.LONG, description = "List usage records for the specified usage type")
     private Long usageType;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getAccountName() {
         return accountName;
@@ -105,9 +98,9 @@ public class GetUsageRecordsCmd extends BaseListCmd {
         return projectId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

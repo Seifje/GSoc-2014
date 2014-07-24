@@ -175,7 +175,7 @@ public class SecurityGroupRulesCmd extends Command {
         return ruleBuilder.toString();
     }
 
-    //convert cidrs in the form "a.b.c.d/e" to "hexvalue of 32bit ip/e"
+    // convert cidrs in the form "a.b.c.d/e" to "hexvalue of 32bit ip/e"
     private String compressCidr(String cidr) {
         String[] toks = cidr.split("/");
         long ipnum = NetUtils.ip2Long(toks[0]);
@@ -200,7 +200,8 @@ public class SecurityGroupRulesCmd extends Command {
         for (SecurityGroupRulesCmd.IpPortAndProto ipPandP : getIngressRuleSet()) {
             ruleBuilder.append("I:").append(ipPandP.getProto()).append(":").append(ipPandP.getStartPort()).append(":").append(ipPandP.getEndPort()).append(":");
             for (String cidr : ipPandP.getAllowedCidrs()) {
-                //convert cidrs in the form "a.b.c.d/e" to "hexvalue of 32bit ip/e"
+                // convert cidrs in the form "a.b.c.d/e" to
+                // "hexvalue of 32bit ip/e"
                 ruleBuilder.append(compressCidr(cidr)).append(",");
             }
             ruleBuilder.append("NEXT");
@@ -209,7 +210,8 @@ public class SecurityGroupRulesCmd extends Command {
         for (SecurityGroupRulesCmd.IpPortAndProto ipPandP : getEgressRuleSet()) {
             ruleBuilder.append("E:").append(ipPandP.getProto()).append(":").append(ipPandP.getStartPort()).append(":").append(ipPandP.getEndPort()).append(":");
             for (String cidr : ipPandP.getAllowedCidrs()) {
-                //convert cidrs in the form "a.b.c.d/e" to "hexvalue of 32bit ip/e"
+                // convert cidrs in the form "a.b.c.d/e" to
+                // "hexvalue of 32bit ip/e"
                 ruleBuilder.append(compressCidr(cidr)).append(",");
             }
             ruleBuilder.append("NEXT");
@@ -219,8 +221,8 @@ public class SecurityGroupRulesCmd extends Command {
     }
 
     /*
-     * Compress the security group rules using zlib compression to allow the call to the hypervisor
-     * to scale beyond 8k cidrs.
+     * Compress the security group rules using zlib compression to allow the
+     * call to the hypervisor to scale beyond 8k cidrs.
      */
     public String compressStringifiedRules() {
         StringBuilder ruleBuilder = new StringBuilder();
@@ -243,8 +245,9 @@ public class SecurityGroupRulesCmd extends Command {
         String stringified = ruleBuilder.toString();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
-            //Note : not using GZipOutputStream since that is for files
-            //GZipOutputStream gives a different header, although the compression is the same
+            // Note : not using GZipOutputStream since that is for files
+            // GZipOutputStream gives a different header, although the
+            // compression is the same
             DeflaterOutputStream dzip = new DeflaterOutputStream(out);
             dzip.write(stringified.getBytes());
             dzip.close();
@@ -272,7 +275,7 @@ public class SecurityGroupRulesCmd extends Command {
     }
 
     public int getTotalNumCidrs() {
-        //useful for logging
+        // useful for logging
         int count = 0;
         for (IpPortAndProto i : ingressRuleSet) {
             count += i.allowedCidrs.length;

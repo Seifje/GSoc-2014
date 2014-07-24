@@ -23,9 +23,9 @@ import java.util.ListIterator;
 import com.cloud.bridge.util.HeaderParam;
 
 /**
- * We need to be able to pass in specific values into the S3 REST authentication algorithm
- * where these values can be obtained from either HTTP headers directly or from the body
- * of a POST request.
+ * We need to be able to pass in specific values into the S3 REST authentication
+ * algorithm where these values can be obtained from either HTTP headers
+ * directly or from the body of a POST request.
  */
 public class S3AuthParams {
 

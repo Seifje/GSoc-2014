@@ -78,7 +78,7 @@ public class NetworkACLItemVO implements NetworkACLItem {
     @Enumerated(value = EnumType.STRING)
     TrafficType trafficType;
 
-    // This is a delayed load value.  If the value is null,
+    // This is a delayed load value. If the value is null,
     // then this field has not been loaded yet.
     // Call the NetworkACLItem dao to load it.
     @Transient
@@ -101,8 +101,8 @@ public class NetworkACLItemVO implements NetworkACLItem {
         uuid = UUID.randomUUID().toString();
     }
 
-    public NetworkACLItemVO(Integer portStart, Integer portEnd, String protocol, long aclId, List<String> sourceCidrs, Integer icmpCode, Integer icmpType,
-            TrafficType trafficType, Action action, int number) {
+    public NetworkACLItemVO(Integer portStart, Integer portEnd, String protocol, long aclId, List<String> sourceCidrs, Integer icmpCode, Integer icmpType, TrafficType trafficType,
+            Action action, int number) {
         sourcePortStart = portStart;
         sourcePortEnd = portEnd;
         this.protocol = protocol;
@@ -225,8 +225,8 @@ public class NetworkACLItemVO implements NetworkACLItem {
 
     public void setSourceCidrs(String sourceCidrs) {
         List<String> srcCidrs = new LinkedList<String>();
-        StringTokenizer st = new StringTokenizer(sourceCidrs,",;");
-        while(st.hasMoreTokens()) {
+        StringTokenizer st = new StringTokenizer(sourceCidrs, ",;");
+        while (st.hasMoreTokens()) {
             srcCidrs.add(st.nextToken());
         }
         this.sourceCidrs = srcCidrs;

@@ -41,6 +41,7 @@ public class S3PolicyDateCondition extends S3PolicyCondition {
 
     /**
      * Return a set holding all the condition keys kept in this object.
+     * 
      * @return Set<String>
      */
     public Set<ConditionKeys> getAllKeys() {
@@ -48,8 +49,9 @@ public class S3PolicyDateCondition extends S3PolicyCondition {
     }
 
     /**
-     * After calling getAllKeys(), pass in each key from that result to get
-     * the key's associated list of values.
+     * After calling getAllKeys(), pass in each key from that result to get the
+     * key's associated list of values.
+     * 
      * @param key
      * @return Calendar[]
      */
@@ -58,13 +60,16 @@ public class S3PolicyDateCondition extends S3PolicyCondition {
     }
 
     /**
-     * Convert the key's values into the type depending on the what the condition expects.
+     * Convert the key's values into the type depending on the what the
+     * condition expects.
+     * 
      * @throws ParseException
      */
     public void setKey(ConditionKeys key, String[] values) throws ParseException {
         Calendar[] dates = new Calendar[values.length];
 
-        // -> aws:EpochTime - Number of seconds since epoch is supported here and can also be used in a numeric condition
+        // -> aws:EpochTime - Number of seconds since epoch is supported here
+        // and can also be used in a numeric condition
         if (ConditionKeys.EpochTime == key) {
             for (int i = 0; i < values.length; i++) {
                 long epochTime = Long.parseLong(values[i]);
@@ -79,11 +84,11 @@ public class S3PolicyDateCondition extends S3PolicyCondition {
     }
 
     /**
-     * Evaluation logic is as follows:
-     * 1) An 'AND' operation is used over all defined keys
-     * 2) An 'OR'  operation is used over all key values
+     * Evaluation logic is as follows: 1) An 'AND' operation is used over all
+     * defined keys 2) An 'OR' operation is used over all key values
      *
-     * Each condition has one or more keys, and each keys have one or more values to test.
+     * Each condition has one or more keys, and each keys have one or more
+     * values to test.
      */
     public boolean isTrue(S3PolicyContext context, String SID) {
         // -> improperly defined condition evaluates to false
@@ -102,43 +107,45 @@ public class S3PolicyDateCondition extends S3PolicyCondition {
             Calendar[] valueList = getKeyValues(keyName);
             boolean keyResult = false;
 
-            // -> stop when we hit the first true key value (i.e., key values are 'OR'ed together)
+            // -> stop when we hit the first true key value (i.e., key values
+            // are 'OR'ed together)
             for (int i = 0; i < valueList.length && !keyResult; i++) {
                 int difference = tod.compareTo(valueList[i]);
 
                 switch (condition) {
-                    case DateEquals:
-                        if (0 == difference)
-                            keyResult = true;
-                        break;
-                    case DateNotEquals:
-                        if (0 != difference)
-                            keyResult = true;
-                        break;
-                    case DateLessThan:
-                        if (0 > difference)
-                            keyResult = true;
-                        break;
-                    case DateLessThanEquals:
-                        if (0 > difference || 0 == difference)
-                            keyResult = true;
-                        break;
-                    case DateGreaterThan:
-                        if (0 < difference)
-                            keyResult = true;
-                        break;
-                    case DateGreaterThanEquals:
-                        if (0 < difference || 0 == difference)
-                            keyResult = true;
-                        break;
-                    default:
-                        return false;
+                case DateEquals:
+                    if (0 == difference)
+                        keyResult = true;
+                    break;
+                case DateNotEquals:
+                    if (0 != difference)
+                        keyResult = true;
+                    break;
+                case DateLessThan:
+                    if (0 > difference)
+                        keyResult = true;
+                    break;
+                case DateLessThanEquals:
+                    if (0 > difference || 0 == difference)
+                        keyResult = true;
+                    break;
+                case DateGreaterThan:
+                    if (0 < difference)
+                        keyResult = true;
+                    break;
+                case DateGreaterThanEquals:
+                    if (0 < difference || 0 == difference)
+                        keyResult = true;
+                    break;
+                default:
+                    return false;
                 }
-                logger.info("S3PolicyDateCondition eval - SID: " + SID + ", " + condition + ", key: " + keyName + ", valuePassedIn: " +
-                    DatatypeConverter.printDateTime(tod) + ", valueInRule: " + DatatypeConverter.printDateTime(valueList[i]) + ", result: " + keyResult);
+                logger.info("S3PolicyDateCondition eval - SID: " + SID + ", " + condition + ", key: " + keyName + ", valuePassedIn: " + DatatypeConverter.printDateTime(tod)
+                        + ", valueInRule: " + DatatypeConverter.printDateTime(valueList[i]) + ", result: " + keyResult);
             }
 
-            // -> if all key values are, false then that key is false and then the entire condition is then false
+            // -> if all key values are, false then that key is false and then
+            // the entire condition is then false
             if (!keyResult)
                 return false;
         }

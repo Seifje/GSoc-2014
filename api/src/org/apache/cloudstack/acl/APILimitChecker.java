@@ -22,7 +22,8 @@ import com.cloud.user.Account;
 import com.cloud.utils.component.Adapter;
 
 /**
- * APILimitChecker checks if we should block an API request based on pre-set account based api limit.
+ * APILimitChecker checks if we should block an API request based on pre-set
+ * account based api limit.
  */
 public interface APILimitChecker extends Adapter {
     // Interface for checking if the account is over its api limit

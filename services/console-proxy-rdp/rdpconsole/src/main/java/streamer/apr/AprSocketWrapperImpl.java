@@ -171,12 +171,15 @@ public class AprSocketWrapperImpl extends PipelineImpl implements SocketWrapper 
             } catch (Exception e) {
                 throw new RuntimeException("[" + this + "] ERROR: Cannot make SSL handshake with server: ", e);
             }
-            if (ret != 0 && ret != 20014) // 20014: bad certificate signature FIXME: show prompt for self signed certificate
+            if (ret != 0 && ret != 20014) // 20014: bad certificate signature
+                // FIXME: show prompt for self signed
+                // certificate
                 throw new RuntimeException("[" + this + "] ERROR: Cannot make SSL handshake with server(" + ret + "): " + SSL.getLastError());
 
             try {
                 byte[] key = SSLSocket.getInfoB(socket, SSL.SSL_INFO_CLIENT_CERT);
-                //*DEBUG*/System.out.println("DEBUG: Server cert:\n"+new ByteBuffer(key).dump());
+                // *DEBUG*/System.out.println("DEBUG: Server cert:\n"+new
+                // ByteBuffer(key).dump());
                 sslState.serverCertificateSubjectPublicKeyInfo = new X509CertImpl(key).getPublicKey().getEncoded();
             } catch (Exception e) {
                 throw new RuntimeException("[" + this + "] ERROR: Cannot get server public key: ", e);
@@ -209,7 +212,8 @@ public class AprSocketWrapperImpl extends PipelineImpl implements SocketWrapper 
         if (shutdowned)
             return;
 
-        // Causes segfault in AprSocketSource.poll() method, so this function must be called from it
+        // Causes segfault in AprSocketSource.poll() method, so this function
+        // must be called from it
         try {
             Socket.close(socket);
             // or

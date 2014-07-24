@@ -81,16 +81,18 @@ public class ServiceProvider extends ManagerBase {
     private final Timer timer = new Timer();
     private MHostVO mhost;
     private Properties properties;
-    private boolean useSubDomain = false;         // use DNS sub domain for bucket name
+    private boolean useSubDomain = false; // use DNS sub domain for bucket name
     private String serviceEndpoint = null;
-    private String multipartDir = null;          // illegal bucket name used as a folder for storing multiparts
+    private String multipartDir = null; // illegal bucket name used as a folder
+                                        // for storing multiparts
     private String masterDomain = ".s3.amazonaws.com";
     @Inject
     private S3Engine engine;
     @Inject
     private EC2Engine EC2_engine;
 
-    // -> cache Bucket Policies here so we don't have to load from db on every access
+    // -> cache Bucket Policies here so we don't have to load from db on every
+    // access
     private final Map<String, S3BucketPolicy> policyMap = new HashMap<String, S3BucketPolicy>();
 
     protected ServiceProvider() throws IOException {
@@ -117,7 +119,8 @@ public class ServiceProvider extends ManagerBase {
     }
 
     public long getManagementHostId() {
-        // we want to limit mhost within its own session, id of the value will be returned
+        // we want to limit mhost within its own session, id of the value will
+        // be returned
         long mhostId = 0;
         if (mhost != null)
             mhostId = mhost.getId() != null ? mhost.getId().longValue() : 0L;
@@ -125,13 +128,14 @@ public class ServiceProvider extends ManagerBase {
     }
 
     /**
-     * We return a 2-tuple to distinguish between two cases:
-     * (1) there is no entry in the map for bucketName, and (2) there is a null entry
-     * in the map for bucketName.   In case 2, the database was inspected for the
-     * bucket policy but it had none so we cache it here to reduce database lookups.
+     * We return a 2-tuple to distinguish between two cases: (1) there is no
+     * entry in the map for bucketName, and (2) there is a null entry in the map
+     * for bucketName. In case 2, the database was inspected for the bucket
+     * policy but it had none so we cache it here to reduce database lookups.
+     * 
      * @param bucketName
-     * @return Integer in the tuple means: -1 if no policy defined for the bucket, 0 if one defined
-     *         even if it is set at null.
+     * @return Integer in the tuple means: -1 if no policy defined for the
+     *         bucket, 0 if one defined even if it is set at null.
      */
     public OrderedPair<S3BucketPolicy, Integer> getBucketPolicy(String bucketName) {
 
@@ -139,12 +143,21 @@ public class ServiceProvider extends ManagerBase {
             S3BucketPolicy policy = policyMap.get(bucketName);
             return new OrderedPair<S3BucketPolicy, Integer>(policy, 0);
         } else
-            return new OrderedPair<S3BucketPolicy, Integer>(null, -1);           // For case (1) where the map has no entry for bucketName
+            return new OrderedPair<S3BucketPolicy, Integer>(null, -1); // For
+                                                                       // case
+                                                                       // (1)
+                                                                       // where
+                                                                       // the
+                                                                       // map
+                                                                       // has no
+                                                                       // entry
+                                                                       // for
+                                                                       // bucketName
     }
 
     /**
-     * The policy parameter can be set to null, which means that there is no policy
-     * for the bucket so a database lookup is not necessary.
+     * The policy parameter can be set to null, which means that there is no
+     * policy for the bucket so a database lookup is not necessary.
      *
      * @param bucketName
      * @param policy
@@ -241,8 +254,9 @@ public class ServiceProvider extends ManagerBase {
 
         setupHost(hostKey, host);
 
-        // we will commit and start a new transaction to allow host info be flushed to DB
-        //PersistContext.flush();
+        // we will commit and start a new transaction to allow host info be
+        // flushed to DB
+        // PersistContext.flush();
 
         String localStorageRoot = properties.getProperty("storage.root");
         if (localStorageRoot != null) {

@@ -21,19 +21,10 @@ import com.cloud.storage.Storage.ImageFormat;
 public class Hypervisor {
 
     public static enum HypervisorType {
-        None, //for storage hosts
-        XenServer,
-        KVM,
-        VMware,
-        Hyperv,
-        VirtualBox,
-        Parralels,
-        BareMetal,
-        Simulator,
-        Ovm,
-        LXC,
+        None, // for storage hosts
+        XenServer, KVM, VMware, Hyperv, VirtualBox, Parralels, BareMetal, Simulator, Ovm, LXC,
 
-        Any; /*If you don't care about the hypervisor type*/
+        Any; /* If you don't care about the hypervisor type */
 
         public static HypervisorType getType(String hypervisor) {
             if (hypervisor == null) {
@@ -67,7 +58,8 @@ public class Hypervisor {
         }
 
         /**
-         * This method really needs to be part of the properties of the hypervisor type itself.
+         * This method really needs to be part of the properties of the
+         * hypervisor type itself.
          *
          * @param hyperType
          * @return

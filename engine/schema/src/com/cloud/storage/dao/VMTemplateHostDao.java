@@ -27,7 +27,7 @@ import com.cloud.utils.db.GenericDao;
 import com.cloud.utils.fsm.StateDao;
 
 public interface VMTemplateHostDao extends GenericDao<VMTemplateHostVO, Long>,
-        StateDao<ObjectInDataStoreStateMachine.State, ObjectInDataStoreStateMachine.Event, DataObjectInStore> {
+StateDao<ObjectInDataStoreStateMachine.State, ObjectInDataStoreStateMachine.Event, DataObjectInStore> {
     List<VMTemplateHostVO> listByHostId(long id);
 
     List<VMTemplateHostVO> listByTemplateId(long templateId);

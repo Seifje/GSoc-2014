@@ -166,34 +166,34 @@ public class MessageBusBase implements MessageBus {
             while (_pendingActions.size() > 0) {
                 record = _pendingActions.remove(0);
                 switch (record.getType()) {
-                    case Subscribe: {
-                        SubscriptionNode current = locate(record.getSubject(), null, true);
-                        assert (current != null);
-                        current.addSubscriber(record.getSubscriber());
+                case Subscribe: {
+                    SubscriptionNode current = locate(record.getSubject(), null, true);
+                    assert (current != null);
+                    current.addSubscriber(record.getSubscriber());
+                }
+                    break;
+
+                case Unsubscribe:
+                    if (record.getSubject() != null) {
+                        SubscriptionNode current = locate(record.getSubject(), null, false);
+                        if (current != null)
+                            current.removeSubscriber(record.getSubscriber(), false);
+                    } else {
+                        _subscriberRoot.removeSubscriber(record.getSubscriber(), true);
                     }
-                        break;
+                    break;
 
-                    case Unsubscribe:
-                        if (record.getSubject() != null) {
-                            SubscriptionNode current = locate(record.getSubject(), null, false);
-                            if (current != null)
-                                current.removeSubscriber(record.getSubscriber(), false);
-                        } else {
-                            _subscriberRoot.removeSubscriber(record.getSubscriber(), true);
-                        }
-                        break;
+                case ClearAll:
+                    _subscriberRoot.clearAll();
+                    break;
 
-                    case ClearAll:
-                        _subscriberRoot.clearAll();
-                        break;
+                case Prune:
+                    doPrune();
+                    break;
 
-                    case Prune:
-                        doPrune();
-                        break;
-
-                    default:
-                        assert (false);
-                        break;
+                default:
+                    assert (false);
+                    break;
 
                 }
             }

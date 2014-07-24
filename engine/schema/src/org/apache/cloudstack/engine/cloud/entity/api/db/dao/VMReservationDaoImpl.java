@@ -94,8 +94,8 @@ public class VMReservationDaoImpl extends GenericDaoBase<VMReservationVO, Long> 
     private void saveVolumeReservation(VMReservationVO reservation) {
         if (reservation.getVolumeReservation() != null) {
             for (Long volumeId : reservation.getVolumeReservation().keySet()) {
-                VolumeReservationVO volumeReservation =
-                    new VolumeReservationVO(reservation.getVmId(), volumeId, reservation.getVolumeReservation().get(volumeId), reservation.getId());
+                VolumeReservationVO volumeReservation = new VolumeReservationVO(reservation.getVmId(), volumeId, reservation.getVolumeReservation().get(volumeId),
+                        reservation.getId());
                 _volumeReservationDao.persist(volumeReservation);
             }
         }

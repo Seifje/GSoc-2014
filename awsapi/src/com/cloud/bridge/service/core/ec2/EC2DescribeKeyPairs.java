@@ -36,7 +36,8 @@ public class EC2DescribeKeyPairs {
     }
 
     /**
-     * @param keyName the keyName to add
+     * @param keyName
+     *            the keyName to add
      */
     public void addKeyName(String keyName) {
         keyNames.add(keyName);
@@ -50,7 +51,8 @@ public class EC2DescribeKeyPairs {
     }
 
     /**
-     * @param keyFilterSet the keyFilterSet to set
+     * @param keyFilterSet
+     *            the keyFilterSet to set
      */
     public void setKeyFilterSet(EC2KeyPairFilterSet keyFilterSet) {
         this.keyFilterSet = keyFilterSet;

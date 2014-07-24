@@ -189,8 +189,7 @@ public class LocalSecondaryStorageResource extends ServerResourceBase implements
     @Override
     public StartupCommand[] initialize() {
 
-        final StartupStorageCommand cmd =
-            new StartupStorageCommand(_parent, StoragePoolType.Filesystem, 1024l * 1024l * 1024l * 1024l, _dlMgr.gatherTemplateInfo(_parent));
+        final StartupStorageCommand cmd = new StartupStorageCommand(_parent, StoragePoolType.Filesystem, 1024l * 1024l * 1024l * 1024l, _dlMgr.gatherTemplateInfo(_parent));
         cmd.setResourceType(Storage.StorageResourceType.LOCAL_SECONDARY_STORAGE);
         cmd.setIqn("local://");
         fillNetworkInformation(cmd);

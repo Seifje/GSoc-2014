@@ -36,10 +36,9 @@ import com.cloud.uservm.UserVm;
 public class DestroyVMCmdByAdmin extends DestroyVMCmd {
     public static final Logger s_logger = Logger.getLogger(DestroyVMCmdByAdmin.class.getName());
 
-
     @Override
-    public void execute() throws ResourceUnavailableException, ConcurrentOperationException{
-        CallContext.current().setEventDetails("Vm Id: "+getId());
+    public void execute() throws ResourceUnavailableException, ConcurrentOperationException {
+        CallContext.current().setEventDetails("Vm Id: " + getId());
         UserVm result = _userVmService.destroyVm(this);
 
         UserVmResponse response = new UserVmResponse();

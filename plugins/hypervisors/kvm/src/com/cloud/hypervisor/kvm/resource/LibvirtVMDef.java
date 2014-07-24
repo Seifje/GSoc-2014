@@ -540,7 +540,7 @@ public class LibvirtVMDef {
         }
 
         public void defNetworkBasedDisk(String diskName, String sourceHost, int sourcePort, String authUserName, String authSecretUUID, int devId, diskBus bus,
-            diskProtocol protocol, diskFmtType diskFmtType) {
+                diskProtocol protocol, diskFmtType diskFmtType) {
             _diskType = diskType.NETWORK;
             _deviceType = deviceType.DISK;
             _diskFmtType = diskFmtType;
@@ -556,7 +556,7 @@ public class LibvirtVMDef {
         }
 
         public void defNetworkBasedDisk(String diskName, String sourceHost, int sourcePort, String authUserName, String authSecretUUID, String diskLabel, diskBus bus,
-            diskProtocol protocol, diskFmtType diskFmtType) {
+                diskProtocol protocol, diskFmtType diskFmtType) {
             _diskType = diskType.NETWORK;
             _deviceType = deviceType.DISK;
             _diskFmtType = diskFmtType;
@@ -653,8 +653,7 @@ public class LibvirtVMDef {
             }
             diskBuilder.append(" type='" + _diskType + "'");
             diskBuilder.append(">\n");
-            diskBuilder.append("<driver name='qemu'" + " type='" + _diskFmtType
-                + "' cache='" + _diskCacheMode + "' " + "/>\n");
+            diskBuilder.append("<driver name='qemu'" + " type='" + _diskFmtType + "' cache='" + _diskCacheMode + "' " + "/>\n");
             if (_diskType == diskType.FILE) {
                 diskBuilder.append("<source ");
                 if (_sourcePath != null) {
@@ -694,11 +693,18 @@ public class LibvirtVMDef {
             }
             diskBuilder.append("/>\n");
 
-            if ((_deviceType != deviceType.CDROM) &&
-                (s_libvirtVersion >= 9008) &&
-                (s_qemuVersion >= 1001000) &&
-                (((_bytesReadRate != null) && (_bytesReadRate > 0)) || ((_bytesWriteRate != null) && (_bytesWriteRate > 0)) ||
-                    ((_iopsReadRate != null) && (_iopsReadRate > 0)) || ((_iopsWriteRate != null) && (_iopsWriteRate > 0)))) { // not CDROM, from libvirt 0.9.8 and QEMU 1.1.0
+            if ((_deviceType != deviceType.CDROM)
+                    && (s_libvirtVersion >= 9008)
+                    && (s_qemuVersion >= 1001000)
+                    && (((_bytesReadRate != null) && (_bytesReadRate > 0)) || ((_bytesWriteRate != null) && (_bytesWriteRate > 0))
+                            || ((_iopsReadRate != null) && (_iopsReadRate > 0)) || ((_iopsWriteRate != null) && (_iopsWriteRate > 0)))) { // not
+                // CDROM,
+                // from
+                // libvirt
+                // 0.9.8
+                // and
+                // QEMU
+                // 1.1.0
                 diskBuilder.append("<iotune>\n");
                 if ((_bytesReadRate != null) && (_bytesReadRate > 0))
                     diskBuilder.append("<read_bytes_sec>" + _bytesReadRate + "</read_bytes_sec>\n");
@@ -750,9 +756,9 @@ public class LibvirtVMDef {
         }
 
         private guestNetType _netType; /*
-                                         * bridge, ethernet, network, user,
-                                         * internal
-                                         */
+                                       * bridge, ethernet, network, user,
+                                       * internal
+                                       */
         private hostNicType _hostNetType; /* Only used by agent java code */
         private String _netSourceMode;
         private String _sourceName;
@@ -905,7 +911,10 @@ public class LibvirtVMDef {
             if (_model != null) {
                 netBuilder.append("<model type='" + _model + "'/>\n");
             }
-            if ((s_libvirtVersion >= 9004) && (_networkRateKBps > 0)) { // supported from libvirt 0.9.4
+            if ((s_libvirtVersion >= 9004) && (_networkRateKBps > 0)) { // supported
+                // from
+                // libvirt
+                // 0.9.4
                 netBuilder.append("<bandwidth>\n");
                 netBuilder.append("<inbound average='" + _networkRateKBps + "' peak='" + _networkRateKBps + "'/>\n");
                 netBuilder.append("<outbound average='" + _networkRateKBps + "' peak='" + _networkRateKBps + "'/>\n");
@@ -1012,7 +1021,7 @@ public class LibvirtVMDef {
             StringBuilder modeBuilder = new StringBuilder();
 
             // start cpu def, adding mode, model
-            if ("custom".equalsIgnoreCase(_mode) && _model != null){
+            if ("custom".equalsIgnoreCase(_mode) && _model != null) {
                 modeBuilder.append("<cpu mode='custom' match='exact'><model fallback='allow'>" + _model + "</model>");
             } else if ("host-model".equals(_mode)) {
                 modeBuilder.append("<cpu mode='host-model'><model fallback='allow'></model>");

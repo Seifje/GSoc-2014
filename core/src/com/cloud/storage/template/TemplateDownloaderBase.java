@@ -100,18 +100,18 @@ public abstract class TemplateDownloaderBase extends ManagedContextRunnable impl
     @Override
     public boolean stopDownload() {
         switch (getStatus()) {
-            case IN_PROGRESS:
-            case UNKNOWN:
-            case NOT_STARTED:
-            case RECOVERABLE_ERROR:
-            case UNRECOVERABLE_ERROR:
-            case ABORTED:
-                _status = TemplateDownloader.Status.ABORTED;
-                break;
-            case DOWNLOAD_FINISHED:
-                break;
-            default:
-                break;
+        case IN_PROGRESS:
+        case UNKNOWN:
+        case NOT_STARTED:
+        case RECOVERABLE_ERROR:
+        case UNRECOVERABLE_ERROR:
+        case ABORTED:
+            _status = TemplateDownloader.Status.ABORTED;
+            break;
+        case DOWNLOAD_FINISHED:
+            break;
+        default:
+            break;
         }
         File f = new File(_toFile);
         if (f.exists()) {

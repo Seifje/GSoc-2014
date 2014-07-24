@@ -130,47 +130,46 @@ public class ManagementServerMock {
         }
         field.setAccessible(true);
         switch (fieldType) {
-            case STRING:
+        case STRING:
+            try {
+                field.set(cmd, value);
+            } catch (Exception ex) {
+                s_logger.warn(ex);
+                return;
+            }
+            break;
+        case UUID:
+            if (value.equals("-1")) {
                 try {
-                    field.set(cmd, value);
+                    field.setLong(cmd, -1L);
                 } catch (Exception ex) {
                     s_logger.warn(ex);
                     return;
                 }
-                break;
-            case UUID:
-                if (value.equals("-1")) {
-                    try {
-                        field.setLong(cmd, -1L);
-                    } catch (Exception ex) {
-                        s_logger.warn(ex);
-                        return;
-                    }
-                }
-                break;
-            case LONG:
-                try {
-                    field.set(cmd, value);
-                } catch (Exception ex) {
-                    s_logger.warn(ex);
-                    return;
-                }
-                break;
-            default:
-                try {
-                    field.set(cmd, value);
-                } catch (Exception ex) {
-                    s_logger.warn(ex);
-                    return;
-                }
-                break;
+            }
+            break;
+        case LONG:
+            try {
+                field.set(cmd, value);
+            } catch (Exception ex) {
+                s_logger.warn(ex);
+                return;
+            }
+            break;
+        default:
+            try {
+                field.set(cmd, value);
+            } catch (Exception ex) {
+                s_logger.warn(ex);
+                return;
+            }
+            break;
         }
     }
 
     private void createHost() {
-        HostVO host =
-            new HostVO(_hostId, "aa01", Type.BaremetalDhcp, "192.168.1.1", "255.255.255.0", null, null, null, null, null, null, null, null, null, null,
-                UUID.randomUUID().toString(), Status.Up, "1.0", null, null, _zone.getId(), null, 0, 0, "aa", 0, StoragePoolType.NetworkFilesystem);
+        HostVO host = new HostVO(_hostId, "aa01", Type.BaremetalDhcp, "192.168.1.1", "255.255.255.0", null, null, null, null, null, null, null, null, null, null, UUID.randomUUID()
+                .toString(), Status.Up, "1.0", null, null, _zone.getId(), null, 0, 0, "aa", 0, StoragePoolType.NetworkFilesystem);
         host.setResourceState(ResourceState.Enabled);
         _hostDao.persist(host);
         _hostId = host.getId();
@@ -237,8 +236,7 @@ public class ManagementServerMock {
             e.printStackTrace();
         }
         long id = _userVmDao.getNextInSequence(Long.class, "id");
-        UserVmVO vm =
-            new UserVmVO(id, name, name, tmpl.getId(), HypervisorType.XenServer, tmpl.getGuestOSId(), false, false, _zone.getDomainId(), Account.ACCOUNT_ID_SYSTEM,
+        UserVmVO vm = new UserVmVO(id, name, name, tmpl.getId(), HypervisorType.XenServer, tmpl.getGuestOSId(), false, false, _zone.getDomainId(), Account.ACCOUNT_ID_SYSTEM,
                 small.getId(), null, name, null);
         vm.setState(com.cloud.vm.VirtualMachine.State.Running);
         vm.setHostId(_hostId);
@@ -250,7 +248,7 @@ public class ManagementServerMock {
             _vmMgr.addVmToNetwork(vm, network, profile);
         } catch (Exception ex) {
             // TODO Auto-generated catch block
-            //ex.printStackTrace();
+            // ex.printStackTrace();
         }
         return vm;
     }
@@ -332,9 +330,7 @@ public class ManagementServerMock {
         } catch (InvalidParameterValueException e) {
             List<String> isolationMethods = new ArrayList<String>();
             isolationMethods.add("L3VPN");
-            _znet =
-                _networkService.createPhysicalNetwork(_zone.getId(), null, null, isolationMethods, BroadcastDomainRange.ZONE.toString(), _zone.getDomainId(), null,
-                    "znet");
+            _znet = _networkService.createPhysicalNetwork(_zone.getId(), null, null, isolationMethods, BroadcastDomainRange.ZONE.toString(), _zone.getDomainId(), null, "znet");
             List<PhysicalNetworkVO> nets = _physicalNetworkDao.listByZoneAndTrafficType(_zone.getId(), TrafficType.Public);
             if (nets == null || nets.isEmpty()) {
                 _networkService.addTrafficTypeToPhysicalNetwork(_znet.getId(), TrafficType.Public.toString(), "vlan", null, null, null, null, null, null);
@@ -356,8 +352,8 @@ public class ManagementServerMock {
             _networkService.addTrafficTypeToPhysicalNetwork(_znet.getId(), TrafficType.Guest.toString(), "vlan", null, null, null, null, null, null);
         }
 
-        Pair<List<? extends PhysicalNetworkServiceProvider>, Integer> providers =
-            _networkService.listNetworkServiceProviders(_znet.getId(), Provider.JuniperContrailRouter.getName(), null, null, null);
+        Pair<List<? extends PhysicalNetworkServiceProvider>, Integer> providers = _networkService.listNetworkServiceProviders(_znet.getId(),
+                Provider.JuniperContrailRouter.getName(), null, null, null);
         if (providers.second() == 0) {
             s_logger.debug("Add " + Provider.JuniperContrailRouter.getName() + " to network " + _znet.getName());
             PhysicalNetworkServiceProvider provider = _networkService.addProviderToPhysicalNetwork(_znet.getId(), Provider.JuniperContrailRouter.getName(), null, null);
@@ -384,8 +380,7 @@ public class ManagementServerMock {
         _zone = _zoneDao.findByName("default");
         if (_zone == null) {
             ConfigurationManager mgr = (ConfigurationManager)_configService;
-            _zone =
-                mgr.createZone(User.UID_SYSTEM, "default", "8.8.8.8", null, "8.8.4.4", null, null /* cidr */, "ROOT", Domain.ROOT_DOMAIN, NetworkType.Advanced, null,
+            _zone = mgr.createZone(User.UID_SYSTEM, "default", "8.8.8.8", null, "8.8.4.4", null, null /* cidr */, "ROOT", Domain.ROOT_DOMAIN, NetworkType.Advanced, null,
                     null /* networkDomain */, false, false, null, null);
         }
     }

@@ -36,7 +36,8 @@ public class EC2DeleteKeyPair {
     }
 
     /**
-     * @param keyName the keyName to set
+     * @param keyName
+     *            the keyName to set
      */
     public void setKeyName(String keyName) {
         this.keyName = keyName;

@@ -25,8 +25,8 @@
 package com.amazon.s3;
 
 /**
-*  CopyObject bean class
-*/
+ * CopyObject bean class
+ */
 
 public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
@@ -40,23 +40,26 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for SourceBucket
-    */
+     * field for SourceBucket
+     */
 
     protected java.lang.String localSourceBucket;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getSourceBucket() {
         return localSourceBucket;
     }
 
     /**
-       * Auto generated setter method
-       * @param param SourceBucket
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            SourceBucket
+     */
     public void setSourceBucket(java.lang.String param) {
 
         this.localSourceBucket = param;
@@ -64,23 +67,26 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for SourceKey
-    */
+     * field for SourceKey
+     */
 
     protected java.lang.String localSourceKey;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getSourceKey() {
         return localSourceKey;
     }
 
     /**
-       * Auto generated setter method
-       * @param param SourceKey
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            SourceKey
+     */
     public void setSourceKey(java.lang.String param) {
 
         this.localSourceKey = param;
@@ -88,23 +94,26 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for DestinationBucket
-    */
+     * field for DestinationBucket
+     */
 
     protected java.lang.String localDestinationBucket;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getDestinationBucket() {
         return localDestinationBucket;
     }
 
     /**
-       * Auto generated setter method
-       * @param param DestinationBucket
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            DestinationBucket
+     */
     public void setDestinationBucket(java.lang.String param) {
 
         this.localDestinationBucket = param;
@@ -112,23 +121,26 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for DestinationKey
-    */
+     * field for DestinationKey
+     */
 
     protected java.lang.String localDestinationKey;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getDestinationKey() {
         return localDestinationKey;
     }
 
     /**
-       * Auto generated setter method
-       * @param param DestinationKey
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            DestinationKey
+     */
     public void setDestinationKey(java.lang.String param) {
 
         this.localDestinationKey = param;
@@ -136,33 +148,37 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for MetadataDirective
-    */
+     * field for MetadataDirective
+     */
 
     protected com.amazon.s3.MetadataDirective localMetadataDirective;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localMetadataDirectiveTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.s3.MetadataDirective
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.s3.MetadataDirective
+     */
     public com.amazon.s3.MetadataDirective getMetadataDirective() {
         return localMetadataDirective;
     }
 
     /**
-       * Auto generated setter method
-       * @param param MetadataDirective
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            MetadataDirective
+     */
     public void setMetadataDirective(com.amazon.s3.MetadataDirective param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localMetadataDirectiveTracker = true;
         } else {
             localMetadataDirectiveTracker = false;
@@ -174,22 +190,23 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for Metadata
-    * This was an Array!
-    */
+     * field for Metadata This was an Array!
+     */
 
     protected com.amazon.s3.MetadataEntry[] localMetadata;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localMetadataTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.s3.MetadataEntry[]
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.s3.MetadataEntry[]
+     */
     public com.amazon.s3.MetadataEntry[] getMetadata() {
         return localMetadata;
     }
@@ -207,14 +224,16 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
     /**
      * Auto generated setter method
-     * @param param Metadata
+     * 
+     * @param param
+     *            Metadata
      */
     public void setMetadata(com.amazon.s3.MetadataEntry[] param) {
 
         validateMetadata(param);
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localMetadataTracker = true;
         } else {
             localMetadataTracker = false;
@@ -225,15 +244,17 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * Auto generated add method for the array for convenience
-    * @param param com.amazon.s3.MetadataEntry
-    */
+     * Auto generated add method for the array for convenience
+     * 
+     * @param param
+     *            com.amazon.s3.MetadataEntry
+     */
     public void addMetadata(com.amazon.s3.MetadataEntry param) {
         if (localMetadata == null) {
             localMetadata = new com.amazon.s3.MetadataEntry[] {};
         }
 
-        //update the setting tracker
+        // update the setting tracker
         localMetadataTracker = true;
 
         java.util.List list = org.apache.axis2.databinding.utils.ConverterUtil.toList(localMetadata);
@@ -243,33 +264,37 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for AccessControlList
-    */
+     * field for AccessControlList
+     */
 
     protected com.amazon.s3.AccessControlList localAccessControlList;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localAccessControlListTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.s3.AccessControlList
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.s3.AccessControlList
+     */
     public com.amazon.s3.AccessControlList getAccessControlList() {
         return localAccessControlList;
     }
 
     /**
-       * Auto generated setter method
-       * @param param AccessControlList
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            AccessControlList
+     */
     public void setAccessControlList(com.amazon.s3.AccessControlList param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localAccessControlListTracker = true;
         } else {
             localAccessControlListTracker = false;
@@ -281,33 +306,37 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for CopySourceIfModifiedSince
-    */
+     * field for CopySourceIfModifiedSince
+     */
 
     protected java.util.Calendar localCopySourceIfModifiedSince;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localCopySourceIfModifiedSinceTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.util.Calendar
-    */
+     * Auto generated getter method
+     * 
+     * @return java.util.Calendar
+     */
     public java.util.Calendar getCopySourceIfModifiedSince() {
         return localCopySourceIfModifiedSince;
     }
 
     /**
-       * Auto generated setter method
-       * @param param CopySourceIfModifiedSince
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            CopySourceIfModifiedSince
+     */
     public void setCopySourceIfModifiedSince(java.util.Calendar param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localCopySourceIfModifiedSinceTracker = true;
         } else {
             localCopySourceIfModifiedSinceTracker = false;
@@ -319,33 +348,37 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for CopySourceIfUnmodifiedSince
-    */
+     * field for CopySourceIfUnmodifiedSince
+     */
 
     protected java.util.Calendar localCopySourceIfUnmodifiedSince;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localCopySourceIfUnmodifiedSinceTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.util.Calendar
-    */
+     * Auto generated getter method
+     * 
+     * @return java.util.Calendar
+     */
     public java.util.Calendar getCopySourceIfUnmodifiedSince() {
         return localCopySourceIfUnmodifiedSince;
     }
 
     /**
-       * Auto generated setter method
-       * @param param CopySourceIfUnmodifiedSince
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            CopySourceIfUnmodifiedSince
+     */
     public void setCopySourceIfUnmodifiedSince(java.util.Calendar param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localCopySourceIfUnmodifiedSinceTracker = true;
         } else {
             localCopySourceIfUnmodifiedSinceTracker = false;
@@ -357,22 +390,23 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for CopySourceIfMatch
-    * This was an Array!
-    */
+     * field for CopySourceIfMatch This was an Array!
+     */
 
     protected java.lang.String[] localCopySourceIfMatch;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localCopySourceIfMatchTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String[]
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String[]
+     */
     public java.lang.String[] getCopySourceIfMatch() {
         return localCopySourceIfMatch;
     }
@@ -390,14 +424,16 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
     /**
      * Auto generated setter method
-     * @param param CopySourceIfMatch
+     * 
+     * @param param
+     *            CopySourceIfMatch
      */
     public void setCopySourceIfMatch(java.lang.String[] param) {
 
         validateCopySourceIfMatch(param);
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localCopySourceIfMatchTracker = true;
         } else {
             localCopySourceIfMatchTracker = false;
@@ -408,15 +444,17 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * Auto generated add method for the array for convenience
-    * @param param java.lang.String
-    */
+     * Auto generated add method for the array for convenience
+     * 
+     * @param param
+     *            java.lang.String
+     */
     public void addCopySourceIfMatch(java.lang.String param) {
         if (localCopySourceIfMatch == null) {
             localCopySourceIfMatch = new java.lang.String[] {};
         }
 
-        //update the setting tracker
+        // update the setting tracker
         localCopySourceIfMatchTracker = true;
 
         java.util.List list = org.apache.axis2.databinding.utils.ConverterUtil.toList(localCopySourceIfMatch);
@@ -426,22 +464,23 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for CopySourceIfNoneMatch
-    * This was an Array!
-    */
+     * field for CopySourceIfNoneMatch This was an Array!
+     */
 
     protected java.lang.String[] localCopySourceIfNoneMatch;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localCopySourceIfNoneMatchTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String[]
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String[]
+     */
     public java.lang.String[] getCopySourceIfNoneMatch() {
         return localCopySourceIfNoneMatch;
     }
@@ -459,14 +498,16 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
     /**
      * Auto generated setter method
-     * @param param CopySourceIfNoneMatch
+     * 
+     * @param param
+     *            CopySourceIfNoneMatch
      */
     public void setCopySourceIfNoneMatch(java.lang.String[] param) {
 
         validateCopySourceIfNoneMatch(param);
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localCopySourceIfNoneMatchTracker = true;
         } else {
             localCopySourceIfNoneMatchTracker = false;
@@ -477,15 +518,17 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * Auto generated add method for the array for convenience
-    * @param param java.lang.String
-    */
+     * Auto generated add method for the array for convenience
+     * 
+     * @param param
+     *            java.lang.String
+     */
     public void addCopySourceIfNoneMatch(java.lang.String param) {
         if (localCopySourceIfNoneMatch == null) {
             localCopySourceIfNoneMatch = new java.lang.String[] {};
         }
 
-        //update the setting tracker
+        // update the setting tracker
         localCopySourceIfNoneMatchTracker = true;
 
         java.util.List list = org.apache.axis2.databinding.utils.ConverterUtil.toList(localCopySourceIfNoneMatch);
@@ -495,33 +538,37 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for StorageClass
-    */
+     * field for StorageClass
+     */
 
     protected com.amazon.s3.StorageClass localStorageClass;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localStorageClassTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.s3.StorageClass
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.s3.StorageClass
+     */
     public com.amazon.s3.StorageClass getStorageClass() {
         return localStorageClass;
     }
 
     /**
-       * Auto generated setter method
-       * @param param StorageClass
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            StorageClass
+     */
     public void setStorageClass(com.amazon.s3.StorageClass param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localStorageClassTracker = true;
         } else {
             localStorageClassTracker = false;
@@ -533,33 +580,37 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for AWSAccessKeyId
-    */
+     * field for AWSAccessKeyId
+     */
 
     protected java.lang.String localAWSAccessKeyId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localAWSAccessKeyIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getAWSAccessKeyId() {
         return localAWSAccessKeyId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param AWSAccessKeyId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            AWSAccessKeyId
+     */
     public void setAWSAccessKeyId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localAWSAccessKeyIdTracker = true;
         } else {
             localAWSAccessKeyIdTracker = false;
@@ -571,33 +622,37 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for Timestamp
-    */
+     * field for Timestamp
+     */
 
     protected java.util.Calendar localTimestamp;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localTimestampTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.util.Calendar
-    */
+     * Auto generated getter method
+     * 
+     * @return java.util.Calendar
+     */
     public java.util.Calendar getTimestamp() {
         return localTimestamp;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Timestamp
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Timestamp
+     */
     public void setTimestamp(java.util.Calendar param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localTimestampTracker = true;
         } else {
             localTimestampTracker = false;
@@ -609,33 +664,37 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for Signature
-    */
+     * field for Signature
+     */
 
     protected java.lang.String localSignature;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localSignatureTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getSignature() {
         return localSignature;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Signature
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Signature
+     */
     public void setSignature(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localSignatureTracker = true;
         } else {
             localSignatureTracker = false;
@@ -647,33 +706,37 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * field for Credential
-    */
+     * field for Credential
+     */
 
     protected java.lang.String localCredential;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localCredentialTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getCredential() {
         return localCredential;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Credential
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Credential
+     */
     public void setCredential(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localCredentialTracker = true;
         } else {
             localCredentialTracker = false;
@@ -685,9 +748,10 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -700,13 +764,13 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, MY_QNAME) {
 
@@ -719,14 +783,13 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
         java.lang.String prefix = null;
         java.lang.String namespace = null;
@@ -902,7 +965,8 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                         localMetadata[i].serialize(new javax.xml.namespace.QName("http://s3.amazonaws.com/doc/2006-03-01/", "Metadata"), factory, xmlWriter);
                     } else {
 
-                        // we don't have to do any thing since minOccures is zero
+                        // we don't have to do any thing since minOccures is
+                        // zero
 
                     }
 
@@ -1216,8 +1280,8 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -1229,10 +1293,10 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -1242,10 +1306,10 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -1268,7 +1332,7 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -1296,7 +1360,8 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -1330,8 +1395,8 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -1350,9 +1415,9 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
         java.util.ArrayList elementList = new java.util.ArrayList();
@@ -1536,17 +1601,20 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static CopyObject parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             CopyObject object = new CopyObject();
 
@@ -1571,7 +1639,7 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                         java.lang.String type = fullTypeName.substring(fullTypeName.indexOf(":") + 1);
 
                         if (!"CopyObject".equals(type)) {
-                            //find namespace for the prefix
+                            // find namespace for the prefix
                             java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
                             return (CopyObject)com.amazon.s3.ExtensionMapper.getTypeObject(nsUri, type, reader);
                         }
@@ -1580,7 +1648,8 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                 }
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -1603,10 +1672,11 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1621,10 +1691,11 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1639,10 +1710,11 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1657,10 +1729,11 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1673,7 +1746,7 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1687,7 +1760,8 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                     // Process the array and step past its final element's end.
                     list6.add(com.amazon.s3.MetadataEntry.Factory.parse(reader));
 
-                    //loop until we find a start element that is not part of this array
+                    // loop until we find a start element that is not part of
+                    // this array
                     boolean loopDone6 = false;
                     while (!loopDone6) {
                         // We should be at the end element, but make sure
@@ -1699,7 +1773,8 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                         while (!reader.isStartElement() && !reader.isEndElement())
                             reader.next();
                         if (reader.isEndElement()) {
-                            //two continuous end elements means we are exiting the xml structure
+                            // two continuous end elements means we are exiting
+                            // the xml structure
                             loopDone6 = true;
                         } else {
                             if (new javax.xml.namespace.QName("http://s3.amazonaws.com/doc/2006-03-01/", "Metadata").equals(reader.getName())) {
@@ -1710,12 +1785,11 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                             }
                         }
                     }
-                    // call the converter utility  to convert and set the array
+                    // call the converter utility to convert and set the array
 
-                    object.setMetadata((com.amazon.s3.MetadataEntry[])org.apache.axis2.databinding.utils.ConverterUtil.convertToArray(com.amazon.s3.MetadataEntry.class,
-                        list6));
+                    object.setMetadata((com.amazon.s3.MetadataEntry[])org.apache.axis2.databinding.utils.ConverterUtil.convertToArray(com.amazon.s3.MetadataEntry.class, list6));
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1730,7 +1804,7 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1739,8 +1813,7 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                 while (!reader.isStartElement() && !reader.isEndElement())
                     reader.next();
 
-                if (reader.isStartElement() &&
-                    new javax.xml.namespace.QName("http://s3.amazonaws.com/doc/2006-03-01/", "CopySourceIfModifiedSince").equals(reader.getName())) {
+                if (reader.isStartElement() && new javax.xml.namespace.QName("http://s3.amazonaws.com/doc/2006-03-01/", "CopySourceIfModifiedSince").equals(reader.getName())) {
 
                     java.lang.String content = reader.getElementText();
 
@@ -1748,7 +1821,7 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1757,8 +1830,7 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                 while (!reader.isStartElement() && !reader.isEndElement())
                     reader.next();
 
-                if (reader.isStartElement() &&
-                    new javax.xml.namespace.QName("http://s3.amazonaws.com/doc/2006-03-01/", "CopySourceIfUnmodifiedSince").equals(reader.getName())) {
+                if (reader.isStartElement() && new javax.xml.namespace.QName("http://s3.amazonaws.com/doc/2006-03-01/", "CopySourceIfUnmodifiedSince").equals(reader.getName())) {
 
                     java.lang.String content = reader.getElementText();
 
@@ -1766,7 +1838,7 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1780,7 +1852,8 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                     // Process the array and step past its final element's end.
                     list10.add(reader.getElementText());
 
-                    //loop until we find a start element that is not part of this array
+                    // loop until we find a start element that is not part of
+                    // this array
                     boolean loopDone10 = false;
                     while (!loopDone10) {
                         // Ensure we are at the EndElement
@@ -1793,7 +1866,8 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                         while (!reader.isStartElement() && !reader.isEndElement())
                             reader.next();
                         if (reader.isEndElement()) {
-                            //two continuous end elements means we are exiting the xml structure
+                            // two continuous end elements means we are exiting
+                            // the xml structure
                             loopDone10 = true;
                         } else {
                             if (new javax.xml.namespace.QName("http://s3.amazonaws.com/doc/2006-03-01/", "CopySourceIfMatch").equals(reader.getName())) {
@@ -1804,11 +1878,11 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                             }
                         }
                     }
-                    // call the converter utility  to convert and set the array
+                    // call the converter utility to convert and set the array
 
                     object.setCopySourceIfMatch((java.lang.String[])list10.toArray(new java.lang.String[list10.size()]));
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1822,7 +1896,8 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                     // Process the array and step past its final element's end.
                     list11.add(reader.getElementText());
 
-                    //loop until we find a start element that is not part of this array
+                    // loop until we find a start element that is not part of
+                    // this array
                     boolean loopDone11 = false;
                     while (!loopDone11) {
                         // Ensure we are at the EndElement
@@ -1835,7 +1910,8 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                         while (!reader.isStartElement() && !reader.isEndElement())
                             reader.next();
                         if (reader.isEndElement()) {
-                            //two continuous end elements means we are exiting the xml structure
+                            // two continuous end elements means we are exiting
+                            // the xml structure
                             loopDone11 = true;
                         } else {
                             if (new javax.xml.namespace.QName("http://s3.amazonaws.com/doc/2006-03-01/", "CopySourceIfNoneMatch").equals(reader.getName())) {
@@ -1846,11 +1922,11 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                             }
                         }
                     }
-                    // call the converter utility  to convert and set the array
+                    // call the converter utility to convert and set the array
 
                     object.setCopySourceIfNoneMatch((java.lang.String[])list11.toArray(new java.lang.String[list11.size()]));
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1865,7 +1941,7 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1882,7 +1958,7 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1899,7 +1975,7 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1916,7 +1992,7 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1933,7 +2009,7 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1943,7 +2019,8 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
                     reader.next();
 
                 if (reader.isStartElement())
-                    // A start element we are not expecting indicates a trailing invalid property
+                    // A start element we are not expecting indicates a trailing
+                    // invalid property
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
 
             } catch (javax.xml.stream.XMLStreamException e) {
@@ -1953,6 +2030,6 @@ public class CopyObject implements org.apache.axis2.databinding.ADBBean {
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

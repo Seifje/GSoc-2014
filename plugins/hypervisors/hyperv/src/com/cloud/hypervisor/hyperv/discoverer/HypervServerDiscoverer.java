@@ -83,7 +83,6 @@ public class HypervServerDiscoverer extends DiscovererBase implements Discoverer
     @Inject
     private HostPodDao _podDao;
 
-
     // TODO: AgentManager and AlertManager not being used to transmit info,
     // may want to reconsider.
     @Inject
@@ -201,7 +200,7 @@ public class HypervServerDiscoverer extends DiscovererBase implements Discoverer
     // ignored in favour of another created in response to
     @Override
     public final Map<? extends ServerResource, Map<String, String>> find(final long dcId, final Long podId, final Long clusterId, final URI uri, final String username,
-        final String password, final List<String> hostTags) throws DiscoveryException {
+            final String password, final List<String> hostTags) throws DiscoveryException {
 
         if (s_logger.isInfoEnabled()) {
             s_logger.info("Discover host. dc(zone): " + dcId + ", pod: " + podId + ", cluster: " + clusterId + ", uri host: " + uri.getHost());
@@ -247,8 +246,7 @@ public class HypervServerDiscoverer extends DiscovererBase implements Discoverer
                 return null;
             }
 
-            s_logger.info("Creating" + HypervDirectConnectResource.class.getName() + " HypervDummyResourceBase for zone/pod/cluster " + dcId + "/" + podId + "/" +
-                clusterId);
+            s_logger.info("Creating" + HypervDirectConnectResource.class.getName() + " HypervDummyResourceBase for zone/pod/cluster " + dcId + "/" + podId + "/" + clusterId);
 
             // Some Hypervisors organise themselves in pools.
             // The startup command tells us what pool they are using.
@@ -371,8 +369,8 @@ public class HypervServerDiscoverer extends DiscovererBase implements Discoverer
 
     // TODO: add test for method
     @Override
-    public final HostVO createHostVOForDirectConnectAgent(final HostVO host, final StartupCommand[] startup, final ServerResource resource,
-        final Map<String, String> details, final List<String> hostTags) {
+    public final HostVO createHostVOForDirectConnectAgent(final HostVO host, final StartupCommand[] startup, final ServerResource resource, final Map<String, String> details,
+            final List<String> hostTags) {
         StartupCommand firstCmd = startup[0];
         if (!(firstCmd instanceof StartupRoutingCommand)) {
             return null;

@@ -70,7 +70,7 @@ public class VmwareStorageSubsystemCommandHandler extends StorageSubsystemComman
         DataTO destData = cmd.getDestTO();
         DataStoreTO srcDataStore = srcData.getDataStore();
         DataStoreTO destDataStore = destData.getDataStore();
-        //if copied between s3 and nfs cache, go to resource
+        // if copied between s3 and nfs cache, go to resource
         boolean needDelegation = false;
         if (destDataStore instanceof NfsTO && destDataStore.getRole() == DataStoreRole.ImageCache) {
             if (srcDataStore instanceof S3TO || srcDataStore instanceof SwiftTO) {
@@ -79,7 +79,8 @@ public class VmwareStorageSubsystemCommandHandler extends StorageSubsystemComman
         }
 
         if (srcDataStore.getRole() == DataStoreRole.ImageCache && destDataStore.getRole() == DataStoreRole.Image) {
-            //need to take extra processing for vmware, such as packing to ova, before sending to S3
+            // need to take extra processing for vmware, such as packing to ova,
+            // before sending to S3
             if (srcData.getObjectType() == DataObjectType.VOLUME) {
                 NfsTO cacheStore = (NfsTO)srcDataStore;
                 String parentPath = storageResource.getRootDir(cacheStore.getUrl());
@@ -90,11 +91,13 @@ public class VmwareStorageSubsystemCommandHandler extends StorageSubsystemComman
                 storageManager.createOva(parentPath + File.separator + path, name);
                 vol.setPath(path + File.separator + name + ".ova");
             } else if (srcData.getObjectType() == DataObjectType.TEMPLATE) {
-                // sync template from NFS cache to S3 in NFS migration to S3 case
+                // sync template from NFS cache to S3 in NFS migration to S3
+                // case
                 storageManager.createOvaForTemplate((TemplateObjectTO)srcData);
             } else if (srcData.getObjectType() == DataObjectType.SNAPSHOT) {
                 // pack ova first
-                // sync snapshot from NFS cache to S3 in NFS migration to S3 case
+                // sync snapshot from NFS cache to S3 in NFS migration to S3
+                // case
                 String parentPath = storageResource.getRootDir(srcDataStore.getUrl());
                 SnapshotObjectTO snap = (SnapshotObjectTO)srcData;
                 String path = snap.getPath();
@@ -103,7 +106,8 @@ public class VmwareStorageSubsystemCommandHandler extends StorageSubsystemComman
                 String snapDir = path.substring(0, index);
                 storageManager.createOva(parentPath + File.separator + snapDir, name);
                 if (destData.getObjectType() == DataObjectType.TEMPLATE) {
-                    //create template from snapshot on src at first, then copy it to s3
+                    // create template from snapshot on src at first, then copy
+                    // it to s3
                     TemplateObjectTO cacheTemplate = (TemplateObjectTO)destData;
                     cacheTemplate.setDataStore(srcDataStore);
                     CopyCmdAnswer answer = (CopyCmdAnswer)processor.createTemplateFromSnapshot(cmd);
@@ -115,7 +119,7 @@ public class VmwareStorageSubsystemCommandHandler extends StorageSubsystemComman
                     template.setDataStore(srcDataStore);
                     CopyCommand newCmd = new CopyCommand(template, destData, cmd.getWait(), cmd.executeInSequence());
                     Answer result = storageResource.defaultAction(newCmd);
-                    //clean up template data on staging area
+                    // clean up template data on staging area
                     try {
                         DeleteCommand deleteCommand = new DeleteCommand(template);
                         storageResource.defaultAction(deleteCommand);
@@ -129,7 +133,8 @@ public class VmwareStorageSubsystemCommandHandler extends StorageSubsystemComman
         }
 
         if (srcData.getObjectType() == DataObjectType.SNAPSHOT && srcData.getDataStore().getRole() == DataStoreRole.Primary) {
-            //for back up snapshot, we need to do backup to cache, then to object store if object store is used.
+            // for back up snapshot, we need to do backup to cache, then to
+            // object store if object store is used.
             if (cmd.getCacheTO() != null) {
                 cmd.setDestTO(cmd.getCacheTO());
 
@@ -150,7 +155,7 @@ public class VmwareStorageSubsystemCommandHandler extends StorageSubsystemComman
                 CopyCommand newCmd = new CopyCommand(newSnapshot, destData, cmd.getWait(), cmd.executeInSequence());
                 Answer result = storageResource.defaultAction(newCmd);
 
-                //clean up data on staging area
+                // clean up data on staging area
                 try {
                     newSnapshot.setPath(path);
                     DeleteCommand deleteCommand = new DeleteCommand(newSnapshot);

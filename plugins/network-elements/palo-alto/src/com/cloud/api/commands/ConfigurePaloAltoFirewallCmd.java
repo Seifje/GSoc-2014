@@ -39,8 +39,7 @@ import com.cloud.network.dao.ExternalFirewallDeviceVO;
 import com.cloud.network.element.PaloAltoFirewallElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "configurePaloAltoFirewall", responseObject = PaloAltoFirewallResponse.class, description = "Configures a Palo Alto firewall device",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "configurePaloAltoFirewall", responseObject = PaloAltoFirewallResponse.class, description = "Configures a Palo Alto firewall device", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ConfigurePaloAltoFirewallCmd extends BaseAsyncCmd {
 
     public static final Logger s_logger = Logger.getLogger(ConfigurePaloAltoFirewallCmd.class.getName());
@@ -48,26 +47,19 @@ public class ConfigurePaloAltoFirewallCmd extends BaseAsyncCmd {
     @Inject
     PaloAltoFirewallElementService _paFwService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.FIREWALL_DEVICE_ID,
-               type = CommandType.UUID,
-               entityType = PaloAltoFirewallResponse.class,
-               required = true,
-               description = "Palo Alto firewall device ID")
+    @Parameter(name = ApiConstants.FIREWALL_DEVICE_ID, type = CommandType.UUID, entityType = PaloAltoFirewallResponse.class, required = true, description = "Palo Alto firewall device ID")
     private Long fwDeviceId;
 
-    @Parameter(name = ApiConstants.FIREWALL_DEVICE_CAPACITY,
-               type = CommandType.LONG,
-               required = false,
-               description = "capacity of the firewall device, Capacity will be interpreted as number of networks device can handle")
+    @Parameter(name = ApiConstants.FIREWALL_DEVICE_CAPACITY, type = CommandType.LONG, required = false, description = "capacity of the firewall device, Capacity will be interpreted as number of networks device can handle")
     private Long capacity;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getFirewallDeviceId() {
         return fwDeviceId;
@@ -77,13 +69,12 @@ public class ConfigurePaloAltoFirewallCmd extends BaseAsyncCmd {
         return capacity;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             ExternalFirewallDeviceVO fwDeviceVO = _paFwService.configurePaloAltoFirewall(this);
             if (fwDeviceVO != null) {

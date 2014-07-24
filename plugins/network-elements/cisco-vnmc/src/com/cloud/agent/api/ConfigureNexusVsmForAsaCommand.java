@@ -19,9 +19,9 @@ package com.cloud.agent.api;
 import com.cloud.agent.api.LogLevel.Log4jLevel;
 
 /**
- * Command for configuring n1kv VSM for asa1kv device. It does the following in VSM:
- * a. creating vservice node for asa1kv
- * b. updating vlan of inside port profile associated with asa1kv
+ * Command for configuring n1kv VSM for asa1kv device. It does the following in
+ * VSM: a. creating vservice node for asa1kv b. updating vlan of inside port
+ * profile associated with asa1kv
  */
 public class ConfigureNexusVsmForAsaCommand extends Command {
     private long _vlanId;

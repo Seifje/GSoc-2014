@@ -79,13 +79,16 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         encryptData(conn);
         // drop keys
         dropKeysIfExist(conn);
-        //update templete ID for system Vms
-        //updateSystemVms(conn); This is not required as system template update is handled during 4.2 upgrade
+        // update templete ID for system Vms
+        // updateSystemVms(conn); This is not required as system template update
+        // is handled during 4.2 upgrade
         // update domain network ref
         updateDomainNetworkRef(conn);
-        // update networks that use redundant routers to the new network offering
+        // update networks that use redundant routers to the new network
+        // offering
         updateReduntantRouters(conn);
-        // update networks that have to switch from Shared to Isolated network offerings
+        // update networks that have to switch from Shared to Isolated network
+        // offerings
         switchAccountSpecificNetworksToIsolated(conn);
         // update networks to external network offerings if needed
         String externalOfferingName = fixNetworksWithExternalDevices(conn);
@@ -93,11 +96,12 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         createNetworkOfferingServices(conn, externalOfferingName);
         // create service/provider map for networks
         createNetworkServices(conn);
-        //migrate user concentrated deployment planner choice to new global setting
+        // migrate user concentrated deployment planner choice to new global
+        // setting
         migrateUserConcentratedPlannerChoice(conn);
         // update domain router table for element it;
         updateRouters(conn);
-        //update host capacities
+        // update host capacities
         updateHostCapacity(conn);
     }
 
@@ -113,17 +117,16 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
 
     private void setupPhysicalNetworks(Connection conn) {
         /**
-         * for each zone:
-         * add a p.network, use zone.vnet and zone.type
-         * add default traffic types, pnsp and virtual router element in enabled state
-         * set p.network.id in op_dc_vnet and vlan and user_ip_address
+         * for each zone: add a p.network, use zone.vnet and zone.type add
+         * default traffic types, pnsp and virtual router element in enabled
+         * state set p.network.id in op_dc_vnet and vlan and user_ip_address
          * list guest networks for the zone, set p.network.id
          *
-         * for cases where network_tags are used for multiple guest networks:
-         * - figure out distinct tags
-         * - create physical network per tag
-         * - create traffic types and set the tag to xen_network_label
-         * - add physical network id  to networks, vlan, user_ip_address for networks belonging to this tag
+         * for cases where network_tags are used for multiple guest networks: -
+         * figure out distinct tags - create physical network per tag - create
+         * traffic types and set the tag to xen_network_label - add physical
+         * network id to networks, vlan, user_ip_address for networks belonging
+         * to this tag
          */
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -156,7 +159,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 String zoneName = rs.getString(5);
                 String removed = rs.getString(6);
 
-                //set uuid for the zone
+                // set uuid for the zone
                 String uuid = UUID.randomUUID().toString();
                 String updateUuid = "UPDATE `cloud`.`data_center` SET uuid = ? WHERE id = ?";
                 pstmtUpdate = conn.prepareStatement(updateUuid);
@@ -165,7 +168,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 pstmtUpdate.executeUpdate();
                 pstmtUpdate.close();
 
-                //check if public network needs to be created
+                // check if public network needs to be created
                 boolean crtPbNtwk = false;
                 pstmt = conn.prepareStatement("SELECT * FROM `cloud`.`networks` where traffic_type=\"public\" and data_center_id=?");
                 pstmt2Close.add(pstmt);
@@ -175,54 +178,54 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                     crtPbNtwk = true;
                 }
 
-                //check if there are multiple guest networks configured using network_tags
-                PreparedStatement pstmt2 =
-                    conn.prepareStatement("SELECT distinct tag FROM `cloud`.`network_tags` t JOIN `cloud`.`networks` n ON t.network_id = n.id WHERE n.data_center_id = ? and n.removed IS NULL");
+                // check if there are multiple guest networks configured using
+                // network_tags
+                PreparedStatement pstmt2 = conn
+                        .prepareStatement("SELECT distinct tag FROM `cloud`.`network_tags` t JOIN `cloud`.`networks` n ON t.network_id = n.id WHERE n.data_center_id = ? and n.removed IS NULL");
                 pstmt2Close.add(pstmt2);
                 pstmt2.setLong(1, zoneId);
                 ResultSet rsTags = pstmt2.executeQuery();
                 if (rsTags.next()) {
                     s_logger.debug("Network tags are not empty, might have to create more than one physical network...");
-                    //make sure setup does not use guest vnets
+                    // make sure setup does not use guest vnets
 
                     if (vnet != null) {
-                        //check if any vnet is allocated and guest networks are using vnets.
-                        PreparedStatement pstmt4 =
-                            conn.prepareStatement("SELECT v.* FROM `cloud`.`op_dc_vnet_alloc` v JOIN `cloud`.`networks` n ON CONCAT('vlan://' , v.vnet) = " +
-                                "n.broadcast_uri WHERE v.taken IS NOT NULL AND v.data_center_id = ? AND n.removed IS NULL");
+                        // check if any vnet is allocated and guest networks are
+                        // using vnets.
+                        PreparedStatement pstmt4 = conn.prepareStatement("SELECT v.* FROM `cloud`.`op_dc_vnet_alloc` v JOIN `cloud`.`networks` n ON CONCAT('vlan://' , v.vnet) = "
+                                + "n.broadcast_uri WHERE v.taken IS NOT NULL AND v.data_center_id = ? AND n.removed IS NULL");
                         pstmt2Close.add(pstmt4);
                         pstmt4.setLong(1, zoneId);
                         ResultSet rsVNet = pstmt4.executeQuery();
 
                         if (rsVNet.next()) {
                             String message = "Cannot upgrade. Your setup has multiple Physical Networks and is using guest "
-                                + "Vnet that is assigned wrongly. To upgrade, first correct the setup by doing the following: \n"
-                                + "1. Please rollback to your 2.2.14 setup\n"
-                                + "2. Please stop all VMs using isolated(virtual) networks through CloudStack\n"
-                                + "3. Run following query to find if any networks still have nics allocated:\n\t"
-                                + "a) check if any virtual guest networks still have allocated nics by running:\n\t"
-                                + "SELECT DISTINCT op.id from `cloud`.`op_networks` op JOIN `cloud`.`networks` n on "
-                                + "op.id=n.id WHERE nics_count != 0 AND guest_type = 'Virtual';\n\t"
-                                + "b) If this returns any networkd ids, then ensure that all VMs are stopped, no new VM is being started, and then shutdown management server\n\t"
-                                + "c) Clean up the nics count for the 'virtual' network id's returned in step (a) by running this:\n\t"
-                                + "UPDATE `cloud`.`op_networks` SET nics_count = 0 WHERE  id = <enter id of virtual network>\n\t"
-                                + "d) Restart management server and wait for all networks to shutdown. [Networks shutdown will be "
-                                + "determined by network.gc.interval and network.gc.wait seconds] \n"
-                                + "4. Please ensure all networks are shutdown and all guest Vnet's are free.\n"
-                                + "5. Run upgrade. This will allocate all your guest vnet range to first physical network.  \n"
-                                + "6. Reconfigure the vnet ranges for each physical network as desired by using updatePhysicalNetwork API \n"
-                                + "7. Start all your VMs";
+                                    + "Vnet that is assigned wrongly. To upgrade, first correct the setup by doing the following: \n"
+                                    + "1. Please rollback to your 2.2.14 setup\n"
+                                    + "2. Please stop all VMs using isolated(virtual) networks through CloudStack\n"
+                                    + "3. Run following query to find if any networks still have nics allocated:\n\t"
+                                    + "a) check if any virtual guest networks still have allocated nics by running:\n\t"
+                                    + "SELECT DISTINCT op.id from `cloud`.`op_networks` op JOIN `cloud`.`networks` n on "
+                                    + "op.id=n.id WHERE nics_count != 0 AND guest_type = 'Virtual';\n\t"
+                                    + "b) If this returns any networkd ids, then ensure that all VMs are stopped, no new VM is being started, and then shutdown management server\n\t"
+                                    + "c) Clean up the nics count for the 'virtual' network id's returned in step (a) by running this:\n\t"
+                                    + "UPDATE `cloud`.`op_networks` SET nics_count = 0 WHERE  id = <enter id of virtual network>\n\t"
+                                    + "d) Restart management server and wait for all networks to shutdown. [Networks shutdown will be "
+                                    + "determined by network.gc.interval and network.gc.wait seconds] \n"
+                                    + "4. Please ensure all networks are shutdown and all guest Vnet's are free.\n"
+                                    + "5. Run upgrade. This will allocate all your guest vnet range to first physical network.  \n"
+                                    + "6. Reconfigure the vnet ranges for each physical network as desired by using updatePhysicalNetwork API \n" + "7. Start all your VMs";
 
                             s_logger.error(message);
 
                             throw new CloudRuntimeException(
-                                "Cannot upgrade this setup since it uses guest vnet and will have multiple physical networks. Please check the logs for details on how to proceed");
+                                    "Cannot upgrade this setup since it uses guest vnet and will have multiple physical networks. Please check the logs for details on how to proceed");
                         }
                         rsVNet.close();
 
-                        //Clean up any vnets that have no live networks/nics
-                        pstmt4 =
-                            conn.prepareStatement("SELECT v.id, v.vnet, v.reservation_id FROM `cloud`.`op_dc_vnet_alloc` v LEFT JOIN networks n ON CONCAT('vlan://' , v.vnet) = n.broadcast_uri WHERE v.taken IS NOT NULL AND v.data_center_id = ? AND n.broadcast_uri IS NULL AND n.removed IS NULL");
+                        // Clean up any vnets that have no live networks/nics
+                        pstmt4 = conn
+                                .prepareStatement("SELECT v.id, v.vnet, v.reservation_id FROM `cloud`.`op_dc_vnet_alloc` v LEFT JOIN networks n ON CONCAT('vlan://' , v.vnet) = n.broadcast_uri WHERE v.taken IS NOT NULL AND v.data_center_id = ? AND n.broadcast_uri IS NULL AND n.removed IS NULL");
                         pstmt2Close.add(pstmt4);
                         pstmt4.setLong(1, zoneId);
                         rsVNet = pstmt4.executeQuery();
@@ -230,7 +233,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                             Long vnet_id = rsVNet.getLong(1);
                             String vnetValue = rsVNet.getString(2);
                             String reservationId = rsVNet.getString(3);
-                            //does this vnet have any nic associated?
+                            // does this vnet have any nic associated?
                             PreparedStatement pstmt5 = conn.prepareStatement("SELECT id, instance_id FROM `cloud`.`nics` where broadcast_uri = ? and removed IS NULL");
                             pstmt2Close.add(pstmt5);
                             String uri = "vlan://" + vnetValue;
@@ -239,11 +242,11 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                             Long nic_id = rsNic.getLong(1);
                             Long instance_id = rsNic.getLong(2);
                             if (rsNic.next()) {
-                                throw new CloudRuntimeException("Cannot upgrade. Please cleanup the guest vnet: " + vnetValue + " , it is being used by nic_id: " +
-                                    nic_id + " , instance_id: " + instance_id);
+                                throw new CloudRuntimeException("Cannot upgrade. Please cleanup the guest vnet: " + vnetValue + " , it is being used by nic_id: " + nic_id
+                                        + " , instance_id: " + instance_id);
                             }
 
-                            //free this vnet
+                            // free this vnet
                             String freeVnet = "UPDATE `cloud`.`op_dc_vnet_alloc` SET account_id = NULL, taken = NULL, reservation_id = NULL WHERE id = ?";
                             pstmtUpdate = conn.prepareStatement(freeVnet);
                             pstmtUpdate.setLong(1, vnet_id);
@@ -254,10 +257,10 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
 
                     boolean isFirstPhysicalNtwk = true;
                     do {
-                        //create one physical network per tag
+                        // create one physical network per tag
                         String guestNetworkTag = rsTags.getString(1);
                         long physicalNetworkId = addPhysicalNetworkToZone(conn, zoneId, zoneName, networkType, (isFirstPhysicalNtwk) ? vnet : null, domainId);
-                        //add Traffic types
+                        // add Traffic types
                         if (isFirstPhysicalNtwk) {
                             if (crtPbNtwk) {
                                 addTrafficType(conn, physicalNetworkId, "Public", xenPublicLabel, kvmPublicLabel, vmwarePublicLabel);
@@ -270,7 +273,8 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                         addTrafficType(conn, physicalNetworkId, "Guest", guestNetworkTag, kvmGuestLabel, vmwareGuestLabel);
                         addDefaultVRProvider(conn, physicalNetworkId, zoneId);
                         addDefaultSGProvider(conn, physicalNetworkId, zoneId, networkType, false);
-                        //for all networks with this tag, add physical_network_id
+                        // for all networks with this tag, add
+                        // physical_network_id
 
                         PreparedStatement pstmt3 = conn.prepareStatement("SELECT network_id FROM `cloud`.`network_tags` where tag = '" + guestNetworkTag + "'");
                         ResultSet rsNet = pstmt3.executeQuery();
@@ -283,8 +287,12 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                         }
                         pstmt3.close();
 
-                        // add the reference to this physical network for the default public network entries in vlan / user_ip_address tables
-                        // add first physicalNetworkId to op_dc_vnet_alloc for this zone - just a placeholder since direct networking dont need this
+                        // add the reference to this physical network for the
+                        // default public network entries in vlan /
+                        // user_ip_address tables
+                        // add first physicalNetworkId to op_dc_vnet_alloc for
+                        // this zone - just a placeholder since direct
+                        // networking dont need this
                         if (isFirstPhysicalNtwk) {
                             s_logger.debug("Adding PhysicalNetwork to default Public network entries in vlan and user_ip_address");
                             pstmt3 = conn.prepareStatement("SELECT id FROM `cloud`.`networks` where traffic_type = 'Public' and data_center_id = " + zoneId);
@@ -306,7 +314,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                     } while (rsTags.next());
                     pstmt2.close();
                 } else {
-                    //default to one physical network
+                    // default to one physical network
                     long physicalNetworkId = addPhysicalNetworkToZone(conn, zoneId, zoneName, networkType, vnet, domainId);
                     // add traffic types
                     if (crtPbNtwk) {
@@ -343,13 +351,14 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
 
                     // add physicalNetworkId to guest networks for this zone
                     s_logger.debug("Adding PhysicalNetwork to networks");
-                    String updateNet =
-                        "UPDATE `cloud`.`networks` SET physical_network_id = " + physicalNetworkId + " WHERE data_center_id = " + zoneId + " AND traffic_type = 'Guest'";
+                    String updateNet = "UPDATE `cloud`.`networks` SET physical_network_id = " + physicalNetworkId + " WHERE data_center_id = " + zoneId
+                            + " AND traffic_type = 'Guest'";
                     pstmtUpdate = conn.prepareStatement(updateNet);
                     pstmtUpdate.executeUpdate();
                     pstmtUpdate.close();
 
-                    //mark this physical network as removed if the zone is removed.
+                    // mark this physical network as removed if the zone is
+                    // removed.
                     if (removed != null) {
                         pstmtUpdate = conn.prepareStatement("UPDATE `cloud`.`physical_network` SET removed = now() WHERE id = ?");
                         pstmtUpdate.setLong(1, physicalNetworkId);
@@ -578,8 +587,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt =
-                conn.prepareStatement("select id, dns_service, gateway_service, firewall_service, lb_service, userdata_service,"
+            pstmt = conn.prepareStatement("select id, dns_service, gateway_service, firewall_service, lb_service, userdata_service,"
                     + " vpn_service, dhcp_service, unique_name from `cloud`.`network_offerings` where traffic_type='Guest'");
             pstmt2Close.add(pstmt);
             rs = pstmt.executeQuery();
@@ -637,9 +645,9 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                     services.put("SecurityGroup", "SecurityGroupProvider");
                 }
 
-                if (uniqueName.equals(NetworkOffering.DefaultIsolatedNetworkOfferingWithSourceNatService.toString()) ||
-                    uniqueName.equals(NetworkOffering.DefaultIsolatedNetworkOfferingWithSourceNatService.toString() + "-redundant") ||
-                    uniqueName.equalsIgnoreCase(externalOfferingName)) {
+                if (uniqueName.equals(NetworkOffering.DefaultIsolatedNetworkOfferingWithSourceNatService.toString())
+                        || uniqueName.equals(NetworkOffering.DefaultIsolatedNetworkOfferingWithSourceNatService.toString() + "-redundant")
+                        || uniqueName.equalsIgnoreCase(externalOfferingName)) {
                     if (externalOfferingName != null && uniqueName.equalsIgnoreCase(externalOfferingName)) {
                         services.put("SourceNat", "JuniperSRX");
                         services.put("PortForwarding", "JuniperSRX");
@@ -653,8 +661,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 }
 
                 for (String service : services.keySet()) {
-                    pstmt =
-                        conn.prepareStatement("INSERT INTO `cloud`.`ntwk_offering_service_map` (`network_offering_id`,"
+                    pstmt = conn.prepareStatement("INSERT INTO `cloud`.`ntwk_offering_service_map` (`network_offering_id`,"
                             + " `service`, `provider`, `created`) values (?,?,?, now())");
                     pstmt2Close.add(pstmt);
                     pstmt.setLong(1, id);
@@ -663,7 +670,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                     pstmt.executeUpdate();
                 }
 
-                //update shared source nat and dedicated lb
+                // update shared source nat and dedicated lb
                 pstmt = conn.prepareStatement("UPDATE `cloud`.`network_offerings` set shared_source_nat_service=?, dedicated_lb_service=? where id=?");
                 pstmt2Close.add(pstmt);
                 pstmt.setBoolean(1, sharedSourceNat);
@@ -684,7 +691,8 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            // update subdomain access field for existing domain specific networks
+            // update subdomain access field for existing domain specific
+            // networks
             pstmt = conn.prepareStatement("select value from `cloud`.`configuration` where name='allow.subdomain.network.access'");
             pstmt2Close.add(pstmt);
             rs = pstmt.executeQuery();
@@ -697,7 +705,8 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 s_logger.debug("Successfully updated subdomain_access field in network_domain table with value " + subdomainAccess);
             }
 
-            // convert zone level 2.2.x networks to ROOT domain 3.0 access networks
+            // convert zone level 2.2.x networks to ROOT domain 3.0 access
+            // networks
             pstmt = conn.prepareStatement("select id from `cloud`.`networks` where shared=true and is_domain_specific=false and traffic_type='Guest'");
             pstmt2Close.add(pstmt);
             rs = pstmt.executeQuery();
@@ -755,8 +764,8 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         PreparedStatement pstmt = null;
         try {
             s_logger.debug("Updating domain_router table");
-            pstmt =
-                conn.prepareStatement("UPDATE domain_router, virtual_router_providers vrp LEFT JOIN (physical_network_service_providers pnsp INNER JOIN physical_network pntwk INNER JOIN vm_instance vm INNER JOIN domain_router vr) ON (vrp.nsp_id = pnsp.id AND pnsp.physical_network_id = pntwk.id AND pntwk.data_center_id = vm.data_center_id AND vm.id=vr.id) SET vr.element_id=vrp.id;");
+            pstmt = conn
+                    .prepareStatement("UPDATE domain_router, virtual_router_providers vrp LEFT JOIN (physical_network_service_providers pnsp INNER JOIN physical_network pntwk INNER JOIN vm_instance vm INNER JOIN domain_router vr) ON (vrp.nsp_id = pnsp.id AND pnsp.physical_network_id = pntwk.id AND pntwk.data_center_id = vm.data_center_id AND vm.id=vr.id) SET vr.element_id=vrp.id;");
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new CloudRuntimeException("Unable to update router table. ", e);
@@ -777,9 +786,10 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         ResultSet rs = null;
         ResultSet rs1 = null;
         try {
-            // get all networks that need to be updated to the redundant network offerings
-            pstmt =
-                conn.prepareStatement("select ni.network_id, n.network_offering_id from `cloud`.`nics` ni, `cloud`.`networks` n where ni.instance_id in (select id from `cloud`.`domain_router` where is_redundant_router=1) and n.id=ni.network_id and n.traffic_type='Guest'");
+            // get all networks that need to be updated to the redundant network
+            // offerings
+            pstmt = conn
+                    .prepareStatement("select ni.network_id, n.network_offering_id from `cloud`.`nics` ni, `cloud`.`networks` n where ni.instance_id in (select id from `cloud`.`domain_router` where is_redundant_router=1) and n.id=ni.network_id and n.traffic_type='Guest'");
             pstmt2Close.add(pstmt);
             rs = pstmt.executeQuery();
             pstmt = conn.prepareStatement("select count(*) from `cloud`.`network_offerings`");
@@ -870,23 +880,23 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         PreparedStatement pstmt = null;
         try {
             s_logger.debug("Updating op_host_capacity table, column capacity_state");
-            pstmt =
-                conn.prepareStatement("UPDATE op_host_capacity, host SET op_host_capacity.capacity_state='Disabled' where host.id=op_host_capacity.host_id and op_host_capacity.capacity_type in (0,1) and host.resource_state='Disabled';");
+            pstmt = conn
+                    .prepareStatement("UPDATE op_host_capacity, host SET op_host_capacity.capacity_state='Disabled' where host.id=op_host_capacity.host_id and op_host_capacity.capacity_type in (0,1) and host.resource_state='Disabled';");
             pstmt2Close.add(pstmt);
             pstmt.executeUpdate();
 
-            pstmt =
-                conn.prepareStatement("UPDATE op_host_capacity, cluster SET op_host_capacity.capacity_state='Disabled' where cluster.id=op_host_capacity.cluster_id and cluster.allocation_state='Disabled';");
+            pstmt = conn
+                    .prepareStatement("UPDATE op_host_capacity, cluster SET op_host_capacity.capacity_state='Disabled' where cluster.id=op_host_capacity.cluster_id and cluster.allocation_state='Disabled';");
             pstmt2Close.add(pstmt);
             pstmt.executeUpdate();
 
-            pstmt =
-                conn.prepareStatement("UPDATE op_host_capacity, host_pod_ref SET op_host_capacity.capacity_state='Disabled' where host_pod_ref.id=op_host_capacity.pod_id and host_pod_ref.allocation_state='Disabled';");
+            pstmt = conn
+                    .prepareStatement("UPDATE op_host_capacity, host_pod_ref SET op_host_capacity.capacity_state='Disabled' where host_pod_ref.id=op_host_capacity.pod_id and host_pod_ref.allocation_state='Disabled';");
             pstmt2Close.add(pstmt);
             pstmt.executeUpdate();
 
-            pstmt =
-                conn.prepareStatement("UPDATE op_host_capacity, data_center SET op_host_capacity.capacity_state='Disabled' where data_center.id=op_host_capacity.data_center_id and data_center.allocation_state='Disabled';");
+            pstmt = conn
+                    .prepareStatement("UPDATE op_host_capacity, data_center SET op_host_capacity.capacity_state='Disabled' where data_center.id=op_host_capacity.data_center_id and data_center.allocation_state='Disabled';");
             pstmt2Close.add(pstmt);
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -902,7 +912,8 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         ResultSet rs = null;
         ResultSet rs1 = null;
         try {
-            //check if switch_to_isolated is present; if not - skip this part of the code
+            // check if switch_to_isolated is present; if not - skip this part
+            // of the code
             try {
                 pstmt = conn.prepareStatement("select switch_to_isolated from `cloud`.`networks`");
                 pstmt2Close.add(pstmt);
@@ -915,7 +926,8 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 return;
             }
 
-            // get all networks that need to be updated to the isolated network offering
+            // get all networks that need to be updated to the isolated network
+            // offering
             pstmt = conn.prepareStatement("select id, network_offering_id from `cloud`.`networks` where switch_to_isolated=1");
             pstmt2Close.add(pstmt);
             rs = pstmt.executeQuery();
@@ -1062,11 +1074,10 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         ResultSet rs = null;
         ResultSet rs1 = null;
 
-        //Get zones to upgrade
+        // Get zones to upgrade
         List<Long> zoneIds = new ArrayList<Long>();
         try {
-            pstmt =
-                conn.prepareStatement("select id from `cloud`.`data_center` where lb_provider='F5BigIp' or firewall_provider='JuniperSRX' or gateway_provider='JuniperSRX'");
+            pstmt = conn.prepareStatement("select id from `cloud`.`data_center` where lb_provider='F5BigIp' or firewall_provider='JuniperSRX' or gateway_provider='JuniperSRX'");
             pstmt2Close.add(pstmt);
             rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -1111,7 +1122,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                         pstmt.setLong(1, networkOfferingId);
                         pstmt.executeUpdate();
 
-                        //set the new unique name
+                        // set the new unique name
                         pstmt = conn.prepareStatement("UPDATE `cloud`.`network_offerings2` SET id=?, unique_name=?, name=? WHERE id=?");
                         pstmt2Close.add(pstmt);
                         ntwkOffCount = ntwkOffCount + 1;
@@ -1122,9 +1133,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                         pstmt.setLong(4, networkOfferingId);
                         pstmt.executeUpdate();
 
-                        pstmt =
-                            conn.prepareStatement("INSERT INTO `cloud`.`network_offerings` SELECT * from " + "`cloud`.`network_offerings2` WHERE id=" +
-                                newNetworkOfferingId);
+                        pstmt = conn.prepareStatement("INSERT INTO `cloud`.`network_offerings` SELECT * from " + "`cloud`.`network_offerings2` WHERE id=" + newNetworkOfferingId);
                         pstmt2Close.add(pstmt);
                         pstmt.executeUpdate();
 

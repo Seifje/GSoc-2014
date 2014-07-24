@@ -39,6 +39,7 @@ import com.cloud.user.UserAccount;
 public interface RegionService {
     /**
      * Adds a Region to the local Region
+     *
      * @param id
      * @param name
      * @param endPoint
@@ -48,6 +49,7 @@ public interface RegionService {
 
     /**
      * Update details of the Region with specified Id
+     *
      * @param id
      * @param name
      * @param endPoint
@@ -61,7 +63,9 @@ public interface RegionService {
      */
     public boolean removeRegion(int id);
 
-    /** List all Regions or by Id/Name
+    /**
+     * List all Regions or by Id/Name
+     *
      * @param id
      * @param name
      * @return List of Regions
@@ -69,8 +73,9 @@ public interface RegionService {
     public List<? extends Region> listRegions(ListRegionsCmd cmd);
 
     /**
-     * Deletes a user by userId
-     * isPopagate flag is set to true if sent from peer Region
+     * Deletes a user by userId isPopagate flag is set to true if sent from peer
+     * Region
+     *
      * @param cmd
      *
      * @return true if delete was successful, false otherwise
@@ -78,17 +83,19 @@ public interface RegionService {
     boolean deleteUserAccount(DeleteAccountCmd cmd);
 
     /**
-     * Updates an account
-     * isPopagate falg is set to true if sent from peer Region
+     * Updates an account isPopagate falg is set to true if sent from peer
+     * Region
      *
      * @param cmd
-     *            - the parameter containing accountId or account nameand domainId
+     *            - the parameter containing accountId or account nameand
+     *            domainId
      * @return updated account object
      */
     Account updateAccount(UpdateAccountCmd cmd);
 
     /**
      * Disables an account by accountName and domainId or accountId
+     *
      * @param cmd
      * @return
      * @throws ResourceUnavailableException
@@ -98,6 +105,7 @@ public interface RegionService {
 
     /**
      * Enables an account by accountId
+     *
      * @param cmd
      * @return
      */
@@ -105,6 +113,7 @@ public interface RegionService {
 
     /**
      * Deletes user by Id
+     *
      * @param deleteUserCmd
      * @return true if delete was successful, false otherwise
      */
@@ -121,6 +130,7 @@ public interface RegionService {
 
     /**
      * Deletes domain
+     *
      * @param cmd
      * @return true if delete was successful, false otherwise
      */

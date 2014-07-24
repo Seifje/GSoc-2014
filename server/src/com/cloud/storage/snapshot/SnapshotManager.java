@@ -41,9 +41,10 @@ public interface SnapshotManager {
     void deletePoliciesForVolume(Long volumeId);
 
     /**
-     * For each of the volumes in the account, (which can span across multiple zones and multiple secondary storages), delete
-     * the dir on the secondary storage which contains the backed up snapshots for that volume. This is called during
-     * deleteAccount.
+     * For each of the volumes in the account, (which can span across multiple
+     * zones and multiple secondary storages), delete the dir on the secondary
+     * storage which contains the backed up snapshots for that volume. This is
+     * called during deleteAccount.
      *
      * @param accountId
      *            The account which is to be deleted.
@@ -52,7 +53,8 @@ public interface SnapshotManager {
 
     String getSecondaryStorageURL(SnapshotVO snapshot);
 
-    //void deleteSnapshotsDirForVolume(String secondaryStoragePoolUrl, Long dcId, Long accountId, Long volumeId);
+    // void deleteSnapshotsDirForVolume(String secondaryStoragePoolUrl, Long
+    // dcId, Long accountId, Long volumeId);
 
     boolean canOperateOnVolume(Volume volume);
 

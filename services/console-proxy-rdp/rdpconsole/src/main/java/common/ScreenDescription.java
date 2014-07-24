@@ -55,8 +55,8 @@ public class ScreenDescription {
     /**
      * Store information about server pixel format.
      */
-    public void setPixelFormat(int bitsPerPixel, int depth, boolean bigEndianFlag, boolean trueColorFlag, int redMax, int greenMax, int blueMax, int redShift,
-            int greenShift, int blueShift) {
+    public void setPixelFormat(int bitsPerPixel, int depth, boolean bigEndianFlag, boolean trueColorFlag, int redMax, int greenMax, int blueMax, int redShift, int greenShift,
+            int blueShift) {
 
         bytesPerPixel = (bitsPerPixel + 7) / 8;
 
@@ -151,10 +151,9 @@ public class ScreenDescription {
 
     @Override
     public String toString() {
-        return "ScreenDescription [framebufferWidth=" + framebufferWidth + ", framebufferHeight=" + framebufferHeight + ", desktopName=" + desktopName
-                + ", bytesPerPixel=" + bytesPerPixel + ", depth=" + colorDepth + ", bitsPerPixel=" + bitsPerPixel + ", redShift=" + redShift + ", greenShift=" + greenShift
-                + ", blueShift=" + blueShift + ", redMax=" + redMax + ", greenMax=" + greenMax + ", blueMax=" + blueMax + ", bigEndianFlag=" + bigEndianFlag
-                + ", trueColorFlag=" + trueColorFlag + "]";
+        return "ScreenDescription [framebufferWidth=" + framebufferWidth + ", framebufferHeight=" + framebufferHeight + ", desktopName=" + desktopName + ", bytesPerPixel="
+                + bytesPerPixel + ", depth=" + colorDepth + ", bitsPerPixel=" + bitsPerPixel + ", redShift=" + redShift + ", greenShift=" + greenShift + ", blueShift=" + blueShift
+                + ", redMax=" + redMax + ", greenMax=" + greenMax + ", blueMax=" + blueMax + ", bigEndianFlag=" + bigEndianFlag + ", trueColorFlag=" + trueColorFlag + "]";
     }
 
     public void addSizeChangeListener(SizeChangeListener sizeChangeListener) {

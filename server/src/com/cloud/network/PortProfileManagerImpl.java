@@ -38,8 +38,10 @@ public class PortProfileManagerImpl {
     @DB
     public PortProfileVO addPortProfile(String portProfName, long vsmId, int vlanId, PortType pType, BindingType bType) {
 
-        // In this function, we create a port profile record in the port_profile table.
-        // First, check if a port profile with the given name already exists. If it does, throw an exception.
+        // In this function, we create a port profile record in the port_profile
+        // table.
+        // First, check if a port profile with the given name already exists. If
+        // it does, throw an exception.
 
         if (_portProfileDao.findByName(portProfName) != null) {
             s_logger.info("Port Profile with specified name: " + portProfName + " already exists");
@@ -47,8 +49,10 @@ public class PortProfileManagerImpl {
         }
         // Check if the VSM id is a valid one.
 
-        // TODO: Should we also check whether a port profile for the specified vlanId already exists, and if so,
-        // fail this function? Do we want to enforce such a 1:1 mapping b/w port profile and vlanId?
+        // TODO: Should we also check whether a port profile for the specified
+        // vlanId already exists, and if so,
+        // fail this function? Do we want to enforce such a 1:1 mapping b/w port
+        // profile and vlanId?
 
         // Else, go ahead and create the port profile.
         PortProfileVO portProfileObj = new PortProfileVO(portProfName, vsmId, vlanId, pType, bType);
@@ -59,9 +63,11 @@ public class PortProfileManagerImpl {
     @DB
     public PortProfileVO addPortProfile(String portProfName, long vsmId, int lowVlanId, int highVlanId, PortType pType, BindingType bType) {
 
-        // In this function, we create a port profile record in the port_profile table.
+        // In this function, we create a port profile record in the port_profile
+        // table.
 
-        // First, check if a port profile with the given name already exists. If it does, throw an exception.
+        // First, check if a port profile with the given name already exists. If
+        // it does, throw an exception.
         PortProfileVO portProfileObj;
 
         portProfileObj = _portProfileDao.findByName(portProfName);
@@ -71,7 +77,8 @@ public class PortProfileManagerImpl {
             throw new InvalidParameterValueException("Port Profile with specified name: " + portProfName + " already exists");
         }
 
-        // Next, check if there is any existing port profile that uses a VLAN ID range that clashes with the
+        // Next, check if there is any existing port profile that uses a VLAN ID
+        // range that clashes with the
         // range passed to this function. If so, throw an exception.
 
         if (_portProfileDao.doesVlanRangeClash(lowVlanId, highVlanId) == true) {
@@ -93,7 +100,7 @@ public class PortProfileManagerImpl {
             return true;
         }
 
-        //Else, remove it.
+        // Else, remove it.
         // TODO: Should we be putting any checks here before removing
         // the port profile record from the db?
 

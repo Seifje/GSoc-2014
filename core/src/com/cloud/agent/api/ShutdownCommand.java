@@ -39,7 +39,8 @@ public class ShutdownCommand extends Command {
     }
 
     /**
-     * @return return the reason the agent shutdown.  If Unknown, call getDetail() for any details.
+     * @return return the reason the agent shutdown. If Unknown, call
+     *         getDetail() for any details.
      */
     public String getReason() {
         return reason;

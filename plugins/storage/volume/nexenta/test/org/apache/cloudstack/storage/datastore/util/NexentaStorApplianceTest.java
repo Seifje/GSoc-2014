@@ -28,7 +28,6 @@ import static org.apache.cloudstack.storage.datastore.util.NexentaStorAppliance.
 import static org.apache.cloudstack.storage.datastore.util.NexentaStorAppliance.AddMappingEntryNmsResponse;
 import static org.apache.cloudstack.storage.datastore.util.NexentaNmsClient.NmsResponse;
 
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -60,7 +59,7 @@ public class NexentaStorApplianceTest {
     public void init() {
         final String url = "nmsUrl=https://admin:nexenta@10.1.3.182:8457;volume=cloudstack;storageType=iscsi";
         NexentaUtil.NexentaPluginParameters parameters = NexentaUtil.parseNexentaPluginUrl(url);
-        //client = new NexentaNmsClient(parameters.getNmsUrl());
+        // client = new NexentaNmsClient(parameters.getNmsUrl());
         client = mock(NexentaNmsClient.class);
         appliance = new NexentaStorAppliance(client, parameters);
     }
@@ -86,8 +85,8 @@ public class NexentaStorApplianceTest {
         assertTrue(appliance.isIscsiTargetExists(targetName));
     }
 
-    final static String ISCSI_TARGET_ALREADY_CONFIGURED_ERROR = "Unable to create iscsi target\\n iSCSI target %s already configured\\n itadm create-target failed with error " +
-            "17\\n";
+    final static String ISCSI_TARGET_ALREADY_CONFIGURED_ERROR = "Unable to create iscsi target\\n iSCSI target %s already configured\\n itadm create-target failed with error "
+            + "17\\n";
 
     @Test
     public void testCreateIscsiTarget() {
@@ -229,8 +228,7 @@ public class NexentaStorApplianceTest {
         assertTrue(appliance.isLuExists(volumeName));
     }
 
-    final static String CREATE_LU_IN_USE_ERROR = "Unable to create lu with " +
-            "zvol '%s':\\n stmfadm: filename /dev/zvol/rdsk/%s: in use\\n";
+    final static String CREATE_LU_IN_USE_ERROR = "Unable to create lu with " + "zvol '%s':\\n stmfadm: filename /dev/zvol/rdsk/%s: in use\\n";
 
     @Test
     public void testCreateLu() {
@@ -282,8 +280,7 @@ public class NexentaStorApplianceTest {
         appliance.isLuShared(luName);
     }
 
-    final static String ADD_LUN_MAPPING_ENTRY_ERROR = "(rc: 256) Unable to " +
-            "add view to zvol '%s':\\n add-view: view already exists\\n";
+    final static String ADD_LUN_MAPPING_ENTRY_ERROR = "(rc: 256) Unable to " + "add view to zvol '%s':\\n add-view: view already exists\\n";
 
     @Test
     public void testAddLuMappingEntry() {

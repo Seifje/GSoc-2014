@@ -25,10 +25,12 @@ import org.apache.cloudstack.engine.subsystem.api.storage.HypervisorHostListener
 public class NexentaHostListener implements HypervisorHostListener {
     private static final Logger logger = Logger.getLogger(NexentaHostListener.class);
 
+    @Override
     public boolean hostConnect(long hostId, long poolId) {
         return true;
     }
 
+    @Override
     public boolean hostDisconnected(long hostId, long poolId) {
         return true;
     }

@@ -302,7 +302,8 @@ public class SnapshotServiceImpl implements SnapshotService {
         if (result.isFailed()) {
             try {
                 destSnapshot.processEvent(Event.OperationFailed);
-                //if backup snapshot failed, mark srcSnapshot in snapshot_store_ref as failed also
+                // if backup snapshot failed, mark srcSnapshot in
+                // snapshot_store_ref as failed also
                 srcSnapshot.processEvent(Event.DestroyRequested);
                 srcSnapshot.processEvent(Event.OperationSuccessed);
 
@@ -430,8 +431,10 @@ public class SnapshotServiceImpl implements SnapshotService {
         return false;
     }
 
-    // This routine is used to push snapshots currently on cache store, but not in region store to region store.
-    // used in migrating existing NFS secondary storage to S3. We chose to push all volume related snapshots to handle delta snapshots smoothly.
+    // This routine is used to push snapshots currently on cache store, but not
+    // in region store to region store.
+    // used in migrating existing NFS secondary storage to S3. We chose to push
+    // all volume related snapshots to handle delta snapshots smoothly.
     @Override
     public void syncVolumeSnapshotsToRegionStore(long volumeId, DataStore store) {
         if (dataStoreMgr.isRegionStore(store)) {
@@ -445,9 +448,12 @@ public class SnapshotServiceImpl implements SnapshotService {
         }
     }
 
-    // push one individual snapshots currently on cache store to region store if it is not there already
-    private void syncSnapshotToRegionStore(long snapshotId, DataStore store){
-        // if snapshot is already on region wide object store, check if it is really downloaded there (by checking install_path). Sync snapshot to region
+    // push one individual snapshots currently on cache store to region store if
+    // it is not there already
+    private void syncSnapshotToRegionStore(long snapshotId, DataStore store) {
+        // if snapshot is already on region wide object store, check if it is
+        // really downloaded there (by checking install_path). Sync snapshot to
+        // region
         // wide store if it is not there physically.
         SnapshotInfo snapOnStore = _snapshotFactory.getSnapshot(snapshotId, store);
         if (snapOnStore == null) {
@@ -466,10 +472,13 @@ public class SnapshotServiceImpl implements SnapshotService {
             try {
                 SnapshotResult result = future.get();
                 if (result.isFailed()) {
-                    throw new CloudRuntimeException("sync snapshot from cache to region wide store failed for image store " + store.getName() + ":"
-                            + result.getResult());
+                    throw new CloudRuntimeException("sync snapshot from cache to region wide store failed for image store " + store.getName() + ":" + result.getResult());
                 }
-                _cacheMgr.releaseCacheObject(srcSnapshot); // reduce reference count for template on cache, so it can recycled by schedule
+                _cacheMgr.releaseCacheObject(srcSnapshot); // reduce reference
+                // count for template
+                // on cache, so it
+                // can recycled by
+                // schedule
             } catch (Exception ex) {
                 throw new CloudRuntimeException("sync snapshot from cache to region wide store failed for image store " + store.getName());
             }
@@ -479,23 +488,21 @@ public class SnapshotServiceImpl implements SnapshotService {
 
     private AsyncCallFuture<SnapshotResult> syncToRegionStoreAsync(SnapshotInfo snapshot, DataStore store) {
         AsyncCallFuture<SnapshotResult> future = new AsyncCallFuture<SnapshotResult>();
-        // no need to create entry on snapshot_store_ref here, since entries are already created when updateCloudToUseObjectStore is invoked.
-        // But we need to set default install path so that sync can be done in the right s3 path
+        // no need to create entry on snapshot_store_ref here, since entries are
+        // already created when updateCloudToUseObjectStore is invoked.
+        // But we need to set default install path so that sync can be done in
+        // the right s3 path
         SnapshotInfo snapshotOnStore = _snapshotFactory.getSnapshot(snapshot, store);
-        String installPath = TemplateConstants.DEFAULT_SNAPSHOT_ROOT_DIR + "/"
-                + snapshot.getAccountId() + "/" + snapshot.getVolumeId();
+        String installPath = TemplateConstants.DEFAULT_SNAPSHOT_ROOT_DIR + "/" + snapshot.getAccountId() + "/" + snapshot.getVolumeId();
         ((SnapshotObject)snapshotOnStore).setPath(installPath);
-        CopySnapshotContext<CommandResult> context = new CopySnapshotContext<CommandResult>(null, snapshot,
-                snapshotOnStore, future);
-        AsyncCallbackDispatcher<SnapshotServiceImpl, CopyCommandResult> caller = AsyncCallbackDispatcher
-                .create(this);
+        CopySnapshotContext<CommandResult> context = new CopySnapshotContext<CommandResult>(null, snapshot, snapshotOnStore, future);
+        AsyncCallbackDispatcher<SnapshotServiceImpl, CopyCommandResult> caller = AsyncCallbackDispatcher.create(this);
         caller.setCallback(caller.getTarget().syncSnapshotCallBack(null, null)).setContext(context);
         motionSrv.copyAsync(snapshot, snapshotOnStore, caller);
         return future;
     }
 
-    protected Void syncSnapshotCallBack(AsyncCallbackDispatcher<SnapshotServiceImpl, CopyCommandResult> callback,
-            CopySnapshotContext<CommandResult> context) {
+    protected Void syncSnapshotCallBack(AsyncCallbackDispatcher<SnapshotServiceImpl, CopyCommandResult> callback, CopySnapshotContext<CommandResult> context) {
         CopyCommandResult result = callback.getResult();
         SnapshotInfo destSnapshot = context.destSnapshot;
         SnapshotResult res = new SnapshotResult(destSnapshot, null);
@@ -504,9 +511,11 @@ public class SnapshotServiceImpl implements SnapshotService {
         try {
             if (result.isFailed()) {
                 res.setResult(result.getResult());
-                // no change to existing snapshot_store_ref, will try to re-sync later if other call triggers this sync operation
+                // no change to existing snapshot_store_ref, will try to re-sync
+                // later if other call triggers this sync operation
             } else {
-                // this will update install path properly, next time it will not sync anymore.
+                // this will update install path properly, next time it will not
+                // sync anymore.
                 destSnapshot.processEvent(Event.OperationSuccessed, result.getAnswer());
             }
             future.complete(res);

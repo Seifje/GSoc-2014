@@ -34,12 +34,13 @@ import com.cloud.utils.Pair;
 import com.cloud.vm.VirtualMachineProfile;
 
 /**
- * TemplateManager manages the templates stored on secondary storage. It is responsible for creating private/public templates.
+ * TemplateManager manages the templates stored on secondary storage. It is
+ * responsible for creating private/public templates.
  */
 public interface TemplateManager {
     static final String AllowPublicUserTemplatesCK = "allow.public.user.templates";
     static final ConfigKey<Boolean> AllowPublicUserTemplates = new ConfigKey<Boolean>("Advanced", Boolean.class, AllowPublicUserTemplatesCK, "true",
-        "If false, users will not be able to create public templates.", true, ConfigKey.Scope.Account);
+            "If false, users will not be able to create public templates.", true, ConfigKey.Scope.Account);
 
     /**
      * Prepares a template for vm creation for a certain storage pool.
@@ -55,7 +56,8 @@ public interface TemplateManager {
     boolean resetTemplateDownloadStateOnPool(long templateStoragePoolRefId);
 
     /**
-     * Copies a template from its current secondary storage server to the secondary storage server in the specified zone.
+     * Copies a template from its current secondary storage server to the
+     * secondary storage server in the specified zone.
      *
      * @param template
      * @param srcSecStore
@@ -72,13 +74,15 @@ public interface TemplateManager {
      * @param userId
      * @param templateId
      * @param zoneId
-     *            - optional. If specified, will only delete the template from the specified zone's secondary storage server.
+     *            - optional. If specified, will only delete the template from
+     *            the specified zone's secondary storage server.
      * @return true if success
      */
     boolean delete(long userId, long templateId, Long zoneId);
 
     /**
-     * Lists templates in the specified storage pool that are not being used by any VM.
+     * Lists templates in the specified storage pool that are not being used by
+     * any VM.
      *
      * @param pool
      * @return list of VMTemplateStoragePoolVO
@@ -113,7 +117,6 @@ public interface TemplateManager {
     List<DataStore> getImageStoreByTemplate(long templateId, Long zoneId);
 
     TemplateInfo prepareIso(long isoId, long dcId);
-
 
     /**
      * Adds ISO definition to given vm profile

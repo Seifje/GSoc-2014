@@ -31,12 +31,13 @@ import com.cloud.utils.net.Ip;
 import com.cloud.vm.VirtualMachineProfile.Param;
 
 public interface InternalLoadBalancerVMManager {
-    //RAM/CPU for the system offering used by Internal LB VMs
-    public static final int DEFAULT_INTERNALLB_VM_RAMSIZE = 128;            // 128 MB
-    public static final int DEFAULT_INTERNALLB_VM_CPU_MHZ = 256;            // 256 MHz
+    // RAM/CPU for the system offering used by Internal LB VMs
+    public static final int DEFAULT_INTERNALLB_VM_RAMSIZE = 128; // 128 MB
+    public static final int DEFAULT_INTERNALLB_VM_CPU_MHZ = 256; // 256 MHz
 
     /**
      * Destroys Internal LB vm instance
+     *
      * @param vmId
      * @param caller
      * @param callerUserId
@@ -48,6 +49,7 @@ public interface InternalLoadBalancerVMManager {
 
     /**
      * Deploys internal lb vm
+     *
      * @param guestNetwork
      * @param requestedGuestIp
      * @param dest
@@ -59,7 +61,7 @@ public interface InternalLoadBalancerVMManager {
      * @throws ResourceUnavailableException
      */
     List<? extends VirtualRouter> deployInternalLbVm(Network guestNetwork, Ip requestedGuestIp, DeployDestination dest, Account owner, Map<Param, Object> params)
-        throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException;
+            throws InsufficientCapacityException, ConcurrentOperationException, ResourceUnavailableException;
 
     /**
      *
@@ -72,7 +74,9 @@ public interface InternalLoadBalancerVMManager {
     boolean applyLoadBalancingRules(Network network, List<LoadBalancingRule> rules, List<? extends VirtualRouter> internalLbVms) throws ResourceUnavailableException;
 
     /**
-     * Returns existing Internal Load Balancer elements based on guestNetworkId (required) and requestedIp (optional)
+     * Returns existing Internal Load Balancer elements based on guestNetworkId
+     * (required) and requestedIp (optional)
+     *
      * @param guestNetworkId
      * @param requestedGuestIp
      * @return

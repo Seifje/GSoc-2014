@@ -60,11 +60,16 @@ import com.cloud.vm.dao.VMInstanceDao;
 @Component
 public class HypervStorageMotionStrategy implements DataMotionStrategy {
     private static final Logger s_logger = Logger.getLogger(HypervStorageMotionStrategy.class);
-    @Inject AgentManager agentMgr;
-    @Inject VolumeDao volDao;
-    @Inject VolumeDataFactory volFactory;
-    @Inject PrimaryDataStoreDao storagePoolDao;
-    @Inject VMInstanceDao instanceDao;
+    @Inject
+    AgentManager agentMgr;
+    @Inject
+    VolumeDao volDao;
+    @Inject
+    VolumeDataFactory volFactory;
+    @Inject
+    PrimaryDataStoreDao storagePoolDao;
+    @Inject
+    VMInstanceDao instanceDao;
 
     @Override
     public StrategyPriority canHandle(DataObject srcData, DataObject destData) {
@@ -73,8 +78,7 @@ public class HypervStorageMotionStrategy implements DataMotionStrategy {
 
     @Override
     public StrategyPriority canHandle(Map<VolumeInfo, DataStore> volumeMap, Host srcHost, Host destHost) {
-        if (srcHost.getHypervisorType() == HypervisorType.Hyperv &&
-                destHost.getHypervisorType() == HypervisorType.Hyperv) {
+        if (srcHost.getHypervisorType() == HypervisorType.Hyperv && destHost.getHypervisorType() == HypervisorType.Hyperv) {
             return StrategyPriority.HYPERVISOR;
         }
 
@@ -96,8 +100,7 @@ public class HypervStorageMotionStrategy implements DataMotionStrategy {
     }
 
     @Override
-    public Void copyAsync(Map<VolumeInfo, DataStore> volumeMap, VirtualMachineTO vmTo, Host srcHost, Host destHost,
-            AsyncCompletionCallback<CopyCommandResult> callback) {
+    public Void copyAsync(Map<VolumeInfo, DataStore> volumeMap, VirtualMachineTO vmTo, Host srcHost, Host destHost, AsyncCompletionCallback<CopyCommandResult> callback) {
         Answer answer = null;
         String errMsg = null;
         try {
@@ -118,8 +121,8 @@ public class HypervStorageMotionStrategy implements DataMotionStrategy {
         return null;
     }
 
-    private Answer migrateVmWithVolumes(VMInstanceVO vm, VirtualMachineTO to, Host srcHost,
-            Host destHost, Map<VolumeInfo, DataStore> volumeToPool) throws AgentUnavailableException {
+    private Answer migrateVmWithVolumes(VMInstanceVO vm, VirtualMachineTO to, Host srcHost, Host destHost, Map<VolumeInfo, DataStore> volumeToPool)
+            throws AgentUnavailableException {
 
         // Initiate migration of a virtual machine with it's volumes.
         try {
@@ -132,14 +135,13 @@ public class HypervStorageMotionStrategy implements DataMotionStrategy {
             }
 
             MigrateWithStorageCommand command = new MigrateWithStorageCommand(to, volumeToFilerto, destHost.getPrivateIpAddress());
-            MigrateWithStorageAnswer answer = (MigrateWithStorageAnswer) agentMgr.send(srcHost.getId(), command);
+            MigrateWithStorageAnswer answer = (MigrateWithStorageAnswer)agentMgr.send(srcHost.getId(), command);
             if (answer == null) {
                 s_logger.error("Migration with storage of vm " + vm + " failed.");
                 throw new CloudRuntimeException("Error while migrating the vm " + vm + " to host " + destHost);
             } else if (!answer.getResult()) {
-                s_logger.error("Migration with storage of vm " + vm+ " failed. Details: " + answer.getDetails());
-                throw new CloudRuntimeException("Error while migrating the vm " + vm + " to host " + destHost +
-                        ". " + answer.getDetails());
+                s_logger.error("Migration with storage of vm " + vm + " failed. Details: " + answer.getDetails());
+                throw new CloudRuntimeException("Error while migrating the vm " + vm + " to host " + destHost + ". " + answer.getDetails());
             } else {
                 // Update the volume details after migration.
                 updateVolumePathsAfterMigration(volumeToPool, answer.getVolumeTos());
@@ -165,8 +167,10 @@ public class HypervStorageMotionStrategy implements DataMotionStrategy {
                     volumeVO.setPodId(pool.getPodId());
                     volumeVO.setPoolId(pool.getId());
                     volumeVO.setLastPoolId(oldPoolId);
-                    // For SMB, pool credentials are also stored in the uri query string.  We trim the query string
-                    // part  here to make sure the credentials do not get stored in the db unencrypted.
+                    // For SMB, pool credentials are also stored in the uri
+                    // query string. We trim the query string
+                    // part here to make sure the credentials do not get stored
+                    // in the db unencrypted.
                     String folder = pool.getPath();
                     if (pool.getPoolType() == StoragePoolType.SMB && folder != null && folder.contains("?")) {
                         folder = folder.substring(0, folder.indexOf("?"));

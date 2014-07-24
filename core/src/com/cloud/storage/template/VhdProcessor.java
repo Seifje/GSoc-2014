@@ -35,9 +35,8 @@ import com.cloud.utils.component.AdapterBase;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 /**
- * VhdProcessor processes the downloaded template for VHD.  It
- * currently does not handle any type of template conversion
- * into the VHD format.
+ * VhdProcessor processes the downloaded template for VHD. It currently does not
+ * handle any type of template conversion into the VHD format.
  *
  */
 @Local(value = Processor.class)
@@ -49,7 +48,7 @@ public class VhdProcessor extends AdapterBase implements Processor {
     private int vhdFooterCreatorAppOffset = 28;
     private int vhdFooterCreatorVerOffset = 32;
     private int vhdFooterCurrentSizeOffset = 48;
-    private byte[][] citrixCreatorApp = { {0x74, 0x61, 0x70, 0x00}, {0x43, 0x54, 0x58, 0x53}}; /*"tap ", and "CTXS"*/
+    private byte[][] citrixCreatorApp = { {0x74, 0x61, 0x70, 0x00}, {0x43, 0x54, 0x58, 0x53}}; /* "tap ", and "CTXS" */
 
     @Override
     public FormatInfo process(String templatePath, ImageFormat format, String templateName) throws InternalErrorException {
@@ -93,7 +92,7 @@ public class VhdProcessor extends AdapterBase implements Processor {
             }
         }
 
-        //imageSignatureCheck(creatorApp);
+        // imageSignatureCheck(creatorApp);
 
         long templateSize = NumbersUtil.bytesToLong(currentSize);
         info.virtualSize = templateSize;
@@ -148,7 +147,10 @@ public class VhdProcessor extends AdapterBase implements Processor {
             }
         }
         if (!findKnownCreator) {
-            /*Only support VHD image created by citrix xenserver, and xenconverter*/
+            /*
+             * Only support VHD image created by citrix xenserver, and
+             * xenconverter
+             */
             String readableCreator = "";
             for (int j = 0; j < creatorApp.length; j++) {
                 readableCreator += (char)creatorApp[j];

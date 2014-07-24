@@ -93,7 +93,8 @@ public class VncMessageHandler extends BaseElement {
                 if (!handleFBU(buf, link))
                     return;
 
-                // Frame buffer update is received and fully processed, send request for
+                // Frame buffer update is received and fully processed, send
+                // request for
                 // another frame buffer update to server.
                 sendFBUR();
 
@@ -179,15 +180,15 @@ public class VncMessageHandler extends BaseElement {
 
         // For all rectangles
 
-        // Restore saved point, to avoid flickering and performance problems when
+        // Restore saved point, to avoid flickering and performance problems
+        // when
         // frame buffer update is split between few incoming packets.
         int numberOfProcessedRectangles = (buf.getMetadata(NUM_OF_PROCESSED_RECTANGLES) != null) ? (Integer)buf.getMetadata(NUM_OF_PROCESSED_RECTANGLES) : 0;
         if (buf.getMetadata(SAVED_CURSOR_POSITION) != null)
             buf.cursor = (Integer)buf.getMetadata(SAVED_CURSOR_POSITION);
 
         if (verbose && numberOfProcessedRectangles > 0)
-            System.out.println("[" + this + "] INFO: Restarting from saved point. Number of already processed rectangles: " + numberOfRectangles + ", cursor: "
-                    + buf.cursor + ".");
+            System.out.println("[" + this + "] INFO: Restarting from saved point. Number of already processed rectangles: " + numberOfRectangles + ", cursor: " + buf.cursor + ".");
 
         // For all new rectangles
         for (int i = numberOfProcessedRectangles; i < numberOfRectangles; i++) {
@@ -232,7 +233,8 @@ public class VncMessageHandler extends BaseElement {
                 throw new RuntimeException("Unsupported ecnoding: " + encodingType + ".");
             }
 
-            // Update information about processed rectangles to avoid handling of same
+            // Update information about processed rectangles to avoid handling
+            // of same
             // rectangle multiple times.
             // TODO: push back partial rectangle only instead
             buf.putMetadata(NUM_OF_PROCESSED_RECTANGLES, ++numberOfProcessedRectangles);
@@ -270,8 +272,8 @@ public class VncMessageHandler extends BaseElement {
         order.height = height;
 
         if (verbose)
-            System.out.println("[" + this + "] INFO: Copy rect. X: " + x + ", y: " + y + ", width: " + width + ", height: " + height + ", srcX: " + order.srcX
-                    + ", srcY: " + order.srcY + ".");
+            System.out.println("[" + this + "] INFO: Copy rect. X: " + x + ", y: " + y + ", width: " + width + ", height: " + height + ", srcX: " + order.srcX + ", srcY: "
+                    + order.srcY + ".");
 
         pushDataToPad(PIXEL_ADAPTER_PAD, new ByteBuffer(order));
 
@@ -288,8 +290,7 @@ public class VncMessageHandler extends BaseElement {
             return false;
 
         if (verbose)
-            System.out.println("[" + this + "] INFO: Raw rect. X: " + x + ", y: " + y + ", width: " + width + ", height: " + height + ", data length: "
-                    + rectDataLength + ".");
+            System.out.println("[" + this + "] INFO: Raw rect. X: " + x + ", y: " + y + ", width: " + width + ", height: " + height + ", data length: " + rectDataLength + ".");
 
         BitmapRectangle rectangle = new BitmapRectangle();
         rectangle.x = x;
@@ -359,7 +360,7 @@ public class VncMessageHandler extends BaseElement {
                         // Number of rectangles
                         0, 3,},
 
-                        new byte[] {
+                new byte[] {
 
                         // x, y, width, height: 0x0@4x4
                         0, 0, 0, 0, 0, 4, 0, 4,
@@ -367,13 +368,13 @@ public class VncMessageHandler extends BaseElement {
                         (byte)((RfbConstants.ENCODING_DESKTOP_SIZE >> 24) & 0xff), (byte)((RfbConstants.ENCODING_DESKTOP_SIZE >> 16) & 0xff),
                         (byte)((RfbConstants.ENCODING_DESKTOP_SIZE >> 8) & 0xff), (byte)((RfbConstants.ENCODING_DESKTOP_SIZE >> 0) & 0xff),},
 
-                        new byte[] {
+                new byte[] {
 
                         // x, y, width, height: 0x0@4x4
                         0, 0, 0, 0, 0, 4, 0, 4,
                         // Encoding: raw rect
-                        (byte)((RfbConstants.ENCODING_RAW >> 24) & 0xff), (byte)((RfbConstants.ENCODING_RAW >> 16) & 0xff),
-                        (byte)((RfbConstants.ENCODING_RAW >> 8) & 0xff), (byte)((RfbConstants.ENCODING_RAW >> 0) & 0xff),
+                        (byte)((RfbConstants.ENCODING_RAW >> 24) & 0xff), (byte)((RfbConstants.ENCODING_RAW >> 16) & 0xff), (byte)((RfbConstants.ENCODING_RAW >> 8) & 0xff),
+                        (byte)((RfbConstants.ENCODING_RAW >> 0) & 0xff),
                         // Raw pixel data 4x4x1 bpp
                         1, 2, 3, 4, 5, 6, 7, 8, 9, 10,}, new byte[] {11, 12, 13, 14, 15, 16,
 
@@ -400,8 +401,7 @@ public class VncMessageHandler extends BaseElement {
         Element bellSink = new MockSink("bell", emptyBuf);
         Element clipboardSink = new MockSink("clipboard", emptyBuf);
         Element desktopSizeChangeSink = new MockSink("desktop_size", emptyBuf);
-        Element pixelsSink = new MockSink("pixels",
-                ByteBuffer.convertByteArraysToByteBuffers(new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,}));
+        Element pixelsSink = new MockSink("pixels", ByteBuffer.convertByteArraysToByteBuffers(new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,}));
         Element copyRectSink = new MockSink("copy_rect", emptyBuf);
 
         Pipeline pipeline = new PipelineImpl("test");

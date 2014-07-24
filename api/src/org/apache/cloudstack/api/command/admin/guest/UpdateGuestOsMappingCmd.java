@@ -31,16 +31,15 @@ import com.cloud.event.EventTypes;
 import com.cloud.storage.GuestOSHypervisor;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateGuestOsMapping", description = "Updates the information about Guest OS to Hypervisor specific name mapping", responseObject = GuestOsMappingResponse.class,
-        since = "4.4.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "updateGuestOsMapping", description = "Updates the information about Guest OS to Hypervisor specific name mapping", responseObject = GuestOsMappingResponse.class, since = "4.4.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateGuestOsMappingCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateGuestOsMappingCmd.class.getName());
 
     private static final String s_name = "updateguestosmappingresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = GuestOsMappingResponse.class, required = true, description = "UUID of the Guest OS to hypervisor name Mapping")
     private Long id;
@@ -48,9 +47,9 @@ public class UpdateGuestOsMappingCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.OS_NAME_FOR_HYPERVISOR, type = CommandType.STRING, required = true, description = "Hypervisor specific name for this Guest OS")
     private String osNameForHypervisor;
 
-/////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -67,8 +66,7 @@ public class UpdateGuestOsMappingCmd extends BaseAsyncCmd {
             GuestOsMappingResponse response = _responseGenerator.createGuestOSMappingResponse(guestOsMapping);
             response.setResponseName(getCommandName());
             setResponseObject(response);
-        }
-        else {
+        } else {
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to update guest OS mapping");
         }
 

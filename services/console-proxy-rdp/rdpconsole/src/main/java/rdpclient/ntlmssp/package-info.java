@@ -21,51 +21,51 @@
  * CredSSP ASN.1 definition:
  *
  <pre>
-CredSSP DEFINITIONS EXPLICIT TAGS ::=
+ CredSSP DEFINITIONS EXPLICIT TAGS ::=
 
-BEGIN
+ BEGIN
 
-TSPasswordCreds ::= SEQUENCE {
-  domainName    [0] OCTET STRING,
-  userName      [1] OCTET STRING,
-  password      [2] OCTET STRING
-}
+ TSPasswordCreds ::= SEQUENCE {
+ domainName    [0] OCTET STRING,
+ userName      [1] OCTET STRING,
+ password      [2] OCTET STRING
+ }
 
-TSCspDataDetail ::= SEQUENCE {
-  keySpec       [0] INTEGER,
-  cardName      [1] OCTET STRING OPTIONAL,
-  readerName    [2] OCTET STRING OPTIONAL,
-  containerName [3] OCTET STRING OPTIONAL,
-  cspName       [4] OCTET STRING OPTIONAL
-}
+ TSCspDataDetail ::= SEQUENCE {
+ keySpec       [0] INTEGER,
+ cardName      [1] OCTET STRING OPTIONAL,
+ readerName    [2] OCTET STRING OPTIONAL,
+ containerName [3] OCTET STRING OPTIONAL,
+ cspName       [4] OCTET STRING OPTIONAL
+ }
 
-TSSmartCardCreds ::= SEQUENCE {
-  pin           [0] OCTET STRING,
-  cspData       [1] TSCspDataDetail,
-  userHint      [2] OCTET STRING OPTIONAL,
-  domainHint    [3] OCTET STRING OPTIONAL
-}
+ TSSmartCardCreds ::= SEQUENCE {
+ pin           [0] OCTET STRING,
+ cspData       [1] TSCspDataDetail,
+ userHint      [2] OCTET STRING OPTIONAL,
+ domainHint    [3] OCTET STRING OPTIONAL
+ }
 
-TSCredentials ::= SEQUENCE {
-  credType      [0] INTEGER,
-  credentials   [1] OCTET STRING
-}
+ TSCredentials ::= SEQUENCE {
+ credType      [0] INTEGER,
+ credentials   [1] OCTET STRING
+ }
 
-NegoData ::= SEQUENCE OF SEQUENCE {
-  negoToken     [0] OCTET STRING
-}
+ NegoData ::= SEQUENCE OF SEQUENCE {
+ negoToken     [0] OCTET STRING
+ }
 
-TSRequest ::= SEQUENCE {
-  version       [0] INTEGER,
-  negoTokens    [1] NegoData OPTIONAL,
-  authInfo      [2] OCTET STRING OPTIONAL,
-  pubKeyAuth    [3] OCTET STRING OPTIONAL
-}
+ TSRequest ::= SEQUENCE {
+ version       [0] INTEGER,
+ negoTokens    [1] NegoData OPTIONAL,
+ authInfo      [2] OCTET STRING OPTIONAL,
+ pubKeyAuth    [3] OCTET STRING OPTIONAL
+ }
 
-END
-</pre>
+ END
+ </pre>
 
-For packet flow, @see http://msdn.microsoft.com/en-us/library/cc226794.aspx
+ For packet flow, @see http://msdn.microsoft.com/en-us/library/cc226794.aspx
  */
 package rdpclient.ntlmssp;
 

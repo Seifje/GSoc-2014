@@ -38,9 +38,9 @@ public class ConsoleProxyInfo {
                 for (int i = 0; i < proxyIpAddress.length(); i++)
                     if (sb.charAt(i) == '.')
                         sb.setCharAt(i, '-');
-                sb.append(consoleProxyUrlDomain.substring(1));//skip the *
+                sb.append(consoleProxyUrlDomain.substring(1));// skip the *
             } else {
-                //LB address
+                // LB address
                 sb.append(consoleProxyUrlDomain);
             }
             proxyAddress = sb.toString();

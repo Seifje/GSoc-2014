@@ -17,7 +17,6 @@
 
 package com.cloud.agent.api;
 
-
 public class OvsFetchInterfaceCommand extends Command {
     String label;
 

@@ -85,7 +85,8 @@ public class UriUtils {
         return file.toURI().toString();
     }
 
-    // a simple URI component helper (Note: it does not deal with URI paramemeter area)
+    // a simple URI component helper (Note: it does not deal with URI
+    // paramemeter area)
     public static String encodeURIComponent(String url) {
         int schemeTail = url.indexOf("://");
 
@@ -152,19 +153,16 @@ public class UriUtils {
             while (iterator.hasNext()) {
                 NameValuePair param = iterator.next();
                 String value = null;
-                if ("password".equalsIgnoreCase(param.getName()) &&
-                        param.getValue() != null) {
+                if ("password".equalsIgnoreCase(param.getName()) && param.getValue() != null) {
                     value = encrypt ? DBEncryptionUtil.encrypt(param.getValue()) : DBEncryptionUtil.decrypt(param.getValue());
                 } else {
                     value = param.getValue();
                 }
 
                 if (updatedQuery.length() == 0) {
-                    updatedQuery.append(param.getName()).append('=')
-                            .append(value);
+                    updatedQuery.append(param.getName()).append('=').append(value);
                 } else {
-                    updatedQuery.append('&').append(param.getName())
-                            .append('=').append(value);
+                    updatedQuery.append('&').append(param.getName()).append('=').append(value);
                 }
             }
 
@@ -188,8 +186,7 @@ public class UriUtils {
             StringTokenizer allParams = new StringTokenizer(query, "&");
             while (allParams.hasMoreTokens()) {
                 String param = allParams.nextToken();
-                details.add(new BasicNameValuePair(param.substring(0, param.indexOf("=")),
-                        param.substring(param.indexOf("=") + 1)));
+                details.add(new BasicNameValuePair(param.substring(0, param.indexOf("=")), param.substring(param.indexOf("=") + 1)));
             }
         }
 
@@ -235,8 +232,7 @@ public class UriUtils {
     public static Pair<String, Integer> validateUrl(String url) throws IllegalArgumentException {
         try {
             URI uri = new URI(url);
-            if ((uri.getScheme() == null) ||
-                (!uri.getScheme().equalsIgnoreCase("http") && !uri.getScheme().equalsIgnoreCase("https") && !uri.getScheme().equalsIgnoreCase("file"))) {
+            if ((uri.getScheme() == null) || (!uri.getScheme().equalsIgnoreCase("http") && !uri.getScheme().equalsIgnoreCase("https") && !uri.getScheme().equalsIgnoreCase("file"))) {
                 throw new IllegalArgumentException("Unsupported scheme for url: " + url);
             }
             int port = uri.getPort();

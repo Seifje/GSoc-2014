@@ -47,17 +47,17 @@ public interface AccountDao extends GenericDao<AccountVO, Long> {
 
     List<AccountVO> findCleanupsForDisabledAccounts();
 
-    //return account only in enabled state
+    // return account only in enabled state
     Account findEnabledAccount(String accountName, Long domainId);
 
     Account findEnabledNonProjectAccount(String accountName, Long domainId);
 
-    //returns account even when it's removed
+    // returns account even when it's removed
     Account findAccountIncludingRemoved(String accountName, Long domainId);
 
     Account findNonProjectAccountIncludingRemoved(String accountName, Long domainId);
 
-    //returns only non-removed account
+    // returns only non-removed account
     Account findActiveAccount(String accountName, Long domainId);
 
     Account findActiveNonProjectAccount(String accountName, Long domainId);

@@ -25,19 +25,24 @@ import com.cloud.storage.Snapshot;
 public interface SnapshotEntity extends CloudStackEntity, Snapshot {
     /**
      * Make a reservation for backing up this snapshot
-     * @param expiration time in seconds to expire the reservation
+     *
+     * @param expiration
+     *            time in seconds to expire the reservation
      * @return reservation token
      */
     String reserveForBackup(int expiration);
 
     /**
      * Perform the backup according to the reservation token
-     * @param reservationToken token returned by reserveForBackup
+     *
+     * @param reservationToken
+     *            token returned by reserveForBackup
      */
     void backup(String reservationToken);
 
     /**
      * restore this snapshot to this vm.
+     *
      * @param vm
      */
     void restore(String vm);

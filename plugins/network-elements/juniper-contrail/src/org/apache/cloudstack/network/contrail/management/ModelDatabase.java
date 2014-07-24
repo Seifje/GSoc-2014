@@ -51,7 +51,7 @@ public class ModelDatabase {
     public ServiceInstanceModel lookupServiceInstance(String fqn) {
         ServiceInstanceModel siKey = new ServiceInstanceModel(fqn);
         ServiceInstanceModel current = _serviceInstanceTable.ceiling(siKey);
-        if  (current != null && current.getQualifiedName().equals(fqn)) {
+        if (current != null && current.getQualifiedName().equals(fqn)) {
             return current;
         }
         return null;

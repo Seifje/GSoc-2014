@@ -55,7 +55,7 @@ public class BasicAgentAuthManager extends AdapterBase implements AgentAuthorize
             throw new ConnectionException(true, "Failed to authenticate/authorize", e);
         }
         s_logger.debug("Authorized agent with guid " + cmd[0].getGuid());
-        return false;//so that the next host creator can process it
+        return false;// so that the next host creator can process it
     }
 
     @Override

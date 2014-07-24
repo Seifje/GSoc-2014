@@ -43,7 +43,7 @@ public class SecurityGroupWorkVO implements SecurityGroupWork, InternalIdentity 
     private Long id;
 
     @Column(name = "instance_id", updatable = false, nullable = false)
-    private Long instanceId;    // vm_instance id
+    private Long instanceId; // vm_instance id
 
     @Column(name = "mgmt_server_id", nullable = true)
     private Long serverId;

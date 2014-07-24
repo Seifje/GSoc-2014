@@ -211,7 +211,7 @@ public class VmwareSecondaryStorageResourceHandler implements SecondaryStorageRe
 
             VmwareContext context = currentContext.get();
             if (context != null) {
-                if(!context.validate()) {
+                if (!context.validate()) {
                     invalidateServiceContext(context);
                     context = null;
                 } else {
@@ -220,9 +220,8 @@ public class VmwareSecondaryStorageResourceHandler implements SecondaryStorageRe
                     context.registerStockObject("noderuninfo", cmd.getContextParam("noderuninfo"));
                 }
             }
-            if(context == null) {
-                s_logger.info("Open new VmwareContext. vCenter: " + vCenterAddress + ", user: " + username + ", password: " +
-                        StringUtils.getMaskedPasswordForDisplay(password));
+            if (context == null) {
+                s_logger.info("Open new VmwareContext. vCenter: " + vCenterAddress + ", user: " + username + ", password: " + StringUtils.getMaskedPasswordForDisplay(password));
                 VmwareSecondaryStorageContextFactory.setVcenterSessionTimeout(vCenterSessionTimeout);
                 context = VmwareSecondaryStorageContextFactory.getContext(vCenterAddress, username, password);
             }
@@ -279,9 +278,8 @@ public class VmwareSecondaryStorageResourceHandler implements SecondaryStorageRe
                 for (Pair<ManagedObjectReference, String> hostPair : hostsInCluster) {
                     HostMO hostIteratorMo = new HostMO(hostMo.getContext(), hostPair.first());
 
-                    VmwareHypervisorHostNetworkSummary netSummary =
-                        hostIteratorMo.getHyperHostNetworkSummary(hostIteratorMo.getHostType() == VmwareHostType.ESXi ? cmd.getContextParam("manageportgroup")
-                            : cmd.getContextParam("serviceconsole"));
+                    VmwareHypervisorHostNetworkSummary netSummary = hostIteratorMo.getHyperHostNetworkSummary(hostIteratorMo.getHostType() == VmwareHostType.ESXi ? cmd
+                            .getContextParam("manageportgroup") : cmd.getContextParam("serviceconsole"));
                     _resource.ensureOutgoingRuleForAddress(netSummary.getHostIp());
 
                     s_logger.info("Setup firewall rule for host: " + netSummary.getHostIp());

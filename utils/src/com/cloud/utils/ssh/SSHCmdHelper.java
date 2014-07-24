@@ -97,7 +97,8 @@ public class SSHCmdHelper {
         try {
             sshSession = sshConnection.openSession();
             // There is a bug in Trilead library, wait a second before
-            // starting a shell and executing commands, from http://spci.st.ewi.tudelft.nl/chiron/xref/nl/tudelft/swerl/util/SSHConnection.html
+            // starting a shell and executing commands, from
+            // http://spci.st.ewi.tudelft.nl/chiron/xref/nl/tudelft/swerl/util/SSHConnection.html
             Thread.sleep(1000);
 
             if (sshSession == null) {
@@ -118,9 +119,8 @@ public class SSHCmdHelper {
                     throw new SshException("stdout or stderr of ssh session is null");
                 }
                 if ((stdout.available() == 0) && (stderr.available() == 0)) {
-                    int conditions = sshSession.waitForCondition(ChannelCondition.STDOUT_DATA
-                                | ChannelCondition.STDERR_DATA | ChannelCondition.EOF | ChannelCondition.EXIT_STATUS,
-                                120000);
+                    int conditions = sshSession.waitForCondition(ChannelCondition.STDOUT_DATA | ChannelCondition.STDERR_DATA | ChannelCondition.EOF | ChannelCondition.EXIT_STATUS,
+                            120000);
 
                     if ((conditions & ChannelCondition.TIMEOUT) != 0) {
                         String msg = "Timed out in waiting SSH execution result";
@@ -156,7 +156,7 @@ public class SSHCmdHelper {
             if (result != null && !result.isEmpty())
                 s_logger.debug(cmd + " output:" + result);
 
-             return sshSession.getExitStatus();
+            return sshSession.getExitStatus();
         } catch (Exception e) {
             s_logger.debug("Ssh executed failed", e);
             throw new SshException("Ssh executed failed " + e.getMessage());

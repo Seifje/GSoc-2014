@@ -41,30 +41,25 @@ import com.cloud.utils.exception.CloudRuntimeException;
 
 /**
  * ConfigDepotImpl implements the ConfigDepot and ConfigDepotAdmin interface.
- * Its functionalities include:
- *   - Control how dynamic config values are cached and refreshed.
- *   - Control how scoped config values are stored.
- *   - Gather all of the Configurable interfaces and insert their config
- *     variables into the config table.
- *   - Hide the data source where configs are stored and retrieved.
+ * Its functionalities include: - Control how dynamic config values are cached
+ * and refreshed. - Control how scoped config values are stored. - Gather all of
+ * the Configurable interfaces and insert their config variables into the config
+ * table. - Hide the data source where configs are stored and retrieved.
  *
  * When dealing with this class, we must be very careful on cluster situations.
  *
- * TODO:
- *   - Move the rest of the changes to the config table to here.
- *   - Add the code to mark the rows in configuration table without
- *     the corresponding keys to be null.
- *   - Move all of the configurations to using ConfigDepot
- *   - Completely eliminate Config.java
- *   - Figure out the correct categories.
- *   - Add a scope for management server, where if the scope is management server
- *     then the override is retrieved from a properties file.  Imagine adding a
- *     new management server node and it is much more capable system than previous
- *     management servers, you want the adjustments to thread pools etc to be
- *     very different than other management serves.
- *   - Add validation methods to ConfigKey<?>.  If a validation class is declared
- *     when constructing a ConfigKey then configuration server should use the
- *     validation class to validate the value the admin input for the key.
+ * TODO: - Move the rest of the changes to the config table to here. - Add the
+ * code to mark the rows in configuration table without the corresponding keys
+ * to be null. - Move all of the configurations to using ConfigDepot -
+ * Completely eliminate Config.java - Figure out the correct categories. - Add a
+ * scope for management server, where if the scope is management server then the
+ * override is retrieved from a properties file. Imagine adding a new management
+ * server node and it is much more capable system than previous management
+ * servers, you want the adjustments to thread pools etc to be very different
+ * than other management serves. - Add validation methods to ConfigKey<?>. If a
+ * validation class is declared when constructing a ConfigKey then configuration
+ * server should use the validation class to validate the value the admin input
+ * for the key.
  */
 public class ConfigDepotImpl implements ConfigDepot, ConfigDepotAdmin {
     private final static Logger s_logger = Logger.getLogger(ConfigDepotImpl.class);
@@ -110,8 +105,8 @@ public class ConfigDepotImpl implements ConfigDepot, ConfigDepotAdmin {
         for (ConfigKey<?> key : configurable.getConfigKeys()) {
             Pair<String, ConfigKey<?>> previous = _allKeys.get(key.key());
             if (previous != null && !previous.first().equals(configurable.getConfigComponentName())) {
-                throw new CloudRuntimeException("Configurable " + configurable.getConfigComponentName() + " is adding a key that has been added before by " +
-                    previous.first() + ": " + key.toString());
+                throw new CloudRuntimeException("Configurable " + configurable.getConfigComponentName() + " is adding a key that has been added before by " + previous.first()
+                        + ": " + key.toString());
             }
             _allKeys.put(key.key(), new Pair<String, ConfigKey<?>>(configurable.getConfigComponentName(), key));
 

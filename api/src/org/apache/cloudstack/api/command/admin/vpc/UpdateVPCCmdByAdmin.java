@@ -32,7 +32,7 @@ public class UpdateVPCCmdByAdmin extends UpdateVPCCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateVPCCmdByAdmin.class.getName());
 
     @Override
-    public void execute(){
+    public void execute() {
         Vpc result = _vpcService.updateVpc(getId(), getVpcName(), getDisplayText(), getCustomId(), getDisplayVpc());
         if (result != null) {
             VpcResponse response = _responseGenerator.createVpcResponse(ResponseView.Full, result);
@@ -42,6 +42,5 @@ public class UpdateVPCCmdByAdmin extends UpdateVPCCmd {
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to update VPC");
         }
     }
-
 
 }

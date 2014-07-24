@@ -150,13 +150,12 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
         GlobalLoadBalancerRuleVO newGslbRule = Transaction.execute(new TransactionCallback<GlobalLoadBalancerRuleVO>() {
             @Override
             public GlobalLoadBalancerRuleVO doInTransaction(TransactionStatus status) {
-                GlobalLoadBalancerRuleVO newGslbRule =
-                    new GlobalLoadBalancerRuleVO(name, description, domainName, algorithm, stickyMethod, serviceType, regionId, gslbOwner.getId(),
-                        gslbOwner.getDomainId(), GlobalLoadBalancerRule.State.Staged);
+                GlobalLoadBalancerRuleVO newGslbRule = new GlobalLoadBalancerRuleVO(name, description, domainName, algorithm, stickyMethod, serviceType, regionId, gslbOwner
+                        .getId(), gslbOwner.getDomainId(), GlobalLoadBalancerRule.State.Staged);
                 _gslbRuleDao.persist(newGslbRule);
 
                 UsageEventUtils.publishUsageEvent(EventTypes.EVENT_GLOBAL_LOAD_BALANCER_CREATE, newGslbRule.getAccountId(), 0, newGslbRule.getId(), name,
-                    GlobalLoadBalancerRule.class.getName(), newGslbRule.getUuid());
+                        GlobalLoadBalancerRule.class.getName(), newGslbRule.getUuid());
 
                 return newGslbRule;
             }
@@ -169,9 +168,7 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
 
     @Override
     @DB
-    @ActionEvent(eventType = EventTypes.EVENT_ASSIGN_TO_GLOBAL_LOAD_BALANCER_RULE,
-                 eventDescription = "Assigning a load balancer rule to global load balancer rule",
-                 async = true)
+    @ActionEvent(eventType = EventTypes.EVENT_ASSIGN_TO_GLOBAL_LOAD_BALANCER_RULE, eventDescription = "Assigning a load balancer rule to global load balancer rule", async = true)
     public boolean assignToGlobalLoadBalancerRule(AssignToGlobalLoadBalancerRuleCmd assignToGslbCmd) {
 
         CallContext ctx = CallContext.current();
@@ -199,7 +196,8 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
         List<Long> newZones = new ArrayList<Long>(oldZones);
         List<Pair<Long, Long>> physcialNetworks = new ArrayList<Pair<Long, Long>>();
 
-        // get the list of load balancer rules id's that are assigned currently to GSLB rule and corresponding zone id's
+        // get the list of load balancer rules id's that are assigned currently
+        // to GSLB rule and corresponding zone id's
         List<GlobalLoadBalancerLbRuleMapVO> gslbLbMapVos = _gslbLbMapDao.listByGslbRuleId(gslbRuleId);
         if (gslbLbMapVos != null) {
             for (GlobalLoadBalancerLbRuleMapVO gslbLbMapVo : gslbLbMapVos) {
@@ -210,12 +208,11 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
             }
         }
 
-        /* check each of the load balancer rule id passed in the 'AssignToGlobalLoadBalancerRuleCmd' command is
-         *     valid ID
-         *     caller has access to the rule
-         *     check rule is not revoked
-         *     no two rules are in same zone
-         *     rule is not already assigned to gslb rule
+        /*
+         * check each of the load balancer rule id passed in the
+         * 'AssignToGlobalLoadBalancerRuleCmd' command is valid ID caller has
+         * access to the rule check rule is not revoked no two rules are in same
+         * zone rule is not already assigned to gslb rule
          */
         for (Long lbRuleId : newLbRuleIds) {
 
@@ -248,11 +245,11 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
             physcialNetworks.add(new Pair<Long, Long>(network.getDataCenterId(), network.getPhysicalNetworkId()));
         }
 
-        // for each of the physical network check if GSLB service provider configured
+        // for each of the physical network check if GSLB service provider
+        // configured
         for (Pair<Long, Long> physicalNetwork : physcialNetworks) {
             if (!checkGslbServiceEnabledInZone(physicalNetwork.first(), physicalNetwork.second())) {
-                throw new InvalidParameterValueException("GSLB service is not enabled in the Zone:" + physicalNetwork.first() + " and physical network " +
-                    physicalNetwork.second());
+                throw new InvalidParameterValueException("GSLB service is not enabled in the Zone:" + physicalNetwork.first() + " and physical network " + physicalNetwork.second());
             }
         }
 
@@ -261,7 +258,8 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
         Transaction.execute(new TransactionCallbackNoReturn() {
             @Override
             public void doInTransactionWithoutResult(TransactionStatus status) {
-                // persist the mapping for the new Lb rule that needs to assigned to a gslb rule
+                // persist the mapping for the new Lb rule that needs to
+                // assigned to a gslb rule
                 for (Long lbRuleId : newLbRuleIds) {
                     GlobalLoadBalancerLbRuleMapVO newGslbLbMap = new GlobalLoadBalancerLbRuleMapVO();
                     newGslbLbMap.setGslbLoadBalancerId(gslbRuleId);
@@ -284,7 +282,8 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
         try {
             s_logger.debug("Configuring gslb rule configuration on the gslb service providers in the participating zones");
 
-            // apply the gslb rule on to the back end gslb service providers on zones participating in gslb
+            // apply the gslb rule on to the back end gslb service providers on
+            // zones participating in gslb
             if (!applyGlobalLoadBalancerRuleConfig(gslbRuleId, false)) {
                 s_logger.warn("Failed to add load balancer rules " + newLbRuleIds + " to global load balancer rule id " + gslbRuleId);
                 CloudRuntimeException ex = new CloudRuntimeException("Failed to add load balancer rules to GSLB rule ");
@@ -306,8 +305,7 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
 
     @Override
     @DB
-    @ActionEvent(eventType = EventTypes.EVENT_REMOVE_FROM_GLOBAL_LOAD_BALANCER_RULE,
-                 eventDescription = "Removing a load balancer rule to be part of global load balancer rule")
+    @ActionEvent(eventType = EventTypes.EVENT_REMOVE_FROM_GLOBAL_LOAD_BALANCER_RULE, eventDescription = "Removing a load balancer rule to be part of global load balancer rule")
     public boolean removeFromGlobalLoadBalancerRule(RemoveFromGlobalLoadBalancerRuleCmd removeFromGslbCmd) {
 
         CallContext ctx = CallContext.current();
@@ -330,14 +328,15 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
             throw new InvalidParameterValueException("empty list of load balancer rule Ids specified to be un-assigned" + " to global load balancer rule");
         }
 
-        // get the active list of LB rule id's that are assigned currently to GSLB rule and corresponding zone id's
+        // get the active list of LB rule id's that are assigned currently to
+        // GSLB rule and corresponding zone id's
         List<Long> oldLbRuleIds = new ArrayList<Long>();
         List<Long> oldZones = new ArrayList<Long>();
 
         List<GlobalLoadBalancerLbRuleMapVO> gslbLbMapVos = _gslbLbMapDao.listByGslbRuleId(gslbRuleId);
         if (gslbLbMapVos == null) {
-            throw new InvalidParameterValueException(" There are no load balancer rules that are assigned to global " + " load balancer rule id: " + gslbRule.getUuid() +
-                " that are available for deletion");
+            throw new InvalidParameterValueException(" There are no load balancer rules that are assigned to global " + " load balancer rule id: " + gslbRule.getUuid()
+                    + " that are available for deletion");
         }
 
         for (Long lbRuleId : lbRuleIdsToremove) {
@@ -359,8 +358,7 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
         for (Long lbRuleId : lbRuleIdsToremove) {
             LoadBalancerVO loadBalancer = _lbDao.findById(lbRuleId);
             if (oldLbRuleIds != null && !oldLbRuleIds.contains(loadBalancer.getId())) {
-                throw new InvalidParameterValueException("Load balancer ID " + loadBalancer.getUuid() + " is not assigned" + " to global load balancer rule: " +
-                    gslbRule.getUuid());
+                throw new InvalidParameterValueException("Load balancer ID " + loadBalancer.getUuid() + " is not assigned" + " to global load balancer rule: " + gslbRule.getUuid());
             }
         }
 
@@ -397,7 +395,8 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
             Transaction.execute(new TransactionCallbackNoReturn() {
                 @Override
                 public void doInTransactionWithoutResult(TransactionStatus status) {
-                    // remove the mappings of gslb rule to Lb rule that are in revoked state
+                    // remove the mappings of gslb rule to Lb rule that are in
+                    // revoked state
                     for (Long lbRuleId : lbRuleIdsToremove) {
                         GlobalLoadBalancerLbRuleMapVO removeGslbLbMap = _gslbLbMapDao.findByGslbRuleIdAndLbRuleId(gslbRuleId, lbRuleId);
                         _gslbLbMapDao.remove(removeGslbLbMap.getId());
@@ -453,10 +452,10 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
             }
             _gslbRuleDao.remove(gslbRuleId);
             UsageEventUtils.publishUsageEvent(EventTypes.EVENT_GLOBAL_LOAD_BALANCER_DELETE, gslbRule.getAccountId(), 0, gslbRule.getId(), gslbRule.getName(),
-                GlobalLoadBalancerRule.class.getName(), gslbRule.getUuid());
+                    GlobalLoadBalancerRule.class.getName(), gslbRule.getUuid());
             return;
         } else if (gslbRule.getState() == GlobalLoadBalancerRule.State.Add || gslbRule.getState() == GlobalLoadBalancerRule.State.Active) {
-            //mark the GSlb rule to be in revoke state
+            // mark the GSlb rule to be in revoke state
             gslbRule.setState(GlobalLoadBalancerRule.State.Revoke);
             _gslbRuleDao.update(gslbRuleId, gslbRule);
         }
@@ -466,7 +465,8 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
             public List<GlobalLoadBalancerLbRuleMapVO> doInTransaction(TransactionStatus status) {
                 List<GlobalLoadBalancerLbRuleMapVO> gslbLbMapVos = _gslbLbMapDao.listByGslbRuleId(gslbRuleId);
                 if (gslbLbMapVos != null) {
-                    //mark all the GSLB-LB mapping to be in revoke state
+                    // mark all the GSLB-LB mapping to be in revoke
+                    // state
                     for (GlobalLoadBalancerLbRuleMapVO gslbLbMap : gslbLbMapVos) {
                         gslbLbMap.setRevoke(true);
                         _gslbLbMapDao.update(gslbLbMap.getId(), gslbLbMap);
@@ -490,18 +490,18 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
         Transaction.execute(new TransactionCallbackNoReturn() {
             @Override
             public void doInTransactionWithoutResult(TransactionStatus status) {
-                //remove all mappings between GSLB rule and load balancer rules
+                // remove all mappings between GSLB rule and load balancer rules
                 if (gslbLbMapVos != null) {
                     for (GlobalLoadBalancerLbRuleMapVO gslbLbMap : gslbLbMapVos) {
                         _gslbLbMapDao.remove(gslbLbMap.getId());
                     }
                 }
 
-                //remove the GSLB rule itself
+                // remove the GSLB rule itself
                 _gslbRuleDao.remove(gslbRuleId);
 
                 UsageEventUtils.publishUsageEvent(EventTypes.EVENT_GLOBAL_LOAD_BALANCER_DELETE, gslbRule.getAccountId(), 0, gslbRule.getId(), gslbRule.getName(),
-                    GlobalLoadBalancerRule.class.getName(), gslbRule.getUuid());
+                        GlobalLoadBalancerRule.class.getName(), gslbRule.getUuid());
             }
         });
 
@@ -548,7 +548,8 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
         try {
             s_logger.debug("Updating global load balancer with id " + gslbRule.getUuid());
 
-            // apply the gslb rule on to the back end gslb service providers on zones participating in gslb
+            // apply the gslb rule on to the back end gslb service providers on
+            // zones participating in gslb
             applyGlobalLoadBalancerRuleConfig(gslbRuleId, false);
 
             // on success set state to Active
@@ -623,8 +624,10 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
         String persistenceMethod = gslbRule.getPersistence();
         String serviceType = gslbRule.getServiceType();
 
-        // each Gslb rule will have a FQDN, formed from the domain name associated with the gslb rule
-        // and the deployment DNS name configured in global config parameter 'cloud.dns.name'
+        // each Gslb rule will have a FQDN, formed from the domain name
+        // associated with the gslb rule
+        // and the deployment DNS name configured in global config parameter
+        // 'cloud.dns.name'
         String domainName = gslbRule.getGslbDomain();
         String providerDnsName = _globalConfigDao.getValue(Config.CloudDnsName.key());
         String gslbFqdn = domainName + "." + providerDnsName;
@@ -634,7 +637,8 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
         // list of the physical network participating in global load balancing
         List<Pair<Long, Long>> gslbSiteIds = new ArrayList<Pair<Long, Long>>();
 
-        // map of the zone and info corresponding to the load balancer configured in the zone
+        // map of the zone and info corresponding to the load balancer
+        // configured in the zone
         Map<Long, SiteLoadBalancerConfig> zoneSiteLoadbalancerMap = new HashMap<Long, SiteLoadBalancerConfig>();
 
         List<GlobalLoadBalancerLbRuleMapVO> gslbLbMapVos = _gslbLbMapDao.listByGslbRuleId(gslbRuleId);
@@ -652,9 +656,8 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
             gslbSiteIds.add(new Pair<Long, Long>(dataCenterId, physicalNetworkId));
 
             IPAddressVO ip = _ipAddressDao.findById(loadBalancer.getSourceIpAddressId());
-            SiteLoadBalancerConfig siteLb =
-                new SiteLoadBalancerConfig(gslbLbMapVo.isRevoke(), serviceType, ip.getAddress().addr(), Integer.toString(loadBalancer.getDefaultPortStart()),
-                    dataCenterId);
+            SiteLoadBalancerConfig siteLb = new SiteLoadBalancerConfig(gslbLbMapVo.isRevoke(), serviceType, ip.getAddress().addr(), Integer.toString(loadBalancer
+                    .getDefaultPortStart()), dataCenterId);
 
             siteLb.setGslbProviderPublicIp(_gslbProvider.getZoneGslbProviderPublicIp(dataCenterId, physicalNetworkId));
             siteLb.setGslbProviderPrivateIp(_gslbProvider.getZoneGslbProviderPrivateIp(dataCenterId, physicalNetworkId));
@@ -663,7 +666,8 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
             zoneSiteLoadbalancerMap.put(network.getDataCenterId(), siteLb);
         }
 
-        // loop through all the zones, participating in GSLB, and send GSLB config command
+        // loop through all the zones, participating in GSLB, and send GSLB
+        // config command
         // to the corresponding GSLB service provider in that zone
         for (Pair<Long, Long> zoneId : gslbSiteIds) {
 
@@ -678,7 +682,8 @@ public class GlobalLoadBalancingRulesServiceImpl implements GlobalLoadBalancingR
             gslbConfigCmd.setSiteLoadBalancers(slbs);
             gslbConfigCmd.setForRevoke(revoke);
 
-            // revoke GSLB configuration completely on the site GSLB provider for the sites that no longer
+            // revoke GSLB configuration completely on the site GSLB provider
+            // for the sites that no longer
             // are participants of a GSLB rule
             SiteLoadBalancerConfig siteLb = zoneSiteLoadbalancerMap.get(zoneId.first());
             if (siteLb.forRevoke()) {

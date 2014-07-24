@@ -36,9 +36,12 @@ import com.cloud.vm.dao.VMInstanceDao;
 public class VirtualMachinePowerStateSyncImpl implements VirtualMachinePowerStateSync {
     private static final Logger s_logger = Logger.getLogger(VirtualMachinePowerStateSyncImpl.class);
 
-    @Inject MessageBus _messageBus;
-    @Inject VMInstanceDao _instanceDao;
-    @Inject VirtualMachineManager _vmMgr;
+    @Inject
+    MessageBus _messageBus;
+    @Inject
+    VMInstanceDao _instanceDao;
+    @Inject
+    VirtualMachineManager _vmMgr;
 
     protected final ConfigKey<Integer> PingInterval = new ConfigKey<Integer>(Integer.class, "ping.interval", "Advanced", "60",
             "Interval to send application level pings to make sure the connection is still working", false);
@@ -92,8 +95,8 @@ public class VirtualMachinePowerStateSyncImpl implements VirtualMachinePowerStat
         }
 
         // for all running/stopping VMs, we provide monitoring of missing report
-        List<VMInstanceVO> vmsThatAreMissingReport = _instanceDao.findByHostInStates(hostId, VirtualMachine.State.Running,
-                VirtualMachine.State.Stopping, VirtualMachine.State.Starting);
+        List<VMInstanceVO> vmsThatAreMissingReport = _instanceDao.findByHostInStates(hostId, VirtualMachine.State.Running, VirtualMachine.State.Stopping,
+                VirtualMachine.State.Starting);
         java.util.Iterator<VMInstanceVO> it = vmsThatAreMissingReport.iterator();
         while (it.hasNext()) {
             VMInstanceVO instance = it.next();
@@ -118,8 +121,8 @@ public class VirtualMachinePowerStateSyncImpl implements VirtualMachinePowerStat
                 }
 
                 if (s_logger.isDebugEnabled())
-                    s_logger.debug("Detected missing VM. host: " + hostId + ", vm id: " + instance.getId() +
-                            ", power state: PowerReportMissing, last state update: " + vmStateUpdateTime.getTime());
+                    s_logger.debug("Detected missing VM. host: " + hostId + ", vm id: " + instance.getId() + ", power state: PowerReportMissing, last state update: "
+                            + vmStateUpdateTime.getTime());
 
                 long milliSecondsSinceLastStateUpdate = currentTime.getTime() - vmStateUpdateTime.getTime();
 

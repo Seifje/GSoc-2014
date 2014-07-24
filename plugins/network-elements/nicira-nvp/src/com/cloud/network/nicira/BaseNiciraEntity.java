@@ -23,7 +23,7 @@ import java.io.Serializable;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 public abstract class BaseNiciraEntity implements Serializable {
@@ -57,15 +57,12 @@ public abstract class BaseNiciraEntity implements Serializable {
 
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE, false);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE, false);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 31)
-                .append(this.getClass())
-                .append(uuid)
-                .toHashCode();
+        return new HashCodeBuilder(17, 31).append(this.getClass()).append(uuid).toHashCode();
     }
 
     @Override
@@ -79,7 +76,7 @@ public abstract class BaseNiciraEntity implements Serializable {
         if (!(this.getClass().isInstance(obj))) {
             return false;
         }
-        final BaseNiciraEntity another = (BaseNiciraEntity) obj;
+        final BaseNiciraEntity another = (BaseNiciraEntity)obj;
         return new EqualsBuilder().append(uuid, another.uuid).isEquals();
     }
 }

@@ -81,7 +81,8 @@ public class VsmCommand {
             target.appendChild(running);
             editConfig.appendChild(target);
 
-            // Command to create the port profile with the desired configuration.
+            // Command to create the port profile with the desired
+            // configuration.
             Element config = doc.createElement("nf:config");
             config.appendChild(configPortProfileDetails(doc, name, type, binding, mode, vlanid, vdc, espName));
             editConfig.appendChild(config);
@@ -114,7 +115,8 @@ public class VsmCommand {
             target.appendChild(running);
             editConfig.appendChild(target);
 
-            // Command to create the port profile with the desired configuration.
+            // Command to create the port profile with the desired
+            // configuration.
             Element config = doc.createElement("nf:config");
             config.appendChild(configPortProfileDetails(doc, name, type, binding, mode, vlanid));
             editConfig.appendChild(config);
@@ -147,7 +149,8 @@ public class VsmCommand {
             target.appendChild(running);
             editConfig.appendChild(target);
 
-            // Command to update the port profile with the desired configuration.
+            // Command to update the port profile with the desired
+            // configuration.
             Element config = doc.createElement("nf:config");
             config.appendChild(configPortProfileDetails(doc, name, mode, params));
             editConfig.appendChild(config);
@@ -180,7 +183,8 @@ public class VsmCommand {
             target.appendChild(running);
             editConfig.appendChild(target);
 
-            // Command to create the port profile with the desired configuration.
+            // Command to create the port profile with the desired
+            // configuration.
             Element config = doc.createElement("nf:config");
             config.appendChild(deletePortProfileDetails(doc, portName));
             editConfig.appendChild(config);
@@ -213,7 +217,8 @@ public class VsmCommand {
             target.appendChild(running);
             editConfig.appendChild(target);
 
-            // Command to create the port profile with the desired configuration.
+            // Command to create the port profile with the desired
+            // configuration.
             Element config = doc.createElement("nf:config");
             config.appendChild(policyMapDetails(doc, name, averageRate, maxRate, burstRate));
             editConfig.appendChild(config);
@@ -246,7 +251,8 @@ public class VsmCommand {
             target.appendChild(running);
             editConfig.appendChild(target);
 
-            // Command to create the port profile with the desired configuration.
+            // Command to create the port profile with the desired
+            // configuration.
             Element config = doc.createElement("nf:config");
             config.appendChild(deletePolicyMapDetails(doc, name));
             editConfig.appendChild(config);
@@ -279,7 +285,8 @@ public class VsmCommand {
             target.appendChild(running);
             editConfig.appendChild(target);
 
-            // Command to create the port profile with the desired configuration.
+            // Command to create the port profile with the desired
+            // configuration.
             Element config = doc.createElement("nf:config");
             config.appendChild(serviceDetails(doc, policyMap, portProfile, attach));
             editConfig.appendChild(config);
@@ -409,7 +416,8 @@ public class VsmCommand {
             target.appendChild(running);
             editConfig.appendChild(target);
 
-            // Command to create the port profile with the desired configuration.
+            // Command to create the port profile with the desired
+            // configuration.
             Element config = doc.createElement("nf:config");
             config.appendChild(configVServiceNodeDetails(doc, vlanId, ipAddr));
             editConfig.appendChild(config);
@@ -432,10 +440,8 @@ public class VsmCommand {
 
         // vservice node %name% type asa
         Element vservice = doc.createElement("vservice");
-        vservice.appendChild(doc.createElement("node"))
-            .appendChild(doc.createElement("ASA_" + vlanId))
-            .appendChild(doc.createElement("type"))
-            .appendChild(doc.createElement("asa"));
+        vservice.appendChild(doc.createElement("node")).appendChild(doc.createElement("ASA_" + vlanId)).appendChild(doc.createElement("type"))
+        .appendChild(doc.createElement("asa"));
         modeConfigure.appendChild(vservice);
 
         Element address = doc.createElement(s_paramvalue);
@@ -450,11 +456,8 @@ public class VsmCommand {
         vlan.setTextContent(vlanId);
 
         // adjacency l2 vlan %vlanId%
-        modeConfigure.appendChild(doc.createElement("adjacency"))
-            .appendChild(doc.createElement("l2"))
-            .appendChild(doc.createElement("vlan"))
-            .appendChild(doc.createElement("value"))
-            .appendChild(vlan);
+        modeConfigure.appendChild(doc.createElement("adjacency")).appendChild(doc.createElement("l2")).appendChild(doc.createElement("vlan"))
+        .appendChild(doc.createElement("value")).appendChild(vlan);
 
         // fail-mode close
         modeConfigure.appendChild(doc.createElement("fail-mode")).appendChild(doc.createElement("close"));
@@ -466,7 +469,7 @@ public class VsmCommand {
     }
 
     private static Element configPortProfileDetails(Document doc, String name, PortProfileType type, BindingType binding, SwitchPortMode mode, int vlanid, String vdc,
-        String espName) {
+            String espName) {
 
         // In mode, exec_configure.
         Element configure = doc.createElementNS(s_ciscons, "nxos:configure");
@@ -480,25 +483,25 @@ public class VsmCommand {
         // Port profile type.
         Element portDetails = doc.createElement("name");
         switch (type) {
-            case none:
-                portProfile.appendChild(portDetails);
-                break;
-            case ethernet: {
-                Element typetag = doc.createElement("type");
-                Element ethernettype = doc.createElement("ethernet");
-                portProfile.appendChild(typetag);
-                typetag.appendChild(ethernettype);
-                ethernettype.appendChild(portDetails);
-            }
-                break;
-            case vethernet: {
-                Element typetag = doc.createElement("type");
-                Element ethernettype = doc.createElement("vethernet");
-                portProfile.appendChild(typetag);
-                typetag.appendChild(ethernettype);
-                ethernettype.appendChild(portDetails);
-            }
-                break;
+        case none:
+            portProfile.appendChild(portDetails);
+            break;
+        case ethernet: {
+            Element typetag = doc.createElement("type");
+            Element ethernettype = doc.createElement("ethernet");
+            portProfile.appendChild(typetag);
+            typetag.appendChild(ethernettype);
+            ethernettype.appendChild(portDetails);
+        }
+        break;
+        case vethernet: {
+            Element typetag = doc.createElement("type");
+            Element ethernettype = doc.createElement("vethernet");
+            portProfile.appendChild(typetag);
+            typetag.appendChild(ethernettype);
+            ethernettype.appendChild(portDetails);
+        }
+        break;
         }
 
         // Port profile name.
@@ -532,7 +535,8 @@ public class VsmCommand {
         portProf.appendChild(vmware);
 
         // org %vdc%
-        // vservice node <Node Name> profile <Edge Security Profile Name in VNMC>
+        // vservice node <Node Name> profile <Edge Security Profile Name in
+        // VNMC>
         Element vdcValue = doc.createElement(s_paramvalue);
         vdcValue.setAttribute("isKey", "true");
         vdcValue.setTextContent(vdc);
@@ -543,10 +547,8 @@ public class VsmCommand {
 
         String asaNodeName = "ASA_" + vlanid;
         Element vservice = doc.createElement("vservice");
-        vservice.appendChild(doc.createElement("node"))
-            .appendChild(doc.createElement(asaNodeName))
-            .appendChild(doc.createElement("profile"))
-            .appendChild(doc.createElement(espName));
+        vservice.appendChild(doc.createElement("node")).appendChild(doc.createElement(asaNodeName)).appendChild(doc.createElement("profile"))
+        .appendChild(doc.createElement(espName));
         portProf.appendChild(vservice);
 
         // no shutdown.
@@ -581,25 +583,25 @@ public class VsmCommand {
         // Port profile type.
         Element portDetails = doc.createElement("name");
         switch (type) {
-            case none:
-                portProfile.appendChild(portDetails);
-                break;
-            case ethernet: {
-                Element typetag = doc.createElement("type");
-                Element ethernettype = doc.createElement("ethernet");
-                portProfile.appendChild(typetag);
-                typetag.appendChild(ethernettype);
-                ethernettype.appendChild(portDetails);
-            }
-                break;
-            case vethernet: {
-                Element typetag = doc.createElement("type");
-                Element ethernettype = doc.createElement("vethernet");
-                portProfile.appendChild(typetag);
-                typetag.appendChild(ethernettype);
-                ethernettype.appendChild(portDetails);
-            }
-                break;
+        case none:
+            portProfile.appendChild(portDetails);
+            break;
+        case ethernet: {
+            Element typetag = doc.createElement("type");
+            Element ethernettype = doc.createElement("ethernet");
+            portProfile.appendChild(typetag);
+            typetag.appendChild(ethernettype);
+            ethernettype.appendChild(portDetails);
+        }
+        break;
+        case vethernet: {
+            Element typetag = doc.createElement("type");
+            Element ethernettype = doc.createElement("vethernet");
+            portProfile.appendChild(typetag);
+            typetag.appendChild(ethernettype);
+            ethernettype.appendChild(portDetails);
+        }
+        break;
         }
 
         // Port profile name.
@@ -935,7 +937,8 @@ public class VsmCommand {
     private static Element getBindingType(Document doc, BindingType binding) {
         Element portBinding = doc.createElement("port-binding");
 
-        // We only have handling for access or trunk mode. Handling for private-vlan
+        // We only have handling for access or trunk mode. Handling for
+        // private-vlan
         // host/promiscuous command will have to be added.
         if (binding == BindingType.portbindingstatic) {
             Element type = doc.createElement("static");
@@ -956,7 +959,8 @@ public class VsmCommand {
         Element accessmode = doc.createElement("mode");
         switchport.appendChild(accessmode);
 
-        // We only have handling for access or trunk mode. Handling for private-vlan
+        // We only have handling for access or trunk mode. Handling for
+        // private-vlan
         // host/promiscuous command will have to be added.
         if (mode == SwitchPortMode.access) {
             Element access = doc.createElement("access");

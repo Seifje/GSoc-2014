@@ -24,13 +24,13 @@ import com.cloud.utils.Pair;
 import com.cloud.utils.ReflectUtil;
 
 /**
- *  Try to use static initialization to help you in finding incorrect
- *  field names being passed in early.
+ * Try to use static initialization to help you in finding incorrect field names
+ * being passed in early.
  *
- *  Something like the following:
- *  protected static final Filter s_NameFilter = new Filter(VMInstanceVO, name, true, null, null);
+ * Something like the following: protected static final Filter s_NameFilter =
+ * new Filter(VMInstanceVO, name, true, null, null);
  *
- *  Filter nameFilter = new Filter(s_nameFilter);
+ * Filter nameFilter = new Filter(s_nameFilter);
  *
  */
 public class Filter {
@@ -39,8 +39,10 @@ public class Filter {
     String _orderBy;
 
     /**
-     * @param clazz the VO object type
-     * @param field name of the field
+     * @param clazz
+     *            the VO object type
+     * @param field
+     *            name of the field
      * @param offset
      * @param limit
      */
@@ -57,7 +59,9 @@ public class Filter {
 
     /**
      * Note that this copy constructor does not copy offset and limit.
-     * @param that filter
+     *
+     * @param that
+     *            filter
      */
     public Filter(Filter that) {
         this._orderBy = that._orderBy;

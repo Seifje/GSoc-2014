@@ -35,9 +35,8 @@ import com.cloud.template.VirtualMachineTemplate;
 public class RegisterIsoCmdByAdmin extends RegisterIsoCmd {
     public static final Logger s_logger = Logger.getLogger(RegisterIsoCmdByAdmin.class.getName());
 
-
     @Override
-    public void execute() throws ResourceAllocationException{
+    public void execute() throws ResourceAllocationException {
         VirtualMachineTemplate template = _templateService.registerIso(this);
         if (template != null) {
             ListResponse<TemplateResponse> response = new ListResponse<TemplateResponse>();

@@ -168,8 +168,8 @@ public abstract class DiscovererBase extends AdapterBase implements Discoverer {
     }
 
     private void updateNetworkLabels(HostVO host) {
-        //check if networkLabels need to be updated in details
-        //we send only private and storage network label to the resource.
+        // check if networkLabels need to be updated in details
+        // we send only private and storage network label to the resource.
         String privateNetworkLabel = _networkMgr.getDefaultManagementTrafficLabel(host.getDataCenterId(), host.getHypervisorType());
         String storageNetworkLabel = _networkMgr.getDefaultStorageTrafficLabel(host.getDataCenterId(), host.getHypervisorType());
 

@@ -28,10 +28,11 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 /**
- * This class provides a method to do basically the same as @Inject of a type, but
- * it will only find the types in the current context and not the parent.  This class
- * should only be used for very specific Spring bootstrap logic.  In general @Inject
- * is infinitely better.  Basically you need a very good reason to use this.
+ * This class provides a method to do basically the same as @Inject of a type,
+ * but it will only find the types in the current context and not the parent.
+ * This class should only be used for very specific Spring bootstrap logic. In
+ * general @Inject is infinitely better. Basically you need a very good reason
+ * to use this.
  *
  */
 public abstract class AbstractBeanCollector extends AbstractSmartLifeCycle implements BeanPostProcessor {

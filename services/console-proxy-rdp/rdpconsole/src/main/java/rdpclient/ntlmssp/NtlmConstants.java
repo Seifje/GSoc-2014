@@ -19,8 +19,9 @@ package rdpclient.ntlmssp;
 public interface NtlmConstants {
 
     /**
-     * Attribute type: Indicates that this is the last AV_PAIR in the list. AvLen
-     * MUST be 0. This type of information MUST be present in the AV pair list.
+     * Attribute type: Indicates that this is the last AV_PAIR in the list.
+     * AvLen MUST be 0. This type of information MUST be present in the AV pair
+     * list.
      */
     public final static int MSV_AV_EOL = 0x0000;
 
@@ -39,31 +40,31 @@ public interface NtlmConstants {
     public final static int MSV_AV_NETBIOS_DOMAIN_NAME = 0x0002;
 
     /**
-     * Attribute type: The fully qualified domain name (FQDN (1)) of the computer.
-     * The name MUST be in Unicode, and is not null-terminated.
+     * Attribute type: The fully qualified domain name (FQDN (1)) of the
+     * computer. The name MUST be in Unicode, and is not null-terminated.
      */
     public final static int MSV_AV_DNS_COMPUTER_NAME = 0x0003;
 
     /**
-     * Attribute type: The FQDN of the domain. The name MUST be in Unicode, and is
-     * not null-terminated.
+     * Attribute type: The FQDN of the domain. The name MUST be in Unicode, and
+     * is not null-terminated.
      */
     public final static int MSV_AV_DNS_DOMAIN_NAME = 0x0004;
 
     /**
-     * Attribute type: The FQDN of the forest. The name MUST be in Unicode, and is
-     * not null-terminated.
+     * Attribute type: The FQDN of the forest. The name MUST be in Unicode, and
+     * is not null-terminated.
      */
     public final static int MSV_AV_DNS_TREE_NAME = 0x0005;
 
     /**
      * Attribute type: A 32-bit value indicating server or client configuration.
      *
-     * <li>0x00000001: indicates to the client that the account authentication is
-     * constrained.
+     * <li>0x00000001: indicates to the client that the account authentication
+     * is constrained.
      *
-     * <li>0x00000002: indicates that the client is providing message integrity in
-     * the MIC field (section 2.2.1.3) in the AUTHENTICATE_MESSAGE.
+     * <li>0x00000002: indicates that the client is providing message integrity
+     * in the MIC field (section 2.2.1.3) in the AUTHENTICATE_MESSAGE.
      *
      * <li>0x00000004: indicates that the client is providing a target SPN
      * generated from an untrusted source.
@@ -80,8 +81,8 @@ public interface NtlmConstants {
 
     /**
      * Attribute type: A Single_Host_Data (section 2.2.2.2) structure. The Value
-     * field contains a platform-specific blob, as well as a MachineID created at
-     * computer startup to identify the calling machine.<15>
+     * field contains a platform-specific blob, as well as a MachineID created
+     * at computer startup to identify the calling machine.<15>
      */
     public final static int MSV_AV_SINGLE_HOST = 0x0008;
 
@@ -94,8 +95,8 @@ public interface NtlmConstants {
     /**
      * Attribute type: A channel bindings hash. The Value field contains an MD5
      * hash ([RFC4121] section 4.1.1.2) of a gss_channel_bindings_struct
-     * ([RFC2744] section 3.11). An all-zero value of the hash is used to indicate
-     * absence of channel bindings.
+     * ([RFC2744] section 3.11). An all-zero value of the hash is used to
+     * indicate absence of channel bindings.
      */
     public final static int MSV_AV_CHANNEL_BINDINGS = 0x000A;
 
@@ -150,8 +151,9 @@ public interface NtlmConstants {
 
     /**
      * In Windows XP, Windows Server 2003, Windows Vista, Windows Server 2008,
-     * Windows 7, Windows Server 2008 R2, Windows 8, Windows Server 2012, Windows
-     * 8.1, and Windows Server 2012 R2, the maximum lifetime of challenge is 36 hours.
+     * Windows 7, Windows Server 2008 R2, Windows 8, Windows Server 2012,
+     * Windows 8.1, and Windows Server 2012 R2, the maximum lifetime of
+     * challenge is 36 hours.
      */
     public static final int CHALLENGE_MAX_LIFETIME = 36 * 60 * 60;
 }

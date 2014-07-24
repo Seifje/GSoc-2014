@@ -34,8 +34,7 @@ import com.cloud.event.EventTypes;
 import com.cloud.exception.ResourceAllocationException;
 import com.cloud.user.Account;
 
-@APICommand(name = "createAffinityGroup", responseObject = AffinityGroupResponse.class, description = "Creates an affinity/anti-affinity group", entityType = {AffinityGroup.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "createAffinityGroup", responseObject = AffinityGroupResponse.class, description = "Creates an affinity/anti-affinity group", entityType = {AffinityGroup.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateAffinityGroupCmd extends BaseAsyncCreateCmd {
     public static final Logger s_logger = Logger.getLogger(CreateAffinityGroupCmd.class.getName());
 
@@ -48,10 +47,7 @@ public class CreateAffinityGroupCmd extends BaseAsyncCreateCmd {
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "an account for the affinity group. Must be used with domainId.")
     private String accountName;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               description = "domainId of the account owning the affinity group",
-               entityType = DomainResponse.class)
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, description = "domainId of the account owning the affinity group", entityType = DomainResponse.class)
     private Long domainId;
 
     @Parameter(name = ApiConstants.DESCRIPTION, type = CommandType.STRING, description = "optional description of the affinity group")
@@ -60,10 +56,7 @@ public class CreateAffinityGroupCmd extends BaseAsyncCreateCmd {
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "name of the affinity group")
     private String affinityGroupName;
 
-    @Parameter(name = ApiConstants.TYPE,
-               type = CommandType.STRING,
-               required = true,
-               description = "Type of the affinity group from the available affinity/anti-affinity group types")
+    @Parameter(name = ApiConstants.TYPE, type = CommandType.STRING, required = true, description = "Type of the affinity group from the available affinity/anti-affinity group types")
     private String affinityGroupType;
 
     // ///////////////////////////////////////////////////
@@ -116,8 +109,8 @@ public class CreateAffinityGroupCmd extends BaseAsyncCreateCmd {
         }
 
         return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
-                                          // command to SYSTEM so ERROR events
-                                          // are tracked
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
     @Override

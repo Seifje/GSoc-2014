@@ -49,10 +49,8 @@ public class AffinityGroupAccessChecker extends DomainChecker {
             AffinityGroup group = (AffinityGroup)entity;
 
             if (_affinityGroupService.isAdminControlledGroup(group)) {
-                if (accessType != null && accessType == AccessType.OperateEntry
-                        && !_accountMgr.isRootAdmin(caller.getId())) {
-                    throw new PermissionDeniedException(caller + " does not have permission to operate with resource "
-                            + entity);
+                if (accessType != null && accessType == AccessType.OperateEntry && !_accountMgr.isRootAdmin(caller.getId())) {
+                    throw new PermissionDeniedException(caller + " does not have permission to operate with resource " + entity);
                 }
             }
 
@@ -63,7 +61,7 @@ public class AffinityGroupAccessChecker extends DomainChecker {
                     return true;
                 }
             } else {
-                //acl_type account
+                // acl_type account
                 if (caller.getId() != group.getAccountId()) {
                     throw new PermissionDeniedException(caller + " does not have permission to operate with resource " + entity);
                 } else {

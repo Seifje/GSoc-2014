@@ -29,8 +29,8 @@ public interface SspService extends PluggableService {
     /**
      * Add an ssp api endpoint information as an host
      *
-     * Adds a api endpoint information in database and
-     * make it usable.
+     * Adds a api endpoint information in database and make it usable.
+     *
      * @param cmd
      * @return
      */
@@ -40,6 +40,7 @@ public interface SspService extends PluggableService {
      * Delete an ssp api endpoint information
      *
      * Deletes the information from database.
+     *
      * @param cmd
      * @return
      */

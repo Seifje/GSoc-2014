@@ -83,7 +83,8 @@ public class ClientNtlmsspUserCredentials extends OneTimeSwitch implements Eleme
         tsPasswordCreds.password.value = new ByteBuffer(ntlmState.password.getBytes(RdpConstants.CHARSET_16));
         tsPasswordCreds.writeTag(tsPasswordCredsBuf);
         tsPasswordCredsBuf.trimAtCursor();
-        //* DEBUG */System.out.println("TSPasswordCreds:\n" + tsPasswordCredsBuf.dump());
+        // * DEBUG */System.out.println("TSPasswordCreds:\n" +
+        // tsPasswordCredsBuf.dump());
 
         tsCredentials.credentials.value = tsPasswordCredsBuf;
 
@@ -92,7 +93,7 @@ public class ClientNtlmsspUserCredentials extends OneTimeSwitch implements Eleme
 
         // Trim buffer to actual length of data written
         buf.trimAtCursor();
-        //* DEBUG */System.out.println("TSCredentials:\n" + buf.dump());
+        // * DEBUG */System.out.println("TSCredentials:\n" + buf.dump());
 
         return buf;
     }
@@ -105,22 +106,25 @@ public class ClientNtlmsspUserCredentials extends OneTimeSwitch implements Eleme
 
         /* @formatter:off */
         // TSCredentials
-//  30 57 // Sequence
-//  a0 03 // TAG 0
-//  02 01 01 // Integer: 1 : credentials contains a TSPasswordCreds structure
-//  a1 50 // TAG 1
-//  04 4e // OCTETSTRING
+        // 30 57 // Sequence
+        // a0 03 // TAG 0
+        // 02 01 01 // Integer: 1 : credentials contains a TSPasswordCreds
+        // structure
+        // a1 50 // TAG 1
+        // 04 4e // OCTETSTRING
         // TSPasswordCreds
-//  30 4c // SEQUENCE
-//  a0 14 // TAG 0
-//  04 12 // OCTETSTRING
-//  77 00 6f 00 72 00 6b 00 67 00 72 00 6f 00 75 00 70 00 // "workgroup"
-//  a1 1c // TAG 1
-//  04 1a // OCTETSTRING
-//  41 00 64 00 6d 00 69 00 6e 00 69 00 73 00 74 00 72 00 61 00 74 00 6f 00 72 00 // "Administrator"
-//  a2 16 // TAG 2
-//  04 14 //
-//  52 00 32 00 50 00 72 00 65 00 76 00 69 00 65 00 77 00 21 00 // "R2Preview!"
+        // 30 4c // SEQUENCE
+        // a0 14 // TAG 0
+        // 04 12 // OCTETSTRING
+        // 77 00 6f 00 72 00 6b 00 67 00 72 00 6f 00 75 00 70 00 // "workgroup"
+        // a1 1c // TAG 1
+        // 04 1a // OCTETSTRING
+        // 41 00 64 00 6d 00 69 00 6e 00 69 00 73 00 74 00 72 00 61 00 74 00 6f
+        // 00 72 00 // "Administrator"
+        // a2 16 // TAG 2
+        // 04 14 //
+        // 52 00 32 00 50 00 72 00 65 00 76 00 69 00 65 00 77 00 21 00 //
+        // "R2Preview!"
         /* @formatter:on */
 
     }

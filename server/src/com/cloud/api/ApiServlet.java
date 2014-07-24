@@ -106,7 +106,7 @@ public class ApiServlet extends HttpServlet {
         try {
             return URLDecoder.decode(value, "UTF-8");
         } catch (final UnsupportedEncodingException e) {
-            //should never happen
+            // should never happen
             return null;
         }
     }
@@ -129,13 +129,17 @@ public class ApiServlet extends HttpServlet {
         final Map<String, Object[]> params = new HashMap<String, Object[]>();
         params.putAll(req.getParameterMap());
 
-        // For HTTP GET requests, it seems that HttpServletRequest.getParameterMap() actually tries
+        // For HTTP GET requests, it seems that
+        // HttpServletRequest.getParameterMap() actually tries
         // to unwrap URL encoded content from ISO-9959-1.
-        // After failed in using setCharacterEncoding() to control it, end up with following hacking:
-        // for all GET requests, we will override it with our-own way of UTF-8 based URL decoding.
+        // After failed in using setCharacterEncoding() to control it, end up
+        // with following hacking:
+        // for all GET requests, we will override it with our-own way of UTF-8
+        // based URL decoding.
         utf8Fixup(req, params);
 
-        // logging the request start and end in management log for easy debugging
+        // logging the request start and end in management log for easy
+        // debugging
         String reqStr = "";
         if (s_logger.isDebugEnabled()) {
             reqStr = auditTrailSb.toString() + " " + StringUtils.cleanString(req.getQueryString());
@@ -153,7 +157,8 @@ public class ApiServlet extends HttpServlet {
             if (commandObj != null) {
                 final String command = (String)commandObj[0];
                 if ("logout".equalsIgnoreCase(command)) {
-                    // if this is just a logout, invalidate the session and return
+                    // if this is just a logout, invalidate the session and
+                    // return
                     if (session != null) {
                         final Long userId = (Long)session.getAttribute("userid");
                         final Account account = (Account)session.getAttribute("accountobj");
@@ -195,18 +200,22 @@ public class ApiServlet extends HttpServlet {
                     Long domainId = null;
                     if ((domainIdArr != null) && (domainIdArr.length > 0)) {
                         try {
-                            //check if UUID is passed in for domain
+                            // check if UUID is passed in for domain
                             domainId = _apiServer.fetchDomainId(domainIdArr[0]);
                             if (domainId == null) {
                                 domainId = Long.parseLong(domainIdArr[0]);
                             }
-                            auditTrailSb.append(" domainid=" + domainId);// building the params for POST call
+                            auditTrailSb.append(" domainid=" + domainId);// building
+                            // the
+                            // params
+                            // for
+                            // POST
+                            // call
                         } catch (final NumberFormatException e) {
                             s_logger.warn("Invalid domain id entered by user");
                             auditTrailSb.append(" " + HttpServletResponse.SC_UNAUTHORIZED + " " + "Invalid domain id entered, please enter a valid one");
-                            final String serializedResponse =
-                                _apiServer.getSerializedApiError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid domain id entered, please enter a valid one", params,
-                                    responseType);
+                            final String serializedResponse = _apiServer.getSerializedApiError(HttpServletResponse.SC_UNAUTHORIZED,
+                                    "Invalid domain id entered, please enter a valid one", params, responseType);
                             writeResponse(resp, serializedResponse, HttpServletResponse.SC_UNAUTHORIZED, responseType);
                         }
                     }
@@ -229,22 +238,22 @@ public class ApiServlet extends HttpServlet {
                         final String pwd = ((password == null) ? null : password[0]);
                         try {
                             _apiServer.loginUser(session, username[0], pwd, domainId, domain, req.getRemoteAddr(), params);
-                            auditTrailSb.insert(0, "(userId=" + session.getAttribute("userid") + " accountId=" + ((Account)session.getAttribute("accountobj")).getId() +
-                                " sessionId=" + session.getId() + ")");
+                            auditTrailSb.insert(0, "(userId=" + session.getAttribute("userid") + " accountId=" + ((Account)session.getAttribute("accountobj")).getId()
+                                    + " sessionId=" + session.getId() + ")");
                             final String loginResponse = getLoginSuccessResponse(session, responseType);
                             writeResponse(resp, loginResponse, HttpServletResponse.SC_OK, responseType);
                             return;
                         } catch (final CloudAuthenticationException ex) {
-                            // TODO: fall through to API key, or just fail here w/ auth error? (HTTP 401)
+                            // TODO: fall through to API key, or just fail here
+                            // w/ auth error? (HTTP 401)
                             try {
                                 session.invalidate();
                             } catch (final IllegalStateException ise) {
                             }
 
                             auditTrailSb.append(" " + ApiErrorCode.ACCOUNT_ERROR + " " + ex.getMessage() != null ? ex.getMessage()
-                                : "failed to authenticate user, check if username/password are correct");
-                            final String serializedResponse =
-                                _apiServer.getSerializedApiError(ApiErrorCode.ACCOUNT_ERROR.getHttpCode(), ex.getMessage() != null ? ex.getMessage()
+                                    : "failed to authenticate user, check if username/password are correct");
+                            final String serializedResponse = _apiServer.getSerializedApiError(ApiErrorCode.ACCOUNT_ERROR.getHttpCode(), ex.getMessage() != null ? ex.getMessage()
                                     : "failed to authenticate user, check if username/password are correct", params, responseType);
                             writeResponse(resp, serializedResponse, ApiErrorCode.ACCOUNT_ERROR.getHttpCode(), responseType);
                             return;
@@ -255,8 +264,10 @@ public class ApiServlet extends HttpServlet {
             auditTrailSb.append(req.getQueryString());
             final boolean isNew = ((session == null) ? true : session.isNew());
 
-            // Initialize an empty context and we will update it after we have verified the request below,
-            // we no longer rely on web-session here, verifyRequest will populate user/account information
+            // Initialize an empty context and we will update it after we have
+            // verified the request below,
+            // we no longer rely on web-session here, verifyRequest will
+            // populate user/account information
             // if a API key exists
             Long userId = null;
 
@@ -272,13 +283,14 @@ public class ApiServlet extends HttpServlet {
                     } catch (final IllegalStateException ise) {
                     }
                     auditTrailSb.append(" " + HttpServletResponse.SC_UNAUTHORIZED + " " + "unable to verify user credentials");
-                    final String serializedResponse =
-                        _apiServer.getSerializedApiError(HttpServletResponse.SC_UNAUTHORIZED, "unable to verify user credentials", params, responseType);
+                    final String serializedResponse = _apiServer.getSerializedApiError(HttpServletResponse.SC_UNAUTHORIZED, "unable to verify user credentials", params,
+                            responseType);
                     writeResponse(resp, serializedResponse, HttpServletResponse.SC_UNAUTHORIZED, responseType);
                     return;
                 }
 
-                // Do a sanity check here to make sure the user hasn't already been deleted
+                // Do a sanity check here to make sure the user hasn't already
+                // been deleted
                 if ((userId != null) && (account != null) && (accountObj != null) && _apiServer.verifyUser(userId)) {
                     final String[] command = (String[])params.get(ApiConstants.COMMAND);
                     if (command == null) {
@@ -291,16 +303,18 @@ public class ApiServlet extends HttpServlet {
                     final User user = _entityMgr.findById(User.class, userId);
                     CallContext.register(user, (Account)accountObj);
                 } else {
-                    // Invalidate the session to ensure we won't allow a request across management server
-                    // restarts if the userId was serialized to the stored session
+                    // Invalidate the session to ensure we won't allow a request
+                    // across management server
+                    // restarts if the userId was serialized to the stored
+                    // session
                     try {
                         session.invalidate();
                     } catch (final IllegalStateException ise) {
                     }
 
                     auditTrailSb.append(" " + HttpServletResponse.SC_UNAUTHORIZED + " " + "unable to verify user credentials");
-                    final String serializedResponse =
-                        _apiServer.getSerializedApiError(HttpServletResponse.SC_UNAUTHORIZED, "unable to verify user credentials", params, responseType);
+                    final String serializedResponse = _apiServer.getSerializedApiError(HttpServletResponse.SC_UNAUTHORIZED, "unable to verify user credentials", params,
+                            responseType);
                     writeResponse(resp, serializedResponse, HttpServletResponse.SC_UNAUTHORIZED, responseType);
                     return;
                 }
@@ -309,10 +323,11 @@ public class ApiServlet extends HttpServlet {
             }
 
             if (_apiServer.verifyRequest(params, userId)) {
-                auditTrailSb.insert(0, "(userId=" + CallContext.current().getCallingUserId() + " accountId=" + CallContext.current().getCallingAccount().getId() +
-                    " sessionId=" + (session != null ? session.getId() : null) + ")");
+                auditTrailSb.insert(0, "(userId=" + CallContext.current().getCallingUserId() + " accountId=" + CallContext.current().getCallingAccount().getId() + " sessionId="
+                        + (session != null ? session.getId() : null) + ")");
 
-                // Add the HTTP method (GET/POST/PUT/DELETE) as well into the params map.
+                // Add the HTTP method (GET/POST/PUT/DELETE) as well into the
+                // params map.
                 params.put("httpmethod", new String[] {req.getMethod()});
                 final String response = _apiServer.handleRequest(params, responseType, auditTrailSb);
                 writeResponse(resp, response != null ? response : "", HttpServletResponse.SC_OK, responseType);
@@ -325,9 +340,8 @@ public class ApiServlet extends HttpServlet {
                 }
 
                 auditTrailSb.append(" " + HttpServletResponse.SC_UNAUTHORIZED + " " + "unable to verify user credentials and/or request signature");
-                final String serializedResponse =
-                    _apiServer.getSerializedApiError(HttpServletResponse.SC_UNAUTHORIZED, "unable to verify user credentials and/or request signature", params,
-                        responseType);
+                final String serializedResponse = _apiServer.getSerializedApiError(HttpServletResponse.SC_UNAUTHORIZED,
+                        "unable to verify user credentials and/or request signature", params, responseType);
                 writeResponse(resp, serializedResponse, HttpServletResponse.SC_UNAUTHORIZED, responseType);
 
             }
@@ -344,12 +358,14 @@ public class ApiServlet extends HttpServlet {
             if (s_logger.isDebugEnabled()) {
                 s_logger.debug("===END=== " + reqStr);
             }
-            // cleanup user context to prevent from being peeked in other request context
+            // cleanup user context to prevent from being peeked in other
+            // request context
             CallContext.unregister();
         }
     }
 
-    // FIXME: rather than isError, we might was to pass in the status code to give more flexibility
+    // FIXME: rather than isError, we might was to pass in the status code to
+    // give more flexibility
     private void writeResponse(final HttpServletResponse resp, final String response, final int responseCode, final String responseType) {
         try {
             if (BaseCmd.RESPONSE_TYPE_JSON.equalsIgnoreCase(responseType)) {
@@ -411,19 +427,13 @@ public class ApiServlet extends HttpServlet {
                 while (attrNames.hasMoreElements()) {
                     final String attrName = (String)attrNames.nextElement();
                     if (ApiConstants.USER_ID.equalsIgnoreCase(attrName)) {
-                        sb.append("<").append(attrName).append(">")
-                                .append(user_UUID).append("</")
-                                .append(attrName).append(">");
+                        sb.append("<").append(attrName).append(">").append(user_UUID).append("</").append(attrName).append(">");
                     } else if ("domainid".equalsIgnoreCase(attrName)) {
-                        sb.append("<").append(attrName).append(">")
-                                .append(domain_UUID).append("</")
-                                .append(attrName).append(">");
+                        sb.append("<").append(attrName).append(">").append(domain_UUID).append("</").append(attrName).append(">");
                     } else {
                         final Object attrObj = session.getAttribute(attrName);
                         if (attrObj instanceof String || attrObj instanceof Long || attrObj instanceof Short) {
-                            sb.append("<").append(attrName).append(">")
-                                    .append(attrObj.toString()).append("</")
-                                    .append(attrName).append(">");
+                            sb.append("<").append(attrName).append(">").append(attrObj.toString()).append("</").append(attrName).append(">");
                         }
                     }
                 }

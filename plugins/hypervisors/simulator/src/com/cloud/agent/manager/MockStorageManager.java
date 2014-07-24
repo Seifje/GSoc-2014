@@ -50,8 +50,8 @@ import com.cloud.agent.api.storage.PrimaryStorageDownloadCommand;
 import com.cloud.utils.component.Manager;
 
 public interface MockStorageManager extends Manager {
-    public static final long DEFAULT_HOST_STORAGE_SIZE = 1 * 1024 * 1024 * 1024 * 1024L; //1T
-    public static final long DEFAULT_TEMPLATE_SIZE = 1 * 1000 * 1000 * 1000L; //1G
+    public static final long DEFAULT_HOST_STORAGE_SIZE = 1 * 1024 * 1024 * 1024 * 1024L; // 1T
+    public static final long DEFAULT_TEMPLATE_SIZE = 1 * 1000 * 1000 * 1000L; // 1G
 
     public PrimaryStorageDownloadAnswer primaryStorageDownload(PrimaryStorageDownloadCommand cmd);
 
@@ -85,10 +85,10 @@ public interface MockStorageManager extends Manager {
 
     public Answer BackupSnapshot(BackupSnapshotCommand cmd, SimulatorInfo info);
 
-    //public Answer DeleteSnapshotBackup(DeleteSnapshotBackupCommand cmd);
+    // public Answer DeleteSnapshotBackup(DeleteSnapshotBackupCommand cmd);
     public Answer CreateVolumeFromSnapshot(CreateVolumeFromSnapshotCommand cmd);
 
-    //public Answer DeleteTemplate(DeleteTemplateCommand cmd);
+    // public Answer DeleteTemplate(DeleteTemplateCommand cmd);
     public Answer Delete(DeleteCommand cmd);
 
     public Answer SecStorageVMSetup(SecStorageVMSetupCommand cmd);

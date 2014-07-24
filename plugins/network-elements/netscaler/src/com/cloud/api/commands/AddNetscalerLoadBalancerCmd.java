@@ -39,8 +39,7 @@ import com.cloud.network.dao.ExternalLoadBalancerDeviceVO;
 import com.cloud.network.element.NetscalerLoadBalancerElementService;
 import com.cloud.utils.exception.CloudRuntimeException;
 
-@APICommand(name = "addNetscalerLoadBalancer", responseObject = NetscalerLoadBalancerResponse.class, description = "Adds a netscaler load balancer device",
-        requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
+@APICommand(name = "addNetscalerLoadBalancer", responseObject = NetscalerLoadBalancerResponse.class, description = "Adds a netscaler load balancer device", requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
 public class AddNetscalerLoadBalancerCmd extends BaseAsyncCmd {
 
     public static final Logger s_logger = Logger.getLogger(AddNetscalerLoadBalancerCmd.class.getName());
@@ -48,15 +47,11 @@ public class AddNetscalerLoadBalancerCmd extends BaseAsyncCmd {
     @Inject
     NetscalerLoadBalancerElementService _netsclarLbService;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = PhysicalNetworkResponse.class,
-               required = true,
-               description = "the Physical Network ID")
+    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, required = true, description = "the Physical Network ID")
     private Long physicalNetworkId;
 
     @Parameter(name = ApiConstants.URL, type = CommandType.STRING, required = true, description = "URL of the netscaler load balancer appliance.")
@@ -68,16 +63,10 @@ public class AddNetscalerLoadBalancerCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.PASSWORD, type = CommandType.STRING, required = true, description = "Credentials to reach netscaler load balancer device")
     private String password;
 
-    @Parameter(name = ApiConstants.NETWORK_DEVICE_TYPE,
-               type = CommandType.STRING,
-               required = true,
-               description = "Netscaler device type supports NetscalerMPXLoadBalancer, NetscalerVPXLoadBalancer, NetscalerSDXLoadBalancer")
+    @Parameter(name = ApiConstants.NETWORK_DEVICE_TYPE, type = CommandType.STRING, required = true, description = "Netscaler device type supports NetscalerMPXLoadBalancer, NetscalerVPXLoadBalancer, NetscalerSDXLoadBalancer")
     private String deviceType;
 
-    @Parameter(name = ApiConstants.GSLB_PROVIDER,
-               type = CommandType.BOOLEAN,
-               required = false,
-               description = "true if NetScaler device being added is for providing GSLB service")
+    @Parameter(name = ApiConstants.GSLB_PROVIDER, type = CommandType.BOOLEAN, required = false, description = "true if NetScaler device being added is for providing GSLB service")
     private Boolean isGslbProvider;
 
     @Parameter(name = ApiConstants.GSLB_PROVIDER_PUBLIC_IP, type = CommandType.STRING, required = false, description = "public IP of the site")
@@ -86,15 +75,12 @@ public class AddNetscalerLoadBalancerCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.GSLB_PROVIDER_PRIVATE_IP, type = CommandType.STRING, required = false, description = "public IP of the site")
     private String gslbSitePrivateIp;
 
-    @Parameter(name = ApiConstants.EXCLUSIVE_GSLB_PROVIDER,
-               type = CommandType.BOOLEAN,
-               required = false,
-               description = "true if NetScaler device being added is for providing GSLB service exclusively and can not be used for LB")
+    @Parameter(name = ApiConstants.EXCLUSIVE_GSLB_PROVIDER, type = CommandType.BOOLEAN, required = false, description = "true if NetScaler device being added is for providing GSLB service exclusively and can not be used for LB")
     private Boolean isExclusiveGslbProvider;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getPhysicalNetworkId() {
         return physicalNetworkId;
@@ -140,13 +126,12 @@ public class AddNetscalerLoadBalancerCmd extends BaseAsyncCmd {
         return gslbSitePrivateIp;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException {
         try {
             ExternalLoadBalancerDeviceVO lbDeviceVO = _netsclarLbService.addNetscalerLoadBalancer(this);
             if (lbDeviceVO != null) {

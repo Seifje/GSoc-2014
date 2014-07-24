@@ -69,11 +69,12 @@ public class ServerIOChannelRouter extends BaseElement {
             System.out.println("[" + this + "] INFO: Data received: " + buf + ".");
 
         int length = buf.readUnsignedShortLE();
-        if (buf.length != length)
-        {
+        if (buf.length != length) {
             // It is ServerErrorAlert-ValidClient
             // Ignore it
-            //throw new RuntimeException("[" + this + "] ERROR: Incorrect PDU length: " + length + ", data: " + buf + ".");
+            // throw new RuntimeException("[" + this +
+            // "] ERROR: Incorrect PDU length: " + length + ", data: " + buf +
+            // ".");
         }
 
         int type = buf.readUnsignedShortLE() & 0xf;
@@ -249,11 +250,12 @@ public class ServerIOChannelRouter extends BaseElement {
      */
     protected void handleDataPdu(ByteBuffer buf) {
 
-        // (4 bytes): A 32-bit, unsigned integer. Share identifier for the packet.
+        // (4 bytes): A 32-bit, unsigned integer. Share identifier for the
+        // packet.
         long shareId = buf.readUnsignedIntLE();
         if (shareId != state.serverShareId)
             throw new RuntimeException("Unexpected share ID: " + shareId + ".");
-//    buf.skipBytes(4);
+        // buf.skipBytes(4);
 
         // Padding.
         buf.skipBytes(1);
@@ -289,7 +291,8 @@ public class ServerIOChannelRouter extends BaseElement {
 
         case PDUTYPE2_UPDATE: {
 
-            // (2 bytes): A 16-bit, unsigned integer. Type of the graphics update.
+            // (2 bytes): A 16-bit, unsigned integer. Type of the graphics
+            // update.
             int updateType = data.readUnsignedShortLE();
             ByteBuffer payload = data.readBytes(data.length - data.cursor);
             data.unref();
@@ -493,7 +496,8 @@ public class ServerIOChannelRouter extends BaseElement {
                 (byte)0x16, (byte)0x00,
 
                 (byte)0xEA, (byte)0x03, // PDU source: 1002 (LE)
-                (byte)0xEA, (byte)0x03, (byte)0x01, (byte)0x00, // ShareID = 66538
+                (byte)0xEA, (byte)0x03, (byte)0x01, (byte)0x00, // ShareID =
+                // 66538
 
                 (byte)0x01, (byte)0x00, // Length if source descriptor: 1 (LE)
                 (byte)0x00, // Source descriptor (should be set to 0): 0
@@ -519,11 +523,15 @@ public class ServerIOChannelRouter extends BaseElement {
                 (byte)0x16, (byte)0x00,
 
                 (byte)0xEA, (byte)0x03, // PDU source: 1002 (LE)
-                (byte)0xEA, (byte)0x03, (byte)0x01, (byte)0x00, // ShareID = 66538
+                (byte)0xEA, (byte)0x03, (byte)0x01, (byte)0x00, // ShareID
+                // =
+                // 66538
 
-                (byte)0x01, (byte)0x00, // Length if source descriptor: 1 (LE)
-                (byte)0x00, // Source descriptor (should be set to 0): 0
-        }));
+                (byte)0x01, (byte)0x00, // Length if source
+                // descriptor: 1 (LE)
+                (byte)0x00, // Source descriptor (should be set to 0):
+        // 0
+                }));
 
         Pipeline pipeline = new PipelineImpl("test");
         pipeline.add(source, tpkt, x224, mcs, channel1003, sink);

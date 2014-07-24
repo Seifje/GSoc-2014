@@ -35,35 +35,30 @@ import com.cloud.exception.DiscoveryException;
 import com.cloud.storage.ImageStore;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateCloudToUseObjectStore", description = "Migrate current NFS secondary storages to use object store.", responseObject = ImageStoreResponse.class, since = "4.3.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "updateCloudToUseObjectStore", description = "Migrate current NFS secondary storages to use object store.", responseObject = ImageStoreResponse.class, since = "4.3.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateCloudToUseObjectStoreCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateCloudToUseObjectStoreCmd.class.getName());
     private static final String s_name = "updatecloudtouseobjectstoreresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name=ApiConstants.NAME, type=CommandType.STRING, description="the name for the image store")
+    @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, description = "the name for the image store")
     private String name;
 
-    @Parameter(name=ApiConstants.URL, type=CommandType.STRING, description="the URL for the image store")
+    @Parameter(name = ApiConstants.URL, type = CommandType.STRING, description = "the URL for the image store")
     private String url;
 
-    @Parameter(name=ApiConstants.PROVIDER, type=CommandType.STRING,
-            required=true, description="the image store provider name")
+    @Parameter(name = ApiConstants.PROVIDER, type = CommandType.STRING, required = true, description = "the image store provider name")
     private String providerName;
 
-    @Parameter(name=ApiConstants.DETAILS, type=CommandType.MAP, description="the details for the image store. Example: details[0].key=accesskey&details[0].value=s389ddssaa&details[1].key=secretkey&details[1].value=8dshfsss")
+    @Parameter(name = ApiConstants.DETAILS, type = CommandType.MAP, description = "the details for the image store. Example: details[0].key=accesskey&details[0].value=s389ddssaa&details[1].key=secretkey&details[1].value=8dshfsss")
     private Map details;
 
-
-
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
-
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getUrl() {
         return url;
@@ -80,7 +75,7 @@ public class UpdateCloudToUseObjectStoreCmd extends BaseCmd {
             Collection<?> props = details.values();
             Iterator<?> iter = props.iterator();
             while (iter.hasNext()) {
-                HashMap<String, String> detail = (HashMap<String, String>) iter.next();
+                HashMap<String, String> detail = (HashMap<String, String>)iter.next();
                 String key = detail.get("key");
                 String value = detail.get("value");
                 detailsMap.put(key, value);
@@ -97,7 +92,6 @@ public class UpdateCloudToUseObjectStoreCmd extends BaseCmd {
         this.url = url;
     }
 
-
     public void setProviderName(String providerName) {
         this.providerName = providerName;
     }
@@ -106,11 +100,9 @@ public class UpdateCloudToUseObjectStoreCmd extends BaseCmd {
         this.details = details;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
-
-
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -123,11 +115,11 @@ public class UpdateCloudToUseObjectStoreCmd extends BaseCmd {
     }
 
     @Override
-    public void execute(){
-        try{
+    public void execute() {
+        try {
             ImageStore result = _storageService.migrateToObjectStore(getName(), getUrl(), getProviderName(), getDetails());
             ImageStoreResponse storeResponse = null;
-            if (result != null ) {
+            if (result != null) {
                 storeResponse = _responseGenerator.createImageStoreResponse(result);
                 storeResponse.setResponseName(getCommandName());
                 storeResponse.setObjectName("imagestore");

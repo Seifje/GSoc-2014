@@ -31,43 +31,34 @@ import com.cloud.event.EventTypes;
 import com.cloud.network.PhysicalNetworkTrafficType;
 import com.cloud.user.Account;
 
-@APICommand(name = "updateTrafficType", description = "Updates traffic type of a physical network", responseObject = TrafficTypeResponse.class, since = "3.0.0",
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "updateTrafficType", description = "Updates traffic type of a physical network", responseObject = TrafficTypeResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateTrafficTypeCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(UpdateTrafficTypeCmd.class.getName());
 
     private static final String s_name = "updatetraffictyperesponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = TrafficTypeResponse.class, required = true, description = "traffic type id")
     private Long id;
 
-    @Parameter(name = ApiConstants.XENSERVER_NETWORK_LABEL,
-               type = CommandType.STRING,
-               description = "The network name label of the physical device dedicated to this traffic on a XenServer host")
+    @Parameter(name = ApiConstants.XENSERVER_NETWORK_LABEL, type = CommandType.STRING, description = "The network name label of the physical device dedicated to this traffic on a XenServer host")
     private String xenLabel;
 
-    @Parameter(name = ApiConstants.KVM_NETWORK_LABEL,
-               type = CommandType.STRING,
-               description = "The network name label of the physical device dedicated to this traffic on a KVM host")
+    @Parameter(name = ApiConstants.KVM_NETWORK_LABEL, type = CommandType.STRING, description = "The network name label of the physical device dedicated to this traffic on a KVM host")
     private String kvmLabel;
 
-    @Parameter(name = ApiConstants.VMWARE_NETWORK_LABEL,
-               type = CommandType.STRING,
-               description = "The network name label of the physical device dedicated to this traffic on a VMware host")
+    @Parameter(name = ApiConstants.VMWARE_NETWORK_LABEL, type = CommandType.STRING, description = "The network name label of the physical device dedicated to this traffic on a VMware host")
     private String vmwareLabel;
 
-    @Parameter(name = ApiConstants.HYPERV_NETWORK_LABEL,
-               type = CommandType.STRING,
-               description = "The network name label of the physical device dedicated to this traffic on a Hyperv host")
+    @Parameter(name = ApiConstants.HYPERV_NETWORK_LABEL, type = CommandType.STRING, description = "The network name label of the physical device dedicated to this traffic on a Hyperv host")
     private String hypervLabel;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getId() {
         return id;
@@ -89,9 +80,9 @@ public class UpdateTrafficTypeCmd extends BaseAsyncCmd {
         return hypervLabel;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

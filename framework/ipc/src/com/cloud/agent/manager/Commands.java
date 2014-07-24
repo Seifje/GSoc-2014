@@ -126,7 +126,9 @@ public class Commands implements Iterable<Command> {
     }
 
     /**
-     * @return For Commands with handler OnError.Continue, one command succeeding is successful.  If not, all commands must succeed to be successful.
+     * @return For Commands with handler OnError.Continue, one command
+     *         succeeding is successful. If not, all commands must succeed to be
+     *         successful.
      */
     public boolean isSuccessful() {
         if (_answers == null) {

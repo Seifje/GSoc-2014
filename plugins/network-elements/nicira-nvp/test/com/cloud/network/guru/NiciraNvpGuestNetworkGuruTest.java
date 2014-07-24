@@ -400,7 +400,7 @@ public class NiciraNvpGuestNetworkGuruTest {
 
         final CreateLogicalSwitchAnswer answer = mock(CreateLogicalSwitchAnswer.class);
         when(answer.getResult()).thenReturn(true);
-        //when(answer.getLogicalSwitchUuid()).thenReturn("aaaaa");
+        // when(answer.getLogicalSwitchUuid()).thenReturn("aaaaa");
         when(agentmgr.easySend(eq(NETWORK_ID), (Command)any())).thenReturn(answer);
 
         final Network implementednetwork = guru.implement(network, offering, dest, res);

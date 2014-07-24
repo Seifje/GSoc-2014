@@ -35,10 +35,10 @@ public class CryptoAlgos implements NtlmConstants {
 
     /**
      * Indicates the left-to-right concatenation of the string parameters, from
-     * the first string to the Nnth. Any numbers are converted to strings and all
-     * numeric conversions to strings retain all digits, even nonsignificant ones.
-     * The result is a string. For example, ConcatenationOf(0x00122, "XYZ",
-     * "Client") results in the string "00122XYZClient."
+     * the first string to the Nnth. Any numbers are converted to strings and
+     * all numeric conversions to strings retain all digits, even nonsignificant
+     * ones. The result is a string. For example, ConcatenationOf(0x00122,
+     * "XYZ", "Client") results in the string "00122XYZClient."
      */
     public static String concatenationOf(String... args) {
         StringBuffer sb = new StringBuffer();
@@ -83,8 +83,8 @@ public class CryptoAlgos implements NtlmConstants {
 
     /**
      * Indicates the encryption of an 8-byte data item D with the 16-byte key K
-     * using the Data Encryption Standard Long (DESL) algorithm. The result is 24
-     * bytes in length. DESL(K, D) is computed as follows.
+     * using the Data Encryption Standard Long (DESL) algorithm. The result is
+     * 24 bytes in length. DESL(K, D) is computed as follows.
      *
      * <pre>
      *   ConcatenationOf( DES(K[0..6], D),
@@ -108,8 +108,8 @@ public class CryptoAlgos implements NtlmConstants {
     }
 
     /**
-     * Retrieve the user's LM response key from the server database (directory or
-     * local database).
+     * Retrieve the user's LM response key from the server database (directory
+     * or local database).
      */
     public static byte[] LMGETKEY(byte[] u, byte[] d) {
         throw new RuntimeException("FATAL: Not implemented.");
@@ -129,8 +129,8 @@ public class CryptoAlgos implements NtlmConstants {
     }
 
     /**
-     * Indicates the computation of a 16-byte HMAC-keyed MD5 message digest of the
-     * byte string m using the key k.
+     * Indicates the computation of a 16-byte HMAC-keyed MD5 message digest of
+     * the byte string m using the key k.
      */
     public static byte[] HMAC_MD5(byte[] k, byte[] m) {
         try {
@@ -147,9 +147,10 @@ public class CryptoAlgos implements NtlmConstants {
 
     /**
      * Produces a key exchange key from the session base key K, LM response and
-     * server challenge SC as defined in the sections KXKEY, SIGNKEY, and SEALKEY.
+     * server challenge SC as defined in the sections KXKEY, SIGNKEY, and
+     * SEALKEY.
      */
-    public static byte[] KXKEY(byte[] sessionBaseKey/*K, byte[] LM, byte[] SC*/) {
+    public static byte[] KXKEY(byte[] sessionBaseKey/* K, byte[] LM, byte[] SC */) {
         // Key eXchange Key is server challenge
         /* In NTLMv2, KeyExchangeKey is the 128-bit SessionBaseKey */
         return Arrays.copyOf(sessionBaseKey, sessionBaseKey.length);
@@ -208,8 +209,8 @@ public class CryptoAlgos implements NtlmConstants {
      * number.
      *
      * Note The NTLM Authentication Protocol does not define the statistical
-     * properties of the random number generator. It is left to the discretion of
-     * the implementation to define the strength requirements of the NONCE(n)
+     * properties of the random number generator. It is left to the discretion
+     * of the implementation to define the strength requirements of the NONCE(n)
      * operation.
      */
     public static byte[] NONCE(int n) {
@@ -219,7 +220,7 @@ public class CryptoAlgos implements NtlmConstants {
         random.nextBytes(nonce);
 
         // Fixed nonce for debugging purposes
-        //* DEBUG */for (int i = 0; i < N; i++) nonce[i] = (byte) (i + 1);
+        // * DEBUG */for (int i = 0; i < N; i++) nonce[i] = (byte) (i + 1);
 
         return nonce;
     }
@@ -234,12 +235,12 @@ public class CryptoAlgos implements NtlmConstants {
     }
 
     /**
-     * The RC4 Encryption Algorithm. To obtain this stream cipher that is licensed
-     * by RSA Data Security, Inc., contact this company.
+     * The RC4 Encryption Algorithm. To obtain this stream cipher that is
+     * licensed by RSA Data Security, Inc., contact this company.
      *
-     * Indicates the encryption of data item d with the current session or message
-     * key state, using the RC4 algorithm. h is the handle to a key state
-     * structure initialized by RC4INIT.
+     * Indicates the encryption of data item d with the current session or
+     * message key state, using the RC4 algorithm. h is the handle to a key
+     * state structure initialized by RC4INIT.
      */
     public static byte[] RC4(Cipher h, byte[] d) {
         return h.update(d);
@@ -288,9 +289,9 @@ public class CryptoAlgos implements NtlmConstants {
     }
 
     /**
-     * Indicates the retrieval of the current time as a 64-bit value, represented
-     * as the number of 100-nanosecond ticks elapsed since midnight of January
-     * 1st, 1601 (UTC).
+     * Indicates the retrieval of the current time as a 64-bit value,
+     * represented as the number of 100-nanosecond ticks elapsed since midnight
+     * of January 1st, 1601 (UTC).
      */
     public static byte[] Currenttime() {
         // (current time + milliseconds from 1.01.1601 to 1.01.1970) *
@@ -308,8 +309,8 @@ public class CryptoAlgos implements NtlmConstants {
 
     /**
      * Indicates the 2-byte little-endian byte order encoding of the Unicode
-     * UTF-16 representation of string. The Byte Order Mark (BOM) is not sent over
-     * the wire.
+     * UTF-16 representation of string. The Byte Order Mark (BOM) is not sent
+     * over the wire.
      */
     public static byte[] UNICODE(String string) {
         return string.getBytes(RdpConstants.CHARSET_16);
@@ -321,8 +322,8 @@ public class CryptoAlgos implements NtlmConstants {
     }
 
     /**
-     * Indicates the creation of a byte array of length N. Each byte in the array
-     * is initialized to the value zero.
+     * Indicates the creation of a byte array of length N. Each byte in the
+     * array is initialized to the value zero.
      */
     public static byte[] Z(int n) {
         return new byte[n];

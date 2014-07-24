@@ -72,9 +72,9 @@ public class NexentaUtilTest {
         assertNull(parameters.getVolume());
         assertEquals(parameters.getStorageType(), Storage.StoragePoolType.Iscsi);
         assertEquals(parameters.getStorageHost(), "192.168.1.1");
-        assertEquals((int) parameters.getStoragePort(), NexentaUtil.DEFAULT_ISCSI_TARGET_PORTAL_PORT);
+        assertEquals((int)parameters.getStoragePort(), NexentaUtil.DEFAULT_ISCSI_TARGET_PORTAL_PORT);
         assertNull(parameters.getStoragePath());
-        assertEquals((boolean) parameters.getSparseVolumes(), false);
+        assertEquals((boolean)parameters.getSparseVolumes(), false);
         assertEquals(parameters.getVolumeBlockSize(), "8K");
 
         url += "volume=cloudstack";
@@ -89,11 +89,11 @@ public class NexentaUtilTest {
         url += "storageType=";
         parameters = NexentaUtil.parseNexentaPluginUrl(url + "nfs");
         assertEquals(parameters.getStorageType(), Storage.StoragePoolType.NetworkFilesystem);
-        assertEquals((int) parameters.getStoragePort(), NexentaUtil.DEFAULT_NFS_PORT);
+        assertEquals((int)parameters.getStoragePort(), NexentaUtil.DEFAULT_NFS_PORT);
 
         parameters = NexentaUtil.parseNexentaPluginUrl(url + "iscsi");
         assertEquals(parameters.getStorageType(), Storage.StoragePoolType.Iscsi);
-        assertEquals((int) parameters.getStoragePort(), NexentaUtil.DEFAULT_ISCSI_TARGET_PORTAL_PORT);
+        assertEquals((int)parameters.getStoragePort(), NexentaUtil.DEFAULT_ISCSI_TARGET_PORTAL_PORT);
 
         url += "nfs;storageHost=192.168.1.2;";
         parameters = NexentaUtil.parseNexentaPluginUrl(url);
@@ -101,7 +101,7 @@ public class NexentaUtilTest {
 
         url += "storagePort=3000;";
         parameters = NexentaUtil.parseNexentaPluginUrl(url);
-        assertEquals((int) parameters.getStoragePort(), 3000);
+        assertEquals((int)parameters.getStoragePort(), 3000);
 
         url += "storagePath=/volumes/cloudstack;";
         parameters = NexentaUtil.parseNexentaPluginUrl(url);
@@ -115,14 +115,15 @@ public class NexentaUtilTest {
         parameters = NexentaUtil.parseNexentaPluginUrl(url);
         assertEquals(parameters.getVolumeBlockSize(), "128K");
 
-        url += "unknownParameter=value;";  // NOTE: exception should not be raised
+        url += "unknownParameter=value;"; // NOTE: exception should not be
+        // raised
         parameters = NexentaUtil.parseNexentaPluginUrl(url);
 
         assertEquals(parameters.getNmsUrl().toString(), "http://admin:nexenta@192.168.1.1:2000/rest/nms/");
         assertEquals(parameters.getVolume(), "cloudstack");
         assertEquals(parameters.getStorageType(), Storage.StoragePoolType.NetworkFilesystem);
         assertEquals(parameters.getStorageHost(), "192.168.1.2");
-        assertEquals((int) parameters.getStoragePort(), 3000);
+        assertEquals((int)parameters.getStoragePort(), 3000);
         assertEquals(parameters.getStoragePath(), "/volumes/cloudstack");
         assertEquals(parameters.getSparseVolumes(), Boolean.TRUE);
         assertEquals(parameters.getVolumeBlockSize(), "128K");

@@ -1,4 +1,3 @@
-
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -48,8 +47,11 @@ public interface ResourceManager extends ResourceService {
      * Register a listener for different types of resource life cycle events.
      * There can only be one type of listener per type of host.
      *
-     * @param Event type see ResourceListener.java, allow combination of multiple events.
-     * @param listener the listener to notify.
+     * @param Event
+     *            type see ResourceListener.java, allow combination of multiple
+     *            events.
+     * @param listener
+     *            the listener to notify.
      */
     public void registerResourceEvent(Integer event, ResourceListener listener);
 
@@ -57,10 +59,13 @@ public interface ResourceManager extends ResourceService {
 
     /**
      *
-     * @param name of adapter
+     * @param name
+     *            of adapter
      * @param adapter
-     * @param hates, a list of names which will be eliminated by this adapter. Especially for the case where
-     * can be only one adapter responds to an event, e.g. startupCommand
+     * @param hates
+     *            , a list of names which will be eliminated by this adapter.
+     *            Especially for the case where can be only one adapter responds
+     *            to an event, e.g. startupCommand
      */
     public void registerResourceStateAdapter(String name, ResourceStateAdapter adapter);
 
@@ -144,49 +149,69 @@ public interface ResourceManager extends ResourceService {
 
     /**
      * Check if host is GPU enabled
-     * @param hostId the host to be checked
+     *
+     * @param hostId
+     *            the host to be checked
      * @return true if host contains GPU card else false
      */
     boolean isHostGpuEnabled(long hostId);
 
     /**
      * Check if host has GPU devices available
-     * @param hostId the host to be checked
-     * @param groupName: gpuCard name
-     * @param vgpuType the VGPU type
+     *
+     * @param hostId
+     *            the host to be checked
+     * @param groupName
+     *            : gpuCard name
+     * @param vgpuType
+     *            the VGPU type
      * @return true when the host has the capacity with given VGPU type
      */
     boolean isGPUDeviceAvailable(long hostId, String groupName, String vgpuType);
 
     /**
      * Get available GPU device
-     * @param hostId the host to be checked
-     * @param groupName: gpuCard name
-     * @param vgpuType the VGPU type
+     *
+     * @param hostId
+     *            the host to be checked
+     * @param groupName
+     *            : gpuCard name
+     * @param vgpuType
+     *            the VGPU type
      * @return GPUDeviceTO[]
      */
     GPUDeviceTO getGPUDevice(long hostId, String groupName, String vgpuType);
 
     /**
      * Return listof available GPU devices
-     * @param hostId, the host to be checked
-     * @param groupName: gpuCard name
-     * @param vgpuType the VGPU type
+     *
+     * @param hostId
+     *            , the host to be checked
+     * @param groupName
+     *            : gpuCard name
+     * @param vgpuType
+     *            the VGPU type
      * @return List of HostGpuGroupsVO.
      */
     List<HostGpuGroupsVO> listAvailableGPUDevice(long hostId, String groupName, String vgpuType);
 
     /**
      * Update GPU device details (post VM deployment)
-     * @param hostId, the dest host Id
-     * @param groupDetails, capacity of GPU group.
+     *
+     * @param hostId
+     *            , the dest host Id
+     * @param groupDetails
+     *            , capacity of GPU group.
      */
     void updateGPUDetails(long hostId, HashMap<String, HashMap<String, VgpuTypesInfo>> groupDetails);
 
     /**
      * Get GPU details for a host
-     * @param host, the Host object
-     * @return Details of groupNames and enabled VGPU type with remaining capacity.
+     *
+     * @param host
+     *            , the Host object
+     * @return Details of groupNames and enabled VGPU type with remaining
+     *         capacity.
      */
     HashMap<String, HashMap<String, VgpuTypesInfo>> getGPUStatistics(HostVO host);
 }

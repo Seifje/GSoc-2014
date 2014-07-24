@@ -64,7 +64,7 @@ import com.cloud.utils.db.TransactionLegacy;
 public class UsageServiceImpl extends ManagerBase implements UsageService, Manager {
     public static final Logger s_logger = Logger.getLogger(UsageServiceImpl.class);
 
-    //ToDo: Move implementation to ManagaerImpl
+    // ToDo: Move implementation to ManagaerImpl
 
     @Inject
     private AccountDao _accountDao;
@@ -90,7 +90,7 @@ public class UsageServiceImpl extends ManagerBase implements UsageService, Manag
         super.configure(name, params);
         String timeZoneStr = _configDao.getValue(Config.UsageAggregationTimezone.toString());
         if (timeZoneStr == null) {
-           timeZoneStr = "GMT";
+            timeZoneStr = "GMT";
         }
         _usageTimezone = TimeZone.getTimeZone(timeZoneStr);
         return true;
@@ -143,7 +143,7 @@ public class UsageServiceImpl extends ManagerBase implements UsageService, Manag
             accountId = project.getProjectAccountId();
         }
 
-        //if accountId is not specified, use accountName and domainId
+        // if accountId is not specified, use accountName and domainId
         if ((accountId == null) && (accountName != null) && (domainId != null)) {
             if (_domainDao.isChildDomain(caller.getDomainId(), domainId)) {
                 Filter filter = new Filter(AccountVO.class, "id", Boolean.FALSE, null, null);
@@ -164,11 +164,15 @@ public class UsageServiceImpl extends ManagerBase implements UsageService, Manag
         boolean isAdmin = false;
         boolean isDomainAdmin = false;
 
-        //If accountId couldn't be found using accountName and domainId, get it from userContext
+        // If accountId couldn't be found using accountName and domainId, get it
+        // from userContext
         if (accountId == null) {
             accountId = caller.getId();
-            //List records for all the accounts if the caller account is of type admin.
-            //If account_id or account_name is explicitly mentioned, list records for the specified account only even if the caller is of type admin
+            // List records for all the accounts if the caller account is of
+            // type admin.
+            // If account_id or account_name is explicitly mentioned, list
+            // records for the specified account only even if the caller is of
+            // type admin
             if (_accountService.isRootAdmin(caller.getId())) {
                 isAdmin = true;
             } else if (_accountService.isDomainAdmin(caller.getId())) {
@@ -187,8 +191,8 @@ public class UsageServiceImpl extends ManagerBase implements UsageService, Manag
         Date adjustedEndDate = computeAdjustedTime(endDate, usageTZ, false);
 
         if (s_logger.isDebugEnabled()) {
-            s_logger.debug("getting usage records for account: " + accountId + ", domainId: " + domainId + ", between " + startDate + " and " + endDate +
-                ", using pageSize: " + cmd.getPageSizeVal() + " and startIndex: " + cmd.getStartIndex());
+            s_logger.debug("getting usage records for account: " + accountId + ", domainId: " + domainId + ", between " + startDate + " and " + endDate + ", using pageSize: "
+                    + cmd.getPageSizeVal() + " and startIndex: " + cmd.getStartIndex());
         }
 
         Filter usageFilter = new Filter(UsageVO.class, "startDate", false, cmd.getStartIndex(), cmd.getPageSizeVal());
@@ -221,7 +225,10 @@ public class UsageServiceImpl extends ManagerBase implements UsageService, Manag
             sc.addAnd("startDate", SearchCriteria.Op.BETWEEN, adjustedStartDate, adjustedEndDate);
             sc.addAnd("endDate", SearchCriteria.Op.BETWEEN, adjustedStartDate, adjustedEndDate);
         } else {
-            return new Pair<List<? extends Usage>, Integer>(new ArrayList<Usage>(), new Integer(0)); // return an empty list if we fail to validate the dates
+            return new Pair<List<? extends Usage>, Integer>(new ArrayList<Usage>(), new Integer(0)); // return an empty
+            // list if we fail
+            // to validate the
+            // dates
         }
 
         Pair<List<UsageVO>, Integer> usageRecords = null;

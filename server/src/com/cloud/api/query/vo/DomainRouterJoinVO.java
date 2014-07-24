@@ -70,9 +70,9 @@ public class DomainRouterJoinVO extends BaseViewVO implements ControlledViewEnti
     private String domainPath = null;
 
     /**
-     * Note that state is intentionally missing the setter.  Any updates to
-     * the state machine needs to go through the DAO object because someone
-     * else could be updating it as well.
+     * Note that state is intentionally missing the setter. Any updates to the
+     * state machine needs to go through the DAO object because someone else
+     * could be updating it as well.
      */
     @Enumerated(value = EnumType.STRING)
     @Column(name = "state", updatable = true, nullable = false, length = 32)

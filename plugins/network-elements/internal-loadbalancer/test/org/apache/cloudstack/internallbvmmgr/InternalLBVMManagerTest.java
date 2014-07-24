@@ -82,11 +82,11 @@ import com.cloud.vm.dao.NicDao;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/lb_mgr.xml")
 public class InternalLBVMManagerTest extends TestCase {
-    //The interface to test
+    // The interface to test
     @Inject
     InternalLoadBalancerVMManager _lbVmMgr;
 
-    //Mocked interfaces
+    // Mocked interfaces
     @Inject
     AccountManager _accountMgr;
     @Inject
@@ -116,18 +116,18 @@ public class InternalLBVMManagerTest extends TestCase {
     @Override
     @Before
     public void setUp() {
-        //mock system offering creation as it's used by configure() method called by initComponentsLifeCycle
+        // mock system offering creation as it's used by configure() method
+        // called by initComponentsLifeCycle
         Mockito.when(_accountMgr.getAccount(1L)).thenReturn(new AccountVO());
-        ServiceOfferingVO off = new ServiceOfferingVO("alena", 1, 1,
-                1, 1, 1, false, "alena", Storage.ProvisioningType.THIN, false, false, null, false, VirtualMachine.Type.InternalLoadBalancerVm, false);
+        ServiceOfferingVO off = new ServiceOfferingVO("alena", 1, 1, 1, 1, 1, false, "alena", Storage.ProvisioningType.THIN, false, false, null, false,
+                VirtualMachine.Type.InternalLoadBalancerVm, false);
         off = setId(off, 1);
         Mockito.when(_svcOffDao.persistSystemServiceOffering(Matchers.any(ServiceOfferingVO.class))).thenReturn(off);
 
         ComponentContext.initComponentsLifeCycle();
 
-        vm =
-            new DomainRouterVO(1L, off.getId(), 1, "alena", 1, HypervisorType.XenServer, 1, 1, 1, false, 0, false, null, false, false,
-                VirtualMachine.Type.InternalLoadBalancerVm, null);
+        vm = new DomainRouterVO(1L, off.getId(), 1, "alena", 1, HypervisorType.XenServer, 1, 1, 1, false, 0, false, null, false, false, VirtualMachine.Type.InternalLoadBalancerVm,
+                null);
         vm.setRole(Role.INTERNAL_LB_VM);
         vm = setId(vm, 1);
         vm.setPrivateIpAddress("10.2.2.2");
@@ -186,7 +186,7 @@ public class InternalLBVMManagerTest extends TestCase {
         return ntwk;
     }
 
-    //TESTS FOR findInternalLbVms METHOD
+    // TESTS FOR findInternalLbVms METHOD
 
     @Test
     public void findInternalLbVmsForInvalidNetwork() {
@@ -200,7 +200,7 @@ public class InternalLBVMManagerTest extends TestCase {
         assertTrue("Empty vm list was returned for valid network id", !vms.isEmpty());
     }
 
-    //TESTS FOR applyLoadBalancingRules METHOD
+    // TESTS FOR applyLoadBalancingRules METHOD
     @Test
     public void applyEmptyRulesSet() {
         boolean result = false;
@@ -308,7 +308,7 @@ public class InternalLBVMManagerTest extends TestCase {
         }
     }
 
-    //TESTS FOR destroyInternalLbVm METHOD
+    // TESTS FOR destroyInternalLbVm METHOD
     @Test
     public void destroyNonExistingVM() throws ResourceUnavailableException, ConcurrentOperationException {
         boolean result = false;

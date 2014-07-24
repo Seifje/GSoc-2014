@@ -20,8 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Provide converters for regexp (case independent tokens)
- * Also provide upper case or lower case (default) converters for byte array b[] to hex String
+ * Provide converters for regexp (case independent tokens) Also provide upper
+ * case or lower case (default) converters for byte array b[] to hex String
  */
 public class StringHelper {
     public static final String EMPTY_STRING = "";
@@ -30,8 +30,9 @@ public class StringHelper {
 
     private static final char[] hexCharsLowerCase = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
-    /* Convert byte array b[] into an uppercase hex string
-    */
+    /*
+     * Convert byte array b[] into an uppercase hex string
+     */
     public static String toHexStringUpperCase(byte[] b) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < b.length; i++) {
@@ -41,7 +42,8 @@ public class StringHelper {
         return sb.toString();
     }
 
-    /* Convert byte array b[] into a lowercase (default) hex string
+    /*
+     * Convert byte array b[] into a lowercase (default) hex string
      */
     public static String toHexString(byte[] b) {
         StringBuffer sb = new StringBuffer();
@@ -76,20 +78,21 @@ public class StringHelper {
     }
 
     /**
-     * Convert the string into a regex to allow easy matching.  In both S3 and EC2 regex strings
-     * are used for matching.  We must remember to quote all special regex characters that appear
-     * in the string.
+     * Convert the string into a regex to allow easy matching. In both S3 and
+     * EC2 regex strings are used for matching. We must remember to quote all
+     * special regex characters that appear in the string.
      */
     public static String toRegex(String param) {
         StringBuffer regex = new StringBuffer();
         for (int i = 0; i < param.length(); i++) {
             char next = param.charAt(i);
             if ('*' == next)
-                regex.append(".+");   // -> multi-character match wild card
+                regex.append(".+"); // -> multi-character match wild card
             else if ('?' == next)
-                regex.append(".");   // -> single-character match wild card
+                regex.append("."); // -> single-character match wild card
             else if ('.' == next)
-                regex.append("\\.");   // all of these are special regex characters we are quoting
+                regex.append("\\."); // all of these are special regex
+                                     // characters we are quoting
             else if ('+' == next)
                 regex.append("\\+");
             else if ('$' == next)

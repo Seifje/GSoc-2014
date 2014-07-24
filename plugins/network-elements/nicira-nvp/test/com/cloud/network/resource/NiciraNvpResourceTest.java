@@ -122,8 +122,9 @@ public class NiciraNvpResourceTest {
         verify(nvpApi).setControllerAddress("127.0.0.1");
         assertTrue("Incorrect resource name", "nvptestdevice".equals(resource.getName()));
 
-        /* Pretty lame test, but here to assure this plugin fails
-         * if the type name ever changes from L2Networking
+        /*
+         * Pretty lame test, but here to assure this plugin fails if the type
+         * name ever changes from L2Networking
          */
         assertTrue("Incorrect resource type", resource.getType() == Host.Type.L2Networking);
     }
@@ -294,8 +295,8 @@ public class NiciraNvpResourceTest {
         resource.configure("NiciraNvpResource", parameters);
 
         doThrow(new NiciraNvpApiException()).when(nvpApi).updateLogicalSwitchPortAttachment((String)any(), (String)any(), (Attachment)any());
-        final UpdateLogicalSwitchPortAnswer dlspa =
-            (UpdateLogicalSwitchPortAnswer)resource.executeRequest(new UpdateLogicalSwitchPortCommand("aaaa", "bbbb", "cccc", "owner", "nicname"));
+        final UpdateLogicalSwitchPortAnswer dlspa = (UpdateLogicalSwitchPortAnswer)resource.executeRequest(new UpdateLogicalSwitchPortCommand("aaaa", "bbbb", "cccc", "owner",
+                "nicname"));
         assertFalse(dlspa.getResult());
     }
 
@@ -304,8 +305,7 @@ public class NiciraNvpResourceTest {
         resource.configure("NiciraNvpResource", parameters);
 
         @SuppressWarnings("unchecked")
-        final
-        NiciraNvpList<LogicalSwitchPort> lspl = mock(NiciraNvpList.class);
+        final NiciraNvpList<LogicalSwitchPort> lspl = mock(NiciraNvpList.class);
         when(lspl.getResultCount()).thenReturn(1);
         when(nvpApi.findLogicalSwitchPortsByUuid("aaaa", "bbbb")).thenReturn(lspl);
 
@@ -318,8 +318,7 @@ public class NiciraNvpResourceTest {
         resource.configure("NiciraNvpResource", parameters);
 
         @SuppressWarnings("unchecked")
-        final
-        NiciraNvpList<LogicalSwitchPort> lspl = mock(NiciraNvpList.class);
+        final NiciraNvpList<LogicalSwitchPort> lspl = mock(NiciraNvpList.class);
         when(lspl.getResultCount()).thenReturn(0);
         when(nvpApi.findLogicalSwitchPortsByUuid("aaaa", "bbbb")).thenReturn(lspl);
 
@@ -421,8 +420,7 @@ public class NiciraNvpResourceTest {
 
         final ConfigurePublicIpsOnLogicalRouterCommand cmd = mock(ConfigurePublicIpsOnLogicalRouterCommand.class);
         @SuppressWarnings("unchecked")
-        final
-        NiciraNvpList<LogicalRouterPort> list = mock(NiciraNvpList.class);
+        final NiciraNvpList<LogicalRouterPort> list = mock(NiciraNvpList.class);
 
         when(cmd.getLogicalRouterUuid()).thenReturn("aaaaa");
         when(cmd.getL3GatewayServiceUuid()).thenReturn("bbbbb");
@@ -437,9 +435,8 @@ public class NiciraNvpResourceTest {
     @Test
     public void testConfigureStaticNatRulesOnLogicalRouter() throws ConfigurationException, NiciraNvpApiException {
         resource.configure("NiciraNvpResource", parameters);
-        /* StaticNat
-         * Outside IP: 11.11.11.11
-         * Inside IP:  10.10.10.10
+        /*
+         * StaticNat Outside IP: 11.11.11.11 Inside IP: 10.10.10.10
          */
 
         // Mock the command
@@ -452,8 +449,7 @@ public class NiciraNvpResourceTest {
 
         // Mock the api find call
         @SuppressWarnings("unchecked")
-        final
-        NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
+        final NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
         when(nvpApi.findNatRulesByLogicalRouterUuid("aaaaa")).thenReturn(storedRules);
 
         // Mock the api create calls
@@ -483,9 +479,8 @@ public class NiciraNvpResourceTest {
     @Test
     public void testConfigureStaticNatRulesOnLogicalRouterExistingRules() throws ConfigurationException, NiciraNvpApiException {
         resource.configure("NiciraNvpResource", parameters);
-        /* StaticNat
-         * Outside IP: 11.11.11.11
-         * Inside IP:  10.10.10.10
+        /*
+         * StaticNat Outside IP: 11.11.11.11 Inside IP: 10.10.10.10
          */
 
         // Mock the command
@@ -504,8 +499,7 @@ public class NiciraNvpResourceTest {
 
         // Mock the api find call
         @SuppressWarnings("unchecked")
-        final
-        NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
+        final NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
         when(storedRules.getResultCount()).thenReturn(2);
         when(storedRules.getResults()).thenReturn(Arrays.asList(rulepair));
         when(nvpApi.findNatRulesByLogicalRouterUuid("aaaaa")).thenReturn(storedRules);
@@ -531,9 +525,8 @@ public class NiciraNvpResourceTest {
     @Test
     public void testConfigureStaticNatRulesOnLogicalRouterRemoveRules() throws ConfigurationException, NiciraNvpApiException {
         resource.configure("NiciraNvpResource", parameters);
-        /* StaticNat
-         * Outside IP: 11.11.11.11
-         * Inside IP:  10.10.10.10
+        /*
+         * StaticNat Outside IP: 11.11.11.11 Inside IP: 10.10.10.10
          */
 
         // Mock the command
@@ -554,8 +547,7 @@ public class NiciraNvpResourceTest {
 
         // Mock the api find call
         @SuppressWarnings("unchecked")
-        final
-        NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
+        final NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
         when(storedRules.getResultCount()).thenReturn(2);
         when(storedRules.getResults()).thenReturn(Arrays.asList(rulepair));
         when(nvpApi.findNatRulesByLogicalRouterUuid("aaaaa")).thenReturn(storedRules);
@@ -578,9 +570,8 @@ public class NiciraNvpResourceTest {
     @Test
     public void testConfigureStaticNatRulesOnLogicalRouterRollback() throws ConfigurationException, NiciraNvpApiException {
         resource.configure("NiciraNvpResource", parameters);
-        /* StaticNat
-         * Outside IP: 11.11.11.11
-         * Inside IP:  10.10.10.10
+        /*
+         * StaticNat Outside IP: 11.11.11.11 Inside IP: 10.10.10.10
          */
 
         // Mock the command
@@ -599,8 +590,7 @@ public class NiciraNvpResourceTest {
 
         // Mock the api find call
         @SuppressWarnings("unchecked")
-        final
-        NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
+        final NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
         when(storedRules.getResultCount()).thenReturn(0);
         when(nvpApi.findNatRulesByLogicalRouterUuid("aaaaa")).thenReturn(storedRules);
 
@@ -613,9 +603,8 @@ public class NiciraNvpResourceTest {
     @Test
     public void testConfigurePortForwardingRulesOnLogicalRouter() throws ConfigurationException, NiciraNvpApiException {
         resource.configure("NiciraNvpResource", parameters);
-        /* StaticNat
-         * Outside IP: 11.11.11.11
-         * Inside IP:  10.10.10.10
+        /*
+         * StaticNat Outside IP: 11.11.11.11 Inside IP: 10.10.10.10
          */
 
         // Mock the command
@@ -628,8 +617,7 @@ public class NiciraNvpResourceTest {
 
         // Mock the api find call
         @SuppressWarnings("unchecked")
-        final
-        NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
+        final NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
         when(nvpApi.findNatRulesByLogicalRouterUuid("aaaaa")).thenReturn(storedRules);
 
         // Mock the api create calls
@@ -659,9 +647,8 @@ public class NiciraNvpResourceTest {
     @Test
     public void testConfigurePortForwardingRulesOnLogicalRouterExistingRules() throws ConfigurationException, NiciraNvpApiException {
         resource.configure("NiciraNvpResource", parameters);
-        /* StaticNat
-         * Outside IP: 11.11.11.11
-         * Inside IP:  10.10.10.10
+        /*
+         * StaticNat Outside IP: 11.11.11.11 Inside IP: 10.10.10.10
          */
 
         // Mock the command
@@ -680,8 +667,7 @@ public class NiciraNvpResourceTest {
 
         // Mock the api find call
         @SuppressWarnings("unchecked")
-        final
-        NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
+        final NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
         when(storedRules.getResultCount()).thenReturn(2);
         when(storedRules.getResults()).thenReturn(Arrays.asList(rulepair));
         when(nvpApi.findNatRulesByLogicalRouterUuid("aaaaa")).thenReturn(storedRules);
@@ -707,9 +693,8 @@ public class NiciraNvpResourceTest {
     @Test
     public void testConfigurePortForwardingRulesOnLogicalRouterRemoveRules() throws ConfigurationException, NiciraNvpApiException {
         resource.configure("NiciraNvpResource", parameters);
-        /* StaticNat
-         * Outside IP: 11.11.11.11
-         * Inside IP:  10.10.10.10
+        /*
+         * StaticNat Outside IP: 11.11.11.11 Inside IP: 10.10.10.10
          */
 
         // Mock the command
@@ -730,8 +715,7 @@ public class NiciraNvpResourceTest {
 
         // Mock the api find call
         @SuppressWarnings("unchecked")
-        final
-        NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
+        final NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
         when(storedRules.getResultCount()).thenReturn(2);
         when(storedRules.getResults()).thenReturn(Arrays.asList(rulepair));
         when(nvpApi.findNatRulesByLogicalRouterUuid("aaaaa")).thenReturn(storedRules);
@@ -754,9 +738,8 @@ public class NiciraNvpResourceTest {
     @Test
     public void testConfigurePortForwardingRulesOnLogicalRouterRollback() throws ConfigurationException, NiciraNvpApiException {
         resource.configure("NiciraNvpResource", parameters);
-        /* StaticNat
-         * Outside IP: 11.11.11.11
-         * Inside IP:  10.10.10.10
+        /*
+         * StaticNat Outside IP: 11.11.11.11 Inside IP: 10.10.10.10
          */
 
         // Mock the command
@@ -775,8 +758,7 @@ public class NiciraNvpResourceTest {
 
         // Mock the api find call
         @SuppressWarnings("unchecked")
-        final
-        NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
+        final NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
         when(storedRules.getResultCount()).thenReturn(0);
         when(nvpApi.findNatRulesByLogicalRouterUuid("aaaaa")).thenReturn(storedRules);
 
@@ -789,9 +771,8 @@ public class NiciraNvpResourceTest {
     @Test
     public void testConfigurePortForwardingRulesOnLogicalRouterPortRange() throws ConfigurationException, NiciraNvpApiException {
         resource.configure("NiciraNvpResource", parameters);
-        /* StaticNat
-         * Outside IP: 11.11.11.11
-         * Inside IP:  10.10.10.10
+        /*
+         * StaticNat Outside IP: 11.11.11.11 Inside IP: 10.10.10.10
          */
 
         // Mock the command
@@ -804,8 +785,7 @@ public class NiciraNvpResourceTest {
 
         // Mock the api find call
         @SuppressWarnings("unchecked")
-        final
-        NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
+        final NiciraNvpList<NatRule> storedRules = mock(NiciraNvpList.class);
         when(nvpApi.findNatRulesByLogicalRouterUuid("aaaaa")).thenReturn(storedRules);
 
         // Mock the api create calls
@@ -816,7 +796,8 @@ public class NiciraNvpResourceTest {
 
         final ConfigurePortForwardingRulesOnLogicalRouterAnswer a = (ConfigurePortForwardingRulesOnLogicalRouterAnswer)resource.executeRequest(cmd);
 
-        // The expected result is false, Nicira does not support port ranges in DNAT
+        // The expected result is false, Nicira does not support port ranges in
+        // DNAT
         assertFalse(a.getResult());
 
     }

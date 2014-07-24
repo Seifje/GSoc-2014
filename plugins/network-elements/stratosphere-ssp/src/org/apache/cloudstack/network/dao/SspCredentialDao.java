@@ -22,11 +22,11 @@ public interface SspCredentialDao extends GenericDao<SspCredentialVO, Long> {
     /**
      * Find an ssp credential for a specific cloudstack zone.
      *
-     * For now, credential is a pair of username and password.
-     * We might want to fetch different pairs for each cloudstack users
-     * in future work.
+     * For now, credential is a pair of username and password. We might want to
+     * fetch different pairs for each cloudstack users in future work.
      *
-     * @param zoneId zone Id
+     * @param zoneId
+     *            zone Id
      * @return credential object
      */
     public SspCredentialVO findByZone(long zoneId);

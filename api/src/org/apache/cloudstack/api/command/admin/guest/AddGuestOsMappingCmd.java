@@ -32,16 +32,15 @@ import com.cloud.event.EventTypes;
 import com.cloud.storage.GuestOSHypervisor;
 import com.cloud.user.Account;
 
-@APICommand(name = "addGuestOsMapping", description = "Adds a guest OS name to hypervisor OS name mapping", responseObject = GuestOsMappingResponse.class,
-        since = "4.4.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "addGuestOsMapping", description = "Adds a guest OS name to hypervisor OS name mapping", responseObject = GuestOsMappingResponse.class, since = "4.4.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class AddGuestOsMappingCmd extends BaseAsyncCreateCmd {
     public static final Logger s_logger = Logger.getLogger(AddGuestOsMappingCmd.class.getName());
 
     private static final String s_name = "addguestosmappingresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
     @Parameter(name = ApiConstants.OS_TYPE_ID, type = CommandType.UUID, required = false, entityType = GuestOSResponse.class, description = "UUID of Guest OS type. Either the UUID or Display Name must be passed")
     private Long osTypeId;
@@ -58,9 +57,9 @@ public class AddGuestOsMappingCmd extends BaseAsyncCreateCmd {
     @Parameter(name = ApiConstants.OS_NAME_FOR_HYPERVISOR, type = CommandType.STRING, required = true, description = "OS name specific to the hypervisor")
     private String osNameForHypervisor;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getOsTypeId() {
         return osTypeId;
@@ -82,9 +81,9 @@ public class AddGuestOsMappingCmd extends BaseAsyncCreateCmd {
         return osNameForHypervisor;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

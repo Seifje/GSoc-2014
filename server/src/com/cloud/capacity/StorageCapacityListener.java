@@ -68,8 +68,7 @@ public class StorageCapacityListener implements Listener {
         StartupStorageCommand ssCmd = (StartupStorageCommand)startup;
         if (ssCmd.getResourceType() == Storage.StorageResourceType.STORAGE_HOST) {
             BigDecimal overProvFactor = BigDecimal.valueOf(CapacityManager.StorageOverprovisioningFactor.value());
-            CapacityVO capacity =
-                new CapacityVO(server.getId(), server.getDataCenterId(), server.getPodId(), server.getClusterId(), 0L, (overProvFactor.multiply(new BigDecimal(
+            CapacityVO capacity = new CapacityVO(server.getId(), server.getDataCenterId(), server.getPodId(), server.getClusterId(), 0L, (overProvFactor.multiply(new BigDecimal(
                     server.getTotalSize()))).longValue(), Capacity.CAPACITY_TYPE_STORAGE_ALLOCATED);
             _capacityDao.persist(capacity);
         }

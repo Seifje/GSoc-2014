@@ -90,7 +90,6 @@ public class StorageCacheManagerImpl implements StorageCacheManager, Manager {
         return null;
     }
 
-
     @Override
     public DataStore getCacheStorage(DataObject data, Scope scope) {
         for (StorageCacheAllocator allocator : storageCacheAllocator) {
@@ -101,7 +100,6 @@ public class StorageCacheManagerImpl implements StorageCacheManager, Manager {
         }
         return null;
     }
-
 
     protected List<DataStore> getCacheStores() {
         QueryBuilder<ImageStoreVO> sc = QueryBuilder.create(ImageStoreVO.class);

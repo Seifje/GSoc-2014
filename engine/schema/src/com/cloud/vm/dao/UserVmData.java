@@ -676,14 +676,14 @@ public class UserVmData {
             this.domainName = domainName;
         }
 
-        /* FIXME : the below functions are not used, so commenting out later need to include egress list
-                public List<SecurityGroupRuleResponse> getIngressRules() {
-                    return securityGroupRules;
-                }
-
-                public void setIngressRules(List<SecurityGroupRuleResponse> securityGroupRules) {
-                    this.securityGroupRules = securityGroupRules;
-                } */
+        /*
+         * FIXME : the below functions are not used, so commenting out later
+         * need to include egress list public List<SecurityGroupRuleResponse>
+         * getIngressRules() { return securityGroupRules; }
+         *
+         * public void setIngressRules(List<SecurityGroupRuleResponse>
+         * securityGroupRules) { this.securityGroupRules = securityGroupRules; }
+         */
 
         @Override
         public int hashCode() {

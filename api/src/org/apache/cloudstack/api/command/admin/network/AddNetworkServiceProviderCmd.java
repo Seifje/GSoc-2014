@@ -36,46 +36,31 @@ import com.cloud.exception.ResourceAllocationException;
 import com.cloud.network.PhysicalNetworkServiceProvider;
 import com.cloud.user.Account;
 
-@APICommand(name = "addNetworkServiceProvider",
-            description = "Adds a network serviceProvider to a physical network",
-            responseObject = ProviderResponse.class,
-            since = "3.0.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "addNetworkServiceProvider", description = "Adds a network serviceProvider to a physical network", responseObject = ProviderResponse.class, since = "3.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class AddNetworkServiceProviderCmd extends BaseAsyncCreateCmd {
     public static final Logger s_logger = Logger.getLogger(AddNetworkServiceProviderCmd.class.getName());
 
     private static final String s_name = "addnetworkserviceproviderresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = PhysicalNetworkResponse.class,
-               required = true,
-               description = "the Physical Network ID to add the provider to")
+    @Parameter(name = ApiConstants.PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, required = true, description = "the Physical Network ID to add the provider to")
     private Long physicalNetworkId;
 
-    @Parameter(name = ApiConstants.DEST_PHYSICAL_NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = PhysicalNetworkResponse.class,
-               description = "the destination Physical Network ID to bridge to")
+    @Parameter(name = ApiConstants.DEST_PHYSICAL_NETWORK_ID, type = CommandType.UUID, entityType = PhysicalNetworkResponse.class, description = "the destination Physical Network ID to bridge to")
     private Long destinationPhysicalNetworkId;
 
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "the name for the physical network service provider")
     private String name;
 
-    @Parameter(name = ApiConstants.SERVICE_LIST,
-               type = CommandType.LIST,
-               collectionType = CommandType.STRING,
-               description = "the list of services to be enabled for this physical network service provider")
+    @Parameter(name = ApiConstants.SERVICE_LIST, type = CommandType.LIST, collectionType = CommandType.STRING, description = "the list of services to be enabled for this physical network service provider")
     private List<String> enabledServices;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getPhysicalNetworkId() {
         return physicalNetworkId;
@@ -93,9 +78,9 @@ public class AddNetworkServiceProviderCmd extends BaseAsyncCreateCmd {
         return enabledServices;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {
@@ -122,8 +107,8 @@ public class AddNetworkServiceProviderCmd extends BaseAsyncCreateCmd {
 
     @Override
     public void create() throws ResourceAllocationException {
-        PhysicalNetworkServiceProvider result =
-            _networkService.addProviderToPhysicalNetwork(getPhysicalNetworkId(), getProviderName(), getDestinationPhysicalNetworkId(), getEnabledServices());
+        PhysicalNetworkServiceProvider result = _networkService.addProviderToPhysicalNetwork(getPhysicalNetworkId(), getProviderName(), getDestinationPhysicalNetworkId(),
+                getEnabledServices());
         if (result != null) {
             setEntityId(result.getId());
             setEntityUuid(result.getUuid());

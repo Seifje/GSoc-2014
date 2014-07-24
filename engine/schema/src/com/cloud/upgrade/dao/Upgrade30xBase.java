@@ -137,8 +137,7 @@ public abstract class Upgrade30xBase implements DbUpgrade {
         PreparedStatement pstmtUpdate = null;
         try {
             s_logger.debug("Adding PhysicalNetwork traffic types");
-            String insertTraficType =
-                "INSERT INTO `cloud`.`physical_network_traffic_types` (physical_network_id, traffic_type, xen_network_label, kvm_network_label, vmware_network_label, uuid) VALUES ( ?, ?, ?, ?, ?, ?)";
+            String insertTraficType = "INSERT INTO `cloud`.`physical_network_traffic_types` (physical_network_id, traffic_type, xen_network_label, kvm_network_label, vmware_network_label, uuid) VALUES ( ?, ?, ?, ?, ?, ?)";
             pstmtUpdate = conn.prepareStatement(insertTraficType);
             pstmtUpdate.setLong(1, physicalNetworkId);
             pstmtUpdate.setString(2, trafficType);
@@ -163,13 +162,13 @@ public abstract class Upgrade30xBase implements DbUpgrade {
     protected void addDefaultSGProvider(Connection conn, long physicalNetworkId, long zoneId, String networkType, boolean is304) {
         PreparedStatement pstmtUpdate = null, pstmt2 = null;
         try {
-            //add security group service provider (if security group service is enabled for at least one guest network)
+            // add security group service provider (if security group service is
+            // enabled for at least one guest network)
             boolean isSGServiceEnabled = false;
             String selectSG = "";
 
             if (is304) {
-                selectSG =
-                    "SELECT nm.* FROM `cloud`.`ntwk_service_map` nm JOIN `cloud`.`networks` n ON nm.network_id = n.id where n.data_center_id = ? and nm.service='SecurityGroup'";
+                selectSG = "SELECT nm.* FROM `cloud`.`ntwk_service_map` nm JOIN `cloud`.`networks` n ON nm.network_id = n.id where n.data_center_id = ? and nm.service='SecurityGroup'";
             } else {
                 selectSG = "SELECT * from `cloud`.`networks` where is_security_group_enabled=1 and data_center_id=?";
             }
@@ -185,8 +184,7 @@ public abstract class Upgrade30xBase implements DbUpgrade {
 
             if (isSGServiceEnabled) {
                 s_logger.debug("Adding PhysicalNetworkServiceProvider SecurityGroupProvider to the physical network id=" + physicalNetworkId);
-                String insertPNSP =
-                    "INSERT INTO `cloud`.`physical_network_service_providers` (`uuid`, `physical_network_id` , `provider_name`, `state` ,"
+                String insertPNSP = "INSERT INTO `cloud`.`physical_network_service_providers` (`uuid`, `physical_network_id` , `provider_name`, `state` ,"
                         + "`destination_physical_network_id`, `vpn_service_provided`, `dhcp_service_provided`, `dns_service_provided`, `gateway_service_provided`,"
                         + "`firewall_service_provided`, `source_nat_service_provided`, `load_balance_service_provided`, `static_nat_service_provided`,"
                         + "`port_forwarding_service_provided`, `user_data_service_provided`, `security_group_service_provided`) VALUES (?,?,?,?,0,0,0,0,0,0,0,0,0,0,0,1)";
@@ -223,8 +221,7 @@ public abstract class Upgrade30xBase implements DbUpgrade {
         try {
             // add physical network service provider - VirtualRouter
             s_logger.debug("Adding PhysicalNetworkServiceProvider VirtualRouter");
-            String insertPNSP =
-                "INSERT INTO `cloud`.`physical_network_service_providers` (`uuid`, `physical_network_id` , `provider_name`, `state` ,"
+            String insertPNSP = "INSERT INTO `cloud`.`physical_network_service_providers` (`uuid`, `physical_network_id` , `provider_name`, `state` ,"
                     + "`destination_physical_network_id`, `vpn_service_provided`, `dhcp_service_provided`, `dns_service_provided`, `gateway_service_provided`,"
                     + "`firewall_service_provided`, `source_nat_service_provided`, `load_balance_service_provided`, `static_nat_service_provided`,"
                     + "`port_forwarding_service_provided`, `user_data_service_provided`, `security_group_service_provided`) VALUES (?,?,?,?,0,1,1,1,1,1,1,1,1,1,1,0)";
@@ -239,9 +236,8 @@ public abstract class Upgrade30xBase implements DbUpgrade {
             pstmtUpdate.close();
 
             // add virtual_router_element
-            String fetchNSPid =
-                "SELECT id from `cloud`.`physical_network_service_providers` where physical_network_id=" + physicalNetworkId +
-                    " AND provider_name = 'VirtualRouter' AND uuid = ?";
+            String fetchNSPid = "SELECT id from `cloud`.`physical_network_service_providers` where physical_network_id=" + physicalNetworkId
+                    + " AND provider_name = 'VirtualRouter' AND uuid = ?";
             pstmt2 = conn.prepareStatement(fetchNSPid);
             pstmt2.setString(1, routerUUID);
             ResultSet rsNSPid = pstmt2.executeQuery();

@@ -86,11 +86,9 @@ public class ClusterServiceServletContainer {
             }
 
             _params = new BasicHttpParams();
-            _params.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 5000)
-                .setIntParameter(CoreConnectionPNames.SOCKET_BUFFER_SIZE, 8 * 1024)
-                .setBooleanParameter(CoreConnectionPNames.STALE_CONNECTION_CHECK, false)
-                .setBooleanParameter(CoreConnectionPNames.TCP_NODELAY, true)
-                .setParameter(CoreProtocolPNames.ORIGIN_SERVER, "HttpComponents/1.1");
+            _params.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 5000).setIntParameter(CoreConnectionPNames.SOCKET_BUFFER_SIZE, 8 * 1024)
+            .setBooleanParameter(CoreConnectionPNames.STALE_CONNECTION_CHECK, false).setBooleanParameter(CoreConnectionPNames.TCP_NODELAY, true)
+            .setParameter(CoreProtocolPNames.ORIGIN_SERVER, "HttpComponents/1.1");
 
             // Set up the HTTP protocol processor
             BasicHttpProcessor httpproc = new BasicHttpProcessor();
@@ -146,7 +144,8 @@ public class ClusterServiceServletContainer {
                                         s_logger.trace("Cluster request from " + conn.getRemoteAddress().toString() + " is processed");
                                 }
                             } catch (ConnectionClosedException ex) {
-                                // client close and read time out exceptions are expected
+                                // client close and read time out exceptions are
+                                // expected
                                 // when KEEP-AVLIE is enabled
                                 s_logger.trace("Client closed connection", ex);
                             } catch (IOException ex) {
@@ -166,7 +165,8 @@ public class ClusterServiceServletContainer {
                 } catch (Throwable e) {
                     s_logger.error("Unexpected exception ", e);
 
-                    // back off to avoid spinning if the exception condition keeps coming back
+                    // back off to avoid spinning if the exception condition
+                    // keeps coming back
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e1) {

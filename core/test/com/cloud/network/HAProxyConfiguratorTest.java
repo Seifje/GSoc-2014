@@ -62,7 +62,9 @@ public class HAProxyConfiguratorTest {
     }
 
     /**
-     * Test method for {@link com.cloud.network.HAProxyConfigurator#generateConfiguration(com.cloud.agent.api.routing.LoadBalancerConfigCommand)}.
+     * Test method for
+     * {@link com.cloud.network.HAProxyConfigurator#generateConfiguration(com.cloud.agent.api.routing.LoadBalancerConfigCommand)}
+     * .
      */
     @Test
     public void testGenerateConfigurationLoadBalancerConfigCommand() {

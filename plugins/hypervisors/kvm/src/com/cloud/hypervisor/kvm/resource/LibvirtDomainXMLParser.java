@@ -80,9 +80,8 @@ public class LibvirtDomainXMLParser {
                         fmt = DiskDef.diskFmtType.valueOf(diskFmtType.toUpperCase());
                     }
 
-                    def.defNetworkBasedDisk(diskPath, host, port, authUserName, poolUuid, diskLabel,
-                        DiskDef.diskBus.valueOf(bus.toUpperCase()),
-                        DiskDef.diskProtocol.valueOf(protocol.toUpperCase()), fmt);
+                    def.defNetworkBasedDisk(diskPath, host, port, authUserName, poolUuid, diskLabel, DiskDef.diskBus.valueOf(bus.toUpperCase()),
+                            DiskDef.diskProtocol.valueOf(protocol.toUpperCase()), fmt);
                     def.setCacheMode(DiskDef.diskCacheMode.valueOf(diskCacheMode.toUpperCase()));
                 } else {
                     String diskFmtType = getAttrValue("driver", "type", disk);
@@ -105,8 +104,7 @@ public class LibvirtDomainXMLParser {
                             def.defISODisk(diskFile);
                         }
                     } else if (type.equalsIgnoreCase("block")) {
-                        def.defBlockBasedDisk(diskDev, diskLabel,
-                            DiskDef.diskBus.valueOf(bus.toUpperCase()));
+                        def.defBlockBasedDisk(diskDev, diskLabel, DiskDef.diskBus.valueOf(bus.toUpperCase()));
                     }
                     def.setCacheMode(DiskDef.diskCacheMode.valueOf(diskCacheMode.toUpperCase()));
                 }

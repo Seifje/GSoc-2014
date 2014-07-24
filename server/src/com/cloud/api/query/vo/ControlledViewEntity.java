@@ -21,7 +21,8 @@ import org.apache.cloudstack.api.Identity;
 import org.apache.cloudstack.api.InternalIdentity;
 
 /**
- * This is the interface for all VO classes representing DB views created for previous ControlledEntity.
+ * This is the interface for all VO classes representing DB views created for
+ * previous ControlledEntity.
  *
  *
  */

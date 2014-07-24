@@ -78,9 +78,10 @@ public class AuthenticationHandler implements Handler {
     }
 
     /**
-     * For EC2 SOAP calls this function's goal is to extract the X509 certificate that is
-     * part of the WS-Security wrapped SOAP request.   We need the cert in order to
-     * map it to the user's Cloud API key and Cloud Secret Key.
+     * For EC2 SOAP calls this function's goal is to extract the X509
+     * certificate that is part of the WS-Security wrapped SOAP request. We need
+     * the cert in order to map it to the user's Cloud API key and Cloud Secret
+     * Key.
      */
     @Override
     public InvocationResponse invoke(MessageContext msgContext) throws AxisFault {
@@ -88,7 +89,7 @@ public class AuthenticationHandler implements Handler {
         try {
             SOAPEnvelope soapEnvelope = msgContext.getEnvelope();
             String xmlHeader = soapEnvelope.toString();
-            //System.out.println( "entire request: " + xmlHeader );
+            // System.out.println( "entire request: " + xmlHeader );
 
             InputStream is = new ByteArrayInputStream(xmlHeader.getBytes("UTF-8"));
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -104,11 +105,12 @@ public class AuthenticationHandler implements Handler {
                 ByteArrayInputStream bs = new ByteArrayInputStream(certBytes);
                 while (bs.available() > 0)
                     userCert = cf.generateCertificate(bs);
-                //System.out.println( "cert: " + userCert.toString());
+                // System.out.println( "cert: " + userCert.toString());
                 String uniqueId = AuthenticationUtils.X509CertUniqueId(userCert);
                 logger.debug("X509 cert's uniqueId: " + uniqueId);
 
-                // -> find the Cloud API key and the secret key from the cert's uniqueId
+                // -> find the Cloud API key and the secret key from the cert's
+                // uniqueId
                 UserCredentialsDao ucDao = new UserCredentialsDaoImpl();
                 UserCredentialsVO cloudKeys = ucDao.getByCertUniqueId(uniqueId);
                 if (null == cloudKeys) {
@@ -116,7 +118,8 @@ public class AuthenticationHandler implements Handler {
                     throw new AxisFault("User not properly registered: Certificate does not map to Cloud API Keys", "Client.Blocked");
                 } else
                     UserContext.current().initContext(cloudKeys.getAccessKey(), cloudKeys.getSecretKey(), cloudKeys.getAccessKey(), "SOAP Request", null);
-                //System.out.println( "end of cert match: " + UserContext.current().getSecretKey());
+                // System.out.println( "end of cert match: " +
+                // UserContext.current().getSecretKey());
             }
         } catch (AxisFault e) {
             throw e;

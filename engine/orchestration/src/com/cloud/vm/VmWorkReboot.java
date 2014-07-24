@@ -52,8 +52,8 @@ public class VmWorkReboot extends VmWork {
         if (params != null) {
             rawParams = new HashMap<String, String>();
             for (Map.Entry<VirtualMachineProfile.Param, Object> entry : params.entrySet()) {
-                rawParams.put(entry.getKey().getName(), JobSerializerHelper.toObjectSerializedString(
-                    entry.getValue() instanceof Serializable ? (Serializable)entry.getValue() : entry.getValue().toString()));
+                rawParams.put(entry.getKey().getName(),
+                        JobSerializerHelper.toObjectSerializedString(entry.getValue() instanceof Serializable ? (Serializable)entry.getValue() : entry.getValue().toString()));
             }
         }
     }

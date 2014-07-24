@@ -467,12 +467,14 @@ public class MockVmManagerImpl extends ManagerBase implements MockVmManager {
 
     @Override
     public Answer scaleVm(ScaleVmCommand cmd) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 
     @Override
     public Answer plugSecondaryIp(NetworkRulesVmSecondaryIpCommand cmd) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 
     @Override
@@ -573,7 +575,7 @@ public class MockVmManagerImpl extends ManagerBase implements MockVmManager {
 
     @Override
     public GetDomRVersionAnswer getDomRVersion(GetDomRVersionCmd cmd) {
-        String template_version = "CloudStack Release "+ VirtualNetworkApplianceService.MinVRVersion.toString();
+        String template_version = "CloudStack Release " + VirtualNetworkApplianceService.MinVRVersion.toString();
         return new GetDomRVersionAnswer(cmd, null, template_version, UUID.randomUUID().toString());
     }
 
@@ -609,8 +611,8 @@ public class MockVmManagerImpl extends ManagerBase implements MockVmManager {
                 s_logger.info("New seqno received: " + cmd.getSeqNum() + " curr=" + currSeqnum);
                 updateSeqnoAndSig = true;
                 if (!cmd.getSignature().equals(currSig)) {
-                    s_logger.info("New seqno received: " + cmd.getSeqNum() + " curr=" + currSeqnum + " new signature received:" + cmd.getSignature() + " curr=" +
-                        currSig + ", updated iptables");
+                    s_logger.info("New seqno received: " + cmd.getSeqNum() + " curr=" + currSeqnum + " new signature received:" + cmd.getSignature() + " curr=" + currSig
+                            + ", updated iptables");
                     action = ", updated iptables";
                     reason = reason + "seqno_increased_sig_changed";
                 } else {
@@ -622,14 +624,12 @@ public class MockVmManagerImpl extends ManagerBase implements MockVmManager {
                 reason = reason + "seqno_decreased";
             } else {
                 if (!cmd.getSignature().equals(currSig)) {
-                    s_logger.info("Identical seqno received: " + cmd.getSeqNum() + " new signature received:" + cmd.getSignature() + " curr=" + currSig +
-                        ", updated iptables");
+                    s_logger.info("Identical seqno received: " + cmd.getSeqNum() + " new signature received:" + cmd.getSignature() + " curr=" + currSig + ", updated iptables");
                     action = ", updated iptables";
                     reason = reason + "seqno_same_sig_changed";
                     updateSeqnoAndSig = true;
                 } else {
-                    s_logger.info("Identical seqno received: " + cmd.getSeqNum() + " curr=" + currSeqnum + " no change in signature:" + cmd.getSignature() +
-                        ", do nothing");
+                    s_logger.info("Identical seqno received: " + cmd.getSeqNum() + " curr=" + currSeqnum + " no change in signature:" + cmd.getSignature() + ", do nothing");
                     reason = reason + "seqno_same_sig_same";
                 }
             }
@@ -639,9 +639,9 @@ public class MockVmManagerImpl extends ManagerBase implements MockVmManager {
             action = ", updated iptables";
             reason = ", seqno_new";
         }
-        s_logger.info("Programmed network rules for vm " + cmd.getVmName() + " seqno=" + cmd.getSeqNum() + " signature=" + cmd.getSignature() + " guestIp=" +
-            cmd.getGuestIp() + ", numIngressRules=" + cmd.getIngressRuleSet().length + ", numEgressRules=" + cmd.getEgressRuleSet().length + " total cidrs=" +
-            cmd.getTotalNumCidrs() + action + reason);
+        s_logger.info("Programmed network rules for vm " + cmd.getVmName() + " seqno=" + cmd.getSeqNum() + " signature=" + cmd.getSignature() + " guestIp=" + cmd.getGuestIp()
+                + ", numIngressRules=" + cmd.getIngressRuleSet().length + ", numEgressRules=" + cmd.getEgressRuleSet().length + " total cidrs=" + cmd.getTotalNumCidrs() + action
+                + reason);
         return updateSeqnoAndSig;
     }
 
@@ -666,6 +666,6 @@ public class MockVmManagerImpl extends ManagerBase implements MockVmManager {
 
     @Override
     public Answer fence(FenceCommand cmd) {
-       return new FenceAnswer(cmd);
+        return new FenceAnswer(cmd);
     }
 }

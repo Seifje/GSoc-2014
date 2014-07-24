@@ -99,16 +99,8 @@ public class ResourceCountVO implements ResourceCount {
 
     @Override
     public String toString() {
-        return new StringBuilder("REsourceCount[").append("-")
-            .append(id)
-            .append("-")
-            .append(type)
-            .append("-")
-            .append(accountId)
-            .append("-")
-            .append(domainId)
-            .append("]")
-            .toString();
+        return new StringBuilder("REsourceCount[").append("-").append(id).append("-").append(type).append("-").append(accountId).append("-").append(domainId).append("]")
+                .toString();
     }
 
     @Override

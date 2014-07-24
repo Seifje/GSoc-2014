@@ -74,8 +74,7 @@ public class VolumeTest {
     @Before
     public void setUp() {
         // create data center
-        DataCenterVO dc =
-            new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Basic, null, null, true,
+        DataCenterVO dc = new DataCenterVO(UUID.randomUUID().toString(), "test", "8.8.8.8", null, "10.0.0.1", null, "10.0.0.1/24", null, null, NetworkType.Basic, null, null, true,
                 true, null, null);
         dc = dcDao.persist(dc);
         dcId = dc.getId();

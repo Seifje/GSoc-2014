@@ -37,13 +37,13 @@ public class OvmSecurityGroup extends OvmObject {
     }
 
     public static boolean defaultNetworkRulesForUserVm(Connection c, String vmName, String vmId, String ipAddress, String macAddress, String vifName, String bridgeName)
-        throws XmlRpcException {
+            throws XmlRpcException {
         Object[] params = {vmName, vmId, ipAddress, macAddress, vifName, bridgeName};
         return (Boolean)c.call("OvmSecurityGroup.default_network_rules_user_vm", params);
     }
 
-    public static boolean addNetworkRules(Connection c, String vmName, String vmId, String guestIp, String signature, String seqno, String vifMacAddress,
-        String newRules, String vifDeviceName, String bridgeName) throws XmlRpcException {
+    public static boolean addNetworkRules(Connection c, String vmName, String vmId, String guestIp, String signature, String seqno, String vifMacAddress, String newRules,
+            String vifDeviceName, String bridgeName) throws XmlRpcException {
         Object[] params = {vmName, vmId, guestIp, signature, seqno, vifMacAddress, newRules, vifDeviceName, bridgeName};
         return (Boolean)c.call("OvmSecurityGroup.add_network_rules", params);
     }

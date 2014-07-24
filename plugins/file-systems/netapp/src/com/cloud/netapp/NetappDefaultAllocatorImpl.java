@@ -36,7 +36,7 @@ public class NetappDefaultAllocatorImpl implements NetappAllocator {
         List<NetappVolumeVO> volumesOnPoolAscending = _netappMgr.listVolumesAscending(poolName);
 
         if (volumesOnPoolAscending == null) {
-            //no pools exist in db
+            // no pools exist in db
             return null;
         }
 
@@ -47,8 +47,8 @@ public class NetappDefaultAllocatorImpl implements NetappAllocator {
                 long availableBytes = _netappMgr.returnAvailableVolumeSize(vol.getVolumeName(), vol.getUsername(), vol.getPassword(), vol.getIpAddress());
 
                 if (lunSizeGb <= bytesToGb(availableBytes) && availableBytes > maxAvailable) {
-                    maxAvailable = availableBytes; //new max
-                    selectedVol = vol; //new least loaded vol
+                    maxAvailable = availableBytes; // new max
+                    selectedVol = vol; // new least loaded vol
                 }
             } catch (ServerException se) {
                 s_logger.debug("Ignoring failure to obtain volume size for volume " + vol.getVolumeName());
@@ -61,43 +61,44 @@ public class NetappDefaultAllocatorImpl implements NetappAllocator {
 
     /**
      * This method does the actual round robin allocation
+     * 
      * @param poolName
      * @param lunSizeGb
      * @return -- the selected volume to create the lun on
      */
     @Override
     public synchronized NetappVolumeVO chooseVolumeFromPool(String poolName, long lunSizeGb) {
-        int pos = 0; //0 by default
+        int pos = 0; // 0 by default
         List<NetappVolumeVO> volumesOnPoolAscending = _netappMgr.listVolumesAscending(poolName);
 
         if (volumesOnPoolAscending == null) {
-            //no pools exist in db
+            // no pools exist in db
             return null;
         }
 
-        //get the index of the record from the map
+        // get the index of the record from the map
         if (s_poolNameToLastVolumeIdAllocated.get(poolName) == null) {
             pos = 0;
         } else {
             pos = s_poolNameToLastVolumeIdAllocated.get(poolName);
         }
 
-        //update for RR effect
+        // update for RR effect
         s_poolNameToLastVolumeIdAllocated.put(poolName, (pos + 1) % volumesOnPoolAscending.size());
 
-        //now iterate over the records
+        // now iterate over the records
         Object[] volumesOnPoolAscendingArray = volumesOnPoolAscending.toArray();
         int counter = 0;
         while (counter < volumesOnPoolAscendingArray.length) {
             NetappVolumeVO vol = (NetappVolumeVO)volumesOnPoolAscendingArray[pos];
 
-            //check if the volume fits the bill
+            // check if the volume fits the bill
             long availableBytes;
             try {
                 availableBytes = _netappMgr.returnAvailableVolumeSize(vol.getVolumeName(), vol.getUsername(), vol.getPassword(), vol.getIpAddress());
 
                 if (lunSizeGb <= bytesToGb(availableBytes)) {
-                    //found one
+                    // found one
                     return vol;
                 }
                 pos = (pos + 1) % volumesOnPoolAscendingArray.length;
@@ -113,6 +114,7 @@ public class NetappDefaultAllocatorImpl implements NetappAllocator {
 
     /**
      * This method does the byte to gb conversion
+     * 
      * @param bytes
      * @return -- converted gb
      */

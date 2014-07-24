@@ -99,19 +99,23 @@ public class NetworkTO {
     }
 
     /**
-     * This constructor is usually for hosts where the other information are not important.
+     * This constructor is usually for hosts where the other information are not
+     * important.
      *
-     * @param ip ip address
-     * @param netmask netmask
-     * @param mac mac address
+     * @param ip
+     *            ip address
+     * @param netmask
+     *            netmask
+     * @param mac
+     *            mac address
      */
     public NetworkTO(String ip, String netmask, String mac) {
         this(ip, netmask, mac, null, null, null);
     }
 
     /**
-     * This is the full constructor and should be used for VM's network as it contains
-     * the full information about what is needed.
+     * This is the full constructor and should be used for VM's network as it
+     * contains the full information about what is needed.
      *
      * @param ip
      * @param vlan

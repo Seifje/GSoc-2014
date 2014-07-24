@@ -25,15 +25,15 @@
 package com.amazon.ec2;
 
 /**
-*  InstanceNetworkInterfaceSetItemType bean class
-*/
+ * InstanceNetworkInterfaceSetItemType bean class
+ */
 
 public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.databinding.ADBBean {
-    /* This type was generated from the piece of schema that had
-            name = InstanceNetworkInterfaceSetItemType
-            Namespace URI = http://ec2.amazonaws.com/doc/2012-08-15/
-            Namespace Prefix = ns1
-            */
+    /*
+     * This type was generated from the piece of schema that had name =
+     * InstanceNetworkInterfaceSetItemType Namespace URI =
+     * http://ec2.amazonaws.com/doc/2012-08-15/ Namespace Prefix = ns1
+     */
 
     private static java.lang.String generatePrefix(java.lang.String namespace) {
         if (namespace.equals("http://ec2.amazonaws.com/doc/2012-08-15/")) {
@@ -43,23 +43,26 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * field for NetworkInterfaceId
-    */
+     * field for NetworkInterfaceId
+     */
 
     protected java.lang.String localNetworkInterfaceId;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getNetworkInterfaceId() {
         return localNetworkInterfaceId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param NetworkInterfaceId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            NetworkInterfaceId
+     */
     public void setNetworkInterfaceId(java.lang.String param) {
 
         this.localNetworkInterfaceId = param;
@@ -67,33 +70,37 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * field for SubnetId
-    */
+     * field for SubnetId
+     */
 
     protected java.lang.String localSubnetId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localSubnetIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getSubnetId() {
         return localSubnetId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param SubnetId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            SubnetId
+     */
     public void setSubnetId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localSubnetIdTracker = true;
         } else {
             localSubnetIdTracker = false;
@@ -105,33 +112,37 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * field for VpcId
-    */
+     * field for VpcId
+     */
 
     protected java.lang.String localVpcId;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localVpcIdTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getVpcId() {
         return localVpcId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param VpcId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            VpcId
+     */
     public void setVpcId(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localVpcIdTracker = true;
         } else {
             localVpcIdTracker = false;
@@ -143,33 +154,37 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * field for Description
-    */
+     * field for Description
+     */
 
     protected java.lang.String localDescription;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localDescriptionTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getDescription() {
         return localDescription;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Description
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Description
+     */
     public void setDescription(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localDescriptionTracker = true;
         } else {
             localDescriptionTracker = false;
@@ -181,23 +196,26 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * field for OwnerId
-    */
+     * field for OwnerId
+     */
 
     protected java.lang.String localOwnerId;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getOwnerId() {
         return localOwnerId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param OwnerId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            OwnerId
+     */
     public void setOwnerId(java.lang.String param) {
 
         this.localOwnerId = param;
@@ -205,23 +223,26 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * field for Status
-    */
+     * field for Status
+     */
 
     protected java.lang.String localStatus;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getStatus() {
         return localStatus;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Status
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Status
+     */
     public void setStatus(java.lang.String param) {
 
         this.localStatus = param;
@@ -229,33 +250,37 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * field for PrivateIpAddress
-    */
+     * field for PrivateIpAddress
+     */
 
     protected java.lang.String localPrivateIpAddress;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localPrivateIpAddressTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getPrivateIpAddress() {
         return localPrivateIpAddress;
     }
 
     /**
-       * Auto generated setter method
-       * @param param PrivateIpAddress
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            PrivateIpAddress
+     */
     public void setPrivateIpAddress(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localPrivateIpAddressTracker = true;
         } else {
             localPrivateIpAddressTracker = false;
@@ -267,33 +292,37 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * field for PrivateDnsName
-    */
+     * field for PrivateDnsName
+     */
 
     protected java.lang.String localPrivateDnsName;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localPrivateDnsNameTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getPrivateDnsName() {
         return localPrivateDnsName;
     }
 
     /**
-       * Auto generated setter method
-       * @param param PrivateDnsName
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            PrivateDnsName
+     */
     public void setPrivateDnsName(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localPrivateDnsNameTracker = true;
         } else {
             localPrivateDnsNameTracker = false;
@@ -305,29 +334,33 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * field for SourceDestCheck
-    */
+     * field for SourceDestCheck
+     */
 
     protected boolean localSourceDestCheck;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localSourceDestCheckTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return boolean
-    */
+     * Auto generated getter method
+     * 
+     * @return boolean
+     */
     public boolean getSourceDestCheck() {
         return localSourceDestCheck;
     }
 
     /**
-       * Auto generated setter method
-       * @param param SourceDestCheck
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            SourceDestCheck
+     */
     public void setSourceDestCheck(boolean param) {
 
         // setting primitive attribute tracker to true
@@ -344,33 +377,37 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * field for GroupSet
-    */
+     * field for GroupSet
+     */
 
     protected com.amazon.ec2.GroupSetType localGroupSet;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localGroupSetTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.GroupSetType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.GroupSetType
+     */
     public com.amazon.ec2.GroupSetType getGroupSet() {
         return localGroupSet;
     }
 
     /**
-       * Auto generated setter method
-       * @param param GroupSet
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            GroupSet
+     */
     public void setGroupSet(com.amazon.ec2.GroupSetType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localGroupSetTracker = true;
         } else {
             localGroupSetTracker = false;
@@ -382,23 +419,26 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * field for Attachment
-    */
+     * field for Attachment
+     */
 
     protected com.amazon.ec2.InstanceNetworkInterfaceAttachmentType localAttachment;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.InstanceNetworkInterfaceAttachmentType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.InstanceNetworkInterfaceAttachmentType
+     */
     public com.amazon.ec2.InstanceNetworkInterfaceAttachmentType getAttachment() {
         return localAttachment;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Attachment
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Attachment
+     */
     public void setAttachment(com.amazon.ec2.InstanceNetworkInterfaceAttachmentType param) {
 
         this.localAttachment = param;
@@ -406,33 +446,37 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * field for Association
-    */
+     * field for Association
+     */
 
     protected com.amazon.ec2.InstanceNetworkInterfaceAssociationType localAssociation;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localAssociationTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.InstanceNetworkInterfaceAssociationType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.InstanceNetworkInterfaceAssociationType
+     */
     public com.amazon.ec2.InstanceNetworkInterfaceAssociationType getAssociation() {
         return localAssociation;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Association
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Association
+     */
     public void setAssociation(com.amazon.ec2.InstanceNetworkInterfaceAssociationType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localAssociationTracker = true;
         } else {
             localAssociationTracker = false;
@@ -444,33 +488,37 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * field for PrivateIpAddressesSet
-    */
+     * field for PrivateIpAddressesSet
+     */
 
     protected com.amazon.ec2.InstancePrivateIpAddressesSetType localPrivateIpAddressesSet;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localPrivateIpAddressesSetTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.InstancePrivateIpAddressesSetType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.InstancePrivateIpAddressesSetType
+     */
     public com.amazon.ec2.InstancePrivateIpAddressesSetType getPrivateIpAddressesSet() {
         return localPrivateIpAddressesSet;
     }
 
     /**
-       * Auto generated setter method
-       * @param param PrivateIpAddressesSet
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            PrivateIpAddressesSet
+     */
     public void setPrivateIpAddressesSet(com.amazon.ec2.InstancePrivateIpAddressesSetType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localPrivateIpAddressesSetTracker = true;
         } else {
             localPrivateIpAddressesSetTracker = false;
@@ -482,9 +530,10 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -497,13 +546,13 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, parentQName) {
 
@@ -516,14 +565,13 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
         java.lang.String prefix = null;
         java.lang.String namespace = null;
@@ -877,8 +925,8 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -890,10 +938,10 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -903,10 +951,10 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -929,7 +977,7 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -957,7 +1005,8 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -991,8 +1040,8 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -1011,9 +1060,9 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
         java.util.ArrayList elementList = new java.util.ArrayList();
@@ -1127,17 +1176,20 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static InstanceNetworkInterfaceSetItemType parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             InstanceNetworkInterfaceSetItemType object = new InstanceNetworkInterfaceSetItemType();
 
@@ -1162,7 +1214,7 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
                         java.lang.String type = fullTypeName.substring(fullTypeName.indexOf(":") + 1);
 
                         if (!"InstanceNetworkInterfaceSetItemType".equals(type)) {
-                            //find namespace for the prefix
+                            // find namespace for the prefix
                             java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
                             return (InstanceNetworkInterfaceSetItemType)com.amazon.ec2.ExtensionMapper.getTypeObject(nsUri, type, reader);
                         }
@@ -1171,7 +1223,8 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
 
                 }
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -1188,10 +1241,11 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1206,7 +1260,7 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1223,7 +1277,7 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1240,7 +1294,7 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1257,10 +1311,11 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1275,10 +1330,11 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1293,7 +1349,7 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1310,7 +1366,7 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1327,7 +1383,7 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1342,7 +1398,7 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1357,10 +1413,11 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1373,7 +1430,7 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1382,14 +1439,13 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
                 while (!reader.isStartElement() && !reader.isEndElement())
                     reader.next();
 
-                if (reader.isStartElement() &&
-                    new javax.xml.namespace.QName("http://ec2.amazonaws.com/doc/2012-08-15/", "privateIpAddressesSet").equals(reader.getName())) {
+                if (reader.isStartElement() && new javax.xml.namespace.QName("http://ec2.amazonaws.com/doc/2012-08-15/", "privateIpAddressesSet").equals(reader.getName())) {
 
                     object.setPrivateIpAddressesSet(com.amazon.ec2.InstancePrivateIpAddressesSetType.Factory.parse(reader));
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1399,7 +1455,8 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
                     reader.next();
 
                 if (reader.isStartElement())
-                    // A start element we are not expecting indicates a trailing invalid property
+                    // A start element we are not expecting indicates a trailing
+                    // invalid property
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
 
             } catch (javax.xml.stream.XMLStreamException e) {
@@ -1409,6 +1466,6 @@ public class InstanceNetworkInterfaceSetItemType implements org.apache.axis2.dat
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

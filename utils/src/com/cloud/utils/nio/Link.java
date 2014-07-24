@@ -98,44 +98,36 @@ public class Link {
     /**
      * No user, so comment it out.
      *
-     * Static methods for reading from a channel in case
-     * you need to add a client that doesn't require nio.
-     * @param ch channel to read from.
-     * @param bytebuffer to use.
+     * Static methods for reading from a channel in case you need to add a
+     * client that doesn't require nio.
+     *
+     * @param ch
+     *            channel to read from.
+     * @param bytebuffer
+     *            to use.
      * @return bytes read
-     * @throws IOException if not read to completion.
-    public static byte[] read(SocketChannel ch, ByteBuffer buff) throws IOException {
-        synchronized(buff) {
-            buff.clear();
-            buff.limit(4);
-
-            while (buff.hasRemaining()) {
-                if (ch.read(buff) == -1) {
-                    throw new IOException("Connection closed with -1 on reading size.");
-                }
-            }
-
-            buff.flip();
-
-            int length = buff.getInt();
-            ByteArrayOutputStream output = new ByteArrayOutputStream(length);
-            WritableByteChannel outCh = Channels.newChannel(output);
-
-            int count = 0;
-            while (count < length) {
-                buff.clear();
-                int read = ch.read(buff);
-                if (read < 0) {
-                    throw new IOException("Connection closed with -1 on reading data.");
-                }
-                count += read;
-                buff.flip();
-                outCh.write(buff);
-            }
-
-            return output.toByteArray();
-        }
-    }
+     * @throws IOException
+     *             if not read to completion. public static byte[]
+     *             read(SocketChannel ch, ByteBuffer buff) throws IOException {
+     *             synchronized(buff) { buff.clear(); buff.limit(4);
+     *
+     *             while (buff.hasRemaining()) { if (ch.read(buff) == -1) {
+     *             throw new
+     *             IOException("Connection closed with -1 on reading size."); }
+     *             }
+     *
+     *             buff.flip();
+     *
+     *             int length = buff.getInt(); ByteArrayOutputStream output =
+     *             new ByteArrayOutputStream(length); WritableByteChannel outCh
+     *             = Channels.newChannel(output);
+     *
+     *             int count = 0; while (count < length) { buff.clear(); int
+     *             read = ch.read(buff); if (read < 0) { throw new
+     *             IOException("Connection closed with -1 on reading data."); }
+     *             count += read; buff.flip(); outCh.write(buff); }
+     *
+     *             return output.toByteArray(); } }
      */
 
     private static void doWrite(SocketChannel ch, ByteBuffer[] buffers, SSLEngine sslEngine) throws IOException {
@@ -155,8 +147,8 @@ public class Link {
             headBuf.clear();
             pkgBuf.clear();
             engResult = sslEngine.wrap(buffers, pkgBuf);
-            if (engResult.getHandshakeStatus() != HandshakeStatus.FINISHED && engResult.getHandshakeStatus() != HandshakeStatus.NOT_HANDSHAKING &&
-                engResult.getStatus() != SSLEngineResult.Status.OK) {
+            if (engResult.getHandshakeStatus() != HandshakeStatus.FINISHED && engResult.getHandshakeStatus() != HandshakeStatus.NOT_HANDSHAKING
+                    && engResult.getStatus() != SSLEngineResult.Status.OK) {
                 throw new IOException("SSL: SSLEngine return bad result! " + engResult);
             }
 
@@ -193,13 +185,16 @@ public class Link {
     }
 
     /**
-     * write method to write to a socket.  This method writes to completion so
-     * it doesn't follow the nio standard.  We use this to make sure we write
-     * our own protocol.
+     * write method to write to a socket. This method writes to completion so it
+     * doesn't follow the nio standard. We use this to make sure we write our
+     * own protocol.
      *
-     * @param ch channel to write to.
-     * @param buffers buffers to write.
-     * @throws IOException if unable to write to completion.
+     * @param ch
+     *            channel to write to.
+     * @param buffers
+     *            buffers to write.
+     * @throws IOException
+     *             if unable to write to completion.
      */
     public static void write(SocketChannel ch, ByteBuffer[] buffers, SSLEngine sslEngine) throws IOException {
         synchronized (ch) {
@@ -207,12 +202,15 @@ public class Link {
         }
     }
 
-    /* SSL has limitation of 16k, we may need to split packets. 18000 is 16k + some extra SSL informations */
+    /*
+     * SSL has limitation of 16k, we may need to split packets. 18000 is 16k +
+     * some extra SSL informations
+     */
     protected static final int MAX_SIZE_PER_PACKET = 18000;
     protected static final int HEADER_FLAG_FOLLOWING = 0x10000;
 
     public byte[] read(SocketChannel ch) throws IOException {
-        if (_readHeader) {   // Start of a packet
+        if (_readHeader) { // Start of a packet
             if (_readBuffer.position() == 0) {
                 _readBuffer.limit(4);
             }
@@ -262,7 +260,7 @@ public class Link {
             throw new IOException("Connection closed with -1 on read.");
         }
 
-        if (_readBuffer.hasRemaining()) {   // We're not done yet.
+        if (_readBuffer.hasRemaining()) { // We're not done yet.
             if (s_logger.isTraceEnabled()) {
                 s_logger.trace("Still has " + _readBuffer.remaining());
             }
@@ -281,8 +279,8 @@ public class Link {
             remaining = _readBuffer.remaining();
             appBuf = ByteBuffer.allocate(sslSession.getApplicationBufferSize() + 40);
             engResult = _sslEngine.unwrap(_readBuffer, appBuf);
-            if (engResult.getHandshakeStatus() != HandshakeStatus.FINISHED && engResult.getHandshakeStatus() != HandshakeStatus.NOT_HANDSHAKING &&
-                engResult.getStatus() != SSLEngineResult.Status.OK) {
+            if (engResult.getHandshakeStatus() != HandshakeStatus.FINISHED && engResult.getHandshakeStatus() != HandshakeStatus.NOT_HANDSHAKING
+                    && engResult.getStatus() != SSLEngineResult.Status.OK) {
                 throw new IOException("SSL: SSLEngine return bad result! " + engResult);
             }
             if (remaining == _readBuffer.remaining()) {

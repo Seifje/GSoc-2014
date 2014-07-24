@@ -46,7 +46,8 @@ public class AsyncJobJoinMapDaoImpl extends GenericDaoBase<AsyncJobJoinMapVO, Lo
     private final SearchBuilder<AsyncJobJoinMapVO> CompleteJoinSearch;
     private final SearchBuilder<AsyncJobJoinMapVO> WakeupSearch;
 
-//    private final GenericSearchBuilder<AsyncJobJoinMapVO, Long> JoinJobSearch;
+    // private final GenericSearchBuilder<AsyncJobJoinMapVO, Long>
+    // JoinJobSearch;
 
     protected AsyncJobJoinMapDaoImpl() {
         RecordSearch = createSearchBuilder();
@@ -68,14 +69,14 @@ public class AsyncJobJoinMapDaoImpl extends GenericDaoBase<AsyncJobJoinMapVO, Lo
         WakeupSearch.and("joinStatus", WakeupSearch.entity().getJoinStatus(), Op.EQ);
         WakeupSearch.done();
 
-//        JoinJobSearch = createSearchBuilder(Long.class);
-//        JoinJobSearch.and(JoinJobSearch.entity().getJoinJobId(), Op.SC, "joinJobId");
-//        JoinJobSearch.done();
+        // JoinJobSearch = createSearchBuilder(Long.class);
+        // JoinJobSearch.and(JoinJobSearch.entity().getJoinJobId(), Op.SC,
+        // "joinJobId");
+        // JoinJobSearch.done();
     }
 
     @Override
-    public Long joinJob(long jobId, long joinJobId, long joinMsid, long wakeupIntervalMs, long expirationMs, Long syncSourceId, String wakeupHandler,
-            String wakeupDispatcher) {
+    public Long joinJob(long jobId, long joinJobId, long joinMsid, long wakeupIntervalMs, long expirationMs, Long syncSourceId, String wakeupHandler, String wakeupDispatcher) {
 
         AsyncJobJoinMapVO record = new AsyncJobJoinMapVO();
         record.setJobId(jobId);
@@ -83,7 +84,9 @@ public class AsyncJobJoinMapDaoImpl extends GenericDaoBase<AsyncJobJoinMapVO, Lo
         record.setJoinMsid(joinMsid);
         record.setJoinStatus(JobInfo.Status.IN_PROGRESS);
         record.setSyncSourceId(syncSourceId);
-        record.setWakeupInterval(wakeupIntervalMs / 1000);        // convert millisecond to second
+        record.setWakeupInterval(wakeupIntervalMs / 1000); // convert
+        // millisecond to
+        // second
         record.setWakeupHandler(wakeupHandler);
         record.setWakeupDispatcher(wakeupDispatcher);
         if (wakeupHandler != null) {
@@ -150,67 +153,80 @@ public class AsyncJobJoinMapDaoImpl extends GenericDaoBase<AsyncJobJoinMapVO, Lo
         update(ub, sc, null);
     }
 
-//    @Override
-//    public List<Long> wakeupScan() {
-//        List<Long> standaloneList = new ArrayList<Long>();
-//
-//        Date cutDate = DateUtil.currentGMTTime();
-//
-//        TransactionLegacy txn = TransactionLegacy.currentTxn();
-//        PreparedStatement pstmt = null;
-//        try {
-//            txn.start();
-//
-//            //
-//            // performance sensitive processing, do it in plain SQL
-//            //
-//            String sql = "UPDATE async_job SET job_pending_signals=? WHERE id IN " +
-//                    "(SELECT job_id FROM async_job_join_map WHERE next_wakeup < ? AND expiration > ?)";
-//            pstmt = txn.prepareStatement(sql);
-//            pstmt.setInt(1, AsyncJob.Constants.SIGNAL_MASK_WAKEUP);
-//            pstmt.setString(2, DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
-//            pstmt.setString(3, DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
-//            pstmt.executeUpdate();
-//            pstmt.close();
-//
-//            sql = "UPDATE sync_queue_item SET queue_proc_msid=NULL, queue_proc_number=NULL WHERE content_id IN " +
-//                    "(SELECT job_id FROM async_job_join_map WHERE next_wakeup < ? AND expiration > ?)";
-//            pstmt = txn.prepareStatement(sql);
-//            pstmt.setString(1, DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
-//            pstmt.setString(2, DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
-//            pstmt.executeUpdate();
-//            pstmt.close();
-//
-//            sql = "SELECT job_id FROM async_job_join_map WHERE next_wakeup < ? AND expiration > ? AND job_id NOT IN (SELECT content_id FROM sync_queue_item)";
-//            pstmt = txn.prepareStatement(sql);
-//            pstmt.setString(1, DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
-//            pstmt.setString(2, DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
-//            ResultSet rs = pstmt.executeQuery();
-//            while(rs.next()) {
-//                standaloneList.add(rs.getLong(1));
-//            }
-//            rs.close();
-//            pstmt.close();
-//
-//            // update for next wake-up
-//            sql = "UPDATE async_job_join_map SET next_wakeup=DATE_ADD(next_wakeup, INTERVAL wakeup_interval SECOND) WHERE next_wakeup < ? AND expiration > ?";
-//            pstmt = txn.prepareStatement(sql);
-//            pstmt.setString(1, DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
-//            pstmt.setString(2, DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
-//            pstmt.executeUpdate();
-//            pstmt.close();
-//
-//            txn.commit();
-//        } catch (SQLException e) {
-//            s_logger.error("Unexpected exception", e);
-//        }
-//
-//        return standaloneList;
-//    }
+    // @Override
+    // public List<Long> wakeupScan() {
+    // List<Long> standaloneList = new ArrayList<Long>();
+    //
+    // Date cutDate = DateUtil.currentGMTTime();
+    //
+    // TransactionLegacy txn = TransactionLegacy.currentTxn();
+    // PreparedStatement pstmt = null;
+    // try {
+    // txn.start();
+    //
+    // //
+    // // performance sensitive processing, do it in plain SQL
+    // //
+    // String sql = "UPDATE async_job SET job_pending_signals=? WHERE id IN " +
+    // "(SELECT job_id FROM async_job_join_map WHERE next_wakeup < ? AND expiration > ?)";
+    // pstmt = txn.prepareStatement(sql);
+    // pstmt.setInt(1, AsyncJob.Constants.SIGNAL_MASK_WAKEUP);
+    // pstmt.setString(2,
+    // DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
+    // pstmt.setString(3,
+    // DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
+    // pstmt.executeUpdate();
+    // pstmt.close();
+    //
+    // sql =
+    // "UPDATE sync_queue_item SET queue_proc_msid=NULL, queue_proc_number=NULL WHERE content_id IN "
+    // +
+    // "(SELECT job_id FROM async_job_join_map WHERE next_wakeup < ? AND expiration > ?)";
+    // pstmt = txn.prepareStatement(sql);
+    // pstmt.setString(1,
+    // DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
+    // pstmt.setString(2,
+    // DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
+    // pstmt.executeUpdate();
+    // pstmt.close();
+    //
+    // sql =
+    // "SELECT job_id FROM async_job_join_map WHERE next_wakeup < ? AND expiration > ? AND job_id NOT IN (SELECT content_id FROM sync_queue_item)";
+    // pstmt = txn.prepareStatement(sql);
+    // pstmt.setString(1,
+    // DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
+    // pstmt.setString(2,
+    // DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
+    // ResultSet rs = pstmt.executeQuery();
+    // while(rs.next()) {
+    // standaloneList.add(rs.getLong(1));
+    // }
+    // rs.close();
+    // pstmt.close();
+    //
+    // // update for next wake-up
+    // sql =
+    // "UPDATE async_job_join_map SET next_wakeup=DATE_ADD(next_wakeup, INTERVAL wakeup_interval SECOND) WHERE next_wakeup < ? AND expiration > ?";
+    // pstmt = txn.prepareStatement(sql);
+    // pstmt.setString(1,
+    // DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
+    // pstmt.setString(2,
+    // DateUtil.getDateDisplayString(TimeZone.getTimeZone("GMT"), cutDate));
+    // pstmt.executeUpdate();
+    // pstmt.close();
+    //
+    // txn.commit();
+    // } catch (SQLException e) {
+    // s_logger.error("Unexpected exception", e);
+    // }
+    //
+    // return standaloneList;
+    // }
 
     @Override
     public List<Long> findJobsToWake(long joinedJobId) {
-        // TODO: We should fix this.  We shouldn't be crossing daos in a dao code.
+        // TODO: We should fix this. We shouldn't be crossing daos in a dao
+        // code.
         List<Long> standaloneList = new ArrayList<Long>();
         TransactionLegacy txn = TransactionLegacy.currentTxn();
         String sql = "SELECT job_id FROM async_job_join_map WHERE join_job_id = ? AND job_id NOT IN (SELECT content_id FROM sync_queue_item)";

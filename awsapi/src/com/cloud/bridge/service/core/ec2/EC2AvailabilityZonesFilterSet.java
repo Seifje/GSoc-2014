@@ -32,7 +32,8 @@ public class EC2AvailabilityZonesFilterSet {
     private Map<String, String> filterTypes = new HashMap<String, String>();
 
     public EC2AvailabilityZonesFilterSet() {
-        // -> use these values to check that the proper filter is passed to this type of filter set
+        // -> use these values to check that the proper filter is passed to this
+        // type of filter set
         filterTypes.put("zone-name", "String");
         filterTypes.put("message", "String");
     }

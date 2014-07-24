@@ -64,10 +64,12 @@ public class SecurityGroupUsageParser {
         }
 
         // - query usage_volume table with the following criteria:
-        //     - look for an entry for accountId with start date in the given range
-        //     - look for an entry for accountId with end date in the given range
-        //     - look for an entry for accountId with end date null (currently running vm or owned IP)
-        //     - look for an entry for accountId with start date before given range *and* end date after given range
+        // - look for an entry for accountId with start date in the given range
+        // - look for an entry for accountId with end date in the given range
+        // - look for an entry for accountId with end date null (currently
+        // running vm or owned IP)
+        // - look for an entry for accountId with start date before given range
+        // *and* end date after given range
         List<UsageSecurityGroupVO> usageSGs = s_usageSecurityGroupDao.getUsageRecords(account.getId(), account.getDomainId(), startDate, endDate, false, 0);
 
         if (usageSGs.isEmpty()) {
@@ -94,12 +96,15 @@ public class SecurityGroupUsageParser {
                 sgDeleteDate = endDate;
             }
 
-            // clip the start date to the beginning of our aggregation range if the vm has been running for a while
+            // clip the start date to the beginning of our aggregation range if
+            // the vm has been running for a while
             if (sgCreateDate.before(startDate)) {
                 sgCreateDate = startDate;
             }
 
-            long currentDuration = (sgDeleteDate.getTime() - sgCreateDate.getTime()) + 1; // make sure this is an inclusive check for milliseconds (i.e. use n - m + 1 to find total number of millis to charge)
+            long currentDuration = (sgDeleteDate.getTime() - sgCreateDate.getTime()) + 1; // make sure this is an inclusive check for
+            // milliseconds (i.e. use n - m + 1 to find
+            // total number of millis to charge)
 
             updateSGUsageData(usageMap, key, usageSG.getVmInstanceId(), currentDuration);
         }
@@ -108,7 +113,8 @@ public class SecurityGroupUsageParser {
             Pair<Long, Long> sgtimeInfo = usageMap.get(sgIdKey);
             long useTime = sgtimeInfo.second().longValue();
 
-            // Only create a usage record if we have a runningTime of bigger than zero.
+            // Only create a usage record if we have a runningTime of bigger
+            // than zero.
             if (useTime > 0L) {
                 SGInfo info = sgMap.get(sgIdKey);
                 createUsageRecord(UsageTypes.SECURITY_GROUP, useTime, startDate, endDate, account, info.getVmId(), info.getSGId(), info.getZoneId());
@@ -142,16 +148,15 @@ public class SecurityGroupUsageParser {
         String usageDisplay = dFormat.format(usage);
 
         if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Creating security group:" + sgId + " usage record for Vm : " + vmId + ", usage: " + usageDisplay + ", startDate: " + startDate +
-                ", endDate: " + endDate + ", for account: " + account.getId());
+            s_logger.debug("Creating security group:" + sgId + " usage record for Vm : " + vmId + ", usage: " + usageDisplay + ", startDate: " + startDate + ", endDate: "
+                    + endDate + ", for account: " + account.getId());
         }
 
         // Create the usage record
         String usageDesc = "Security Group: " + sgId + " for Vm : " + vmId + " usage time";
 
-        UsageVO usageRecord =
-            new UsageVO(zoneId, account.getId(), account.getDomainId(), usageDesc, usageDisplay + " Hrs", type, new Double(usage), vmId, null, null, null, sgId, null,
-                startDate, endDate);
+        UsageVO usageRecord = new UsageVO(zoneId, account.getId(), account.getDomainId(), usageDesc, usageDisplay + " Hrs", type, new Double(usage), vmId, null, null, null, sgId,
+                null, startDate, endDate);
         s_usageDao.persist(usageRecord);
     }
 

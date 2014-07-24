@@ -68,13 +68,14 @@ public class NioServer extends NioConnection {
     }
 
     /**
-     * Sends the data to the address specified.  If address is not already
-     * connected, this does nothing and returns null.  If address is already
-     * connected, then it returns the attached object so the caller can
-     * prepare for any responses.
+     * Sends the data to the address specified. If address is not already
+     * connected, this does nothing and returns null. If address is already
+     * connected, then it returns the attached object so the caller can prepare
+     * for any responses.
+     *
      * @param saddr
      * @param data
-     * @return null if not sent.  attach object in link if sent.
+     * @return null if not sent. attach object in link if sent.
      */
     public Object send(InetSocketAddress saddr, byte[] data) throws ClosedChannelException {
         Link link = _links.get(saddr);

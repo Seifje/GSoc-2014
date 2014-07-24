@@ -54,6 +54,7 @@ public class RegionsApiUtil {
 
     /**
      * Makes an api call using region service end_point, api command and params
+     *
      * @param region
      * @param command
      * @param params
@@ -82,6 +83,7 @@ public class RegionsApiUtil {
     /**
      * Makes an api call using region service end_point, api command and params
      * Returns Account object on success
+     *
      * @param region
      * @param command
      * @param params
@@ -94,7 +96,7 @@ public class RegionsApiUtil {
             HttpMethod method = new GetMethod(url);
             if (client.executeMethod(method) == 200) {
                 InputStream is = method.getResponseBodyAsStream();
-                //Translate response to Account object
+                // Translate response to Account object
                 XStream xstream = new XStream(new DomDriver());
                 xstream.alias("account", RegionAccount.class);
                 xstream.alias("user", RegionUser.class);
@@ -125,6 +127,7 @@ public class RegionsApiUtil {
     /**
      * Makes an api call using region service end_point, api command and params
      * Returns Domain object on success
+     *
      * @param region
      * @param command
      * @param params
@@ -138,7 +141,7 @@ public class RegionsApiUtil {
             if (client.executeMethod(method) == 200) {
                 InputStream is = method.getResponseBodyAsStream();
                 XStream xstream = new XStream(new DomDriver());
-                //Translate response to Domain object
+                // Translate response to Domain object
                 xstream.alias("domain", RegionDomain.class);
                 xstream.aliasField("id", RegionDomain.class, "uuid");
                 xstream.aliasField("parentdomainid", RegionDomain.class, "parentUuid");
@@ -163,6 +166,7 @@ public class RegionsApiUtil {
     /**
      * Makes an api call using region service end_point, api command and params
      * Returns UserAccount object on success
+     *
      * @param region
      * @param command
      * @param params
@@ -197,6 +201,7 @@ public class RegionsApiUtil {
 
     /**
      * Builds parameters string with command and encoded param values
+     *
      * @param command
      * @param params
      * @return
@@ -219,8 +224,9 @@ public class RegionsApiUtil {
     }
 
     /**
-     * Build URL for api call using region end_point
-     * Parameters are sorted and signed using secret_key
+     * Build URL for api call using region end_point Parameters are sorted and
+     * signed using secret_key
+     *
      * @param apiParams
      * @param region
      * @return
@@ -257,7 +263,8 @@ public class RegionsApiUtil {
             }
             Collections.sort(sortedParams);
 
-            //Construct the sorted URL and sign and URL encode the sorted URL with your secret key
+            // Construct the sorted URL and sign and URL encode the sorted URL
+            // with your secret key
             String sortedUrl = null;
             first = true;
             for (String param : sortedParams) {
@@ -281,7 +288,8 @@ public class RegionsApiUtil {
     }
 
     /**
-     * 1. Signs a string with a secret key using SHA-1 2. Base64 encode the result 3. URL encode the final result
+     * 1. Signs a string with a secret key using SHA-1 2. Base64 encode the
+     * result 3. URL encode the final result
      *
      * @param request
      * @param key

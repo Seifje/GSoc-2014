@@ -25,15 +25,15 @@
 package com.amazon.ec2;
 
 /**
-*  RequestSpotInstancesType bean class
-*/
+ * RequestSpotInstancesType bean class
+ */
 
 public class RequestSpotInstancesType implements org.apache.axis2.databinding.ADBBean {
-    /* This type was generated from the piece of schema that had
-            name = RequestSpotInstancesType
-            Namespace URI = http://ec2.amazonaws.com/doc/2012-08-15/
-            Namespace Prefix = ns1
-            */
+    /*
+     * This type was generated from the piece of schema that had name =
+     * RequestSpotInstancesType Namespace URI =
+     * http://ec2.amazonaws.com/doc/2012-08-15/ Namespace Prefix = ns1
+     */
 
     private static java.lang.String generatePrefix(java.lang.String namespace) {
         if (namespace.equals("http://ec2.amazonaws.com/doc/2012-08-15/")) {
@@ -43,23 +43,26 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for SpotPrice
-    */
+     * field for SpotPrice
+     */
 
     protected java.lang.String localSpotPrice;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getSpotPrice() {
         return localSpotPrice;
     }
 
     /**
-       * Auto generated setter method
-       * @param param SpotPrice
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            SpotPrice
+     */
     public void setSpotPrice(java.lang.String param) {
 
         this.localSpotPrice = param;
@@ -67,33 +70,37 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for InstanceCount
-    */
+     * field for InstanceCount
+     */
 
     protected java.math.BigInteger localInstanceCount;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localInstanceCountTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.math.BigInteger
-    */
+     * Auto generated getter method
+     * 
+     * @return java.math.BigInteger
+     */
     public java.math.BigInteger getInstanceCount() {
         return localInstanceCount;
     }
 
     /**
-       * Auto generated setter method
-       * @param param InstanceCount
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            InstanceCount
+     */
     public void setInstanceCount(java.math.BigInteger param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localInstanceCountTracker = true;
         } else {
             localInstanceCountTracker = false;
@@ -105,33 +112,37 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for Type
-    */
+     * field for Type
+     */
 
     protected java.lang.String localType;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localTypeTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getType() {
         return localType;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Type
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Type
+     */
     public void setType(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localTypeTracker = true;
         } else {
             localTypeTracker = false;
@@ -143,33 +154,37 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for ValidFrom
-    */
+     * field for ValidFrom
+     */
 
     protected java.util.Calendar localValidFrom;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localValidFromTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.util.Calendar
-    */
+     * Auto generated getter method
+     * 
+     * @return java.util.Calendar
+     */
     public java.util.Calendar getValidFrom() {
         return localValidFrom;
     }
 
     /**
-       * Auto generated setter method
-       * @param param ValidFrom
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            ValidFrom
+     */
     public void setValidFrom(java.util.Calendar param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localValidFromTracker = true;
         } else {
             localValidFromTracker = false;
@@ -181,33 +196,37 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for ValidUntil
-    */
+     * field for ValidUntil
+     */
 
     protected java.util.Calendar localValidUntil;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localValidUntilTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.util.Calendar
-    */
+     * Auto generated getter method
+     * 
+     * @return java.util.Calendar
+     */
     public java.util.Calendar getValidUntil() {
         return localValidUntil;
     }
 
     /**
-       * Auto generated setter method
-       * @param param ValidUntil
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            ValidUntil
+     */
     public void setValidUntil(java.util.Calendar param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localValidUntilTracker = true;
         } else {
             localValidUntilTracker = false;
@@ -219,33 +238,37 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for LaunchGroup
-    */
+     * field for LaunchGroup
+     */
 
     protected java.lang.String localLaunchGroup;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localLaunchGroupTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getLaunchGroup() {
         return localLaunchGroup;
     }
 
     /**
-       * Auto generated setter method
-       * @param param LaunchGroup
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            LaunchGroup
+     */
     public void setLaunchGroup(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localLaunchGroupTracker = true;
         } else {
             localLaunchGroupTracker = false;
@@ -257,33 +280,37 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for AvailabilityZoneGroup
-    */
+     * field for AvailabilityZoneGroup
+     */
 
     protected java.lang.String localAvailabilityZoneGroup;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localAvailabilityZoneGroupTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getAvailabilityZoneGroup() {
         return localAvailabilityZoneGroup;
     }
 
     /**
-       * Auto generated setter method
-       * @param param AvailabilityZoneGroup
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            AvailabilityZoneGroup
+     */
     public void setAvailabilityZoneGroup(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localAvailabilityZoneGroupTracker = true;
         } else {
             localAvailabilityZoneGroupTracker = false;
@@ -295,23 +322,26 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * field for LaunchSpecification
-    */
+     * field for LaunchSpecification
+     */
 
     protected com.amazon.ec2.LaunchSpecificationRequestType localLaunchSpecification;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.LaunchSpecificationRequestType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.LaunchSpecificationRequestType
+     */
     public com.amazon.ec2.LaunchSpecificationRequestType getLaunchSpecification() {
         return localLaunchSpecification;
     }
 
     /**
-       * Auto generated setter method
-       * @param param LaunchSpecification
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            LaunchSpecification
+     */
     public void setLaunchSpecification(com.amazon.ec2.LaunchSpecificationRequestType param) {
 
         this.localLaunchSpecification = param;
@@ -319,9 +349,10 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -334,13 +365,13 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, parentQName) {
 
@@ -353,14 +384,13 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
         java.lang.String prefix = null;
         java.lang.String namespace = null;
@@ -637,8 +667,8 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -650,10 +680,10 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -663,10 +693,10 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -689,7 +719,7 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -717,7 +747,8 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -751,8 +782,8 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -771,9 +802,9 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
         java.util.ArrayList elementList = new java.util.ArrayList();
@@ -852,17 +883,20 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static RequestSpotInstancesType parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             RequestSpotInstancesType object = new RequestSpotInstancesType();
 
@@ -887,7 +921,7 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
                         java.lang.String type = fullTypeName.substring(fullTypeName.indexOf(":") + 1);
 
                         if (!"RequestSpotInstancesType".equals(type)) {
-                            //find namespace for the prefix
+                            // find namespace for the prefix
                             java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
                             return (RequestSpotInstancesType)com.amazon.ec2.ExtensionMapper.getTypeObject(nsUri, type, reader);
                         }
@@ -896,7 +930,8 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
 
                 }
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -913,10 +948,11 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -931,7 +967,7 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -948,7 +984,7 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -965,7 +1001,7 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -982,7 +1018,7 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -999,7 +1035,7 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1008,8 +1044,7 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
                 while (!reader.isStartElement() && !reader.isEndElement())
                     reader.next();
 
-                if (reader.isStartElement() &&
-                    new javax.xml.namespace.QName("http://ec2.amazonaws.com/doc/2012-08-15/", "availabilityZoneGroup").equals(reader.getName())) {
+                if (reader.isStartElement() && new javax.xml.namespace.QName("http://ec2.amazonaws.com/doc/2012-08-15/", "availabilityZoneGroup").equals(reader.getName())) {
 
                     java.lang.String content = reader.getElementText();
 
@@ -1017,7 +1052,7 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -1032,10 +1067,11 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -1043,7 +1079,8 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
                     reader.next();
 
                 if (reader.isStartElement())
-                    // A start element we are not expecting indicates a trailing invalid property
+                    // A start element we are not expecting indicates a trailing
+                    // invalid property
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
 
             } catch (javax.xml.stream.XMLStreamException e) {
@@ -1053,6 +1090,6 @@ public class RequestSpotInstancesType implements org.apache.axis2.databinding.AD
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

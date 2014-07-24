@@ -59,13 +59,13 @@ public class VirtualNetworkModelTest extends TestCase {
     @Override
     @Before
     public void setUp() throws IOException {
-        //Network UUIDs
+        // Network UUIDs
         String uuid = UUID.randomUUID().toString();
         String uuid1 = UUID.randomUUID().toString();
         String uuid2 = UUID.randomUUID().toString();
         String uuid3 = UUID.randomUUID().toString();
 
-        //ContrailManager
+        // ContrailManager
         ContrailManagerImpl contrailMgr = mock(ContrailManagerImpl.class);
 
         controller = mock(ModelController.class);
@@ -73,48 +73,48 @@ public class VirtualNetworkModelTest extends TestCase {
 
         ApiConnector api = mock(ApiConnectorMock.class);
 
-        //Mock classes/methods
+        // Mock classes/methods
         when(controller.getManager()).thenReturn(contrailMgr);
         when(controller.getApiAccessor()).thenReturn(api);
         when(controller.getVlanDao()).thenReturn(vlanDao);
 
-        //Policy References used by vnModel1
+        // Policy References used by vnModel1
         List<ObjectReference<VirtualNetworkPolicyType>> policyRefs1 = new ArrayList<ObjectReference<VirtualNetworkPolicyType>>();
         ObjectReference<VirtualNetworkPolicyType> objectReference1 = new ObjectReference<VirtualNetworkPolicyType>();
         policyRefs1.add(objectReference1);
 
-        //Policy References used by vnModel2
+        // Policy References used by vnModel2
         List<ObjectReference<VirtualNetworkPolicyType>> policyRefs2 = new ArrayList<ObjectReference<VirtualNetworkPolicyType>>();
         ObjectReference<VirtualNetworkPolicyType> objectReference2 = new ObjectReference<VirtualNetworkPolicyType>();
         policyRefs2.add(objectReference2);
 
-        //Policy References used by vnModel3
+        // Policy References used by vnModel3
         List<ObjectReference<VirtualNetworkPolicyType>> policyRefs3 = new ArrayList<ObjectReference<VirtualNetworkPolicyType>>();
         ObjectReference<VirtualNetworkPolicyType> objectReference3 = new ObjectReference<VirtualNetworkPolicyType>();
         objectReference3.setReference(Arrays.asList(""), null, null, UUID.randomUUID().toString());
 
         policyRefs3.add(objectReference3);
 
-        //Network to be compared with
+        // Network to be compared with
         VirtualNetwork vn = mock(VirtualNetwork.class);
         when(api.findById(VirtualNetwork.class, uuid)).thenReturn(vn);
 
-        //Network to be compared with
+        // Network to be compared with
         VirtualNetwork vn1 = mock(VirtualNetwork.class);
         when(api.findById(VirtualNetwork.class, uuid1)).thenReturn(vn1);
         when(vn1.getNetworkPolicy()).thenReturn(policyRefs1);
 
-        //Network to be compared to
+        // Network to be compared to
         VirtualNetwork vn2 = mock(VirtualNetwork.class);
         when(api.findById(VirtualNetwork.class, uuid2)).thenReturn(vn2);
         when(vn2.getNetworkPolicy()).thenReturn(policyRefs2);
 
-        //Network to be compared to
+        // Network to be compared to
         VirtualNetwork vn3 = mock(VirtualNetwork.class);
         when(api.findById(VirtualNetwork.class, uuid3)).thenReturn(vn3);
         when(vn3.getNetworkPolicy()).thenReturn(policyRefs3);
 
-        //Virtual-Network 1
+        // Virtual-Network 1
         NetworkVO network1 = mock(NetworkVO.class);
         when(network1.getName()).thenReturn("testnetwork");
         when(network1.getState()).thenReturn(State.Allocated);
@@ -124,7 +124,7 @@ public class VirtualNetworkModelTest extends TestCase {
         when(network1.getDomainId()).thenReturn(10L);
         when(network1.getAccountId()).thenReturn(42L);
 
-        //Virtual-Network 2
+        // Virtual-Network 2
         NetworkVO network2 = mock(NetworkVO.class);
         when(network2.getName()).thenReturn("Testnetwork");
         when(network2.getState()).thenReturn(State.Allocated);
@@ -134,7 +134,7 @@ public class VirtualNetworkModelTest extends TestCase {
         when(network2.getDomainId()).thenReturn(10L);
         when(network2.getAccountId()).thenReturn(42L);
 
-        //Virtual-Network 3
+        // Virtual-Network 3
         NetworkVO network3 = mock(NetworkVO.class);
         when(network3.getName()).thenReturn("Testnetwork");
         when(network3.getState()).thenReturn(State.Allocated);
@@ -179,7 +179,7 @@ public class VirtualNetworkModelTest extends TestCase {
 
         String uuid = UUID.randomUUID().toString();
         ContrailManagerImpl contrailMgr = mock(ContrailManagerImpl.class);
-        ModelController controller      = mock(ModelController.class);
+        ModelController controller = mock(ModelController.class);
         ApiConnector api = new ApiConnectorMock(null, 0);
         when(controller.getManager()).thenReturn(contrailMgr);
         when(controller.getApiAccessor()).thenReturn(api);
@@ -213,7 +213,7 @@ public class VirtualNetworkModelTest extends TestCase {
 
     @Test
     public void testCompareDifferentVirtualNetwork() throws IOException {
-        //This one returns false because one network has Policy References
+        // This one returns false because one network has Policy References
         vnModel.read(controller);
 
         assertFalse(vnModel.compare(controller, vnModel1));
@@ -221,7 +221,8 @@ public class VirtualNetworkModelTest extends TestCase {
 
     @Test
     public void testCompareSameVirtualNetwork() throws IOException {
-        //This one returns true because both networks have the same Policy References
+        // This one returns true because both networks have the same Policy
+        // References
         vnModel1.read(controller);
 
         assertTrue(vnModel1.compare(controller, vnModel2));
@@ -229,7 +230,7 @@ public class VirtualNetworkModelTest extends TestCase {
 
     @Test
     public void testCompareDifferentDeeperVirtualNetwork() throws IOException {
-        //This one returns false because one network has Policy References
+        // This one returns false because one network has Policy References
         vnModel2.read(controller);
 
         assertFalse(vnModel2.compare(controller, vnModel3));

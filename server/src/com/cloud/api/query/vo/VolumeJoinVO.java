@@ -314,7 +314,7 @@ public class VolumeJoinVO extends BaseViewVO implements ControlledViewEntity {
         return volumeType;
     }
 
-    public Storage.ProvisioningType getProvisioningType(){
+    public Storage.ProvisioningType getProvisioningType() {
         return provisioningType;
     }
 
@@ -619,7 +619,6 @@ public class VolumeJoinVO extends BaseViewVO implements ControlledViewEntity {
     public String getPath() {
         return path;
     }
-
 
     public String getChainInfo() {
         return chainInfo;

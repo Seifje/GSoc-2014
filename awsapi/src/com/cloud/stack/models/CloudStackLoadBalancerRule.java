@@ -25,7 +25,7 @@ public class CloudStackLoadBalancerRule {
     @SerializedName(ApiConstants.ACCOUNT)
     private String account;
     @SerializedName(ApiConstants.ALGORITHM)
-    private String algorithm;  // source, roundrobin, leastconn
+    private String algorithm; // source, roundrobin, leastconn
     @SerializedName(ApiConstants.DESCRIPTION)
     private String description;
     @SerializedName(ApiConstants.DOMAIN)

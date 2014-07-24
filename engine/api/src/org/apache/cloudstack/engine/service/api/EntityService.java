@@ -27,8 +27,7 @@ import com.cloud.storage.Volume;
 import com.cloud.vm.VirtualMachine;
 
 /**
- * Service to retrieve CloudStack entities
- * very likely to change
+ * Service to retrieve CloudStack entities very likely to change
  */
 @Path("resources")
 public interface EntityService {

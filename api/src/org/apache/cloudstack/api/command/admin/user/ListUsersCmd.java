@@ -25,20 +25,17 @@ import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.response.ListResponse;
 import org.apache.cloudstack.api.response.UserResponse;
 
-@APICommand(name = "listUsers", description = "Lists user accounts", responseObject = UserResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = true)
+@APICommand(name = "listUsers", description = "Lists user accounts", responseObject = UserResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = true)
 public class ListUsersCmd extends BaseListAccountResourcesCmd {
     public static final Logger s_logger = Logger.getLogger(ListUsersCmd.class.getName());
 
     private static final String s_name = "listusersresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.ACCOUNT_TYPE,
-               type = CommandType.LONG,
-               description = "List users by account type. Valid types include admin, domain-admin, read-only-admin, or user.")
+    @Parameter(name = ApiConstants.ACCOUNT_TYPE, type = CommandType.LONG, description = "List users by account type. Valid types include admin, domain-admin, read-only-admin, or user.")
     private Long accountType;
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = UserResponse.class, description = "List user by ID.")
@@ -50,9 +47,9 @@ public class ListUsersCmd extends BaseListAccountResourcesCmd {
     @Parameter(name = ApiConstants.USERNAME, type = CommandType.STRING, description = "List user by the username")
     private String username;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public Long getAccountType() {
         return accountType;
@@ -70,9 +67,9 @@ public class ListUsersCmd extends BaseListAccountResourcesCmd {
         return username;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

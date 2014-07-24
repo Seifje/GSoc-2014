@@ -28,7 +28,8 @@ public interface ConfigurationServer {
     public static final String Name = "configuration-server";
 
     /**
-     * Persists default values for the configuration table, pods/zones, and VLANs
+     * Persists default values for the configuration table, pods/zones, and
+     * VLANs
      *
      * @return
      */

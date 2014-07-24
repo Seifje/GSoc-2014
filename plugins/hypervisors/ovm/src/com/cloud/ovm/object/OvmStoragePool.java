@@ -42,8 +42,10 @@ public class OvmStoragePool extends OvmObject {
     }
 
     /**
-     * @param c: connection
-     * @param d: includes three fields {uuid, type, path}
+     * @param c
+     *            : connection
+     * @param d
+     *            : includes three fields {uuid, type, path}
      * @throws XmlRpcException
      */
     public static void create(Connection c, Details d) throws XmlRpcException {
@@ -53,8 +55,10 @@ public class OvmStoragePool extends OvmObject {
 
     /**
      *
-     * @param c: connection
-     * @param uuid: uuid of primary storage
+     * @param c
+     *            : connection
+     * @param uuid
+     *            : uuid of primary storage
      * @return: Details with full fields
      * @throws XmlRpcException
      */
@@ -66,9 +70,12 @@ public class OvmStoragePool extends OvmObject {
 
     /**
      *
-     * @param c: Connection
-     * @param uuid: Pool uuid
-     * @param from: secondary storage download path
+     * @param c
+     *            : Connection
+     * @param uuid
+     *            : Pool uuid
+     * @param from
+     *            : secondary storage download path
      * @return: <destenation path, size of template>
      * @throws XmlRpcException
      */
@@ -84,16 +91,15 @@ public class OvmStoragePool extends OvmObject {
         c.call("OvmStoragePool.prepareOCFS2Nodes", params);
     }
 
-    public static Map<String, String> createTemplateFromVolume(Connection c, String secStorageMountPath, String installPath, String volumePath, int timeout)
-        throws XmlRpcException {
+    public static Map<String, String> createTemplateFromVolume(Connection c, String secStorageMountPath, String installPath, String volumePath, int timeout) throws XmlRpcException {
         Object[] params = {secStorageMountPath, installPath, volumePath};
         String res = (String)c.callTimeoutInSec("OvmStoragePool.createTemplateFromVolume", params, timeout);
         Map info = Coder.mapFromJson(res);
         return info;
     }
 
-    public static String copyVolume(Connection c, String secStorageMountPath, String volumeFolderOnSecStorage, String volumePath, String storagePoolUuid, Boolean toSec,
-        int timeout) throws XmlRpcException {
+    public static String copyVolume(Connection c, String secStorageMountPath, String volumeFolderOnSecStorage, String volumePath, String storagePoolUuid, Boolean toSec, int timeout)
+            throws XmlRpcException {
         Object[] params = {secStorageMountPath, volumeFolderOnSecStorage, volumePath, storagePoolUuid, toSec};
         String res = (String)c.callTimeoutInSec("OvmStoragePool.copyVolume", params, timeout);
         Map info = Coder.mapFromJson(res);

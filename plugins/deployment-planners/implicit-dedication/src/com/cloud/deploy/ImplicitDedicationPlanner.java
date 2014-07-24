@@ -86,11 +86,14 @@ public class ImplicitDedicationPlanner extends FirstFitPlanner implements Deploy
 
         // Go over all the hosts in the cluster and get a list of
         // 1. All empty hosts, not running any vms.
-        // 2. Hosts running vms for this account and created by a service offering which uses an
-        //    implicit dedication planner.
-        // 3. Hosts running vms created by implicit planner and in strict mode of other accounts.
-        // 4. Hosts running vms from other account or from this account but created by a service offering which uses
-        //    any planner besides implicit.
+        // 2. Hosts running vms for this account and created by a service
+        // offering which uses an
+        // implicit dedication planner.
+        // 3. Hosts running vms created by implicit planner and in strict mode
+        // of other accounts.
+        // 4. Hosts running vms from other account or from this account but
+        // created by a service offering which uses
+        // any planner besides implicit.
         Set<Long> emptyHosts = new HashSet<Long>();
         Set<Long> hostRunningVmsOfAccount = new HashSet<Long>();
         Set<Long> hostRunningStrictImplicitVmsOfOtherAccounts = new HashSet<Long>();
@@ -108,11 +111,13 @@ public class ImplicitDedicationPlanner extends FirstFitPlanner implements Deploy
             }
         }
 
-        // Hosts running vms of other accounts created by ab implicit planner in strict mode should always be avoided.
+        // Hosts running vms of other accounts created by ab implicit planner in
+        // strict mode should always be avoided.
         avoid.addHostList(hostRunningStrictImplicitVmsOfOtherAccounts);
 
         if (!hostRunningVmsOfAccount.isEmpty() && (hostsToAvoid == null || !hostsToAvoid.containsAll(hostRunningVmsOfAccount))) {
-            // Check if any of hosts that are running implicit dedicated vms are available (not in avoid list).
+            // Check if any of hosts that are running implicit dedicated vms are
+            // available (not in avoid list).
             // If so, we'll try and use these hosts.
             avoid.addHostList(emptyHosts);
             avoid.addHostList(allOtherHosts);
@@ -125,7 +130,8 @@ public class ImplicitDedicationPlanner extends FirstFitPlanner implements Deploy
             // If in strict mode, there is nothing else to try.
             clusterList = null;
         } else {
-            // If in preferred mode, check if hosts are available to try, otherwise return an empty cluster list.
+            // If in preferred mode, check if hosts are available to try,
+            // otherwise return an empty cluster list.
             if (!allOtherHosts.isEmpty() && (hostsToAvoid == null || !hostsToAvoid.containsAll(allOtherHosts))) {
                 clusterList = getUpdatedClusterList(clusterList, avoid.getHostsToAvoid());
             } else {
@@ -140,7 +146,8 @@ public class ImplicitDedicationPlanner extends FirstFitPlanner implements Deploy
         List<VMInstanceVO> vms = _vmInstanceDao.listUpByHostId(hostId);
         List<VMInstanceVO> vmsByLastHostId = _vmInstanceDao.listByLastHostId(hostId);
         if (vmsByLastHostId.size() > 0) {
-            // check if any VMs are within skip.counting.hours, if yes we have to consider the host.
+            // check if any VMs are within skip.counting.hours, if yes we have
+            // to consider the host.
             for (VMInstanceVO stoppedVM : vmsByLastHostId) {
                 long secondsSinceLastUpdate = (DateUtil.currentGMTTime().getTime() - stoppedVM.getUpdateTime().getTime()) / 1000;
                 if (secondsSinceLastUpdate < capacityReleaseInterval) {
@@ -164,8 +171,8 @@ public class ImplicitDedicationPlanner extends FirstFitPlanner implements Deploy
                 break;
             } else {
                 if (!isImplicitPlannerUsedByOffering(vm.getServiceOfferingId())) {
-                    s_logger.info("Host " + vm.getHostId() + " found to be unsuitable for implicit dedication as it " +
-                        "is running instances of this account which haven't been created using implicit dedication.");
+                    s_logger.info("Host " + vm.getHostId() + " found to be unsuitable for implicit dedication as it "
+                            + "is running instances of this account which haven't been created using implicit dedication.");
                     suitable = false;
                     break;
                 }
@@ -282,7 +289,8 @@ public class ImplicitDedicationPlanner extends FirstFitPlanner implements Deploy
             Set<Long> allOtherHosts = new HashSet<Long>();
             for (Long host : allHosts) {
                 List<VMInstanceVO> vms = getVmsOnHost(host);
-                // emptyHost should contain only Hosts which are not having any VM's (user/system) on it.
+                // emptyHost should contain only Hosts which are not having any
+                // VM's (user/system) on it.
                 if (vms == null || vms.isEmpty()) {
                     emptyHosts.add(host);
                 } else if (checkHostSuitabilityForImplicitDedication(account.getAccountId(), vms)) {
@@ -299,14 +307,20 @@ public class ImplicitDedicationPlanner extends FirstFitPlanner implements Deploy
             avoid.addHostList(hostRunningStrictImplicitVmsOfOtherAccounts);
 
             if (!hostRunningVmsOfAccount.isEmpty() && (hostsToAvoid == null || !hostsToAvoid.containsAll(hostRunningVmsOfAccount))) {
-                // Check if any of hosts that are running implicit dedicated vms are available (not in avoid list).
-                // If so, we'll try and use these hosts. We can deploy in Dedicated mode
+                // Check if any of hosts that are running implicit dedicated vms
+                // are available (not in avoid list).
+                // If so, we'll try and use these hosts. We can deploy in
+                // Dedicated mode
                 return PlannerResourceUsage.Dedicated;
             } else if (!emptyHosts.isEmpty() && (hostsToAvoid == null || !hostsToAvoid.containsAll(emptyHosts))) {
-                // If there aren't implicit resources try on empty hosts, As empty hosts are available we can deploy in Dedicated mode.
-                // Empty hosts can contain hosts which are not having user vms but system vms are running.
-                // But the host where system vms are running is marked as shared and still be part of empty Hosts.
-                // The scenario will fail where actual Empty hosts and uservms not running host.
+                // If there aren't implicit resources try on empty hosts, As
+                // empty hosts are available we can deploy in Dedicated mode.
+                // Empty hosts can contain hosts which are not having user vms
+                // but system vms are running.
+                // But the host where system vms are running is marked as shared
+                // and still be part of empty Hosts.
+                // The scenario will fail where actual Empty hosts and uservms
+                // not running host.
                 return PlannerResourceUsage.Dedicated;
             } else if (!preferred) {
                 return PlannerResourceUsage.Dedicated;

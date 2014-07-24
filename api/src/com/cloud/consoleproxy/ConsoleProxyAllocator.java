@@ -25,6 +25,7 @@ import com.cloud.vm.ConsoleProxy;
 public interface ConsoleProxyAllocator extends Adapter {
     /**
      * Finds the least loaded console proxy.
+     *
      * @param candidates
      * @param loadInfo
      * @param dataCenterId

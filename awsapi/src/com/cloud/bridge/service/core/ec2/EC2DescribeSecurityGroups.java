@@ -21,7 +21,10 @@ import java.util.List;
 
 public class EC2DescribeSecurityGroups {
 
-    private List<String> groupSet = new ArrayList<String>();    // a list of strings identifying each group
+    private List<String> groupSet = new ArrayList<String>(); // a list of
+                                                             // strings
+                                                             // identifying each
+                                                             // group
     private EC2GroupFilterSet gfs = null;
 
     public EC2DescribeSecurityGroups() {

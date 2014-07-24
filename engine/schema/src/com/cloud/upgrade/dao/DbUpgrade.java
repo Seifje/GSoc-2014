@@ -27,8 +27,8 @@ public interface DbUpgrade {
     boolean supportsRollingUpgrade();
 
     /**
-     * @return the script to prepare the database schema for the
-     * data migration step.
+     * @return the script to prepare the database schema for the data migration
+     *         step.
      */
     File[] getPrepareScripts();
 

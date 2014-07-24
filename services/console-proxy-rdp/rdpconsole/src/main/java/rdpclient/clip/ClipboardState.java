@@ -23,9 +23,9 @@ public class ClipboardState {
 
     /**
      * The Long Format Name variant of the Format List PDU is supported for
-     * exchanging updated format names. If this flag is not set, the Short Format
-     * Name variant MUST be used. If this flag is set by both protocol endpoints,
-     * then the Long Format Name variant MUST be used.
+     * exchanging updated format names. If this flag is not set, the Short
+     * Format Name variant MUST be used. If this flag is set by both protocol
+     * endpoints, then the Long Format Name variant MUST be used.
      */
     public boolean serverUseLongFormatNames = false;
     public final boolean clientUseLongFormatNames = false;
@@ -38,8 +38,8 @@ public class ClipboardState {
     public final boolean clientStreamFileClipEnabled = false;
 
     /**
-     * Indicates that any description of files to copy and paste MUST NOT include
-     * the source path of the files.
+     * Indicates that any description of files to copy and paste MUST NOT
+     * include the source path of the files.
      */
     public boolean serverFileClipNoFilePaths = false;
     public final boolean clientFileClipNoFilePaths = false;

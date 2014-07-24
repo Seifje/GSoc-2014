@@ -60,34 +60,34 @@ public class MidoNetElementTest extends TestCase {
      */
     public void testAddDhcpEntry() {
 
-        //mockMgmt
+        // mockMgmt
         MidonetApi api = mock(MidonetApi.class, RETURNS_DEEP_STUBS);
 
-        //mockDhcpHost
+        // mockDhcpHost
         DhcpHost mockDhcpHost = mock(DhcpHost.class);
 
-        //mockHostCollection
+        // mockHostCollection
         ResourceCollection<DhcpHost> hosts = new ResourceCollection<DhcpHost>(new ArrayList<DhcpHost>());
 
-        //mockDhcpSubnet
+        // mockDhcpSubnet
         DhcpSubnet mockSub = mock(DhcpSubnet.class);
         when(mockSub.addDhcpHost()).thenReturn(mockDhcpHost);
         when(mockSub.getDhcpHosts()).thenReturn(hosts);
 
-        //mockSubnetCollection
+        // mockSubnetCollection
         ResourceCollection mockSubnetCollection = mock(ResourceCollection.class);
         when(mockSubnetCollection.get(anyInt())).thenReturn(mockSub);
 
-        //mockBridge
+        // mockBridge
         Bridge mockBridge = mock(Bridge.class);
         when(api.addBridge().tenantId(anyString()).name(anyString()).create()).thenReturn(mockBridge);
         when(mockBridge.getDhcpSubnets()).thenReturn(mockSubnetCollection);
 
-        //mockRouter
+        // mockRouter
         Router mockRouter = mock(Router.class);
         when(api.addRouter().tenantId(anyString()).name(anyString()).create()).thenReturn(mockRouter);
 
-        //mockNetwork
+        // mockNetwork
         Network mockNetwork = mock(Network.class);
         when(mockNetwork.getAccountId()).thenReturn((long)1);
         when(mockNetwork.getGateway()).thenReturn("1.2.3.4");
@@ -96,19 +96,19 @@ public class MidoNetElementTest extends TestCase {
         when(mockNetwork.getBroadcastDomainType()).thenReturn(Networks.BroadcastDomainType.Mido);
         when(mockNetwork.getTrafficType()).thenReturn(Networks.TrafficType.Guest);
 
-        //mockAccountDao
+        // mockAccountDao
         AccountDao mockAccountDao = mock(AccountDao.class);
         AccountVO mockAccountVO = mock(AccountVO.class);
         when(mockAccountDao.findById(anyLong())).thenReturn(mockAccountVO);
         when(mockAccountVO.getUuid()).thenReturn("1");
 
-        //mockNic
+        // mockNic
         NicProfile mockNic = mock(NicProfile.class);
         when(mockNic.getIp4Address()).thenReturn("10.10.10.170");
         when(mockNic.getMacAddress()).thenReturn("02:00:73:3e:00:01");
         when(mockNic.getName()).thenReturn("Fake Name");
 
-        //mockVm
+        // mockVm
         @SuppressWarnings("unchecked")
         VirtualMachineProfile mockVm = mock(VirtualMachineProfile.class);
         when(mockVm.getType()).thenReturn(VirtualMachine.Type.User);
@@ -135,10 +135,10 @@ public class MidoNetElementTest extends TestCase {
      * Test the standard case of implement with no errors.
      */
     public void testImplement() {
-        //mock
+        // mock
         MidonetApi api = mock(MidonetApi.class, RETURNS_DEEP_STUBS);
 
-        //mockAccountDao
+        // mockAccountDao
         AccountDao mockAccountDao = mock(AccountDao.class);
         AccountVO mockAccountVO = mock(AccountVO.class);
         when(mockAccountDao.findById(anyLong())).thenReturn(mockAccountVO);
@@ -148,33 +148,33 @@ public class MidoNetElementTest extends TestCase {
         elem.setMidonetApi(api);
         elem.setAccountDao(mockAccountDao);
 
-        //mockRPort
+        // mockRPort
         RouterPort mockRPort = mock(RouterPort.class);
         when(mockRPort.getId()).thenReturn(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"));
 
-        //mockBPort
+        // mockBPort
         BridgePort mockBPort = mock(BridgePort.class);
         when(mockBPort.link(any(UUID.class))).thenReturn(mockBPort);
 
-        //mockPort
+        // mockPort
         Port mockPort = mock(Port.class);
 
         ResourceCollection<Port> peerPorts = new ResourceCollection<Port>(new ArrayList<Port>());
 
         peerPorts.add(mockPort);
 
-        //mockBridge
+        // mockBridge
         Bridge mockBridge = mock(Bridge.class, RETURNS_DEEP_STUBS);
         when(api.addBridge().tenantId(anyString()).name(anyString()).create()).thenReturn(mockBridge);
         when(mockBridge.addInteriorPort().create()).thenReturn(mockBPort);
         when(mockBridge.getPeerPorts()).thenReturn(peerPorts);
 
-        //mockRouter
+        // mockRouter
         Router mockRouter = mock(Router.class, RETURNS_DEEP_STUBS);
         when(api.addRouter().tenantId(anyString()).name(anyString()).create()).thenReturn(mockRouter);
         when(mockRouter.addInteriorRouterPort().create()).thenReturn(mockRPort);
 
-        //mockNetwork
+        // mockNetwork
         Network mockNetwork = mock(Network.class);
         when(mockNetwork.getAccountId()).thenReturn((long)1);
         when(mockNetwork.getGateway()).thenReturn("1.2.3.4");

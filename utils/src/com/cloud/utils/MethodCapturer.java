@@ -85,7 +85,8 @@ public class MethodCapturer<T> {
 
             capturerNew.setInstance((T)en.create());
 
-            // We expect MethodCapturer is only used for singleton objects here, so we only maintain a limited cache
+            // We expect MethodCapturer is only used for singleton objects here,
+            // so we only maintain a limited cache
             // here
             if (s_cache.size() < CACHE_SIZE) {
                 s_cache.put(obj, capturerNew);

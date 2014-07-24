@@ -35,7 +35,11 @@ public class RpcProviderImpl implements RpcProvider {
 
     private TransportProvider _transportProvider;
     private String _transportAddress;
-    private RpcTransportEndpoint _transportEndpoint = new RpcTransportEndpoint();    // transport attachment at RPC layer
+    private RpcTransportEndpoint _transportEndpoint = new RpcTransportEndpoint(); // transport
+    // attachment
+    // at
+    // RPC
+    // layer
 
     private MessageSerializer _messageSerializer;
     private List<RpcServiceEndpoint> _serviceEndpoints = new ArrayList<RpcServiceEndpoint>();
@@ -205,21 +209,21 @@ public class RpcProviderImpl implements RpcProvider {
 
         if (call != null) {
             switch (pdu.getResult()) {
-                case RpcCallResponsePdu.RESULT_SUCCESSFUL:
-                    call.complete(pdu.getSerializedResult());
-                    break;
+            case RpcCallResponsePdu.RESULT_SUCCESSFUL:
+                call.complete(pdu.getSerializedResult());
+                break;
 
-                case RpcCallResponsePdu.RESULT_HANDLER_NOT_EXIST:
-                    call.complete(new RpcException("Handler does not exist"));
-                    break;
+            case RpcCallResponsePdu.RESULT_HANDLER_NOT_EXIST:
+                call.complete(new RpcException("Handler does not exist"));
+                break;
 
-                case RpcCallResponsePdu.RESULT_HANDLER_EXCEPTION:
-                    call.complete(new RpcException("Exception in handler"));
-                    break;
+            case RpcCallResponsePdu.RESULT_HANDLER_EXCEPTION:
+                call.complete(new RpcException("Exception in handler"));
+                break;
 
-                default:
-                    assert (false);
-                    break;
+            default:
+                assert (false);
+                break;
             }
         }
     }
@@ -229,7 +233,8 @@ public class RpcProviderImpl implements RpcProvider {
         @Override
         public void onTransportMessage(String senderEndpointAddress, String targetEndpointAddress, String multiplexer, String message) {
 
-            // we won't handle generic transport message toward RPC transport endpoint
+            // we won't handle generic transport message toward RPC transport
+            // endpoint
         }
 
         @Override

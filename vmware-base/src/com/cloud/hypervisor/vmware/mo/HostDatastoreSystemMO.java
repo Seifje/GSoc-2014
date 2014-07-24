@@ -49,7 +49,8 @@ public class HostDatastoreSystemMO extends BaseMO {
     }
 
     public ManagedObjectReference findDatastore(String name) throws Exception {
-        // added cloud.com specific name convention, we will use custom field "cloud.uuid" as datastore name as well
+        // added cloud.com specific name convention, we will use custom field
+        // "cloud.uuid" as datastore name as well
         CustomFieldsManagerMO cfmMo = new CustomFieldsManagerMO(_context, _context.getServiceContent().getCustomFieldsManager());
         int key = cfmMo.getCustomFieldKey("Datastore", CustomFieldConstants.CLOUD_UUID);
         assert (key != 0);
@@ -114,7 +115,8 @@ public class HostDatastoreSystemMO extends BaseMO {
         return null;
     }
 
-    // TODO this is a hacking helper method, when we can pass down storage pool info along with volume
+    // TODO this is a hacking helper method, when we can pass down storage pool
+    // info along with volume
     // we should be able to find the datastore by name
     public ManagedObjectReference findDatastoreByExportPath(String exportPath) throws Exception {
         assert (exportPath != null);

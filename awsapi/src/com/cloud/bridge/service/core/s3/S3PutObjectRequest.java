@@ -21,7 +21,7 @@ import java.io.InputStream;
 public class S3PutObjectRequest extends S3Request {
     protected String bucketName;
     protected String key;
-    protected String rawTimestamp;   // -> original is needed for authentication
+    protected String rawTimestamp; // -> original is needed for authentication
     protected String storageClass;
     protected String credential;
     protected long contentLength;

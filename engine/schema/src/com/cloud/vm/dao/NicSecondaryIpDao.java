@@ -29,8 +29,8 @@ public interface NicSecondaryIpDao extends GenericDao<NicSecondaryIpVO, Long> {
 
     NicSecondaryIpVO findByInstanceIdAndNetworkId(long networkId, long instanceId);
 
-    //    void removeNicsForInstance(long instanceId);
-    //    void removeSecondaryIpForNic(long nicId);
+    // void removeNicsForInstance(long instanceId);
+    // void removeSecondaryIpForNic(long nicId);
 
     NicSecondaryIpVO findByIp4AddressAndNetworkId(String ip4Address, long networkId);
 

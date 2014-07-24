@@ -31,14 +31,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 /**
- * Holds the relation
- *  Id,
- *  Name,
- *  OwnerCanonicalId,
- *  SHost,
- *  CreateTime,
- *  VersioningStatus
- * For ORM see "com/cloud/bridge/model/SHost.hbm.xml"
+ * Holds the relation Id, Name, OwnerCanonicalId, SHost, CreateTime,
+ * VersioningStatus For ORM see "com/cloud/bridge/model/SHost.hbm.xml"
  */
 
 @Entity

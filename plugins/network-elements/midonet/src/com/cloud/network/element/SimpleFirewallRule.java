@@ -53,7 +53,8 @@ public class SimpleFirewallRule {
     }
 
     public SimpleFirewallRule(FirewallRuleTO rule) {
-        // Destination IP (confusingly called SourceIP in FirewallRule attributes)
+        // Destination IP (confusingly called SourceIP in FirewallRule
+        // attributes)
         dstIp = rule.getSrcIp();
         protocol = rule.getProtocol();
 
@@ -132,9 +133,9 @@ public class SimpleFirewallRule {
 
         sourceCidrs = new ArrayList<String>();
         /*
-         * Only one IP in the CIDR list
-         * Port Forwarding Rules don't have sourceCidrs, but they do have
-         * targets. Use those instead if they exist.
+         * Only one IP in the CIDR list Port Forwarding Rules don't have
+         * sourceCidrs, but they do have targets. Use those instead if they
+         * exist.
          */
         DtoRule.DtoNatTarget[] targets = rule.getNatTargets();
         if (targets != null) {
@@ -159,9 +160,9 @@ public class SimpleFirewallRule {
 
         } else {
             /*
-             * If this is port forwarding, we want to take the start
-             * port for the public port range, and the start port for
-             * the private port range to uniquely identify this rule.
+             * If this is port forwarding, we want to take the start port for
+             * the public port range, and the start port for the private port
+             * range to uniquely identify this rule.
              */
             if (targets != null) {
                 dstPortStart = targets[0].portFrom;
@@ -206,7 +207,8 @@ public class SimpleFirewallRule {
         // rule is for one CIDR
         for (String sourceCidr : sourceCidrs) {
 
-            // Follows the rule String format defined in SetFirewallRulesCommand.java::generateFirewallRules()
+            // Follows the rule String format defined in
+            // SetFirewallRulesCommand.java::generateFirewallRules()
             int field1 = getFieldOne();
             int field2 = getFieldTwo();
 

@@ -39,42 +39,28 @@ import com.cloud.exception.ResourceAllocationException;
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.storage.Volume;
 
-@APICommand(name = "uploadVolume", description = "Uploads a data disk.", responseObject = VolumeResponse.class, responseView = ResponseView.Restricted, entityType = {Volume.class},
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "uploadVolume", description = "Uploads a data disk.", responseObject = VolumeResponse.class, responseView = ResponseView.Restricted, entityType = {Volume.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UploadVolumeCmd extends BaseAsyncCmd {
     public static final Logger s_logger = Logger.getLogger(UploadVolumeCmd.class.getName());
     private static final String s_name = "uploadvolumeresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.FORMAT,
-               type = CommandType.STRING,
-               required = true,
-               description = "the format for the volume. Possible values include QCOW2, OVA, and VHD.")
+    @Parameter(name = ApiConstants.FORMAT, type = CommandType.STRING, required = true, description = "the format for the volume. Possible values include QCOW2, OVA, and VHD.")
     private String format;
 
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "the name of the volume")
     private String volumeName;
 
-    @Parameter(name = ApiConstants.URL,
-               type = CommandType.STRING,
-               required = true,
-               description = "the URL of where the volume is hosted. Possible URL include http:// and https://")
+    @Parameter(name = ApiConstants.URL, type = CommandType.STRING, required = true, description = "the URL of where the volume is hosted. Possible URL include http:// and https://")
     private String url;
 
-    @Parameter(name = ApiConstants.ZONE_ID,
-               type = CommandType.UUID,
-               entityType = ZoneResponse.class,
-               required = true,
-               description = "the ID of the zone the volume is to be hosted on")
+    @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, required = true, description = "the ID of the zone the volume is to be hosted on")
     private Long zoneId;
 
-    @Parameter(name = ApiConstants.DOMAIN_ID,
-               type = CommandType.UUID,
-               entityType = DomainResponse.class,
-               description = "an optional domainId. If the account parameter is used, domainId must also be used.")
+    @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, entityType = DomainResponse.class, description = "an optional domainId. If the account parameter is used, domainId must also be used.")
     private Long domainId;
 
     @Parameter(name = ApiConstants.ACCOUNT, type = CommandType.STRING, description = "an optional accountName. Must be used with domainId.")
@@ -89,9 +75,9 @@ public class UploadVolumeCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.PROJECT_ID, type = CommandType.UUID, entityType = ProjectResponse.class, description = "Upload volume for the project")
     private Long projectId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getFormat() {
         return format;
@@ -125,27 +111,27 @@ public class UploadVolumeCmd extends BaseAsyncCmd {
         return imageStoreUuid;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException, NetworkRuleConflictException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
+    NetworkRuleConflictException {
 
-            Volume volume = _volumeService.uploadVolume(this);
-            if (volume != null){
+        Volume volume = _volumeService.uploadVolume(this);
+        if (volume != null) {
             VolumeResponse response = _responseGenerator.createVolumeResponse(ResponseView.Restricted, volume);
-                response.setResponseName(getCommandName());
-                setResponseObject(response);
-            } else {
-                throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to upload volume");
-            }
+            response.setResponseName(getCommandName());
+            setResponseObject(response);
+        } else {
+            throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to upload volume");
+        }
     }
 
     @Override
     public String getCommandName() {
-           return s_name;
+        return s_name;
     }
 
     @Override
@@ -160,7 +146,7 @@ public class UploadVolumeCmd extends BaseAsyncCmd {
 
     @Override
     public String getEventDescription() {
-        return  "uploading volume: " + getVolumeName() + " in the zone " + getZoneId();
+        return "uploading volume: " + getVolumeName() + " in the zone " + getZoneId();
     }
 
     @Override

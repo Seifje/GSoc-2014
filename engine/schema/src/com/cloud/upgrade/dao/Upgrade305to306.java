@@ -62,7 +62,7 @@ public class Upgrade305to306 extends Upgrade30xBase implements DbUpgrade {
     @Override
     public void performDataMigration(Connection conn) {
 
-        //Add index for alert table.
+        // Add index for alert table.
         addIndexForAlert(conn);
 
         upgradeEIPNetworkOfferings(conn);
@@ -75,13 +75,14 @@ public class Upgrade305to306 extends Upgrade30xBase implements DbUpgrade {
 
     private void addIndexForAlert(Connection conn) {
 
-        //First drop if it exists. (Due to patches shipped to customers some will have the index and some wont.)
+        // First drop if it exists. (Due to patches shipped to customers some
+        // will have the index and some wont.)
         List<String> indexList = new ArrayList<String>();
         s_logger.debug("Dropping index i_alert__last_sent if it exists");
         indexList.add("i_alert__last_sent");
         DbUpgradeUtils.dropKeysIfExist(conn, "alert", indexList, false);
 
-        //Now add index.
+        // Now add index.
         PreparedStatement pstmt = null;
         try {
             pstmt = conn.prepareStatement("ALTER TABLE `cloud`.`alert` ADD INDEX `i_alert__last_sent`(`last_sent`)");
@@ -111,7 +112,8 @@ public class Upgrade305to306 extends Upgrade30xBase implements DbUpgrade {
                 long id = rs.getLong(1);
                 // check if elastic IP service is enabled for network offering
                 if (rs.getLong(2) != 0) {
-                    //update network offering with eip_associate_public_ip set to true
+                    // update network offering with eip_associate_public_ip set
+                    // to true
                     pstmt = conn.prepareStatement("UPDATE `cloud`.`network_offerings` set eip_associate_public_ip=? where id=?");
                     pstmt.setBoolean(1, true);
                     pstmt.setLong(2, id);
@@ -136,13 +138,14 @@ public class Upgrade305to306 extends Upgrade30xBase implements DbUpgrade {
 
     private void addIndexForHostDetails(Connection conn) {
 
-        //First drop if it exists. (Due to patches shipped to customers some will have the index and some wont.)
+        // First drop if it exists. (Due to patches shipped to customers some
+        // will have the index and some wont.)
         List<String> indexList = new ArrayList<String>();
         s_logger.debug("Dropping index fk_host_details__host_id if it exists");
         indexList.add("fk_host_details__host_id");
         DbUpgradeUtils.dropKeysIfExist(conn, "host_details", indexList, false);
 
-        //Now add index.
+        // Now add index.
         PreparedStatement pstmt = null;
         try {
             pstmt = conn.prepareStatement("ALTER TABLE `cloud`.`host_details` ADD INDEX `fk_host_details__host_id`(`host_id`)");
@@ -168,8 +171,8 @@ public class Upgrade305to306 extends Upgrade30xBase implements DbUpgrade {
         ResultSet rsNw = null;
         try {
             // update the existing ingress rules traffic type
-            pstmt = conn.prepareStatement("update `cloud`.`firewall_rules`" +
-                "  set traffic_type='Ingress' where purpose='Firewall' and ip_address_id is not null and traffic_type is null");
+            pstmt = conn.prepareStatement("update `cloud`.`firewall_rules`"
+                    + "  set traffic_type='Ingress' where purpose='Firewall' and ip_address_id is not null and traffic_type is null");
             s_logger.debug("Updating firewall Ingress rule traffic type: " + pstmt);
             pstmt.executeUpdate();
 
@@ -177,10 +180,11 @@ public class Upgrade305to306 extends Upgrade30xBase implements DbUpgrade {
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 long netId = rs.getLong(1);
-                //When upgraded from 2.2.14 to 3.0.6 guest_type is updated to Isolated in the 2214to30 clean up sql. clean up executes
-                //after this. So checking for Isolated OR Virtual
-                pstmt = conn.prepareStatement("select account_id, domain_id FROM `cloud`.`networks` where (guest_type='Isolated' OR guest_type='" +
-                    "Virtual') and traffic_type='Guest' and vpc_id is NULL and (state='implemented' OR state='Shutdown') and id=? ");
+                // When upgraded from 2.2.14 to 3.0.6 guest_type is updated to
+                // Isolated in the 2214to30 clean up sql. clean up executes
+                // after this. So checking for Isolated OR Virtual
+                pstmt = conn.prepareStatement("select account_id, domain_id FROM `cloud`.`networks` where (guest_type='Isolated' OR guest_type='"
+                        + "Virtual') and traffic_type='Guest' and vpc_id is NULL and (state='implemented' OR state='Shutdown') and id=? ");
                 pstmt.setLong(1, netId);
                 s_logger.debug("Getting account_id, domain_id from networks table: " + pstmt);
                 rsNw = pstmt.executeQuery();
@@ -189,10 +193,10 @@ public class Upgrade305to306 extends Upgrade30xBase implements DbUpgrade {
                     long accountId = rsNw.getLong(1);
                     long domainId = rsNw.getLong(2);
 
-                    //Add new rule for the existing networks
+                    // Add new rule for the existing networks
                     s_logger.debug("Adding default egress firewall rule for network " + netId);
-                    pstmt =
-                        conn.prepareStatement("INSERT INTO firewall_rules (uuid, state, protocol, purpose, account_id, domain_id, network_id, xid, created,  traffic_type) VALUES (?, 'Active', 'all', 'Firewall', ?, ?, ?, ?, now(), 'Egress')");
+                    pstmt = conn
+                            .prepareStatement("INSERT INTO firewall_rules (uuid, state, protocol, purpose, account_id, domain_id, network_id, xid, created,  traffic_type) VALUES (?, 'Active', 'all', 'Firewall', ?, ?, ?, ?, now(), 'Egress')");
                     pstmt.setString(1, UUID.randomUUID().toString());
                     pstmt.setLong(2, accountId);
                     pstmt.setLong(3, domainId);
@@ -265,15 +269,16 @@ public class Upgrade305to306 extends Upgrade30xBase implements DbUpgrade {
         ResultSet rs = null;
         s_logger.debug("Updating KVM snapshots");
         try {
-            pstmt =
-                conn.prepareStatement("select id, backup_snap_id from `cloud`.`snapshots` where hypervisor_type='KVM' and removed is null and backup_snap_id is not null");
+            pstmt = conn.prepareStatement("select id, backup_snap_id from `cloud`.`snapshots` where hypervisor_type='KVM' and removed is null and backup_snap_id is not null");
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 long id = rs.getLong(1);
                 String backUpPath = rs.getString(2);
                 // Update Backup Path. Remove anything before /snapshots/
-                // e.g 22x Path /mnt/0f14da63-7033-3ca5-bdbe-fa62f4e2f38a/snapshots/1/2/6/i-2-6-VM_ROOT-6_20121219072022
-                // Above path should change to /snapshots/1/2/6/i-2-6-VM_ROOT-6_20121219072022
+                // e.g 22x Path
+                // /mnt/0f14da63-7033-3ca5-bdbe-fa62f4e2f38a/snapshots/1/2/6/i-2-6-VM_ROOT-6_20121219072022
+                // Above path should change to
+                // /snapshots/1/2/6/i-2-6-VM_ROOT-6_20121219072022
                 int index = backUpPath.indexOf("snapshots" + File.separator);
                 if (index > 1) {
                     String correctedPath = File.separator + backUpPath.substring(index);

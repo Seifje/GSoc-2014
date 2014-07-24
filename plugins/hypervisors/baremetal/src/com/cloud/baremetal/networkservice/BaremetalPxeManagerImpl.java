@@ -133,14 +133,14 @@ public class BaremetalPxeManagerImpl extends ManagerBase implements BaremetalPxe
 
     @Override
     public boolean prepare(VirtualMachineProfile profile, NicProfile nic, DeployDestination dest, ReservationContext context) {
-        //TODO: select type from template
+        // TODO: select type from template
         BaremetalPxeType type = BaremetalPxeType.KICK_START;
         return getServiceByType(type.toString()).prepare(profile, nic, dest, context);
     }
 
     @Override
     public boolean prepareCreateTemplate(Long pxeServerId, UserVm vm, String templateUrl) {
-        //TODO: select type from template
+        // TODO: select type from template
         BaremetalPxeType type = BaremetalPxeType.PING;
         return getServiceByType(type.toString()).prepareCreateTemplate(pxeServerId, vm, templateUrl);
     }
@@ -223,14 +223,14 @@ public class BaremetalPxeManagerImpl extends ManagerBase implements BaremetalPxe
             throw new CloudRuntimeException(String.format("Cannot find physical network in zone %s", vm.getDataCenterId()));
         }
         if (phys.size() > 1) {
-            throw new CloudRuntimeException(String.format("Baremetal only supports one physical network in zone, but zone %s has %s physical networks",
-                vm.getDataCenterId(), phys.size()));
+            throw new CloudRuntimeException(String.format("Baremetal only supports one physical network in zone, but zone %s has %s physical networks", vm.getDataCenterId(),
+                    phys.size()));
         }
         PhysicalNetworkVO phy = phys.get(0);
 
         QueryBuilder<BaremetalPxeVO> sc = QueryBuilder.create(BaremetalPxeVO.class);
-        //TODO: handle both kickstart and PING
-        //sc.addAnd(sc.getEntity().getPodId(), Op.EQ, vm.getPodIdToDeployIn());
+        // TODO: handle both kickstart and PING
+        // sc.addAnd(sc.getEntity().getPodId(), Op.EQ, vm.getPodIdToDeployIn());
         sc.and(sc.entity().getPhysicalNetworkId(), Op.EQ, phy.getId());
         BaremetalPxeVO pxeVo = sc.find();
         if (pxeVo == null) {

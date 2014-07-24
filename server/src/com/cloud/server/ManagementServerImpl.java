@@ -174,6 +174,7 @@ import org.apache.cloudstack.api.command.admin.storage.ListS3sCmd;
 import org.apache.cloudstack.api.command.admin.storage.ListSecondaryStagingStoresCmd;
 import org.apache.cloudstack.api.command.admin.storage.ListStoragePoolsCmd;
 import org.apache.cloudstack.api.command.admin.storage.ListStorageProvidersCmd;
+import org.apache.cloudstack.api.command.admin.storage.ListStorageTagsCmd;
 import org.apache.cloudstack.api.command.admin.storage.PreparePrimaryStorageForMaintenanceCmd;
 import org.apache.cloudstack.api.command.admin.storage.UpdateCloudToUseObjectStoreCmd;
 import org.apache.cloudstack.api.command.admin.storage.UpdateStoragePoolCmd;
@@ -755,7 +756,6 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
     @Inject
     private ServiceOfferingDetailsDao _serviceOfferingDetailsDao;
 
-
     @Inject
     private ProjectManager _projectMgr;
     @Inject
@@ -858,7 +858,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
             _eventExecutor.scheduleAtFixedRate(new EventPurgeTask(), cleanup, cleanup, TimeUnit.SECONDS);
         }
 
-        //Alerts purge configurations
+        // Alerts purge configurations
         int alertPurgeInterval = NumbersUtil.parseInt(_configDao.getValue(Config.AlertPurgeInterval.key()), 60 * 60 * 24); // 1 day.
         _alertPurgeDelay = NumbersUtil.parseInt(_configDao.getValue(Config.AlertPurgeDelay.key()), 0);
         if (_alertPurgeDelay != 0) {
@@ -1112,11 +1112,11 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
             throw ex;
         }
 
-        if(_serviceOfferingDetailsDao.findDetail(vm.getServiceOfferingId(), GPU.Keys.pciDevice.toString()) != null) {
-            s_logger.info(" Live Migration of GPU enabled VM : " + vm.getInstanceName()+ " is not supported");
+        if (_serviceOfferingDetailsDao.findDetail(vm.getServiceOfferingId(), GPU.Keys.pciDevice.toString()) != null) {
+            s_logger.info(" Live Migration of GPU enabled VM : " + vm.getInstanceName() + " is not supported");
             // Return empty list.
-            return new Ternary<Pair<List<? extends Host>, Integer>, List<? extends Host>, Map<Host, Boolean>>(new Pair<List <? extends Host>,
-                    Integer>(new ArrayList<HostVO>(), new Integer(0)), new ArrayList<Host>(), new HashMap<Host, Boolean>());
+            return new Ternary<Pair<List<? extends Host>, Integer>, List<? extends Host>, Map<Host, Boolean>>(new Pair<List<? extends Host>, Integer>(new ArrayList<HostVO>(),
+                    new Integer(0)), new ArrayList<Host>(), new HashMap<Host, Boolean>());
         }
 
         if (!vm.getHypervisorType().equals(HypervisorType.XenServer) && !vm.getHypervisorType().equals(HypervisorType.VMware) && !vm.getHypervisorType().equals(HypervisorType.KVM)
@@ -1178,7 +1178,8 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
             allHosts = allHostsPair.first();
             allHosts.remove(srcHost);
 
-            // Check if the host has storage pools for all the volumes of the vm to be migrated.
+            // Check if the host has storage pools for all the volumes of the vm
+            // to be migrated.
             for (Iterator<HostVO> iterator = allHosts.iterator(); iterator.hasNext();) {
                 Host host = iterator.next();
                 Map<Volume, List<StoragePool>> volumePools = findSuitablePoolsForVolumes(vmProfile, host);
@@ -1222,7 +1223,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         }
 
         for (HostAllocator allocator : hostAllocators) {
-            if  (canMigrateWithStorage) {
+            if (canMigrateWithStorage) {
                 suitableHosts = allocator.allocateTo(vmProfile, plan, Host.Type.Routing, excludes, allHosts, HostAllocator.RETURN_UPTO_ALL, false);
             } else {
                 suitableHosts = allocator.allocateTo(vmProfile, plan, Host.Type.Routing, excludes, HostAllocator.RETURN_UPTO_ALL, false);
@@ -1264,7 +1265,8 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         List<VolumeVO> volumes = _volumeDao.findCreatedByInstance(vmProfile.getId());
         Map<Volume, List<StoragePool>> suitableVolumeStoragePools = new HashMap<Volume, List<StoragePool>>();
 
-        // For each volume find list of suitable storage pools by calling the allocators
+        // For each volume find list of suitable storage pools by calling the
+        // allocators
         for (VolumeVO volume : volumes) {
             DiskOfferingVO diskOffering = _diskOfferingDao.findById(volume.getDiskOfferingId());
             DiskProfile diskProfile = new DiskProfile(volume, diskOffering, vmProfile.getHypervisorType());
@@ -1362,8 +1364,10 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
 
         // Source pool of the volume.
         StoragePoolVO srcVolumePool = _poolDao.findById(volume.getPoolId());
-        // Get all the pools available. Only shared pools are considered because only a volume on a shared pools
-        // can be live migrated while the virtual machine stays on the same host.
+        // Get all the pools available. Only shared pools are considered because
+        // only a volume on a shared pools
+        // can be live migrated while the virtual machine stays on the same
+        // host.
         List<StoragePoolVO> storagePools = null;
         if (srcVolumePool.getClusterId() == null) {
             storagePools = _poolDao.findZoneWideStoragePoolsByTags(volume.getDataCenterId(), null);
@@ -1379,7 +1383,8 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         }
 
         // Get all the suitable pools.
-        // Exclude the current pool from the list of pools to which the volume can be migrated.
+        // Exclude the current pool from the list of pools to which the volume
+        // can be migrated.
         ExcludeList avoid = new ExcludeList();
         avoid.addPool(srcVolumePool.getId());
 
@@ -1734,7 +1739,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
                 ConfigurationVO configVo = _configDao.findByName(param.getName());
                 configVo.setValue(_configDepot.get(param.getName()).valueIn(id).toString());
                 configVOList.add(configVo);
-    }
+            }
 
             return new Pair<List<? extends Configuration>, Integer>(configVOList, configVOList.size());
         }
@@ -1773,10 +1778,10 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         if (isAllocated) {
             Account caller = CallContext.current().getCallingAccount();
 
-            Ternary<Long, Boolean, ListProjectResourcesCriteria> domainIdRecursiveListProject = new Ternary<Long, Boolean, ListProjectResourcesCriteria>(
-                    cmd.getDomainId(), cmd.isRecursive(), null);
-            _accountMgr.buildACLSearchParameters(caller, cmd.getId(), cmd.getAccountName(), cmd.getProjectId(), permittedAccounts,
-                    domainIdRecursiveListProject, cmd.listAll(), false);
+            Ternary<Long, Boolean, ListProjectResourcesCriteria> domainIdRecursiveListProject = new Ternary<Long, Boolean, ListProjectResourcesCriteria>(cmd.getDomainId(),
+                    cmd.isRecursive(), null);
+            _accountMgr.buildACLSearchParameters(caller, cmd.getId(), cmd.getAccountName(), cmd.getProjectId(), permittedAccounts, domainIdRecursiveListProject, cmd.listAll(),
+                    false);
             domainId = domainIdRecursiveListProject.first();
             isRecursive = domainIdRecursiveListProject.second();
             listProjectResourcesCriteria = domainIdRecursiveListProject.third();
@@ -1961,7 +1966,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         String hypervisor = cmd.getHypervisor();
         String hypervisorVersion = cmd.getHypervisorVersion();
 
-        //throw exception if hypervisor name is not passed, but version is
+        // throw exception if hypervisor name is not passed, but version is
         if (hypervisorVersion != null && (hypervisor == null || hypervisor.isEmpty())) {
             throw new InvalidParameterValueException("Hypervisor version parameter cannot be used without specifying a hypervisor : XenServer, KVM or VMware");
         }
@@ -2014,18 +2019,18 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
             throw new InvalidParameterValueException("Please specify a valid hypervisor and supported version");
         }
 
-        //by this point either osTypeId or osStdType is non-empty. Find by either of them. ID takes preference if both are specified
+        // by this point either osTypeId or osStdType is non-empty. Find by
+        // either of them. ID takes preference if both are specified
         if (osTypeId != null) {
             guestOs = ApiDBUtils.findGuestOSById(osTypeId);
-        }
-        else if (osStdName != null) {
+        } else if (osStdName != null) {
             guestOs = ApiDBUtils.findGuestOSByDisplayName(osStdName);
         }
 
         if (guestOs == null) {
             throw new InvalidParameterValueException("Unable to find the guest OS by name or UUID");
         }
-        //check for duplicates
+        // check for duplicates
         GuestOSHypervisorVO duplicate = _guestOSHypervisorDao.findByOsIdAndHypervisorAndUserDefined(guestOs.getId(), hypervisorType.toString(), hypervisorVersion, true);
 
         if (duplicate != null) {
@@ -2087,7 +2092,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         Long id = cmd.getId();
         String displayName = cmd.getOsDisplayName();
 
-        //check if guest OS exists
+        // check if guest OS exists
         GuestOS guestOsHandle = ApiDBUtils.findGuestOSById(id);
         if (guestOsHandle == null) {
             throw new InvalidParameterValueException("Guest OS not found. Please specify a valid ID for the Guest OS");
@@ -2097,14 +2102,14 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
             throw new InvalidParameterValueException("Unable to modify system defined guest OS");
         }
 
-        //Check if update is needed
+        // Check if update is needed
         if (displayName.equals(guestOsHandle.getDisplayName())) {
             return guestOsHandle;
         }
 
-        //Check if another Guest OS by same name exists
+        // Check if another Guest OS by same name exists
         GuestOS duplicate = ApiDBUtils.findGuestOSByDisplayName(displayName);
-        if(duplicate != null) {
+        if (duplicate != null) {
             throw new InvalidParameterValueException("The specified Guest OS name : " + displayName + " already exists. Please specify a unique guest OS name");
         }
         GuestOSVO guestOs = _guestOSDao.createForUpdate(id);
@@ -2122,7 +2127,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
     public boolean removeGuestOs(RemoveGuestOsCmd cmd) {
         Long id = cmd.getId();
 
-        //check if guest OS exists
+        // check if guest OS exists
         GuestOS guestOs = ApiDBUtils.findGuestOSById(id);
         if (guestOs == null) {
             throw new InvalidParameterValueException("Guest OS not found. Please specify a valid ID for the Guest OS");
@@ -2142,7 +2147,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         Long id = cmd.getId();
         String osNameForHypervisor = cmd.getOsNameForHypervisor();
 
-        //check if mapping exists
+        // check if mapping exists
         GuestOSHypervisor guestOsHypervisorHandle = _guestOSHypervisorDao.findById(id);
         if (guestOsHypervisorHandle == null) {
             throw new InvalidParameterValueException("Guest OS Mapping not found. Please specify a valid ID for the Guest OS Mapping");
@@ -2167,7 +2172,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
     public boolean removeGuestOsMapping(RemoveGuestOsMappingCmd cmd) {
         Long id = cmd.getId();
 
-        //check if mapping exists
+        // check if mapping exists
         GuestOSHypervisor guestOsHypervisorHandle = _guestOSHypervisorDao.findById(id);
         if (guestOsHypervisorHandle == null) {
             throw new InvalidParameterValueException("Guest OS Mapping not found. Please specify a valid ID for the Guest OS Mapping");
@@ -2292,21 +2297,21 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         Transaction.execute(new TransactionCallbackNoReturn() {
             @Override
             public void doInTransactionWithoutResult(TransactionStatus status) {
-        if (domainName != null) {
-            String updatedDomainPath = getUpdatedDomainPath(domain.getPath(), domainName);
-            updateDomainChildren(domain, updatedDomainPath);
-            domain.setName(domainName);
-            domain.setPath(updatedDomainPath);
-        }
+                if (domainName != null) {
+                    String updatedDomainPath = getUpdatedDomainPath(domain.getPath(), domainName);
+                    updateDomainChildren(domain, updatedDomainPath);
+                    domain.setName(domainName);
+                    domain.setPath(updatedDomainPath);
+                }
 
-        if (networkDomain != null) {
-            if (networkDomain.isEmpty()) {
-                domain.setNetworkDomain(null);
-            } else {
-                domain.setNetworkDomain(networkDomain);
-            }
-        }
-        _domainDao.update(domainId, domain);
+                if (networkDomain != null) {
+                    if (networkDomain.isEmpty()) {
+                        domain.setNetworkDomain(null);
+                    } else {
+                        domain.setNetworkDomain(networkDomain);
+                    }
+                }
+                _domainDao.update(domainId, domain);
             }
         });
 
@@ -3473,7 +3478,8 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         if (cmd.getPrivateKey() != null) {
             _ksMgr.saveCertificate(ConsoleProxyManager.CERTIFICATE_NAME, certificate, key, cmd.getDomainSuffix());
 
-            // Reboot ssvm here since private key is present - meaning server cert being passed
+            // Reboot ssvm here since private key is present - meaning server
+            // cert being passed
             List<SecondaryStorageVmVO> alreadyRunning = _secStorageVmDao.getSecStorageVmListInStates(null, State.Running, State.Migrating, State.Starting);
             for (SecondaryStorageVmVO ssVmVm : alreadyRunning) {
                 _secStorageVmMgr.rebootSecStorageVm(ssVmVm.getId());
@@ -3483,9 +3489,9 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         }
 
         _consoleProxyMgr.setManagementState(ConsoleProxyManagementState.ResetSuspending);
-        return "Certificate has been successfully updated, if its the server certificate we would reboot all " +
-                "running console proxy VMs and secondary storage VMs to propagate the new certificate, " +
-                "please give a few minutes for console access and storage services service to be up and working again";
+        return "Certificate has been successfully updated, if its the server certificate we would reboot all "
+                + "running console proxy VMs and secondary storage VMs to propagate the new certificate, "
+                + "please give a few minutes for console access and storage services service to be up and working again";
     }
 
     @Override
@@ -3580,10 +3586,9 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         Account caller = CallContext.current().getCallingAccount();
         List<Long> permittedAccounts = new ArrayList<Long>();
 
-        Ternary<Long, Boolean, ListProjectResourcesCriteria> domainIdRecursiveListProject = new Ternary<Long, Boolean, ListProjectResourcesCriteria>(
-                cmd.getDomainId(), cmd.isRecursive(), null);
-        _accountMgr.buildACLSearchParameters(caller, null, cmd.getAccountName(), cmd.getProjectId(), permittedAccounts, domainIdRecursiveListProject,
-                cmd.listAll(), false);
+        Ternary<Long, Boolean, ListProjectResourcesCriteria> domainIdRecursiveListProject = new Ternary<Long, Boolean, ListProjectResourcesCriteria>(cmd.getDomainId(),
+                cmd.isRecursive(), null);
+        _accountMgr.buildACLSearchParameters(caller, null, cmd.getAccountName(), cmd.getProjectId(), permittedAccounts, domainIdRecursiveListProject, cmd.listAll(), false);
         Long domainId = domainIdRecursiveListProject.first();
         Boolean isRecursive = domainIdRecursiveListProject.second();
         ListProjectResourcesCriteria listProjectResourcesCriteria = domainIdRecursiveListProject.third();
@@ -3695,23 +3700,23 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
             Transaction.execute(new TransactionCallbackNoReturn() {
                 @Override
                 public void doInTransactionWithoutResult(TransactionStatus status) {
-                for (HostVO h : hosts) {
-                    if (s_logger.isDebugEnabled()) {
-                        s_logger.debug("Changing password for host name = " + h.getName());
-                    }
-                    // update password for this host
-                    DetailVO nv = _detailsDao.findDetail(h.getId(), ApiConstants.USERNAME);
-                    if (nv.getValue().equals(cmd.getUsername())) {
-                        DetailVO nvp = _detailsDao.findDetail(h.getId(), ApiConstants.PASSWORD);
-                        nvp.setValue(DBEncryptionUtil.encrypt(cmd.getPassword()));
-                        _detailsDao.persist(nvp);
-                    } else {
-                        // if one host in the cluster has diff username then
-                        // rollback to maintain consistency
+                    for (HostVO h : hosts) {
+                        if (s_logger.isDebugEnabled()) {
+                            s_logger.debug("Changing password for host name = " + h.getName());
+                        }
+                        // update password for this host
+                        DetailVO nv = _detailsDao.findDetail(h.getId(), ApiConstants.USERNAME);
+                        if (nv.getValue().equals(cmd.getUsername())) {
+                            DetailVO nvp = _detailsDao.findDetail(h.getId(), ApiConstants.PASSWORD);
+                            nvp.setValue(DBEncryptionUtil.encrypt(cmd.getPassword()));
+                            _detailsDao.persist(nvp);
+                        } else {
+                            // if one host in the cluster has diff username then
+                            // rollback to maintain consistency
                             throw new InvalidParameterValueException("The username is not same for all hosts, please modify passwords for individual hosts.");
+                        }
                     }
                 }
-            }
             });
         }
 
@@ -3845,7 +3850,7 @@ public class ManagementServerImpl extends ManagerBase implements ManagementServe
         boolean result = _itMgr.upgradeVmDb(systemVmId, serviceOfferingId);
 
         if (newServiceOffering.isDynamic()) {
-            //save the custom values to the database.
+            // save the custom values to the database.
             _userVmMgr.saveCustomOfferingDetails(systemVmId, newServiceOffering);
         }
         if (currentServiceOffering.isDynamic() && !newServiceOffering.isDynamic()) {

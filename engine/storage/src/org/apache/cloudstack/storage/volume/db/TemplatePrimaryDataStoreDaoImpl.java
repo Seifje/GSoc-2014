@@ -85,34 +85,12 @@ public class TemplatePrimaryDataStoreDaoImpl extends GenericDaoBase<TemplatePrim
             TemplatePrimaryDataStoreVO template = findByIdIncludingRemoved(vo.getId());
             if (template != null) {
                 StringBuilder str = new StringBuilder("Unable to update ").append(vo.toString());
-                str.append(": DB Data={id=")
-                    .append(template.getId())
-                    .append("; state=")
-                    .append(template.getState())
-                    .append("; updatecount=")
-                    .append(template.getUpdatedCount())
-                    .append(";updatedTime=")
-                    .append(template.getLastUpdated());
-                str.append(": New Data={id=")
-                    .append(vo.getId())
-                    .append("; state=")
-                    .append(nextState)
-                    .append("; event=")
-                    .append(event)
-                    .append("; updatecount=")
-                    .append(vo.getUpdatedCount())
-                    .append("; updatedTime=")
-                    .append(vo.getLastUpdated());
-                str.append(": stale Data={id=")
-                    .append(vo.getId())
-                    .append("; state=")
-                    .append(currentState)
-                    .append("; event=")
-                    .append(event)
-                    .append("; updatecount=")
-                    .append(oldUpdated)
-                    .append("; updatedTime=")
-                    .append(oldUpdatedTime);
+                str.append(": DB Data={id=").append(template.getId()).append("; state=").append(template.getState()).append("; updatecount=").append(template.getUpdatedCount())
+                .append(";updatedTime=").append(template.getLastUpdated());
+                str.append(": New Data={id=").append(vo.getId()).append("; state=").append(nextState).append("; event=").append(event).append("; updatecount=")
+                .append(vo.getUpdatedCount()).append("; updatedTime=").append(vo.getLastUpdated());
+                str.append(": stale Data={id=").append(vo.getId()).append("; state=").append(currentState).append("; event=").append(event).append("; updatecount=")
+                .append(oldUpdated).append("; updatedTime=").append(oldUpdatedTime);
             } else {
                 s_logger.debug("Unable to update template: id=" + vo.getId() + ", as there is no such template exists in the database anymore");
             }

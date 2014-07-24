@@ -72,7 +72,8 @@ public class ApiXmlDocReader {
                     oldCommands.put(c1.getName(), c1);
                 }
             } catch (EOFException ex) {
-                // EOF exception shows that there is no more objects in ObjectInputStream, so do nothing here
+                // EOF exception shows that there is no more objects in
+                // ObjectInputStream, so do nothing here
             }
 
             try {
@@ -82,7 +83,8 @@ public class ApiXmlDocReader {
                     commands.put(c.getName(), c);
                 }
             } catch (EOFException ex) {
-                // EOF exception shows that there is no more objects in ObjectInputStream, so do nothing here
+                // EOF exception shows that there is no more objects in
+                // ObjectInputStream, so do nothing here
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -194,7 +196,8 @@ public class ApiXmlDocReader {
                         }
                     }
 
-                    // Check if any response arguments were removed in new version
+                    // Check if any response arguments were removed in new
+                    // version
                     for (Argument arg : oldCommand.getResponse()) {
                         if (newCommand.getResArgByName(arg.getName()) == null) {
                             removedRespArgs.add(arg);
@@ -202,8 +205,8 @@ public class ApiXmlDocReader {
                     }
                 }
 
-                if (newReqArgs.size() != 0 || newRespArgs.size() != 0 || removedReqArgs.size() != 0 || removedRespArgs.size() != 0 || stableReqArgs.size() != 0 ||
-                    stableReqArgs.size() != 0) {
+                if (newReqArgs.size() != 0 || newRespArgs.size() != 0 || removedReqArgs.size() != 0 || removedRespArgs.size() != 0 || stableReqArgs.size() != 0
+                        || stableReqArgs.size() != 0) {
                     StringBuffer commandInfo = new StringBuffer();
                     commandInfo.append("\n\t" + key);
                     out.write(commandInfo.toString());

@@ -47,6 +47,7 @@ public class AutoScaleVmGroupVmMapVO implements InternalIdentity {
         this.instanceId = instanceId;
     }
 
+    @Override
     public long getId() {
         return id;
     }

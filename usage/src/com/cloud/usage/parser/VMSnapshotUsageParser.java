@@ -94,7 +94,7 @@ public class VMSnapshotUsageParser {
             long duration = (createDate.getTime() - previousCreated.getTime()) + 1;
 
             createUsageRecord(UsageTypes.VM_SNAPSHOT, duration, previousCreated, createDate, account, volId, zoneId, previousEvent.getDiskOfferingId(), vmId,
-                previousEvent.getSize());
+                    previousEvent.getSize());
             previousEvent.setProcessed(new Date());
             s_usageVMSnapshotDao.update(previousEvent);
 
@@ -113,14 +113,13 @@ public class VMSnapshotUsageParser {
             }
             long duration = (endDate.getTime() - created.getTime()) + 1;
             createUsageRecord(UsageTypes.VM_SNAPSHOT, duration, created, endDate, account, usageRec.getId(), usageRec.getZoneId(), usageRec.getDiskOfferingId(),
-                usageRec.getVmId(), usageRec.getSize());
+                    usageRec.getVmId(), usageRec.getSize());
         }
 
         return true;
     }
 
-    private static void createUsageRecord(int type, long runningTime, Date startDate, Date endDate, AccountVO account, long volId, long zoneId, Long doId, Long vmId,
-        long size) {
+    private static void createUsageRecord(int type, long runningTime, Date startDate, Date endDate, AccountVO account, long volId, long zoneId, Long doId, Long vmId, long size) {
         // Our smallest increment is hourly for now
         if (s_logger.isDebugEnabled()) {
             s_logger.debug("Total running time " + runningTime + "ms");
@@ -132,8 +131,8 @@ public class VMSnapshotUsageParser {
         String usageDisplay = dFormat.format(usage);
 
         if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Creating VMSnapshot Volume usage record for vol: " + volId + ", usage: " + usageDisplay + ", startDate: " + startDate + ", endDate: " +
-                endDate + ", for account: " + account.getId());
+            s_logger.debug("Creating VMSnapshot Volume usage record for vol: " + volId + ", usage: " + usageDisplay + ", startDate: " + startDate + ", endDate: " + endDate
+                    + ", for account: " + account.getId());
         }
 
         // Create the usage record
@@ -145,9 +144,8 @@ public class VMSnapshotUsageParser {
 
         usageDesc += " Size: " + size;
 
-        UsageVO usageRecord =
-            new UsageVO(zoneId, account.getId(), account.getDomainId(), usageDesc, usageDisplay + " Hrs", type, new Double(usage), vmId, null, doId, null, volId, size,
-                startDate, endDate);
+        UsageVO usageRecord = new UsageVO(zoneId, account.getId(), account.getDomainId(), usageDesc, usageDisplay + " Hrs", type, new Double(usage), vmId, null, doId, null, volId,
+                size, startDate, endDate);
         s_usageDao.persist(usageRecord);
     }
 

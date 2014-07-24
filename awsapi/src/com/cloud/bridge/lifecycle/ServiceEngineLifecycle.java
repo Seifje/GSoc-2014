@@ -24,9 +24,9 @@ import org.apache.log4j.Logger;
 import com.cloud.bridge.service.controller.s3.ServiceProvider;
 
 /**
- * ServiceEngineLifecycle is used to participate Axis service life cycle management
- * so that we can inject proper initialization and cleanup procedure into the
- * process
+ * ServiceEngineLifecycle is used to participate Axis service life cycle
+ * management so that we can inject proper initialization and cleanup procedure
+ * into the process
  */
 public class ServiceEngineLifecycle implements ServiceLifeCycle {
     private static final long serialVersionUID = -249114759030608486L;
@@ -36,7 +36,7 @@ public class ServiceEngineLifecycle implements ServiceLifeCycle {
     public void startUp(ConfigurationContext config, AxisService service) {
         // initialize service provider during Axis engine startup
         try {
-            //UserCredentialsDao.preCheckTableExistence();
+            // UserCredentialsDao.preCheckTableExistence();
             ServiceProvider.getInstance();
             ServiceEngineLifecycle.initialized = true;
         } catch (Exception e) {

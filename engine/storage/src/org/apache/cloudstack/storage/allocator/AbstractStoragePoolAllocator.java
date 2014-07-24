@@ -54,16 +54,14 @@ public abstract class AbstractStoragePoolAllocator extends AdapterBase implement
     private static final Logger s_logger = Logger.getLogger(AbstractStoragePoolAllocator.class);
     @Inject
     StorageManager storageMgr;
-    protected @Inject
-    PrimaryDataStoreDao _storagePoolDao;
+    protected @Inject PrimaryDataStoreDao _storagePoolDao;
     @Inject
     VolumeDao _volumeDao;
     @Inject
     ConfigurationDao _configDao;
     @Inject
     ClusterDao _clusterDao;
-    protected @Inject
-    DataStoreManager dataStoreMgr;
+    protected @Inject DataStoreManager dataStoreMgr;
     protected BigDecimal _storageOverprovisioningFactor = new BigDecimal(1);
     long _extraBytesPerVolume = 0;
     Random _rand;

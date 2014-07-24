@@ -49,7 +49,7 @@ public class TestingAllocator extends AdapterBase implements HostAllocator {
 
     @Override
     public List<Host> allocateTo(VirtualMachineProfile vmProfile, DeploymentPlan plan, Type type, ExcludeList avoid, List<? extends Host> hosts, int returnUpTo,
-        boolean considerReservedCapacity) {
+            boolean considerReservedCapacity) {
         return allocateTo(vmProfile, plan, type, avoid, returnUpTo, considerReservedCapacity);
     }
 
@@ -70,7 +70,8 @@ public class TestingAllocator extends AdapterBase implements HostAllocator {
 
     @Override
     public boolean isVirtualMachineUpgradable(VirtualMachine vm, ServiceOffering offering) {
-        // currently we do no special checks to rule out a VM being upgradable to an offering, so
+        // currently we do no special checks to rule out a VM being upgradable
+        // to an offering, so
         // return true
         return true;
     }

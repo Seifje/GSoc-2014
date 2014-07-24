@@ -52,8 +52,7 @@ import com.cloud.exception.ResourceAllocationException;
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.storage.ImageStore;
 
-@APICommand(name = "addS3", description = "Adds S3", responseObject = ImageStoreResponse.class, since = "4.0.0",
-        requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
+@APICommand(name = "addS3", description = "Adds S3", responseObject = ImageStoreResponse.class, since = "4.0.0", requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
 public final class AddS3Cmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(AddS3Cmd.class.getName());
 
@@ -84,8 +83,8 @@ public final class AddS3Cmd extends BaseCmd {
     private final Integer socketTimeout = null;
 
     @Override
-    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException,
-        ResourceAllocationException, NetworkRuleConflictException {
+    public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ServerApiException, ConcurrentOperationException, ResourceAllocationException,
+    NetworkRuleConflictException {
 
         Map<String, String> dm = new HashMap<String, String>();
         dm.put(ApiConstants.S3_ACCESS_KEY, getAccessKey());
@@ -105,8 +104,7 @@ public final class AddS3Cmd extends BaseCmd {
             dm.put(ApiConstants.S3_SOCKET_TIMEOUT, getSocketTimeout().toString());
         }
 
-
-        try{
+        try {
             ImageStore result = _storageService.discoverImageStore(null, null, "S3", null, dm);
             ImageStoreResponse storeResponse = null;
             if (result != null) {

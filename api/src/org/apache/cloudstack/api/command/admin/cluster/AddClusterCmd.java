@@ -38,8 +38,7 @@ import com.cloud.exception.ResourceInUseException;
 import com.cloud.org.Cluster;
 import com.cloud.user.Account;
 
-@APICommand(name = "addCluster", description = "Adds a new cluster", responseObject = ClusterResponse.class,
-        requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
+@APICommand(name = "addCluster", description = "Adds a new cluster", responseObject = ClusterResponse.class, requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
 public class AddClusterCmd extends BaseCmd {
     public static final Logger s_logger = Logger.getLogger(AddClusterCmd.class.getName());
 
@@ -63,10 +62,7 @@ public class AddClusterCmd extends BaseCmd {
     @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, required = true, description = "the Zone ID for the cluster")
     private Long zoneId;
 
-    @Parameter(name = ApiConstants.HYPERVISOR,
-               type = CommandType.STRING,
-               required = true,
-               description = "hypervisor type of the cluster: XenServer,KVM,VMware,Hyperv,BareMetal,Simulator")
+    @Parameter(name = ApiConstants.HYPERVISOR, type = CommandType.STRING, required = true, description = "hypervisor type of the cluster: XenServer,KVM,VMware,Hyperv,BareMetal,Simulator")
     private String hypervisor;
 
     @Parameter(name = ApiConstants.CLUSTER_TYPE, type = CommandType.STRING, required = true, description = "type of the cluster: CloudManaged, ExternalManaged")
@@ -84,28 +80,16 @@ public class AddClusterCmd extends BaseCmd {
     @Parameter(name = ApiConstants.VSM_IPADDRESS, type = CommandType.STRING, required = false, description = "the ipaddress of the VSM associated with this cluster")
     private String vsmipaddress;
 
-    @Parameter(name = ApiConstants.VSWITCH_TYPE_GUEST_TRAFFIC,
-               type = CommandType.STRING,
-               required = false,
-               description = "Type of virtual switch used for guest traffic in the cluster. Allowed values are, vmwaresvs (for VMware standard vSwitch) and vmwaredvs (for VMware distributed vSwitch)")
+    @Parameter(name = ApiConstants.VSWITCH_TYPE_GUEST_TRAFFIC, type = CommandType.STRING, required = false, description = "Type of virtual switch used for guest traffic in the cluster. Allowed values are, vmwaresvs (for VMware standard vSwitch) and vmwaredvs (for VMware distributed vSwitch)")
     private String vSwitchTypeGuestTraffic;
 
-    @Parameter(name = ApiConstants.VSWITCH_TYPE_PUBLIC_TRAFFIC,
-               type = CommandType.STRING,
-               required = false,
-               description = "Type of virtual switch used for public traffic in the cluster. Allowed values are, vmwaresvs (for VMware standard vSwitch) and vmwaredvs (for VMware distributed vSwitch)")
+    @Parameter(name = ApiConstants.VSWITCH_TYPE_PUBLIC_TRAFFIC, type = CommandType.STRING, required = false, description = "Type of virtual switch used for public traffic in the cluster. Allowed values are, vmwaresvs (for VMware standard vSwitch) and vmwaredvs (for VMware distributed vSwitch)")
     private String vSwitchTypePublicTraffic;
 
-    @Parameter(name = ApiConstants.VSWITCH_NAME_GUEST_TRAFFIC,
-               type = CommandType.STRING,
-               required = false,
-               description = "Name of virtual switch used for guest traffic in the cluster. This would override zone wide traffic label setting.")
+    @Parameter(name = ApiConstants.VSWITCH_NAME_GUEST_TRAFFIC, type = CommandType.STRING, required = false, description = "Name of virtual switch used for guest traffic in the cluster. This would override zone wide traffic label setting.")
     private String vSwitchNameGuestTraffic;
 
-    @Parameter(name = ApiConstants.VSWITCH_NAME_PUBLIC_TRAFFIC,
-               type = CommandType.STRING,
-               required = false,
-               description = "Name of virtual switch used for public traffic in the cluster.  This would override zone wide traffic label setting.")
+    @Parameter(name = ApiConstants.VSWITCH_NAME_PUBLIC_TRAFFIC, type = CommandType.STRING, required = false, description = "Name of virtual switch used for public traffic in the cluster.  This would override zone wide traffic label setting.")
     private String vSwitchNamePublicTraffic;
 
     public String getVSwitchTypeGuestTraffic() {

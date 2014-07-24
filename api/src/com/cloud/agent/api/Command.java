@@ -33,10 +33,11 @@ public abstract class Command {
 
     public static final String HYPERVISOR_TYPE = "hypervisorType";
 
-    // allow command to carry over hypervisor or other environment related context info
+    // allow command to carry over hypervisor or other environment related
+    // context info
     @LogLevel(Log4jLevel.Trace)
     protected Map<String, String> contextMap = new HashMap<String, String>();
-    private int wait;  //in second
+    private int wait; // in second
 
     protected Command() {
         this.wait = 0;

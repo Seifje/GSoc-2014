@@ -98,8 +98,7 @@ public class ControlNetworkGuru extends PodBasedNetworkGuru implements NetworkGu
             return null;
         }
 
-        NetworkVO config =
-            new NetworkVO(offering.getTrafficType(), Mode.Static, BroadcastDomainType.LinkLocal, offering.getId(), Network.State.Setup, plan.getDataCenterId(),
+        NetworkVO config = new NetworkVO(offering.getTrafficType(), Mode.Static, BroadcastDomainType.LinkLocal, offering.getId(), Network.State.Setup, plan.getDataCenterId(),
                 plan.getPhysicalNetworkId());
         config.setCidr(_cidr);
         config.setGateway(_gateway);
@@ -112,8 +111,7 @@ public class ControlNetworkGuru extends PodBasedNetworkGuru implements NetworkGu
     }
 
     @Override
-    public NicProfile allocate(Network config, NicProfile nic, VirtualMachineProfile vm) throws InsufficientVirtualNetworkCapcityException,
-        InsufficientAddressCapacityException {
+    public NicProfile allocate(Network config, NicProfile nic, VirtualMachineProfile vm) throws InsufficientVirtualNetworkCapcityException, InsufficientAddressCapacityException {
 
         if (vm.getHypervisorType() == HypervisorType.VMware && !isRouterVm(vm)) {
             NicProfile nicProf = new NicProfile(Nic.ReservationStrategy.Create, null, null, null, null);
@@ -135,10 +133,11 @@ public class ControlNetworkGuru extends PodBasedNetworkGuru implements NetworkGu
 
     @Override
     public void reserve(NicProfile nic, Network config, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
-        throws InsufficientVirtualNetworkCapcityException, InsufficientAddressCapacityException {
+            throws InsufficientVirtualNetworkCapcityException, InsufficientAddressCapacityException {
         assert nic.getTrafficType() == TrafficType.Control;
 
-        // we have to get management/private ip for the control nic for vmware/hyperv due ssh issues.
+        // we have to get management/private ip for the control nic for
+        // vmware/hyperv due ssh issues.
         HypervisorType hType = dest.getHost().getHypervisorType();
         if (((hType == HypervisorType.VMware) || (hType == HypervisorType.Hyperv)) && isRouterVm(vm)) {
             if (dest.getDataCenter().getNetworkType() != NetworkType.Basic) {
@@ -148,7 +147,8 @@ public class ControlNetworkGuru extends PodBasedNetworkGuru implements NetworkGu
                 nic.setMacAddress(mac);
                 return;
             } else {
-                // in basic mode and in VMware case, control network will be shared with guest network
+                // in basic mode and in VMware case, control network will be
+                // shared with guest network
                 String mac = _networkMgr.getNextAvailableMacAddressInNetwork(config.getId());
                 nic.setMacAddress(mac);
                 nic.setIp4Address("0.0.0.0");
@@ -174,7 +174,7 @@ public class ControlNetworkGuru extends PodBasedNetworkGuru implements NetworkGu
     public boolean release(NicProfile nic, VirtualMachineProfile vm, String reservationId) {
         assert nic.getTrafficType() == TrafficType.Control;
         HypervisorType hType = vm.getHypervisorType();
-        if ( ( (hType == HypervisorType.VMware) || (hType == HypervisorType.Hyperv) )&& isRouterVm(vm)) {
+        if (((hType == HypervisorType.VMware) || (hType == HypervisorType.Hyperv)) && isRouterVm(vm)) {
             long dcId = vm.getVirtualMachine().getDataCenterId();
             DataCenterVO dcVo = _dcDao.findById(dcId);
             if (dcVo.getNetworkType() != NetworkType.Basic) {
@@ -207,8 +207,7 @@ public class ControlNetworkGuru extends PodBasedNetworkGuru implements NetworkGu
     }
 
     @Override
-    public Network implement(Network config, NetworkOffering offering, DeployDestination destination, ReservationContext context)
-        throws InsufficientVirtualNetworkCapcityException {
+    public Network implement(Network config, NetworkOffering offering, DeployDestination destination, ReservationContext context) throws InsufficientVirtualNetworkCapcityException {
         assert config.getTrafficType() == TrafficType.Control : "Why are you sending this configuration to me " + config;
         return config;
     }

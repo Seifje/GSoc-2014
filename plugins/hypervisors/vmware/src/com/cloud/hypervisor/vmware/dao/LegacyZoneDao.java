@@ -24,13 +24,15 @@ import com.cloud.utils.db.GenericDao;
 
 public interface LegacyZoneDao extends GenericDao<LegacyZoneVO, Long> {
     /**
-     * @param zoneId - id of zone
+     * @param zoneId
+     *            - id of zone
      * @return Object of legacy zone (LegacyZoneVO) identified by zoneId
      */
     LegacyZoneVO findByZoneId(String zoneId);
 
     /**
      * Lists all legacy CloudStack zones
+     * 
      * @return list of ids of legacy CloudStack zones
      */
     List<LegacyZoneVO> listAllLegacyZones();

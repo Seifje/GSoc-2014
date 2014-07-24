@@ -29,7 +29,8 @@ public class EC2ModifyInstanceAttribute {
     }
 
     /**
-     * @param instanceId to set
+     * @param instanceId
+     *            to set
      */
     public void setInstanceId(String instanceId) {
         this.instanceId = instanceId;
@@ -43,7 +44,8 @@ public class EC2ModifyInstanceAttribute {
     }
 
     /**
-     * @param instanceType to set
+     * @param instanceType
+     *            to set
      */
     public void setInstanceType(String instanceType) {
         this.instanceType = instanceType;

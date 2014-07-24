@@ -169,10 +169,10 @@ public class AutoScaleVmProfileVO implements AutoScaleVmProfile, Identity, Inter
             }
         }
         /*
-         * setCounterParams(String counterParam)'s String param is caught by UpdateBuilder and stored in an internal
-         * list.
-         * Which is used later to update the db. The variables in a VO object is not used to update the db.
-         * Hence calling the function which is intercepted.
+         * setCounterParams(String counterParam)'s String param is caught by
+         * UpdateBuilder and stored in an internal list. Which is used later to
+         * update the db. The variables in a VO object is not used to update the
+         * db. Hence calling the function which is intercepted.
          */
         setCounterParams(sb.toString());
     }

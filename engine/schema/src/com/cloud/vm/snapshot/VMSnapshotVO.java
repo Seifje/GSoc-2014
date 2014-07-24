@@ -41,12 +41,7 @@ import com.cloud.utils.db.GenericDao;
 @Table(name = "vm_snapshots")
 public class VMSnapshotVO implements VMSnapshot {
     @Id
-    @TableGenerator(name = "vm_snapshots_sq",
-                    table = "sequence",
-                    pkColumnName = "name",
-                    valueColumnName = "value",
-                    pkColumnValue = "vm_snapshots_seq",
-                    allocationSize = 1)
+    @TableGenerator(name = "vm_snapshots_sq", table = "sequence", pkColumnName = "name", valueColumnName = "value", pkColumnValue = "vm_snapshots_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id")
     Long id;

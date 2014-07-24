@@ -40,15 +40,16 @@ public class UserVmCloneSettingDaoImplTest extends TestCase {
         UserVmCloneSettingVO vo = new UserVmCloneSettingVO(vmId, cloneType);
         _vmcsdao.persist(vo);
         vo = _vmcsdao.findById(vmId);
-        assert (vo.getCloneType().equalsIgnoreCase(cloneType)) : "Unexpected Clone Type retrieved from table! Retrieved: " + vo.getCloneType() + " while expected was: " +
-            cloneType;
+        assert (vo.getCloneType().equalsIgnoreCase(cloneType)) : "Unexpected Clone Type retrieved from table! Retrieved: " + vo.getCloneType() + " while expected was: "
+                + cloneType;
 
         // Next test whether the record is retrieved by clone type.
         List<UserVmCloneSettingVO> voList = new ArrayList<UserVmCloneSettingVO>();
         voList = _vmcsdao.listByCloneType(cloneType);
         assert (voList != null && !voList.isEmpty()) : "Failed to retrieve any record of VMs by clone type!";
 
-        // If a vo list is indeed retrieved, also check whether the vm id retrieved matches what we put in there.
+        // If a vo list is indeed retrieved, also check whether the vm id
+        // retrieved matches what we put in there.
         assert (voList.get(0).getVmId() == vmId) : "Retrieved vmId " + voList.get(0).getVmId() + " does not match input vmId: " + vmId;
     }
 

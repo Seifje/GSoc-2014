@@ -127,8 +127,13 @@ public class SamplePrimaryDataStoreLifeCycleImpl implements PrimaryDataStoreLife
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.cloudstack.engine.subsystem.api.storage.DataStoreLifeCycle#migrateToObjectStore(org.apache.cloudstack.engine.subsystem.api.storage.DataStore)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.apache.cloudstack.engine.subsystem.api.storage.DataStoreLifeCycle
+     * #migrateToObjectStore
+     * (org.apache.cloudstack.engine.subsystem.api.storage.DataStore)
      */
     @Override
     public boolean migrateToObjectStore(DataStore store) {

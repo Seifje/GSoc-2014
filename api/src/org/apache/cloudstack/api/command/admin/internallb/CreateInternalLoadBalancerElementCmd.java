@@ -38,12 +38,7 @@ import com.cloud.exception.ResourceAllocationException;
 import com.cloud.network.VirtualRouterProvider;
 import com.cloud.user.Account;
 
-@APICommand(name = "createInternalLoadBalancerElement",
-            responseObject = InternalLoadBalancerElementResponse.class,
-            description = "Create an Internal Load Balancer element.",
-            since = "4.2.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "createInternalLoadBalancerElement", responseObject = InternalLoadBalancerElementResponse.class, description = "Create an Internal Load Balancer element.", since = "4.2.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateInternalLoadBalancerElementCmd extends BaseAsyncCreateCmd {
     public static final Logger s_logger = Logger.getLogger(CreateInternalLoadBalancerElementCmd.class.getName());
     private static final String s_name = "createinternalloadbalancerelementresponse";
@@ -51,20 +46,16 @@ public class CreateInternalLoadBalancerElementCmd extends BaseAsyncCreateCmd {
     @Inject
     private List<InternalLoadBalancerElementService> _service;
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.NETWORK_SERVICE_PROVIDER_ID,
-               type = CommandType.UUID,
-               entityType = ProviderResponse.class,
-               required = true,
-               description = "the network service provider ID of the internal load balancer element")
+    @Parameter(name = ApiConstants.NETWORK_SERVICE_PROVIDER_ID, type = CommandType.UUID, entityType = ProviderResponse.class, required = true, description = "the network service provider ID of the internal load balancer element")
     private Long nspId;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public void setNspId(Long nspId) {
         this.nspId = nspId;
@@ -74,9 +65,9 @@ public class CreateInternalLoadBalancerElementCmd extends BaseAsyncCreateCmd {
         return nspId;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
 
     @Override
     public String getCommandName() {

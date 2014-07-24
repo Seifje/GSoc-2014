@@ -51,7 +51,8 @@ public class ClientMCSErectDomainRequest extends OneTimeSwitch {
 
         buf.writeByte(0x04); // Erect Domain Request
 
-        // Client SHOULD initialize both the subHeight and subinterval fields of the MCS Erect Domain Request PDU to zero.
+        // Client SHOULD initialize both the subHeight and subinterval fields of
+        // the MCS Erect Domain Request PDU to zero.
 
         buf.writeByte(1); // ErectDomainRequest::subHeight length = 1 byte
         buf.writeByte(0); // ErectDomainRequest::subHeight
@@ -66,6 +67,7 @@ public class ClientMCSErectDomainRequest extends OneTimeSwitch {
 
     /**
      * Example.
+     *
      * @see http://msdn.microsoft.com/en-us/library/cc240837.aspx
      */
     public static void main(String args[]) {
@@ -76,62 +78,61 @@ public class ClientMCSErectDomainRequest extends OneTimeSwitch {
         /* @formatter:off */
         byte[] packet = new byte[] {
 
-                0x03, 0x00, 0x00, 0x0c,  //  TPKT Header (length = 12 bytes)
-                0x02, (byte) 0xf0, (byte) 0x80,  //  X.224 Data TPDU
+                0x03, 0x00, 0x00, 0x0c, // TPKT Header (length = 12 bytes)
+                0x02, (byte) 0xf0, (byte) 0x80, // X.224 Data TPDU
 
                 // PER encoded (ALIGNED variant of BASIC-PER) PDU contents:
                 0x04, 0x01, 0x00, 0x01, 0x00,
 
                 // 0x04:
                 // 0 - --\
-                // 0 -   |
-                // 0 -   | CHOICE: From DomainMCSPDU select erectDomainRequest (1)
-                // 0 -   | of type ErectDomainRequest
-                // 0 -   |
+                // 0 - |
+                // 0 - | CHOICE: From DomainMCSPDU select erectDomainRequest (1)
+                // 0 - | of type ErectDomainRequest
+                // 0 - |
                 // 1 - --/
                 // 0 - padding
                 // 0 - padding
 
                 // 0x01:
                 // 0 - --\
-                // 0 -   |
-                // 0 -   |
-                // 0 -   | ErectDomainRequest::subHeight length = 1 byte
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
+                // 0 - |
+                // 0 - |
+                // 0 - | ErectDomainRequest::subHeight length = 1 byte
+                // 0 - |
+                // 0 - |
+                // 0 - |
                 // 1 - --/
 
                 // 0x00:
                 // 0 - --\
-                // 0 -   |
-                // 0 -   |
-                // 0 -   | ErectDomainRequest::subHeight = 0
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
+                // 0 - |
+                // 0 - |
+                // 0 - | ErectDomainRequest::subHeight = 0
+                // 0 - |
+                // 0 - |
+                // 0 - |
                 // 0 - --/
 
                 // 0x01:
                 // 0 - --\
-                // 0 -   |
-                // 0 -   |
-                // 0 -   | ErectDomainRequest::subInterval length = 1 byte
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
+                // 0 - |
+                // 0 - |
+                // 0 - | ErectDomainRequest::subInterval length = 1 byte
+                // 0 - |
+                // 0 - |
+                // 0 - |
                 // 1 - --/
 
                 // 0x00:
                 // 0 - --\
-                // 0 -   |
-                // 0 -   |
-                // 0 -   | ErectDomainRequest::subInterval = 0
-                // 0 -   |
-                // 0 -   |
-                // 0 -   |
+                // 0 - |
+                // 0 - |
+                // 0 - | ErectDomainRequest::subInterval = 0
+                // 0 - |
+                // 0 - |
+                // 0 - |
                 // 0 - --/
-
 
         };
         /* @formatter:on */
@@ -154,36 +155,17 @@ public class ClientMCSErectDomainRequest extends OneTimeSwitch {
 
 /*
  * 03 00 00 0C 02 F0 80 04 01 00 01 00
-
-  Frame: Number = 14, Captured Frame Length = 69, MediaType = DecryptedPayloadHeader
-+ DecryptedPayloadHeader: FrameCount = 1, ErrorStatus = SUCCESS
-  TLSSSLData: Transport Layer Security (TLS) Payload Data
-+ TLS: TLS Rec Layer-1 SSL Application Data
-  ISOTS: TPKTCount = 1
-- TPKT: version: 3, Length: 12
-    version: 3 (0x3)
-    Reserved: 0 (0x0)
-    PacketLength: 12 (0xC)
-- X224: Data
-    Length: 2 (0x2)
-    Type: Data
-    EOT: 128 (0x80)
-- T125: Erect Domain Request, SubHeight = 0, SubInterval = 0
-  - MCSHeader: Type=Erect Domain Request
-   - Type: Erect Domain Request
-    - RootIndex: 1
-       Value: (000001..) 0x1
-  - MCSErectDomainRequest: SubHeight = 0, SubInterval = 0
-   - SubHeight: 0x0
-    - Length: 1
-     - Align: No Padding
-        Padding2: (00......) 0x0
-       Length: 1
-      Value: 0 (0x0)
-   - SubInterval: 0x0
-    - Length: 1
-       Align: No Padding
-       Length: 1
-      Value: 0 (0x0)
-
+ *
+ * Frame: Number = 14, Captured Frame Length = 69, MediaType =
+ * DecryptedPayloadHeader + DecryptedPayloadHeader: FrameCount = 1, ErrorStatus
+ * = SUCCESS TLSSSLData: Transport Layer Security (TLS) Payload Data + TLS: TLS
+ * Rec Layer-1 SSL Application Data ISOTS: TPKTCount = 1 - TPKT: version: 3,
+ * Length: 12 version: 3 (0x3) Reserved: 0 (0x0) PacketLength: 12 (0xC) - X224:
+ * Data Length: 2 (0x2) Type: Data EOT: 128 (0x80) - T125: Erect Domain Request,
+ * SubHeight = 0, SubInterval = 0 - MCSHeader: Type=Erect Domain Request - Type:
+ * Erect Domain Request - RootIndex: 1 Value: (000001..) 0x1 -
+ * MCSErectDomainRequest: SubHeight = 0, SubInterval = 0 - SubHeight: 0x0 -
+ * Length: 1 - Align: No Padding Padding2: (00......) 0x0 Length: 1 Value: 0
+ * (0x0) - SubInterval: 0x0 - Length: 1 Align: No Padding Length: 1 Value: 0
+ * (0x0)
  */

@@ -19,7 +19,7 @@ package com.cloud.network.router;
 import com.cloud.vm.VirtualMachine;
 
 /**
- *  bridge internal and external traffic.
+ * bridge internal and external traffic.
  */
 public interface VirtualRouter extends VirtualMachine {
     public enum Role {

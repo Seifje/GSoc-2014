@@ -33,7 +33,8 @@ public class EC2InstanceFilterSet {
     private Map<String, String> filterTypes = new HashMap<String, String>();
 
     public EC2InstanceFilterSet() {
-        // -> use these values to check that the proper filter is passed to this type of filter set
+        // -> use these values to check that the proper filter is passed to this
+        // type of filter set
         filterTypes.put("availability-zone", "string");
         filterTypes.put("hypervisor", "string");
         filterTypes.put("image-id", "string");
@@ -59,7 +60,8 @@ public class EC2InstanceFilterSet {
             throw new EC2ServiceException(ClientError.InvalidFilter, "Filter '" + filterName + "' is invalid");
         }
 
-        // ToDo we could add checks to make sure the type of a filters value is correct (e.g., an integer)
+        // ToDo we could add checks to make sure the type of a filters value is
+        // correct (e.g., an integer)
         filterSet.add(param);
     }
 
@@ -68,10 +70,12 @@ public class EC2InstanceFilterSet {
     }
 
     /**
-     * For a filter to match an instance just one of its values has to match the volume.
-     * For an instance to be included in the instance response it must pass all the defined filters.
+     * For a filter to match an instance just one of its values has to match the
+     * volume. For an instance to be included in the instance response it must
+     * pass all the defined filters.
      *
-     * @param sampleList - list of instances to test against the defined filters
+     * @param sampleList
+     *            - list of instances to test against the defined filters
      * @return EC2DescribeInstancesResponse
      * @throws ParseException
      */
@@ -161,7 +165,8 @@ public class EC2InstanceFilterSet {
             return false;
 
         for (int i = 0; i < set.length; i++) {
-            //System.out.println( "contsinsString: " + lookingFor + " " + set[i] );
+            // System.out.println( "contsinsString: " + lookingFor + " " +
+            // set[i] );
             if (lookingFor.matches(set[i]))
                 return true;
         }
@@ -177,7 +182,8 @@ public class EC2InstanceFilterSet {
 
     private boolean containsInteger(int lookingFor, String[] set) {
         for (int i = 0; i < set.length; i++) {
-            //System.out.println( "contsinsInteger: " + lookingFor + " " + set[i] );
+            // System.out.println( "contsinsInteger: " + lookingFor + " " +
+            // set[i] );
             int temp = Integer.parseInt(set[i]);
             if (lookingFor == temp)
                 return true;
@@ -188,63 +194,64 @@ public class EC2InstanceFilterSet {
     private boolean containsDevice(String deviceId, String[] set) {
         Integer devId = new Integer(deviceId);
         for (int i = 0; i < set.length; i++) {
-            //System.out.println( "contsinsDevice: " + deviceId + " " + set[i] );
+            // System.out.println( "contsinsDevice: " + deviceId + " " + set[i]
+            // );
             switch (devId) {
-                case 1:
-                    if (("/dev/sdb").matches(set[i]))
-                        return true;
-                    if (("/dev/xvdb").matches(set[i]))
-                        return true;
-                    break;
+            case 1:
+                if (("/dev/sdb").matches(set[i]))
+                    return true;
+                if (("/dev/xvdb").matches(set[i]))
+                    return true;
+                break;
 
-                case 2:
-                    if (("/dev/sdc").matches(set[i]))
-                        return true;
-                    if (("/dev/xvdc").matches(set[i]))
-                        return true;
-                    break;
+            case 2:
+                if (("/dev/sdc").matches(set[i]))
+                    return true;
+                if (("/dev/xvdc").matches(set[i]))
+                    return true;
+                break;
 
-                case 4:
-                    if (("/dev/sde").matches(set[i]))
-                        return true;
-                    if (("/dev/xvde").matches(set[i]))
-                        return true;
-                    break;
+            case 4:
+                if (("/dev/sde").matches(set[i]))
+                    return true;
+                if (("/dev/xvde").matches(set[i]))
+                    return true;
+                break;
 
-                case 5:
-                    if (("/dev/sdf").matches(set[i]))
-                        return true;
-                    if (("/dev/xvdf").matches(set[i]))
-                        return true;
-                    break;
+            case 5:
+                if (("/dev/sdf").matches(set[i]))
+                    return true;
+                if (("/dev/xvdf").matches(set[i]))
+                    return true;
+                break;
 
-                case 6:
-                    if (("/dev/sdg").matches(set[i]))
-                        return true;
-                    if (("/dev/xvdg").matches(set[i]))
-                        return true;
-                    break;
+            case 6:
+                if (("/dev/sdg").matches(set[i]))
+                    return true;
+                if (("/dev/xvdg").matches(set[i]))
+                    return true;
+                break;
 
-                case 7:
-                    if (("/dev/sdh").matches(set[i]))
-                        return true;
-                    if (("/dev/xvdh").matches(set[i]))
-                        return true;
-                    break;
+            case 7:
+                if (("/dev/sdh").matches(set[i]))
+                    return true;
+                if (("/dev/xvdh").matches(set[i]))
+                    return true;
+                break;
 
-                case 8:
-                    if (("/dev/sdi").matches(set[i]))
-                        return true;
-                    if (("/dev/xvdi").matches(set[i]))
-                        return true;
-                    break;
+            case 8:
+                if (("/dev/sdi").matches(set[i]))
+                    return true;
+                if (("/dev/xvdi").matches(set[i]))
+                    return true;
+                break;
 
-                case 9:
-                    if (("/dev/sdj").matches(set[i]))
-                        return true;
-                    if (("/dev/xvdj").matches(set[i]))
-                        return true;
-                    break;
+            case 9:
+                if (("/dev/sdj").matches(set[i]))
+                    return true;
+                if (("/dev/xvdj").matches(set[i]))
+                    return true;
+                break;
             }
         }
         return false;

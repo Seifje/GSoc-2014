@@ -43,7 +43,8 @@ public class ProjectDaoImpl extends GenericDaoBase<ProjectVO, Long> implements P
     protected final SearchBuilder<ProjectVO> AllFieldsSearch;
     protected GenericSearchBuilder<ProjectVO, Long> CountByDomain;
     protected GenericSearchBuilder<ProjectVO, Long> ProjectAccountSearch;
-    // ResourceTagsDaoImpl _tagsDao = ComponentLocator.inject(ResourceTagsDaoImpl.class);
+    // ResourceTagsDaoImpl _tagsDao =
+    // ComponentLocator.inject(ResourceTagsDaoImpl.class);
     @Inject
     ResourceTagDao _tagsDao;
 

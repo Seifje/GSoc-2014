@@ -742,7 +742,8 @@ public class ApiDBUtils {
         s_affinityGroupDao = affinityGroupDao;
         s_affinityGroupJoinDao = affinityGroupJoinDao;
         s_gslbService = gslbService;
-        // Note: stats collector should already have been initialized by this time, otherwise a null instance is returned
+        // Note: stats collector should already have been initialized by this
+        // time, otherwise a null instance is returned
         s_statsCollector = StatsCollector.getInstance();
         s_networkACLDao = networkACLDao;
         s_accountService = accountService;
@@ -760,9 +761,12 @@ public class ApiDBUtils {
     }
 
     public static long getStorageCapacitybyPool(Long poolId, short capacityType) {
-        // TODO: This method is for the API only, but it has configuration values (ramSize for system vms)
-        // so if this Utils class can have some kind of config rather than a static initializer (maybe from
-        // management server instantiation?) then maybe the management server method can be moved entirely
+        // TODO: This method is for the API only, but it has configuration
+        // values (ramSize for system vms)
+        // so if this Utils class can have some kind of config rather than a
+        // static initializer (maybe from
+        // management server instantiation?) then maybe the management server
+        // method can be moved entirely
         // into this utils class.
         return s_ms.getMemoryOrCpuCapacityByHost(poolId, capacityType);
     }
@@ -787,7 +791,6 @@ public class ApiDBUtils {
     public static String getVersion() {
         return s_ms.getVersion();
     }
-
 
     // ///////////////////////////////////////////////////////////
     // Manager methods //
@@ -1068,35 +1071,43 @@ public class ApiDBUtils {
         return s_volumeDao.getHypervisorType(volumeId);
     }
 
-    public static HypervisorType getHypervisorTypeFromFormat(long dcId, ImageFormat format){
+    public static HypervisorType getHypervisorTypeFromFormat(long dcId, ImageFormat format) {
         HypervisorType type = s_storageMgr.getHypervisorTypeFromFormat(format);
         if (format == ImageFormat.VHD) {
-            // Xenserver and Hyperv both support vhd format. Additionally hyperv is only supported
-            // in a dc/zone if there aren't any other hypervisor types present in the zone). If the
-            // format type is VHD check is any xenserver clusters are present. If not, we assume it
+            // Xenserver and Hyperv both support vhd format. Additionally hyperv
+            // is only supported
+            // in a dc/zone if there aren't any other hypervisor types present
+            // in the zone). If the
+            // format type is VHD check is any xenserver clusters are present.
+            // If not, we assume it
             // is a hyperv zone and update the type.
             List<ClusterVO> xenClusters = s_clusterDao.listByDcHyType(dcId, HypervisorType.XenServer.toString());
             if (xenClusters.isEmpty()) {
                 type = HypervisorType.Hyperv;
             }
-        } if (format == ImageFormat.RAW) {
+        }
+        if (format == ImageFormat.RAW) {
             // Currently, KVM only suppoorts RBD images of type RAW.
             // This results in a weird collision with OVM volumes which
             // can only be raw, thus making KVM RBD volumes show up as OVM
             // rather than RBD. This block of code can (hopefuly) by checking to
             // see if the pool is using either RBD or NFS. However, it isn't
-            // quite clear what to do if both storage types are used. If the image
-            // format is RAW, it narrows the hypervisor choice down to OVM and KVM / RBD or KVM / CLVM
+            // quite clear what to do if both storage types are used. If the
+            // image
+            // format is RAW, it narrows the hypervisor choice down to OVM and
+            // KVM / RBD or KVM / CLVM
             // This would be better implemented at a cluster level.
             List<StoragePoolVO> pools = s_storagePoolDao.listByDataCenterId(dcId);
             ListIterator<StoragePoolVO> itr = pools.listIterator();
-            while(itr.hasNext()) {
+            while (itr.hasNext()) {
                 StoragePoolVO pool = itr.next();
-                if(pool.getPoolType() == StoragePoolType.RBD || pool.getPoolType() == StoragePoolType.CLVM) {
-                  // This case will note the presence of non-qcow2 primary stores, suggesting KVM without NFS. Otherwse,
-                  // If this check is not passed, the hypervisor type will remain OVM.
-                  type = HypervisorType.KVM;
-                  break;
+                if (pool.getPoolType() == StoragePoolType.RBD || pool.getPoolType() == StoragePoolType.CLVM) {
+                    // This case will note the presence of non-qcow2 primary
+                    // stores, suggesting KVM without NFS. Otherwse,
+                    // If this check is not passed, the hypervisor type will
+                    // remain OVM.
+                    type = HypervisorType.KVM;
+                    break;
                 }
             }
         }
@@ -1128,9 +1139,8 @@ public class ApiDBUtils {
     }
 
     public static List<UserVmVO> listUserVMsByNetworkId(long networkId) {
-        return s_userVmDao.listByNetworkIdAndStates(networkId, VirtualMachine.State.Running,
-                VirtualMachine.State.Starting, VirtualMachine.State.Stopping, VirtualMachine.State.Unknown,
-                VirtualMachine.State.Migrating);
+        return s_userVmDao.listByNetworkIdAndStates(networkId, VirtualMachine.State.Running, VirtualMachine.State.Starting, VirtualMachine.State.Stopping,
+                VirtualMachine.State.Unknown, VirtualMachine.State.Migrating);
     }
 
     public static List<DomainRouterVO> listDomainRoutersByNetworkId(long networkId) {
@@ -1225,7 +1235,7 @@ public class ApiDBUtils {
 
     public static boolean isExtractionDisabled() {
         String disableExtractionString = s_configDao.getValue(Config.DisableExtraction.toString());
-        boolean disableExtraction  = (disableExtractionString == null) ? false : Boolean.parseBoolean(disableExtractionString);
+        boolean disableExtraction = (disableExtractionString == null) ? false : Boolean.parseBoolean(disableExtractionString);
         return disableExtraction;
     }
 
@@ -1356,14 +1366,14 @@ public class ApiDBUtils {
 
     public static String getKeyPairName(String sshPublicKey) {
         SSHKeyPairVO sshKeyPair = s_sshKeyPairDao.findByPublicKey(sshPublicKey);
-        //key might be removed prior to this point
+        // key might be removed prior to this point
         if (sshKeyPair != null) {
             return sshKeyPair.getName();
         }
         return null;
     }
 
-    public static UserVmDetailVO  findPublicKeyByVmId(long vmId) {
+    public static UserVmDetailVO findPublicKeyByVmId(long vmId) {
         return s_userVmDetailsDao.findDetail(vmId, "SSH.PublicKey");
     }
 
@@ -1447,7 +1457,8 @@ public class ApiDBUtils {
         ApiCommandJobType jobInstanceType = EnumUtils.fromString(ApiCommandJobType.class, job.getInstanceType(), ApiCommandJobType.None);
 
         if (job.getInstanceId() == null) {
-            // when assert is hit, implement 'getInstanceId' of BaseAsyncCmd and return appropriate instance id
+            // when assert is hit, implement 'getInstanceId' of BaseAsyncCmd and
+            // return appropriate instance id
             assert (false);
             return null;
         }
@@ -1462,8 +1473,8 @@ public class ApiDBUtils {
             if (template != null) {
                 jobInstanceId = template.getUuid();
             }
-        } else if (jobInstanceType == ApiCommandJobType.VirtualMachine || jobInstanceType == ApiCommandJobType.ConsoleProxy ||
-            jobInstanceType == ApiCommandJobType.SystemVm || jobInstanceType == ApiCommandJobType.DomainRouter) {
+        } else if (jobInstanceType == ApiCommandJobType.VirtualMachine || jobInstanceType == ApiCommandJobType.ConsoleProxy || jobInstanceType == ApiCommandJobType.SystemVm
+                || jobInstanceType == ApiCommandJobType.DomainRouter) {
             VMInstanceVO vm = ApiDBUtils.findVMInstanceById(job.getInstanceId());
             if (vm != null) {
                 jobInstanceId = vm.getUuid();
@@ -1566,9 +1577,9 @@ public class ApiDBUtils {
         return jobInstanceId;
     }
 
-    ///////////////////////////////////////////////////////////////////////
-    //  Newly Added Utility Methods for List API refactoring             //
-    ///////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////
+    // Newly Added Utility Methods for List API refactoring //
+    // /////////////////////////////////////////////////////////////////////
 
     public static DomainRouterResponse newDomainRouterResponse(DomainRouterJoinVO vr, Account caller) {
         return s_domainRouterJoinDao.newDomainRouterResponse(vr, caller);
@@ -1680,7 +1691,6 @@ public class ApiDBUtils {
         return s_userAccountJoinDao.searchByAccountId(accountId);
     }
 
-
     public static ProjectAccountResponse newProjectAccountResponse(ProjectAccountJoinVO proj) {
         return s_projectAccountJoinDao.newProjectAccountResponse(proj);
     }
@@ -1760,7 +1770,6 @@ public class ApiDBUtils {
     public static List<ImageStoreJoinVO> newImageStoreView(ImageStore vr) {
         return s_imageStoreJoinDao.newImageStoreView(vr);
     }
-
 
     public static AccountResponse newAccountResponse(ResponseView view, AccountJoinVO ve) {
         return s_accountJoinDao.newAccountResponse(view, ve);
@@ -1849,7 +1858,6 @@ public class ApiDBUtils {
     public static AffinityGroupResponse fillAffinityGroupDetails(AffinityGroupResponse resp, AffinityGroupJoinVO group) {
         return s_affinityGroupJoinDao.setAffinityGroupResponse(resp, group);
     }
-
 
     public static List<? extends LoadBalancer> listSiteLoadBalancers(long gslbRuleId) {
         return s_gslbService.listSiteLoadBalancers(gslbRuleId);

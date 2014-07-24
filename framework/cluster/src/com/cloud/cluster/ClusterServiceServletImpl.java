@@ -39,8 +39,7 @@ public class ClusterServiceServletImpl implements ClusterService {
     }
 
     public ClusterServiceServletImpl(String serviceUrl) {
-        s_logger.info("Setup cluster service servlet. service url: " + serviceUrl + ", request timeout: " + ClusterServiceAdapter.ClusterMessageTimeOut.value() +
-            " seconds");
+        s_logger.info("Setup cluster service servlet. service url: " + serviceUrl + ", request timeout: " + ClusterServiceAdapter.ClusterMessageTimeOut.value() + " seconds");
 
         _serviceUrl = serviceUrl;
     }
@@ -95,8 +94,8 @@ public class ClusterServiceServletImpl implements ClusterService {
                     s_logger.debug("POST " + _serviceUrl + " response :" + result + ", responding time: " + (System.currentTimeMillis() - startTick) + " ms");
                 }
             } else {
-                s_logger.error("Invalid response code : " + response + ", from : " + _serviceUrl + ", method : " + method.getParameter("method") + " responding time: " +
-                    (System.currentTimeMillis() - startTick));
+                s_logger.error("Invalid response code : " + response + ", from : " + _serviceUrl + ", method : " + method.getParameter("method") + " responding time: "
+                        + (System.currentTimeMillis() - startTick));
             }
         } catch (HttpException e) {
             s_logger.error("HttpException from : " + _serviceUrl + ", method : " + method.getParameter("method"));
@@ -132,12 +131,11 @@ public class ClusterServiceServletImpl implements ClusterService {
     // for test purpose only
     public static void main(String[] args) {
         /*
-                ClusterServiceServletImpl service = new ClusterServiceServletImpl("http://localhost:9090/clusterservice", 300);
-                try {
-                    String result = service.execute("test", 1, "{ p1:v1, p2:v2 }", true);
-                    System.out.println(result);
-                } catch (RemoteException e) {
-                }
-        */
+         * ClusterServiceServletImpl service = new
+         * ClusterServiceServletImpl("http://localhost:9090/clusterservice",
+         * 300); try { String result = service.execute("test", 1,
+         * "{ p1:v1, p2:v2 }", true); System.out.println(result); } catch
+         * (RemoteException e) { }
+         */
     }
 }

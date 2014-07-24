@@ -16,7 +16,7 @@
 // under the License.
 
 /**This interface is implemented by AccountResponse and ProjectResponse as both of them
-have limits and resource count **/
+ have limits and resource count **/
 
 package org.apache.cloudstack.api.response;
 

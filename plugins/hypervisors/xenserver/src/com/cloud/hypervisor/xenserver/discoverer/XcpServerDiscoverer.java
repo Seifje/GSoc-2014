@@ -99,7 +99,6 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-
 @Local(value = Discoverer.class)
 public class XcpServerDiscoverer extends DiscovererBase implements Discoverer, Listener, ResourceStateAdapter {
     private static final Logger s_logger = Logger.getLogger(XcpServerDiscoverer.class);
@@ -153,15 +152,15 @@ public class XcpServerDiscoverer extends DiscovererBase implements Discoverer, L
             for (Map.Entry<Host, Host.Record> entry : hosts.entrySet()) {
 
                 Host.Record re = entry.getValue();
-                if (!re.address.equalsIgnoreCase(hostIp)){
+                if (!re.address.equalsIgnoreCase(hostIp)) {
                     continue;
                 }
                 Set<HostPatch> patches = re.patches;
                 PoolPatch poolPatch = PoolPatch.getByUuid(conn, hotFixUuid);
-                for(HostPatch patch : patches) {
+                for (HostPatch patch : patches) {
                     PoolPatch pp = patch.getPoolPatch(conn);
                     if (pp.equals(poolPatch) && patch.getApplied(conn)) {
-                        s_logger.debug("host " + hostIp + " does have " + hotFixUuid +" Hotfix.");
+                        s_logger.debug("host " + hostIp + " does have " + hotFixUuid + " Hotfix.");
                         return true;
                     }
                 }
@@ -175,11 +174,9 @@ public class XcpServerDiscoverer extends DiscovererBase implements Discoverer, L
         return false;
     }
 
-
-
     @Override
-    public Map<? extends ServerResource, Map<String, String>>
-    find(long dcId, Long podId, Long clusterId, URI url, String username, String password, List<String> hostTags) throws DiscoveryException {
+    public Map<? extends ServerResource, Map<String, String>> find(long dcId, Long podId, Long clusterId, URI url, String username, String password, List<String> hostTags)
+            throws DiscoveryException {
         Map<CitrixResourceBase, Map<String, String>> resources = new HashMap<CitrixResourceBase, Map<String, String>>();
         Connection conn = null;
         if (!url.getScheme().equals("http")) {
@@ -231,7 +228,7 @@ public class XcpServerDiscoverer extends DiscovererBase implements Discoverer, L
                 latestHotFix = XenserverConfigs.XSHotFix62ESP1;
             }
 
-            /*set cluster hypervisor type to xenserver*/
+            /* set cluster hypervisor type to xenserver */
             ClusterVO clu = _clusterDao.findById(clusterId);
             if (clu.getGuid() == null) {
                 setClusterGuid(clu, poolUuid);
@@ -239,8 +236,7 @@ public class XcpServerDiscoverer extends DiscovererBase implements Discoverer, L
                 List<HostVO> clusterHosts = _resourceMgr.listAllHostsInCluster(clusterId);
                 if (clusterHosts != null && clusterHosts.size() > 0) {
                     if (!clu.getGuid().equals(poolUuid)) {
-                        String msg = "Please join the host " +  hostIp + " to XS pool  "
-                                       + clu.getGuid() + " through XC/XS before adding it through CS UI";
+                        String msg = "Please join the host " + hostIp + " to XS pool  " + clu.getGuid() + " through XC/XS before adding it through CS UI";
                         s_logger.warn(msg);
                         throw new DiscoveryException(msg);
                     }
@@ -248,7 +244,8 @@ public class XcpServerDiscoverer extends DiscovererBase implements Discoverer, L
                     setClusterGuid(clu, poolUuid);
                 }
             }
-            // can not use this conn after this point, because this host may join a pool, this conn is retired
+            // can not use this conn after this point, because this host may
+            // join a pool, this conn is retired
             if (conn != null) {
                 try {
                     Session.logout(conn);
@@ -397,7 +394,6 @@ public class XcpServerDiscoverer extends DiscovererBase implements Discoverer, L
         }
     }
 
-
     protected CitrixResourceBase createServerResource(long dcId, Long podId, Host.Record record, String hotfix) {
         String prodBrand = record.softwareVersion.get("product_brand");
         if (prodBrand == null) {
@@ -446,9 +442,8 @@ public class XcpServerDiscoverer extends DiscovererBase implements Discoverer, L
             return new XcpOssResource();
         }
 
-        String msg =
-                "Only support XCP 1.0.0, 1.1.0, 1.4.x, 1.5 beta, 1.6.x; XenServer 5.6,  XenServer 5.6 FP1, XenServer 5.6 SP2, Xenserver 6.0, 6.0.2, 6.1.0, 6.2.0 but this one is " +
-                        prodBrand + " " + prodVersion;
+        String msg = "Only support XCP 1.0.0, 1.1.0, 1.4.x, 1.5 beta, 1.6.x; XenServer 5.6,  XenServer 5.6 FP1, XenServer 5.6 SP2, Xenserver 6.0, 6.0.2, 6.1.0, 6.2.0 but this one is "
+                + prodBrand + " " + prodVersion;
         _alertMgr.sendAlert(AlertManager.AlertType.ALERT_TYPE_HOST, dcId, podId, msg, msg);
         s_logger.debug(msg);
         throw new RuntimeException(msg);
@@ -505,7 +500,7 @@ public class XcpServerDiscoverer extends DiscovererBase implements Discoverer, L
 
     @Override
     public void postDiscovery(List<HostVO> hosts, long msId) throws DiscoveryException {
-        //do nothing
+        // do nothing
     }
 
     @Override
@@ -534,9 +529,8 @@ public class XcpServerDiscoverer extends DiscovererBase implements Discoverer, L
         Long id;
         if (tmplt == null) {
             id = _tmpltDao.getNextInSequence(Long.class, "id");
-            VMTemplateVO template =
-                    VMTemplateVO.createPreHostIso(id, isoName, isoName, ImageFormat.ISO, true, true, TemplateType.PERHOST, null, null, true, 64, Account.ACCOUNT_ID_SYSTEM,
-                            null, "xen-pv-drv-iso", false, 1, false, HypervisorType.XenServer);
+            VMTemplateVO template = VMTemplateVO.createPreHostIso(id, isoName, isoName, ImageFormat.ISO, true, true, TemplateType.PERHOST, null, null, true, 64,
+                    Account.ACCOUNT_ID_SYSTEM, null, "xen-pv-drv-iso", false, 1, false, HypervisorType.XenServer);
             _tmpltDao.persist(template);
         } else {
             id = tmplt.getId();
@@ -591,7 +585,7 @@ public class XcpServerDiscoverer extends DiscovererBase implements Discoverer, L
             String hotfix = details.get(XenserverConfigs.XS620HotFix);
             if (hotfix != null && hotfix.equalsIgnoreCase(XenserverConfigs.XSHotFix62ESP1004)) {
                 resource = Xenserver625Resource.class.getName();
-            } else if (hotfix != null && hotfix.equalsIgnoreCase(XenserverConfigs.XSHotFix62ESP1)){
+            } else if (hotfix != null && hotfix.equalsIgnoreCase(XenserverConfigs.XSHotFix62ESP1)) {
                 resource = XenServer620SP1Resource.class.getName();
             } else {
                 resource = XenServer620Resource.class.getName();
@@ -608,9 +602,8 @@ public class XcpServerDiscoverer extends DiscovererBase implements Discoverer, L
         }
 
         if (resource == null) {
-            String msg =
-                    "Only support XCP 1.0.0, 1.1.0, 1.4.x, 1.5 beta, 1.6.x; XenServer 5.6, 5.6 FP1, 5.6 SP2 and Xenserver 6.0 , 6.0.2, 6.1.0, 6.2.0 but this one is " +
-                            prodBrand + " " + prodVersion;
+            String msg = "Only support XCP 1.0.0, 1.1.0, 1.4.x, 1.5 beta, 1.6.x; XenServer 5.6, 5.6 FP1, 5.6 SP2 and Xenserver 6.0 , 6.0.2, 6.1.0, 6.2.0 but this one is "
+                    + prodBrand + " " + prodVersion;
             s_logger.debug(msg);
             throw new RuntimeException(msg);
         }

@@ -23,8 +23,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
- * A <code>BuffereImageCanvas</code> component represents frame buffer image on the
- * screen. It also notifies its subscribers when screen is repainted.
+ * A <code>BuffereImageCanvas</code> component represents frame buffer image on
+ * the screen. It also notifies its subscribers when screen is repainted.
  */
 public class BufferedImageCanvas extends Canvas {
     private static final long serialVersionUID = 1L;
@@ -77,7 +77,7 @@ public class BufferedImageCanvas extends Canvas {
     }
 
     public void updateFrameBuffer(int x, int y, int w, int h) {
-        //this method will be used to mark the dirty tiles
+        // this method will be used to mark the dirty tiles
     }
 
 }

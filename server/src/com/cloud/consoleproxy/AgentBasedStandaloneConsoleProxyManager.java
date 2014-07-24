@@ -42,7 +42,7 @@ public class AgentBasedStandaloneConsoleProxyManager extends AgentBasedConsolePr
         HostVO host = findHost(userVm);
         if (host != null) {
             HostVO allocatedHost = null;
-            /*Is there a consoleproxy agent running on the same machine?*/
+            /* Is there a consoleproxy agent running on the same machine? */
             List<HostVO> hosts = _hostDao.listAllIncludingRemoved();
             for (HostVO hv : hosts) {
                 if (hv.getType() == Host.Type.ConsoleProxy && hv.getPublicIpAddress().equalsIgnoreCase(host.getPublicIpAddress())) {
@@ -51,7 +51,7 @@ public class AgentBasedStandaloneConsoleProxyManager extends AgentBasedConsolePr
                 }
             }
             if (allocatedHost == null) {
-                /*Is there a consoleproxy agent running in the same pod?*/
+                /* Is there a consoleproxy agent running in the same pod? */
                 for (HostVO hv : hosts) {
                     if (hv.getType() == Host.Type.ConsoleProxy && hv.getPodId().equals(host.getPodId())) {
                         allocatedHost = hv;
@@ -65,15 +65,16 @@ public class AgentBasedStandaloneConsoleProxyManager extends AgentBasedConsolePr
                 return null;
             }
             if (s_logger.isDebugEnabled())
-                s_logger.debug("Assign standalone console proxy running at " + allocatedHost.getName() + " to user vm " + userVmId + " with public IP " +
-                    allocatedHost.getPublicIpAddress());
+                s_logger.debug("Assign standalone console proxy running at " + allocatedHost.getName() + " to user vm " + userVmId + " with public IP "
+                        + allocatedHost.getPublicIpAddress());
 
-            // only private IP, public IP, host id have meaningful values, rest of all are place-holder values
+            // only private IP, public IP, host id have meaningful values, rest
+            // of all are place-holder values
             String publicIp = allocatedHost.getPublicIpAddress();
             if (publicIp == null) {
                 if (s_logger.isDebugEnabled())
-                    s_logger.debug("Host " + allocatedHost.getName() + "/" + allocatedHost.getPrivateIpAddress() +
-                        " does not have public interface, we will return its private IP for cosole proxy.");
+                    s_logger.debug("Host " + allocatedHost.getName() + "/" + allocatedHost.getPrivateIpAddress()
+                            + " does not have public interface, we will return its private IP for cosole proxy.");
                 publicIp = allocatedHost.getPrivateIpAddress();
             }
 

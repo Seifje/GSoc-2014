@@ -30,8 +30,7 @@ public class DispatchChain {
         return this;
     }
 
-    public void dispatch(final DispatchTask task)
-            throws ServerApiException {
+    public void dispatch(final DispatchTask task) throws ServerApiException {
 
         for (final DispatchWorker worker : workers) {
             worker.handle(task);

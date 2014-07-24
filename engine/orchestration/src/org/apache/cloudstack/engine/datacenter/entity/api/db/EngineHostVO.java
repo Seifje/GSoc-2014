@@ -67,7 +67,8 @@ public class EngineHostVO implements EngineHost, Identity {
     private String name = null;
 
     /**
-     * Note: There is no setter for status because it has to be set in the dao code.
+     * Note: There is no setter for status because it has to be set in the dao
+     * code.
      */
     @Column(name = "status", nullable = false)
     private Status status = null;
@@ -142,18 +143,20 @@ public class EngineHostVO implements EngineHost, Identity {
     private String hypervisorVersion;
 
     @Column(name = "update_count", updatable = true, nullable = false)
-    protected long updated;    // This field should be updated everytime the state is updated.  There's no set method in the vo object because it is done with in the dao code.
+    protected long updated; // This field should be updated everytime the state
+    // is updated. There's no set method in the vo
+    // object because it is done with in the dao code.
 
     @Column(name = "uuid")
     private String uuid;
 
-    // This is a delayed load value.  If the value is null,
+    // This is a delayed load value. If the value is null,
     // then this field has not been loaded yet.
     // Call host dao to load it.
     @Transient
     Map<String, String> details;
 
-    // This is a delayed load value.  If the value is null,
+    // This is a delayed load value. If the value is null,
     // then this field has not been loaded yet.
     // Call host dao to load it.
     @Transient
@@ -370,7 +373,7 @@ public class EngineHostVO implements EngineHost, Identity {
     @Column(name = GenericDao.REMOVED_COLUMN)
     private Date removed;
 
-    //orchestration
+    // orchestration
     @Column(name = "owner")
     private String owner = null;
 
@@ -379,9 +382,9 @@ public class EngineHostVO implements EngineHost, Identity {
     protected Date lastUpdated;
 
     /**
-     * Note that state is intentionally missing the setter.  Any updates to
-     * the state machine needs to go through the DAO object because someone
-     * else could be updating it as well.
+     * Note that state is intentionally missing the setter. Any updates to the
+     * state machine needs to go through the DAO object because someone else
+     * could be updating it as well.
      */
     @Enumerated(value = EnumType.STRING)
     @StateMachine(state = State.class, event = Event.class)
@@ -403,36 +406,12 @@ public class EngineHostVO implements EngineHost, Identity {
         this.orchestrationState = State.Disabled;
     }
 
-    public EngineHostVO(long id, String name, Type type, String privateIpAddress, String privateNetmask, String privateMacAddress, String publicIpAddress,
-            String publicNetmask, String publicMacAddress, String storageIpAddress, String storageNetmask, String storageMacAddress, String deuxStorageIpAddress,
-            String duxStorageNetmask, String deuxStorageMacAddress, String guid, Status status, String version, String iqn, Date disconnectedOn, long dcId, Long podId,
-            long serverId, long ping, String parent, long totalSize, StoragePoolType fsType) {
-        this(id,
-            name,
-            type,
-            privateIpAddress,
-            privateNetmask,
-            privateMacAddress,
-            publicIpAddress,
-            publicNetmask,
-            publicMacAddress,
-            storageIpAddress,
-            storageNetmask,
-            storageMacAddress,
-            guid,
-            status,
-            version,
-            iqn,
-            disconnectedOn,
-            dcId,
-            podId,
-            serverId,
-            ping,
-            null,
-            null,
-            null,
-            0,
-            null);
+    public EngineHostVO(long id, String name, Type type, String privateIpAddress, String privateNetmask, String privateMacAddress, String publicIpAddress, String publicNetmask,
+            String publicMacAddress, String storageIpAddress, String storageNetmask, String storageMacAddress, String deuxStorageIpAddress, String duxStorageNetmask,
+            String deuxStorageMacAddress, String guid, Status status, String version, String iqn, Date disconnectedOn, long dcId, Long podId, long serverId, long ping,
+            String parent, long totalSize, StoragePoolType fsType) {
+        this(id, name, type, privateIpAddress, privateNetmask, privateMacAddress, publicIpAddress, publicNetmask, publicMacAddress, storageIpAddress, storageNetmask,
+                storageMacAddress, guid, status, version, iqn, disconnectedOn, dcId, podId, serverId, ping, null, null, null, 0, null);
         this.parent = parent;
         this.totalSize = totalSize;
         this.fsType = fsType;
@@ -440,10 +419,9 @@ public class EngineHostVO implements EngineHost, Identity {
         this.orchestrationState = State.Disabled;
     }
 
-    public EngineHostVO(long id, String name, Type type, String privateIpAddress, String privateNetmask, String privateMacAddress, String publicIpAddress,
-            String publicNetmask, String publicMacAddress, String storageIpAddress, String storageNetmask, String storageMacAddress, String guid, Status status,
-            String version, String url, Date disconnectedOn, long dcId, Long podId, long serverId, long ping, Integer cpus, Long speed, Long totalMemory,
-            long dom0MinMemory, String caps) {
+    public EngineHostVO(long id, String name, Type type, String privateIpAddress, String privateNetmask, String privateMacAddress, String publicIpAddress, String publicNetmask,
+            String publicMacAddress, String storageIpAddress, String storageNetmask, String storageMacAddress, String guid, Status status, String version, String url,
+            Date disconnectedOn, long dcId, Long podId, long serverId, long ping, Integer cpus, Long speed, Long totalMemory, long dom0MinMemory, String caps) {
         this.id = id;
         this.name = name;
         this.status = status;
@@ -498,6 +476,7 @@ public class EngineHostVO implements EngineHost, Identity {
         this.disconnectedOn = disconnectedOn;
     }
 
+    @Override
     public String getStorageUrl() {
         return storageUrl;
     }
@@ -706,10 +685,10 @@ public class EngineHostVO implements EngineHost, Identity {
     }
 
     @Override
-    // TODO, I tempoerary disable it as it breaks GenericSearchBuild when @Transient is applied
+    // TODO, I tempoerary disable it as it breaks GenericSearchBuild when
+    // @Transient is applied
     // @Transient
-        public
-        Status getState() {
+    public Status getState() {
         return status;
     }
 

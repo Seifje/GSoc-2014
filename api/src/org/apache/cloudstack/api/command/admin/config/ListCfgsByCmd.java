@@ -35,8 +35,7 @@ import org.apache.cloudstack.config.Configuration;
 
 import com.cloud.utils.Pair;
 
-@APICommand(name = "listConfigurations", description = "Lists all configurations.", responseObject = ConfigurationResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listConfigurations", description = "Lists all configurations.", responseObject = ConfigurationResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListCfgsByCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListCfgsByCmd.class.getName());
 
@@ -52,28 +51,16 @@ public class ListCfgsByCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, description = "lists configuration by name")
     private String configName;
 
-    @Parameter(name = ApiConstants.ZONE_ID,
-               type = CommandType.UUID,
-               entityType = ZoneResponse.class,
-               description = "the ID of the Zone to update the parameter value for corresponding zone")
+    @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, description = "the ID of the Zone to update the parameter value for corresponding zone")
     private Long zoneId;
 
-    @Parameter(name = ApiConstants.CLUSTER_ID,
-               type = CommandType.UUID,
-               entityType = ClusterResponse.class,
-               description = "the ID of the Cluster to update the parameter value for corresponding cluster")
+    @Parameter(name = ApiConstants.CLUSTER_ID, type = CommandType.UUID, entityType = ClusterResponse.class, description = "the ID of the Cluster to update the parameter value for corresponding cluster")
     private Long clusterId;
 
-    @Parameter(name = ApiConstants.STORAGE_ID,
-               type = CommandType.UUID,
-               entityType = StoragePoolResponse.class,
-               description = "the ID of the Storage pool to update the parameter value for corresponding storage pool")
+    @Parameter(name = ApiConstants.STORAGE_ID, type = CommandType.UUID, entityType = StoragePoolResponse.class, description = "the ID of the Storage pool to update the parameter value for corresponding storage pool")
     private Long storagePoolId;
 
-    @Parameter(name = ApiConstants.ACCOUNT_ID,
-               type = CommandType.UUID,
-               entityType = AccountResponse.class,
-               description = "the ID of the Account to update the parameter value for corresponding account")
+    @Parameter(name = ApiConstants.ACCOUNT_ID, type = CommandType.UUID, entityType = AccountResponse.class, description = "the ID of the Account to update the parameter value for corresponding account")
     private Long accountId;
 
     // ///////////////////////////////////////////////////

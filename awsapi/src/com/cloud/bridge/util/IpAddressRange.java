@@ -17,9 +17,9 @@
 package com.cloud.bridge.util;
 
 /**
- * Represents a network IP address or a range of addresses.
- * A range is useful when representing IP addresses defined in
- * CIDR format.   The range is a 32 bit IP inclusive.
+ * Represents a network IP address or a range of addresses. A range is useful
+ * when representing IP addresses defined in CIDR format. The range is a 32 bit
+ * IP inclusive.
  */
 public class IpAddressRange {
 
@@ -54,7 +54,9 @@ public class IpAddressRange {
     }
 
     /**
-     * Is the parameter (i.e., left) inside the range represented by this object?
+     * Is the parameter (i.e., left) inside the range represented by this
+     * object?
+     * 
      * @param left
      * @return boolean
      */
@@ -99,8 +101,8 @@ public class IpAddressRange {
     }
 
     /**
-     * In order to do unsigned math here we must use long types so that high order bits
-     * are not used as the sign of the number.
+     * In order to do unsigned math here we must use long types so that high
+     * order bits are not used as the sign of the number.
      *
      * @param ipAddress
      * @return

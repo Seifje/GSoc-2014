@@ -24,8 +24,10 @@ import java.util.Set;
 
 /**
  *
- * @param <S> State
- * @param <E> Event
+ * @param <S>
+ *            State
+ * @param <E>
+ *            Event
  */
 public interface FiniteState<S, E> {
     /**
@@ -35,14 +37,16 @@ public interface FiniteState<S, E> {
 
     /**
      * get next state based on the event.
+     *
      * @param event
      * @return next State
      */
     S getNextState(E event);
 
     /**
-     * Get the states that could have traveled to the current state
-     * via this event.
+     * Get the states that could have traveled to the current state via this
+     * event.
+     *
      * @param event
      * @return array of states
      */
@@ -50,6 +54,7 @@ public interface FiniteState<S, E> {
 
     /**
      * Get the possible events that can happen from the current state.
+     *
      * @return array of events.
      */
     Set<E> getPossibleEvents();

@@ -71,8 +71,7 @@ public class KeystoreManagerImpl extends ManagerBase implements KeystoreManager 
 
     @Override
     public void saveCertificate(String name, String certificate, String key, String domainSuffix) {
-        if (name == null || name.isEmpty() || certificate == null || certificate.isEmpty() || key == null || key.isEmpty() || domainSuffix == null ||
-            domainSuffix.isEmpty())
+        if (name == null || name.isEmpty() || certificate == null || certificate.isEmpty() || key == null || key.isEmpty() || domainSuffix == null || domainSuffix.isEmpty())
             throw new CloudRuntimeException("invalid parameter in saveCerticate");
 
         _ksDao.save(name, certificate, key, domainSuffix);
@@ -138,7 +137,8 @@ public class KeystoreManagerImpl extends ManagerBase implements KeystoreManager 
         if (certchains.size() > 0) {
             ArrayList<String> chains = new ArrayList<String>();
             for (KeystoreVO cert : certchains) {
-                if (chains.size() == 0) {// For the first time it will be length 0
+                if (chains.size() == 0) {// For the first time it will be length
+                                         // 0
                     rootCert = cert.getCertificate();
                 }
                 chains.add(cert.getCertificate());

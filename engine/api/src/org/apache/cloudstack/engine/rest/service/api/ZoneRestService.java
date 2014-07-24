@@ -34,7 +34,7 @@ import org.apache.cloudstack.engine.service.api.ProvisioningService;
 
 @Produces({"application/json"})
 public class ZoneRestService {
-//    @Inject
+    // @Inject
     ProvisioningService _provisioningService;
 
     @GET

@@ -97,7 +97,7 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
     private final static Logger s_logger = Logger.getLogger(RemoteAccessVpnManagerImpl.class);
 
     static final ConfigKey<String> RemoteAccessVpnClientIpRange = new ConfigKey<String>("Network", String.class, RemoteAccessVpnClientIpRangeCK, "10.1.2.1-10.1.2.8",
-        "The range of ips to be allocated to remote access vpn clients. The first ip in the range is used by the VPN server", false, ConfigKey.Scope.Account);
+            "The range of ips to be allocated to remote access vpn clients. The first ip in the range is used by the VPN server", false, ConfigKey.Scope.Account);
 
     @Inject
     AccountDao _accountDao;
@@ -174,14 +174,14 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
         final boolean openFirewallFinal = openFirewall;
 
         if (networkId == null && vpcId == null) {
-            throw new InvalidParameterValueException("Unable to create remote access vpn for the ipAddress: " + ipAddr.getAddress().addr() +
-                    " as ip is not associated with any network or VPC");
+            throw new InvalidParameterValueException("Unable to create remote access vpn for the ipAddress: " + ipAddr.getAddress().addr()
+                    + " as ip is not associated with any network or VPC");
         }
 
         RemoteAccessVpnVO vpnVO = _remoteAccessVpnDao.findByPublicIpAddress(publicIpId);
 
         if (vpnVO != null) {
-            //if vpn is in Added state, return it to the api
+            // if vpn is in Added state, return it to the api
             if (vpnVO.getState() == RemoteAccessVpn.State.Added) {
                 return vpnVO;
             }
@@ -208,19 +208,20 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
         if (networkId != null) {
             vpnVO = _remoteAccessVpnDao.findByAccountAndNetwork(ipAddr.getAccountId(), networkId);
             if (vpnVO != null) {
-                //if vpn is in Added state, return it to the api
+                // if vpn is in Added state, return it to the api
                 if (vpnVO.getState() == RemoteAccessVpn.State.Added) {
                     return vpnVO;
                 }
                 throw new InvalidParameterValueException("A Remote Access VPN already exists for this account");
             }
-            //Verify that vpn service is enabled for the network
+            // Verify that vpn service is enabled for the network
             Network network = _networkMgr.getNetwork(networkId);
             if (!_networkMgr.areServicesSupportedInNetwork(network.getId(), Service.Vpn)) {
                 throw new InvalidParameterValueException("Vpn service is not supported in network id=" + ipAddr.getAssociatedWithNetworkId());
             }
             cidr = NetUtils.getCidr(network.getCidr());
-        } else { // Don't need to check VPC because there is only one IP(source NAT IP) available for VPN
+        } else { // Don't need to check VPC because there is only one IP(source
+            // NAT IP) available for VPN
             Vpc vpc = _vpcDao.findById(vpcId);
             cidr = NetUtils.getCidr(vpc.getCidr());
         }
@@ -242,12 +243,10 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
             @Override
             public RemoteAccessVpn doInTransaction(TransactionStatus status) throws NetworkRuleConflictException {
                 if (vpcId == null) {
-                    _rulesMgr.reservePorts(ipAddr, NetUtils.UDP_PROTO, Purpose.Vpn, openFirewallFinal, caller, NetUtils.VPN_PORT, NetUtils.VPN_L2TP_PORT,
-                        NetUtils.VPN_NATT_PORT);
+                    _rulesMgr.reservePorts(ipAddr, NetUtils.UDP_PROTO, Purpose.Vpn, openFirewallFinal, caller, NetUtils.VPN_PORT, NetUtils.VPN_L2TP_PORT, NetUtils.VPN_NATT_PORT);
                 }
-                RemoteAccessVpnVO vpnVO =
-                    new RemoteAccessVpnVO(ipAddr.getAccountId(), ipAddr.getDomainId(), ipAddr.getAssociatedWithNetworkId(), publicIpId, vpcId, range[0], newIpRange,
-                        sharedSecret);
+                RemoteAccessVpnVO vpnVO = new RemoteAccessVpnVO(ipAddr.getAccountId(), ipAddr.getDomainId(), ipAddr.getAssociatedWithNetworkId(), publicIpId, vpcId, range[0],
+                        newIpRange, sharedSecret);
 
                 if (forDisplay != null) {
                     vpnVO.setDisplay(forDisplay);
@@ -307,20 +306,21 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
                     break;
                 }
             }
-        }catch (ResourceUnavailableException ex) {
+        } catch (ResourceUnavailableException ex) {
             vpn.setState(prevState);
             _remoteAccessVpnDao.update(vpn.getId(), vpn);
-            s_logger.debug("Failed to stop the vpn " + vpn.getId() + " , so reverted state to "+
-                    RemoteAccessVpn.State.Running);
+            s_logger.debug("Failed to stop the vpn " + vpn.getId() + " , so reverted state to " + RemoteAccessVpn.State.Running);
             success = false;
         } finally {
             if (success) {
-                //Cleanup corresponding ports
+                // Cleanup corresponding ports
                 final List<? extends FirewallRule> vpnFwRules = _rulesDao.listByIpAndPurpose(ipId, Purpose.Vpn);
 
                 boolean applyFirewall = false;
                 final List<FirewallRuleVO> fwRules = new ArrayList<FirewallRuleVO>();
-                //if related firewall rule is created for the first vpn port, it would be created for the 2 other ports as well, so need to cleanup the backend
+                // if related firewall rule is created for the first vpn port,
+                // it would be created for the 2 other ports as well, so need to
+                // cleanup the backend
                 if (vpnFwRules.size() != 0 && _rulesDao.findByRelatedId(vpnFwRules.get(0).getId()) != null) {
                     applyFirewall = true;
                 }
@@ -330,7 +330,8 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
                         @Override
                         public void doInTransactionWithoutResult(TransactionStatus status) {
                             for (FirewallRule vpnFwRule : vpnFwRules) {
-                                //don't apply on the backend yet; send all 3 rules in a banch
+                                // don't apply on the backend yet; send all 3
+                                // rules in a banch
                                 _firewallMgr.revokeRelatedFirewallRule(vpnFwRule.getId(), false);
                                 fwRules.add(_rulesDao.findByRelatedId(vpnFwRule.getId()));
                             }
@@ -339,7 +340,7 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
                         }
                     });
 
-                    //now apply vpn rules on the backend
+                    // now apply vpn rules on the backend
                     s_logger.debug("Reapplying firewall rules for ip id=" + ipId + " as a part of disable remote access vpn");
                     success = _firewallMgr.applyIngressFirewallRules(ipId, caller);
                 }
@@ -350,20 +351,23 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
                             @Override
                             public void doInTransactionWithoutResult(TransactionStatus status) {
                                 _remoteAccessVpnDao.remove(vpn.getId());
-                                // Stop billing of VPN users when VPN is removed. VPN_User_ADD events will be generated when VPN is created again
+                                // Stop billing of VPN users when VPN is
+                                // removed. VPN_User_ADD events will be
+                                // generated when VPN is created again
                                 List<VpnUserVO> vpnUsers = _vpnUsersDao.listByAccount(vpn.getAccountId());
                                 for (VpnUserVO user : vpnUsers) {
-                                    // VPN_USER_REMOVE event is already generated for users in Revoke state
+                                    // VPN_USER_REMOVE event is already
+                                    // generated for users in Revoke state
                                     if (user.getState() != VpnUser.State.Revoke) {
-                                        UsageEventUtils.publishUsageEvent(EventTypes.EVENT_VPN_USER_REMOVE, user.getAccountId(), 0, user.getId(), user.getUsername(),
-                                            user.getClass().getName(), user.getUuid());
+                                        UsageEventUtils.publishUsageEvent(EventTypes.EVENT_VPN_USER_REMOVE, user.getAccountId(), 0, user.getId(), user.getUsername(), user
+                                                .getClass().getName(), user.getUuid());
                                     }
                                 }
                                 if (vpnFwRules != null) {
                                     for (FirewallRule vpnFwRule : vpnFwRules) {
                                         _rulesDao.remove(vpnFwRule.getId());
-                                        s_logger.debug("Successfully removed firewall rule with ip id=" + vpnFwRule.getSourceIpAddressId() + " and port " +
-                                            vpnFwRule.getSourcePortStart() + " as a part of vpn cleanup");
+                                        s_logger.debug("Successfully removed firewall rule with ip id=" + vpnFwRule.getSourceIpAddressId() + " and port "
+                                                + vpnFwRule.getSourcePortStart() + " as a part of vpn cleanup");
                                     }
                                 }
                             }
@@ -398,7 +402,7 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
                 }
                 _accountMgr.checkAccess(caller, null, true, owner);
 
-                //don't allow duplicated user names for the same account
+                // don't allow duplicated user names for the same account
                 VpnUserVO vpnUser = _vpnUsersDao.findByAccountAndUsername(owner.getId(), username);
                 if (vpnUser != null) {
                     throw new InvalidParameterValueException("VPN User with name " + username + " is already added for account " + owner);
@@ -411,7 +415,7 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
 
                 VpnUser user = _vpnUsersDao.persist(new VpnUserVO(vpnOwnerId, owner.getDomainId(), username, password));
                 UsageEventUtils.publishUsageEvent(EventTypes.EVENT_VPN_USER_ADD, user.getAccountId(), 0, user.getId(), user.getUsername(), user.getClass().getName(),
-                    user.getUuid());
+                        user.getUuid());
 
                 return user;
             }
@@ -433,7 +437,7 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
                 user.setState(State.Revoke);
                 _vpnUsersDao.update(user.getId(), user);
                 UsageEventUtils.publishUsageEvent(EventTypes.EVENT_VPN_USER_REMOVE, user.getAccountId(), 0, user.getId(), user.getUsername(), user.getClass().getName(),
-                    user.getUuid());
+                        user.getUuid());
             }
         });
 
@@ -490,12 +494,13 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
                         vpn.setState(RemoteAccessVpn.State.Running);
                         _remoteAccessVpnDao.update(vpn.getId(), vpn);
 
-                        // Start billing of existing VPN users in ADD and Active state
+                        // Start billing of existing VPN users in ADD and Active
+                        // state
                         List<VpnUserVO> vpnUsers = _vpnUsersDao.listByAccount(vpn.getAccountId());
                         for (VpnUserVO user : vpnUsers) {
                             if (user.getState() != VpnUser.State.Revoke) {
-                                UsageEventUtils.publishUsageEvent(EventTypes.EVENT_VPN_USER_ADD, user.getAccountId(), 0, user.getId(), user.getUsername(),
-                                    user.getClass().getName(), user.getUuid());
+                                UsageEventUtils.publishUsageEvent(EventTypes.EVENT_VPN_USER_ADD, user.getAccountId(), 0, user.getId(), user.getUsername(), user.getClass()
+                                        .getName(), user.getUuid());
                             }
                         }
                     }
@@ -516,7 +521,8 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
 
         List<VpnUserVO> users = _vpnUsersDao.listByAccount(vpnOwnerId);
 
-        //If user is in Active state, we still have to resend them therefore their status has to be Add
+        // If user is in Active state, we still have to resend them therefore
+        // their status has to be Add
         for (VpnUserVO user : users) {
             if (user.getState() == State.Active) {
                 user.setState(State.Add);
@@ -571,8 +577,8 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
                         @Override
                         public void doInTransactionWithoutResult(TransactionStatus status) {
                             _vpnUsersDao.remove(user.getId());
-                            UsageEventUtils.publishUsageEvent(EventTypes.EVENT_VPN_USER_REMOVE, user.getAccountId(), 0, user.getId(), user.getUsername(), user.getClass()
-                                .getName(), user.getUuid());
+                            UsageEventUtils.publishUsageEvent(EventTypes.EVENT_VPN_USER_REMOVE, user.getAccountId(), 0, user.getId(), user.getUsername(),
+                                    user.getClass().getName(), user.getUuid());
                         }
                     });
                 }
@@ -590,7 +596,8 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
         Account caller = CallContext.current().getCallingAccount();
         List<Long> permittedAccounts = new ArrayList<Long>();
 
-        Ternary<Long, Boolean, ListProjectResourcesCriteria> domainIdRecursiveListProject = new Ternary<Long, Boolean, ListProjectResourcesCriteria>(cmd.getDomainId(), cmd.isRecursive(), null);
+        Ternary<Long, Boolean, ListProjectResourcesCriteria> domainIdRecursiveListProject = new Ternary<Long, Boolean, ListProjectResourcesCriteria>(cmd.getDomainId(),
+                cmd.isRecursive(), null);
         _accountMgr.buildACLSearchParameters(caller, id, cmd.getAccountName(), cmd.getProjectId(), permittedAccounts, domainIdRecursiveListProject, cmd.listAll(), false);
         Long domainId = domainIdRecursiveListProject.first();
         Boolean isRecursive = domainIdRecursiveListProject.second();
@@ -599,7 +606,6 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
         SearchBuilder<VpnUserVO> sb = _vpnUsersDao.createSearchBuilder();
         _accountMgr.buildACLSearchBuilder(sb, domainId, isRecursive, permittedAccounts, listProjectResourcesCriteria);
 
-
         sb.and("id", sb.entity().getId(), SearchCriteria.Op.EQ);
         sb.and("username", sb.entity().getUsername(), SearchCriteria.Op.EQ);
         sb.and("state", sb.entity().getState(), Op.IN);
@@ -607,7 +613,7 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
         SearchCriteria<VpnUserVO> sc = sb.create();
         _accountMgr.buildACLSearchCriteria(sc, domainId, isRecursive, permittedAccounts, listProjectResourcesCriteria);
 
-        //list only active users
+        // list only active users
         sc.setParameters("state", State.Active, State.Add);
 
         if (id != null) {
@@ -645,7 +651,8 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
             _accountMgr.checkAccess(caller, null, true, publicIp);
         }
 
-        Ternary<Long, Boolean, ListProjectResourcesCriteria> domainIdRecursiveListProject = new Ternary<Long, Boolean, ListProjectResourcesCriteria>(cmd.getDomainId(), cmd.isRecursive(), null);
+        Ternary<Long, Boolean, ListProjectResourcesCriteria> domainIdRecursiveListProject = new Ternary<Long, Boolean, ListProjectResourcesCriteria>(cmd.getDomainId(),
+                cmd.isRecursive(), null);
         _accountMgr.buildACLSearchParameters(caller, null, cmd.getAccountName(), cmd.getProjectId(), permittedAccounts, domainIdRecursiveListProject, cmd.listAll(), false);
         Long domainId = domainIdRecursiveListProject.first();
         Boolean isRecursive = domainIdRecursiveListProject.second();
@@ -663,7 +670,6 @@ public class RemoteAccessVpnManagerImpl extends ManagerBase implements RemoteAcc
 
         SearchCriteria<RemoteAccessVpnVO> sc = sb.create();
         _accountMgr.buildACLSearchCriteria(sc, domainId, isRecursive, permittedAccounts, listProjectResourcesCriteria);
-
 
         sc.setParameters("state", RemoteAccessVpn.State.Running);
 

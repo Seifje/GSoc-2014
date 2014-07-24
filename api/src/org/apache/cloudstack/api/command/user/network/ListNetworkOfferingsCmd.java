@@ -32,15 +32,14 @@ import org.apache.cloudstack.api.response.ZoneResponse;
 
 import com.cloud.offering.NetworkOffering;
 
-@APICommand(name = "listNetworkOfferings", description = "Lists all available network offerings.", responseObject = NetworkOfferingResponse.class,
-        requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "listNetworkOfferings", description = "Lists all available network offerings.", responseObject = NetworkOfferingResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListNetworkOfferingsCmd extends BaseListCmd {
     public static final Logger s_logger = Logger.getLogger(ListNetworkOfferingsCmd.class.getName());
     private static final String s_name = "listnetworkofferingsresponse";
 
-    /////////////////////////////////////////////////////
-    //////////////// API parameters /////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ////////////// API parameters /////////////////////
+    // ///////////////////////////////////////////////////
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = NetworkOfferingResponse.class, description = "list network offerings by id")
     private Long id;
 
@@ -62,38 +61,25 @@ public class ListNetworkOfferingsCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.AVAILABILITY, type = CommandType.STRING, description = "the availability of network offering. Default value is Required")
     private String availability;
 
-    @Parameter(name = ApiConstants.ZONE_ID,
-               type = CommandType.UUID,
-               entityType = ZoneResponse.class,
-               description = "list netowrk offerings available for network creation in specific zone")
+    @Parameter(name = ApiConstants.ZONE_ID, type = CommandType.UUID, entityType = ZoneResponse.class, description = "list netowrk offerings available for network creation in specific zone")
     private Long zoneId;
 
     @Parameter(name = ApiConstants.STATE, type = CommandType.STRING, description = "list network offerings by state")
     private String state;
 
-    @Parameter(name = ApiConstants.NETWORK_ID,
-               type = CommandType.UUID,
-               entityType = NetworkResponse.class,
-               description = "the ID of the network. Pass this in if you want to see the available network offering that a network can be changed to.")
+    @Parameter(name = ApiConstants.NETWORK_ID, type = CommandType.UUID, entityType = NetworkResponse.class, description = "the ID of the network. Pass this in if you want to see the available network offering that a network can be changed to.")
     private Long networkId;
 
     @Parameter(name = ApiConstants.GUEST_IP_TYPE, type = CommandType.STRING, description = "list network offerings by guest type: Shared or Isolated")
     private String guestIpType;
 
-    @Parameter(name = ApiConstants.SUPPORTED_SERVICES,
-               type = CommandType.LIST,
-               collectionType = CommandType.STRING,
-               description = "list network offerings supporting certain services")
+    @Parameter(name = ApiConstants.SUPPORTED_SERVICES, type = CommandType.LIST, collectionType = CommandType.STRING, description = "list network offerings supporting certain services")
     private List<String> supportedServices;
 
-    @Parameter(name = ApiConstants.SOURCE_NAT_SUPPORTED,
-               type = CommandType.BOOLEAN,
-               description = "true if need to list only netwok offerings where source nat is supported, false otherwise")
+    @Parameter(name = ApiConstants.SOURCE_NAT_SUPPORTED, type = CommandType.BOOLEAN, description = "true if need to list only netwok offerings where source nat is supported, false otherwise")
     private Boolean sourceNatSupported;
 
-    @Parameter(name = ApiConstants.SPECIFY_IP_RANGES,
-               type = CommandType.BOOLEAN,
-               description = "true if need to list only network offerings which support specifying ip ranges")
+    @Parameter(name = ApiConstants.SPECIFY_IP_RANGES, type = CommandType.BOOLEAN, description = "true if need to list only network offerings which support specifying ip ranges")
     private Boolean specifyIpRanges;
 
     @Parameter(name = ApiConstants.TAGS, type = CommandType.STRING, description = "list network offerings by tags", length = 4096)
@@ -105,9 +91,9 @@ public class ListNetworkOfferingsCmd extends BaseListCmd {
     @Parameter(name = ApiConstants.FOR_VPC, type = CommandType.BOOLEAN, description = "the network offering can be used" + " only for network creation inside the VPC")
     private Boolean forVpc;
 
-    /////////////////////////////////////////////////////
-    /////////////////// Accessors ///////////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////////// Accessors ///////////////////////
+    // ///////////////////////////////////////////////////
 
     public String getNetworkOfferingName() {
         return networkOfferingName;
@@ -177,9 +163,9 @@ public class ListNetworkOfferingsCmd extends BaseListCmd {
         return forVpc;
     }
 
-    /////////////////////////////////////////////////////
-    /////////////// API Implementation///////////////////
-    /////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////
+    // ///////////// API Implementation///////////////////
+    // ///////////////////////////////////////////////////
     @Override
     public String getCommandName() {
         return s_name;

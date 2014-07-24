@@ -36,12 +36,7 @@ import com.cloud.network.rules.HealthCheckPolicy;
 import com.cloud.network.rules.LoadBalancer;
 import com.cloud.user.Account;
 
-@APICommand(name = "createLBHealthCheckPolicy",
-            description = "Creates a Load Balancer healthcheck policy ",
-            responseObject = LBHealthCheckResponse.class,
-            since = "4.2.0",
-            requestHasSensitiveInfo = false,
-            responseHasSensitiveInfo = false)
+@APICommand(name = "createLBHealthCheckPolicy", description = "Creates a Load Balancer healthcheck policy ", responseObject = LBHealthCheckResponse.class, since = "4.2.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 @SuppressWarnings("rawtypes")
 public class CreateLBHealthCheckPolicyCmd extends BaseAsyncCreateCmd {
     public static final Logger s_logger = Logger.getLogger(CreateLBHealthCheckPolicyCmd.class.getName());
@@ -52,11 +47,7 @@ public class CreateLBHealthCheckPolicyCmd extends BaseAsyncCreateCmd {
     // ////////////// API parameters /////////////////////
     // ///////////////////////////////////////////////////
 
-    @Parameter(name = ApiConstants.LBID,
-               type = CommandType.UUID,
-               entityType = FirewallRuleResponse.class,
-               required = true,
-               description = "the ID of the load balancer rule")
+    @Parameter(name = ApiConstants.LBID, type = CommandType.UUID, entityType = FirewallRuleResponse.class, required = true, description = "the ID of the load balancer rule")
     private Long lbRuleId;
 
     @Parameter(name = ApiConstants.DESCRIPTION, type = CommandType.STRING, description = "the description of the load balancer HealthCheck policy")
@@ -65,33 +56,20 @@ public class CreateLBHealthCheckPolicyCmd extends BaseAsyncCreateCmd {
     @Parameter(name = ApiConstants.HEALTHCHECK_PINGPATH, type = CommandType.STRING, required = false, description = "HTTP Ping Path")
     private String pingPath;
 
-    @Parameter(name = ApiConstants.HEALTHCHECK_RESPONSE_TIMEOUT,
-               type = CommandType.INTEGER,
-               required = false,
-               description = "Time to wait when receiving a response from the health check (2sec - 60 sec)")
+    @Parameter(name = ApiConstants.HEALTHCHECK_RESPONSE_TIMEOUT, type = CommandType.INTEGER, required = false, description = "Time to wait when receiving a response from the health check (2sec - 60 sec)")
     private int responsTimeOut;
 
-    @Parameter(name = ApiConstants.HEALTHCHECK_INTERVAL_TIME,
-               type = CommandType.INTEGER,
-               required = false,
-               description = "Amount of time between health checks (1 sec - 20940 sec)")
+    @Parameter(name = ApiConstants.HEALTHCHECK_INTERVAL_TIME, type = CommandType.INTEGER, required = false, description = "Amount of time between health checks (1 sec - 20940 sec)")
     private int healthCheckInterval;
 
-    @Parameter(name = ApiConstants.HEALTHCHECK_HEALTHY_THRESHOLD,
-               type = CommandType.INTEGER,
-               required = false,
-               description = "Number of consecutive health check success before declaring an instance healthy")
+    @Parameter(name = ApiConstants.HEALTHCHECK_HEALTHY_THRESHOLD, type = CommandType.INTEGER, required = false, description = "Number of consecutive health check success before declaring an instance healthy")
     private int healthyThreshold;
 
-    @Parameter(name = ApiConstants.HEALTHCHECK_UNHEALTHY_THRESHOLD,
-               type = CommandType.INTEGER,
-               required = false,
-               description = "Number of consecutive health check failures before declaring an instance unhealthy")
+    @Parameter(name = ApiConstants.HEALTHCHECK_UNHEALTHY_THRESHOLD, type = CommandType.INTEGER, required = false, description = "Number of consecutive health check failures before declaring an instance unhealthy")
     private int unhealthyThreshold;
 
     @Parameter(name = ApiConstants.FOR_DISPLAY, type = CommandType.BOOLEAN, description = "an optional field, whether to the display the rule to the end user or not", since = "4.4", authorized = {RoleType.Admin})
     private Boolean display;
-
 
     // ///////////////////////////////////////////////////
     // ///////////////// Accessors ///////////////////////
@@ -104,7 +82,7 @@ public class CreateLBHealthCheckPolicyCmd extends BaseAsyncCreateCmd {
 
     @Override
     public boolean isDisplay() {
-        if(display == null)
+        if (display == null)
             return true;
         else
             return display;
@@ -138,7 +116,9 @@ public class CreateLBHealthCheckPolicyCmd extends BaseAsyncCreateCmd {
             return account.getId();
         }
 
-        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
+        return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this
+        // command to SYSTEM so ERROR events
+        // are tracked
     }
 
     public int getResponsTimeOut() {
@@ -166,7 +146,8 @@ public class CreateLBHealthCheckPolicyCmd extends BaseAsyncCreateCmd {
             CallContext.current().setEventDetails("Load balancer healthcheck policy Id : " + getEntityId());
             success = _lbService.applyLBHealthCheckPolicy(this);
             if (success) {
-                // State might be different after the rule is applied, so get new object here
+                // State might be different after the rule is applied, so get
+                // new object here
                 policy = _entityMgr.findById(HealthCheckPolicy.class, getEntityId());
                 LoadBalancer lb = _lbService.findById(policy.getLoadBalancerId());
                 LBHealthCheckResponse hcResponse = _responseGenerator.createLBHealthCheckPolicyResponse(policy, lb);

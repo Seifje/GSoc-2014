@@ -23,7 +23,9 @@ import org.apache.cloudstack.api.response.UsageTypeResponse;
 
 public class UsageTypes {
     public static final int RUNNING_VM = 1;
-    public static final int ALLOCATED_VM = 2; // used for tracking how long storage has been allocated for a VM
+    public static final int ALLOCATED_VM = 2; // used for tracking how long
+    // storage has been allocated for
+    // a VM
     public static final int IP_ADDRESS = 3;
     public static final int NETWORK_BYTES_SENT = 4;
     public static final int NETWORK_BYTES_RECEIVED = 5;

@@ -31,16 +31,14 @@ import com.cloud.exception.ResourceAllocationException;
 import com.cloud.offering.ServiceOffering;
 import com.cloud.uservm.UserVm;
 
-@APICommand(name = "changeServiceForVirtualMachine", responseObject=UserVmResponse.class, description="Changes the service offering for a virtual machine. " +
-                                            "The virtual machine must be in a \"Stopped\" state for " +
-        "this command to take effect.", responseView = ResponseView.Full)
+@APICommand(name = "changeServiceForVirtualMachine", responseObject = UserVmResponse.class, description = "Changes the service offering for a virtual machine. "
+        + "The virtual machine must be in a \"Stopped\" state for " + "this command to take effect.", responseView = ResponseView.Full)
 public class UpgradeVMCmdByAdmin extends UpgradeVMCmd {
     public static final Logger s_logger = Logger.getLogger(UpgradeVMCmdByAdmin.class.getName());
 
-
     @Override
-    public void execute() throws ResourceAllocationException{
-        CallContext.current().setEventDetails("Vm Id: "+getId());
+    public void execute() throws ResourceAllocationException {
+        CallContext.current().setEventDetails("Vm Id: " + getId());
 
         ServiceOffering serviceOffering = _entityMgr.findById(ServiceOffering.class, serviceOfferingId);
         if (serviceOffering == null) {
@@ -48,7 +46,7 @@ public class UpgradeVMCmdByAdmin extends UpgradeVMCmd {
         }
 
         UserVm result = _userVmService.upgradeVirtualMachine(this);
-        if (result != null){
+        if (result != null) {
             UserVmResponse response = _responseGenerator.createUserVmResponse(ResponseView.Full, "virtualmachine", result).get(0);
             response.setResponseName(getCommandName());
             setResponseObject(response);

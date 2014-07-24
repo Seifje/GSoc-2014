@@ -36,10 +36,8 @@ import com.cloud.network.IpAddress;
 public class AssociateIPAddrCmdByAdmin extends AssociateIPAddrCmd {
     public static final Logger s_logger = Logger.getLogger(AssociateIPAddrCmdByAdmin.class.getName());
 
-
     @Override
-    public void execute() throws ResourceUnavailableException, ResourceAllocationException,
-                                    ConcurrentOperationException, InsufficientCapacityException {
+    public void execute() throws ResourceUnavailableException, ResourceAllocationException, ConcurrentOperationException, InsufficientCapacityException {
         CallContext.current().setEventDetails("Ip Id: " + getEntityId());
 
         IpAddress result = null;
@@ -58,8 +56,5 @@ public class AssociateIPAddrCmdByAdmin extends AssociateIPAddrCmd {
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to assign ip address");
         }
     }
-
-
-
 
 }

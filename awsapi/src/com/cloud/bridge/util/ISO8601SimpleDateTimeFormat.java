@@ -26,24 +26,25 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
- * Format and parse a date string which is expected to be in ISO 8601 DateTimeFormat especially for
- * use in XML documents.
- * An example is for use with GMTDateTimeUserType to provide parsing of DateTime format strings into
- * accurate Java Date representations based on UTC.
- * The purpose of this class is to allow the creation of accurate date time representations following
- * the ISO 8601 format YYYY-MM-DDThh:MM:ss
- * using the letter "T" as the date/time separator
- * This representation may be immediately followed by a "Z" (Zulu i.e. at zero offset from GMT) to indicate UTC
- * or, otherwise, to a specific time zone.  If a time zone (tz) is encoded then this is held as the difference
- * between the local time in the tz and UCT, expressed as a positive(+) or negative(-) offset (hhMM) appended
- * to the format.
- * The default case holds no tz information and assumes that a date time representation referenced to Zulu
- * (i.e. zero offset from GMT) is required.  When formatting an existing Date transform it into the Zulu timezone
- * so that it is explicitly at GMT with zero offset.  This provides the default representation for the encoding
- * of AWS datetime values.
- * For testing, it may be useful to note that, as at 2012, a city whose time is always in the Zulu timezone is
- * Reykjavik, Iceland.
- * The parsing and formatting methods provided by this class are GMT-referenced and locale insensitive.
+ * Format and parse a date string which is expected to be in ISO 8601
+ * DateTimeFormat especially for use in XML documents. An example is for use
+ * with GMTDateTimeUserType to provide parsing of DateTime format strings into
+ * accurate Java Date representations based on UTC. The purpose of this class is
+ * to allow the creation of accurate date time representations following the ISO
+ * 8601 format YYYY-MM-DDThh:MM:ss using the letter "T" as the date/time
+ * separator This representation may be immediately followed by a "Z" (Zulu i.e.
+ * at zero offset from GMT) to indicate UTC or, otherwise, to a specific time
+ * zone. If a time zone (tz) is encoded then this is held as the difference
+ * between the local time in the tz and UCT, expressed as a positive(+) or
+ * negative(-) offset (hhMM) appended to the format. The default case holds no
+ * tz information and assumes that a date time representation referenced to Zulu
+ * (i.e. zero offset from GMT) is required. When formatting an existing Date
+ * transform it into the Zulu timezone so that it is explicitly at GMT with zero
+ * offset. This provides the default representation for the encoding of AWS
+ * datetime values. For testing, it may be useful to note that, as at 2012, a
+ * city whose time is always in the Zulu timezone is Reykjavik, Iceland. The
+ * parsing and formatting methods provided by this class are GMT-referenced and
+ * locale insensitive.
  */
 
 public class ISO8601SimpleDateTimeFormat extends SimpleDateFormat {
@@ -64,16 +65,18 @@ public class ISO8601SimpleDateTimeFormat extends SimpleDateFormat {
     /**
      * Construct a new ISO8601DateTimeFormat using a specific time zone.
      * Initializes calendar inherited from java.text.DateFormat.calendar
-     * @param tz The time zone used to format and parse the date.
+     * 
+     * @param tz
+     *            The time zone used to format and parse the date.
      */
     public ISO8601SimpleDateTimeFormat(TimeZone tz) {
         setCalendar(Calendar.getInstance(tz));
     }
 
     /**
-     * The abstract superclass DateFormat has two business methods to override.  These are
-     * public StringBuffer format(Date arg0, StringBuffer arg1, FieldPosition arg2)
-     * public Date parse(String arg0, ParsePosition arg1)
+     * The abstract superclass DateFormat has two business methods to override.
+     * These are public StringBuffer format(Date arg0, StringBuffer arg1,
+     * FieldPosition arg2) public Date parse(String arg0, ParsePosition arg1)
      */
 
     /**
@@ -90,9 +93,11 @@ public class ISO8601SimpleDateTimeFormat extends SimpleDateFormat {
         return stringBuffer;
     }
 
-    /* @see DateFormat#parse(String, ParsePosition)
-     * Assigns the values of YYYY-MM-DDThh:MM:ss fields between the delimiters of dateString
-     * or a near approximation using the superclass SimpleDateFormat if not formatted exactly as ISO8601
+    /*
+     * @see DateFormat#parse(String, ParsePosition) Assigns the values of
+     * YYYY-MM-DDThh:MM:ss fields between the delimiters of dateString or a near
+     * approximation using the superclass SimpleDateFormat if not formatted
+     * exactly as ISO8601
      */
     @Override
     public Date parse(String dateString, ParsePosition pos) {
@@ -136,13 +141,14 @@ public class ISO8601SimpleDateTimeFormat extends SimpleDateFormat {
             p++;
             // Assign value of ss
             int ss = 0;
-            //   if (p < dateString.length() && dateString.charAt(p) == ':') {
+            // if (p < dateString.length() && dateString.charAt(p) == ':') {
             // Allow exactly two ss digits after final : delimiter
             ss = Integer.valueOf(dateString.substring(p, p + 2)).intValue();
             p += 2;
             // Set calendar inherited from java.text.DateFormat.calendar
             calendar.set(YYYY, MM, DD, hh, mm, ss);
-            calendar.set(Calendar.MILLISECOND, 0); // Since java.util.Date holds none, zeroize milliseconds
+            calendar.set(Calendar.MILLISECOND, 0); // Since java.util.Date holds
+                                                   // none, zeroize milliseconds
             // process appended timezone if any or Z otherwise
             p = parseTZ(p, dateString);
         } catch (IllegalArgumentException ex) {
@@ -151,7 +157,7 @@ public class ISO8601SimpleDateTimeFormat extends SimpleDateFormat {
             return super.parse(dateString, startpos);
         } catch (Exception ex) {
             super.setTimeZone(TimeZone.getTimeZone("GMT"));
-            return super.parse(dateString, startpos);    // default pattern
+            return super.parse(dateString, startpos); // default pattern
         } finally {
             pos.setIndex(p);
         }
@@ -160,10 +166,13 @@ public class ISO8601SimpleDateTimeFormat extends SimpleDateFormat {
     }
 
     /**
-     * Write the time zone string.  Remember that in the default TimeZone there is no offset and the
-     * convention to supply the TimeZone string constant "Z" is applicable.  As an optimization there
-     * is no need to call this method where the default TimeZone has been set.
-     * @param stringBuffer The buffer to append the time zone.
+     * Write the time zone string. Remember that in the default TimeZone there
+     * is no offset and the convention to supply the TimeZone string constant
+     * "Z" is applicable. As an optimization there is no need to call this
+     * method where the default TimeZone has been set.
+     * 
+     * @param stringBuffer
+     *            The buffer to append the time zone.
      */
     protected final void writeTZ(StringBuffer stringBuffer) {
         int offset = calendar.get(Calendar.ZONE_OFFSET) + calendar.get(Calendar.DST_OFFSET);
@@ -187,7 +196,9 @@ public class ISO8601SimpleDateTimeFormat extends SimpleDateFormat {
 
     /**
      * Write hour, minutes, and seconds.
-     * @param stringBuffer The buffer to append the string.
+     * 
+     * @param stringBuffer
+     *            The buffer to append the string.
      */
     protected final void writehhMMss(StringBuffer stringBuffer) {
         int hh = calendar.get(Calendar.HOUR_OF_DAY);
@@ -204,7 +215,9 @@ public class ISO8601SimpleDateTimeFormat extends SimpleDateFormat {
 
     /**
      * Write YYYY, and MMs.
-     * @param stringBuffer The buffer to append the string.
+     * 
+     * @param stringBuffer
+     *            The buffer to append the string.
      */
     protected final void writeYYYYMM(StringBuffer stringBuffer) {
         int YYYY = calendar.get(Calendar.YEAR);
@@ -212,45 +225,45 @@ public class ISO8601SimpleDateTimeFormat extends SimpleDateFormat {
 
         String MM;
         switch (calendar.get(Calendar.MONTH)) {
-            case Calendar.JANUARY:
-                MM = "-01-";
-                break;
-            case Calendar.FEBRUARY:
-                MM = "-02-";
-                break;
-            case Calendar.MARCH:
-                MM = "-03-";
-                break;
-            case Calendar.APRIL:
-                MM = "-04-";
-                break;
-            case Calendar.MAY:
-                MM = "-05-";
-                break;
-            case Calendar.JUNE:
-                MM = "-06-";
-                break;
-            case Calendar.JULY:
-                MM = "-07-";
-                break;
-            case Calendar.AUGUST:
-                MM = "-08-";
-                break;
-            case Calendar.SEPTEMBER:
-                MM = "-09-";
-                break;
-            case Calendar.OCTOBER:
-                MM = "-10-";
-                break;
-            case Calendar.NOVEMBER:
-                MM = "-11-";
-                break;
-            case Calendar.DECEMBER:
-                MM = "-12-";
-                break;
-            default:
-                MM = "-NA-";
-                break;
+        case Calendar.JANUARY:
+            MM = "-01-";
+            break;
+        case Calendar.FEBRUARY:
+            MM = "-02-";
+            break;
+        case Calendar.MARCH:
+            MM = "-03-";
+            break;
+        case Calendar.APRIL:
+            MM = "-04-";
+            break;
+        case Calendar.MAY:
+            MM = "-05-";
+            break;
+        case Calendar.JUNE:
+            MM = "-06-";
+            break;
+        case Calendar.JULY:
+            MM = "-07-";
+            break;
+        case Calendar.AUGUST:
+            MM = "-08-";
+            break;
+        case Calendar.SEPTEMBER:
+            MM = "-09-";
+            break;
+        case Calendar.OCTOBER:
+            MM = "-10-";
+            break;
+        case Calendar.NOVEMBER:
+            MM = "-11-";
+            break;
+        case Calendar.DECEMBER:
+            MM = "-12-";
+            break;
+        default:
+            MM = "-NA-";
+            break;
         }
         stringBuffer.append(MM);
 
@@ -260,9 +273,13 @@ public class ISO8601SimpleDateTimeFormat extends SimpleDateFormat {
 
     /**
      * Write an integer value with leading zeros.
-     * @param stringBuffer The buffer to append the string.
-     * @param value The value to write.
-     * @param length The length of the string to write.
+     * 
+     * @param stringBuffer
+     *            The buffer to append the string.
+     * @param value
+     *            The value to write.
+     * @param length
+     *            The length of the string to write.
      */
     protected final void appendInt(StringBuffer stringBuffer, int value, int length) {
         int len1 = stringBuffer.length();
@@ -275,8 +292,11 @@ public class ISO8601SimpleDateTimeFormat extends SimpleDateFormat {
 
     /**
      * Parse the time zone.
-     * @param i The position to start parsing.
-     * @param dateString The dateString to parse.
+     * 
+     * @param i
+     *            The position to start parsing.
+     * @param dateString
+     *            The dateString to parse.
      * @return The position after parsing has finished.
      */
 
@@ -319,7 +339,8 @@ public class ISO8601SimpleDateTimeFormat extends SimpleDateFormat {
     @Override
     public int hashCode() {
         return (calendar.get(2) + calendar.get(16));
-        // numberFormat (used by superclass) will not distribute, so use calendar third and penultimate fields
+        // numberFormat (used by superclass) will not distribute, so use
+        // calendar third and penultimate fields
         // (i.e. dd and ss) instead
         // in Java 6 (Calendar.FIELD_COUNT-1) returns 16
     }

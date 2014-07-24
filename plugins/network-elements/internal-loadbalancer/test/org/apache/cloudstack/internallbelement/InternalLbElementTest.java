@@ -66,11 +66,11 @@ import com.cloud.utils.net.Ip;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/lb_element.xml")
 public class InternalLbElementTest {
-    //The class to test
+    // The class to test
     @Inject
     InternalLoadBalancerElement _lbEl;
 
-    //Mocked interfaces
+    // Mocked interfaces
     @Inject
     AccountManager _accountMgr;
     @Inject
@@ -86,7 +86,7 @@ public class InternalLbElementTest {
 
     long validElId = 1L;
     long nonExistingElId = 2L;
-    long invalidElId = 3L; //not of VirtualRouterProviderType
+    long invalidElId = 3L; // not of VirtualRouterProviderType
     long notEnabledElId = 4L;
 
     long validProviderId = 1L;
@@ -122,7 +122,7 @@ public class InternalLbElementTest {
         Mockito.when(_entityMgr.findById(Matchers.eq(DataCenter.class), Matchers.anyLong())).thenReturn(dc);
     }
 
-    //TEST FOR getProvider() method
+    // TEST FOR getProvider() method
 
     @Test
     public void verifyProviderName() {
@@ -130,7 +130,7 @@ public class InternalLbElementTest {
         assertEquals("Wrong provider is returned", pr.getName(), Provider.InternalLbVm.getName());
     }
 
-    //TEST FOR isReady() METHOD
+    // TEST FOR isReady() METHOD
 
     @Test
     public void verifyValidProviderState() {
@@ -164,21 +164,21 @@ public class InternalLbElementTest {
         assertFalse("Not enabled provider is returned as ready", isReady);
     }
 
-    //TEST FOR canEnableIndividualServices METHOD
+    // TEST FOR canEnableIndividualServices METHOD
     @Test
     public void verifyCanEnableIndividualSvc() {
         boolean result = _lbEl.canEnableIndividualServices();
         assertTrue("Wrong value is returned by canEnableIndividualSvc", result);
     }
 
-    //TEST FOR verifyServicesCombination METHOD
+    // TEST FOR verifyServicesCombination METHOD
     @Test
     public void verifyServicesCombination() {
         boolean result = _lbEl.verifyServicesCombination(new HashSet<Service>());
         assertTrue("Wrong value is returned by verifyServicesCombination", result);
     }
 
-    //TEST FOR applyIps METHOD
+    // TEST FOR applyIps METHOD
     @Test
     public void verifyApplyIps() throws ResourceUnavailableException {
         List<PublicIp> ips = new ArrayList<PublicIp>();
@@ -186,14 +186,14 @@ public class InternalLbElementTest {
         assertTrue("Wrong value is returned by applyIps method", result);
     }
 
-    //TEST FOR updateHealthChecks METHOD
+    // TEST FOR updateHealthChecks METHOD
     @Test
     public void verifyUpdateHealthChecks() throws ResourceUnavailableException {
         List<LoadBalancerTO> check = _lbEl.updateHealthChecks(new NetworkVO(), new ArrayList<LoadBalancingRule>());
         assertNull("Wrong value is returned by updateHealthChecks method", check);
     }
 
-    //TEST FOR validateLBRule METHOD
+    // TEST FOR validateLBRule METHOD
     @Test
     public void verifyValidateLBRule() throws ResourceUnavailableException {
         ApplicationLoadBalancerRuleVO lb = new ApplicationLoadBalancerRuleVO(null, null, 22, 22, "roundrobin", 1L, 1L, 1L, new Ip("10.10.10.1"), 1L, Scheme.Internal);

@@ -172,8 +172,9 @@ public abstract class Tag implements Asn1Constants {
      * Calculate length of type to tag number. Values less than 31 are encoded
      * using lower 5 bits of first byte of tag. Values larger than 31 are
      * indicated by lower 5 bits set to 1 (0x1F, 31), and next bytes are contain
-     * value in network order, where topmost bit of byte (0x80) indicates is value
-     * contains more bytes, i.e. last byte of sequence has this bit set to 0.
+     * value in network order, where topmost bit of byte (0x80) indicates is
+     * value contains more bytes, i.e. last byte of sequence has this bit set to
+     * 0.
      */
     public int calculateLengthOfTagTypeOrTagNumber(int tagType) {
         if (tagType >= EXTENDED_TYPE)
@@ -203,18 +204,20 @@ public abstract class Tag implements Asn1Constants {
         long lengthOfPayload = calculateLengthOfValuePayload();
         buf.writeBerLength(lengthOfPayload);
 
-        // Store cursor to check is calculated length matches length of actual bytes
+        // Store cursor to check is calculated length matches length of actual
+        // bytes
         // written
         int storedCursor = buf.cursor;
 
         // Write value
         writeTagValuePayload(buf);
 
-        // Check is calculated length matches length of actual bytes written, to catch errors early
+        // Check is calculated length matches length of actual bytes written, to
+        // catch errors early
         int actualLength = buf.cursor - storedCursor;
         if (actualLength != lengthOfPayload)
-            throw new RuntimeException("[" + this + "] ERROR: Unexpected length of data in buffer. Expected " + lengthOfPayload + " of bytes of payload, but "
-                    + actualLength + " bytes are written instead. Data: " + buf + ".");
+            throw new RuntimeException("[" + this + "] ERROR: Unexpected length of data in buffer. Expected " + lengthOfPayload + " of bytes of payload, but " + actualLength
+                    + " bytes are written instead. Data: " + buf + ".");
     }
 
     /**
@@ -223,11 +226,11 @@ public abstract class Tag implements Asn1Constants {
     public abstract void writeTagValuePayload(ByteBuffer buf);
 
     /**
-     * Read required tag, i.e. we are 100% sure that byte buffer will contain this
-     * tag, or exception will be thrown otherwise.
+     * Read required tag, i.e. we are 100% sure that byte buffer will contain
+     * this tag, or exception will be thrown otherwise.
      *
      * @param buf
-     *          buffer with tag data
+     *            buffer with tag data
      */
     public void readTag(ByteBuffer buf) {
         BerType typeAndFlags = readBerType(buf);
@@ -284,10 +287,11 @@ public abstract class Tag implements Asn1Constants {
     }
 
     /**
-     * Check are tag type and flags valid for this tag with or without tag prefix.
+     * Check are tag type and flags valid for this tag with or without tag
+     * prefix.
      *
      * @param explicit
-     *          if true, then value is wrapped in tag prefix
+     *            if true, then value is wrapped in tag prefix
      */
     public boolean isTypeValid(BerType typeAndFlags, boolean explicit) {
         if (explicit)
@@ -408,8 +412,8 @@ public abstract class Tag implements Asn1Constants {
             throw new RuntimeException("Extended tag types/numbers (31+) are not supported yet: " + berType + ".");
 
         if ((berType.tagClass & CLASS_MASK) != berType.tagClass)
-            throw new RuntimeException("Value of BER tag class is out of range: " + berType.tagClass + ". Expected values: " + UNIVERSAL_CLASS + ", " + CONTEXT_CLASS
-                    + ", " + APPLICATION_CLASS + ", " + PRIVATE_CLASS + ".");
+            throw new RuntimeException("Value of BER tag class is out of range: " + berType.tagClass + ". Expected values: " + UNIVERSAL_CLASS + ", " + CONTEXT_CLASS + ", "
+                    + APPLICATION_CLASS + ", " + PRIVATE_CLASS + ".");
 
         int typeAndFlags = berType.tagClass | ((berType.constructed) ? CONSTRUCTED : 0) | berType.typeOrTagNumber;
 
@@ -421,7 +425,7 @@ public abstract class Tag implements Asn1Constants {
      * already read.
      *
      * @param buf
-     *          buffer with tag data
+     *            buffer with tag data
      */
     public abstract void readTagValue(ByteBuffer buf, BerType typeAndFlags);
 
@@ -429,7 +433,7 @@ public abstract class Tag implements Asn1Constants {
      * Create deep copy of this tag with given suffix appended to name.
      *
      * @param suffix
-     *          suffix to add to tag name, or empty string
+     *            suffix to add to tag name, or empty string
      * @return deep copy of this tag
      */
     public abstract Tag deepCopy(String suffix);
@@ -438,7 +442,7 @@ public abstract class Tag implements Asn1Constants {
      * Create deep copy of this tag for array or set.
      *
      * @param index
-     *          index of element in array or set
+     *            index of element in array or set
      * @return deep copy of this tag
      */
     public Tag deepCopy(int index) {

@@ -25,15 +25,15 @@
 package com.amazon.ec2;
 
 /**
-*  BundleInstanceTaskType bean class
-*/
+ * BundleInstanceTaskType bean class
+ */
 
 public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBBean {
-    /* This type was generated from the piece of schema that had
-            name = BundleInstanceTaskType
-            Namespace URI = http://ec2.amazonaws.com/doc/2012-08-15/
-            Namespace Prefix = ns1
-            */
+    /*
+     * This type was generated from the piece of schema that had name =
+     * BundleInstanceTaskType Namespace URI =
+     * http://ec2.amazonaws.com/doc/2012-08-15/ Namespace Prefix = ns1
+     */
 
     private static java.lang.String generatePrefix(java.lang.String namespace) {
         if (namespace.equals("http://ec2.amazonaws.com/doc/2012-08-15/")) {
@@ -43,23 +43,26 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-    * field for InstanceId
-    */
+     * field for InstanceId
+     */
 
     protected java.lang.String localInstanceId;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getInstanceId() {
         return localInstanceId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param InstanceId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            InstanceId
+     */
     public void setInstanceId(java.lang.String param) {
 
         this.localInstanceId = param;
@@ -67,23 +70,26 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-    * field for BundleId
-    */
+     * field for BundleId
+     */
 
     protected java.lang.String localBundleId;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getBundleId() {
         return localBundleId;
     }
 
     /**
-       * Auto generated setter method
-       * @param param BundleId
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            BundleId
+     */
     public void setBundleId(java.lang.String param) {
 
         this.localBundleId = param;
@@ -91,23 +97,26 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-    * field for State
-    */
+     * field for State
+     */
 
     protected java.lang.String localState;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getState() {
         return localState;
     }
 
     /**
-       * Auto generated setter method
-       * @param param State
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            State
+     */
     public void setState(java.lang.String param) {
 
         this.localState = param;
@@ -115,23 +124,26 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-    * field for StartTime
-    */
+     * field for StartTime
+     */
 
     protected java.util.Calendar localStartTime;
 
     /**
-    * Auto generated getter method
-    * @return java.util.Calendar
-    */
+     * Auto generated getter method
+     * 
+     * @return java.util.Calendar
+     */
     public java.util.Calendar getStartTime() {
         return localStartTime;
     }
 
     /**
-       * Auto generated setter method
-       * @param param StartTime
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            StartTime
+     */
     public void setStartTime(java.util.Calendar param) {
 
         this.localStartTime = param;
@@ -139,23 +151,26 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-    * field for UpdateTime
-    */
+     * field for UpdateTime
+     */
 
     protected java.util.Calendar localUpdateTime;
 
     /**
-    * Auto generated getter method
-    * @return java.util.Calendar
-    */
+     * Auto generated getter method
+     * 
+     * @return java.util.Calendar
+     */
     public java.util.Calendar getUpdateTime() {
         return localUpdateTime;
     }
 
     /**
-       * Auto generated setter method
-       * @param param UpdateTime
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            UpdateTime
+     */
     public void setUpdateTime(java.util.Calendar param) {
 
         this.localUpdateTime = param;
@@ -163,23 +178,26 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-    * field for Storage
-    */
+     * field for Storage
+     */
 
     protected com.amazon.ec2.BundleInstanceTaskStorageType localStorage;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.BundleInstanceTaskStorageType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.BundleInstanceTaskStorageType
+     */
     public com.amazon.ec2.BundleInstanceTaskStorageType getStorage() {
         return localStorage;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Storage
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Storage
+     */
     public void setStorage(com.amazon.ec2.BundleInstanceTaskStorageType param) {
 
         this.localStorage = param;
@@ -187,33 +205,37 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-    * field for Progress
-    */
+     * field for Progress
+     */
 
     protected java.lang.String localProgress;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localProgressTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return java.lang.String
-    */
+     * Auto generated getter method
+     * 
+     * @return java.lang.String
+     */
     public java.lang.String getProgress() {
         return localProgress;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Progress
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Progress
+     */
     public void setProgress(java.lang.String param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localProgressTracker = true;
         } else {
             localProgressTracker = false;
@@ -225,33 +247,37 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-    * field for Error
-    */
+     * field for Error
+     */
 
     protected com.amazon.ec2.BundleInstanceTaskErrorType localError;
 
-    /*  This tracker boolean wil be used to detect whether the user called the set method
-    *   for this attribute. It will be used to determine whether to include this field
-    *   in the serialized XML
-    */
+    /*
+     * This tracker boolean wil be used to detect whether the user called the
+     * set method for this attribute. It will be used to determine whether to
+     * include this field in the serialized XML
+     */
     protected boolean localErrorTracker = false;
 
     /**
-    * Auto generated getter method
-    * @return com.amazon.ec2.BundleInstanceTaskErrorType
-    */
+     * Auto generated getter method
+     * 
+     * @return com.amazon.ec2.BundleInstanceTaskErrorType
+     */
     public com.amazon.ec2.BundleInstanceTaskErrorType getError() {
         return localError;
     }
 
     /**
-       * Auto generated setter method
-       * @param param Error
-       */
+     * Auto generated setter method
+     * 
+     * @param param
+     *            Error
+     */
     public void setError(com.amazon.ec2.BundleInstanceTaskErrorType param) {
 
         if (param != null) {
-            //update the setting tracker
+            // update the setting tracker
             localErrorTracker = true;
         } else {
             localErrorTracker = false;
@@ -263,9 +289,10 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-    * isReaderMTOMAware
-    * @return true if the reader supports MTOM
-    */
+     * isReaderMTOMAware
+     * 
+     * @return true if the reader supports MTOM
+     */
     public static boolean isReaderMTOMAware(javax.xml.stream.XMLStreamReader reader) {
         boolean isReaderMTOMAware = false;
 
@@ -278,13 +305,13 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-    *
-    * @param parentQName
-    * @param factory
-    * @return org.apache.axiom.om.OMElement
-    */
+     *
+     * @param parentQName
+     * @param factory
+     * @return org.apache.axiom.om.OMElement
+     */
     public org.apache.axiom.om.OMElement getOMElement(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory)
-        throws org.apache.axis2.databinding.ADBException {
+            throws org.apache.axis2.databinding.ADBException {
 
         org.apache.axiom.om.OMDataSource dataSource = new org.apache.axis2.databinding.ADBDataSource(this, parentQName) {
 
@@ -297,14 +324,13 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException {
         serialize(parentQName, factory, xmlWriter, false);
     }
 
     public void serialize(final javax.xml.namespace.QName parentQName, final org.apache.axiom.om.OMFactory factory,
-        org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
-        org.apache.axis2.databinding.ADBException {
+            org.apache.axis2.databinding.utils.writer.MTOMAwareXMLStreamWriter xmlWriter, boolean serializeType) throws javax.xml.stream.XMLStreamException,
+            org.apache.axis2.databinding.ADBException {
 
         java.lang.String prefix = null;
         java.lang.String namespace = null;
@@ -550,8 +576,8 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     /**
      * Util method to write an attribute with the ns prefix
      */
-    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue,
-        javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+    private void writeAttribute(java.lang.String prefix, java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
+            throws javax.xml.stream.XMLStreamException {
         if (xmlWriter.getPrefix(namespace) == null) {
             xmlWriter.writeNamespace(prefix, namespace);
             xmlWriter.setPrefix(prefix, namespace);
@@ -563,10 +589,10 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeAttribute(java.lang.String namespace, java.lang.String attName, java.lang.String attValue, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
         if (namespace.equals("")) {
             xmlWriter.writeAttribute(attName, attValue);
         } else {
@@ -576,10 +602,10 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-      * Util method to write an attribute without the ns prefix
-      */
+     * Util method to write an attribute without the ns prefix
+     */
     private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName, javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter)
-        throws javax.xml.stream.XMLStreamException {
+            throws javax.xml.stream.XMLStreamException {
 
         java.lang.String attributeNamespace = qname.getNamespaceURI();
         java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
@@ -602,7 +628,7 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-     *  method to handle Qnames
+     * method to handle Qnames
      */
 
     private void writeQName(javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
@@ -630,7 +656,8 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     private void writeQNames(javax.xml.namespace.QName[] qnames, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
 
         if (qnames != null) {
-            // we have to store this data until last moment since it is not possible to write any
+            // we have to store this data until last moment since it is not
+            // possible to write any
             // namespace data after writing the charactor data
             java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
             java.lang.String namespaceURI = null;
@@ -664,8 +691,8 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-    * Register a namespace prefix
-    */
+     * Register a namespace prefix
+     */
     private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
         java.lang.String prefix = xmlWriter.getPrefix(namespace);
 
@@ -684,9 +711,9 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-    * databinding method to get an XML representation of this object
-    *
-    */
+     * databinding method to get an XML representation of this object
+     *
+     */
     public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
 
         java.util.ArrayList elementList = new java.util.ArrayList();
@@ -761,17 +788,20 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
     }
 
     /**
-     *  Factory class that keeps the parse method
+     * Factory class that keeps the parse method
      */
     public static class Factory {
 
         /**
-        * static method to create the object
-        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
-        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
-        * Postcondition: If this object is an element, the reader is positioned at its end element
-        *                If this object is a complex type, the reader is positioned at the end element of its outer element
-        */
+         * static method to create the object Precondition: If this object is an
+         * element, the current or next start element starts this object and any
+         * intervening reader events are ignorable If this object is not an
+         * element, it is a complex type and the reader is at the event just
+         * after the outer start element Postcondition: If this object is an
+         * element, the reader is positioned at its end element If this object
+         * is a complex type, the reader is positioned at the end element of its
+         * outer element
+         */
         public static BundleInstanceTaskType parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
             BundleInstanceTaskType object = new BundleInstanceTaskType();
 
@@ -796,7 +826,7 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
                         java.lang.String type = fullTypeName.substring(fullTypeName.indexOf(":") + 1);
 
                         if (!"BundleInstanceTaskType".equals(type)) {
-                            //find namespace for the prefix
+                            // find namespace for the prefix
                             java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
                             return (BundleInstanceTaskType)com.amazon.ec2.ExtensionMapper.getTypeObject(nsUri, type, reader);
                         }
@@ -805,7 +835,8 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
 
                 }
 
-                // Note all attributes that were handled. Used to differ normal attributes
+                // Note all attributes that were handled. Used to differ normal
+                // attributes
                 // from anyAttributes.
                 java.util.Vector handledAttributes = new java.util.Vector();
 
@@ -822,10 +853,11 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -840,10 +872,11 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -858,10 +891,11 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -876,10 +910,11 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -894,10 +929,11 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -910,10 +946,11 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
-                    // A start element we are not expecting indicates an invalid parameter was passed
+                    // A start element we are not expecting indicates an invalid
+                    // parameter was passed
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
                 }
 
@@ -928,7 +965,7 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -943,7 +980,7 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
 
                     reader.next();
 
-                }  // End of if for expected property start element
+                } // End of if for expected property start element
 
                 else {
 
@@ -953,7 +990,8 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
                     reader.next();
 
                 if (reader.isStartElement())
-                    // A start element we are not expecting indicates a trailing invalid property
+                    // A start element we are not expecting indicates a trailing
+                    // invalid property
                     throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getLocalName());
 
             } catch (javax.xml.stream.XMLStreamException e) {
@@ -963,6 +1001,6 @@ public class BundleInstanceTaskType implements org.apache.axis2.databinding.ADBB
             return object;
         }
 
-    }//end of factory class
+    }// end of factory class
 
 }

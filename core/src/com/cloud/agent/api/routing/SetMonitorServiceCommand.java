@@ -22,8 +22,8 @@ import com.cloud.agent.api.to.MonitorServiceTO;
 
 /**
  *
- * AccessDetails allow different components to put in information about
- * how to access the components inside the command.
+ * AccessDetails allow different components to put in information about how to
+ * access the components inside the command.
  */
 public class SetMonitorServiceCommand extends NetworkElementCommand {
     MonitorServiceTO[] services;

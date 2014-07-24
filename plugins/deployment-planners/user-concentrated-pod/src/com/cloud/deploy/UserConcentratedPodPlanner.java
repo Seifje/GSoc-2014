@@ -33,15 +33,17 @@ public class UserConcentratedPodPlanner extends FirstFitPlanner implements Deplo
     private static final Logger s_logger = Logger.getLogger(UserConcentratedPodPlanner.class);
 
     /**
-     * This method should reorder the given list of Cluster Ids by applying any necessary heuristic
-     * for this planner
-     * For UserConcentratedPodPlanner we need to order the clusters in a zone across pods, by considering those pods first which have more number of VMs for this account
-     * This reordering is not done incase the clusters within single pod are passed when the allocation is applied at pod-level.
+     * This method should reorder the given list of Cluster Ids by applying any
+     * necessary heuristic for this planner For UserConcentratedPodPlanner we
+     * need to order the clusters in a zone across pods, by considering those
+     * pods first which have more number of VMs for this account This reordering
+     * is not done incase the clusters within single pod are passed when the
+     * allocation is applied at pod-level.
+     *
      * @return List<Long> ordered list of Cluster Ids
      */
     @Override
-    protected List<Long> reorderClusters(long id, boolean isZone, Pair<List<Long>, Map<Long, Double>> clusterCapacityInfo, VirtualMachineProfile vmProfile,
-        DeploymentPlan plan) {
+    protected List<Long> reorderClusters(long id, boolean isZone, Pair<List<Long>, Map<Long, Double>> clusterCapacityInfo, VirtualMachineProfile vmProfile, DeploymentPlan plan) {
         List<Long> clusterIdsByCapacity = clusterCapacityInfo.first();
         if (vmProfile.getOwner() == null || !isZone) {
             return clusterIdsByCapacity;
@@ -50,8 +52,8 @@ public class UserConcentratedPodPlanner extends FirstFitPlanner implements Deplo
     }
 
     private List<Long> applyUserConcentrationPodHeuristicToClusters(long zoneId, List<Long> prioritizedClusterIds, long accountId) {
-        //user has VMs in certain pods. - prioritize those pods first
-        //UserConcentratedPod strategy
+        // user has VMs in certain pods. - prioritize those pods first
+        // UserConcentratedPod strategy
         List<Long> clusterList = new ArrayList<Long>();
         List<Long> podIds = listPodsByUserConcentration(zoneId, accountId);
         if (!podIds.isEmpty()) {
@@ -112,9 +114,11 @@ public class UserConcentratedPodPlanner extends FirstFitPlanner implements Deplo
     }
 
     /**
-     * This method should reorder the given list of Pod Ids by applying any necessary heuristic
-     * for this planner
-     * For UserConcentratedPodPlanner we need to order the pods by considering those pods first which have more number of VMs for this account
+     * This method should reorder the given list of Pod Ids by applying any
+     * necessary heuristic for this planner For UserConcentratedPodPlanner we
+     * need to order the pods by considering those pods first which have more
+     * number of VMs for this account
+     *
      * @return List<Long> ordered list of Pod Ids
      */
     @Override
@@ -125,11 +129,11 @@ public class UserConcentratedPodPlanner extends FirstFitPlanner implements Deplo
         }
         long accountId = vmProfile.getOwner().getAccountId();
 
-        //user has VMs in certain pods. - prioritize those pods first
-        //UserConcentratedPod strategy
+        // user has VMs in certain pods. - prioritize those pods first
+        // UserConcentratedPod strategy
         List<Long> podIds = listPodsByUserConcentration(plan.getDataCenterId(), accountId);
         if (!podIds.isEmpty()) {
-            //remove pods that dont have capacity for this vm
+            // remove pods that dont have capacity for this vm
             podIds.retainAll(podIdsByCapacity);
             podIdsByCapacity.removeAll(podIds);
             podIds.addAll(podIdsByCapacity);

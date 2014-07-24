@@ -87,7 +87,7 @@ public class ConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, String
             }
 
             if (!"DEFAULT".equals(instance)) {
-                //Default instance params are already added, need not add again
+                // Default instance params are already added, need not add again
                 sc = InstanceSearch.create();
                 sc.setParameters("instance", instance);
 
@@ -133,13 +133,14 @@ public class ConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, String
 
     @PostConstruct
     public void init() throws ConfigurationException {
-        /* This bean is loaded in bootstrap and beans
-         * in bootstrap don't go through the CloudStackExtendedLifeCycle
+        /*
+         * This bean is loaded in bootstrap and beans in bootstrap don't go
+         * through the CloudStackExtendedLifeCycle
          */
         configure(getName(), getConfigParams());
     }
 
-    //Use update method with category instead
+    // Use update method with category instead
     @Override
     @Deprecated
     public boolean update(String name, String value) {

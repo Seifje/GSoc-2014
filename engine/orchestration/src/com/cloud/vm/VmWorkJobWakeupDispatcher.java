@@ -41,8 +41,8 @@ import com.cloud.utils.component.AdapterBase;
 import com.cloud.vm.dao.VMInstanceDao;
 
 /**
- * Please note: VmWorkJobWakeupDispatcher is not currently in use. It is designed for event-driven based
- * job processing model.
+ * Please note: VmWorkJobWakeupDispatcher is not currently in use. It is
+ * designed for event-driven based job processing model.
  *
  * Current code base uses blocking calls to wait for job completion
  */
@@ -69,10 +69,10 @@ public class VmWorkJobWakeupDispatcher extends AdapterBase implements AsyncJobDi
         try {
             List<AsyncJobJoinMapVO> joinRecords = _joinMapDao.listJoinRecords(job.getId());
             if (joinRecords.size() != 1) {
-                s_logger.warn("AsyncJob-" + job.getId()
-                        + " received wakeup call with un-supported joining job number: " + joinRecords.size());
+                s_logger.warn("AsyncJob-" + job.getId() + " received wakeup call with un-supported joining job number: " + joinRecords.size());
 
-                // if we fail wakeup-execution for any reason, avoid release sync-source if there is any
+                // if we fail wakeup-execution for any reason, avoid release
+                // sync-source if there is any
                 job.setSyncSource(null);
                 return;
             }
@@ -105,8 +105,7 @@ public class VmWorkJobWakeupDispatcher extends AdapterBase implements AsyncJobDi
                     handler.invoke(_vmMgr);
                 } else {
                     assert (false);
-                    s_logger.error("Unable to find wakeup handler " + joinRecord.getWakeupHandler() +
-                            " when waking up job-" + job.getId());
+                    s_logger.error("Unable to find wakeup handler " + joinRecord.getWakeupHandler() + " when waking up job-" + job.getId());
                 }
             } finally {
                 CallContext.unregister();
@@ -114,7 +113,8 @@ public class VmWorkJobWakeupDispatcher extends AdapterBase implements AsyncJobDi
         } catch (Throwable e) {
             s_logger.warn("Unexpected exception in waking up job-" + job.getId());
 
-            // if we fail wakeup-execution for any reason, avoid release sync-source if there is any
+            // if we fail wakeup-execution for any reason, avoid release
+            // sync-source if there is any
             job.setSyncSource(null);
         }
     }

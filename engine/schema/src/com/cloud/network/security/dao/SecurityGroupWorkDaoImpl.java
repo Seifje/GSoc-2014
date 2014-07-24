@@ -103,7 +103,7 @@ public class SecurityGroupWorkDaoImpl extends GenericDaoBase<SecurityGroupWorkVO
             final SearchCriteria<SecurityGroupWorkVO> sc = UntakenWorkSearch.create();
             sc.setParameters("step", Step.Scheduled);
 
-            final Filter filter = new Filter(SecurityGroupWorkVO.class, null, true, 0l, 1l);//FIXME: order desc by update time?
+            final Filter filter = new Filter(SecurityGroupWorkVO.class, null, true, 0l, 1l);// FIXME: order desc by update time?
 
             txn.start();
             final List<SecurityGroupWorkVO> vos = lockRows(sc, filter, true);
@@ -117,7 +117,8 @@ public class SecurityGroupWorkDaoImpl extends GenericDaoBase<SecurityGroupWorkVO
             SecurityGroupWorkVO work = vos.get(0);
             boolean processing = false;
             if (findByVmIdStep(work.getInstanceId(), Step.Processing) != null) {
-                //ensure that there is no job in Processing state for the same VM
+                // ensure that there is no job in Processing state for the same
+                // VM
                 processing = true;
                 if (s_logger.isTraceEnabled()) {
                     s_logger.trace("Security Group work take: found a job in Scheduled and Processing  vmid=" + work.getInstanceId());
@@ -126,8 +127,9 @@ public class SecurityGroupWorkDaoImpl extends GenericDaoBase<SecurityGroupWorkVO
             work.setServerId(serverId);
             work.setDateTaken(new Date());
             if (processing) {
-                //the caller to take() should check the step and schedule another work item to come back
-                //and take a look.
+                // the caller to take() should check the step and schedule
+                // another work item to come back
+                // and take a look.
                 work.setStep(SecurityGroupWork.Step.Done);
             } else {
                 work.setStep(SecurityGroupWork.Step.Processing);

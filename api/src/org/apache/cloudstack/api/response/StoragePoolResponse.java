@@ -139,7 +139,8 @@ public class StoragePoolResponse extends BaseResponse {
     }
 
     /**
-     * @param scope the scope to set
+     * @param scope
+     *            the scope to set
      */
     public void setScope(String scope) {
         this.scope = scope;

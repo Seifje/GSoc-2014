@@ -58,10 +58,10 @@ public class ServerMonitorReadyPDU extends BaseElement {
         // System.setProperty("streamer.Pipeline.debug", "true");
 
         /* @formatter:off */
-        byte[] packet = new byte[] {
-                0x01, 0x00,  //  CLIPRDR_HEADER::msgType = CB_MONITOR_READY (1)
-                0x00, 0x00,  //  CLIPRDR_HEADER::msgFlags = 0
-                0x00, 0x00, 0x00, 0x00,  //  CLIPRDR_HEADER::dataLen = 0 bytes
+        byte[] packet = new byte[] { 0x01, 0x00, // CLIPRDR_HEADER::msgType =
+                // CB_MONITOR_READY (1)
+                0x00, 0x00, // CLIPRDR_HEADER::msgFlags = 0
+                0x00, 0x00, 0x00, 0x00, // CLIPRDR_HEADER::dataLen = 0 bytes
         };
         /* @formatter:on */
 

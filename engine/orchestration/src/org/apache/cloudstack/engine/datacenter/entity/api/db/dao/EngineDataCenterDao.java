@@ -29,8 +29,10 @@ public interface EngineDataCenterDao extends GenericDao<EngineDataCenterVO, Long
     EngineDataCenterVO findByName(String name);
 
     /**
-     * @param id data center id
-     * @return a pair of mac address strings.  The first one is private and second is public.
+     * @param id
+     *            data center id
+     * @return a pair of mac address strings. The first one is private and
+     *         second is public.
      */
     String[] getNextAvailableMacAddressPair(long id);
 

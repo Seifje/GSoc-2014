@@ -78,6 +78,7 @@ public class XcpOssResource extends CitrixResourceBase {
         return true;
     }
 
+    @Override
     protected StartupStorageCommand initializeLocalSR(Connection conn) {
         SR extsr = getLocalEXTSR(conn);
         if (extsr != null) {
@@ -91,7 +92,8 @@ public class XcpOssResource extends CitrixResourceBase {
                     extsr.setNameDescription(conn, name);
                     Host host = Host.getByUuid(conn, _host.uuid);
                     String address = host.getAddress(conn);
-                    StoragePoolInfo pInfo = new StoragePoolInfo(extsr.getNameLabel(conn), address, SRType.EXT.toString(), SRType.EXT.toString(), Storage.StoragePoolType.EXT, cap, avail);
+                    StoragePoolInfo pInfo = new StoragePoolInfo(extsr.getNameLabel(conn), address, SRType.EXT.toString(), SRType.EXT.toString(), Storage.StoragePoolType.EXT, cap,
+                            avail);
                     StartupStorageCommand cmd = new StartupStorageCommand();
                     cmd.setPoolInfo(pInfo);
                     cmd.setGuid(_host.uuid);
@@ -124,7 +126,7 @@ public class XcpOssResource extends CitrixResourceBase {
     @Override
     protected synchronized VBD createPatchVbd(Connection conn, String vmName, VM vm) throws XmlRpcException, XenAPIException {
         if (_host.localSRuuid != null) {
-            //create an iso vdi on it
+            // create an iso vdi on it
             String result = callHostPlugin(conn, "vmops", "createISOVHD", "uuid", _host.localSRuuid);
             if (result == null || result.equalsIgnoreCase("Failed")) {
                 throw new CloudRuntimeException("can not create systemvm vdi");
@@ -171,7 +173,7 @@ public class XcpOssResource extends CitrixResourceBase {
     @Override
     public Answer executeRequest(Command cmd) {
         if (cmd instanceof NetworkUsageCommand) {
-            return execute((NetworkUsageCommand) cmd);
+            return execute((NetworkUsageCommand)cmd);
         } else {
             return super.executeRequest(cmd);
         }

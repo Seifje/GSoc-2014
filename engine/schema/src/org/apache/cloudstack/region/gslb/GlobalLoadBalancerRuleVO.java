@@ -77,8 +77,8 @@ public class GlobalLoadBalancerRuleVO implements GlobalLoadBalancerRule {
         uuid = UUID.randomUUID().toString();
     }
 
-    public GlobalLoadBalancerRuleVO(String name, String description, String gslbDomain, String algorithm, String persistence, String serviceType, int regionId,
-            long accountId, long domainId, State state) {
+    public GlobalLoadBalancerRuleVO(String name, String description, String gslbDomain, String algorithm, String persistence, String serviceType, int regionId, long accountId,
+            long domainId, State state) {
         this.name = name;
         this.description = description;
         region = regionId;

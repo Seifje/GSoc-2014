@@ -29,12 +29,15 @@ import com.cloud.exception.InternalErrorException;
  *
  * A model object represents the desired state of the system.
  *
- * The object constructor should set the uuid and the internal id of the cloudstack objects.
+ * The object constructor should set the uuid and the internal id of the
+ * cloudstack objects.
  *
- * The build method reads the master database (typically cloudstack mysql) and derives the state that
- * we wish to reflect in the contrail API. This method should not modify the Contrail API state.
+ * The build method reads the master database (typically cloudstack mysql) and
+ * derives the state that we wish to reflect in the contrail API. This method
+ * should not modify the Contrail API state.
  *
- * The verify method reads the API server state and compares with cached properties.
+ * The verify method reads the API server state and compares with cached
+ * properties.
  *
  * The update method pushes updates to the contrail API server.
  */
@@ -45,8 +48,10 @@ public interface ModelObject {
         private static final long serialVersionUID = -2019113974956703526L;
 
         /*
-         * WeakReference class is not serializable by definition. So, we cannot enforce its serialization unless we write the implementation of
-         * methods writeObject() and readObject(). Since the code was already not serializing it, it's been marked as transient.
+         * WeakReference class is not serializable by definition. So, we cannot
+         * enforce its serialization unless we write the implementation of
+         * methods writeObject() and readObject(). Since the code was already
+         * not serializing it, it's been marked as transient.
          */
         transient WeakReference<ModelObject> reference;
 
@@ -106,6 +111,7 @@ public interface ModelObject {
 
     /**
      * Delete the object from the API server.
+     *
      * @param controller
      * @throws IOException
      */
@@ -124,7 +130,9 @@ public interface ModelObject {
     public TreeSet<ModelObject> successors();
 
     /**
-     * Push updates to Contrail API server. This API is only valid for objects in the database.
+     * Push updates to Contrail API server. This API is only valid for objects
+     * in the database.
+     *
      * @param controller
      * @throws IOException
      * @throws InternalErrorException
@@ -132,7 +140,9 @@ public interface ModelObject {
     public void update(ModelController controller) throws InternalErrorException, IOException;
 
     /**
-     * Check that the state of the current object matches the state of the API server.
+     * Check that the state of the current object matches the state of the API
+     * server.
+     *
      * @param controller
      * @return
      */

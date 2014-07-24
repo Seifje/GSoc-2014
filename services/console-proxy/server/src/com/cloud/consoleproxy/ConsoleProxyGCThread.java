@@ -24,9 +24,9 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * ConsoleProxyGCThread does house-keeping work for the process, it helps cleanup log files,
- * recycle idle client sessions without front-end activities and report client stats to external
- * management software
+ * ConsoleProxyGCThread does house-keeping work for the process, it helps
+ * cleanup log files, recycle idle client sessions without front-end activities
+ * and report client stats to external management software
  */
 public class ConsoleProxyGCThread extends Thread {
     private static final Logger s_logger = Logger.getLogger(ConsoleProxyGCThread.class);

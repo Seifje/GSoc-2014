@@ -37,8 +37,7 @@ import com.cloud.exception.ResourceAllocationException;
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.host.Host;
 
-@APICommand(name = "addStratosphereSsp", responseObject = SspResponse.class, description = "Adds stratosphere ssp server",
-        requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
+@APICommand(name = "addStratosphereSsp", responseObject = SspResponse.class, description = "Adds stratosphere ssp server", requestHasSensitiveInfo = true, responseHasSensitiveInfo = false)
 public class AddSspCmd extends BaseCmd {
     private static final Logger s_logger = Logger.getLogger(AddSspCmd.class.getName());
     @Inject
@@ -59,7 +58,8 @@ public class AddSspCmd extends BaseCmd {
     private String password;
 
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, required = true, description = "stratosphere ssp api name")
-    private String name; // required because HostVO name field defined as NOT NULL.
+    private String name; // required because HostVO name field defined as NOT
+    // NULL.
 
     @Parameter(name = "tenantuuid", type = CommandType.STRING, required = false, description = "stratosphere ssp tenant uuid")
     private String tenantUuid; // required in creating ssp tenant_network
@@ -76,7 +76,7 @@ public class AddSspCmd extends BaseCmd {
 
     @Override
     public void execute() throws ResourceUnavailableException, InsufficientCapacityException, ConcurrentOperationException, ResourceAllocationException,
-        NetworkRuleConflictException {
+            NetworkRuleConflictException {
         s_logger.trace("execute");
         Host host = _service.addSspHost(this);
         SspResponse response = new SspResponse();

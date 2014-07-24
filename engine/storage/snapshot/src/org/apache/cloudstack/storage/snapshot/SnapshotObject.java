@@ -78,7 +78,10 @@ public class SnapshotObject implements SnapshotInfo {
     SnapshotDataStoreDao snapshotStoreDao;
     @Inject
     StorageStrategyFactory storageStrategyFactory;
-    private String installPath; // temporarily set installPath before passing to resource for entries with empty installPath for object store migration case
+    private String installPath; // temporarily set installPath before passing to
+
+    // resource for entries with empty installPath
+    // for object store migration case
 
     public SnapshotObject() {
 
@@ -288,7 +291,7 @@ public class SnapshotObject implements SnapshotInfo {
                 snapshotStore.setInstallPath(snapshotTO.getPath());
                 if (snapshotTO.getPhysicalSize() != null) {
                     // For S3 delta snapshot, physical size is currently not set
-                snapshotStore.setSize(snapshotTO.getPhysicalSize());
+                    snapshotStore.setSize(snapshotTO.getPhysicalSize());
                 }
                 if (snapshotTO.getParentSnapshotPath() == null) {
                     snapshotStore.setParentSnapshotId(0L);
@@ -299,8 +302,8 @@ public class SnapshotObject implements SnapshotInfo {
                 if (snapshotTO.getVolume() != null && snapshotTO.getVolume().getPath() != null) {
                     VolumeVO vol = volumeDao.findByUuid(snapshotTO.getVolume().getUuid());
                     if (vol != null) {
-                        s_logger.info("Update volume path change due to snapshot operation, volume " + vol.getId() + " path: " + vol.getPath() + "->" +
-                            snapshotTO.getVolume().getPath());
+                        s_logger.info("Update volume path change due to snapshot operation, volume " + vol.getId() + " path: " + vol.getPath() + "->"
+                                + snapshotTO.getVolume().getPath());
                         vol.setPath(snapshotTO.getVolume().getPath());
                         volumeDao.update(vol.getId(), vol);
                     } else {

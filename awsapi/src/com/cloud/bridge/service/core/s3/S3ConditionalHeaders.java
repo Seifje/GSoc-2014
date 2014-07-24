@@ -73,8 +73,8 @@ public class S3ConditionalHeaders {
     }
 
     /**
-     * Takes the header value from HTTP "If-Match", for example is:
-     * If-Match: "xyzzy", "r2d2xxxx", "c3piozzzz"
+     * Takes the header value from HTTP "If-Match", for example is: If-Match:
+     * "xyzzy", "r2d2xxxx", "c3piozzzz"
      *
      * @param ifMatch
      */
@@ -121,8 +121,8 @@ public class S3ConditionalHeaders {
      * Has the object been modified since the client has last checked?
      *
      * @param lastModified
-     * @return a negative value means that the object has not been modified since
-     *         a postive  value means that this test should be ignored.
+     * @return a negative value means that the object has not been modified
+     *         since a postive value means that this test should be ignored.
      */
     public int ifModifiedSince(Date lastModified) {
         if (null == modifiedSince)
@@ -138,8 +138,8 @@ public class S3ConditionalHeaders {
      * Has the object been modified since the unmodified date?
      *
      * @param lastModified
-     * @return a negative value means that the object has been modified since
-     *         a postive  value means that this test should be ignored.
+     * @return a negative value means that the object has been modified since a
+     *         postive value means that this test should be ignored.
      */
     public int ifUnmodifiedSince(Date lastModified) {
         if (null == unmodifiedSince)
@@ -152,12 +152,14 @@ public class S3ConditionalHeaders {
     }
 
     /**
-     * Does the object's contents (its MD5 signature) match what the client thinks
-     * it is?
+     * Does the object's contents (its MD5 signature) match what the client
+     * thinks it is?
      *
-     * @param ETag - an MD5 signature of the content of the data being stored in S3
-     * @return a negative value means that the test has failed,
-     *         a positive value means that the test succeeded or could not be done (so ignore it)
+     * @param ETag
+     *            - an MD5 signature of the content of the data being stored in
+     *            S3
+     * @return a negative value means that the test has failed, a positive value
+     *         means that the test succeeded or could not be done (so ignore it)
      */
     public int ifMatchEtag(String ETag) {
         if (null == ifMatch || null == ETag)
@@ -171,12 +173,14 @@ public class S3ConditionalHeaders {
     }
 
     /**
-     * None of the given ETags in the "If-None-Match" can match the ETag parameter for this
-     * function to pass.
+     * None of the given ETags in the "If-None-Match" can match the ETag
+     * parameter for this function to pass.
      *
-     * @param ETag - an MD5 signature of the content of the data being stored in S3
-     * @return a negative value means that the test has failed,
-     *         a positive value means that the test succeeded or could not be done (so ignore it)
+     * @param ETag
+     *            - an MD5 signature of the content of the data being stored in
+     *            S3
+     * @return a negative value means that the test has failed, a positive value
+     *         means that the test succeeded or could not be done (so ignore it)
      */
     public int ifNoneMatchEtag(String ETag) {
         if (null == ifNoneMatch || null == ETag)

@@ -49,17 +49,15 @@ public class StoragePoolWorkDaoImpl extends GenericDaoBase<StoragePoolWorkVO, Lo
     protected StoragePoolWorkDaoImpl() {
         PendingWorkForPrepareForMaintenanceSearch = createSearchBuilder();
         PendingWorkForPrepareForMaintenanceSearch.and("poolId", PendingWorkForPrepareForMaintenanceSearch.entity().getPoolId(), SearchCriteria.Op.EQ);
-        PendingWorkForPrepareForMaintenanceSearch.and("stoppedForMaintenance", PendingWorkForPrepareForMaintenanceSearch.entity().isStoppedForMaintenance(),
-            SearchCriteria.Op.EQ);
+        PendingWorkForPrepareForMaintenanceSearch.and("stoppedForMaintenance", PendingWorkForPrepareForMaintenanceSearch.entity().isStoppedForMaintenance(), SearchCriteria.Op.EQ);
         PendingWorkForPrepareForMaintenanceSearch.and("startedAfterMaintenance", PendingWorkForPrepareForMaintenanceSearch.entity().isStartedAfterMaintenance(),
-            SearchCriteria.Op.EQ);
+                SearchCriteria.Op.EQ);
         PendingWorkForPrepareForMaintenanceSearch.done();
 
         PendingWorkForCancelMaintenanceSearch = createSearchBuilder();
         PendingWorkForCancelMaintenanceSearch.and("poolId", PendingWorkForCancelMaintenanceSearch.entity().getPoolId(), SearchCriteria.Op.EQ);
         PendingWorkForCancelMaintenanceSearch.and("stoppedForMaintenance", PendingWorkForCancelMaintenanceSearch.entity().isStoppedForMaintenance(), SearchCriteria.Op.EQ);
-        PendingWorkForCancelMaintenanceSearch.and("startedAfterMaintenance", PendingWorkForCancelMaintenanceSearch.entity().isStartedAfterMaintenance(),
-            SearchCriteria.Op.EQ);
+        PendingWorkForCancelMaintenanceSearch.and("startedAfterMaintenance", PendingWorkForCancelMaintenanceSearch.entity().isStartedAfterMaintenance(), SearchCriteria.Op.EQ);
         PendingWorkForCancelMaintenanceSearch.done();
 
         PoolAndVmIdSearch = createSearchBuilder();

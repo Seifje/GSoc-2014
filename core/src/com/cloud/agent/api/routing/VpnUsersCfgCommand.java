@@ -67,7 +67,7 @@ public class VpnUsersCfgCommand extends NetworkElementCommand {
         }
 
         protected UsernamePassword() {
-            //for Gson
+            // for Gson
         }
 
         public String getUsernamePassword() {

@@ -54,7 +54,7 @@ public class NeutronNodeWrapper {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        NeutronNodeWrapper other = (NeutronNodeWrapper) obj;
+        NeutronNodeWrapper other = (NeutronNodeWrapper)obj;
         if (node == null) {
             if (other.node != null)
                 return false;

@@ -78,8 +78,7 @@ public class MidoNetPublicNetworkGuru extends PublicNetworkGuru {
         }
 
         if (offering.getTrafficType() == Networks.TrafficType.Public) {
-            NetworkVO ntwk =
-                new NetworkVO(offering.getTrafficType(), Networks.Mode.Static, Networks.BroadcastDomainType.Mido, offering.getId(), Network.State.Allocated,
+            NetworkVO ntwk = new NetworkVO(offering.getTrafficType(), Networks.Mode.Static, Networks.BroadcastDomainType.Mido, offering.getId(), Network.State.Allocated,
                     plan.getDataCenterId(), plan.getPhysicalNetworkId());
             return ntwk;
         } else {
@@ -93,7 +92,7 @@ public class MidoNetPublicNetworkGuru extends PublicNetworkGuru {
 
     @Override
     protected void getIp(NicProfile nic, DataCenter dc, VirtualMachineProfile vm, Network network) throws InsufficientVirtualNetworkCapcityException,
-        InsufficientAddressCapacityException, ConcurrentOperationException {
+            InsufficientAddressCapacityException, ConcurrentOperationException {
         if (nic.getIp4Address() == null) {
             PublicIp ip = _ipAddrMgr.assignPublicIpAddress(dc.getId(), null, vm.getOwner(), Vlan.VlanType.VirtualNetwork, null, null, false);
             nic.setIp4Address(ip.getAddress().addr());
@@ -107,9 +106,9 @@ public class MidoNetPublicNetworkGuru extends PublicNetworkGuru {
             // Make it the default nic so that a default route is set up.
             nic.setDefaultNic(true);
 
-            //nic.setIsolationUri(Networks.IsolationType..Mido.toUri(ip.getVlanTag()));
+            // nic.setIsolationUri(Networks.IsolationType..Mido.toUri(ip.getVlanTag()));
             nic.setBroadcastUri(network.getBroadcastUri());
-            //nic.setBroadcastType(Networks.BroadcastDomainType.Vlan);
+            // nic.setBroadcastType(Networks.BroadcastDomainType.Vlan);
             nic.setFormat(Networks.AddressFormat.Ip4);
             nic.setReservationId(String.valueOf(ip.getVlanTag()));
             nic.setMacAddress(ip.getMacAddress());
@@ -131,8 +130,8 @@ public class MidoNetPublicNetworkGuru extends PublicNetworkGuru {
     }
 
     @Override
-    public NicProfile allocate(Network network, NicProfile nic, VirtualMachineProfile vm) throws InsufficientVirtualNetworkCapcityException,
-        InsufficientAddressCapacityException, ConcurrentOperationException {
+    public NicProfile allocate(Network network, NicProfile nic, VirtualMachineProfile vm) throws InsufficientVirtualNetworkCapcityException, InsufficientAddressCapacityException,
+            ConcurrentOperationException {
 
         if (nic == null) {
             nic = new NicProfile(Nic.ReservationStrategy.Create, null, null, null, null);
@@ -161,7 +160,7 @@ public class MidoNetPublicNetworkGuru extends PublicNetworkGuru {
 
     @Override
     public void reserve(NicProfile nic, Network network, VirtualMachineProfile vm, DeployDestination dest, ReservationContext context)
-        throws InsufficientVirtualNetworkCapcityException, InsufficientAddressCapacityException, ConcurrentOperationException {
+            throws InsufficientVirtualNetworkCapcityException, InsufficientAddressCapacityException, ConcurrentOperationException {
         s_logger.debug("reserve called with network: " + network + " nic: " + nic + " vm: " + vm);
         if (nic.getIp4Address() == null) {
             getIp(nic, dest.getDataCenter(), vm, network);
@@ -176,16 +175,15 @@ public class MidoNetPublicNetworkGuru extends PublicNetworkGuru {
 
     @Override
     public Network implement(Network network, NetworkOffering offering, DeployDestination destination, ReservationContext context)
-        throws InsufficientVirtualNetworkCapcityException {
+            throws InsufficientVirtualNetworkCapcityException {
         s_logger.debug("implement called with network: " + network);
         long dcId = destination.getDataCenter().getId();
 
-        //get physical network id
+        // get physical network id
         long physicalNetworkId = _networkModel.findPhysicalNetworkId(dcId, offering.getTags(), offering.getTrafficType());
 
-        NetworkVO implemented =
-            new NetworkVO(network.getTrafficType(), network.getMode(), network.getBroadcastDomainType(), network.getNetworkOfferingId(), Network.State.Allocated,
-                network.getDataCenterId(), physicalNetworkId);
+        NetworkVO implemented = new NetworkVO(network.getTrafficType(), network.getMode(), network.getBroadcastDomainType(), network.getNetworkOfferingId(),
+                Network.State.Allocated, network.getDataCenterId(), physicalNetworkId);
 
         if (network.getGateway() != null) {
             implemented.setGateway(network.getGateway());

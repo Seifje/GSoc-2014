@@ -24,6 +24,7 @@ import org.apache.cloudstack.api.InternalIdentity;
 
 public interface NetworkACLItem extends InternalIdentity, Identity, Displayable {
 
+    @Override
     String getUuid();
 
     Action getAction();
@@ -31,10 +32,16 @@ public interface NetworkACLItem extends InternalIdentity, Identity, Displayable 
     int getNumber();
 
     enum State {
-        Staged, // Rule been created but has never got through network rule conflict detection.  Rules in this state can not be sent to network elements.
-        Add,    // Add means the rule has been created and has gone through network rule conflict detection.
-        Active, // Rule has been sent to the network elements and reported to be active.
-        Revoke  // Revoke means this rule has been revoked. If this rule has been sent to the network elements, the rule will be deleted from database.
+        Staged, // Rule been created but has never got through network rule
+        // conflict detection. Rules in this state can not be sent to
+        // network elements.
+        Add, // Add means the rule has been created and has gone through network
+        // rule conflict detection.
+        Active, // Rule has been sent to the network elements and reported to be
+        // active.
+        Revoke // Revoke means this rule has been revoked. If this rule has been
+        // sent to the network elements, the rule will be deleted from
+        // database.
     }
 
     enum TrafficType {
@@ -51,7 +58,8 @@ public interface NetworkACLItem extends InternalIdentity, Identity, Displayable 
     Integer getSourcePortStart();
 
     /**
-     * @return last port of the source prot range.  If this is null, that means only one port is mapped.
+     * @return last port of the source prot range. If this is null, that means
+     *         only one port is mapped.
      */
     Integer getSourcePortEnd();
 

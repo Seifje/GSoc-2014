@@ -31,6 +31,7 @@ import com.cloud.utils.NumbersUtil;
 
 /**
  * copied from the public domain utility from John Burkard.
+ *
  * @author <a href="mailto:jb@eaio.com">Johann Burkard</a>
  * @version 2.1.3
  **/
@@ -62,21 +63,18 @@ public class MacAddress {
     public String toString(String separator) {
         StringBuilder buff = new StringBuilder();
         Formatter formatter = new Formatter(buff);
-        formatter.format("%02x%s%02x%s%02x%s%02x%s%02x%s%02x", _addr >> 40 & 0xff, separator, _addr >> 32 & 0xff, separator, _addr >> 24 & 0xff, separator,
-            _addr >> 16 & 0xff, separator, _addr >> 8 & 0xff, separator, _addr & 0xff);
+        formatter.format("%02x%s%02x%s%02x%s%02x%s%02x%s%02x", _addr >> 40 & 0xff, separator, _addr >> 32 & 0xff, separator, _addr >> 24 & 0xff, separator, _addr >> 16 & 0xff,
+                separator, _addr >> 8 & 0xff, separator, _addr & 0xff);
         return buff.toString();
 
         /*
-
-        String str = Long.toHexString(_addr);
-
-        for (int i = str.length() - 1; i >= 0; i--) {
-            buff.append(str.charAt(i));
-            if (separator != null && (str.length() - i) % 2 == 0) {
-                buff.append(separator);
-            }
-        }
-        return buff.reverse().toString();
+         *
+         * String str = Long.toHexString(_addr);
+         *
+         * for (int i = str.length() - 1; i >= 0; i--) {
+         * buff.append(str.charAt(i)); if (separator != null && (str.length() -
+         * i) % 2 == 0) { buff.append(separator); } } return
+         * buff.reverse().toString();
          */
     }
 
@@ -207,8 +205,7 @@ public class MacAddress {
      * <li>.{1,2}-.{1,2}-.{1,2}-.{1,2}-.{1,2}-.{1,2}</li>
      * </ul>
      *
-     * This is copied from the author below.  The author encouraged copying
-     * it.
+     * This is copied from the author below. The author encouraged copying it.
      *
      */
     static String parse(String in) {
@@ -261,13 +258,17 @@ public class MacAddress {
     }
 
     /**
-     * Parses a <code>long</code> from a hex encoded number. This method will skip
-     * all characters that are not 0-9 and a-f (the String is lower cased first).
-     * Returns 0 if the String does not contain any interesting characters.
+     * Parses a <code>long</code> from a hex encoded number. This method will
+     * skip all characters that are not 0-9 and a-f (the String is lower cased
+     * first). Returns 0 if the String does not contain any interesting
+     * characters.
      *
-     * @param s the String to extract a <code>long</code> from, may not be <code>null</code>
+     * @param s
+     *            the String to extract a <code>long</code> from, may not be
+     *            <code>null</code>
      * @return a <code>long</code>
-     * @throws NullPointerException if the String is <code>null</code>
+     * @throws NullPointerException
+     *             if the String is <code>null</code>
      */
     public static long parseLong(String s) throws NullPointerException {
         s = s.toLowerCase();
@@ -290,13 +291,17 @@ public class MacAddress {
     }
 
     /**
-     * Parses an <code>int</code> from a hex encoded number. This method will skip
-     * all characters that are not 0-9 and a-f (the String is lower cased first).
-     * Returns 0 if the String does not contain any interesting characters.
+     * Parses an <code>int</code> from a hex encoded number. This method will
+     * skip all characters that are not 0-9 and a-f (the String is lower cased
+     * first). Returns 0 if the String does not contain any interesting
+     * characters.
      *
-     * @param s the String to extract an <code>int</code> from, may not be <code>null</code>
+     * @param s
+     *            the String to extract an <code>int</code> from, may not be
+     *            <code>null</code>
      * @return an <code>int</code>
-     * @throws NullPointerException if the String is <code>null</code>
+     * @throws NullPointerException
+     *             if the String is <code>null</code>
      */
     public static int parseInt(String s) throws NullPointerException {
         s = s.toLowerCase();
@@ -319,13 +324,17 @@ public class MacAddress {
     }
 
     /**
-     * Parses a <code>short</code> from a hex encoded number. This method will skip
-     * all characters that are not 0-9 and a-f (the String is lower cased first).
-     * Returns 0 if the String does not contain any interesting characters.
+     * Parses a <code>short</code> from a hex encoded number. This method will
+     * skip all characters that are not 0-9 and a-f (the String is lower cased
+     * first). Returns 0 if the String does not contain any interesting
+     * characters.
      *
-     * @param s the String to extract a <code>short</code> from, may not be <code>null</code>
+     * @param s
+     *            the String to extract a <code>short</code> from, may not be
+     *            <code>null</code>
      * @return a <code>short</code>
-     * @throws NullPointerException if the String is <code>null</code>
+     * @throws NullPointerException
+     *             if the String is <code>null</code>
      */
     public static short parseShort(String s) throws NullPointerException {
         s = s.toLowerCase();
@@ -348,13 +357,17 @@ public class MacAddress {
     }
 
     /**
-     * Parses a <code>byte</code> from a hex encoded number. This method will skip
-     * all characters that are not 0-9 and a-f (the String is lower cased first).
-     * Returns 0 if the String does not contain any interesting characters.
+     * Parses a <code>byte</code> from a hex encoded number. This method will
+     * skip all characters that are not 0-9 and a-f (the String is lower cased
+     * first). Returns 0 if the String does not contain any interesting
+     * characters.
      *
-     * @param s the String to extract a <code>byte</code> from, may not be <code>null</code>
+     * @param s
+     *            the String to extract a <code>byte</code> from, may not be
+     *            <code>null</code>
      * @return a <code>byte</code>
-     * @throws NullPointerException if the String is <code>null</code>
+     * @throws NullPointerException
+     *             if the String is <code>null</code>
      */
     public static byte parseByte(String s) throws NullPointerException {
         s = s.toLowerCase();

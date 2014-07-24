@@ -115,8 +115,7 @@ public class IPAddressDaoImpl extends GenericDaoBase<IPAddressVO, Long> implemen
         SearchBuilder<VlanVO> virtaulNetworkVlan = _vlanDao.createSearchBuilder();
         virtaulNetworkVlan.and("vlanType", virtaulNetworkVlan.entity().getVlanType(), SearchCriteria.Op.EQ);
 
-        AllIpCountForDashboard.join("vlan", virtaulNetworkVlan, virtaulNetworkVlan.entity().getId(), AllIpCountForDashboard.entity().getVlanId(),
-            JoinBuilder.JoinType.INNER);
+        AllIpCountForDashboard.join("vlan", virtaulNetworkVlan, virtaulNetworkVlan.entity().getId(), AllIpCountForDashboard.entity().getVlanId(), JoinBuilder.JoinType.INNER);
         virtaulNetworkVlan.done();
         AllIpCountForDashboard.done();
 
@@ -169,7 +168,7 @@ public class IPAddressDaoImpl extends GenericDaoBase<IPAddressVO, Long> implemen
         address.setSystem(false);
         address.setVmIp(null);
         address.setDisplay(true);
-        //remove resource details for the ip
+        // remove resource details for the ip
         _detailsDao.removeDetails(ipAddressId);
         update(ipAddressId, address);
     }
@@ -296,8 +295,7 @@ public class IPAddressDaoImpl extends GenericDaoBase<IPAddressVO, Long> implemen
         TransactionLegacy txn = TransactionLegacy.currentTxn();
         int ipCount = 0;
         try {
-            String sql =
-                "SELECT count(*) FROM user_ip_address u INNER JOIN vlan v on (u.vlan_db_id = v.id AND v.data_center_id = ? AND v.vlan_id = ? AND v.vlan_gateway = ? AND v.vlan_netmask = ? AND u.account_id = ?)";
+            String sql = "SELECT count(*) FROM user_ip_address u INNER JOIN vlan v on (u.vlan_db_id = v.id AND v.data_center_id = ? AND v.vlan_id = ? AND v.vlan_gateway = ? AND v.vlan_netmask = ? AND u.account_id = ?)";
 
             PreparedStatement pstmt = txn.prepareAutoCloseStatement(sql);
             pstmt.setLong(1, dcId);

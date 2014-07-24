@@ -39,6 +39,7 @@ public interface F5ExternalLoadBalancerElementService extends PluggableService {
 
     /**
      * adds a F5 load balancer device in to a physical network
+     * 
      * @param AddF5LoadBalancerCmd
      * @return ExternalLoadBalancerDeviceVO object for the device added
      */
@@ -46,6 +47,7 @@ public interface F5ExternalLoadBalancerElementService extends PluggableService {
 
     /**
      * removes a F5 load balancer device from a physical network
+     * 
      * @param DeleteF5LoadBalancerCmd
      * @return true if F5 load balancer device is successfully deleted
      */
@@ -53,6 +55,7 @@ public interface F5ExternalLoadBalancerElementService extends PluggableService {
 
     /**
      * configures a F5 load balancer device added in a physical network
+     * 
      * @param ConfigureF5LoadBalancerCmd
      * @return ExternalLoadBalancerDeviceVO for the device configured
      */
@@ -60,13 +63,16 @@ public interface F5ExternalLoadBalancerElementService extends PluggableService {
 
     /**
      * lists all the load balancer devices added in to a physical network
+     * 
      * @param ListF5LoadBalancersCmd
-     * @return list of ExternalLoadBalancerDeviceVO for the devices in the physical network.
+     * @return list of ExternalLoadBalancerDeviceVO for the devices in the
+     *         physical network.
      */
     public List<ExternalLoadBalancerDeviceVO> listF5LoadBalancers(ListF5LoadBalancersCmd cmd);
 
     /**
      * lists all the guest networks using a F5 load balancer device
+     * 
      * @param ListF5LoadBalancerNetworksCmd
      * @return list of the guest networks that are using this F5 load balancer
      */
@@ -77,21 +83,17 @@ public interface F5ExternalLoadBalancerElementService extends PluggableService {
     /* Deprecated API helper function */
     @Deprecated
     // API helper function supported for backward compatibility
-        public
-        Host addExternalLoadBalancer(AddExternalLoadBalancerCmd cmd);
+    public Host addExternalLoadBalancer(AddExternalLoadBalancerCmd cmd);
 
     @Deprecated
-    //  API helper function supported for backward compatibility
-        public
-        boolean deleteExternalLoadBalancer(DeleteExternalLoadBalancerCmd cmd);
+    // API helper function supported for backward compatibility
+    public boolean deleteExternalLoadBalancer(DeleteExternalLoadBalancerCmd cmd);
 
     @Deprecated
-    //  API helper function supported for backward compatibility
-        public
-        List<Host> listExternalLoadBalancers(ListExternalLoadBalancersCmd cmd);
+    // API helper function supported for backward compatibility
+    public List<Host> listExternalLoadBalancers(ListExternalLoadBalancersCmd cmd);
 
     @Deprecated
-    //  API helper function supported for backward compatibility
-        public
-        ExternalLoadBalancerResponse createExternalLoadBalancerResponse(Host externalLb);
+    // API helper function supported for backward compatibility
+    public ExternalLoadBalancerResponse createExternalLoadBalancerResponse(Host externalLb);
 }

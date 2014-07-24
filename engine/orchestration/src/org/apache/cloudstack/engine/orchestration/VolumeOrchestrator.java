@@ -210,17 +210,8 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
     }
 
     public VolumeVO allocateDuplicateVolumeVO(Volume oldVol, Long templateId) {
-        VolumeVO newVol = new VolumeVO(oldVol.getVolumeType(),
-            oldVol.getName(),
-            oldVol.getDataCenterId(),
-            oldVol.getDomainId(),
-            oldVol.getAccountId(),
-            oldVol.getDiskOfferingId(),
-            oldVol.getProvisioningType(),
-            oldVol.getSize(),
-            oldVol.getMinIops(),
-            oldVol.getMaxIops(),
-            oldVol.get_iScsiName());
+        VolumeVO newVol = new VolumeVO(oldVol.getVolumeType(), oldVol.getName(), oldVol.getDataCenterId(), oldVol.getDomainId(), oldVol.getAccountId(), oldVol.getDiskOfferingId(),
+                oldVol.getProvisioningType(), oldVol.getSize(), oldVol.getMinIops(), oldVol.getMaxIops(), oldVol.get_iScsiName());
         if (templateId != null) {
             newVol.setTemplateId(templateId);
         } else {
@@ -297,7 +288,9 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
         }
 
         if (vm != null && pod != null) {
-            //if VM is running use the hostId to find the clusterID. If it is stopped, refer the cluster where the ROOT volume of the VM exists.
+            // if VM is running use the hostId to find the clusterID. If it is
+            // stopped, refer the cluster where the ROOT volume of the VM
+            // exists.
             Long hostId = null;
             Long clusterId = null;
             if (vm.getState() == State.Running) {
@@ -322,7 +315,7 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
             }
 
             if (pool == null) {
-                //pool could not be found in the VM's pod/cluster.
+                // pool could not be found in the VM's pod/cluster.
                 if (s_logger.isDebugEnabled()) {
                     s_logger.debug("Could not find any storage pool to create Volume in the pod/cluster of the provided VM " + vm.getUuid());
                 }
@@ -363,7 +356,8 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
         try {
             _snapshotSrv.syncVolumeSnapshotsToRegionStore(snapVolId, snapStore);
         } catch (Exception ex) {
-            // log but ignore the sync error to avoid any potential S3 down issue, it should be sync next time
+            // log but ignore the sync error to avoid any potential S3 down
+            // issue, it should be sync next time
             s_logger.warn(ex.getMessage(), ex);
         }
         // create volume on primary from snapshot
@@ -431,7 +425,8 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
     @DB
     public VolumeInfo createVolume(VolumeInfo volume, VirtualMachine vm, VirtualMachineTemplate template, DataCenter dc, Pod pod, Long clusterId, ServiceOffering offering,
             DiskOffering diskOffering, List<StoragePool> avoids, long size, HypervisorType hyperType) {
-        // update the volume's hypervisor_ss_reserve from its disk offering (used for managed storage)
+        // update the volume's hypervisor_ss_reserve from its disk offering
+        // (used for managed storage)
         volume = updateHypervisorSnapshotReserveForVolume(diskOffering, volume, hyperType);
 
         StoragePool pool = null;
@@ -462,7 +457,8 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
         }
         DataStore store = dataStoreMgr.getDataStore(pool.getId(), DataStoreRole.Primary);
         for (int i = 0; i < 2; i++) {
-            // retry one more time in case of template reload is required for Vmware case
+            // retry one more time in case of template reload is required for
+            // Vmware case
             AsyncCallFuture<VolumeApiResult> future = null;
             boolean isNotCreatedFromTemplate = volume.getTemplateId() == null ? true : false;
             if (isNotCreatedFromTemplate) {
@@ -495,10 +491,14 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
         throw new CloudRuntimeException("create volume failed even after template re-deploy");
     }
 
-    // For managed storage on Xen and VMware, we need to potentially make space for hypervisor snapshots.
-    // The disk offering can collect this information and pass it on to the volume that's about to be created.
-    // Ex. if you want a 10 GB CloudStack volume to reside on managed storage on Xen, this leads to an SR
-    // that is a total size of (10 GB * (hypervisorSnapshotReserveSpace / 100) + 10 GB).
+    // For managed storage on Xen and VMware, we need to potentially make space
+    // for hypervisor snapshots.
+    // The disk offering can collect this information and pass it on to the
+    // volume that's about to be created.
+    // Ex. if you want a 10 GB CloudStack volume to reside on managed storage on
+    // Xen, this leads to an SR
+    // that is a total size of (10 GB * (hypervisorSnapshotReserveSpace / 100) +
+    // 10 GB).
     private VolumeInfo updateHypervisorSnapshotReserveForVolume(DiskOffering diskOffering, VolumeInfo volumeInfo, HypervisorType hyperType) {
         Integer hypervisorSnapshotReserve = diskOffering.getHypervisorSnapshotReserve();
 
@@ -584,7 +584,8 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
     }
 
     @Override
-    public DiskProfile allocateRawVolume(Type type, String name, DiskOffering offering, Long size, Long minIops, Long maxIops, VirtualMachine vm, VirtualMachineTemplate template, Account owner) {
+    public DiskProfile allocateRawVolume(Type type, String name, DiskOffering offering, Long size, Long minIops, Long maxIops, VirtualMachine vm, VirtualMachineTemplate template,
+            Account owner) {
         if (size == null) {
             size = offering.getDiskSize();
         } else {
@@ -594,17 +595,8 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
         minIops = minIops != null ? minIops : offering.getMinIops();
         maxIops = maxIops != null ? maxIops : offering.getMaxIops();
 
-        VolumeVO vol = new VolumeVO(type,
-            name,
-            vm.getDataCenterId(),
-            owner.getDomainId(),
-            owner.getId(),
-            offering.getId(),
-            offering.getProvisioningType(),
-            size,
-            minIops,
-            maxIops,
-            null);
+        VolumeVO vol = new VolumeVO(type, name, vm.getDataCenterId(), owner.getDomainId(), owner.getId(), offering.getId(), offering.getProvisioningType(), size, minIops, maxIops,
+                null);
         if (vm != null) {
             vol.setInstanceId(vm.getId());
         }
@@ -638,11 +630,12 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
     }
 
     @Override
-    public DiskProfile allocateTemplatedVolume(Type type, String name, DiskOffering offering, Long rootDisksize, Long minIops, Long maxIops, VirtualMachineTemplate template, VirtualMachine vm, Account owner) {
+    public DiskProfile allocateTemplatedVolume(Type type, String name, DiskOffering offering, Long rootDisksize, Long minIops, Long maxIops, VirtualMachineTemplate template,
+            VirtualMachine vm, Account owner) {
         assert (template.getFormat() != ImageFormat.ISO) : "ISO is not a template really....";
 
         Long size = _tmpltMgr.getTemplateSize(template.getId(), vm.getDataCenterId());
-        if (rootDisksize != null ) {
+        if (rootDisksize != null) {
             rootDisksize = rootDisksize * 1024 * 1024 * 1024;
             if (rootDisksize > size) {
                 s_logger.debug("Using root disk size of " + rootDisksize + " for volume " + name);
@@ -655,17 +648,8 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
         minIops = minIops != null ? minIops : offering.getMinIops();
         maxIops = maxIops != null ? maxIops : offering.getMaxIops();
 
-        VolumeVO vol = new VolumeVO(type,
-            name,
-            vm.getDataCenterId(),
-            owner.getDomainId(),
-            owner.getId(),
-            offering.getId(),
-            offering.getProvisioningType(),
-            size,
-            minIops,
-            maxIops,
-            null);
+        VolumeVO vol = new VolumeVO(type, name, vm.getDataCenterId(), owner.getDomainId(), owner.getId(), offering.getId(), offering.getProvisioningType(), size, minIops, maxIops,
+                null);
         vol.setFormat(getSupportedImageFormatForCluster(template.getHypervisorType()));
         if (vm != null) {
             vol.setInstanceId(vm.getId());
@@ -682,10 +666,9 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
         }
 
         if (vm.getType() == VirtualMachine.Type.User) {
-           UserVmVO userVm = _userVmDao.findById(vm.getId());
-           vol.setDisplayVolume(userVm.isDisplayVm());
+            UserVmVO userVm = _userVmDao.findById(vm.getId());
+            vol.setDisplayVolume(userVm.isDisplayVm());
         }
-
 
         vol = _volsDao.persist(vol);
 
@@ -764,7 +747,9 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
         } else if (volume.getState() == Volume.State.Uploaded) {
             vol = copyVolume(storagePool, volume, vm, rootDiskTmplt, dcVO, pod, diskVO, svo, rootDiskHyperType);
             if (vol != null) {
-                // Moving of Volume is successful, decrement the volume resource count from secondary for an account and increment it into primary storage under same account.
+                // Moving of Volume is successful, decrement the volume resource
+                // count from secondary for an account and increment it into
+                // primary storage under same account.
                 _resourceLimitMgr.decrementResourceCount(volume.getAccountId(), ResourceType.secondary_storage, volume.getSize());
                 _resourceLimitMgr.incrementResourceCount(volume.getAccountId(), ResourceType.primary_storage, volume.getSize());
             }
@@ -799,7 +784,8 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
             @Override
             public VolumeVO doInTransaction(TransactionStatus status) {
                 VolumeVO newVolume = allocateDuplicateVolumeVO(existingVolume, templateIdToUseFinal);
-                // In case of Vmware if vm reference is not removed then during root
+                // In case of Vmware if vm reference is not removed then during
+                // root
                 // disk cleanup
                 // the vm also gets deleted, so remove the reference
                 if (vm.getHypervisorType() == HypervisorType.VMware) {
@@ -810,7 +796,8 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
                 } catch (NoTransitionException e) {
                     s_logger.debug("Unable to destroy existing volume: " + e.toString());
                 }
-                // In case of VMware VM will continue to use the old root disk until expunged, so force expunge old root disk
+                // In case of VMware VM will continue to use the old root disk
+                // until expunged, so force expunge old root disk
                 if (vm.getHypervisorType() == HypervisorType.VMware) {
                     s_logger.info("Expunging volume " + existingVolume.getId() + " from primary data store");
                     AsyncCallFuture<VolumeApiResult> future = volService.expungeVolumeAsync(volFactory.getVolume(existingVolume.getId()));
@@ -1029,12 +1016,15 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
             vm.addDisk(disk);
         }
 
-        //if (vm.getType() == VirtualMachine.Type.User && vm.getTemplate().getFormat() == ImageFormat.ISO) {
+        // if (vm.getType() == VirtualMachine.Type.User &&
+        // vm.getTemplate().getFormat() == ImageFormat.ISO) {
         if (vm.getType() == VirtualMachine.Type.User) {
             _tmpltMgr.prepareIsoForVmProfile(vm);
-            //DataTO dataTO = tmplFactory.getTemplate(vm.getTemplate().getId(), DataStoreRole.Image, vm.getVirtualMachine().getDataCenterId()).getTO();
-            //DiskTO iso = new DiskTO(dataTO, 3L, null, Volume.Type.ISO);
-            //vm.addDisk(iso);
+            // DataTO dataTO = tmplFactory.getTemplate(vm.getTemplate().getId(),
+            // DataStoreRole.Image,
+            // vm.getVirtualMachine().getDataCenterId()).getTO();
+            // DiskTO iso = new DiskTO(dataTO, 3L, null, Volume.Type.ISO);
+            // vm.addDisk(iso);
         }
     }
 
@@ -1110,13 +1100,15 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
                             }
                             DiskOffering diskOffering = _entityMgr.findById(DiskOffering.class, vol.getDiskOfferingId());
                             if (diskOffering.getUseLocalStorage()) {
-                                // Currently migration of local volume is not supported so bail out
+                                // Currently migration of local volume is not
+                                // supported so bail out
                                 if (s_logger.isDebugEnabled()) {
                                     s_logger.debug("Local volume " + vol + " cannot be recreated on storagepool " + assignedPool + " assigned by deploymentPlanner");
                                 }
                                 throw new CloudRuntimeException("Local volume " + vol + " cannot be recreated on storagepool " + assignedPool + " assigned by deploymentPlanner");
                             } else {
-                                //Check if storage migration is enabled in config
+                                // Check if storage migration is enabled in
+                                // config
                                 if (StorageHAMigrationEnabled.value()) {
                                     if (s_logger.isDebugEnabled()) {
                                         s_logger.debug("Shared volume " + vol + " will be migrated on storage pool " + assignedPool + " assigned by deploymentPlanner");
@@ -1182,13 +1174,15 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
         VolumeInfo volume = volFactory.getVolume(newVol.getId(), destPool);
         Long templateId = newVol.getTemplateId();
         for (int i = 0; i < 2; i++) {
-            // retry one more time in case of template reload is required for Vmware case
+            // retry one more time in case of template reload is required for
+            // Vmware case
             AsyncCallFuture<VolumeApiResult> future = null;
             if (templateId == null) {
                 DiskOffering diskOffering = _entityMgr.findById(DiskOffering.class, volume.getDiskOfferingId());
                 HypervisorType hyperType = vm.getVirtualMachine().getHypervisorType();
 
-                // update the volume's hypervisor_ss_reserve from its disk offering (used for managed storage)
+                // update the volume's hypervisor_ss_reserve from its disk
+                // offering (used for managed storage)
                 updateHypervisorSnapshotReserveForVolume(diskOffering, volume, hyperType);
 
                 volume = volFactory.getVolume(newVol.getId(), destPool);
@@ -1208,14 +1202,14 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
                     DiskOffering diskOffering = _entityMgr.findById(DiskOffering.class, volume.getDiskOfferingId());
                     HypervisorType hyperType = vm.getVirtualMachine().getHypervisorType();
 
-                    // update the volume's hypervisor_ss_reserve from its disk offering (used for managed storage)
+                    // update the volume's hypervisor_ss_reserve from its disk
+                    // offering (used for managed storage)
                     updateHypervisorSnapshotReserveForVolume(diskOffering, volume, hyperType);
 
                     long hostId = vm.getVirtualMachine().getHostId();
 
                     future = volService.createManagedStorageAndVolumeFromTemplateAsync(volume, destPool.getId(), templ, hostId);
-                }
-                else {
+                } else {
                     future = volService.createVolumeFromTemplateAsync(volume, destPool.getId(), templ);
                 }
             }
@@ -1242,7 +1236,7 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
                 }
 
                 newVol = _volsDao.findById(newVol.getId());
-                break; //break out of template-redeploy retry loop
+                break; // break out of template-redeploy retry loop
             } catch (InterruptedException e) {
                 s_logger.error("Unable to create " + newVol, e);
                 throw new StorageUnavailableException("Unable to create " + newVol + ":" + e.toString(), destPool.getId());
@@ -1388,7 +1382,8 @@ public class VolumeOrchestrator extends ManagerBase implements VolumeOrchestrati
     public void updateVolumeDiskChain(long volumeId, String path, String chainInfo) {
         VolumeVO vol = _volsDao.findById(volumeId);
         boolean needUpdate = false;
-        // Volume path is not getting updated in the DB, need to find reason and fix the issue.
+        // Volume path is not getting updated in the DB, need to find reason and
+        // fix the issue.
         if (vol.getPath() == null)
             return;
         if (!vol.getPath().equalsIgnoreCase(path))

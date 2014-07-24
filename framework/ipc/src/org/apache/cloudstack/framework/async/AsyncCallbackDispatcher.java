@@ -65,7 +65,6 @@ public class AsyncCallbackDispatcher<T, R> implements AsyncCompletionCallback {
         if (clzName.contains("EnhancerByCloudStack"))
             clz = clz.getSuperclass();
 
-
         Enhancer en = null;
         synchronized (enMap) {
             en = enMap.get(clz);
@@ -77,8 +76,8 @@ public class AsyncCallbackDispatcher<T, R> implements AsyncCompletionCallback {
                     @Override
                     public Object intercept(Object arg0, Method arg1, Object[] arg2, MethodProxy arg3) throws Throwable {
                         return null;
-                        }
-                    });
+                    }
+                });
                 enMap.put(clz, en);
             }
         }

@@ -372,25 +372,25 @@ public class CiscoVnmcResource implements ServerResource {
                         String[] externalIpRange = getIpRangeFromCidr(rule.getSourceCidrList().get(0));
                         if (rule.getTrafficType() == TrafficType.Ingress) {
                             if (!rule.getProtocol().equalsIgnoreCase("icmp") && rule.getSrcPortRange() != null) {
-                                if (!_connection.createTenantVDCIngressAclRule(tenant, rule.getId(), policyIdentifier, rule.getProtocol().toUpperCase(),
-                                    externalIpRange[0], externalIpRange[1], Integer.toString(rule.getSrcPortRange()[0]), Integer.toString(rule.getSrcPortRange()[1]))) {
+                                if (!_connection.createTenantVDCIngressAclRule(tenant, rule.getId(), policyIdentifier, rule.getProtocol().toUpperCase(), externalIpRange[0],
+                                        externalIpRange[1], Integer.toString(rule.getSrcPortRange()[0]), Integer.toString(rule.getSrcPortRange()[1]))) {
                                     throw new ExecutionException("Failed to create ACL ingress rule in VNMC for guest network with vlan " + vlanId);
                                 }
                             } else {
-                                if (!_connection.createTenantVDCIngressAclRule(tenant, rule.getId(), policyIdentifier, rule.getProtocol().toUpperCase(),
-                                    externalIpRange[0], externalIpRange[1])) {
+                                if (!_connection.createTenantVDCIngressAclRule(tenant, rule.getId(), policyIdentifier, rule.getProtocol().toUpperCase(), externalIpRange[0],
+                                        externalIpRange[1])) {
                                     throw new ExecutionException("Failed to create ACL ingress rule in VNMC for guest network with vlan " + vlanId);
                                 }
                             }
                         } else {
                             if ((rule.getProtocol().equalsIgnoreCase("tcp") || rule.getProtocol().equalsIgnoreCase("udp")) && rule.getSrcPortRange() != null) {
-                                if (!_connection.createTenantVDCEgressAclRule(tenant, rule.getId(), policyIdentifier, rule.getProtocol().toUpperCase(),
-                                    externalIpRange[0], externalIpRange[1], Integer.toString(rule.getSrcPortRange()[0]), Integer.toString(rule.getSrcPortRange()[1]))) {
+                                if (!_connection.createTenantVDCEgressAclRule(tenant, rule.getId(), policyIdentifier, rule.getProtocol().toUpperCase(), externalIpRange[0],
+                                        externalIpRange[1], Integer.toString(rule.getSrcPortRange()[0]), Integer.toString(rule.getSrcPortRange()[1]))) {
                                     throw new ExecutionException("Failed to create ACL egress rule in VNMC for guest network with vlan " + vlanId);
                                 }
                             } else {
-                                if (!_connection.createTenantVDCEgressAclRule(tenant, rule.getId(), policyIdentifier, rule.getProtocol().toUpperCase(),
-                                    externalIpRange[0], externalIpRange[1])) {
+                                if (!_connection.createTenantVDCEgressAclRule(tenant, rule.getId(), policyIdentifier, rule.getProtocol().toUpperCase(), externalIpRange[0],
+                                        externalIpRange[1])) {
                                     throw new ExecutionException("Failed to create ACL egress rule in VNMC for guest network with vlan " + vlanId);
                                 }
                             }
@@ -562,12 +562,12 @@ public class CiscoVnmcResource implements ServerResource {
                             throw new ExecutionException("Failed to create PF ip pool in VNMC for guest network with vlan " + vlanId);
                         }
                         if (!_connection.createTenantVDCPFPortPool(tenant, Long.toString(rule.getId()), Integer.toString(rule.getDstPortRange()[0]),
-                            Integer.toString(rule.getDstPortRange()[1]))) {
+                                Integer.toString(rule.getDstPortRange()[1]))) {
                             throw new ExecutionException("Failed to create PF port pool in VNMC for guest network with vlan " + vlanId);
                         }
 
                         if (!_connection.createTenantVDCPFRule(tenant, rule.getId(), policyIdentifier, rule.getProtocol().toUpperCase(), rule.getSrcIp(),
-                            Integer.toString(rule.getSrcPortRange()[0]), Integer.toString(rule.getSrcPortRange()[1]))) {
+                                Integer.toString(rule.getSrcPortRange()[0]), Integer.toString(rule.getSrcPortRange()[1]))) {
                             throw new ExecutionException("Failed to create PF rule in VNMC for guest network with vlan " + vlanId);
                         }
                     }
@@ -645,7 +645,8 @@ public class CiscoVnmcResource implements ServerResource {
     }
 
     /*
-     * Create vservice node and update inside port profile for ASA appliance in VSM
+     * Create vservice node and update inside port profile for ASA appliance in
+     * VSM
      */
     private synchronized Answer execute(ConfigureNexusVsmForAsaCommand cmd) {
         return execute(cmd, _numRetries);

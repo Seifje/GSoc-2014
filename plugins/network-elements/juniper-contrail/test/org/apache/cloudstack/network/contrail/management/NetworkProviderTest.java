@@ -209,7 +209,8 @@ public class NetworkProviderTest extends TestCase {
         ManagementServerMock.setParameter(cmd, ApiConstants.GATEWAY, BaseCmd.CommandType.STRING, "10.0.1.254");
         ManagementServerMock.setParameter(cmd, ApiConstants.NETMASK, BaseCmd.CommandType.STRING, "255.255.255.0");
         // Physical network id can't be specified for Guest traffic type.
-        // SetParameter(cmd, "physicalNetworkId", BaseCmd.CommandType.LONG, _znet.getId());
+        // SetParameter(cmd, "physicalNetworkId", BaseCmd.CommandType.LONG,
+        // _znet.getId());
 
         Network result = null;
         try {
@@ -222,9 +223,8 @@ public class NetworkProviderTest extends TestCase {
     }
 
     @Test
-    //@Ignore
-        public
-        void testCreateNetwork() {
+    // @Ignore
+    public void testCreateNetwork() {
         purgeTestNetwork();
         createTestNetwork("test");
     }
@@ -337,8 +337,7 @@ public class NetworkProviderTest extends TestCase {
         }
         DomainVO domain = _domainDao.findById(Domain.ROOT_DOMAIN);
         try {
-            net.juniper.contrail.api.types.Domain vncDomain =
-                (net.juniper.contrail.api.types.Domain)_api.findById(net.juniper.contrail.api.types.Domain.class, domain.getUuid());
+            net.juniper.contrail.api.types.Domain vncDomain = (net.juniper.contrail.api.types.Domain)_api.findById(net.juniper.contrail.api.types.Domain.class, domain.getUuid());
             if (_api.findByName(net.juniper.contrail.api.types.Project.class, vncDomain, name) == null) {
                 fail("create project failed in vnc");
             }
@@ -384,14 +383,18 @@ public class NetworkProviderTest extends TestCase {
             fail("unable to create floating ip");
         }
 
-        /* reset ApiServer objects to default config only, so above created objects
-         * exists only in cludstack db but not in api server
+        /*
+         * reset ApiServer objects to default config only, so above created
+         * objects exists only in cludstack db but not in api server
          */
         ((ApiConnectorMock)_api).initConfig();
         /* reset model cached objects */
         _contrailMgr.getDatabase().initDb();
 
-        /* Create one object of each type directly in api-server - these objects does not exist in cloudstack */
+        /*
+         * Create one object of each type directly in api-server - these objects
+         * does not exist in cloudstack
+         */
         net.juniper.contrail.api.types.Domain domain = new net.juniper.contrail.api.types.Domain();
         domain.setName("test-vnc-only-domain--1");
         domain.setUuid(UUID.randomUUID().toString());
@@ -464,7 +467,7 @@ public class NetworkProviderTest extends TestCase {
             fail(ex.getMessage());
         }
 
-        //now db sync
+        // now db sync
         if (_dbSync.syncAll(DBSyncGeneric.SYNC_MODE_UPDATE) == ServerDBSync.SYNC_STATE_OUT_OF_SYNC) {
             s_logger.info("# Cloudstack DB & VNC are out of sync - resync done");
         }

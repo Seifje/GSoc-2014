@@ -108,7 +108,8 @@ public class AgentRoutingResource extends AgentStorageResource {
     public PingCommand getCurrentStatus(long id) {
         TransactionLegacy txn = TransactionLegacy.open(TransactionLegacy.SIMULATOR_DB);
         try {
-            MockConfigurationVO config = _simMgr.getMockConfigurationDao().findByNameBottomUP(agentHost.getDataCenterId(), agentHost.getPodId(), agentHost.getClusterId(), agentHost.getId(), "PingCommand");
+            MockConfigurationVO config = _simMgr.getMockConfigurationDao().findByNameBottomUP(agentHost.getDataCenterId(), agentHost.getPodId(), agentHost.getClusterId(),
+                    agentHost.getId(), "PingCommand");
             if (config != null) {
                 Map<String, String> configParameters = config.getParameters();
                 for (Map.Entry<String, String> entry : configParameters.entrySet()) {
@@ -133,7 +134,7 @@ public class AgentRoutingResource extends AgentStorageResource {
         }
         synchronized (_vms) {
             if (_vms.size() == 0) {
-                //load vms state from database
+                // load vms state from database
                 _vms.putAll(_simMgr.getVmStates(hostGuid));
             }
         }
@@ -160,9 +161,8 @@ public class AgentRoutingResource extends AgentStorageResource {
 
         List<Object> info = getHostInfo();
 
-        StartupRoutingCommand cmd =
-            new StartupRoutingCommand((Integer)info.get(0), (Long)info.get(1), (Long)info.get(2), (Long)info.get(4), (String)info.get(3), HypervisorType.Simulator,
-                RouterPrivateIpStrategy.HostLocal);
+        StartupRoutingCommand cmd = new StartupRoutingCommand((Integer)info.get(0), (Long)info.get(1), (Long)info.get(2), (Long)info.get(4), (String)info.get(3),
+                HypervisorType.Simulator, RouterPrivateIpStrategy.HostLocal);
         cmd.setStateChanges(changes);
 
         Map<String, String> hostDetails = new HashMap<String, String>();

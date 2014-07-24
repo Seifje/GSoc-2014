@@ -39,11 +39,12 @@ public class S3PolicyConditionBlock {
     }
 
     /**
-     * Condition blocks are evaluated where as an 'AND' of the result of
-     * each separate condition in the block.   Thus, a single false value makes
-     * the entire block evaluate to false.  If no conditions are present and the
-     * condition is relevant to the request, then the default condition is considered
-     * to be true.
+     * Condition blocks are evaluated where as an 'AND' of the result of each
+     * separate condition in the block. Thus, a single false value makes the
+     * entire block evaluate to false. If no conditions are present and the
+     * condition is relevant to the request, then the default condition is
+     * considered to be true.
+     * 
      * @throws Exception
      */
     public boolean isTrue(S3PolicyContext context, String SID) throws Exception {

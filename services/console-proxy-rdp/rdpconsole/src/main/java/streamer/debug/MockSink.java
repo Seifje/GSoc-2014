@@ -58,15 +58,15 @@ public class MockSink extends BaseElement {
             return;
 
         if (packetNumber >= bufs.length)
-            throw new AssertionError("[" + this + "] Incoming buffer #" + packetNumber + " is not expected. Number of expected buffers: " + bufs.length
-                    + ", unexpected buffer: " + buf + ".");
+            throw new AssertionError("[" + this + "] Incoming buffer #" + packetNumber + " is not expected. Number of expected buffers: " + bufs.length + ", unexpected buffer: "
+                    + buf + ".");
 
         // Compare incoming buffer with expected buffer
         ByteBuffer expectedBuf = bufs[packetNumber];
         if (!Arrays.equals(expectedBuf.toByteArray(), buf.toByteArray())) {
             dump(buf, expectedBuf);
-            throw new AssertionError("[" + this + "] Incoming buffer #" + packetNumber + " is not equal to expected buffer.\n  Actual bufer: " + buf
-                    + ",\n  expected buffer: " + expectedBuf + ".");
+            throw new AssertionError("[" + this + "] Incoming buffer #" + packetNumber + " is not equal to expected buffer.\n  Actual bufer: " + buf + ",\n  expected buffer: "
+                    + expectedBuf + ".");
         }
 
         // If expected buffer has metadata, then compare it too
@@ -123,8 +123,8 @@ public class MockSink extends BaseElement {
 
         Element mockSource = new MockSource("source") {
             {
-                bufs = new ByteBuffer[] {new ByteBuffer(new byte[] {1, 1, 2, 3, 4, 5}), new ByteBuffer(new byte[] {2, 1, 2, 3, 4}),
-                        new ByteBuffer(new byte[] {3, 1, 2, 3}), new ByteBuffer(new byte[] {4, 1, 2}), new ByteBuffer(new byte[] {5, 1})};
+                bufs = new ByteBuffer[] {new ByteBuffer(new byte[] {1, 1, 2, 3, 4, 5}), new ByteBuffer(new byte[] {2, 1, 2, 3, 4}), new ByteBuffer(new byte[] {3, 1, 2, 3}),
+                        new ByteBuffer(new byte[] {4, 1, 2}), new ByteBuffer(new byte[] {5, 1})};
                 verbose = true;
                 delay = 100;
                 numBuffers = bufs.length;
@@ -133,8 +133,8 @@ public class MockSink extends BaseElement {
 
         Element mockSink = new MockSink("sink") {
             {
-                bufs = new ByteBuffer[] {new ByteBuffer(new byte[] {1, 1, 2, 3, 4, 5}), new ByteBuffer(new byte[] {2, 1, 2, 3, 4}),
-                        new ByteBuffer(new byte[] {3, 1, 2, 3}), new ByteBuffer(new byte[] {4, 1, 2}), new ByteBuffer(new byte[] {5, 1})};
+                bufs = new ByteBuffer[] {new ByteBuffer(new byte[] {1, 1, 2, 3, 4, 5}), new ByteBuffer(new byte[] {2, 1, 2, 3, 4}), new ByteBuffer(new byte[] {3, 1, 2, 3}),
+                        new ByteBuffer(new byte[] {4, 1, 2}), new ByteBuffer(new byte[] {5, 1})};
                 verbose = true;
             }
         };

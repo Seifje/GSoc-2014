@@ -157,11 +157,11 @@ public class S3TemplateDownloader extends ManagedContextRunnable implements Temp
     @Override
     public long download(boolean resume, DownloadCompleteCallback callback) {
         switch (status) {
-            case ABORTED:
-            case UNRECOVERABLE_ERROR:
-            case DOWNLOAD_FINISHED:
-                return 0;
-            default:
+        case ABORTED:
+        case UNRECOVERABLE_ERROR:
+        case DOWNLOAD_FINISHED:
+            return 0;
+        default:
 
         }
 
@@ -214,8 +214,8 @@ public class S3TemplateDownloader extends ManagedContextRunnable implements Temp
 
             InputStream in = !chunked ? new BufferedInputStream(request.getResponseBodyAsStream()) : new ChunkedInputStream(request.getResponseBodyAsStream());
 
-            s_logger.info("Starting download from " + getDownloadUrl() + " to s3 bucket " + s3.getBucketName() + " remoteSize=" + remoteSize + " , max size=" +
-                maxTemplateSizeInByte);
+            s_logger.info("Starting download from " + getDownloadUrl() + " to s3 bucket " + s3.getBucketName() + " remoteSize=" + remoteSize + " , max size="
+                    + maxTemplateSizeInByte);
 
             Date start = new Date();
             // compute s3 key
@@ -260,8 +260,8 @@ public class S3TemplateDownloader extends ManagedContextRunnable implements Temp
             } else {
                 // single part upload, with 5GB limit in Amazon
                 S3Utils.putObject(s3, putObjectRequest);
-                while (status != TemplateDownloader.Status.DOWNLOAD_FINISHED && status != TemplateDownloader.Status.UNRECOVERABLE_ERROR &&
-                    status != TemplateDownloader.Status.ABORTED) {
+                while (status != TemplateDownloader.Status.DOWNLOAD_FINISHED && status != TemplateDownloader.Status.UNRECOVERABLE_ERROR
+                        && status != TemplateDownloader.Status.ABORTED) {
                     // wait for completion
                 }
             }
@@ -325,28 +325,28 @@ public class S3TemplateDownloader extends ManagedContextRunnable implements Temp
     @SuppressWarnings("fallthrough")
     public boolean stopDownload() {
         switch (getStatus()) {
-            case IN_PROGRESS:
-                if (request != null) {
-                    request.abort();
-                }
-                status = TemplateDownloader.Status.ABORTED;
-                return true;
-            case UNKNOWN:
-            case NOT_STARTED:
-            case RECOVERABLE_ERROR:
-            case UNRECOVERABLE_ERROR:
-            case ABORTED:
-                status = TemplateDownloader.Status.ABORTED;
-            case DOWNLOAD_FINISHED:
-                try {
-                    S3Utils.deleteObject(s3, s3.getBucketName(), s3Key);
-                } catch (Exception ex) {
-                    // ignore delete exception if it is not there
-                }
-                return true;
+        case IN_PROGRESS:
+            if (request != null) {
+                request.abort();
+            }
+            status = TemplateDownloader.Status.ABORTED;
+            return true;
+        case UNKNOWN:
+        case NOT_STARTED:
+        case RECOVERABLE_ERROR:
+        case UNRECOVERABLE_ERROR:
+        case ABORTED:
+            status = TemplateDownloader.Status.ABORTED;
+        case DOWNLOAD_FINISHED:
+            try {
+                S3Utils.deleteObject(s3, s3.getBucketName(), s3Key);
+            } catch (Exception ex) {
+                // ignore delete exception if it is not there
+            }
+            return true;
 
-            default:
-                return true;
+        default:
+            return true;
         }
     }
 

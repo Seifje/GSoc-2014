@@ -48,8 +48,7 @@ import com.cloud.vm.ReservationContext;
 @Component
 @Local(value = {NetworkACLServiceProvider.class, VpcProvider.class, ContrailElementImpl.class})
 public class ContrailVpcElementImpl extends ContrailElementImpl implements NetworkACLServiceProvider, VpcProvider {
-    private static final Logger s_logger =
-            Logger.getLogger(ContrailElement.class);
+    private static final Logger s_logger = Logger.getLogger(ContrailElement.class);
 
     @Inject
     NetworkACLDao _networkACLDao;
@@ -61,50 +60,43 @@ public class ContrailVpcElementImpl extends ContrailElementImpl implements Netwo
     }
 
     @Override
-    public boolean implementVpc(Vpc vpc, DeployDestination dest,
-            ReservationContext context) throws ConcurrentOperationException,
-            ResourceUnavailableException, InsufficientCapacityException {
+    public boolean implementVpc(Vpc vpc, DeployDestination dest, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException,
+            InsufficientCapacityException {
         // TODO Auto-generated method stub
         s_logger.debug("NetworkElement implementVpc");
         return true;
     }
 
     @Override
-    public boolean shutdownVpc(Vpc vpc, ReservationContext context)
-            throws ConcurrentOperationException, ResourceUnavailableException {
+    public boolean shutdownVpc(Vpc vpc, ReservationContext context) throws ConcurrentOperationException, ResourceUnavailableException {
         // TODO Auto-generated method stub
         s_logger.debug("NetworkElement shutdownVpc");
         return true;
     }
 
     @Override
-    public boolean createPrivateGateway(PrivateGateway gateway)
-            throws ConcurrentOperationException, ResourceUnavailableException {
+    public boolean createPrivateGateway(PrivateGateway gateway) throws ConcurrentOperationException, ResourceUnavailableException {
         // TODO Auto-generated method stub
         s_logger.debug("NetworkElement createPrivateGateway");
         return false;
     }
 
     @Override
-    public boolean deletePrivateGateway(PrivateGateway privateGateway)
-            throws ConcurrentOperationException, ResourceUnavailableException {
+    public boolean deletePrivateGateway(PrivateGateway privateGateway) throws ConcurrentOperationException, ResourceUnavailableException {
         // TODO Auto-generated method stub
         s_logger.debug("NetworkElement deletePrivateGateway");
         return false;
     }
 
     @Override
-    public boolean applyStaticRoutes(Vpc vpc, List<StaticRouteProfile> routes)
-            throws ResourceUnavailableException {
+    public boolean applyStaticRoutes(Vpc vpc, List<StaticRouteProfile> routes) throws ResourceUnavailableException {
         // TODO Auto-generated method stub
         s_logger.debug("NetworkElement applyStaticRoutes");
         return true;
     }
 
     @Override
-    public boolean applyNetworkACLs(Network net,
-            List<? extends NetworkACLItem> rules)
-                    throws ResourceUnavailableException {
+    public boolean applyNetworkACLs(Network net, List<? extends NetworkACLItem> rules) throws ResourceUnavailableException {
         s_logger.debug("NetworkElement applyNetworkACLs");
         if (rules == null || rules.isEmpty()) {
             s_logger.debug("no rules to apply");
@@ -116,8 +108,9 @@ public class ContrailVpcElementImpl extends ContrailElementImpl implements Netwo
         NetworkPolicyModel policyModel = _manager.getDatabase().lookupNetworkPolicy(acl.getUuid());
         if (policyModel == null) {
             /*
-             * For the first time, when a CS ACL applied to a network, create a network-policy in VNC
-             * and when there are no networks associated to CS ACL, delete it from VNC.
+             * For the first time, when a CS ACL applied to a network, create a
+             * network-policy in VNC and when there are no networks associated
+             * to CS ACL, delete it from VNC.
              */
             policyModel = new NetworkPolicyModel(acl.getUuid(), acl.getName());
             net.juniper.contrail.api.types.Project project;
@@ -133,10 +126,12 @@ public class ContrailVpcElementImpl extends ContrailElementImpl implements Netwo
             policyModel.setProject(project);
         }
 
-        VirtualNetworkModel vnModel = _manager.getDatabase().lookupVirtualNetwork(net.getUuid(),
-                _manager.getCanonicalName(net), net.getTrafficType());
+        VirtualNetworkModel vnModel = _manager.getDatabase().lookupVirtualNetwork(net.getUuid(), _manager.getCanonicalName(net), net.getTrafficType());
         NetworkPolicyModel oldPolicyModel = null;
-        /* this method is called when network is destroyed too, hence vn model might have been deleted already */
+        /*
+         * this method is called when network is destroyed too, hence vn model
+         * might have been deleted already
+         */
         if (vnModel != null) {
             oldPolicyModel = vnModel.getNetworkPolicyModel();
             vnModel.addToNetworkPolicy(policyModel);
@@ -171,8 +166,8 @@ public class ContrailVpcElementImpl extends ContrailElementImpl implements Netwo
             }
         }
         /*
-         * if no other VNs are associated with the old policy,
-         * we could delete it from the Contrail VNC
+         * if no other VNs are associated with the old policy, we could delete
+         * it from the Contrail VNC
          */
         if (policyModel != oldPolicyModel && oldPolicyModel != null && !oldPolicyModel.hasDescendents()) {
             try {
@@ -188,9 +183,7 @@ public class ContrailVpcElementImpl extends ContrailElementImpl implements Netwo
     }
 
     @Override
-    public boolean applyACLItemsToPrivateGw(PrivateGateway privateGateway,
-            List<? extends NetworkACLItem> rules)
-                    throws ResourceUnavailableException {
+    public boolean applyACLItemsToPrivateGw(PrivateGateway privateGateway, List<? extends NetworkACLItem> rules) throws ResourceUnavailableException {
         // TODO Auto-generated method stub
         s_logger.debug("NetworkElement applyACLItemsToPrivateGw");
         return true;

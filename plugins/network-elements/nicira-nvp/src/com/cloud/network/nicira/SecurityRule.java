@@ -33,7 +33,6 @@ public class SecurityRule extends AccessRule {
 
     protected String profileUuid;
 
-
     /**
      * Default constructor
      */
@@ -43,8 +42,7 @@ public class SecurityRule extends AccessRule {
     /**
      * Fully parameterized constructor
      */
-    public SecurityRule(final String ethertype, final String ipPrefix, final String profileUuid,
-            final int portRangeMin, final int portRangeMax, final int protocol) {
+    public SecurityRule(final String ethertype, final String ipPrefix, final String profileUuid, final int portRangeMin, final int portRangeMax, final int protocol) {
         this.ethertype = ethertype;
         this.ipPrefix = ipPrefix;
         this.portRangeMin = portRangeMin;
@@ -107,11 +105,7 @@ public class SecurityRule extends AccessRule {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 31)
-            .append(ethertype).append(ipPrefix)
-            .append(portRangeMin).append(portRangeMax)
-            .append(profileUuid).append(protocol)
-            .toHashCode();
+        return new HashCodeBuilder(17, 31).append(ethertype).append(ipPrefix).append(portRangeMin).append(portRangeMax).append(profileUuid).append(protocol).toHashCode();
     }
 
     @Override
@@ -125,14 +119,8 @@ public class SecurityRule extends AccessRule {
         if (!(obj instanceof SecurityRule)) {
             return false;
         }
-        final SecurityRule another = (SecurityRule) obj;
-        return new EqualsBuilder()
-                .append(ethertype, another.ethertype)
-                .append(ipPrefix, another.ipPrefix)
-                .append(portRangeMin, another.portRangeMin)
-                .append(portRangeMax, another.portRangeMax)
-                .append(profileUuid, another.profileUuid)
-                .append(protocol, another.protocol)
-                .isEquals();
+        final SecurityRule another = (SecurityRule)obj;
+        return new EqualsBuilder().append(ethertype, another.ethertype).append(ipPrefix, another.ipPrefix).append(portRangeMin, another.portRangeMin)
+                .append(portRangeMax, another.portRangeMax).append(profileUuid, another.profileUuid).append(protocol, another.protocol).isEquals();
     }
 }
