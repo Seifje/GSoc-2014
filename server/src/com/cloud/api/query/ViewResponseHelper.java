@@ -327,13 +327,13 @@ public class ViewResponseHelper {
 
     public static List<StorageTagResponse> createStorageTagResponse(StorageTagVO... tags) {
         Hashtable<Long, StorageTagResponse> vrDataList = new Hashtable<Long, StorageTagResponse>();
+        ArrayList<StorageTagResponse> list = new ArrayList<StorageTagResponse>();
         // Initialise the vrdatalist with the input data
         for (StorageTagVO vr : tags) {
-            StorageTagResponse vrData = vrDataList.get(vr.getId());
+            list.add(ApiDBUtils.newStorageTagResponse(vr));
 
-            vrDataList.put(vr.getId(), vrData);
         }
-        return new ArrayList<StorageTagResponse>(vrDataList.values());
+        return list;
     }
 
     /*********/
